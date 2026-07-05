@@ -1522,8 +1522,8 @@ const LanguageToggle = ({ lang, setLang }: { lang: Language; setLang: (l: Langua
 
 export default function App() {
   const [lang, setLang] = useState<Language>('ru');
-  const [activeCategory, setActiveCategory] = useState<CategoryType>('Cards');
-  const [subFilter, setSubFilter] = useState<SubCategory>('None');
+  const [activeCategory, setActiveCategory] = useState<CategoryType>('Proxy');
+  const [subFilter, setSubFilter] = useState<SubCategory>('Proxy');
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [isProxyGuideOpen, setIsProxyGuideOpen] = useState(false);
   const [isAntidetectGuideOpen, setIsAntidetectGuideOpen] = useState(false);
@@ -1563,15 +1563,49 @@ export default function App() {
     return () => clearTimeout(timeout);
   }, [placeholderText, isDeleting, wordIndex]);
 
+  const normalizeSearchText = (value: string) =>
+    value
+      .toLowerCase()
+      .replace(/ё/g, 'е')
+      .replace(/https?:\/\//g, '')
+      .replace(/www\./g, '')
+      .replace(/[^\p{L}\p{N}]+/gu, ' ')
+      .trim();
+
+  const compactSearchText = (value: string) => normalizeSearchText(value).replace(/\s+/g, '');
+
+  const collectSearchText = (value: unknown): string[] => {
+    if (value === null || value === undefined) return [];
+    if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') return [String(value)];
+    if (Array.isArray(value)) return value.flatMap(collectSearchText);
+    if (typeof value === 'object') return Object.values(value as Record<string, unknown>).flatMap(collectSearchText);
+    return [];
+  };
+
   const filteredOffers = useMemo(() => {
+    const query = normalizeSearchText(searchQuery);
+    const compactQuery = compactSearchText(searchQuery);
+    const hasQuery = query.length > 0;
+
     return OFFERS.filter(o => {
-      const matchesCategory = o.category === activeCategory;
-      const matchesSub = subFilter === 'None' || o.subCategory === subFilter;
-      const matchesSearch = o.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                           o.description[lang]?.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesSub && matchesSearch;
+      if (!hasQuery) {
+        const matchesCategory = o.category === activeCategory;
+        const matchesSub = subFilter === 'None' || o.subCategory === subFilter;
+        return matchesCategory && matchesSub;
+      }
+
+      const categoryData = CATEGORIES.find(c => c.id === o.category);
+      const searchableText = collectSearchText([
+        o,
+        categoryData?.title,
+        o.subCategory,
+      ]).join(' ');
+      const normalizedText = normalizeSearchText(searchableText);
+      const compactText = compactSearchText(searchableText);
+
+      return normalizedText.includes(query) || (compactQuery.length > 1 && compactText.includes(compactQuery));
     });
-  }, [activeCategory, subFilter, searchQuery, lang]);
+  }, [activeCategory, subFilter, searchQuery]);
 
   const renderGuideIcon = (id: string, className: string) => {
     const guideIcons: Record<string, any> = {
@@ -1696,8 +1730,9 @@ export default function App() {
   };
 
   const handleCategoryChange = (cat: CategoryType) => {
+    const nextCategory = CATEGORIES.find(c => c.id === cat);
     setActiveCategory(cat);
-    setSubFilter('None');
+    setSubFilter(nextCategory?.subFilters?.[0] || 'None');
     scrollToPageTop();
   };
 
