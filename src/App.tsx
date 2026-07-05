@@ -1695,11 +1695,12 @@ const [subFilter, setSubFilter] = useState<SubCategory>('Proxy');
     });
   };
 
-  const handleCategoryChange = (cat: CategoryType) => {
-    setActiveCategory(cat);
-    setSubFilter('None');
-    scrollToPageTop();
-  };
+const handleCategoryChange = (cat: CategoryType) => {
+  const nextCategory = CATEGORIES.find(c => c.id === cat);
+  setActiveCategory(cat);
+  setSubFilter(nextCategory?.subFilters?.[0] || 'None');
+  scrollToPageTop();
+};
 
   const activeCategoryData = CATEGORIES.find(c => c.id === activeCategory);
 
