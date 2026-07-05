@@ -250,15 +250,15 @@ const OFFERS: Offer[] = [
     subCategory: 'Proxy',
     name: 'ProxyShard',
     description: { 
-      ru: 'Современный сервис с качественными Residential и ISP-прокси. Хороший баланс между стоимостью, скоростью и стабильностью работы.', 
-      en: 'Modern service with quality Residential and ISP proxies. A good balance of price, speed, and stability.' 
+      ru: 'Современный сервис с Residential, Datacenter, Mobile и ISP-прокси. Хороший баланс между стоимостью, скоростью и стабильностью работы.', 
+      en: 'Modern service with Residential, Datacenter, Mobile, and ISP proxies. A good balance of price, speed, and stability.' 
     },
     url: 'https://proxyshard.com?ref=hopscup',
     logoUrl: '/proxyshard.png',
     isBestChoice: true,
     details: {
-      geo: { ru: '190+ стран', en: '190+ countries' },
-      types: { ru: 'Residential, ISP', en: 'Residential, ISP' },
+      geo: { ru: '100+ стран', en: '100+ countries' },
+      types: { ru: 'Residential, Datacenter, Mobile, ISP', en: 'Residential, Datacenter, Mobile, ISP' },
       paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта', en: 'Visa/Mastercard, Crypto' }
     }
   },
@@ -275,7 +275,7 @@ const OFFERS: Offer[] = [
     logoUrl: '/proxyline.png',
     details: {
       geo: { ru: '100+ стран', en: '100+ countries' },
-      types: { ru: 'IPv4, IPv6, ISP', en: 'IPv4, IPv6, ISP' },
+      types: { ru: 'IPv4, IPv6', en: 'IPv4, IPv6' },
       paymentMethods: { ru: 'Visa/Mastercard, СБП, Мир, Криптовалюта', en: 'Visa/Mastercard, SBP, Mir, Crypto' }
     }
   },
@@ -285,14 +285,14 @@ const OFFERS: Offer[] = [
     subCategory: 'Proxy',
     name: 'ProxyWing',
     description: {
-      ru: 'Резидентские прокси с оплатой за использованный трафик. Хороший вариант для работы с аккаунтами, рекламными кабинетами и другими задачами, где важен высокий траст IP.',
-      en: 'Residential proxies with pay-as-you-go traffic. A strong option for accounts, ad cabinets, and other tasks where high IP trust matters.'
+      ru: 'Универсальный прокси-сервис с Residential, Datacenter, ISP и Mobile-прокси. Хороший вариант для аккаунтов, рекламных кабинетов, парсинга и задач, где важен высокий траст IP.',
+      en: 'A universal proxy service with Residential, Datacenter, ISP, and Mobile proxies. A strong option for accounts, ad cabinets, scraping, and tasks where high IP trust matters.'
     },
     url: 'https://dashboard.proxywing.com/billing/aff.php?aff=813',
     logoUrl: '/proxywing.png',
     details: {
-      geo: { ru: '190+ стран', en: '190+ countries' },
-      types: { ru: 'Residential', en: 'Residential' },
+      geo: { ru: '200+ стран', en: '200+ countries' },
+      types: { ru: 'Residential, Datacenter, ISP, Mobile', en: 'Residential, Datacenter, ISP, Mobile' },
       paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта', en: 'Visa/Mastercard, Crypto' }
     }
   },
@@ -310,7 +310,7 @@ const OFFERS: Offer[] = [
     isPopular: true,
     details: {
       geo: { ru: '220+ стран', en: '220+ countries' },
-      types: { ru: 'Residential, Mobile, ISP, IPv4, IPv6', en: 'Residential, Mobile, ISP, IPv4, IPv6' },
+      types: { ru: 'IPv4, IPv6, ISP, Residential, Mobile, Shared', en: 'IPv4, IPv6, ISP, Residential, Mobile, Shared' },
       paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта, PayPal', en: 'Visa/Mastercard, Crypto, PayPal' }
     }
   },
@@ -320,14 +320,14 @@ const OFFERS: Offer[] = [
     subCategory: 'Proxy',
     name: 'Proxy6',
     description: {
-      ru: 'Один из самых известных сервисов с доступными IPv4 и IPv6 прокси. Подходит для повседневных задач, автоматизации и работы с большим количеством IP.',
-      en: 'One of the best-known services with affordable IPv4 and IPv6 proxies. Suitable for daily tasks, automation, and working with many IPs.'
+      ru: 'Один из самых известных сервисов с доступными IPv4/IPv6, shared IPv4 и MTProto-прокси. Подходит для повседневных задач, автоматизации и работы с большим количеством IP.',
+      en: 'One of the best-known services with affordable IPv4/IPv6, shared IPv4, and MTProto proxies. Suitable for daily tasks, automation, and working with many IPs.'
     },
     url: 'https://px6.net/c/103460',
     logoUrl: '/proxy6.png',
     details: {
       geo: { ru: '70+ стран', en: '70+ countries' },
-      types: { ru: 'IPv4, IPv6', en: 'IPv4, IPv6' },
+      types: { ru: 'IPv4, IPv6, Shared IPv4, MTProto', en: 'IPv4, IPv6, Shared IPv4, MTProto' },
       paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта', en: 'Visa/Mastercard, Crypto' }
     }
   },
@@ -354,15 +354,15 @@ const OFFERS: Offer[] = [
     subCategory: 'Proxy',
     name: 'Proxys.io',
     description: {
-      ru: 'Универсальный сервис с большим выбором прокси под любые задачи. Есть Residential, Mobile, ISP и классические IPv4/IPv6. Подойдет как для работы с аккаунтами, так и для автоматизации.',
-      en: 'A universal service with a wide proxy selection for many tasks: Residential, Mobile, ISP, and classic IPv4/IPv6. Good for both account work and automation.'
+      ru: 'Универсальный сервис с большим выбором прокси под разные задачи: IPv4/IPv6, shared, residential, mobile и dynamic. Подойдет как для работы с аккаунтами, так и для автоматизации.',
+      en: 'A universal service with a wide proxy selection for different tasks: IPv4/IPv6, shared, residential, mobile, and dynamic proxies. Good for both account work and automation.'
     },
     url: 'https://proxys.io/?refid=54507',
     logoUrl: '/proxys-io.png',
     details: {
-      geo: { ru: '200+ стран', en: '200+ countries' },
-      types: { ru: 'Residential, Mobile, ISP, IPv4, IPv6', en: 'Residential, Mobile, ISP, IPv4, IPv6' },
-      paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта, PayPal', en: 'Visa/Mastercard, Crypto, PayPal' }
+      geo: { ru: '240+ стран', en: '240+ countries' },
+      types: { ru: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic', en: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic' },
+      paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта, Alipay', en: 'Visa/Mastercard, Crypto, Alipay' }
     }
   },
   // VPN
