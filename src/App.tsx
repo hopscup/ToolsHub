@@ -1522,8 +1522,8 @@ const LanguageToggle = ({ lang, setLang }: { lang: Language; setLang: (l: Langua
 
 export default function App() {
   const [lang, setLang] = useState<Language>('ru');
-  const [activeCategory, setActiveCategory] = useState<CategoryType>('Cards');
-  const [subFilter, setSubFilter] = useState<SubCategory>('None');
+const [activeCategory, setActiveCategory] = useState<CategoryType>('Proxy');
+const [subFilter, setSubFilter] = useState<SubCategory>('Proxy');
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [isProxyGuideOpen, setIsProxyGuideOpen] = useState(false);
   const [isAntidetectGuideOpen, setIsAntidetectGuideOpen] = useState(false);
