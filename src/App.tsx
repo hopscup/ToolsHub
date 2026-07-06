@@ -1764,7 +1764,7 @@ export default function App() {
       <div className="mesh-gradient" />
       
       {/* Unified Header & Navigation */}
-      <div className="relative z-50 bg-bg-dark/40 backdrop-blur-2xl border-b border-white/5">
+      <div className="sticky top-0 z-[90] bg-bg-dark/70 backdrop-blur-2xl border-b border-white/5 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
         {/* Top Row: Logo & Language Toggle */}
         <div className="py-2 px-6 md:px-12 flex justify-between items-center border-b border-white/5">
           <div className="flex items-center gap-4">
