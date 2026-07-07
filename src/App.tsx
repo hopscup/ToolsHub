@@ -60,6 +60,7 @@ type CategoryType = 'Proxy' | 'Antidetect' | 'Stores' | 'Cards' | 'Crypto' | 'SM
 
 type SubCategory = 'Proxy' | 'VPN' | 'PCBasic' | 'PCAdvanced' | 'Mobile' | 'NoKYC' | 'WithKYC' | 'CardCrypto' | 'USDTQR' | 'Web' | 'Bot' | 'BoostSites' | 'Bux' | 'SteamFast' | 'SteamItems' | 'None';
 
+const SITE_URL = 'https://hopscup.tools';
 const PROXY_ANTIDETECT_VIDEO_URL = 'https://youtu.be/pBljqjuY2ls?si=Ft3UMgxjNUvaRT4d';
 const CARDS_VIDEO_URL = 'https://youtu.be/l15QzKojPsk?si=G7t9EW_ug9frLuWj';
 const SOCIAL_VIDEO_URL = 'https://youtu.be/MdvO9gVcym4?si=lBsgOITQokrj-zO3';
@@ -155,6 +156,270 @@ const CATEGORIES: { id: CategoryType; icon: any; title: Record<Language, string>
   { id: 'Steam', icon: Gamepad2, title: { ru: 'Пополнение Steam', en: 'Steam Top-up' }, subFilters: ['SteamFast', 'SteamItems'], guides: { text: '#', video: '#' } },
   { id: 'Guides', icon: FileText, title: { ru: 'Полезные гайды', en: 'Useful Guides' } },
 ];
+
+const CATEGORY_ROUTES: Record<CategoryType, string> = {
+  Proxy: '/proxy-vpn',
+  Antidetect: '/antidetect',
+  Stores: '/account-shop',
+  Cards: '/foreign-cards',
+  Crypto: '/crypto-exchange',
+  SMS: '/sms-activators',
+  VPS: '/vps',
+  Social: '/social-boost',
+  Steam: '/steam-topup',
+  Guides: '/guides',
+};
+
+const getDefaultSubFilter = (category: CategoryType): SubCategory => {
+  const categoryData = CATEGORIES.find(item => item.id === category);
+  return categoryData?.subFilters?.[0] || 'None';
+};
+
+const getCategoryFromPath = (path = typeof window !== 'undefined' ? window.location.pathname : '/'): CategoryType => {
+  const normalizedPath = path.replace(/\/+$/, '') || '/';
+  const match = Object.entries(CATEGORY_ROUTES).find(([, route]) => route === normalizedPath);
+  return (match?.[0] as CategoryType | undefined) || 'Proxy';
+};
+
+const SECTION_SEO: Record<CategoryType, {
+  route: string;
+  title: Record<Language, string>;
+  description: Record<Language, string>;
+  heading: Record<Language, string>;
+  intro: Record<Language, string>;
+  points: Record<Language, string[]>;
+}> = {
+  Proxy: {
+    route: CATEGORY_ROUTES.Proxy,
+    title: {
+      ru: 'Прокси и VPN для аккаунтов, фарма и работы | Hopscup Tools',
+      en: 'Proxy and VPN services for account work | Hopscup Tools',
+    },
+    description: {
+      ru: 'Подборка прокси и VPN: residential, mobile, ISP, IPv4/IPv6, сервисы с оплатой картой и криптой для аккаунтов, рекламы и автоматизации.',
+      en: 'Curated proxy and VPN services: residential, mobile, ISP, IPv4/IPv6, cards and crypto payments for account work and automation.',
+    },
+    heading: {
+      ru: 'Прокси и VPN для рабочих задач',
+      en: 'Proxy and VPN services for work',
+    },
+    intro: {
+      ru: 'В этом разделе собраны прокси и VPN, которые можно использовать для аккаунтов, рекламных кабинетов, автоматизации, парсинга и повседневной работы с зарубежными сервисами.',
+      en: 'This section collects proxy and VPN services for accounts, ad cabinets, automation, scraping, and everyday work with international services.',
+    },
+    points: {
+      ru: ['Для высокого траста чаще смотрят mobile, residential и ISP.', 'Для парсинга и простых задач часто хватает IPv4/IPv6.', 'Перед покупкой лучше сверять гео, тип прокси и способ оплаты.'],
+      en: ['Mobile, residential, and ISP proxies are usually better for trust-sensitive tasks.', 'IPv4/IPv6 is often enough for scraping and simpler automation.', 'Check geo, proxy type, and payment method before buying.'],
+    },
+  },
+  Antidetect: {
+    route: CATEGORY_ROUTES.Antidetect,
+    title: {
+      ru: 'Антидетект браузеры для мультиаккаунтинга | Hopscup Tools',
+      en: 'Antidetect browsers for multi-accounting | Hopscup Tools',
+    },
+    description: {
+      ru: 'Сравнение антидетект браузеров: бесплатные профили, стартовые тарифы, цена за 100 профилей и варианты для базовых и усиленных задач.',
+      en: 'Antidetect browser comparison: free profiles, starter plans, 100-profile pricing, and options for basic and advanced tasks.',
+    },
+    heading: {
+      ru: 'Антидетект браузеры под разные уровни задач',
+      en: 'Antidetect browsers for different task levels',
+    },
+    intro: {
+      ru: 'Антидетект нужен, когда приходится вести несколько профилей и важно разделять отпечатки браузера, прокси, cookie и окружение аккаунтов.',
+      en: 'Antidetect browsers help manage multiple profiles while separating browser fingerprints, proxies, cookies, and account environments.',
+    },
+    points: {
+      ru: ['Базовые решения подходят для обычного мультиаккаунтинга.', 'Усиленные варианты чаще берут под строгий антифрод.', 'Смотри не только цену, но и бесплатные профили, командную работу и стабильность.'],
+      en: ['Basic tools are suitable for regular multi-accounting.', 'Advanced options are usually used for stricter antifraud.', 'Check pricing, free profiles, team features, and stability.'],
+    },
+  },
+  Stores: {
+    route: CATEGORY_ROUTES.Stores,
+    title: {
+      ru: 'Магазины аккаунтов и подписок | Hopscup Tools',
+      en: 'Account and subscription shops | Hopscup Tools',
+    },
+    description: {
+      ru: 'Подборка сайтов и Telegram-магазинов для покупки аккаунтов, AI-подписок, Discord, Twitter, Google и других цифровых товаров.',
+      en: 'A curated list of websites and Telegram stores for buying accounts, AI subscriptions, Discord, Twitter, Google, and other digital goods.',
+    },
+    heading: {
+      ru: 'Магазины аккаунтов, подписок и цифровых товаров',
+      en: 'Account, subscription, and digital goods stores',
+    },
+    intro: {
+      ru: 'Здесь собраны площадки, где можно купить аккаунты, подписки на нейросети и другие цифровые товары. Основной фокус — удобство, отзывы, способы оплаты и понятные правила покупки.',
+      en: 'This section lists marketplaces for accounts, AI subscriptions, and digital goods with a focus on convenience, reviews, payment methods, and clear purchase rules.',
+    },
+    points: {
+      ru: ['Для большинства задач удобно начинать с DarkStore и FunPay.', 'В Telegram-магазинах часто бывают дешевые подписки на AI-сервисы.', 'Перед покупкой всегда проверяй отзывы, условия замены и описание товара.'],
+      en: ['DarkStore and FunPay are convenient starting points for many tasks.', 'Telegram shops often have discounted AI subscriptions.', 'Always check reviews, replacement rules, and product descriptions before buying.'],
+    },
+  },
+  Cards: {
+    route: CATEGORY_ROUTES.Cards,
+    title: {
+      ru: 'Зарубежные карты без KYC и с KYC | Hopscup Tools',
+      en: 'Foreign virtual cards with and without KYC | Hopscup Tools',
+    },
+    description: {
+      ru: 'Сервисы зарубежных виртуальных карт для оплаты зарубежных подписок, App Store, Google Play, Airbnb, рекламы и других сервисов.',
+      en: 'Foreign virtual card services for paying subscriptions, App Store, Google Play, Airbnb, ads, and other international services.',
+    },
+    heading: {
+      ru: 'Зарубежные карты для оплаты сервисов',
+      en: 'Foreign cards for service payments',
+    },
+    intro: {
+      ru: 'Зарубежные карты помогают оплачивать сервисы, где российские карты не проходят: подписки, магазины приложений, бронирования, рекламу и зарубежные платформы.',
+      en: 'Foreign cards help pay for services where local cards may fail: subscriptions, app stores, bookings, ads, and international platforms.',
+    },
+    points: {
+      ru: ['Без KYC обычно быстрее старт, но могут быть ограничения.', 'С KYC чаще больше лимиты и стабильность.', 'Перед выпуском карты проверь комиссии, пополнение и поддержку нужного сервиса.'],
+      en: ['No-KYC options are usually faster to start but may have limits.', 'KYC options often provide higher limits and more stability.', 'Check fees, top-up methods, and supported services before issuing a card.'],
+    },
+  },
+  Crypto: {
+    route: CATEGORY_ROUTES.Crypto,
+    title: {
+      ru: 'Купить и продать крипту онлайн и офлайн | Hopscup Tools',
+      en: 'Buy and sell crypto online and offline | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обменники для покупки и продажи криптовалюты: онлайн-обмен, офлайн-направления, наличные, карты, USDT и популярные сети.',
+      en: 'Crypto exchange services for buying and selling crypto: online exchange, offline directions, cash, cards, USDT, and popular networks.',
+    },
+    heading: {
+      ru: 'Обмен крипты под разные форматы',
+      en: 'Crypto exchange for different formats',
+    },
+    intro: {
+      ru: 'Раздел для покупки и продажи крипты через обменники: онлайн, офлайн, с картами, наличными и популярными сетями.',
+      en: 'This section covers crypto exchange services for online and offline deals, cards, cash, and popular networks.',
+    },
+    points: {
+      ru: ['Для крупных сумм лучше заранее согласовывать детали с менеджером.', 'Всегда сверяй сеть, адрес, курс и минимальную сумму.', 'Первый перевод на новый адрес разумнее делать тестовой суммой.'],
+      en: ['For larger amounts, confirm details with a manager in advance.', 'Always check network, address, rate, and minimum amount.', 'Use a small test transfer for a new address.'],
+    },
+  },
+  SMS: {
+    route: CATEGORY_ROUTES.SMS,
+    title: {
+      ru: 'SMS-активаторы для регистрации аккаунтов | Hopscup Tools',
+      en: 'SMS activators for account registration | Hopscup Tools',
+    },
+    description: {
+      ru: 'SMS-активаторы и виртуальные номера для регистрации аккаунтов: гео, способы оплаты, крипта, карты и российские способы пополнения.',
+      en: 'SMS activators and virtual numbers for account registration: geo, payment methods, crypto, cards, and local top-up options.',
+    },
+    heading: {
+      ru: 'SMS-активаторы и виртуальные номера',
+      en: 'SMS activators and virtual numbers',
+    },
+    intro: {
+      ru: 'SMS-активаторы помогают быстро получить номер под регистрацию, но качество зависит от страны, оператора, сервиса и конкретной площадки.',
+      en: 'SMS activators help quickly rent a number for registration, but quality depends on country, operator, service, and target platform.',
+    },
+    points: {
+      ru: ['Если код не пришел, сервисы часто возвращают средства за неудачную активацию.', 'Для сложных регистраций полезно смотреть статистику доходимости.', 'Гео номера иногда стоит подбирать под прокси или VPN.'],
+      en: ['If the code does not arrive, many services refund failed activations.', 'For tougher registrations, delivery statistics are useful.', 'Number geo sometimes should match the proxy or VPN geo.'],
+    },
+  },
+  VPS: {
+    route: CATEGORY_ROUTES.VPS,
+    title: {
+      ru: 'VDS и VPS серверы для ботов и рабочих задач | Hopscup Tools',
+      en: 'VDS and VPS servers for bots and work tasks | Hopscup Tools',
+    },
+    description: {
+      ru: 'Подборка VDS/VPS хостингов для ботов, скриптов, парсинга, нод и удаленной работы: MaCloud, Xorek, VDSina, SpaceCore, AEZA.',
+      en: 'VDS/VPS hosting list for bots, scripts, scraping, nodes, and remote work: MaCloud, Xorek, VDSina, SpaceCore, AEZA.',
+    },
+    heading: {
+      ru: 'VDS/VPS серверы для постоянной работы',
+      en: 'VDS/VPS servers for continuous work',
+    },
+    intro: {
+      ru: 'VDS/VPS нужен, когда скрипт, бот, парсер или рабочее окружение должны работать стабильно и не зависеть от домашнего ПК.',
+      en: 'VDS/VPS hosting is useful when a script, bot, scraper, or work environment must run reliably without depending on a home PC.',
+    },
+    points: {
+      ru: ['MaCloud дороже, но обычно спокойнее по стабильности.', 'Xorek дешевле и подходит для простых задач.', 'Перед оплатой смотри локацию, ресурсы, бэкапы и способы оплаты.'],
+      en: ['MaCloud is pricier but usually calmer for stability.', 'Xorek is cheaper and suitable for simpler tasks.', 'Check location, resources, backups, and payment methods before paying.'],
+    },
+  },
+  Social: {
+    route: CATEGORY_ROUTES.Social,
+    title: {
+      ru: 'Накрутка и буксы для рефералов и заданий | Hopscup Tools',
+      en: 'Social boost and task exchanges for referrals | Hopscup Tools',
+    },
+    description: {
+      ru: 'Сайты накрутки и буксы для рефералов, регистраций, социальных действий и Telegram-заданий с оплатой картой, СБП/Мир и криптой.',
+      en: 'Social boost sites and task exchanges for referrals, registrations, social actions, and Telegram tasks with card, local, and crypto payments.',
+    },
+    heading: {
+      ru: 'Накрутка и буксы для рефералов',
+      en: 'Social boost and task exchanges for referrals',
+    },
+    intro: {
+      ru: 'Раздел для задач, где нужны регистрации, рефералы или простые действия от исполнителей: сайты накрутки дают скорость, буксы дают более ручной формат.',
+      en: 'This section is for registrations, referrals, and simple user actions: boost sites provide speed, while task exchanges offer a more manual format.',
+    },
+    points: {
+      ru: ['Сайты накрутки удобнее, когда важна скорость.', 'Буксы полезны, когда нужно подтверждение вроде скрина или Telegram-логина.', 'Перед подтверждением задания лучше проверять исполнителей и повторы.'],
+      en: ['Boost sites are convenient when speed matters.', 'Task exchanges are useful when proof like screenshots or Telegram logins is needed.', 'Check performers and duplicate submissions before approval.'],
+    },
+  },
+  Steam: {
+    route: CATEGORY_ROUTES.Steam,
+    title: {
+      ru: 'Пополнение Steam из РФ и через предметы | Hopscup Tools',
+      en: 'Steam top-up via login and items | Hopscup Tools',
+    },
+    description: {
+      ru: 'Способы пополнения Steam: по логину, через предметы CS/TF/Rust, пополнение из РФ, быстрые варианты и пополнение в плюс до 30%.',
+      en: 'Steam top-up methods: by login, CS/TF/Rust items, local top-ups, fast options, and item-based top-ups with potential upside.',
+    },
+    heading: {
+      ru: 'Пополнение Steam быстро или через предметы',
+      en: 'Steam top-up by login or through items',
+    },
+    intro: {
+      ru: 'Можно пополнять Steam быстро по логину с комиссией или через предметы, если готов сверять цены и ждать продажи на маркете.',
+      en: 'Steam can be topped up quickly by login with a fee or through items if you are ready to compare prices and wait for market sales.',
+    },
+    points: {
+      ru: ['Через логин проще и быстрее, но обычно с комиссией.', 'Через предметы можно выйти в плюс, но нужно сверять ликвидность и цену в Steam.', 'Для РФ также встречается пополнение через банки вроде Сбера и Ozon с комиссией.'],
+      en: ['Login top-up is simpler and faster but usually has a fee.', 'Item-based top-ups can be profitable, but liquidity and Steam prices must be checked.', 'Local bank top-ups may also be available with a commission.'],
+    },
+  },
+  Guides: {
+    route: CATEGORY_ROUTES.Guides,
+    title: {
+      ru: 'Полезные гайды по аккаунтам, IP, Gmail и крипте | Hopscup Tools',
+      en: 'Useful guides for accounts, IP, Gmail, and crypto | Hopscup Tools',
+    },
+    description: {
+      ru: 'Гайды Hopscup по смене IP, Gmail-форвардингу, ферме аккаунтов, KYC/OTC площадкам, UID и адресам для бирж.',
+      en: 'Hopscup guides on IP changes, Gmail forwarding, account farms, KYC/OTC platforms, UIDs, and exchange addresses.',
+    },
+    heading: {
+      ru: 'Полезные гайды Hopscup',
+      en: 'Useful Hopscup guides',
+    },
+    intro: {
+      ru: 'Здесь собраны отдельные материалы, которые помогают настроить базовую инфраструктуру: почты, IP, аккаунты, адреса и KYC/OTC-процессы.',
+      en: 'This section collects practical materials for basic infrastructure: emails, IPs, accounts, addresses, and KYC/OTC processes.',
+    },
+    points: {
+      ru: ['Начать можно с гайда по смене IP и форвардингу Gmail.', 'Для фермы аккаунтов полезен большой материал по почтам, прокси и антидетектам.', 'Крипто-гайды помогают с UID, адресами и верификациями.'],
+      en: ['Start with the IP change and Gmail forwarding guides.', 'The account farm guide covers emails, proxies, and antidetect browsers.', 'Crypto guides help with UIDs, addresses, and verifications.'],
+    },
+  },
+};
 
 const OFFERS: Offer[] = [
   // GUIDES
@@ -1521,9 +1786,10 @@ const LanguageToggle = ({ lang, setLang }: { lang: Language; setLang: (l: Langua
 );
 
 export default function App() {
+  const initialCategory = getCategoryFromPath();
   const [lang, setLang] = useState<Language>('ru');
-  const [activeCategory, setActiveCategory] = useState<CategoryType>('Proxy');
-  const [subFilter, setSubFilter] = useState<SubCategory>('Proxy');
+  const [activeCategory, setActiveCategory] = useState<CategoryType>(initialCategory);
+  const [subFilter, setSubFilter] = useState<SubCategory>(getDefaultSubFilter(initialCategory));
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [isProxyGuideOpen, setIsProxyGuideOpen] = useState(false);
   const [isAntidetectGuideOpen, setIsAntidetectGuideOpen] = useState(false);
@@ -1562,6 +1828,77 @@ export default function App() {
     const timeout = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
     return () => clearTimeout(timeout);
   }, [placeholderText, isDeleting, wordIndex]);
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      const nextCategory = getCategoryFromPath();
+      setActiveCategory(nextCategory);
+      setSubFilter(getDefaultSubFilter(nextCategory));
+      setSearchQuery('');
+    };
+
+    window.addEventListener('popstate', handleRouteChange);
+    return () => window.removeEventListener('popstate', handleRouteChange);
+  }, []);
+
+  useEffect(() => {
+    const sectionSeo = SECTION_SEO[activeCategory];
+    const canonicalUrl = `${SITE_URL}${sectionSeo.route}`;
+    const title = sectionSeo.title[lang];
+    const description = sectionSeo.description[lang];
+
+    const setMeta = (selector: string, attribute: 'name' | 'property', key: string, content: string) => {
+      let element = document.head.querySelector<HTMLMetaElement>(selector);
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+      element.setAttribute('content', content);
+    };
+
+    document.documentElement.lang = lang;
+    document.title = title;
+    setMeta('meta[name="description"]', 'name', 'description', description);
+    setMeta('meta[property="og:title"]', 'property', 'og:title', title);
+    setMeta('meta[property="og:description"]', 'property', 'og:description', description);
+    setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
+    setMeta('meta[property="og:type"]', 'property', 'og:type', 'website');
+    setMeta('meta[property="og:image"]', 'property', 'og:image', `${SITE_URL}/logo.png`);
+    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary');
+    setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
+    setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
+    setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', `${SITE_URL}/logo.png`);
+
+    let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', canonicalUrl);
+
+    let structuredData = document.head.querySelector<HTMLScriptElement>('#structured-data');
+    if (!structuredData) {
+      structuredData = document.createElement('script');
+      structuredData.id = 'structured-data';
+      structuredData.type = 'application/ld+json';
+      document.head.appendChild(structuredData);
+    }
+    structuredData.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: title,
+      description,
+      url: canonicalUrl,
+      isPartOf: {
+        '@type': 'WebSite',
+        name: "Hopscup's Tools Hub",
+        url: SITE_URL,
+      },
+      inLanguage: lang === 'ru' ? 'ru-RU' : 'en',
+    });
+  }, [activeCategory, lang]);
 
   const normalizeSearchText = (value: string) =>
     value
@@ -1730,13 +2067,19 @@ export default function App() {
   };
 
   const handleCategoryChange = (cat: CategoryType) => {
+    const nextRoute = CATEGORY_ROUTES[cat];
+    if (window.location.pathname !== nextRoute) {
+      window.history.pushState(null, '', nextRoute);
+    }
     const nextCategory = CATEGORIES.find(c => c.id === cat);
     setActiveCategory(cat);
     setSubFilter(nextCategory?.subFilters?.[0] || 'None');
+    setSearchQuery('');
     scrollToPageTop();
   };
 
   const activeCategoryData = CATEGORIES.find(c => c.id === activeCategory);
+  const currentSectionSeo = SECTION_SEO[activeCategory];
 
   const InfoRow = ({ icon: Icon, label, value }: { icon: any; label: string; value?: string }) => {
     if (!value) return null;
@@ -2018,6 +2361,35 @@ export default function App() {
           )}
         </div>
       </div>
+
+      {/* SEO Section Intro */}
+      <section className="max-w-6xl mx-auto px-6 mb-12 relative z-10">
+        <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.035] backdrop-blur-xl p-6 md:p-8 shadow-[0_24px_80px_rgba(0,0,0,0.22)]">
+          <div className="flex flex-col lg:flex-row gap-6 lg:items-start lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-[10px] uppercase tracking-[0.24em] text-brand-purple font-black mb-3">
+                {activeCategoryData?.title[lang]}
+              </p>
+              <h2 className="font-display text-2xl md:text-3xl font-black text-white tracking-tight mb-3">
+                {currentSectionSeo.heading[lang]}
+              </h2>
+              <p className="text-sm md:text-base text-white/60 leading-relaxed">
+                {currentSectionSeo.intro[lang]}
+              </p>
+            </div>
+            <div className="grid gap-3 w-full lg:max-w-md">
+              {currentSectionSeo.points[lang].map((point) => (
+                <div key={point} className="flex gap-3 rounded-2xl border border-white/8 bg-black/20 px-4 py-3">
+                  <Star className="w-4 h-4 text-brand-purple shrink-0 mt-0.5" />
+                  <span className="text-xs md:text-sm text-white/62 font-semibold leading-relaxed">
+                    {point}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Grid */}
       <main className="max-w-6xl mx-auto px-6 pt-2 min-h-[400px] relative z-10">
