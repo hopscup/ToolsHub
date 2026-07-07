@@ -2080,6 +2080,7 @@ export default function App() {
 
   const activeCategoryData = CATEGORIES.find(c => c.id === activeCategory);
   const currentSectionSeo = SECTION_SEO[activeCategory];
+  const hasSectionControls = Boolean(activeCategoryData?.subFilters || activeCategoryData?.guides || activeCategory === 'SMS');
 
   const InfoRow = ({ icon: Icon, label, value }: { icon: any; label: string; value?: string }) => {
     if (!value) return null;
@@ -2196,171 +2197,173 @@ export default function App() {
       </section>
 
       {/* Sub-Filters & Section Guides */}
-      <div className="max-w-6xl mx-auto px-6 mb-16 relative z-30">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex flex-wrap justify-center gap-3">
-            {activeCategoryData?.subFilters && (
-              <>
-                <button
-                  onClick={() => {
-                    setSubFilter('None');
-                    scrollToPageTop();
-                  }}
-                  className={`px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border-2 ${
-                    subFilter === 'None' 
-                      ? 'bg-brand-purple border-brand-purple text-white shadow-[0_0_20px_rgba(129,28,254,0.3)]' 
-                      : 'bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:border-white/20'
-                  }`}
-                >
-                  {t.all}
-                </button>
-                {activeCategoryData.subFilters.map(filter => (
+      {hasSectionControls && (
+        <div className="max-w-6xl mx-auto px-6 mb-16 relative z-30">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex flex-wrap justify-center gap-3">
+              {activeCategoryData?.subFilters && (
+                <>
                   <button
-                    key={filter}
                     onClick={() => {
-                      setSubFilter(filter);
+                      setSubFilter('None');
                       scrollToPageTop();
                     }}
                     className={`px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border-2 ${
-                      subFilter === filter 
+                      subFilter === 'None' 
                         ? 'bg-brand-purple border-brand-purple text-white shadow-[0_0_20px_rgba(129,28,254,0.3)]' 
                         : 'bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:border-white/20'
                     }`}
                   >
-                    {t.subFilters[filter] || filter}
+                    {t.all}
                   </button>
-                ))}
-              </>
-            )}
-          </div>
+                  {activeCategoryData.subFilters.map(filter => (
+                    <button
+                      key={filter}
+                      onClick={() => {
+                        setSubFilter(filter);
+                        scrollToPageTop();
+                      }}
+                      className={`px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border-2 ${
+                        subFilter === filter 
+                          ? 'bg-brand-purple border-brand-purple text-white shadow-[0_0_20px_rgba(129,28,254,0.3)]' 
+                          : 'bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:border-white/20'
+                      }`}
+                    >
+                      {t.subFilters[filter] || filter}
+                    </button>
+                  ))}
+                </>
+              )}
+            </div>
 
-          {activeCategoryData?.guides && (
-            <div className="flex gap-3">
-              {activeCategory === 'Proxy' ? (
-                <button
-                  onClick={() => setIsProxyGuideOpen(true)}
-                  className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
-                >
-                  <Zap className="w-5 h-5" />
-                  {lang === 'ru' ? 'Какие прокси мне выбрать?' : 'Which proxies should I choose?'}
-                </button>
-              ) : activeCategory === 'Antidetect' ? (
-                <button
-                  onClick={() => setIsAntidetectGuideOpen(true)}
-                  className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
-                >
-                  <Zap className="w-5 h-5" />
-                  {lang === 'ru' ? 'Какой антидетект выбрать?' : 'Which antidetect should I choose?'}
-                </button>
-              ) : activeCategory === 'Stores' ? (
-                <>
-                  <button 
-                    onClick={() => setIsStoresGuideOpen(true)}
+            {activeCategoryData?.guides && (
+              <div className="flex gap-3">
+                {activeCategory === 'Proxy' ? (
+                  <button
+                    onClick={() => setIsProxyGuideOpen(true)}
                     className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                   >
                     <Zap className="w-5 h-5" />
-                    {t.guideTitle}
+                    {lang === 'ru' ? 'Какие прокси мне выбрать?' : 'Which proxies should I choose?'}
                   </button>
-                </>
-              ) : activeCategory === 'Social' ? (
-                <>
+                ) : activeCategory === 'Antidetect' ? (
                   <button
-                    onClick={() => setIsSocialGuideOpen(true)}
-                    className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
-                  >
-                    <Users className="w-5 h-5" />
-                    {lang === 'ru' ? 'Где брать рефералов?' : 'Where to get referrals?'}
-                  </button>
-                  <a
-                    href={SOCIAL_VIDEO_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
-                  >
-                    <Video className="w-5 h-5" />
-                    {t.videoGuide}
-                  </a>
-                </>
-              ) : activeCategory === 'Steam' ? (
-                <>
-                  <button
-                    onClick={() => setIsSteamGuideOpen(true)}
+                    onClick={() => setIsAntidetectGuideOpen(true)}
                     className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                   >
                     <Zap className="w-5 h-5" />
-                    {lang === 'ru' ? 'Как выгодно пополнять Steam?' : 'How to top up Steam profitably?'}
+                    {lang === 'ru' ? 'Какой антидетект выбрать?' : 'Which antidetect should I choose?'}
                   </button>
-                  <a
-                    href={STEAM_PRICE_TABLE_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
-                  >
-                    <FileText className="w-5 h-5" />
-                    {lang === 'ru' ? 'Таблица цен' : 'Price table'}
-                  </a>
-                </>
-              ) : activeCategory === 'Cards' ? (
-                <>
-                  <button
-                    onClick={() => setIsCardsGuideOpen(true)}
-                    className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
-                  >
-                    <CreditCard className="w-5 h-5" />
-                    {lang === 'ru' ? 'Зачем нужна зарубежная карта?' : 'Why use a foreign card?'}
-                  </button>
-                  <a
-                    href={CARDS_VIDEO_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
-                  >
-                    <Video className="w-5 h-5" />
-                    {t.videoGuide}
-                  </a>
-                </>
-              ) : (
-                <>
-                  {typeof activeCategoryData.guides.text === 'string' && activeCategoryData.guides.text !== '#' && (
-                    <a 
-                      href={activeCategoryData.guides.text} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+                ) : activeCategory === 'Stores' ? (
+                  <>
+                    <button 
+                      onClick={() => setIsStoresGuideOpen(true)}
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
-                      <FileText className="w-5 h-5" />
-                      {t.textGuide}
-                    </a>
-                  )}
-                  {activeCategoryData.guides.video && activeCategoryData.guides.video !== '#' && (
-                    <a 
-                      href={activeCategoryData.guides.video} 
-                      target="_blank" 
+                      <Zap className="w-5 h-5" />
+                      {t.guideTitle}
+                    </button>
+                  </>
+                ) : activeCategory === 'Social' ? (
+                  <>
+                    <button
+                      onClick={() => setIsSocialGuideOpen(true)}
+                      className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
+                    >
+                      <Users className="w-5 h-5" />
+                      {lang === 'ru' ? 'Где брать рефералов?' : 'Where to get referrals?'}
+                    </button>
+                    <a
+                      href={SOCIAL_VIDEO_URL}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <Video className="w-5 h-5" />
                       {t.videoGuide}
                     </a>
-                  )}
-                </>
-              )}
-            </div>
-          )}
+                  </>
+                ) : activeCategory === 'Steam' ? (
+                  <>
+                    <button
+                      onClick={() => setIsSteamGuideOpen(true)}
+                      className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
+                    >
+                      <Zap className="w-5 h-5" />
+                      {lang === 'ru' ? 'Как выгодно пополнять Steam?' : 'How to top up Steam profitably?'}
+                    </button>
+                    <a
+                      href={STEAM_PRICE_TABLE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
+                    >
+                      <FileText className="w-5 h-5" />
+                      {lang === 'ru' ? 'Таблица цен' : 'Price table'}
+                    </a>
+                  </>
+                ) : activeCategory === 'Cards' ? (
+                  <>
+                    <button
+                      onClick={() => setIsCardsGuideOpen(true)}
+                      className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
+                    >
+                      <CreditCard className="w-5 h-5" />
+                      {lang === 'ru' ? 'Зачем нужна зарубежная карта?' : 'Why use a foreign card?'}
+                    </button>
+                    <a
+                      href={CARDS_VIDEO_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
+                    >
+                      <Video className="w-5 h-5" />
+                      {t.videoGuide}
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    {typeof activeCategoryData.guides.text === 'string' && activeCategoryData.guides.text !== '#' && (
+                      <a 
+                        href={activeCategoryData.guides.text} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
+                      >
+                        <FileText className="w-5 h-5" />
+                        {t.textGuide}
+                      </a>
+                    )}
+                    {activeCategoryData.guides.video && activeCategoryData.guides.video !== '#' && (
+                      <a 
+                        href={activeCategoryData.guides.video} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
+                      >
+                        <Video className="w-5 h-5" />
+                        {t.videoGuide}
+                      </a>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
 
-          {activeCategory === 'SMS' && (
-            <div className="flex justify-center w-full md:w-auto">
-              <button
-                onClick={() => setIsActivatorGuideOpen(true)}
-                className="flex items-center gap-2.5 px-10 py-5 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[12px] font-black uppercase tracking-widest"
-              >
-                <Zap className="w-5 h-5" />
-                {lang === 'ru' ? 'Как правильно выбрать активатор?' : 'How to choose an activator?'}
-              </button>
-            </div>
-          )}
+            {activeCategory === 'SMS' && (
+              <div className="flex justify-center w-full md:w-auto">
+                <button
+                  onClick={() => setIsActivatorGuideOpen(true)}
+                  className="flex items-center gap-2.5 px-10 py-5 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[12px] font-black uppercase tracking-widest"
+                >
+                  <Zap className="w-5 h-5" />
+                  {lang === 'ru' ? 'Как правильно выбрать активатор?' : 'How to choose an activator?'}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Grid */}
       <main className="max-w-6xl mx-auto px-6 pt-2 min-h-[400px] relative z-10">
