@@ -2362,35 +2362,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* SEO Section Intro */}
-      <section className="max-w-6xl mx-auto px-6 mb-12 relative z-10">
-        <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.035] backdrop-blur-xl p-6 md:p-8 shadow-[0_24px_80px_rgba(0,0,0,0.22)]">
-          <div className="flex flex-col lg:flex-row gap-6 lg:items-start lg:justify-between">
-            <div className="max-w-2xl">
-              <p className="text-[10px] uppercase tracking-[0.24em] text-brand-purple font-black mb-3">
-                {activeCategoryData?.title[lang]}
-              </p>
-              <h2 className="font-display text-2xl md:text-3xl font-black text-white tracking-tight mb-3">
-                {currentSectionSeo.heading[lang]}
-              </h2>
-              <p className="text-sm md:text-base text-white/60 leading-relaxed">
-                {currentSectionSeo.intro[lang]}
-              </p>
-            </div>
-            <div className="grid gap-3 w-full lg:max-w-md">
-              {currentSectionSeo.points[lang].map((point) => (
-                <div key={point} className="flex gap-3 rounded-2xl border border-white/8 bg-black/20 px-4 py-3">
-                  <Star className="w-4 h-4 text-brand-purple shrink-0 mt-0.5" />
-                  <span className="text-xs md:text-sm text-white/62 font-semibold leading-relaxed">
-                    {point}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Grid */}
       <main className="max-w-6xl mx-auto px-6 pt-2 min-h-[400px] relative z-10">
         <AnimatePresence mode="popLayout">
@@ -2625,6 +2596,35 @@ export default function App() {
           )}
         </AnimatePresence>
       </main>
+
+      {/* SEO Section Intro */}
+      <section className="max-w-6xl mx-auto px-6 mt-16 relative z-10">
+        <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.035] backdrop-blur-xl p-6 md:p-8 shadow-[0_24px_80px_rgba(0,0,0,0.22)]">
+          <div className="flex flex-col lg:flex-row gap-6 lg:items-start lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-[10px] uppercase tracking-[0.24em] text-brand-purple font-black mb-3">
+                {activeCategoryData?.title[lang]}
+              </p>
+              <h2 className="font-display text-2xl md:text-3xl font-black text-white tracking-tight mb-3">
+                {currentSectionSeo.heading[lang]}
+              </h2>
+              <p className="text-sm md:text-base text-white/60 leading-relaxed">
+                {currentSectionSeo.intro[lang]}
+              </p>
+            </div>
+            <div className="grid gap-3 w-full lg:max-w-md">
+              {currentSectionSeo.points[lang].map((point) => (
+                <div key={point} className="flex gap-3 rounded-2xl border border-white/8 bg-black/20 px-4 py-3">
+                  <Star className="w-4 h-4 text-brand-purple shrink-0 mt-0.5" />
+                  <span className="text-xs md:text-sm text-white/62 font-semibold leading-relaxed">
+                    {point}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Global Tips for Crypto */}
       {activeCategory === 'Crypto' && (
