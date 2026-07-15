@@ -558,7 +558,7 @@ const OFFERS: Offer[] = [
     details: {
       geo: { ru: '200+ стран', en: '200+ countries' },
       types: { ru: 'Residential, Datacenter, ISP, Mobile', en: 'Residential, Datacenter, ISP, Mobile' },
-      paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта', en: 'Visa/Mastercard, Crypto' }
+      paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto' }
     }
   },
   {
@@ -593,7 +593,7 @@ const OFFERS: Offer[] = [
     details: {
       geo: { ru: '70+ стран', en: '70+ countries' },
       types: { ru: 'IPv4, IPv6, Shared IPv4, MTProto', en: 'IPv4, IPv6, Shared IPv4, MTProto' },
-      paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта', en: 'Visa/Mastercard, Crypto' }
+      paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto' }
     }
   },
   {
@@ -610,7 +610,7 @@ const OFFERS: Offer[] = [
     details: {
       geo: { ru: '20+ стран', en: '20+ countries' },
       types: { ru: 'Mobile', en: 'Mobile' },
-      paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта', en: 'Visa/Mastercard, Crypto' }
+      paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto' }
     }
   },
   {
@@ -627,7 +627,7 @@ const OFFERS: Offer[] = [
     details: {
       geo: { ru: '240+ стран', en: '240+ countries' },
       types: { ru: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic', en: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic' },
-      paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта, Alipay', en: 'Visa/Mastercard, Crypto, Alipay' }
+      paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта, Alipay', en: 'Visa/Mastercard, SBP/Mir, Crypto, Alipay' }
     }
   },
   // VPN
