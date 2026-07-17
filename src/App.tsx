@@ -170,10 +170,7 @@ const CATEGORY_ROUTES: Record<CategoryType, string> = {
   Guides: '/guides',
 };
 
-const getDefaultSubFilter = (category: CategoryType): SubCategory => {
-  const categoryData = CATEGORIES.find(item => item.id === category);
-  return categoryData?.subFilters?.[0] || 'None';
-};
+const getDefaultSubFilter = (): SubCategory => 'None';
 
 const getCategoryFromPath = (path = typeof window !== 'undefined' ? window.location.pathname : '/'): CategoryType => {
   const normalizedPath = path.replace(/\/+$/, '') || '/';
@@ -1789,7 +1786,7 @@ export default function App() {
   const initialCategory = getCategoryFromPath();
   const [lang, setLang] = useState<Language>('ru');
   const [activeCategory, setActiveCategory] = useState<CategoryType>(initialCategory);
-  const [subFilter, setSubFilter] = useState<SubCategory>(getDefaultSubFilter(initialCategory));
+  const [subFilter, setSubFilter] = useState<SubCategory>(getDefaultSubFilter());
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [isProxyGuideOpen, setIsProxyGuideOpen] = useState(false);
   const [isAntidetectGuideOpen, setIsAntidetectGuideOpen] = useState(false);
@@ -1833,7 +1830,7 @@ export default function App() {
     const handleRouteChange = () => {
       const nextCategory = getCategoryFromPath();
       setActiveCategory(nextCategory);
-      setSubFilter(getDefaultSubFilter(nextCategory));
+      setSubFilter(getDefaultSubFilter());
       setSearchQuery('');
     };
 
@@ -2071,9 +2068,8 @@ export default function App() {
     if (window.location.pathname !== nextRoute) {
       window.history.pushState(null, '', nextRoute);
     }
-    const nextCategory = CATEGORIES.find(c => c.id === cat);
     setActiveCategory(cat);
-    setSubFilter(nextCategory?.subFilters?.[0] || 'None');
+    setSubFilter(getDefaultSubFilter());
     setSearchQuery('');
     scrollToPageTop();
   };
@@ -2112,9 +2108,9 @@ export default function App() {
         {/* Top Row: Logo & Language Toggle */}
         <div className="py-2 px-6 md:px-12 flex justify-between items-center border-b border-white/5">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/5">
+            <a href="/" aria-label="Hopscup's Tools Hub" className="w-10 h-10 rounded-xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/5 transition-transform hover:scale-105">
               <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
-            </div>
+            </a>
             
             <div className="hidden sm:flex items-center gap-2">
               {t.social?.map((social) => {
