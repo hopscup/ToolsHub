@@ -1,5 +1,23 @@
 import { useEffect, useRef } from 'react';
 
+interface Star {
+  angle: number;
+  radius: number;
+  speed: number;
+  size: number;
+  flickerOffset: number;
+}
+
+interface ShootingStar {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+  maxLife: number;
+  length: number;
+}
+
 export const BackgroundParticles = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const filmCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -12,11 +30,14 @@ export const BackgroundParticles = () => {
     const fctx = filmCanvas.getContext('2d');
     if (!ctx || !fctx) return;
 
-    let stars: any[] = [];
-    let shootingStars: any[] = [];
-    const numStars = 400;
+    const isMobile = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+    const numStars = isMobile ? 140 : 320;
+    const targetFrameMs = isMobile ? 1000 / 30 : 1000 / 60;
+    let stars: Star[] = [];
+    let shootingStars: ShootingStar[] = [];
     const getNextShootingStarDelay = () => 5000 + Math.random() * 5000;
     let nextShootingStarAt = Date.now() + getNextShootingStarDelay();
+    let isPageVisible = !document.hidden;
 
     const resize = () => {
       if (!canvas || !filmCanvas) return;
@@ -62,6 +83,7 @@ export const BackgroundParticles = () => {
     };
 
     const generateGrain = () => {
+      if (isMobile) return;
       const imgData = fctx.createImageData(filmCanvas.width, filmCanvas.height);
       const data = imgData.data;
       for (let i = 0; i < data.length; i += 4) {
@@ -73,6 +95,7 @@ export const BackgroundParticles = () => {
     };
 
     const drawScratches = () => {
+      if (isMobile) return;
       fctx.strokeStyle = `rgba(255, 255, 255, ${Math.random() * 0.15 + 0.05})`;
       fctx.lineWidth = Math.random() * 1.5 + 0.5;
 
@@ -88,9 +111,21 @@ export const BackgroundParticles = () => {
     };
 
     let lastGrainTime = 0;
+    let lastFrameTime = 0;
     let animationFrameId: number;
-    const animate = () => {
+    const animate = (frameTime = 0) => {
       if (!canvas || !filmCanvas || !ctx || !fctx) return;
+      if (!isPageVisible) {
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
+
+      if (frameTime - lastFrameTime < targetFrameMs) {
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
+      lastFrameTime = frameTime;
+
       // Clear main canvas - using clearRect instead of fillRect with alpha to ensure transparency
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -138,7 +173,7 @@ export const BackgroundParticles = () => {
         nextShootingStarAt = now + getNextShootingStarDelay();
       }
 
-      if (now - lastGrainTime > 100) {
+      if (!isMobile && now - lastGrainTime > 100) {
         fctx.clearRect(0, 0, filmCanvas.width, filmCanvas.height);
         generateGrain();
         drawScratches();
@@ -148,12 +183,18 @@ export const BackgroundParticles = () => {
       animationFrameId = requestAnimationFrame(animate);
     };
 
+    const handleVisibilityChange = () => {
+      isPageVisible = !document.hidden;
+    };
+
     window.addEventListener('resize', resize);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     resize();
     animate();
 
     return () => {
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -162,12 +203,12 @@ export const BackgroundParticles = () => {
     <>
       <canvas 
         ref={canvasRef} 
-        className="fixed inset-0 pointer-events-none z-0 blur-[1px]" 
+        className="fixed inset-0 pointer-events-none z-0 sm:blur-[1px]" 
       />
       <canvas 
         ref={filmCanvasRef} 
         style={{ mixBlendMode: 'overlay', opacity: 0.4 }}
-        className="fixed inset-0 pointer-events-none z-[1]" 
+        className="fixed inset-0 pointer-events-none z-[1] hidden md:block" 
       />
     </>
   );

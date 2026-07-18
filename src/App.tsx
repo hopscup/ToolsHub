@@ -2113,7 +2113,7 @@ export default function App() {
               <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
             </a>
             
-            <div className="hidden sm:flex items-center gap-2">
+            <div className="flex items-center gap-2">
               {t.social?.map((social) => {
                 const Icon = social.icon;
                 if (!Icon) return null;
