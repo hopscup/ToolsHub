@@ -2867,8 +2867,8 @@ export default function App() {
 
                 <p className="text-white/60 text-sm md:text-base leading-relaxed font-medium mb-8">
                   {lang === 'ru'
-                    ? 'После покупки прокси можно быстро проверить IP на риск, fraud score, VPN/proxy-детект и общее качество. Если показатели слишком плохие, лучше заменить IP до работы с аккаунтами.'
-                    : 'After buying a proxy, you can quickly check IP risk, fraud score, VPN/proxy detection, and overall quality. If the score is too bad, replace the IP before using it with accounts.'}
+                    ? 'После покупки прокси можно быстро проверить IP на риск, fraud score, VPN/proxy-детект и общее качество. Если показатели слишком плохие, лучше заменить IP до работы с аккаунтами. При этом IPv4 часто детектятся как VPN или proxy и получают ниже score просто потому, что они серверные. Это не критично: я редко проверяю обычные IPv4, если задача базовая.'
+                    : 'After buying a proxy, you can quickly check IP risk, fraud score, VPN/proxy detection, and overall quality. If the score is too bad, replace the IP before using it with accounts. Server IPv4 proxies are often detected as VPN or proxy and get a lower score simply because they are datacenter IPs. This is not critical: I rarely check regular IPv4 for basic tasks.'}
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
