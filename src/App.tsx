@@ -1789,6 +1789,7 @@ export default function App() {
   const [subFilter, setSubFilter] = useState<SubCategory>(getDefaultSubFilter());
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [isProxyGuideOpen, setIsProxyGuideOpen] = useState(false);
+  const [isProxyCheckerOpen, setIsProxyCheckerOpen] = useState(false);
   const [isAntidetectGuideOpen, setIsAntidetectGuideOpen] = useState(false);
   const [isActivatorGuideOpen, setIsActivatorGuideOpen] = useState(false);
   const [isStoresGuideOpen, setIsStoresGuideOpen] = useState(false);
@@ -2233,15 +2234,24 @@ export default function App() {
             </div>
 
             {activeCategoryData?.guides && (
-              <div className="flex gap-3">
+              <div className="flex flex-wrap justify-center md:justify-end gap-3">
                 {activeCategory === 'Proxy' ? (
-                  <button
-                    onClick={() => setIsProxyGuideOpen(true)}
-                    className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
-                  >
-                    <Zap className="w-5 h-5" />
-                    {lang === 'ru' ? 'Какие прокси мне выбрать?' : 'Which proxies should I choose?'}
-                  </button>
+                  <>
+                    <button
+                      onClick={() => setIsProxyCheckerOpen(true)}
+                      className="flex items-center gap-2.5 px-8 py-4 bg-white/[0.04] hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
+                    >
+                      <Search className="w-5 h-5" />
+                      {lang === 'ru' ? 'Прокси чекер' : 'Proxy checker'}
+                    </button>
+                    <button
+                      onClick={() => setIsProxyGuideOpen(true)}
+                      className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
+                    >
+                      <Zap className="w-5 h-5" />
+                      {lang === 'ru' ? 'Какие прокси мне выбрать?' : 'Which proxies should I choose?'}
+                    </button>
+                  </>
                 ) : activeCategory === 'Antidetect' ? (
                   <button
                     onClick={() => setIsAntidetectGuideOpen(true)}
@@ -2814,6 +2824,82 @@ export default function App() {
                   >
                     <Video className="w-5 h-5" />
                     {lang === 'ru' ? 'Видео-гайд' : 'Video Guide'}
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Proxy Checker Modal */}
+      <AnimatePresence>
+        {isProxyCheckerOpen && (
+          <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsProxyCheckerOpen(false)}
+              className="absolute inset-0 bg-black/90 backdrop-blur-md"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative bg-bg-dark border border-white/10 w-full max-w-xl rounded-[2.5rem] overflow-hidden shadow-2xl"
+            >
+              <button
+                onClick={() => setIsProxyCheckerOpen(false)}
+                className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/5 transition-colors z-20"
+              >
+                <X className="w-6 h-6 text-white/40 hover:text-white" />
+              </button>
+
+              <div className="p-8 md:p-10">
+                <div className="w-14 h-14 rounded-2xl bg-brand-purple/10 border border-brand-purple/30 flex items-center justify-center mb-6">
+                  <Search className="w-7 h-7 text-brand-purple" />
+                </div>
+
+                <h2 className="text-3xl font-display font-bold mb-4 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
+                  {lang === 'ru' ? 'Прокси чекер' : 'Proxy checker'}
+                </h2>
+
+                <p className="text-white/60 text-sm md:text-base leading-relaxed font-medium mb-8">
+                  {lang === 'ru'
+                    ? 'После покупки прокси можно быстро проверить IP на риск, fraud score, VPN/proxy-детект и общее качество. Если показатели слишком плохие, лучше заменить IP до работы с аккаунтами.'
+                    : 'After buying a proxy, you can quickly check IP risk, fraud score, VPN/proxy detection, and overall quality. If the score is too bad, replace the IP before using it with accounts.'}
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <a
+                    href="https://www.ipqualityscore.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-brand-purple hover:border-brand-purple px-5 py-5 transition-all"
+                  >
+                    <div>
+                      <p className="text-white font-black text-base">IPQualityScore</p>
+                      <p className="text-white/35 group-hover:text-white/70 text-[10px] uppercase tracking-widest font-black mt-1">
+                        ipqualityscore.com
+                      </p>
+                    </div>
+                    <ExternalLink className="w-5 h-5 text-brand-purple group-hover:text-white shrink-0" />
+                  </a>
+
+                  <a
+                    href="https://scamalytics.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-brand-purple hover:border-brand-purple px-5 py-5 transition-all"
+                  >
+                    <div>
+                      <p className="text-white font-black text-base">Scamalytics</p>
+                      <p className="text-white/35 group-hover:text-white/70 text-[10px] uppercase tracking-widest font-black mt-1">
+                        scamalytics.com
+                      </p>
+                    </div>
+                    <ExternalLink className="w-5 h-5 text-brand-purple group-hover:text-white shrink-0" />
                   </a>
                 </div>
               </div>
