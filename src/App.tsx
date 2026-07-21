@@ -210,8 +210,165 @@ const getLocalizedRoute = (category: CategoryType, language: Language) =>
 
 const getLocalizedHomeRoute = (language: Language) => LANGUAGE_PREFIXES[language] || '/';
 
+const translateMissingString = (value: string, language: Language) => {
+  if (language === 'ru' || language === 'en') return value;
+
+  const exact: Record<Exclude<Language, 'ru' | 'en'>, Record<string, string>> = {
+    es: {
+      'Crypto': 'Cripto',
+      'Bank cards, SBP, Crypto': 'Tarjetas bancarias, SBP, cripto',
+      'Visa/Mastercard, Crypto': 'Visa/Mastercard, cripto',
+      'Visa/Mastercard, SBP/Mir, Crypto': 'Visa/Mastercard, SBP/Mir, cripto',
+      'Visa/Mastercard, SBP, Mir, Crypto': 'Visa/Mastercard, SBP, Mir, cripto',
+      'Visa/Mastercard, Crypto, PayPal': 'Visa/Mastercard, cripto, PayPal',
+      'Visa/Mastercard, SBP/RU cards': 'Visa/Mastercard, SBP/tarjetas RU',
+      'Visa/Mastercard, Crypto, SBP/RU cards': 'Visa/Mastercard, cripto, SBP/tarjetas RU',
+      'Crypto, SBP/RU cards': 'Cripto, SBP/tarjetas RU',
+      'Visa, Crypto, SBP/RU cards': 'Visa, cripto, SBP/tarjetas RU',
+      'SBP/Mir, Visa/MC, Crypto': 'SBP/Mir, Visa/MC, cripto',
+      'Mir/SBP, cards, crypto': 'Mir/SBP, tarjetas, cripto',
+      'Cards, PayPal, crypto, local methods': 'Tarjetas, PayPal, cripto y métodos locales',
+      'By Steam login': 'Por login de Steam',
+      'CS/TF/Rust items': 'Ítems CS/TF/Rust',
+      'Mobile IP, Android, iPhone': 'IP móvil, Android, iPhone',
+      'Gmail, emails, forwarding': 'Gmail, correos, reenvío',
+      'Accounts, proxies, antidetects': 'Cuentas, proxies, antidetects',
+      'UIDs, addresses, exchanges': 'UID, direcciones, exchanges',
+      'Task marketplace, registrations, simple actions': 'Bolsa de tareas, registros, acciones simples',
+    },
+    zh: {
+      'Crypto': '加密货币',
+      'Bank cards, SBP, Crypto': '银行卡、SBP、加密货币',
+      'Visa/Mastercard, Crypto': 'Visa/Mastercard、加密货币',
+      'Visa/Mastercard, SBP/Mir, Crypto': 'Visa/Mastercard、SBP/Mir、加密货币',
+      'Visa/Mastercard, SBP, Mir, Crypto': 'Visa/Mastercard、SBP、Mir、加密货币',
+      'Visa/Mastercard, Crypto, PayPal': 'Visa/Mastercard、加密货币、PayPal',
+      'Visa/Mastercard, SBP/RU cards': 'Visa/Mastercard、SBP/俄罗斯银行卡',
+      'Visa/Mastercard, Crypto, SBP/RU cards': 'Visa/Mastercard、加密货币、SBP/俄罗斯银行卡',
+      'Crypto, SBP/RU cards': '加密货币、SBP/俄罗斯银行卡',
+      'Visa, Crypto, SBP/RU cards': 'Visa、加密货币、SBP/俄罗斯银行卡',
+      'SBP/Mir, Visa/MC, Crypto': 'SBP/Mir、Visa/MC、加密货币',
+      'Mir/SBP, cards, crypto': 'Mir/SBP、银行卡、加密货币',
+      'Cards, PayPal, crypto, local methods': '银行卡、PayPal、加密货币和本地方式',
+      'By Steam login': '通过 Steam 登录名',
+      'CS/TF/Rust items': 'CS/TF/Rust 物品',
+      'Mobile IP, Android, iPhone': '移动 IP、Android、iPhone',
+      'Gmail, emails, forwarding': 'Gmail、邮箱、转发',
+      'Accounts, proxies, antidetects': '账号、代理、反检测',
+      'UIDs, addresses, exchanges': 'UID、地址、交易所',
+      'Task marketplace, registrations, simple actions': '任务平台、注册、简单操作',
+    },
+    ko: {
+      'Crypto': '암호화폐',
+      'Bank cards, SBP, Crypto': '은행 카드, SBP, 암호화폐',
+      'Visa/Mastercard, Crypto': 'Visa/Mastercard, 암호화폐',
+      'Visa/Mastercard, SBP/Mir, Crypto': 'Visa/Mastercard, SBP/Mir, 암호화폐',
+      'Visa/Mastercard, SBP, Mir, Crypto': 'Visa/Mastercard, SBP, Mir, 암호화폐',
+      'Visa/Mastercard, Crypto, PayPal': 'Visa/Mastercard, 암호화폐, PayPal',
+      'Visa/Mastercard, SBP/RU cards': 'Visa/Mastercard, SBP/RU 카드',
+      'Visa/Mastercard, Crypto, SBP/RU cards': 'Visa/Mastercard, 암호화폐, SBP/RU 카드',
+      'Crypto, SBP/RU cards': '암호화폐, SBP/RU 카드',
+      'Visa, Crypto, SBP/RU cards': 'Visa, 암호화폐, SBP/RU 카드',
+      'SBP/Mir, Visa/MC, Crypto': 'SBP/Mir, Visa/MC, 암호화폐',
+      'Mir/SBP, cards, crypto': 'Mir/SBP, 카드, 암호화폐',
+      'Cards, PayPal, crypto, local methods': '카드, PayPal, 암호화폐, 현지 결제',
+      'By Steam login': 'Steam 로그인으로',
+      'CS/TF/Rust items': 'CS/TF/Rust 아이템',
+      'Mobile IP, Android, iPhone': '모바일 IP, Android, iPhone',
+      'Gmail, emails, forwarding': 'Gmail, 이메일, 포워딩',
+      'Accounts, proxies, antidetects': '계정, 프록시, 안티디텍트',
+      'UIDs, addresses, exchanges': 'UID, 주소, 거래소',
+      'Task marketplace, registrations, simple actions': '태스크 마켓, 가입, 간단한 작업',
+    },
+  };
+
+  const direct = exact[language]?.[value];
+  if (direct) return direct;
+
+  const countryMatch = value.match(/^(\d+)\+ countries$/);
+  if (countryMatch) {
+    if (language === 'es') return `${countryMatch[1]}+ países`;
+    if (language === 'zh') return `${countryMatch[1]}+ 个国家`;
+    return `${countryMatch[1]}+개 국가`;
+  }
+
+  const replacements: Record<Exclude<Language, 'ru' | 'en'>, Array<[RegExp, string]>> = {
+    es: [
+      [/countries/g, 'países'],
+      [/Bank cards/g, 'tarjetas bancarias'],
+      [/cards/g, 'tarjetas'],
+      [/Crypto/g, 'cripto'],
+      [/crypto/g, 'cripto'],
+      [/Payment/g, 'Pago'],
+      [/Residential/g, 'Residential'],
+      [/Datacenter/g, 'Datacenter'],
+      [/Mobile/g, 'Mobile'],
+      [/Shared/g, 'Shared'],
+      [/Dynamic/g, 'Dynamic'],
+      [/dedicated resources/g, 'recursos dedicados'],
+      [/server infrastructure/g, 'infraestructura de servidor'],
+      [/Multiple locations/g, 'Varias ubicaciones'],
+      [/Different locations/g, 'Diferentes ubicaciones'],
+      [/Different countries and data centers/g, 'Diferentes países y centros de datos'],
+      [/from/g, 'desde'],
+      [/up to/g, 'hasta'],
+      [/\/mo/g, '/mes'],
+    ],
+    zh: [
+      [/countries/g, '国家'],
+      [/Bank cards/g, '银行卡'],
+      [/cards/g, '银行卡'],
+      [/Crypto/g, '加密货币'],
+      [/crypto/g, '加密货币'],
+      [/Payment/g, '支付'],
+      [/Residential/g, '住宅'],
+      [/Datacenter/g, '数据中心'],
+      [/Mobile/g, '移动'],
+      [/Shared/g, '共享'],
+      [/Dynamic/g, '动态'],
+      [/dedicated resources/g, '独享资源'],
+      [/server infrastructure/g, '服务器基础设施'],
+      [/Multiple locations/g, '多个地区'],
+      [/Different locations/g, '不同地区'],
+      [/Different countries and data centers/g, '不同国家和数据中心'],
+      [/from/g, '起'],
+      [/up to/g, '最高'],
+      [/\/mo/g, '/月'],
+    ],
+    ko: [
+      [/countries/g, '국가'],
+      [/Bank cards/g, '은행 카드'],
+      [/cards/g, '카드'],
+      [/Crypto/g, '암호화폐'],
+      [/crypto/g, '암호화폐'],
+      [/Payment/g, '결제'],
+      [/Residential/g, 'Residential'],
+      [/Datacenter/g, 'Datacenter'],
+      [/Mobile/g, 'Mobile'],
+      [/Shared/g, 'Shared'],
+      [/Dynamic/g, 'Dynamic'],
+      [/dedicated resources/g, '전용 리소스'],
+      [/server infrastructure/g, '서버 인프라'],
+      [/Multiple locations/g, '여러 위치'],
+      [/Different locations/g, '다양한 위치'],
+      [/Different countries and data centers/g, '다양한 국가와 데이터센터'],
+      [/from/g, '부터'],
+      [/up to/g, '최대'],
+      [/\/mo/g, '/월'],
+    ],
+  };
+
+  return replacements[language].reduce((text, [pattern, replacement]) => text.replace(pattern, replacement), value);
+};
+
+const translateMissingValue = <T,>(value: T, language: Language): T => {
+  if (typeof value === 'string') return translateMissingString(value, language) as T;
+  if (Array.isArray(value)) return value.map((item) => translateMissingValue(item, language)) as T;
+  return value;
+};
+
 const getLocalizedValue = <T,>(value: Localized<T> | undefined, language: Language): T | undefined =>
-  value?.[language] ?? value?.en ?? value?.ru;
+  value?.[language] ?? (value?.en !== undefined ? translateMissingValue(value.en, language) : value?.ru);
 
 const getDefaultSubFilter = (): SubCategory => 'None';
 
@@ -2001,6 +2158,57 @@ export default function App() {
   const l = <T,>(value?: Localized<T>) => getLocalizedValue(value, lang);
   const lList = <T,>(value?: Localized<T[]>) => getLocalizedValue(value, lang) || [];
   const tx = <T,>(value: Partial<Record<Language, T>> & { en: T }) => value[lang] ?? value.en;
+  const offerDescription = (offer: Offer) => {
+    const ownDescription = offer.description[lang];
+    if (ownDescription) return ownDescription;
+    if (lang === 'ru' || lang === 'en') return l(offer.description);
+
+    const types = l(offer.details?.types);
+    const geo = l(offer.details?.geo);
+    const paymentMethods = l(offer.details?.paymentMethods);
+    const extra = [geo, types, paymentMethods].filter(Boolean).join(' · ');
+
+    const templates: Record<Exclude<Language, 'ru' | 'en'>, Record<CategoryType, string>> = {
+      es: {
+        Proxy: `${offer.name} es un servicio para trabajar con proxies o VPN. Encaja para cuentas, automatización, registros y tareas donde importan el tipo de IP, el GEO y la forma de pago.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Antidetect: `${offer.name} es una solución antidetect para multiaccounting y gestión de perfiles. Sirve para separar entornos, trabajar con proxies y reducir señales sospechosas para plataformas con antifraude.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Stores: `${offer.name} es una tienda o marketplace para comprar cuentas, suscripciones, claves y otros productos digitales. Útil cuando necesitas cerrar una compra rápido y comparar opciones.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Cards: `${offer.name} es un servicio de tarjetas virtuales extranjeras para pagar suscripciones, apps, anuncios, viajes y otros servicios internacionales.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Crypto: `${offer.name} es un servicio para comprar, vender o intercambiar criptomonedas online u offline. Antes de operar conviene revisar tasa, límites, red y condiciones.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        SMS: `${offer.name} es un servicio de números virtuales para recibir códigos SMS y registrar cuentas. Conviene revisar el país, el servicio necesario y el porcentaje de entrega antes de comprar.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        VPS: `${offer.name} es un proveedor VDS/VPS para bots, scripts, parsing, nodos y entornos de trabajo. Elige configuración, sistema operativo y ubicación según la tarea.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Social: `${offer.name} ayuda con referidos, registros, acciones sociales o tareas pagadas. Úsalo cuando necesitas volumen, pero revisa la calidad de ejecución y las pruebas antes de aprobar.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Steam: `${offer.name} es una opción para recargar Steam por login o mediante ítems. Si usas ítems, compara siempre precio, liquidez y comisión en Steam Market.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Guides: `${offer.name} es una guía práctica de Hopscup sobre herramientas, cuentas, IP, cripto o flujos de trabajo relacionados.${extra ? ` Temas: ${extra}.` : ''}`,
+      },
+      zh: {
+        Proxy: `${offer.name} 是用于代理或 VPN 工作的服务，适合账号、自动化、注册以及需要关注 IP 类型、地区和支付方式的任务。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Antidetect: `${offer.name} 是用于多账号和配置文件管理的反检测方案，可帮助隔离环境、配合代理使用，并减少平台风控信号。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Stores: `${offer.name} 是购买账号、订阅、密钥和其他数字商品的商店或市场，适合快速购买并对比不同卖家的选择。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Cards: `${offer.name} 是海外虚拟卡服务，可用于支付订阅、应用、广告、旅行和其他国际服务。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Crypto: `${offer.name} 是线上或线下买卖、兑换加密货币的服务。操作前建议确认汇率、限额、网络和交易条件。${extra ? ` 关键信息：${extra}。` : ''}`,
+        SMS: `${offer.name} 是用于接收短信验证码和注册账号的虚拟号码服务。购买前建议检查国家、目标平台和到达率。${extra ? ` 关键信息：${extra}。` : ''}`,
+        VPS: `${offer.name} 是用于机器人、脚本、采集、节点和工作环境的 VDS/VPS 服务商。配置、系统和地区要按具体任务选择。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Social: `${offer.name} 可用于推荐、注册、社交动作或付费任务。适合需要数量时使用，但确认前要检查执行质量和证明。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Steam: `${offer.name} 是通过 Steam 登录名或物品充值的选项。使用物品充值时，务必对比价格、流动性和 Steam 市场手续费。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Guides: `${offer.name} 是 Hopscup 关于工具、账号、IP、加密货币或工作流程的实用指南。${extra ? ` 主题：${extra}。` : ''}`,
+      },
+      ko: {
+        Proxy: `${offer.name}는 프록시 또는 VPN 작업용 서비스입니다. 계정, 자동화, 가입, IP 유형과 지역, 결제 방식이 중요한 작업에 적합합니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Antidetect: `${offer.name}는 멀티 계정과 프로필 관리를 위한 안티디텍트 솔루션입니다. 환경을 분리하고 프록시와 함께 사용하며 플랫폼의 의심 신호를 줄이는 데 도움이 됩니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Stores: `${offer.name}는 계정, 구독, 키 및 기타 디지털 상품을 구매할 수 있는 상점 또는 마켓플레이스입니다. 빠르게 구매하고 여러 옵션을 비교할 때 유용합니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Cards: `${offer.name}는 구독, 앱, 광고, 여행 및 해외 서비스 결제를 위한 해외 가상 카드 서비스입니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Crypto: `${offer.name}는 온라인 또는 오프라인으로 암호화폐를 사고팔거나 교환하는 서비스입니다. 거래 전 환율, 한도, 네트워크, 조건을 확인하는 것이 좋습니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        SMS: `${offer.name}는 SMS 인증 코드를 받고 계정을 등록하기 위한 가상 번호 서비스입니다. 구매 전 국가, 필요한 플랫폼, 수신율을 확인하는 것이 좋습니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        VPS: `${offer.name}는 봇, 스크립트, 파싱, 노드, 작업 환경을 위한 VDS/VPS 제공업체입니다. 작업에 맞춰 사양, OS, 위치를 선택하세요.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Social: `${offer.name}는 추천인, 가입, 소셜 액션 또는 유료 작업에 사용할 수 있습니다. 수량이 필요할 때 좋지만 승인 전 품질과 증빙을 확인해야 합니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Steam: `${offer.name}는 Steam 로그인 충전 또는 아이템을 통한 충전 옵션입니다. 아이템을 사용할 때는 Steam Market 가격, 유동성, 수수료를 꼭 비교하세요.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Guides: `${offer.name}는 도구, 계정, IP, 암호화폐 또는 관련 워크플로에 대한 Hopscup의 실용 가이드입니다.${extra ? ` 주제: ${extra}.` : ''}`,
+      },
+    };
+
+    return templates[lang][offer.category];
+  };
 
   useEffect(() => {
     const currentWord = words[wordIndex];
@@ -2704,7 +2912,7 @@ export default function App() {
 
                         {offer.category !== 'Cards' && offer.category !== 'Stores' && offer.category !== 'Proxy' && offer.category !== 'Antidetect' && offer.category !== 'Crypto' && offer.category !== 'Social' && offer.category !== 'VPS' && offer.category !== 'Steam' && offer.category !== 'Guides' && (
                           <p className="text-white/60 text-base mb-6 leading-relaxed font-medium min-h-[3.5rem] group-hover:text-white transition-colors">
-                            {l(offer.description)}
+                            {offerDescription(offer)}
                           </p>
                         )}
 
@@ -3957,7 +4165,7 @@ export default function App() {
                       {t.description}
                     </h4>
                     <p className="text-white/80 leading-relaxed text-base font-medium">
-                      {l(selectedOffer.description)}
+                      {offerDescription(selectedOffer)}
                     </p>
                   </div>
 
