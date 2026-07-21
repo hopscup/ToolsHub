@@ -2782,6 +2782,51 @@ export default function App() {
     payment: tx({ ru: 'Оплата:', en: 'Payment:', es: 'Pago:', zh: '支付：', ko: '결제:' }),
     yearLabel: tx({ ru: 'года', en: 'year', es: 'año', zh: '年', ko: '년' }),
     guideTitle: tx({ ru: 'Как выбрать аккаунт правильно?', en: 'How to choose an account correctly?', es: '¿Cómo elegir una cuenta?', zh: '如何选择账号？', ko: '계정을 어떻게 고를까?' }),
+    proxyChecker: tx({ ru: 'Прокси чекер', en: 'Proxy checker', es: 'Verificador de proxy', zh: '代理检测器', ko: '프록시 검사기' }),
+    proxyGuideTitle: tx({ ru: 'Какие прокси мне выбрать?', en: 'Which proxies should I choose?', es: '¿Qué proxies elegir?', zh: '该选择哪种代理？', ko: '어떤 프록시를 선택할까?' }),
+    antidetectGuideTitle: tx({ ru: 'Какой антидетект выбрать?', en: 'Which antidetect should I choose?', es: '¿Qué antidetect elegir?', zh: '该选择哪款反检测浏览器？', ko: '어떤 안티디텍트를 선택할까?' }),
+    referralGuideTitle: tx({ ru: 'Где брать рефералов?', en: 'Where to get referrals?', es: '¿Dónde conseguir referidos?', zh: '从哪里获取推荐用户？', ko: '추천인은 어디서 구할까?' }),
+    steamGuideTitle: tx({ ru: 'Как выгодно пополнять Steam?', en: 'How to top up Steam profitably?', es: '¿Cómo recargar Steam con ventaja?', zh: '如何更划算地充值 Steam？', ko: 'Steam을 더 유리하게 충전하는 법' }),
+    priceTable: tx({ ru: 'Таблица цен', en: 'Price table', es: 'Tabla de precios', zh: '价格表', ko: '가격표' }),
+    cardGuideTitle: tx({ ru: 'Зачем нужна зарубежная карта?', en: 'Why use a foreign card?', es: '¿Para qué sirve una tarjeta extranjera?', zh: '为什么需要海外卡？', ko: '해외 카드가 왜 필요할까?' }),
+    activatorGuideTitle: tx({ ru: 'Как правильно выбрать активатор?', en: 'How to choose an activator?', es: '¿Cómo elegir un activador?', zh: '如何选择接码平台？', ko: 'SMS 인증 서비스를 고르는 법' }),
+    mobileAntidetectSoon: tx({ ru: 'Мобильные антидетекты скоро добавятся', en: 'Mobile antidetects coming soon', es: 'Los antidetects móviles se añadirán pronto', zh: '移动端反检测即将添加', ko: '모바일 안티디텍트는 곧 추가됩니다' }),
+    whatToKnow: tx({ ru: 'Что стоит знать?', en: 'What should you know?', es: 'Lo que conviene saber', zh: '需要了解什么？', ko: '알아둘 점' }),
+    practicalTips: tx({ ru: 'Практические советы:', en: 'Practical tips:', es: 'Consejos prácticos:', zh: '实用建议：', ko: '실전 팁:' }),
+    protocolChoice: tx({ ru: 'Если есть выбор протокола', en: 'If there is a protocol choice', es: 'Si puedes elegir el protocolo', zh: '如果可以选择协议', ko: '프로토콜을 선택할 수 있다면' }),
+    basicAccountsTasks: tx({ ru: 'Базовые аккаунты и простые задачи', en: 'Basic accounts and simple tasks', es: 'Cuentas básicas y tareas simples', zh: '基础账号和简单任务', ko: '기본 계정과 간단한 작업' }),
+    harderTasksAds: tx({ ru: 'Сложнее задачи и рекламные кабинеты', en: 'Harder tasks and ad cabinets', es: 'Tareas más complejas y cuentas publicitarias', zh: '更复杂的任务和广告账户', ko: '더 어려운 작업과 광고 계정' }),
+    maxTrustTraffic: tx({ ru: 'Максимальный траст и экономия трафика', en: 'Maximum trust and traffic savings', es: 'Máximo trust y ahorro de tráfico', zh: '最高信任度和节省流量', ko: '최대 신뢰도와 트래픽 절약' }),
+    whyNeedIt: tx({ ru: 'Зачем он нужен?', en: 'Why do you need it?', es: '¿Para qué sirve?', zh: '它有什么用？', ko: '왜 필요할까?' }),
+    mainSetupRule: tx({ ru: 'Главное правило настройки', en: 'Main setup rule', es: 'Regla principal de configuración', zh: '主要设置原则', ko: '설정의 핵심 규칙' }),
+    forMostTasks: tx({ ru: 'Для большинства задач', en: 'For most tasks', es: 'Para la mayoría de tareas', zh: '适合大多数任务', ko: '대부분의 작업에' }),
+    strongerAntifraud: tx({ ru: 'Для сильного антифрода', en: 'For stronger antifraud', es: 'Para antifraude fuerte', zh: '适合强风控', ko: '강한 안티프로드용' }),
+    saveProfiles: tx({ ru: 'Как экономить на профилях', en: 'How to save on profiles', es: 'Cómo ahorrar en perfiles', zh: '如何节省配置文件成本', ko: '프로필 비용 절약법' }),
+    whatToCheckBefore: tx({ ru: 'Что проверять перед работой:', en: 'What to check before working:', es: 'Qué revisar antes de trabajar:', zh: '开始前要检查什么：', ko: '작업 전 확인할 것:' }),
+    mainProblem: tx({ ru: 'Основная проблема:', en: 'Main problem:', es: 'Problema principal:', zh: '主要问题：', ko: '주요 문제:' }),
+    russianCardsSbp: tx({ ru: 'Для оплаты российскими картами или через СБП', en: 'For payment via Russian cards or SBP', es: 'Para pagar con tarjetas rusas o SBP', zh: '使用俄罗斯银行卡或 SBP 支付', ko: '러시아 카드 또는 SBP 결제' }),
+    cryptoNonCisCards: tx({ ru: 'Если оплачиваете криптовалютой или не СНГ банковской картой', en: 'If paying with crypto or non-CIS cards', es: 'Si pagas con cripto o tarjeta no CIS', zh: '如果使用加密货币或非 CIS 银行卡支付', ko: '암호화폐 또는 비CIS 카드 결제' }),
+    bulkNumbersMinPrice: tx({ ru: 'Когда нужен большой объём номеров по минимальной цене', en: 'When you need bulk numbers at min price', es: 'Cuando necesitas muchos números al menor precio', zh: '需要大量低价号码时', ko: '저렴하게 많은 번호가 필요할 때' }),
+    whereBuyAccounts: tx({ ru: 'Где покупать аккаунты?', en: 'Where to buy accounts?', es: '¿Dónde comprar cuentas?', zh: '在哪里购买账号？', ko: '계정은 어디서 살까?' }),
+    botShops: tx({ ru: 'Бот-магазины', en: 'Bot Shops', es: 'Tiendas bot', zh: '机器人商店', ko: '봇 상점' }),
+    purchaseRules: tx({ ru: 'Правила покупки', en: 'Purchase Rules', es: 'Reglas de compra', zh: '购买规则', ko: '구매 규칙' }),
+    safetyGuarantees: tx({ ru: 'Безопасность и гарантии', en: 'Safety and Guarantees', es: 'Seguridad y garantías', zh: '安全与担保', ko: '안전과 보증' }),
+    aiSubscriptions: tx({ ru: 'ИИ подписки', en: 'AI subscriptions', es: 'Suscripciones de IA', zh: 'AI 订阅', ko: 'AI 구독' }),
+    darkStoreAccounts: tx({ ru: 'Аккаунты DarkStore', en: 'DarkStore accounts', es: 'Cuentas DarkStore', zh: 'DarkStore 账号', ko: 'DarkStore 계정' }),
+    shortVersion: tx({ ru: 'Коротко', en: 'Short version', es: 'Resumen', zh: '简短说明', ko: '요약' }),
+    boostSites: tx({ ru: 'Сайты накрутки', en: 'Boost sites', es: 'Sitios de boost', zh: '增长网站', ko: '부스트 사이트' }),
+    taskExchanges: tx({ ru: 'Буксы', en: 'Task exchanges', es: 'Bolsas de tareas', zh: '任务平台', ko: '태스크 거래소' }),
+    whatToCheck: tx({ ru: 'Что проверять', en: 'What to check', es: 'Qué revisar', zh: '要检查什么', ko: '확인할 것' }),
+    twoScenarios: tx({ ru: 'Два сценария', en: 'Two scenarios', es: 'Dos escenarios', zh: '两种场景', ko: '두 가지 시나리오' }),
+    fastByLogin: tx({ ru: 'Быстро по логину', en: 'Fast by login', es: 'Rápido por login', zh: '通过登录名快速充值', ko: '로그인 빠른 충전' }),
+    topupThroughItems: tx({ ru: 'Пополнение через предметы', en: 'Top-up through items', es: 'Recarga mediante ítems', zh: '通过物品充值', ko: '아이템으로 충전' }),
+    whatIsItFor: tx({ ru: 'В чём смысл?', en: 'What is it for?', es: '¿Cuál es la idea?', zh: '意义是什么？', ko: '무슨 의미일까?' }),
+    whatCanPayFor: tx({ ru: 'Что можно оплачивать?', en: 'What can you pay for?', es: '¿Qué puedes pagar?', zh: '可以支付什么？', ko: '무엇을 결제할 수 있을까?' }),
+    whatIUse: tx({ ru: 'Что использую я?', en: 'What do I use?', es: 'Qué uso yo', zh: '我使用什么？', ko: '내가 쓰는 것' }),
+    guideArticle: tx({ ru: 'Гайд-статья', en: 'Guide Article', es: 'Artículo guía', zh: '图文指南', ko: '가이드 글' }),
+    openPriceTable: tx({ ru: 'Открыть таблицу цен', en: 'Open price table', es: 'Abrir tabla de precios', zh: '打开价格表', ko: '가격표 열기' }),
+    guideTopics: tx({ ru: 'Темы гайда:', en: 'Guide Topics:', es: 'Temas de la guía:', zh: '指南主题：', ko: '가이드 주제:' }),
+    supportedExchangeOptions: tx({ ru: 'Что поддерживает:', en: 'Supported Exchange Options:', es: 'Opciones compatibles:', zh: '支持的选项：', ko: '지원 옵션:' }),
     paymentMethods: tx({ ru: 'Способы оплаты', en: 'Payment Methods', es: 'Métodos de pago', zh: '支付方式', ko: '결제 방법' }),
     platforms: tx({ ru: 'Платформы', en: 'Platforms', es: 'Plataformas', zh: '平台', ko: '플랫폼' }),
     freeProfiles: tx({ ru: 'Бесплатные профили', en: 'Free Profiles', es: 'Perfiles gratis', zh: '免费配置文件', ko: '무료 프로필' }),
@@ -2814,19 +2859,37 @@ export default function App() {
       SteamItems: tx({ ru: 'Через предметы', en: 'Through items', es: 'Con ítems', zh: '通过物品', ko: '아이템으로' }),
     },
     proxyTypes: {
-      static: lang === 'ru' ? 'Статические' : 'Static Proxy',
-      residential: lang === 'ru' ? 'Резидентские' : 'Residential',
+      static: tx({ ru: 'Статические', en: 'Static Proxy', es: 'Proxy estático', zh: '静态代理', ko: '정적 프록시' }),
+      residential: tx({ ru: 'Резидентские', en: 'Residential', es: 'Residential', zh: '住宅代理', ko: 'Residential' }),
     },
-    tipsHeader: lang === 'ru' ? 'Общие советы по обмену крипты:' : 'General crypto exchange tips:',
-    tips: lang === 'ru' ? [
-      'Перед обменом сверяй курс, комиссию, сеть и минимальную сумму.',
-      'Первый перевод делай тестовой суммой, особенно если используешь новый адрес.',
-      'Для крупных сумм заранее согласовывай формат сделки и реквизиты с менеджером.'
-    ] : [
-      'Before exchanging, check the rate, fee, network, and minimum amount.',
-      'Make the first transfer with a small test amount, especially with a new address.',
-      'For larger amounts, agree on the deal format and payment details with a manager first.'
-    ],
+    tipsHeader: tx({ ru: 'Общие советы по обмену крипты:', en: 'General crypto exchange tips:', es: 'Consejos generales para cambiar cripto:', zh: '加密货币兑换通用建议：', ko: '암호화폐 환전 기본 팁:' }),
+    tips: tx({
+      ru: [
+        'Перед обменом сверяй курс, комиссию, сеть и минимальную сумму.',
+        'Первый перевод делай тестовой суммой, особенно если используешь новый адрес.',
+        'Для крупных сумм заранее согласовывай формат сделки и реквизиты с менеджером.'
+      ],
+      en: [
+        'Before exchanging, check the rate, fee, network, and minimum amount.',
+        'Make the first transfer with a small test amount, especially with a new address.',
+        'For larger amounts, agree on the deal format and payment details with a manager first.'
+      ],
+      es: [
+        'Antes de cambiar, revisa el tipo de cambio, la comisión, la red y el importe mínimo.',
+        'Haz el primer envío con una cantidad pequeña de prueba, sobre todo si usas una dirección nueva.',
+        'Para importes grandes, acuerda de antemano el formato de la operación y los datos de pago con el gestor.'
+      ],
+      zh: [
+        '兑换前先核对汇率、手续费、网络和最低金额。',
+        '第一次转账先用小额测试，尤其是使用新地址时。',
+        '大额兑换前，先和客服确认交易方式和收款信息。'
+      ],
+      ko: [
+        '환전 전에 환율, 수수료, 네트워크, 최소 금액을 확인하세요.',
+        '새 주소를 쓸 때는 먼저 소액으로 테스트 전송하세요.',
+        '큰 금액은 거래 방식과 결제 정보를 매니저와 미리 확인하세요.'
+      ]
+    }),
     social: lang === 'ru' ? [
       { id: 'yt', icon: Youtube, url: 'https://www.youtube.com/@hopscup' },
       { id: 'tg', icon: Send, url: 'https://t.me/hopscupcrpt' }
@@ -3058,14 +3121,14 @@ export default function App() {
                       className="flex items-center gap-2.5 px-8 py-4 bg-white/[0.04] hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <Search className="w-5 h-5" />
-                      {lang === 'ru' ? 'Прокси чекер' : 'Proxy checker'}
+                      {t.proxyChecker}
                     </button>
                     <button
                       onClick={() => setIsProxyGuideOpen(true)}
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <Zap className="w-5 h-5" />
-                      {lang === 'ru' ? 'Какие прокси мне выбрать?' : 'Which proxies should I choose?'}
+                      {t.proxyGuideTitle}
                     </button>
                   </>
                 ) : activeCategory === 'Antidetect' ? (
@@ -3074,7 +3137,7 @@ export default function App() {
                     className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                   >
                     <Zap className="w-5 h-5" />
-                    {lang === 'ru' ? 'Какой антидетект выбрать?' : 'Which antidetect should I choose?'}
+                    {t.antidetectGuideTitle}
                   </button>
                 ) : activeCategory === 'Stores' ? (
                   <>
@@ -3093,7 +3156,7 @@ export default function App() {
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <Users className="w-5 h-5" />
-                      {lang === 'ru' ? 'Где брать рефералов?' : 'Where to get referrals?'}
+                      {t.referralGuideTitle}
                     </button>
                     <a
                       href={SOCIAL_VIDEO_URL}
@@ -3112,7 +3175,7 @@ export default function App() {
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <Zap className="w-5 h-5" />
-                      {lang === 'ru' ? 'Как выгодно пополнять Steam?' : 'How to top up Steam profitably?'}
+                      {t.steamGuideTitle}
                     </button>
                     <a
                       href={STEAM_PRICE_TABLE_URL}
@@ -3121,7 +3184,7 @@ export default function App() {
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <FileText className="w-5 h-5" />
-                      {lang === 'ru' ? 'Таблица цен' : 'Price table'}
+                      {t.priceTable}
                     </a>
                   </>
                 ) : activeCategory === 'Cards' ? (
@@ -3131,7 +3194,7 @@ export default function App() {
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <CreditCard className="w-5 h-5" />
-                      {lang === 'ru' ? 'Зачем нужна зарубежная карта?' : 'Why use a foreign card?'}
+                      {t.cardGuideTitle}
                     </button>
                     <a
                       href={CARDS_VIDEO_URL}
@@ -3179,7 +3242,7 @@ export default function App() {
                   className="flex items-center gap-2.5 px-10 py-5 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[12px] font-black uppercase tracking-widest"
                 >
                   <Zap className="w-5 h-5" />
-                  {lang === 'ru' ? 'Как правильно выбрать активатор?' : 'How to choose an activator?'}
+                  {t.activatorGuideTitle}
                 </button>
               </div>
             )}
@@ -3414,7 +3477,7 @@ export default function App() {
             >
               <p className="text-white/40 uppercase tracking-[0.2em] font-black text-sm">
                 {activeCategory === 'Antidetect' && subFilter === 'Mobile'
-                  ? (lang === 'ru' ? 'Мобильные антидетекты скоро добавятся' : 'Mobile antidetects coming soon')
+                  ? t.mobileAntidetectSoon
                   : t.emptyCategory}
               </p>
             </motion.div>
@@ -3527,105 +3590,167 @@ export default function App() {
 
               <div className="p-8 md:p-10 overflow-y-auto custom-scrollbar">
                 <h2 className="text-3xl font-display font-bold mb-8 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-                  {lang === 'ru' ? 'Какие прокси мне выбрать?' : 'Which proxies should I choose?'}
+                  {t.proxyGuideTitle}
                 </h2>
 
                 <div className="space-y-8 text-white/70 text-sm md:text-base leading-relaxed font-medium">
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Globe className="w-5 h-5 text-brand-purple" />
-                      {lang === 'ru' ? 'Что стоит знать?' : 'What should you know?'}
+                      {t.whatToKnow}
                     </h3>
                     <p>
-                      {lang === 'ru'
-                        ? 'Прокси - это отдельный IP для профиля. VPN подходит для обычного использования, но для мультиакков, фарма, рекламы, ретродропов и большого количества аккаунтов почти всегда удобнее именно прокси: один профиль - один IP или своя понятная схема.'
-                        : 'A proxy is a separate IP for a profile. VPN is fine for regular browsing, but for multi-accounting, farming, ads, retro drops, and many accounts, proxies are usually better: one profile gets one IP or another controlled setup.'}
+                      {tx({
+                        ru: 'Прокси - это отдельный IP для профиля. VPN подходит для обычного использования, но для мультиакков, фарма, рекламы, ретродропов и большого количества аккаунтов почти всегда удобнее именно прокси: один профиль - один IP или своя понятная схема.',
+                        en: 'A proxy is a separate IP for a profile. VPN is fine for regular browsing, but for multi-accounting, farming, ads, retro drops, and many accounts, proxies are usually better: one profile gets one IP or another controlled setup.',
+                        es: 'Un proxy es una IP separada para un perfil. Una VPN sirve para uso normal, pero para multiaccounting, farming, anuncios, retro drops y muchas cuentas casi siempre es más cómodo usar proxies: un perfil, una IP, o una lógica clara.',
+                        zh: '代理就是给单个资料单独使用的 IP。VPN 适合日常浏览，但多账号、养号、广告、retrodrop 和大量账号场景通常更适合代理：一个资料一个 IP，或者一套清晰的分配规则。',
+                        ko: '프록시는 프로필별로 쓰는 별도 IP입니다. VPN은 일반 사용에는 괜찮지만 멀티계정, 파밍, 광고, 레트로드롭, 대량 계정 작업에는 보통 프록시가 더 편합니다. 프로필 하나에 IP 하나, 또는 명확한 운영 방식이 필요합니다.'
+                      })}
                     </p>
                   </section>
 
                   <section className="p-6 bg-white/5 rounded-2xl border border-white/10">
                     <h3 className="text-brand-orange font-bold text-lg mb-4">
-                      {lang === 'ru' ? 'Если есть выбор протокола' : 'If there is a protocol choice'}
+                      {t.protocolChoice}
                     </h3>
                     <p>
-                      {lang === 'ru'
-                        ? 'Чаще всего берите SOCKS5. Это более универсальный вариант для антидетектов и рабочих профилей. HTTP тоже может работать, но если не знаете, что выбрать, начинайте с SOCKS5.'
-                        : 'Usually choose SOCKS5. It is the more universal option for antidetect browsers and work profiles. HTTP can also work, but if you are unsure, start with SOCKS5.'}
+                      {tx({
+                        ru: 'Чаще всего берите SOCKS5. Это более универсальный вариант для антидетектов и рабочих профилей. HTTP тоже может работать, но если не знаете, что выбрать, начинайте с SOCKS5.',
+                        en: 'Usually choose SOCKS5. It is the more universal option for antidetect browsers and work profiles. HTTP can also work, but if you are unsure, start with SOCKS5.',
+                        es: 'En la mayoría de casos elige SOCKS5. Es la opción más universal para antidetects y perfiles de trabajo. HTTP también puede funcionar, pero si dudas, empieza por SOCKS5.',
+                        zh: '多数情况下选 SOCKS5。它对反检测浏览器和工作资料更通用。HTTP 也能用，但不确定时先从 SOCKS5 开始。',
+                        ko: '대부분은 SOCKS5를 고르면 됩니다. 안티디텍트 브라우저와 작업용 프로필에 더 범용적입니다. HTTP도 가능하지만 잘 모르겠다면 SOCKS5부터 시작하세요.'
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4">
-                      {lang === 'ru' ? 'Базовые аккаунты и простые задачи' : 'Basic accounts and simple tasks'}
+                      {t.basicAccountsTasks}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           Для Gmail, Twitter, Discord, Telegram, web3-проектов, Яндекса, базовых нейронок и небольшого количества аккаунтов до 20-30 штук чаще всего достаточно обычных <span className="text-brand-purple font-bold">IPv4</span>. Смотреть можно <span className="text-brand-purple font-bold">Proxyline</span>, <span className="text-brand-purple font-bold">Proxy6</span>, <span className="text-brand-purple font-bold">ProxyWing</span>, <span className="text-brand-purple font-bold">Proxys.io</span> и <span className="text-brand-purple font-bold">Proxy-Seller</span>.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           For Gmail, Twitter, Discord, Telegram, web3 projects, Yandex, basic AI tools, and up to 20-30 accounts, regular <span className="text-brand-purple font-bold">IPv4</span> is usually enough. Check <span className="text-brand-purple font-bold">Proxyline</span>, <span className="text-brand-purple font-bold">Proxy6</span>, <span className="text-brand-purple font-bold">ProxyWing</span>, <span className="text-brand-purple font-bold">Proxys.io</span>, and <span className="text-brand-purple font-bold">Proxy-Seller</span>.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          Para Gmail, Twitter, Discord, Telegram, proyectos web3, Yandex, herramientas básicas de IA y hasta 20-30 cuentas, normalmente basta con <span className="text-brand-purple font-bold">IPv4</span>. Puedes mirar <span className="text-brand-purple font-bold">Proxyline</span>, <span className="text-brand-purple font-bold">Proxy6</span>, <span className="text-brand-purple font-bold">ProxyWing</span>, <span className="text-brand-purple font-bold">Proxys.io</span> y <span className="text-brand-purple font-bold">Proxy-Seller</span>.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          Gmail、Twitter、Discord、Telegram、web3 项目、Yandex、基础 AI 工具以及 20-30 个以内账号，通常普通 <span className="text-brand-purple font-bold">IPv4</span> 就够了。可以看 <span className="text-brand-purple font-bold">Proxyline</span>、<span className="text-brand-purple font-bold">Proxy6</span>、<span className="text-brand-purple font-bold">ProxyWing</span>、<span className="text-brand-purple font-bold">Proxys.io</span> 和 <span className="text-brand-purple font-bold">Proxy-Seller</span>。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          Gmail, Twitter, Discord, Telegram, web3 프로젝트, Yandex, 기본 AI 도구, 20-30개 이하 계정에는 보통 일반 <span className="text-brand-purple font-bold">IPv4</span>로 충분합니다. <span className="text-brand-purple font-bold">Proxyline</span>, <span className="text-brand-purple font-bold">Proxy6</span>, <span className="text-brand-purple font-bold">ProxyWing</span>, <span className="text-brand-purple font-bold">Proxys.io</span>, <span className="text-brand-purple font-bold">Proxy-Seller</span>를 보면 됩니다.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4">
-                      {lang === 'ru' ? 'Сложнее задачи и рекламные кабинеты' : 'Harder tasks and ad cabinets'}
+                      {t.harderTasksAds}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           Для браузерных нод, мультиакков бирж, части букмекерок, более сложного абуза, капризных сервисов и залива трафика лучше смотреть в сторону <span className="text-brand-purple font-bold">ISP</span>. Они дороже IPv4, но выглядят естественнее и часто проходят там, где обычные датацентровые IP уже детектятся.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           For browser nodes, exchange multi-accounting, some betting sites, more complex abuse, strict services, and ad traffic, look at <span className="text-brand-purple font-bold">ISP</span>. They cost more than IPv4 but look more natural and often work where datacenter IPs get detected.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          Para nodos de navegador, multiaccounting en exchanges, algunas casas de apuestas, abuso más complejo, servicios exigentes y tráfico publicitario, mira hacia <span className="text-brand-purple font-bold">ISP</span>. Cuestan más que IPv4, pero parecen más naturales y suelen pasar donde las IP de datacenter ya se detectan.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          浏览器节点、交易所多账号、部分博彩站、更复杂的操作、风控严格的服务和投放流量，建议看 <span className="text-brand-purple font-bold">ISP</span>。它们比 IPv4 贵，但看起来更自然，很多普通机房 IP 被识别的场景它们能过。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          브라우저 노드, 거래소 멀티계정, 일부 베팅 사이트, 더 까다로운 작업, 민감한 서비스, 트래픽 작업은 <span className="text-brand-purple font-bold">ISP</span>를 보는 게 좋습니다. IPv4보다 비싸지만 더 자연스럽고, 데이터센터 IP가 잡히는 곳에서도 통과하는 경우가 많습니다.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4">
-                      {lang === 'ru' ? 'Максимальный траст и экономия трафика' : 'Maximum trust and traffic savings'}
+                      {t.maxTrustTraffic}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           <span className="text-brand-purple font-bold">Residential</span> выглядят как домашний интернет и подходят почти под любые задачи, но обычно оплачиваются за гигабайты. Это удобно, если вы быстро настроили профиль, сделали действие и вышли. <span className="text-brand-purple font-bold">Mobile</span> - самый трастовый вариант с большим количеством сменяемых IP, но дороже и чаще требует работать с профилями по очереди.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           <span className="text-brand-purple font-bold">Residential</span> proxies look like home internet and fit almost any task, but are usually billed by traffic. They are convenient when you set up a profile, do the action, and leave. <span className="text-brand-purple font-bold">Mobile</span> is the most trusted option with many rotating IPs, but it is more expensive and often means working through profiles one by one.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          Los proxies <span className="text-brand-purple font-bold">Residential</span> parecen internet doméstico y sirven para casi cualquier tarea, pero normalmente se pagan por tráfico. Son cómodos cuando configuras un perfil, haces la acción y sales. <span className="text-brand-purple font-bold">Mobile</span> es la opción con más confianza y muchas IP rotativas, pero cuesta más y suele implicar trabajar con perfiles uno por uno.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          <span className="text-brand-purple font-bold">Residential</span> 看起来像家庭宽带，几乎适合任何任务，但通常按流量收费。适合快速设置资料、完成操作然后退出。<span className="text-brand-purple font-bold">Mobile</span> 信任度最高，可轮换大量 IP，但更贵，通常需要按资料依次操作。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          <span className="text-brand-purple font-bold">Residential</span>은 가정용 인터넷처럼 보여 거의 모든 작업에 맞지만 보통 트래픽 단위로 결제합니다. 프로필을 빠르게 설정하고 작업 후 종료하는 방식에 좋습니다. <span className="text-brand-purple font-bold">Mobile</span>은 신뢰도가 가장 높고 교체 가능한 IP가 많지만 더 비싸며, 프로필을 순서대로 다루는 경우가 많습니다.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Star className="w-5 h-5 text-brand-orange" />
-                      {lang === 'ru' ? 'Практические советы:' : 'Practical tips:'}
+                      {t.practicalTips}
                     </h3>
                     <ul className="space-y-4">
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'IPv6 дешёвые, но многие сайты до сих пор работают с ними нестабильно. Если не уверены, лучше начинайте с IPv4.' : 'IPv6 proxies are cheap, but many sites still handle them poorly. If unsure, start with IPv4.'}</p>
+                        <p>{tx({ ru: 'IPv6 дешёвые, но многие сайты до сих пор работают с ними нестабильно. Если не уверены, лучше начинайте с IPv4.', en: 'IPv6 proxies are cheap, but many sites still handle them poorly. If unsure, start with IPv4.', es: 'Los IPv6 son baratos, pero muchos sitios todavía funcionan de forma inestable con ellos. Si dudas, empieza por IPv4.', zh: 'IPv6 很便宜，但很多网站对它支持仍不稳定。不确定时先从 IPv4 开始。', ko: 'IPv6는 저렴하지만 아직 많은 사이트에서 불안정합니다. 잘 모르겠다면 IPv4부터 시작하세요.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Не берите shared-прокси для серьёзной работы: один IP уже могли продать нескольким людям, и его история может быть грязной.' : 'Avoid shared proxies for serious work: the same IP may be sold to several people, and its history can be dirty.'}</p>
+                        <p>{tx({ ru: 'Не берите shared-прокси для серьёзной работы: один IP уже могли продать нескольким людям, и его история может быть грязной.', en: 'Avoid shared proxies for serious work: the same IP may be sold to several people, and its history can be dirty.', es: 'Evita proxies compartidos para trabajo serio: una misma IP puede venderse a varias personas y tener historial sucio.', zh: '严肃工作不要用共享代理：同一个 IP 可能卖给多人，历史可能很脏。', ko: '중요한 작업에는 shared 프록시를 피하세요. 같은 IP가 여러 사람에게 팔렸을 수 있고 이력이 지저분할 수 있습니다.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'После покупки проверьте IP через IPQS или Scamalytics. Fraud Score до 10-20 обычно окей, 20-30 ещё терпимо для базовых задач, выше уже повод задуматься или просить замену.' : 'After buying, check the IP with IPQS or Scamalytics. Fraud Score up to 10-20 is usually good, 20-30 can work for basic tasks, higher is a reason to reconsider or ask for replacement.'}</p>
+                        <p>{tx({ ru: 'После покупки проверьте IP через IPQS или Scamalytics. Fraud Score до 10-20 обычно окей, 20-30 ещё терпимо для базовых задач, выше уже повод задуматься или просить замену.', en: 'After buying, check the IP with IPQS or Scamalytics. Fraud Score up to 10-20 is usually good, 20-30 can work for basic tasks, higher is a reason to reconsider or ask for replacement.', es: 'Después de comprar, revisa la IP en IPQS o Scamalytics. Fraud Score hasta 10-20 suele estar bien, 20-30 aún sirve para tareas básicas; más alto ya es motivo para pedir reemplazo.', zh: '购买后用 IPQS 或 Scamalytics 检查 IP。Fraud Score 10-20 通常可以，20-30 做基础任务还勉强，再高就该考虑更换。', ko: '구매 후 IPQS나 Scamalytics로 IP를 확인하세요. Fraud Score 10-20은 보통 괜찮고, 20-30은 기본 작업엔 가능하지만 그 이상이면 교체를 고려하세요.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Если аккаунтов мало, иногда можно сэкономить: обычная мобильная симка + режим самолёта даёт смену IP. Главное сохранять адекватное гео.' : 'For a small number of accounts, you can sometimes save money: a regular mobile SIM plus airplane mode can rotate IPs. Just keep GEO reasonable.'}</p>
+                        <p>{tx({ ru: 'Если аккаунтов мало, иногда можно сэкономить: обычная мобильная симка + режим самолёта даёт смену IP. Главное сохранять адекватное гео.', en: 'For a small number of accounts, you can sometimes save money: a regular mobile SIM plus airplane mode can rotate IPs. Just keep GEO reasonable.', es: 'Si tienes pocas cuentas, a veces puedes ahorrar: una SIM móvil normal + modo avión permite cambiar la IP. Lo importante es mantener una GEO lógica.', zh: '账号不多时可以省钱：普通手机 SIM 加飞行模式就能换 IP。关键是保持合理的地区。', ko: '계정 수가 적다면 일반 모바일 SIM과 비행기 모드로 IP를 바꿔 비용을 줄일 수 있습니다. GEO만 자연스럽게 맞추면 됩니다.' })}</p>
                       </li>
                     </ul>
                   </section>
@@ -3639,7 +3764,7 @@ export default function App() {
                     className="flex items-center gap-3 px-12 py-5 bg-brand-purple text-white rounded-2xl font-black uppercase tracking-widest hover:shadow-[0_0_40px_rgba(129,28,254,0.4)] transition-all"
                   >
                     <Video className="w-5 h-5" />
-                    {lang === 'ru' ? 'Видео-гайд' : 'Video Guide'}
+                    {t.videoGuide}
                   </a>
                 </div>
               </div>
@@ -3678,13 +3803,17 @@ export default function App() {
                 </div>
 
                 <h2 className="text-3xl font-display font-bold mb-4 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-                  {lang === 'ru' ? 'Прокси чекер' : 'Proxy checker'}
+                  {t.proxyChecker}
                 </h2>
 
                 <p className="text-white/60 text-sm md:text-base leading-relaxed font-medium mb-8">
-                  {lang === 'ru'
-                    ? 'После покупки прокси можно быстро проверить IP на риск, fraud score, VPN/proxy-детект и общее качество. Если показатели слишком плохие, лучше заменить IP до работы с аккаунтами. При этом IPv4 часто детектятся как VPN или proxy и получают ниже score просто потому, что они серверные. Это не критично: я редко проверяю обычные IPv4, если задача базовая.'
-                    : 'After buying a proxy, you can quickly check IP risk, fraud score, VPN/proxy detection, and overall quality. If the score is too bad, replace the IP before using it with accounts. Server IPv4 proxies are often detected as VPN or proxy and get a lower score simply because they are datacenter IPs. This is not critical: I rarely check regular IPv4 for basic tasks.'}
+                  {tx({
+                    ru: 'После покупки прокси можно быстро проверить IP на риск, fraud score, VPN/proxy-детект и общее качество. Если показатели слишком плохие, лучше заменить IP до работы с аккаунтами. При этом IPv4 часто детектятся как VPN или proxy и получают ниже score просто потому, что они серверные. Это не критично: я редко проверяю обычные IPv4, если задача базовая.',
+                    en: 'After buying a proxy, you can quickly check IP risk, fraud score, VPN/proxy detection, and overall quality. If the score is too bad, replace the IP before using it with accounts. Server IPv4 proxies are often detected as VPN or proxy and get a lower score simply because they are datacenter IPs. This is not critical: I rarely check regular IPv4 for basic tasks.',
+                    es: 'Después de comprar un proxy puedes revisar rápido el riesgo de la IP, fraud score, detección VPN/proxy y calidad general. Si los indicadores son malos, es mejor cambiar la IP antes de trabajar con cuentas. Los IPv4 de servidor a menudo se detectan como VPN o proxy y reciben menos score solo por ser de datacenter. No es crítico: para tareas básicas rara vez reviso IPv4 normales.',
+                    zh: '购买代理后，可以快速检查 IP 风险、fraud score、VPN/proxy 检测和整体质量。如果指标太差，最好在用于账号前更换 IP。服务器 IPv4 经常会被识别成 VPN 或 proxy，只因为它们是机房 IP，所以分数更低。这不一定严重：基础任务里我很少检查普通 IPv4。',
+                    ko: '프록시 구매 후 IP 위험도, fraud score, VPN/proxy 감지, 전체 품질을 빠르게 확인할 수 있습니다. 지표가 너무 나쁘면 계정 작업 전에 IP를 교체하는 것이 좋습니다. 서버 IPv4는 데이터센터 IP라는 이유만으로 VPN 또는 proxy로 감지되어 점수가 낮게 나오는 경우가 많습니다. 기본 작업에서는 치명적이지 않아 저는 일반 IPv4를 자주 확인하지 않습니다.'
+                  })}
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -3750,99 +3879,147 @@ export default function App() {
 
               <div className="p-8 md:p-10 overflow-y-auto custom-scrollbar">
                 <h2 className="text-3xl font-display font-bold mb-8 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-                  {lang === 'ru' ? 'Какой антидетект выбрать?' : 'Which antidetect should I choose?'}
+                  {t.antidetectGuideTitle}
                 </h2>
 
                 <div className="space-y-8 text-white/70 text-sm md:text-base leading-relaxed font-medium">
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Laptop className="w-5 h-5 text-brand-purple" />
-                      {lang === 'ru' ? 'Зачем он нужен?' : 'Why do you need it?'}
+                      {t.whyNeedIt}
                     </h3>
                     <p>
-                      {lang === 'ru'
-                        ? 'Прокси меняет IP, но не делает вас новым пользователем полностью. Антидетект создаёт отдельные профили с разными отпечатками: для сайта каждый профиль выглядит как отдельный компьютер, браузер и пользователь.'
-                        : 'A proxy changes the IP, but it does not fully make you a new user. An antidetect browser creates separate profiles with different fingerprints: each profile looks like a separate computer, browser, and user to the site.'}
+                      {tx({
+                        ru: 'Прокси меняет IP, но не делает вас новым пользователем полностью. Антидетект создаёт отдельные профили с разными отпечатками: для сайта каждый профиль выглядит как отдельный компьютер, браузер и пользователь.',
+                        en: 'A proxy changes the IP, but it does not fully make you a new user. An antidetect browser creates separate profiles with different fingerprints: each profile looks like a separate computer, browser, and user to the site.',
+                        es: 'Un proxy cambia la IP, pero no te convierte por completo en un usuario nuevo. Un antidetect crea perfiles separados con huellas diferentes: para el sitio, cada perfil parece otro ordenador, navegador y usuario.',
+                        zh: '代理会改变 IP，但不会让你完全变成新用户。反检测浏览器会创建带有不同指纹的独立资料：网站会把每个资料看作不同的电脑、浏览器和用户。',
+                        ko: '프록시는 IP를 바꾸지만 완전히 새로운 사용자로 만들어 주지는 않습니다. 안티디텍트는 서로 다른 fingerprint를 가진 별도 프로필을 만들며, 사이트 입장에서는 각 프로필이 다른 컴퓨터, 브라우저, 사용자처럼 보입니다.'
+                      })}
                     </p>
                   </section>
 
                   <section className="p-6 bg-white/5 rounded-2xl border border-white/10">
                     <h3 className="text-brand-orange font-bold text-lg mb-4">
-                      {lang === 'ru' ? 'Главное правило настройки' : 'Main setup rule'}
+                      {t.mainSetupRule}
                     </h3>
                     <p>
-                      {lang === 'ru'
-                        ? 'Не нужно менять все настройки подряд. В хорошем антидетекте база уже выставлена нормально. Проверяйте только ключевое: ОС под вашу реальную систему, WebRTC в режиме Proxy/Auto, язык/таймзона/гео по прокси, User-Agent на Auto или актуальный Chrome, разрешение экрана не выше вашего реального.'
-                        : 'Do not change every setting manually. A good antidetect browser already has sane defaults. Check only the essentials: OS matching your real system, WebRTC in Proxy/Auto mode, language/timezone/GEO based on proxy, User-Agent on Auto or current Chrome, and screen resolution not above your real one.'}
+                      {tx({
+                        ru: 'Не нужно менять все настройки подряд. В хорошем антидетекте база уже выставлена нормально. Проверяйте только ключевое: ОС под вашу реальную систему, WebRTC в режиме Proxy/Auto, язык/таймзона/гео по прокси, User-Agent на Auto или актуальный Chrome, разрешение экрана не выше вашего реального.',
+                        en: 'Do not change every setting manually. A good antidetect browser already has sane defaults. Check only the essentials: OS matching your real system, WebRTC in Proxy/Auto mode, language/timezone/GEO based on proxy, User-Agent on Auto or current Chrome, and screen resolution not above your real one.',
+                        es: 'No cambies todos los ajustes manualmente. Un buen antidetect ya trae una base correcta. Revisa solo lo clave: sistema operativo acorde al real, WebRTC en Proxy/Auto, idioma/zona horaria/GEO según el proxy, User-Agent en Auto o Chrome actual y resolución no mayor que tu pantalla real.',
+                        zh: '不要手动乱改所有设置。好的反检测浏览器默认配置已经比较合理。只检查关键项：系统和真实设备匹配，WebRTC 用 Proxy/Auto，语言/时区/地区跟代理一致，User-Agent 用 Auto 或最新版 Chrome，屏幕分辨率不要高于真实屏幕。',
+                        ko: '모든 설정을 직접 바꿀 필요는 없습니다. 좋은 안티디텍트는 기본값이 이미 괜찮습니다. 핵심만 확인하세요: 실제 시스템과 맞는 OS, WebRTC Proxy/Auto, 프록시에 맞는 언어/시간대/GEO, User-Agent Auto 또는 최신 Chrome, 실제 화면보다 높지 않은 해상도.'
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4">
-                      {lang === 'ru' ? 'Для большинства задач' : 'For most tasks'}
+                      {t.forMostTasks}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           Для Twitter, Gmail, Discord, Telegram, ретродропов, браузерных нод, web3 и обычных мультиакков чаще всего хватит <span className="text-brand-purple font-bold">Dolphin</span>, <span className="text-brand-purple font-bold">AdsPower</span>, <span className="text-brand-purple font-bold">Incogniton</span>, <span className="text-brand-purple font-bold">GoLogin</span> или похожих решений. У многих есть бесплатные профили, и для 10-20 аккаунтов этого часто достаточно.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           For Twitter, Gmail, Discord, Telegram, retro drops, browser nodes, web3, and normal multi-accounting, <span className="text-brand-purple font-bold">Dolphin</span>, <span className="text-brand-purple font-bold">AdsPower</span>, <span className="text-brand-purple font-bold">Incogniton</span>, <span className="text-brand-purple font-bold">GoLogin</span>, or similar tools are usually enough. Many have free profiles, which is often enough for 10-20 accounts.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          Para Twitter, Gmail, Discord, Telegram, retro drops, nodos de navegador, web3 y multiaccounting normal, normalmente basta con <span className="text-brand-purple font-bold">Dolphin</span>, <span className="text-brand-purple font-bold">AdsPower</span>, <span className="text-brand-purple font-bold">Incogniton</span>, <span className="text-brand-purple font-bold">GoLogin</span> o herramientas similares. Muchas tienen perfiles gratis, suficiente para 10-20 cuentas.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          Twitter、Gmail、Discord、Telegram、retro drops、浏览器节点、web3 和普通多账号，通常 <span className="text-brand-purple font-bold">Dolphin</span>、<span className="text-brand-purple font-bold">AdsPower</span>、<span className="text-brand-purple font-bold">Incogniton</span>、<span className="text-brand-purple font-bold">GoLogin</span> 或类似工具就够了。很多都有免费资料，10-20 个账号通常够用。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          Twitter, Gmail, Discord, Telegram, 레트로드롭, 브라우저 노드, web3, 일반 멀티계정에는 보통 <span className="text-brand-purple font-bold">Dolphin</span>, <span className="text-brand-purple font-bold">AdsPower</span>, <span className="text-brand-purple font-bold">Incogniton</span>, <span className="text-brand-purple font-bold">GoLogin</span> 또는 비슷한 툴이면 충분합니다. 무료 프로필이 있는 경우가 많아 10-20개 계정에는 충분한 편입니다.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4">
-                      {lang === 'ru' ? 'Для сильного антифрода' : 'For stronger antifraud'}
+                      {t.strongerAntifraud}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           Для букмекерок, казино, абуза бирж и задач, где сервис защищает деньги напрямую, лучше смотреть на усиленные варианты: <span className="text-brand-purple font-bold">Vision</span>, <span className="text-brand-purple font-bold">Octo Browser</span>, <span className="text-brand-purple font-bold">Multilogin</span>. Они дороже и обычно без щедрых бесплатных профилей, но глубже работают с браузерным окружением.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           For betting, casinos, exchange abuse, and tasks where the service protects money directly, look at stronger options: <span className="text-brand-purple font-bold">Vision</span>, <span className="text-brand-purple font-bold">Octo Browser</span>, <span className="text-brand-purple font-bold">Multilogin</span>. They cost more and usually do not have generous free profiles, but they work deeper with the browser environment.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          Para apuestas, casinos, abuso en exchanges y tareas donde el servicio protege dinero directamente, mira opciones más fuertes: <span className="text-brand-purple font-bold">Vision</span>, <span className="text-brand-purple font-bold">Octo Browser</span>, <span className="text-brand-purple font-bold">Multilogin</span>. Cuestan más y suelen tener menos perfiles gratuitos, pero trabajan más profundo con el entorno del navegador.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          博彩、赌场、交易所相关操作，以及服务直接保护资金的任务，建议看更强的方案：<span className="text-brand-purple font-bold">Vision</span>、<span className="text-brand-purple font-bold">Octo Browser</span>、<span className="text-brand-purple font-bold">Multilogin</span>。它们更贵，免费资料通常不多，但对浏览器环境处理更深。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          베팅, 카지노, 거래소 관련 작업, 돈을 직접 보호하는 서비스에는 더 강한 옵션을 보세요: <span className="text-brand-purple font-bold">Vision</span>, <span className="text-brand-purple font-bold">Octo Browser</span>, <span className="text-brand-purple font-bold">Multilogin</span>. 더 비싸고 무료 프로필은 적은 편이지만 브라우저 환경을 더 깊게 다룹니다.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4">
-                      {lang === 'ru' ? 'Как экономить на профилях' : 'How to save on profiles'}
+                      {t.saveProfiles}
                     </h3>
                     <p>
-                      {lang === 'ru'
-                        ? 'Если нужно 10-20 аккаунтов, можно начать с бесплатных профилей в нескольких антидетектах и обычных IPv4 или мобильной симки со сменой IP. Если нужно 50-100 аккаунтов на месяц, тогда уже удобнее покупать дополнительные профили: из простых вариантов AdsPower/Dolphin, из усиленных Vision/Octo.'
-                        : 'If you need 10-20 accounts, start with free profiles across several antidetect browsers plus regular IPv4 or a mobile SIM with IP rotation. If you need 50-100 accounts for a month, buying extra profiles becomes more convenient: AdsPower/Dolphin for simpler work, Vision/Octo for stronger setups.'}
+                      {tx({
+                        ru: 'Если нужно 10-20 аккаунтов, можно начать с бесплатных профилей в нескольких антидетектах и обычных IPv4 или мобильной симки со сменой IP. Если нужно 50-100 аккаунтов на месяц, тогда уже удобнее покупать дополнительные профили: из простых вариантов AdsPower/Dolphin, из усиленных Vision/Octo.',
+                        en: 'If you need 10-20 accounts, start with free profiles across several antidetect browsers plus regular IPv4 or a mobile SIM with IP rotation. If you need 50-100 accounts for a month, buying extra profiles becomes more convenient: AdsPower/Dolphin for simpler work, Vision/Octo for stronger setups.',
+                        es: 'Si necesitas 10-20 cuentas, puedes empezar con perfiles gratuitos en varios antidetects y IPv4 normales o una SIM móvil con cambio de IP. Si necesitas 50-100 cuentas al mes, ya conviene comprar perfiles extra: AdsPower/Dolphin para tareas simples, Vision/Octo para setups más fuertes.',
+                        zh: '如果只需要 10-20 个账号，可以先用几个反检测浏览器的免费资料，加普通 IPv4 或可换 IP 的手机卡。如果一个月需要 50-100 个账号，购买额外资料会更方便：简单任务用 AdsPower/Dolphin，更强配置用 Vision/Octo。',
+                        ko: '10-20개 계정이면 여러 안티디텍트의 무료 프로필과 일반 IPv4 또는 IP 교체 가능한 모바일 SIM으로 시작할 수 있습니다. 한 달에 50-100개가 필요하면 추가 프로필 구매가 더 편합니다. 단순 작업은 AdsPower/Dolphin, 강한 세팅은 Vision/Octo가 좋습니다.'
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Shield className="w-5 h-5 text-brand-orange" />
-                      {lang === 'ru' ? 'Что проверять перед работой:' : 'What to check before working:'}
+                      {t.whatToCheckBefore}
                     </h3>
                     <ul className="space-y-4">
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'IP, страна и timezone должны совпадать с прокси и выглядеть логично.' : 'IP, country, and timezone should match the proxy and look logical.'}</p>
+                        <p>{tx({ ru: 'IP, страна и timezone должны совпадать с прокси и выглядеть логично.', en: 'IP, country, and timezone should match the proxy and look logical.', es: 'La IP, el país y la zona horaria deben coincidir con el proxy y verse lógicos.', zh: 'IP、国家和时区必须与代理一致，并且看起来合理。', ko: 'IP, 국가, 시간대가 프록시와 일치하고 자연스러워야 합니다.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'WebRTC не должен показывать ваш реальный IP. В идеале виден только IP прокси.' : 'WebRTC must not reveal your real IP. Ideally, only the proxy IP is visible.'}</p>
+                        <p>{tx({ ru: 'WebRTC не должен показывать ваш реальный IP. В идеале виден только IP прокси.', en: 'WebRTC must not reveal your real IP. Ideally, only the proxy IP is visible.', es: 'WebRTC no debe mostrar tu IP real. Idealmente solo se ve la IP del proxy.', zh: 'WebRTC 不应该暴露真实 IP。理想情况下只显示代理 IP。', ko: 'WebRTC가 실제 IP를 노출하면 안 됩니다. 이상적으로는 프록시 IP만 보여야 합니다.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Language, timezone, screen resolution и WebGL должны выглядеть как обычный живой пользователь, а не как странный тестовый стенд.' : 'Language, timezone, screen resolution, and WebGL should look like a normal real user, not a strange test setup.'}</p>
+                        <p>{tx({ ru: 'Language, timezone, screen resolution и WebGL должны выглядеть как обычный живой пользователь, а не как странный тестовый стенд.', en: 'Language, timezone, screen resolution, and WebGL should look like a normal real user, not a strange test setup.', es: 'Idioma, zona horaria, resolución de pantalla y WebGL deben parecer los de un usuario real, no un entorno de prueba raro.', zh: '语言、时区、屏幕分辨率和 WebGL 应该像普通真实用户，而不是奇怪的测试环境。', ko: 'Language, timezone, screen resolution, WebGL은 이상한 테스트 환경이 아니라 일반 실제 사용자처럼 보여야 합니다.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Куки-прогрев не обязателен всегда, но для сложных задач можно пару минут походить по сайту или использовать куки-робота.' : 'Cookie warming is not always required, but for harder tasks you can browse for a few minutes or use a cookie robot.'}</p>
+                        <p>{tx({ ru: 'Куки-прогрев не обязателен всегда, но для сложных задач можно пару минут походить по сайту или использовать куки-робота.', en: 'Cookie warming is not always required, but for harder tasks you can browse for a few minutes or use a cookie robot.', es: 'El calentamiento de cookies no siempre es obligatorio, pero para tareas difíciles puedes navegar unos minutos o usar un robot de cookies.', zh: 'Cookie 预热不一定总是需要，但复杂任务可以先浏览几分钟，或使用 cookie 机器人。', ko: '쿠키 워밍은 항상 필수는 아니지만, 까다로운 작업에서는 몇 분간 사이트를 둘러보거나 쿠키 로봇을 사용할 수 있습니다.' })}</p>
                       </li>
                     </ul>
                   </section>
@@ -3856,7 +4033,7 @@ export default function App() {
                     className="flex items-center gap-3 px-12 py-5 bg-brand-purple text-white rounded-2xl font-black uppercase tracking-widest hover:shadow-[0_0_40px_rgba(129,28,254,0.4)] transition-all"
                   >
                     <Video className="w-5 h-5" />
-                    {lang === 'ru' ? 'Видео-гайд' : 'Video Guide'}
+                    {t.videoGuide}
                   </a>
                 </div>
               </div>
@@ -3891,105 +4068,185 @@ export default function App() {
 
               <div className="p-8 md:p-10 overflow-y-auto custom-scrollbar">
                 <h2 className="text-3xl font-display font-bold mb-8 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-                  {lang === 'ru' ? 'Как правильно выбрать активатор?' : 'How to choose an activator?'}
+                  {t.activatorGuideTitle}
                 </h2>
 
                 <div className="space-y-8 text-white/70 text-sm md:text-base leading-relaxed font-medium">
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Zap className="w-5 h-5 text-brand-purple" />
-                      {lang === 'ru' ? 'Что стоит знать?' : 'What should you know?'}
+                      {t.whatToKnow}
                     </h3>
                     <p>
-                      {lang === 'ru' 
-                        ? 'Сервисы виртуальных номеров работают примерно одинаково: вы арендуете номер, получаете на него код подтверждения и используете его для регистрации. Некоторые сервисы позволяют брать длительную аренду.' 
-                        : 'Virtual number services work similarly: you rent a number, receive a confirmation code, and use it for registration. Some services offer long-term rentals.'}
+                      {tx({
+                        ru: 'Сервисы виртуальных номеров работают примерно одинаково: вы арендуете номер, получаете на него код подтверждения и используете его для регистрации. Некоторые сервисы позволяют брать длительную аренду.',
+                        en: 'Virtual number services work similarly: you rent a number, receive a confirmation code, and use it for registration. Some services offer long-term rentals.',
+                        es: 'Los servicios de números virtuales funcionan de forma parecida: alquilas un número, recibes el código de confirmación y lo usas para registrarte. Algunos permiten alquileres largos.',
+                        zh: '虚拟号码服务大体类似：租一个号码，接收验证码，然后用于注册。有些服务支持长期租用。',
+                        ko: '가상 번호 서비스는 대체로 비슷합니다. 번호를 빌리고 인증 코드를 받아 회원가입에 사용합니다. 일부 서비스는 장기 대여도 지원합니다.'
+                      })}
                     </p>
                   </section>
 
                   <section className="p-6 bg-white/5 rounded-2xl border border-white/10">
                     <h3 className="text-brand-orange font-bold text-lg mb-4">
-                      {lang === 'ru' ? 'Основная проблема:' : 'Main problem:'}
+                      {t.mainProblem}
                     </h3>
                     <p>
-                      {lang === 'ru' 
-                        ? 'В подборе подходящего номера и страны. Некоторые номера уже могли использоваться ранее, а отдельные площадки могут отклонять номера определённых операторов. Поэтому иногда приходится пробовать разные варианты. Если код так и не приходит, большинство сервисов автоматически возвращают средства за неудачную активацию, если код не был получен.' 
-                        : 'Finding a suitable number and country. Some numbers might have been used before, and certain platforms may reject numbers from specific operators. Most services automatically refund if the code isn\'t received.'}
+                      {tx({
+                        ru: 'В подборе подходящего номера и страны. Некоторые номера уже могли использоваться ранее, а отдельные площадки могут отклонять номера определённых операторов. Поэтому иногда приходится пробовать разные варианты. Если код так и не приходит, большинство сервисов автоматически возвращают средства за неудачную активацию, если код не был получен.',
+                        en: 'Finding a suitable number and country. Some numbers might have been used before, and certain platforms may reject numbers from specific operators. Most services automatically refund if the code is not received.',
+                        es: 'El problema principal es elegir el número y el país adecuados. Algunos números ya pudieron usarse antes, y ciertas plataformas rechazan operadores concretos. A veces hay que probar varias opciones. Si el código no llega, la mayoría de servicios devuelven el dinero automáticamente.',
+                        zh: '主要问题是选择合适的号码和国家。有些号码可能以前被用过，部分平台会拒绝某些运营商的号码，所以有时要尝试不同选项。如果验证码没到，大多数服务会自动退款。',
+                        ko: '핵심은 알맞은 번호와 국가를 고르는 것입니다. 일부 번호는 이미 사용됐을 수 있고, 플랫폼에 따라 특정 통신사 번호를 거절할 수 있습니다. 그래서 여러 옵션을 시도해야 할 때가 있습니다. 코드가 오지 않으면 대부분의 서비스는 자동 환불됩니다.'
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4">
-                      {lang === 'ru' ? 'Для оплаты российскими картами или через СБП' : 'For payment via Russian cards or SBP'}
+                      {t.russianCardsSbp}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           Хорошо подходят <a href="https://smsfast.pro/?ref=1100157" target="_blank" className="text-brand-purple hover:underline">SMS Fast</a> и <a href="https://365sms.vip/?ref=37269" target="_blank" className="text-brand-purple hover:underline">365-SMS</a>. Оба сервиса поддерживают российские способы оплаты и в целом показывают стабильную работу. Для повседневных задач чаще всего используют <a href="https://smsfast.pro/?ref=1100157" target="_blank" className="text-brand-purple hover:underline">SMS Fast</a> как основной вариант.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           <a href="https://smsfast.pro/?ref=1100157" target="_blank" className="text-brand-purple hover:underline">SMS Fast</a> and <a href="https://365sms.vip/?ref=37269" target="_blank" className="text-brand-purple hover:underline">365-SMS</a> are good choices. Both support Russian payment methods and are generally stable.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          <a href="https://smsfast.pro/?ref=1100157" target="_blank" className="text-brand-purple hover:underline">SMS Fast</a> y <a href="https://365sms.vip/?ref=37269" target="_blank" className="text-brand-purple hover:underline">365-SMS</a> son buenas opciones. Ambos aceptan métodos de pago rusos y suelen funcionar de forma estable.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          <a href="https://smsfast.pro/?ref=1100157" target="_blank" className="text-brand-purple hover:underline">SMS Fast</a> 和 <a href="https://365sms.vip/?ref=37269" target="_blank" className="text-brand-purple hover:underline">365-SMS</a> 是不错的选择。两者都支持俄罗斯支付方式，整体比较稳定。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          <a href="https://smsfast.pro/?ref=1100157" target="_blank" className="text-brand-purple hover:underline">SMS Fast</a>와 <a href="https://365sms.vip/?ref=37269" target="_blank" className="text-brand-purple hover:underline">365-SMS</a>가 좋은 선택입니다. 둘 다 러시아 결제 수단을 지원하고 전반적으로 안정적입니다.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4">
-                      {lang === 'ru' ? 'Если оплачиваете криптовалютой или не СНГ банковской картой' : 'If paying with crypto or non-CIS cards'}
+                      {t.cryptoNonCisCards}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           Стоит обратить внимание на <a href="https://smspool.net/?r=AcN28TiKAr" target="_blank" className="text-brand-purple hover:underline">SMSPool</a> и <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">Hero SMS</a>. Сервис предлагает большой выбор номеров, показывает статистику успешности для каждого направления и имеет оперативную службу поддержки.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           Check <a href="https://smspool.net/?r=AcN28TiKAr" target="_blank" className="text-brand-purple hover:underline">SMSPool</a> and <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">Hero SMS</a>. Great selection, success stats, and quick support.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          Mira <a href="https://smspool.net/?r=AcN28TiKAr" target="_blank" className="text-brand-purple hover:underline">SMSPool</a> y <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">Hero SMS</a>. Tienen buena selección, estadísticas de éxito y soporte rápido.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          可以看看 <a href="https://smspool.net/?r=AcN28TiKAr" target="_blank" className="text-brand-purple hover:underline">SMSPool</a> 和 <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">Hero SMS</a>。号码选择多，有成功率统计，支持也比较快。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          <a href="https://smspool.net/?r=AcN28TiKAr" target="_blank" className="text-brand-purple hover:underline">SMSPool</a>와 <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">Hero SMS</a>를 확인해 보세요. 번호 선택지가 많고 성공률 통계와 빠른 지원이 있습니다.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4">
-                      {lang === 'ru' ? 'Когда нужен большой объём номеров по минимальной цене' : 'When you need bulk numbers at min price'}
+                      {t.bulkNumbersMinPrice}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           Можно рассмотреть <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">HeroSMS</a> и <a href="https://tiger-sms.com/?ref=672048" target="_blank" className="text-brand-purple hover:underline">Tiger SMS</a>. Стоимость номеров там начинается примерно от $0.12–0.22. HeroSMS получил особую популярность после закрытия SMS-Activate в конце 2025 года.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           Consider <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">HeroSMS</a> and <a href="https://tiger-sms.com/?ref=672048" target="_blank" className="text-brand-purple hover:underline">Tiger SMS</a>. Prices start from $0.12–0.22.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          Puedes considerar <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">HeroSMS</a> y <a href="https://tiger-sms.com/?ref=672048" target="_blank" className="text-brand-purple hover:underline">Tiger SMS</a>. Los precios empiezan aprox. desde $0.12-0.22.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          可以考虑 <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">HeroSMS</a> 和 <a href="https://tiger-sms.com/?ref=672048" target="_blank" className="text-brand-purple hover:underline">Tiger SMS</a>。价格大约从 $0.12-0.22 起。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">HeroSMS</a>와 <a href="https://tiger-sms.com/?ref=672048" target="_blank" className="text-brand-purple hover:underline">Tiger SMS</a>도 볼 만합니다. 가격은 대략 $0.12-0.22부터 시작합니다.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Star className="w-5 h-5 text-brand-orange" />
-                      {lang === 'ru' ? 'Практические советы:' : 'Practical tips:'}
+                      {t.practicalTips}
                     </h3>
                     <ul className="space-y-4">
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Лучше брать номер той же страны, что прокси/впн. Но не всегда так. Например, для Telegram это не важно, а вот для Google уже имеет бОльшее значение.' : 'It is best to match the number\'s country with your proxy/VPN, though requirements vary (critical for Google, less so for Telegram).'}</p>
+                        <p>{tx({ ru: 'Лучше брать номер той же страны, что прокси/впн. Но не всегда так. Например, для Telegram это не важно, а вот для Google уже имеет бОльшее значение.', en: 'It is best to match the number country with your proxy/VPN, though requirements vary: it matters more for Google and less for Telegram.', es: 'Mejor usar un número del mismo país que el proxy/VPN, aunque depende del servicio: para Google importa más, para Telegram menos.', zh: '最好选择和代理/VPN 同国家的号码，但并非总是必须。Google 更在意，Telegram 通常没那么关键。', ko: '번호 국가는 프록시/VPN과 맞추는 것이 좋지만 항상 필수는 아닙니다. Google은 더 중요하고 Telegram은 덜 중요합니다.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? (
+                        <p>{tx({
+                          ru: (
                           <>
                             Проверяйте нужный сервис+гео на % доходимости сообщений. Эта функция есть в - <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">HeroSMS</a>, <a href="https://grizzlysms.com/ru/?r=1654440" target="_blank" className="text-brand-purple hover:underline">GrizzlySMS</a>, <a href="https://smsfast.pro/?ref=1100157" target="_blank" className="text-brand-purple hover:underline">SMS Fast</a>, <a href="https://smspool.net/?r=AcN28TiKAr" target="_blank" className="text-brand-purple hover:underline">SMSPool</a>.
                           </>
-                        ) : (
+                          ),
+                          en: (
                           <>
                             Check delivery success rates for your target service and GEO. This feature is available on <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">HeroSMS</a>, <a href="https://grizzlysms.com/ru/?r=1654440" target="_blank" className="text-brand-purple hover:underline">GrizzlySMS</a>, <a href="https://smsfast.pro/?ref=1100157" target="_blank" className="text-brand-purple hover:underline">SMS Fast</a>, and <a href="https://smspool.net/?r=AcN28TiKAr" target="_blank" className="text-brand-purple hover:underline">SMSPool</a>.
                           </>
-                        )}</p>
+                          ),
+                          es: (
+                          <>
+                            Revisa el porcentaje de entrega para el servicio y GEO que necesitas. Esta función está en <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">HeroSMS</a>, <a href="https://grizzlysms.com/ru/?r=1654440" target="_blank" className="text-brand-purple hover:underline">GrizzlySMS</a>, <a href="https://smsfast.pro/?ref=1100157" target="_blank" className="text-brand-purple hover:underline">SMS Fast</a> y <a href="https://smspool.net/?r=AcN28TiKAr" target="_blank" className="text-brand-purple hover:underline">SMSPool</a>.
+                          </>
+                          ),
+                          zh: (
+                          <>
+                            检查目标服务和地区的短信到达率。这个功能在 <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">HeroSMS</a>、<a href="https://grizzlysms.com/ru/?r=1654440" target="_blank" className="text-brand-purple hover:underline">GrizzlySMS</a>、<a href="https://smsfast.pro/?ref=1100157" target="_blank" className="text-brand-purple hover:underline">SMS Fast</a> 和 <a href="https://smspool.net/?r=AcN28TiKAr" target="_blank" className="text-brand-purple hover:underline">SMSPool</a> 上都有。
+                          </>
+                          ),
+                          ko: (
+                          <>
+                            필요한 서비스와 GEO의 메시지 도달률을 확인하세요. 이 기능은 <a href="https://hero-sms.com/?ref=687296" target="_blank" className="text-brand-purple hover:underline">HeroSMS</a>, <a href="https://grizzlysms.com/ru/?r=1654440" target="_blank" className="text-brand-purple hover:underline">GrizzlySMS</a>, <a href="https://smsfast.pro/?ref=1100157" target="_blank" className="text-brand-purple hover:underline">SMS Fast</a>, <a href="https://smspool.net/?r=AcN28TiKAr" target="_blank" className="text-brand-purple hover:underline">SMSPool</a>에서 볼 수 있습니다.
+                          </>
+                          )
+                        })}</p>
                       </li>
                     </ul>
                   </section>
@@ -4002,7 +4259,7 @@ export default function App() {
                     className="flex items-center gap-3 px-12 py-5 bg-brand-purple text-white rounded-2xl font-black uppercase tracking-widest hover:shadow-[0_0_40px_rgba(129,28,254,0.4)] transition-all"
                   >
                     <FileText className="w-5 h-5" />
-                    {lang === 'ru' ? 'Гайд-статья' : 'Guide Article'}
+                    {t.guideArticle}
                   </a>
                 </div>
               </div>
@@ -4044,56 +4301,92 @@ export default function App() {
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <ShoppingBag className="w-5 h-5 text-brand-purple" />
-                      {lang === 'ru' ? 'Где покупать аккаунты?' : 'Where to buy accounts?'}
+                      {t.whereBuyAccounts}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           В основном я пользуюсь <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkStore</a> и <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a> - вместе они закрывают примерно 95% моих потребностей. <span className="text-white font-bold">DarkStore</span> чаще беру для рабочих аккаунтов, почт, соцсетей и расходников. По DarkStore и покупке аккаунтов вроде Discord/Twitter есть отдельный <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">видео-гайд</a>. <span className="text-white font-bold">FunPay</span> удобен для подписок, ключей, игровых товаров, услуг и разных цифровых продуктов. Если нужно сравнить цены или найти редкую позицию, можно дополнительно смотреть <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> и <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           I mainly use <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkStore</a> and <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>; together they cover roughly 95% of my needs. <span className="text-white font-bold">DarkStore</span> is mostly for work accounts, emails, social accounts, and consumables. There is a separate <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">video guide</a> for DarkStore and buying Discord/Twitter-style accounts. <span className="text-white font-bold">FunPay</span> is useful for subscriptions, keys, gaming goods, services, and other digital products. For price comparison or rare items, also check <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a>, and <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          Yo uso sobre todo <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkStore</a> y <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>; juntos cubren cerca del 95% de mis necesidades. <span className="text-white font-bold">DarkStore</span> lo uso más para cuentas de trabajo, correos, redes sociales y consumibles. Hay una <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">videoguía</a> aparte sobre DarkStore y cuentas tipo Discord/Twitter. <span className="text-white font-bold">FunPay</span> es cómodo para suscripciones, claves, productos de juegos, servicios y otros productos digitales. Para comparar precios o buscar algo raro, mira también <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> y <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          我主要使用 <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkStore</a> 和 <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>，它们合起来能覆盖我约 95% 的需求。<span className="text-white font-bold">DarkStore</span> 更适合工作账号、邮箱、社媒账号和消耗品。关于 DarkStore 和 Discord/Twitter 类账号购买有单独的 <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">视频指南</a>。<span className="text-white font-bold">FunPay</span> 适合订阅、密钥、游戏商品、服务和其他数字产品。想比价或找稀有商品，也可以看 <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>、<a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> 和 <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          저는 주로 <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkStore</a>와 <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>를 사용합니다. 둘이 제 필요의 약 95%를 해결합니다. <span className="text-white font-bold">DarkStore</span>는 작업용 계정, 이메일, 소셜 계정, 소모품에 자주 씁니다. DarkStore와 Discord/Twitter 계정 구매는 별도 <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">비디오 가이드</a>가 있습니다. <span className="text-white font-bold">FunPay</span>는 구독, 키, 게임 상품, 서비스, 디지털 제품에 편합니다. 가격 비교나 희귀 상품은 <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a>, <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>도 확인하세요.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section className="p-6 bg-white/5 rounded-2xl border border-white/10">
                     <h3 className="text-brand-purple font-bold text-lg mb-4 flex items-center gap-2">
                       <Zap className="w-5 h-5" />
-                      {lang === 'ru' ? 'Бот-магазины' : 'Bot Shops'}
+                      {t.botShops}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           Telegram-боты - это удобные мини-магазины, где чаще всего продаются дешёвые аккаунты и подписки на популярные нейросети и сервисы: Gemini, GPT, Claude, CapCut, Canva и похожие продукты. Про покупку дешёвых ИИ-подписок есть отдельный <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">видео-гайд</a>. Такие боты удобно проверять, когда нужна подписка “здесь и сейчас” или хочется найти цену ниже официальной. Из вариантов можно смотреть <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Лачугу скамера</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a> и <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           Telegram bots are convenient mini-shops that usually sell low-cost accounts and subscriptions for popular AI tools and services: Gemini, GPT, Claude, CapCut, Canva, and similar products. There is a separate <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">video guide</a> about buying cheap AI subscriptions. They are useful when you need a subscription right now or want a lower-than-official price. Options include <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, and <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          Los bots de Telegram son mini-tiendas cómodas donde suelen vender cuentas y suscripciones baratas para herramientas de IA y servicios populares: Gemini, GPT, Claude, CapCut, Canva y similares. Hay una <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">videoguía</a> aparte sobre suscripciones de IA baratas. Son útiles cuando necesitas una suscripción aquí y ahora o un precio por debajo del oficial. Opciones: <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a> y <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          Telegram 机器人是方便的小商店，通常售卖热门 AI 工具和服务的低价账号或订阅：Gemini、GPT、Claude、CapCut、Canva 等。关于购买便宜 AI 订阅有单独的 <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">视频指南</a>。当你需要立刻开通订阅，或想找低于官方价格的方案时很方便。可以看 <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>、<a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>、<a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a> 和 <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          Telegram 봇은 Gemini, GPT, Claude, CapCut, Canva 같은 인기 AI 도구와 서비스의 저렴한 계정 및 구독을 파는 미니 상점입니다. 저렴한 AI 구독 구매는 별도 <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">비디오 가이드</a>가 있습니다. 지금 바로 구독이 필요하거나 공식가보다 낮은 가격을 찾을 때 유용합니다. <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>를 볼 수 있습니다.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Star className="w-5 h-5 text-brand-orange" />
-                      {lang === 'ru' ? 'Правила покупки' : 'Purchase Rules'}
+                      {t.purchaseRules}
                     </h3>
                     <ul className="space-y-4">
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Внимательно читаем описание и отзывы/рейтинг, количество покупок.' : 'Carefully read the description, reviews, rating, and number of purchases.'}</p>
+                        <p>{tx({ ru: 'Внимательно читаем описание и отзывы/рейтинг, количество покупок.', en: 'Carefully read the description, reviews, rating, and number of purchases.', es: 'Lee con atención la descripción, reseñas, rating y número de compras.', zh: '仔细阅读描述、评价、评分和购买数量。', ko: '설명, 리뷰/평점, 구매 수를 꼼꼼히 확인하세요.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Покупайте 1-2 сначала на тест. Потом 5-10.' : 'Buy 1-2 first for testing. Then 5-10.'}</p>
+                        <p>{tx({ ru: 'Покупайте 1-2 сначала на тест. Потом 5-10.', en: 'Buy 1-2 first for testing. Then 5-10.', es: 'Compra primero 1-2 para probar. Después 5-10.', zh: '先买 1-2 个测试，再买 5-10 个。', ko: '처음에는 1-2개만 테스트로 구매하고, 그다음 5-10개로 늘리세요.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Не покупайте сразу 50-100 аккаунтов. Даже у крутого поставщика бывает плохой товар.' : 'Don\'t buy 50-100 accounts immediately. Even top suppliers can have bad stock.'}</p>
+                        <p>{tx({ ru: 'Не покупайте сразу 50-100 аккаунтов. Даже у крутого поставщика бывает плохой товар.', en: 'Do not buy 50-100 accounts immediately. Even top suppliers can have bad stock.', es: 'No compres 50-100 cuentas de golpe. Incluso un buen proveedor puede tener stock malo.', zh: '不要一上来就买 50-100 个账号。即使好供应商也可能有质量差的货。', ko: '처음부터 50-100개를 사지 마세요. 좋은 판매자도 안 좋은 재고가 있을 수 있습니다.' })}</p>
                       </li>
                     </ul>
                   </section>
@@ -4101,12 +4394,16 @@ export default function App() {
                   <section className="p-6 bg-brand-purple/5 rounded-2xl border border-brand-purple/20">
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Shield className="w-5 h-5 text-brand-purple" />
-                      {lang === 'ru' ? 'Безопасность и гарантии' : 'Safety and Guarantees'}
+                      {t.safetyGuarantees}
                     </h3>
                     <p>
-                      {lang === 'ru' 
-                        ? 'Зачастую каждый сайт в этом разделе выступает гарантом. Поэтому деньги сразу не отпускайте. Сначала проверяйте выполнение условий.' 
-                        : 'Most sites in this section act as a guarantor. Don\'t release the money immediately. Check if all conditions are met first.'}
+                      {tx({
+                        ru: 'Зачастую каждый сайт в этом разделе выступает гарантом. Поэтому деньги сразу не отпускайте. Сначала проверяйте выполнение условий.',
+                        en: 'Most sites in this section act as a guarantor. Do not release the money immediately. Check if all conditions are met first.',
+                        es: 'La mayoría de sitios de esta sección actúan como garante. No liberes el dinero de inmediato: primero comprueba que se cumplan las condiciones.',
+                        zh: '本节大多数平台都会充当担保方。不要立刻放款，先确认条件都已满足。',
+                        ko: '이 섹션의 대부분 사이트는 보증 역할을 합니다. 돈을 바로 풀지 말고 조건이 충족됐는지 먼저 확인하세요.'
+                      })}
                     </p>
                   </section>
                 </div>
@@ -4122,7 +4419,7 @@ export default function App() {
                       <Video className="w-5 h-5" />
                     </span>
                     <span className="min-w-0 text-left text-[11px] font-black uppercase leading-snug tracking-[0.16em]">
-                      {lang === 'ru' ? 'ИИ подписки' : 'AI subscriptions'}
+                      {t.aiSubscriptions}
                     </span>
                   </a>
                   <a
@@ -4135,7 +4432,7 @@ export default function App() {
                       <Video className="w-5 h-5 text-brand-purple" />
                     </span>
                     <span className="min-w-0 text-left text-[11px] font-black uppercase leading-snug tracking-[0.16em]">
-                      {lang === 'ru' ? 'Аккаунты DarkStore' : 'DarkStore accounts'}
+                      {t.darkStoreAccounts}
                     </span>
                   </a>
                 </div>
@@ -4171,71 +4468,95 @@ export default function App() {
 
               <div className="p-8 md:p-10 overflow-y-auto custom-scrollbar">
                 <h2 className="text-3xl font-display font-bold mb-8 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-                  {lang === 'ru' ? 'Где брать рефералов?' : 'Where to get referrals?'}
+                  {t.referralGuideTitle}
                 </h2>
 
                 <div className="space-y-8 text-white/70 text-sm md:text-base leading-relaxed font-medium">
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Info className="w-5 h-5 text-brand-purple" />
-                      {lang === 'ru' ? 'Коротко' : 'Short version'}
+                      {t.shortVersion}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           Есть два основных способа: <span className="text-brand-purple font-bold">сайты накрутки</span> и <span className="text-brand-purple font-bold">буксы</span>. Про ферму социальных аккаунтов я уже отдельно писал в <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">большой статье</a>, а здесь оставил именно сервисы, где можно брать рефералов под Telegram-ботов, активности и похожие задачи.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           There are two main ways: <span className="text-brand-purple font-bold">boost sites</span> and <span className="text-brand-purple font-bold">task exchanges</span>. I already wrote a bigger article about social account farms <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">here</a>; this section focuses on services where you can get referrals for Telegram bots, activity, and similar tasks.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          Hay dos formas principales: <span className="text-brand-purple font-bold">sitios de boost</span> y <span className="text-brand-purple font-bold">bolsas de tareas</span>. Ya escribí una <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">guía grande</a> sobre granjas de cuentas sociales; aquí dejé servicios para conseguir referidos para bots de Telegram, actividad y tareas similares.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          主要有两种方式：<span className="text-brand-purple font-bold">增长网站</span> 和 <span className="text-brand-purple font-bold">任务平台</span>。我已经写过一篇关于社交账号农场的 <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">长文</a>；这里重点放可以为 Telegram 机器人、活动和类似任务获取推荐人的服务。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          방법은 크게 두 가지입니다: <span className="text-brand-purple font-bold">부스트 사이트</span>와 <span className="text-brand-purple font-bold">태스크 거래소</span>. 소셜 계정 팜에 대해서는 이미 <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">큰 글</a>을 썼고, 여기서는 Telegram 봇, 활동, 비슷한 작업에 쓸 레퍼럴을 구할 수 있는 서비스에 집중했습니다.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section className="p-6 bg-white/5 rounded-2xl border border-white/10">
                     <h3 className="text-brand-purple font-bold text-lg mb-4 flex items-center gap-2">
                       <ThumbsUp className="w-5 h-5" />
-                      {lang === 'ru' ? 'Сайты накрутки' : 'Boost sites'}
+                      {t.boostSites}
                     </h3>
                     <p>
-                      {lang === 'ru'
-                        ? 'Это самый быстрый и простой вариант: выбираете услугу, указываете ссылку или задачу, пополняете баланс и ждёте выполнение. Я пользовался ими активнее всего, потому что это удобно. Минус — ники и профили часто выглядят ботскими. Зато конкуренция среди сервисов выросла, и цены заметно снизились: например, реф в NotPixel мог стоить около 14 рублей.'
-                        : 'This is the fastest and simplest option: choose a service, add a link or task, top up the balance, and wait for completion. I used these most actively because they are convenient. The downside is that names and profiles often look bot-like. Competition between services has grown, so prices became much lower.'
-                      }
+                      {tx({
+                        ru: 'Это самый быстрый и простой вариант: выбираете услугу, указываете ссылку или задачу, пополняете баланс и ждёте выполнение. Я пользовался ими активнее всего, потому что это удобно. Минус — ники и профили часто выглядят ботскими. Зато конкуренция среди сервисов выросла, и цены заметно снизились: например, реф в NotPixel мог стоить около 14 рублей.',
+                        en: 'This is the fastest and simplest option: choose a service, add a link or task, top up the balance, and wait for completion. I used these most actively because they are convenient. The downside is that names and profiles often look bot-like. Competition between services has grown, so prices became much lower.',
+                        es: 'Es la opción más rápida y simple: eliges un servicio, añades un enlace o tarea, recargas saldo y esperas el resultado. La usé más porque es cómoda. El punto débil es que los nombres y perfiles suelen parecer bots. Aun así, la competencia creció y los precios bajaron bastante.',
+                        zh: '这是最快最简单的方式：选择服务，添加链接或任务，充值余额，等待完成。我用得最多，因为方便。缺点是昵称和资料经常看起来像机器人。不过服务竞争变强后，价格明显下降。',
+                        ko: '가장 빠르고 쉬운 방법입니다. 서비스를 고르고 링크나 작업을 넣고 잔액을 충전한 뒤 완료를 기다리면 됩니다. 편해서 가장 많이 사용했습니다. 단점은 닉네임과 프로필이 봇처럼 보이는 경우가 많다는 점입니다. 대신 경쟁이 늘어서 가격은 많이 내려갔습니다.'
+                      })}
                     </p>
                   </section>
 
                   <section className="p-6 bg-brand-purple/5 rounded-2xl border border-brand-purple/20">
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Users className="w-5 h-5 text-brand-purple" />
-                      {lang === 'ru' ? 'Буксы' : 'Task exchanges'}
+                      {t.taskExchanges}
                     </h3>
                     <p>
-                      {lang === 'ru'
-                        ? 'Буксы — это биржи заданий, где реальные люди выполняют простые действия за деньги. Вы регистрируетесь как заказчик, пополняете баланс и создаёте задание вроде “Регистрация в Telegram-боте”. В подтверждение можно просить Telegram-логин или скрин выполненного задания. Обычно регистрация в боте стоит от 7-10 рублей, но цена зависит от популярности задания и требований.'
-                        : 'Task exchanges are platforms where real people complete simple actions for money. You register as a customer, top up your balance, and create a task like “Register in a Telegram bot”. For proof, you can ask for a Telegram username or a screenshot. A bot registration task often starts around 7-10 RUB, but the price depends on task popularity and requirements.'
-                      }
+                      {tx({
+                        ru: 'Буксы — это биржи заданий, где реальные люди выполняют простые действия за деньги. Вы регистрируетесь как заказчик, пополняете баланс и создаёте задание вроде “Регистрация в Telegram-боте”. В подтверждение можно просить Telegram-логин или скрин выполненного задания. Обычно регистрация в боте стоит от 7-10 рублей, но цена зависит от популярности задания и требований.',
+                        en: 'Task exchanges are platforms where real people complete simple actions for money. You register as a customer, top up your balance, and create a task like “Register in a Telegram bot”. For proof, you can ask for a Telegram username or a screenshot. A bot registration task often starts around 7-10 RUB, but the price depends on task popularity and requirements.',
+                        es: 'Las bolsas de tareas son plataformas donde personas reales hacen acciones simples por dinero. Te registras como cliente, recargas saldo y creas una tarea tipo “registrarse en un bot de Telegram”. Como prueba puedes pedir usuario de Telegram o captura. Una tarea así suele empezar desde 7-10 RUB, según popularidad y requisitos.',
+                        zh: '任务平台是让真人为报酬完成简单操作的服务。你作为客户注册、充值，然后创建类似“注册 Telegram 机器人”的任务。证明可以要求 Telegram 用户名或截图。机器人注册任务通常从 7-10 卢布起，具体取决于任务热度和要求。',
+                        ko: '태스크 거래소는 실제 사람들이 돈을 받고 간단한 행동을 수행하는 플랫폼입니다. 고객으로 가입해 잔액을 충전하고 “Telegram 봇 가입” 같은 작업을 만듭니다. 확인용으로 Telegram 아이디나 스크린샷을 요청할 수 있습니다. 봇 가입 작업은 보통 7-10 RUB부터 시작하지만, 작업 인기와 요구사항에 따라 달라집니다.'
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Shield className="w-5 h-5 text-brand-orange" />
-                      {lang === 'ru' ? 'Что проверять' : 'What to check'}
+                      {t.whatToCheck}
                     </h3>
                     <ul className="space-y-4">
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'В буксах перед подтверждением проверяйте Telegram-логин, скрин, уникальность выполнения и повторы.' : 'On task exchanges, check the Telegram username, screenshot, uniqueness, and repeated submissions before approval.'}</p>
+                        <p>{tx({ ru: 'В буксах перед подтверждением проверяйте Telegram-логин, скрин, уникальность выполнения и повторы.', en: 'On task exchanges, check the Telegram username, screenshot, uniqueness, and repeated submissions before approval.', es: 'En bolsas de tareas, antes de aprobar revisa el usuario de Telegram, la captura, la unicidad y repeticiones.', zh: '在任务平台确认前，检查 Telegram 用户名、截图、唯一性和重复提交。', ko: '태스크 거래소에서는 승인 전에 Telegram 아이디, 스크린샷, 중복 여부와 반복 제출을 확인하세요.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Не запускайте сразу большой объём: сначала сделайте тест на 10-20 выполнений и посмотрите качество.' : 'Do not start with high volume: test 10-20 completions first and check quality.'}</p>
+                        <p>{tx({ ru: 'Не запускайте сразу большой объём: сначала сделайте тест на 10-20 выполнений и посмотрите качество.', en: 'Do not start with high volume: test 10-20 completions first and check quality.', es: 'No lances mucho volumen de golpe: prueba primero 10-20 ejecuciones y revisa la calidad.', zh: '不要一开始就放大量任务：先测试 10-20 个完成结果，看质量。', ko: '처음부터 큰 물량을 넣지 말고 10-20건으로 먼저 테스트해 품질을 확인하세요.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Если важен внешний вид аккаунтов, буксы обычно выглядят естественнее сайтов накрутки, но требуют больше ручной проверки.' : 'If account appearance matters, task exchanges usually look more natural than boost sites, but require more manual checking.'}</p>
+                        <p>{tx({ ru: 'Если важен внешний вид аккаунтов, буксы обычно выглядят естественнее сайтов накрутки, но требуют больше ручной проверки.', en: 'If account appearance matters, task exchanges usually look more natural than boost sites, but require more manual checking.', es: 'Si importa el aspecto de las cuentas, las bolsas suelen verse más naturales que los sitios de boost, pero exigen más revisión manual.', zh: '如果账号外观看起来是否自然很重要，任务平台通常比增长网站更自然，但需要更多人工检查。', ko: '계정의 자연스러운 외형이 중요하다면 태스크 거래소가 부스트 사이트보다 자연스러운 편이지만 수동 검수가 더 필요합니다.' })}</p>
                       </li>
                     </ul>
                   </section>
@@ -4284,69 +4605,95 @@ export default function App() {
 
               <div className="p-8 md:p-10 overflow-y-auto custom-scrollbar">
                 <h2 className="text-3xl font-display font-bold mb-8 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-                  {lang === 'ru' ? 'Как выгодно пополнять Steam?' : 'How to top up Steam profitably?'}
+                  {t.steamGuideTitle}
                 </h2>
 
                 <div className="space-y-8 text-white/70 text-sm md:text-base leading-relaxed font-medium">
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Gamepad2 className="w-5 h-5 text-brand-purple" />
-                      {lang === 'ru' ? 'Два сценария' : 'Two scenarios'}
+                      {t.twoScenarios}
                     </h3>
                     <p>
-                      {lang === 'ru'
-                        ? 'Если нужен результат сразу, проще пополнять Steam по логину: обычно это быстро, но с комиссией. Если готовы потратить время, можно купить предмет дешевле Steam Market, продать его в Steam и получить баланс в плюс. Второй способ выгоднее, но требует проверки цены и ликвидности.'
-                        : 'If you need the result right away, direct login top-up is simpler: usually fast, but with a fee. If you are ready to spend some time, you can buy an item cheaper than on Steam Market, sell it on Steam, and get more balance. The second method is more profitable, but requires checking price and liquidity.'}
+                      {tx({
+                        ru: 'Если нужен результат сразу, проще пополнять Steam по логину: обычно это быстро, но с комиссией. Если готовы потратить время, можно купить предмет дешевле Steam Market, продать его в Steam и получить баланс в плюс. Второй способ выгоднее, но требует проверки цены и ликвидности.',
+                        en: 'If you need the result right away, direct login top-up is simpler: usually fast, but with a fee. If you are ready to spend some time, you can buy an item cheaper than on Steam Market, sell it on Steam, and get more balance. The second method is more profitable, but requires checking price and liquidity.',
+                        es: 'Si necesitas el resultado al instante, es más simple recargar Steam por login: suele ser rápido, pero con comisión. Si puedes esperar, compra un ítem más barato que en Steam Market, véndelo en Steam y recibe más saldo. El segundo método es más rentable, pero exige revisar precio y liquidez.',
+                        zh: '如果需要立刻到账，按 Steam 登录名充值最简单：通常很快，但有手续费。如果愿意花时间，可以购买比 Steam 市场便宜的物品，在 Steam 出售后获得更多余额。第二种更划算，但必须检查价格和流动性。',
+                        ko: '바로 결과가 필요하면 Steam 로그인 충전이 가장 쉽습니다. 보통 빠르지만 수수료가 있습니다. 시간을 쓸 수 있다면 Steam Market보다 싼 아이템을 사서 Steam에서 팔아 더 많은 잔액을 얻을 수 있습니다. 두 번째 방식이 더 유리하지만 가격과 유동성 확인이 필요합니다.'
+                      })}
                     </p>
                   </section>
 
                   <section className="p-6 bg-white/5 rounded-2xl border border-white/10">
                     <h3 className="text-brand-purple font-bold text-lg mb-4 flex items-center gap-2">
                       <Zap className="w-5 h-5" />
-                      {lang === 'ru' ? 'Быстро по логину' : 'Fast by login'}
+                      {t.fastByLogin}
                     </h3>
                     <p>
-                      {lang === 'ru'
-                        ? 'Для РФ самый простой бытовой вариант — найти Steam в поиске Сбербанка или OZON Банка и пополнить по логину. Обычно комиссия около 10%, зато всё происходит быстро и без предметов. Из маркетплейсов можно смотреть GGsel и Playerok: у Playerok часто встречается пополнение около 5%, но всегда проверяйте продавца, рейтинг и условия.'
-                        : 'For Russia, the simplest everyday option is to search for Steam inside Sberbank or OZON Bank and top up by login. The fee is usually around 10%, but it is fast and does not involve items. Among marketplaces, check GGsel and Playerok: Playerok often has offers around 5%, but always check seller rating and terms.'}
+                      {tx({
+                        ru: 'Для РФ самый простой бытовой вариант — найти Steam в поиске Сбербанка или OZON Банка и пополнить по логину. Обычно комиссия около 10%, зато всё происходит быстро и без предметов. Из маркетплейсов можно смотреть GGsel и Playerok: у Playerok часто встречается пополнение около 5%, но всегда проверяйте продавца, рейтинг и условия.',
+                        en: 'For Russia, the simplest everyday option is to search for Steam inside Sberbank or OZON Bank and top up by login. The fee is usually around 10%, but it is fast and does not involve items. Among marketplaces, check GGsel and Playerok: Playerok often has offers around 5%, but always check seller rating and terms.',
+                        es: 'Para Rusia, la opción más simple es buscar Steam dentro de Sberbank u OZON Bank y recargar por login. La comisión suele rondar el 10%, pero es rápido y sin ítems. En marketplaces mira GGsel y Playerok: en Playerok a veces hay ofertas cerca del 5%, pero revisa siempre vendedor, rating y condiciones.',
+                        zh: '在俄罗斯，最简单的日常方式是在 Sberbank 或 OZON Bank 里搜索 Steam，然后按登录名充值。手续费通常约 10%，但速度快且不需要物品。市场平台可以看 GGsel 和 Playerok：Playerok 经常有约 5% 的充值，但一定要检查卖家、评分和条件。',
+                        ko: '러시아에서는 Sberbank 또는 OZON Bank에서 Steam을 검색해 로그인으로 충전하는 것이 가장 쉽습니다. 수수료는 보통 약 10%지만 빠르고 아이템이 필요 없습니다. 마켓플레이스는 GGsel과 Playerok을 볼 수 있습니다. Playerok은 5% 정도의 제안도 있지만 판매자, 평점, 조건을 꼭 확인하세요.'
+                      })}
                     </p>
                   </section>
 
                   <section className="p-6 bg-brand-purple/5 rounded-2xl border border-brand-purple/20">
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Percent className="w-5 h-5 text-brand-purple" />
-                      {lang === 'ru' ? 'Пополнение через предметы' : 'Top-up through items'}
+                      {t.topupThroughItems}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           Для пополнения в плюс удобнее смотреть <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>, <a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>, <a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a> и <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>. Я чаще использую LIS-SKINS, потому что там сразу видно разницу цены со Steam. TF2Lavka полезна, когда нужны Rust/TF2 предметы без долгого ожидания перед продажей, но конкретный предмет всё равно нужно проверять.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           For profitable top-ups, check <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>, <a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>, <a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a>, and <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>. I usually use LIS-SKINS because it shows the price difference versus Steam. TF2Lavka is useful when you need Rust/TF2 items without a long wait before selling, but each item still needs checking.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          Para recargar con beneficio, mira <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>, <a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>, <a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a> y <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>. Yo suelo usar LIS-SKINS porque muestra enseguida la diferencia de precio frente a Steam. TF2Lavka sirve para ítems de Rust/TF2 sin larga espera antes de vender, pero cada ítem hay que revisarlo.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          想用物品充值并获得更高余额，可以看 <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>、<a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>、<a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a> 和 <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>。我更常用 LIS-SKINS，因为它直接显示和 Steam 的价格差。TF2Lavka 适合需要 Rust/TF2 物品且不想等很久再出售的情况，但具体物品仍要检查。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          이득 충전은 <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>, <a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>, <a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a>, <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>를 확인하세요. 저는 Steam과의 가격 차이를 바로 볼 수 있어 LIS-SKINS를 자주 씁니다. TF2Lavka는 Rust/TF2 아이템을 오래 기다리지 않고 팔고 싶을 때 유용하지만, 각 아이템은 확인해야 합니다.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Shield className="w-5 h-5 text-brand-orange" />
-                      {lang === 'ru' ? 'Что проверять' : 'What to check'}
+                      {t.whatToCheck}
                     </h3>
                     <ul className="space-y-4">
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Сверяйте цену предмета со Steam Market, а не только с процентом на сайте.' : 'Compare the item price with Steam Market, not only with the percentage shown on the site.'}</p>
+                        <p>{tx({ ru: 'Сверяйте цену предмета со Steam Market, а не только с процентом на сайте.', en: 'Compare the item price with Steam Market, not only with the percentage shown on the site.', es: 'Compara el precio del ítem con Steam Market, no solo con el porcentaje del sitio.', zh: '对比物品在 Steam Market 的价格，不要只看网站上的百分比。', ko: '사이트의 퍼센트만 보지 말고 Steam Market의 아이템 가격과 비교하세요.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Проверяйте ликвидность: у предмета могут быть красивые проценты, но мало покупок и долгий срок продажи.' : 'Check liquidity: an item may show a nice percentage but have few buyers and slow sale speed.'}</p>
+                        <p>{tx({ ru: 'Проверяйте ликвидность: у предмета могут быть красивые проценты, но мало покупок и долгий срок продажи.', en: 'Check liquidity: an item may show a nice percentage but have few buyers and slow sale speed.', es: 'Revisa la liquidez: un ítem puede tener buen porcentaje, pero pocos compradores y venta lenta.', zh: '检查流动性：物品百分比可能很好看，但买家少、卖得慢。', ko: '유동성을 확인하세요. 퍼센트는 좋아 보여도 구매자가 적고 판매가 느릴 수 있습니다.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Учитывайте комиссию Steam и возможные ограничения на трейд/маркет для конкретной игры и предмета.' : 'Account for Steam fees and possible trade/market restrictions for the specific game and item.'}</p>
+                        <p>{tx({ ru: 'Учитывайте комиссию Steam и возможные ограничения на трейд/маркет для конкретной игры и предмета.', en: 'Account for Steam fees and possible trade/market restrictions for the specific game and item.', es: 'Ten en cuenta la comisión de Steam y posibles restricciones de trade/market para el juego e ítem concreto.', zh: '考虑 Steam 手续费，以及具体游戏和物品可能存在的交易/市场限制。', ko: 'Steam 수수료와 특정 게임/아이템의 거래 및 마켓 제한을 고려하세요.' })}</p>
                       </li>
                     </ul>
                   </section>
@@ -4360,7 +4707,7 @@ export default function App() {
                     className="flex items-center gap-3 px-12 py-5 bg-brand-purple text-white rounded-2xl font-black uppercase tracking-widest hover:shadow-[0_0_40px_rgba(129,28,254,0.4)] transition-all"
                   >
                     <FileText className="w-5 h-5" />
-                    {lang === 'ru' ? 'Открыть таблицу цен' : 'Open price table'}
+                    {t.openPriceTable}
                   </a>
                 </div>
               </div>
@@ -4395,32 +4742,39 @@ export default function App() {
 
               <div className="p-8 md:p-10 overflow-y-auto custom-scrollbar">
                 <h2 className="text-3xl font-display font-bold mb-8 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-                  {lang === 'ru' ? 'Зачем нужна зарубежная карта?' : 'Why use a foreign card?'}
+                  {t.cardGuideTitle}
                 </h2>
 
                 <div className="space-y-8 text-white/70 text-sm md:text-base leading-relaxed font-medium">
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <CreditCard className="w-5 h-5 text-brand-purple" />
-                      {lang === 'ru' ? 'В чём смысл?' : 'What is it for?'}
+                      {t.whatIsItFor}
                     </h3>
                     <p>
-                      {lang === 'ru'
-                        ? 'Зарубежная виртуальная карта нужна, чтобы оплачивать иностранные сервисы, которые не принимают российские карты. Обычно её можно пополнить рублями через СБП или криптовалютой, а дальше платить как обычной Visa/Mastercard.'
-                        : 'A foreign virtual card is used to pay for international services that do not accept Russian cards. Usually you can top it up with RUB via SBP or with crypto, then pay as with a regular Visa/Mastercard.'}
+                      {tx({
+                        ru: 'Зарубежная виртуальная карта нужна, чтобы оплачивать иностранные сервисы, которые не принимают российские карты. Обычно её можно пополнить рублями через СБП или криптовалютой, а дальше платить как обычной Visa/Mastercard.',
+                        en: 'A foreign virtual card is used to pay for international services that do not accept Russian cards. Usually you can top it up with RUB via SBP or with crypto, then pay as with a regular Visa/Mastercard.',
+                        es: 'Una tarjeta virtual extranjera sirve para pagar servicios internacionales que no aceptan tarjetas rusas. Normalmente puedes recargarla en RUB vía SBP o con cripto y luego pagar como con una Visa/Mastercard normal.',
+                        zh: '海外虚拟卡用于支付不接受俄罗斯银行卡的国际服务。通常可以通过 SBP 用卢布充值，或用加密货币充值，然后像普通 Visa/Mastercard 一样付款。',
+                        ko: '해외 가상 카드는 러시아 카드를 받지 않는 해외 서비스 결제에 사용합니다. 보통 SBP로 RUB 충전하거나 암호화폐로 충전한 뒤 일반 Visa/Mastercard처럼 결제할 수 있습니다.'
+                      })}
                     </p>
                   </section>
 
                   <section className="p-6 bg-white/5 rounded-2xl border border-white/10">
                     <h3 className="text-brand-purple font-bold text-lg mb-4 flex items-center gap-2">
                       <Globe className="w-5 h-5" />
-                      {lang === 'ru' ? 'Что можно оплачивать?' : 'What can you pay for?'}
+                      {t.whatCanPayFor}
                     </h3>
                     <div className="flex flex-wrap gap-2.5">
-                      {(lang === 'ru'
-                        ? ['Airbnb, Booking, Aviasales', 'Google Play и App Store', 'ChatGPT, Claude, Gemini', 'Netflix, Spotify, YouTube', 'Amazon, eBay, AliExpress Global', 'OZON и часть RU-мерчантов']
-                        : ['Airbnb, Booking, Aviasales', 'Google Play and App Store', 'ChatGPT, Claude, Gemini', 'Netflix, Spotify, YouTube', 'Amazon, eBay, AliExpress Global', 'OZON and some RU merchants']
-                      ).map((item) => (
+                      {tx({
+                        ru: ['Airbnb, Booking, Aviasales', 'Google Play и App Store', 'ChatGPT, Claude, Gemini', 'Netflix, Spotify, YouTube', 'Amazon, eBay, AliExpress Global', 'OZON и часть RU-мерчантов'],
+                        en: ['Airbnb, Booking, Aviasales', 'Google Play and App Store', 'ChatGPT, Claude, Gemini', 'Netflix, Spotify, YouTube', 'Amazon, eBay, AliExpress Global', 'OZON and some RU merchants'],
+                        es: ['Airbnb, Booking, Aviasales', 'Google Play y App Store', 'ChatGPT, Claude, Gemini', 'Netflix, Spotify, YouTube', 'Amazon, eBay, AliExpress Global', 'OZON y algunos comercios RU'],
+                        zh: ['Airbnb、Booking、Aviasales', 'Google Play 和 App Store', 'ChatGPT、Claude、Gemini', 'Netflix、Spotify、YouTube', 'Amazon、eBay、AliExpress Global', 'OZON 和部分 RU 商户'],
+                        ko: ['Airbnb, Booking, Aviasales', 'Google Play 및 App Store', 'ChatGPT, Claude, Gemini', 'Netflix, Spotify, YouTube', 'Amazon, eBay, AliExpress Global', 'OZON 및 일부 RU 가맹점']
+                      }).map((item) => (
                         <span key={item} className="text-xs bg-brand-purple/10 px-4 py-2 rounded-xl text-brand-purple border border-brand-purple/20 font-bold">
                           {item}
                         </span>
@@ -4431,38 +4785,56 @@ export default function App() {
                   <section>
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Star className="w-5 h-5 text-brand-orange" />
-                      {lang === 'ru' ? 'Что использую я?' : 'What do I use?'}
+                      {t.whatIUse}
                     </h3>
                     <p>
-                      {lang === 'ru' ? (
+                      {tx({
+                        ru: (
                         <>
                           В основном я использую <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a>, потому что карта выпускается без KYC, пополняется через СБП или USDT и нормально проходит в большинстве нужных мне сервисов. Отдельный плюс: иногда проходит не только зарубежка, но и российские мерчанты, например OZON.
                         </>
-                      ) : (
+                        ),
+                        en: (
                         <>
                           I mainly use <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a> because it is issued without KYC, can be topped up via SBP or USDT, and works with most services I need. A separate plus: it can also work with some Russian merchants, for example OZON.
                         </>
-                      )}
+                        ),
+                        es: (
+                        <>
+                          Uso principalmente <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a> porque se emite sin KYC, se recarga por SBP o USDT y funciona en la mayoría de servicios que necesito. Otro plus: a veces también pasa en comercios rusos, por ejemplo OZON.
+                        </>
+                        ),
+                        zh: (
+                        <>
+                          我主要使用 <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a>，因为它无需 KYC 即可开卡，可通过 SBP 或 USDT 充值，并且能在我需要的大多数服务中正常使用。额外优点：有时不只海外服务可用，俄罗斯商户如 OZON 也能通过。
+                        </>
+                        ),
+                        ko: (
+                        <>
+                          저는 주로 <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a>를 사용합니다. KYC 없이 발급되고 SBP 또는 USDT로 충전 가능하며 필요한 대부분 서비스에서 잘 작동하기 때문입니다. 추가 장점은 OZON 같은 일부 러시아 가맹점에서도 통과할 때가 있다는 점입니다.
+                        </>
+                        )
+                      })}
                     </p>
                   </section>
 
                   <section className="p-6 bg-brand-purple/5 rounded-2xl border border-brand-purple/20">
                     <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                       <Shield className="w-5 h-5 text-brand-purple" />
-                      {lang === 'ru' ? 'Практические советы' : 'Practical tips'}
+                      {t.practicalTips}
                     </h3>
                     <ul className="space-y-4">
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Не держите крупный баланс на карте: пополняйте под конкретную оплату.' : 'Do not keep a large balance on the card: top up for a specific payment.'}</p>
+                        <p>{tx({ ru: 'Не держите крупный баланс на карте: пополняйте под конкретную оплату.', en: 'Do not keep a large balance on the card: top up for a specific payment.', es: 'No mantengas mucho saldo en la tarjeta: recarga para un pago concreto.', zh: '不要在卡上保留大额余额：按具体付款需求充值。', ko: '카드에 큰 잔액을 두지 말고 필요한 결제 금액만 충전하세요.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Перед важной покупкой сначала проверьте карту на небольшой оплате или дешёвой подписке.' : 'Before an important purchase, test the card with a small payment or cheap subscription.'}</p>
+                        <p>{tx({ ru: 'Перед важной покупкой сначала проверьте карту на небольшой оплате или дешёвой подписке.', en: 'Before an important purchase, test the card with a small payment or cheap subscription.', es: 'Antes de una compra importante, prueba la tarjeta con un pago pequeño o una suscripción barata.', zh: '重要购买前，先用小额支付或便宜订阅测试这张卡。', ko: '중요한 결제 전에는 소액 결제나 저렴한 구독으로 카드를 먼저 테스트하세요.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{lang === 'ru' ? 'Если один сервис отклонил платёж, это не всегда значит, что карта плохая: у разных мерчантов разные антифрод-правила.' : 'If one service declines a payment, it does not always mean the card is bad: different merchants have different antifraud rules.'}</p>
+                        <p>{tx({ ru: 'Если один сервис отклонил платёж, это не всегда значит, что карта плохая: у разных мерчантов разные антифрод-правила.', en: 'If one service declines a payment, it does not always mean the card is bad: different merchants have different antifraud rules.', es: 'Si un servicio rechaza el pago, no siempre significa que la tarjeta sea mala: cada merchant tiene reglas antifraude distintas.', zh: '如果某个服务拒绝付款，并不一定说明卡不好：不同商户有不同的反欺诈规则。', ko: '한 서비스에서 결제가 거절됐다고 카드가 나쁜 것은 아닙니다. 가맹점마다 antifraud 규칙이 다릅니다.' })}</p>
                       </li>
                     </ul>
                   </section>
@@ -4615,9 +4987,9 @@ export default function App() {
                     <div className="bg-white/[0.03] p-6 rounded-2xl border border-white/10">
                       <h4 className="text-[11px] uppercase font-black text-white/40 tracking-[0.2em] mb-4">
                         {selectedOffer.category === 'Guides'
-                          ? (lang === 'ru' ? 'Темы гайда:' : 'Guide Topics:')
+                          ? t.guideTopics
                           : selectedOffer.category === 'Crypto'
-                            ? (lang === 'ru' ? 'Что поддерживает:' : 'Supported Exchange Options:')
+                            ? t.supportedExchangeOptions
                             : t.whatToPay}
                       </h4>
                       <div className="flex flex-wrap gap-2.5">
