@@ -54,7 +54,8 @@ import {
 } from 'lucide-react';
 
 // --- Types ---
-type Language = 'ru' | 'en';
+type Language = 'ru' | 'en' | 'es' | 'zh' | 'ko';
+type Localized<T = string> = Partial<Record<Language, T>> & { ru: T; en: T };
 
 type CategoryType = 'Proxy' | 'Antidetect' | 'Stores' | 'Cards' | 'Crypto' | 'SMS' | 'VPS' | 'Social' | 'Steam' | 'Guides';
 
@@ -73,88 +74,88 @@ interface Offer {
   category: CategoryType;
   subCategory?: SubCategory;
   name: string;
-  description: Record<Language, string>;
+  description: Localized;
   url: string;
   webUrl?: string;
   logoUrl?: string;
   promoCode?: string;
-  badge?: Record<Language, string>;
+  badge?: Localized;
   isPopular?: boolean;
   isBestChoice?: boolean;
   since?: string;
   platforms?: string[];
   payments?: string[];
-  freeProfiles?: Record<Language, string>;
-  tariffStartPrice?: Record<Language, string>;
-  profiles100Price?: Record<Language, string>;
+  freeProfiles?: Localized;
+  tariffStartPrice?: Localized;
+  profiles100Price?: Localized;
   priceInfo?: {
-    main?: Record<Language, string>;
-    secondary?: Record<Language, string>;
+    main?: Localized;
+    secondary?: Localized;
   };
   cardStats?: {
-    issuance: Record<Language, string>;
-    maintenance: Record<Language, string>;
-    verification: Record<Language, string>;
-    cashback: Record<Language, string>;
-    topup: Record<Language, string>;
-    commission: Record<Language, string>;
-    paySystems: Record<Language, string>;
-    type: Record<Language, string>;
+    issuance: Localized;
+    maintenance: Localized;
+    verification: Localized;
+    cashback: Localized;
+    topup: Localized;
+    commission: Localized;
+    paySystems: Localized;
+    type: Localized;
   };
   details?: {
-    geo?: Record<Language, string>;
-    types?: Record<Language, string>;
+    geo?: Localized;
+    types?: Localized;
     fees?: string;
     kyc?: string;
     minTopup?: string;
-    paymentMethods?: Record<Language, string>;
-    rate?: Record<Language, string>;
-    supports?: Record<Language, string[]>;
-    nuances?: Record<Language, string[]>;
-    pros?: Record<Language, string[]>;
-    targetAudience?: Record<Language, string>;
-    descriptionDetailed?: Record<Language, string>;
+    paymentMethods?: Localized;
+    rate?: Localized;
+    supports?: Localized<string[]>;
+    nuances?: Localized<string[]>;
+    pros?: Localized<string[]>;
+    targetAudience?: Localized;
+    descriptionDetailed?: Localized;
   };
 }
 
 // --- Data ---
-const CATEGORIES: { id: CategoryType; icon: any; title: Record<Language, string>; subFilters?: SubCategory[]; guides?: { text: string | boolean; video: string } }[] = [
+const CATEGORIES: { id: CategoryType; icon: any; title: Localized; subFilters?: SubCategory[]; guides?: { text: string | boolean; video: string } }[] = [
   { 
     id: 'Proxy', 
     icon: Globe, 
-    title: { ru: 'Proxy / VPN', en: 'Proxy / VPN' },
+    title: { ru: 'Proxy / VPN', en: 'Proxy / VPN', es: 'Proxy / VPN', zh: '代理 / VPN', ko: '프록시 / VPN' },
     subFilters: ['Proxy', 'VPN'],
     guides: { text: '#', video: '#' }
   },
   { 
     id: 'Antidetect', 
     icon: Laptop, 
-    title: { ru: 'Антидетект', en: 'Antidetect' },
+    title: { ru: 'Антидетект', en: 'Antidetect', es: 'Antidetect', zh: '反检测', ko: '안티디텍트' },
     subFilters: ['PCBasic', 'PCAdvanced', 'Mobile'],
     guides: { text: '#', video: '#' }
   },
   { 
     id: 'Stores', 
     icon: ShoppingBag, 
-    title: { ru: 'Аккаунт Shop', en: 'Account Shop' }, 
+    title: { ru: 'Аккаунт Shop', en: 'Account Shop', es: 'Tienda de cuentas', zh: '账号商店', ko: '계정 스토어' }, 
     subFilters: ['Web', 'Bot'],
     guides: { 
       text: true, 
       video: 'https://youtu.be/3wjIQRrOdd0?si=04kDWjWwLatAVipc' 
     } 
   },
-  { id: 'Cards', icon: CreditCard, title: { ru: 'Зарубежные Карты', en: 'Virtual Cards' }, subFilters: ['NoKYC', 'WithKYC'], guides: { text: '#', video: '#' } },
+  { id: 'Cards', icon: CreditCard, title: { ru: 'Зарубежные Карты', en: 'Virtual Cards', es: 'Tarjetas virtuales', zh: '虚拟卡', ko: '가상 카드' }, subFilters: ['NoKYC', 'WithKYC'], guides: { text: '#', video: '#' } },
   { 
     id: 'Crypto', 
     icon: Coins, 
-    title: { ru: 'Купить/продать крипту', en: 'Buy/Sell Crypto' },
+    title: { ru: 'Купить/продать крипту', en: 'Buy/Sell Crypto', es: 'Comprar/vender cripto', zh: '买卖加密货币', ko: '암호화폐 매매' },
     guides: { text: '#', video: '#' }
   },
-  { id: 'SMS', icon: MessageSquare, title: { ru: 'SMS Активаторы', en: 'SMS Activators' } },
-  { id: 'VPS', icon: Server, title: { ru: 'VDS/VPS серверы', en: 'VDS/VPS Servers' }, guides: { text: '#', video: '#' } },
-  { id: 'Social', icon: ThumbsUp, title: { ru: 'Накрутка', en: 'Social Boost' }, subFilters: ['BoostSites', 'Bux'], guides: { text: '#', video: '#' } },
-  { id: 'Steam', icon: Gamepad2, title: { ru: 'Пополнение Steam', en: 'Steam Top-up' }, subFilters: ['SteamFast', 'SteamItems'], guides: { text: '#', video: '#' } },
-  { id: 'Guides', icon: FileText, title: { ru: 'Полезные гайды', en: 'Useful Guides' } },
+  { id: 'SMS', icon: MessageSquare, title: { ru: 'SMS Активаторы', en: 'SMS Activators', es: 'SMS Activadores', zh: '短信接码', ko: 'SMS 인증' } },
+  { id: 'VPS', icon: Server, title: { ru: 'VDS/VPS серверы', en: 'VDS/VPS Servers', es: 'Servidores VPS', zh: 'VPS 服务器', ko: 'VPS 서버' }, guides: { text: '#', video: '#' } },
+  { id: 'Social', icon: ThumbsUp, title: { ru: 'Накрутка', en: 'Social Boost', es: 'Boost social', zh: '社交增长', ko: '소셜 부스트' }, subFilters: ['BoostSites', 'Bux'], guides: { text: '#', video: '#' } },
+  { id: 'Steam', icon: Gamepad2, title: { ru: 'Пополнение Steam', en: 'Steam Top-up', es: 'Recarga Steam', zh: 'Steam 充值', ko: 'Steam 충전' }, subFilters: ['SteamFast', 'SteamItems'], guides: { text: '#', video: '#' } },
+  { id: 'Guides', icon: FileText, title: { ru: 'Полезные гайды', en: 'Useful Guides', es: 'Guías útiles', zh: '实用指南', ko: '유용한 가이드' } },
 ];
 
 const CATEGORY_ROUTES: Record<CategoryType, string> = {
@@ -170,21 +171,63 @@ const CATEGORY_ROUTES: Record<CategoryType, string> = {
   Guides: '/guides',
 };
 
+const LANGUAGE_PREFIXES: Record<Language, string> = {
+  ru: '',
+  en: '/en',
+  es: '/es',
+  zh: '/zh',
+  ko: '/ko',
+};
+
+const LANGUAGE_OPTIONS: { value: Language; label: string; inLanguage: string }[] = [
+  { value: 'ru', label: 'RU', inLanguage: 'ru-RU' },
+  { value: 'en', label: 'EN', inLanguage: 'en' },
+  { value: 'es', label: 'ES', inLanguage: 'es' },
+  { value: 'zh', label: '中文', inLanguage: 'zh-CN' },
+  { value: 'ko', label: 'KO', inLanguage: 'ko-KR' },
+];
+
+const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/';
+
+const getLanguageFromPath = (path = typeof window !== 'undefined' ? window.location.pathname : '/'): Language => {
+  const normalizedPath = normalizePath(path);
+  return LANGUAGE_OPTIONS.find(({ value }) => {
+    const prefix = LANGUAGE_PREFIXES[value];
+    return prefix && (normalizedPath === prefix || normalizedPath.startsWith(`${prefix}/`));
+  })?.value || 'ru';
+};
+
+const stripLanguagePrefix = (path: string) => {
+  const normalizedPath = normalizePath(path);
+  const prefix = LANGUAGE_PREFIXES[getLanguageFromPath(path)];
+  if (!prefix) return normalizedPath;
+  if (normalizedPath === prefix) return '/';
+  return normalizedPath.startsWith(`${prefix}/`) ? normalizedPath.slice(prefix.length) || '/' : normalizedPath;
+};
+
+const getLocalizedRoute = (category: CategoryType, language: Language) =>
+  `${LANGUAGE_PREFIXES[language]}${CATEGORY_ROUTES[category]}`;
+
+const getLocalizedHomeRoute = (language: Language) => LANGUAGE_PREFIXES[language] || '/';
+
+const getLocalizedValue = <T,>(value: Localized<T> | undefined, language: Language): T | undefined =>
+  value?.[language] ?? value?.en ?? value?.ru;
+
 const getDefaultSubFilter = (): SubCategory => 'None';
 
 const getCategoryFromPath = (path = typeof window !== 'undefined' ? window.location.pathname : '/'): CategoryType => {
-  const normalizedPath = path.replace(/\/+$/, '') || '/';
+  const normalizedPath = stripLanguagePrefix(path);
   const match = Object.entries(CATEGORY_ROUTES).find(([, route]) => route === normalizedPath);
   return (match?.[0] as CategoryType | undefined) || 'Proxy';
 };
 
 const SECTION_SEO: Record<CategoryType, {
   route: string;
-  title: Record<Language, string>;
-  description: Record<Language, string>;
-  heading: Record<Language, string>;
-  intro: Record<Language, string>;
-  points: Record<Language, string[]>;
+  title: Localized;
+  description: Localized;
+  heading: Localized;
+  intro: Localized;
+  points: Localized<string[]>;
 }> = {
   Proxy: {
     route: CATEGORY_ROUTES.Proxy,
@@ -414,6 +457,149 @@ const SECTION_SEO: Record<CategoryType, {
     points: {
       ru: ['Начать можно с гайда по смене IP и форвардингу Gmail.', 'Для фермы аккаунтов полезен большой материал по почтам, прокси и антидетектам.', 'Крипто-гайды помогают с UID, адресами и верификациями.'],
       en: ['Start with the IP change and Gmail forwarding guides.', 'The account farm guide covers emails, proxies, and antidetect browsers.', 'Crypto guides help with UIDs, addresses, and verifications.'],
+    },
+  },
+};
+
+const RUNTIME_SEO_TRANSLATIONS: Partial<Record<CategoryType, Partial<Record<Language, { title: string; description: string }>>>> = {
+  Proxy: {
+    es: {
+      title: 'Proxies y VPN para cuentas y trabajo | Hopscup Tools',
+      description: 'Selección de servicios proxy y VPN: residential, mobile, ISP, IPv4/IPv6, pagos con tarjeta y cripto para cuentas y automatización.',
+    },
+    zh: {
+      title: '账号工作用代理和 VPN | Hopscup Tools',
+      description: '精选代理和 VPN 服务：住宅、移动、ISP、IPv4/IPv6，支持银行卡和加密货币支付。',
+    },
+    ko: {
+      title: '계정 작업용 프록시와 VPN | Hopscup Tools',
+      description: '계정 작업과 자동화를 위한 residential, mobile, ISP, IPv4/IPv6 프록시 및 VPN 모음.',
+    },
+  },
+  Antidetect: {
+    es: {
+      title: 'Navegadores antidetect para multiaccounting | Hopscup Tools',
+      description: 'Comparación de navegadores antidetect: perfiles gratis, planes iniciales, precio por 100 perfiles y opciones básicas o avanzadas.',
+    },
+    zh: {
+      title: '多账号用反检测浏览器 | Hopscup Tools',
+      description: '反检测浏览器对比：免费配置文件、入门套餐、100 个配置文件价格以及基础/高级任务选择。',
+    },
+    ko: {
+      title: '멀티 계정용 안티디텍트 브라우저 | Hopscup Tools',
+      description: '무료 프로필, 시작 요금제, 100개 프로필 가격, 기본/고급 작업용 안티디텍트 브라우저 비교.',
+    },
+  },
+  Stores: {
+    es: {
+      title: 'Tiendas de cuentas y suscripciones | Hopscup Tools',
+      description: 'Sitios y tiendas de Telegram para comprar cuentas, suscripciones de IA, Discord, Twitter, Google y otros productos digitales.',
+    },
+    zh: {
+      title: '账号和订阅商店 | Hopscup Tools',
+      description: '用于购买账号、AI 订阅、Discord、Twitter、Google 和其他数字商品的网站与 Telegram 商店。',
+    },
+    ko: {
+      title: '계정 및 구독 스토어 | Hopscup Tools',
+      description: '계정, AI 구독, Discord, Twitter, Google 및 기타 디지털 상품 구매용 웹사이트와 Telegram 상점 모음.',
+    },
+  },
+  Cards: {
+    es: {
+      title: 'Tarjetas virtuales extranjeras con y sin KYC | Hopscup Tools',
+      description: 'Servicios de tarjetas virtuales extranjeras para suscripciones, App Store, Google Play, Airbnb, publicidad y otros servicios.',
+    },
+    zh: {
+      title: '有 KYC 和无 KYC 的海外虚拟卡 | Hopscup Tools',
+      description: '用于支付订阅、App Store、Google Play、Airbnb、广告和其他海外服务的虚拟卡服务。',
+    },
+    ko: {
+      title: 'KYC 유무별 해외 가상 카드 | Hopscup Tools',
+      description: '구독, App Store, Google Play, Airbnb, 광고 등 해외 서비스 결제를 위한 가상 카드 서비스.',
+    },
+  },
+  Crypto: {
+    es: {
+      title: 'Comprar y vender cripto online y offline | Hopscup Tools',
+      description: 'Servicios para comprar y vender cripto: intercambio online, direcciones offline, efectivo, tarjetas, USDT y redes populares.',
+    },
+    zh: {
+      title: '线上和线下买卖加密货币 | Hopscup Tools',
+      description: '用于买卖加密货币的兑换服务：线上兑换、线下方向、现金、银行卡、USDT 和常用网络。',
+    },
+    ko: {
+      title: '온라인/오프라인 암호화폐 매매 | Hopscup Tools',
+      description: '온라인 환전, 오프라인 거래, 현금, 카드, USDT 및 주요 네트워크를 지원하는 암호화폐 교환 서비스.',
+    },
+  },
+  SMS: {
+    es: {
+      title: 'Activadores SMS para registrar cuentas | Hopscup Tools',
+      description: 'Activadores SMS y números virtuales para registrar cuentas: países, pagos, cripto, tarjetas y métodos rusos.',
+    },
+    zh: {
+      title: '账号注册用短信接码服务 | Hopscup Tools',
+      description: '账号注册用短信接码和虚拟号码：地区、支付方式、加密货币、银行卡和俄罗斯充值方式。',
+    },
+    ko: {
+      title: '계정 등록용 SMS 인증 서비스 | Hopscup Tools',
+      description: '계정 등록용 SMS 인증 및 가상 번호: 지역, 결제, 암호화폐, 카드, 러시아 충전 방법.',
+    },
+  },
+  VPS: {
+    es: {
+      title: 'Servidores VDS y VPS para bots y trabajo | Hopscup Tools',
+      description: 'Hosting VDS/VPS para bots, scripts, scraping, nodos y trabajo remoto: MaCloud, Xorek, VDSina, SpaceCore, AEZA.',
+    },
+    zh: {
+      title: '机器人和工作任务用 VDS/VPS 服务器 | Hopscup Tools',
+      description: '用于机器人、脚本、采集、节点和远程工作的 VDS/VPS 主机：MaCloud、Xorek、VDSina、SpaceCore、AEZA。',
+    },
+    ko: {
+      title: '봇과 작업용 VDS/VPS 서버 | Hopscup Tools',
+      description: '봇, 스크립트, 스크래핑, 노드, 원격 작업용 VDS/VPS 호스팅: MaCloud, Xorek, VDSina, SpaceCore, AEZA.',
+    },
+  },
+  Social: {
+    es: {
+      title: 'Boost social y bolsas de tareas para referidos | Hopscup Tools',
+      description: 'Sitios de boost y bolsas de tareas para referidos, registros, acciones sociales y tareas de Telegram con pagos por tarjeta y cripto.',
+    },
+    zh: {
+      title: '用于推荐和任务的平台 | Hopscup Tools',
+      description: '用于推荐、注册、社交行为和 Telegram 任务的增长网站与任务平台，支持银行卡和加密货币支付。',
+    },
+    ko: {
+      title: '추천인과 작업용 소셜 부스트 및 태스크 플랫폼 | Hopscup Tools',
+      description: '추천인, 가입, 소셜 액션, Telegram 작업을 위한 부스트 사이트와 태스크 거래소. 카드 및 암호화폐 결제 지원.',
+    },
+  },
+  Steam: {
+    es: {
+      title: 'Recarga de Steam desde Rusia y con ítems | Hopscup Tools',
+      description: 'Métodos de recarga de Steam: por login, con ítems CS/TF/Rust, opciones para Rusia, recargas rápidas y hasta +30% con ítems.',
+    },
+    zh: {
+      title: '俄罗斯 Steam 充值与物品充值 | Hopscup Tools',
+      description: 'Steam 充值方式：通过登录名、CS/TF/Rust 物品、适合俄罗斯的快速充值，以及最高 +30% 的物品充值。',
+    },
+    ko: {
+      title: '러시아 Steam 충전 및 아이템 충전 | Hopscup Tools',
+      description: 'Steam 충전 방법: 로그인 충전, CS/TF/Rust 아이템 충전, 러시아 친화 옵션, 빠른 충전, 아이템으로 최대 +30%.',
+    },
+  },
+  Guides: {
+    es: {
+      title: 'Guías útiles sobre cuentas, IP, Gmail y cripto | Hopscup Tools',
+      description: 'Guías de Hopscup sobre cambio de IP, reenvío de Gmail, granjas de cuentas, plataformas KYC/OTC, UID y direcciones para exchanges.',
+    },
+    zh: {
+      title: '账号、IP、Gmail 和加密货币实用指南 | Hopscup Tools',
+      description: 'Hopscup 关于换 IP、Gmail 转发、账号农场、KYC/OTC 平台、UID 和交易所地址的指南。',
+    },
+    ko: {
+      title: '계정, IP, Gmail, 암호화폐 유용한 가이드 | Hopscup Tools',
+      description: 'IP 변경, Gmail 포워딩, 계정 파밍, KYC/OTC 플랫폼, UID, 거래소 출금 주소에 대한 Hopscup 가이드.',
     },
   },
 };
@@ -1772,19 +1958,27 @@ const PlatformIcon = ({ name, className = "w-3.5 h-3.5" }: { name: string; class
   return <Icon className={className} />;
 };
 
-const LanguageToggle = ({ lang, setLang }: { lang: Language; setLang: (l: Language) => void }) => (
-  <button 
-    onClick={() => setLang(lang === 'ru' ? 'en' : 'ru')}
-    className="flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 hover:border-brand-purple transition-all duration-300 group"
-  >
+const LanguageToggle = ({ lang, onChange }: { lang: Language; onChange: (language: Language) => void }) => (
+  <label className="flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 hover:border-brand-purple transition-all duration-300 group cursor-pointer">
     <Languages className="w-4 h-4 text-brand-purple group-hover:scale-110 transition-transform" />
-    <span className="text-xs font-medium uppercase tracking-wider">{lang === 'ru' ? 'RU' : 'EN'}</span>
-  </button>
+    <select
+      value={lang}
+      onChange={(event) => onChange(event.target.value as Language)}
+      className="bg-transparent text-xs font-medium uppercase tracking-wider text-white focus:outline-none cursor-pointer"
+      aria-label="Language"
+    >
+      {LANGUAGE_OPTIONS.map((option) => (
+        <option key={option.value} value={option.value} className="bg-bg-dark text-white">
+          {option.label}
+        </option>
+      ))}
+    </select>
+  </label>
 );
 
 export default function App() {
   const initialCategory = getCategoryFromPath();
-  const [lang, setLang] = useState<Language>('ru');
+  const [lang, setLang] = useState<Language>(getLanguageFromPath());
   const [activeCategory, setActiveCategory] = useState<CategoryType>(initialCategory);
   const [subFilter, setSubFilter] = useState<SubCategory>(getDefaultSubFilter());
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
@@ -1804,6 +1998,9 @@ export default function App() {
   const typingSpeed = 150;
   const deletingSpeed = 100;
   const pauseTime = 2000;
+  const l = <T,>(value?: Localized<T>) => getLocalizedValue(value, lang);
+  const lList = <T,>(value?: Localized<T[]>) => getLocalizedValue(value, lang) || [];
+  const tx = <T,>(value: Partial<Record<Language, T>> & { en: T }) => value[lang] ?? value.en;
 
   useEffect(() => {
     const currentWord = words[wordIndex];
@@ -1830,7 +2027,9 @@ export default function App() {
   useEffect(() => {
     const handleRouteChange = () => {
       const nextCategory = getCategoryFromPath();
+      const nextLanguage = getLanguageFromPath();
       setActiveCategory(nextCategory);
+      setLang(nextLanguage);
       setSubFilter(getDefaultSubFilter());
       setSearchQuery('');
     };
@@ -1841,9 +2040,10 @@ export default function App() {
 
   useEffect(() => {
     const sectionSeo = SECTION_SEO[activeCategory];
-    const canonicalUrl = `${SITE_URL}${sectionSeo.route}`;
-    const title = sectionSeo.title[lang];
-    const description = sectionSeo.description[lang];
+    const canonicalUrl = `${SITE_URL}${getLocalizedRoute(activeCategory, lang)}`;
+    const runtimeSeo = RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
+    const title = runtimeSeo?.title || getLocalizedValue(sectionSeo.title, lang) || sectionSeo.title.en;
+    const description = runtimeSeo?.description || getLocalizedValue(sectionSeo.description, lang) || sectionSeo.description.en;
 
     const setMeta = (selector: string, attribute: 'name' | 'property', key: string, content: string) => {
       let element = document.head.querySelector<HTMLMetaElement>(selector);
@@ -1876,6 +2076,22 @@ export default function App() {
     }
     canonical.setAttribute('href', canonicalUrl);
 
+    const setAlternate = (hreflang: string, href: string) => {
+      let alternate = document.head.querySelector<HTMLLinkElement>(`link[rel="alternate"][hreflang="${hreflang}"]`);
+      if (!alternate) {
+        alternate = document.createElement('link');
+        alternate.setAttribute('rel', 'alternate');
+        alternate.setAttribute('hreflang', hreflang);
+        document.head.appendChild(alternate);
+      }
+      alternate.setAttribute('href', href);
+    };
+
+    LANGUAGE_OPTIONS.forEach(({ value }) => {
+      setAlternate(value, `${SITE_URL}${getLocalizedRoute(activeCategory, value)}`);
+    });
+    setAlternate('x-default', `${SITE_URL}${CATEGORY_ROUTES[activeCategory]}`);
+
     let structuredData = document.head.querySelector<HTMLScriptElement>('#structured-data');
     if (!structuredData) {
       structuredData = document.createElement('script');
@@ -1894,7 +2110,7 @@ export default function App() {
         name: "Hopscup's Tools Hub",
         url: SITE_URL,
       },
-      inLanguage: lang === 'ru' ? 'ru-RU' : 'en',
+      inLanguage: LANGUAGE_OPTIONS.find((option) => option.value === lang)?.inLanguage || 'en',
     });
   }, [activeCategory, lang]);
 
@@ -1955,57 +2171,63 @@ export default function App() {
   };
 
   const t = {
-    heroTitle: lang === 'ru' ? "Hopscup's Tools Hub" : "Hopscup's Tools Hub",
-    heroSub: lang === 'ru' ? 'Здесь собраны все полезные сервисы, которые я использую для работы' : 'Here are all the useful services that I use for my work',
-    visitSite: lang === 'ru' ? 'Перейти' : 'Visit',
-    promo: lang === 'ru' ? 'Промокод' : 'Promo',
-    popular: lang === 'ru' ? 'Популярное' : 'Popular',
-    bestChoice: lang === 'ru' ? 'Лучший выбор' : 'Best Choice',
-    footer: lang === 'ru' ? 'Сделано с душой для Hopscup Crew' : 'Made with soul for Hopscup Crew',
-    textGuide: lang === 'ru' ? 'Текстовый гайд' : 'Text Guide',
-    videoGuide: lang === 'ru' ? 'Видео гайд' : 'Video Guide',
-    all: lang === 'ru' ? 'Все' : 'All',
-    issuance: lang === 'ru' ? 'Выпуск' : 'Issuance',
-    maintenance: lang === 'ru' ? 'Обслуживание' : 'Monthly Fee',
-    verification: lang === 'ru' ? 'Верификация (KYC)' : 'Verification (KYC)',
-    cashback: lang === 'ru' ? 'Кешбек' : 'Cashback',
-    topup: lang === 'ru' ? 'Пополнение' : 'Top-up',
-    type: lang === 'ru' ? 'Тип' : 'Type',
-    geo: lang === 'ru' ? 'ГЕО' : 'GEO',
-    accounts: lang === 'ru' ? 'Аккаунты:' : 'Accounts:',
-    payment: lang === 'ru' ? 'Оплата:' : 'Payment:',
-    yearLabel: lang === 'ru' ? 'года' : 'year',
-    guideTitle: lang === 'ru' ? 'Как выбрать аккаунт правильно?' : 'How to choose an account correctly?',
-    paymentMethods: lang === 'ru' ? 'Способы оплаты' : 'Payment Methods',
-    platforms: lang === 'ru' ? 'Платформы' : 'Platforms',
-    freeProfiles: lang === 'ru' ? 'Бесплатные профили' : 'Free Profiles',
-    tariffStart: lang === 'ru' ? 'Стартовый тариф' : 'Starter Plan',
-    profiles100: lang === 'ru' ? '100 профилей' : '100 Profiles',
-    whatToPay: lang === 'ru' ? 'Что можно оплачивать:' : 'Supported Services:',
-    nuances: lang === 'ru' ? 'Нюансы и ограничения:' : 'Nuances & Limitations:',
-    pros: lang === 'ru' ? 'Плюсы:' : 'Pros:',
-    rate: lang === 'ru' ? 'Процент пополнения' : 'Top-up Rate',
-    description: lang === 'ru' ? 'Описание' : 'Description',
-    emptyCategory: lang === 'ru' ? 'В этой категории пока пусто' : 'Empty Category',
-    visit: lang === 'ru' ? 'Перейти' : 'Visit Site',
-    open: lang === 'ru' ? 'Открыть' : 'View Details',
-    types: lang === 'ru' ? 'Типы' : 'Types',
+    heroTitle: "Hopscup's Tools Hub",
+    heroSub: tx({
+      ru: 'Здесь собраны все полезные сервисы, которые я использую для работы',
+      en: 'Here are all the useful services that I use for my work',
+      es: 'Aquí están todos los servicios útiles que uso para trabajar',
+      zh: '这里收集了我工作中常用的实用服务',
+      ko: '업무에 사용하는 유용한 서비스들을 모아두었습니다',
+    }),
+    visitSite: tx({ ru: 'Перейти', en: 'Visit', es: 'Abrir', zh: '访问', ko: '열기' }),
+    promo: tx({ ru: 'Промокод', en: 'Promo', es: 'Promo', zh: '优惠码', ko: '프로모 코드' }),
+    popular: tx({ ru: 'Популярное', en: 'Popular', es: 'Popular', zh: '热门', ko: '인기' }),
+    bestChoice: tx({ ru: 'Лучший выбор', en: 'Best Choice', es: 'Mejor opción', zh: '最佳选择', ko: '추천 선택' }),
+    footer: tx({ ru: 'Сделано с душой для Hopscup Crew', en: 'Made with soul for Hopscup Crew', es: 'Hecho con cariño para Hopscup Crew', zh: '为 Hopscup Crew 用心制作', ko: 'Hopscup Crew를 위해 정성껏 제작' }),
+    textGuide: tx({ ru: 'Текстовый гайд', en: 'Text Guide', es: 'Guía escrita', zh: '文字指南', ko: '텍스트 가이드' }),
+    videoGuide: tx({ ru: 'Видео гайд', en: 'Video Guide', es: 'Videoguía', zh: '视频指南', ko: '비디오 가이드' }),
+    all: tx({ ru: 'Все', en: 'All', es: 'Todo', zh: '全部', ko: '전체' }),
+    issuance: tx({ ru: 'Выпуск', en: 'Issuance', es: 'Emisión', zh: '开卡', ko: '발급' }),
+    maintenance: tx({ ru: 'Обслуживание', en: 'Monthly Fee', es: 'Cuota mensual', zh: '月费', ko: '월 사용료' }),
+    verification: tx({ ru: 'Верификация (KYC)', en: 'Verification (KYC)', es: 'Verificación (KYC)', zh: '身份验证 (KYC)', ko: '인증 (KYC)' }),
+    cashback: tx({ ru: 'Кешбек', en: 'Cashback', es: 'Cashback', zh: '返现', ko: '캐시백' }),
+    topup: tx({ ru: 'Пополнение', en: 'Top-up', es: 'Recarga', zh: '充值', ko: '충전' }),
+    type: tx({ ru: 'Тип', en: 'Type', es: 'Tipo', zh: '类型', ko: '유형' }),
+    geo: tx({ ru: 'ГЕО', en: 'GEO', es: 'GEO', zh: '地区', ko: '지역' }),
+    accounts: tx({ ru: 'Аккаунты:', en: 'Accounts:', es: 'Cuentas:', zh: '账号：', ko: '계정:' }),
+    payment: tx({ ru: 'Оплата:', en: 'Payment:', es: 'Pago:', zh: '支付：', ko: '결제:' }),
+    yearLabel: tx({ ru: 'года', en: 'year', es: 'año', zh: '年', ko: '년' }),
+    guideTitle: tx({ ru: 'Как выбрать аккаунт правильно?', en: 'How to choose an account correctly?', es: '¿Cómo elegir una cuenta?', zh: '如何选择账号？', ko: '계정을 어떻게 고를까?' }),
+    paymentMethods: tx({ ru: 'Способы оплаты', en: 'Payment Methods', es: 'Métodos de pago', zh: '支付方式', ko: '결제 방법' }),
+    platforms: tx({ ru: 'Платформы', en: 'Platforms', es: 'Plataformas', zh: '平台', ko: '플랫폼' }),
+    freeProfiles: tx({ ru: 'Бесплатные профили', en: 'Free Profiles', es: 'Perfiles gratis', zh: '免费配置文件', ko: '무료 프로필' }),
+    tariffStart: tx({ ru: 'Стартовый тариф', en: 'Starter Plan', es: 'Plan inicial', zh: '入门套餐', ko: '시작 요금제' }),
+    profiles100: tx({ ru: '100 профилей', en: '100 Profiles', es: '100 perfiles', zh: '100 个配置文件', ko: '프로필 100개' }),
+    whatToPay: tx({ ru: 'Что можно оплачивать:', en: 'Supported Services:', es: 'Servicios compatibles:', zh: '支持的服务：', ko: '지원 서비스:' }),
+    nuances: tx({ ru: 'Нюансы и ограничения:', en: 'Nuances & Limitations:', es: 'Matices y limitaciones:', zh: '注意事项与限制：', ko: '주의점 및 제한:' }),
+    pros: tx({ ru: 'Плюсы:', en: 'Pros:', es: 'Ventajas:', zh: '优点：', ko: '장점:' }),
+    rate: tx({ ru: 'Процент пополнения', en: 'Top-up Rate', es: 'Tasa de recarga', zh: '充值比例', ko: '충전 비율' }),
+    description: tx({ ru: 'Описание', en: 'Description', es: 'Descripción', zh: '描述', ko: '설명' }),
+    emptyCategory: tx({ ru: 'В этой категории пока пусто', en: 'Empty Category', es: 'Categoría vacía', zh: '该分类暂无内容', ko: '비어 있는 카테고리' }),
+    visit: tx({ ru: 'Перейти', en: 'Visit Site', es: 'Visitar sitio', zh: '访问网站', ko: '사이트 방문' }),
+    open: tx({ ru: 'Открыть', en: 'View Details', es: 'Ver detalles', zh: '查看详情', ko: '자세히 보기' }),
+    types: tx({ ru: 'Типы', en: 'Types', es: 'Tipos', zh: '类型', ko: '유형' }),
     subFilters: {
-      Proxy: lang === 'ru' ? 'Прокси' : 'Proxy',
-      VPN: lang === 'ru' ? 'VPN' : 'VPN',
-      PCBasic: lang === 'ru' ? 'ПК базовые' : 'PC Basic',
-      PCAdvanced: lang === 'ru' ? 'ПК усиленные' : 'PC Advanced',
-      Mobile: lang === 'ru' ? 'Мобильные' : 'Mobile',
-      NoKYC: lang === 'ru' ? 'Без KYC' : 'No KYC',
-      WithKYC: lang === 'ru' ? 'С KYC' : 'With KYC',
-      CardCrypto: lang === 'ru' ? 'Карты/Крипта' : 'Cards/Crypto',
-      USDTQR: lang === 'ru' ? 'USDT QR' : 'USDT QR',
-      Web: lang === 'ru' ? 'Сайты' : 'Websites',
-      Bot: lang === 'ru' ? 'Боты в Telegram' : 'Telegram Bots',
-      BoostSites: lang === 'ru' ? 'Сайты накрутки' : 'Boost Sites',
-      Bux: lang === 'ru' ? 'Буксы' : 'Task Exchanges',
-      SteamFast: lang === 'ru' ? 'Быстро по логину' : 'Fast by login',
-      SteamItems: lang === 'ru' ? 'Через предметы' : 'Through items',
+      Proxy: tx({ ru: 'Прокси', en: 'Proxy', es: 'Proxy', zh: '代理', ko: '프록시' }),
+      VPN: 'VPN',
+      PCBasic: tx({ ru: 'ПК базовые', en: 'PC Basic', es: 'PC básico', zh: '基础 PC', ko: 'PC 기본' }),
+      PCAdvanced: tx({ ru: 'ПК усиленные', en: 'PC Advanced', es: 'PC avanzado', zh: '高级 PC', ko: 'PC 고급' }),
+      Mobile: tx({ ru: 'Мобильные', en: 'Mobile', es: 'Móvil', zh: '移动端', ko: '모바일' }),
+      NoKYC: tx({ ru: 'Без KYC', en: 'No KYC', es: 'Sin KYC', zh: '无 KYC', ko: 'KYC 없음' }),
+      WithKYC: tx({ ru: 'С KYC', en: 'With KYC', es: 'Con KYC', zh: '有 KYC', ko: 'KYC 있음' }),
+      CardCrypto: tx({ ru: 'Карты/Крипта', en: 'Cards/Crypto', es: 'Tarjetas/Cripto', zh: '银行卡/加密货币', ko: '카드/암호화폐' }),
+      USDTQR: 'USDT QR',
+      Web: tx({ ru: 'Сайты', en: 'Websites', es: 'Sitios web', zh: '网站', ko: '웹사이트' }),
+      Bot: tx({ ru: 'Боты в Telegram', en: 'Telegram Bots', es: 'Bots de Telegram', zh: 'Telegram 机器人', ko: 'Telegram 봇' }),
+      BoostSites: tx({ ru: 'Сайты накрутки', en: 'Boost Sites', es: 'Sitios de boost', zh: '增长网站', ko: '부스트 사이트' }),
+      Bux: tx({ ru: 'Буксы', en: 'Task Exchanges', es: 'Bolsas de tareas', zh: '任务平台', ko: '태스크 거래소' }),
+      SteamFast: tx({ ru: 'Быстро по логину', en: 'Fast by login', es: 'Rápido por login', zh: '登录名快速充值', ko: '로그인 빠른 충전' }),
+      SteamItems: tx({ ru: 'Через предметы', en: 'Through items', es: 'Con ítems', zh: '通过物品', ko: '아이템으로' }),
     },
     proxyTypes: {
       static: lang === 'ru' ? 'Статические' : 'Static Proxy',
@@ -2065,12 +2287,22 @@ export default function App() {
   };
 
   const handleCategoryChange = (cat: CategoryType) => {
-    const nextRoute = CATEGORY_ROUTES[cat];
+    const nextRoute = getLocalizedRoute(cat, lang);
     if (window.location.pathname !== nextRoute) {
       window.history.pushState(null, '', nextRoute);
     }
     setActiveCategory(cat);
     setSubFilter(getDefaultSubFilter());
+    setSearchQuery('');
+    scrollToPageTop();
+  };
+
+  const handleLanguageChange = (nextLanguage: Language) => {
+    const nextRoute = getLocalizedRoute(activeCategory, nextLanguage);
+    if (window.location.pathname !== nextRoute) {
+      window.history.pushState(null, '', nextRoute);
+    }
+    setLang(nextLanguage);
     setSearchQuery('');
     scrollToPageTop();
   };
@@ -2109,7 +2341,7 @@ export default function App() {
         {/* Top Row: Logo & Language Toggle */}
         <div className="py-2 px-6 md:px-12 flex justify-between items-center border-b border-white/5">
           <div className="flex items-center gap-4">
-            <a href="/" aria-label="Hopscup's Tools Hub" className="w-10 h-10 rounded-xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/5 transition-transform hover:scale-105">
+            <a href={getLocalizedHomeRoute(lang)} aria-label="Hopscup's Tools Hub" className="w-10 h-10 rounded-xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/5 transition-transform hover:scale-105">
               <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
             </a>
             
@@ -2134,7 +2366,7 @@ export default function App() {
           </div>
           
           <div className="flex items-center gap-4">
-            <LanguageToggle lang={lang} setLang={setLang} />
+            <LanguageToggle lang={lang} onChange={handleLanguageChange} />
           </div>
         </div>
 
@@ -2155,7 +2387,7 @@ export default function App() {
                   }`}
                 >
                   <Icon className={`w-4 h-4 transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`} />
-                  <span className="tracking-widest uppercase text-[9px]">{cat.title[lang]}</span>
+                  <span className="tracking-widest uppercase text-[9px]">{l(cat.title)}</span>
                 </button>
               );
             })}
@@ -2437,9 +2669,9 @@ export default function App() {
                         </div>
 
                         <div className="flex flex-col gap-4">
-                          <InfoRow icon={Coins} label={t.paymentMethods} value={offer.details?.paymentMethods?.[lang]} />
-                          <InfoRow icon={Globe} label={t.geo} value={offer.details?.geo?.[lang]} />
-                          <InfoRow icon={Layers} label={t.types} value={offer.details?.types?.[lang]} />
+                          <InfoRow icon={Coins} label={t.paymentMethods} value={l(offer.details?.paymentMethods)} />
+                          <InfoRow icon={Globe} label={t.geo} value={l(offer.details?.geo)} />
+                          <InfoRow icon={Layers} label={t.types} value={l(offer.details?.types)} />
                           <InfoRow icon={Monitor} label={t.platforms} value={offer.platforms?.join(', ')} />
                         </div>
                       </div>
@@ -2472,7 +2704,7 @@ export default function App() {
 
                         {offer.category !== 'Cards' && offer.category !== 'Stores' && offer.category !== 'Proxy' && offer.category !== 'Antidetect' && offer.category !== 'Crypto' && offer.category !== 'Social' && offer.category !== 'VPS' && offer.category !== 'Steam' && offer.category !== 'Guides' && (
                           <p className="text-white/60 text-base mb-6 leading-relaxed font-medium min-h-[3.5rem] group-hover:text-white transition-colors">
-                            {offer.description[lang]}
+                            {l(offer.description)}
                           </p>
                         )}
 
@@ -2482,7 +2714,7 @@ export default function App() {
                               <div className="flex items-center gap-2 text-white/40 font-black uppercase text-[10px] tracking-widest">
                                 <Globe className="w-3.5 h-3.5 text-brand-purple" />
                                 <span>{t.geo}:</span>
-                                <span className="text-white/80">{offer.details.geo[lang]}</span>
+                                <span className="text-white/80">{l(offer.details.geo)}</span>
                               </div>
                             )}
                             <div className="flex items-center gap-2 text-white/40 font-black uppercase text-[10px] tracking-widest">
@@ -2490,7 +2722,7 @@ export default function App() {
                               <span>{t.paymentMethods}:</span>
                             </div>
                             <p className="text-[11px] text-white/60 font-medium leading-tight">
-                              {offer.details?.paymentMethods?.[lang]}
+                              {l(offer.details?.paymentMethods)}
                             </p>
                           </div>
                         )}
@@ -2504,62 +2736,62 @@ export default function App() {
                             <div className="w-1.5 h-1.5 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
                             <span className="text-[12px] text-white/30 uppercase font-black tracking-[0.2em]">{t.issuance}</span>
                           </div>
-                          <span className="text-base text-brand-purple font-black">{offer.cardStats.issuance[lang]}</span>
+                          <span className="text-base text-brand-purple font-black">{l(offer.cardStats.issuance)}</span>
                         </div>
                         <div className="flex justify-between items-center px-1">
                           <div className="flex items-center gap-3">
                             <div className="w-1.5 h-1.5 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
                             <span className="text-[12px] text-white/30 uppercase font-black tracking-[0.2em]">{t.maintenance}</span>
                           </div>
-                          <span className="text-base text-brand-purple font-black">{offer.cardStats.maintenance[lang]}</span>
+                          <span className="text-base text-brand-purple font-black">{l(offer.cardStats.maintenance)}</span>
                         </div>
                         <div className="flex justify-between items-center px-1">
                           <div className="flex items-center gap-3">
                             <div className="w-1.5 h-1.5 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
                             <span className="text-[12px] text-white/30 uppercase font-black tracking-[0.2em]">Apple/Google Pay</span>
                           </div>
-                          <span className="text-base text-white/80 font-bold whitespace-nowrap">{offer.cardStats.paySystems[lang]}</span>
+                          <span className="text-base text-white/80 font-bold whitespace-nowrap">{l(offer.cardStats.paySystems)}</span>
                         </div>
                         <div className="flex justify-between items-center px-1">
                           <div className="flex items-center gap-3">
                             <div className="w-1.5 h-1.5 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
                             <span className="text-[12px] text-white/30 uppercase font-black tracking-[0.2em]">{t.verification}</span>
                           </div>
-                          <span className="text-base text-white/80 font-bold">{offer.cardStats.verification[lang]}</span>
+                          <span className="text-base text-white/80 font-bold">{l(offer.cardStats.verification)}</span>
                         </div>
                         <div className="flex justify-between items-center px-1">
                           <div className="flex items-center gap-3">
                             <div className="w-1.5 h-1.5 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
                             <span className="text-[12px] text-white/30 uppercase font-black tracking-[0.2em]">{t.cashback}</span>
                           </div>
-                          <span className="text-base text-white/80 font-bold">{offer.cardStats.cashback[lang]}</span>
+                          <span className="text-base text-white/80 font-bold">{l(offer.cardStats.cashback)}</span>
                         </div>
                         <div className="flex justify-between items-center px-1">
                           <div className="flex items-center gap-3">
                             <div className="w-1.5 h-1.5 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
                             <span className="text-[12px] text-white/30 uppercase font-black tracking-[0.2em]">{t.topup}</span>
                           </div>
-                          <span className="text-base text-white/80 font-bold whitespace-nowrap overflow-hidden text-ellipsis ml-2 max-w-[120px] text-right">{offer.cardStats.topup[lang]}</span>
+                          <span className="text-base text-white/80 font-bold whitespace-nowrap overflow-hidden text-ellipsis ml-2 max-w-[120px] text-right">{l(offer.cardStats.topup)}</span>
                         </div>
                         <div className="flex justify-between items-center px-1">
                           <div className="flex items-center gap-3">
                             <div className="w-1.5 h-1.5 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
                             <span className="text-[12px] text-white/30 uppercase font-black tracking-[0.2em]">{t.type}</span>
                           </div>
-                          <span className="text-base text-white/80 font-bold whitespace-nowrap overflow-hidden text-ellipsis ml-2 max-w-[120px] text-right">{offer.cardStats.type[lang]}</span>
+                          <span className="text-base text-white/80 font-bold whitespace-nowrap overflow-hidden text-ellipsis ml-2 max-w-[120px] text-right">{l(offer.cardStats.type)}</span>
                         </div>
                       </div>
                     )}
 
                     {(offer.details || offer.platforms?.length) && offer.category !== 'Stores' && offer.category !== 'SMS' && offer.category !== 'Cards' && (
                       <div className="flex flex-col gap-4 mb-8">
-                        <InfoRow icon={Users} label={t.freeProfiles} value={offer.freeProfiles?.[lang]} />
-                        <InfoRow icon={CreditCard} label={t.tariffStart} value={offer.tariffStartPrice?.[lang]} />
-                        <InfoRow icon={Percent} label={t.rate} value={offer.details?.rate?.[lang]} />
-                        <InfoRow icon={Globe} label={t.geo} value={offer.details?.geo?.[lang]} />
-                        <InfoRow icon={Layers} label={t.types} value={offer.details?.types?.[lang]} />
+                        <InfoRow icon={Users} label={t.freeProfiles} value={l(offer.freeProfiles)} />
+                        <InfoRow icon={CreditCard} label={t.tariffStart} value={l(offer.tariffStartPrice)} />
+                        <InfoRow icon={Percent} label={t.rate} value={l(offer.details?.rate)} />
+                        <InfoRow icon={Globe} label={t.geo} value={l(offer.details?.geo)} />
+                        <InfoRow icon={Layers} label={t.types} value={l(offer.details?.types)} />
                         <InfoRow icon={Monitor} label={t.platforms} value={offer.platforms?.join(', ')} />
-                        <InfoRow icon={Coins} label={t.paymentMethods} value={offer.details?.paymentMethods?.[lang]} />
+                        <InfoRow icon={Coins} label={t.paymentMethods} value={l(offer.details?.paymentMethods)} />
                       </div>
                     )}
                   </div>
@@ -2612,17 +2844,17 @@ export default function App() {
           <div className="flex flex-col lg:flex-row gap-6 lg:items-start lg:justify-between">
             <div className="max-w-2xl">
               <p className="text-[10px] uppercase tracking-[0.24em] text-brand-purple font-black mb-3">
-                {activeCategoryData?.title[lang]}
+                {l(activeCategoryData?.title)}
               </p>
               <h2 className="font-display text-2xl md:text-3xl font-black text-white tracking-tight mb-3">
-                {currentSectionSeo.heading[lang]}
+                {l(currentSectionSeo.heading)}
               </h2>
               <p className="text-sm md:text-base text-white/60 leading-relaxed">
-                {currentSectionSeo.intro[lang]}
+                {l(currentSectionSeo.intro)}
               </p>
             </div>
             <div className="grid gap-3 w-full lg:max-w-md">
-              {currentSectionSeo.points[lang].map((point) => (
+              {lList(currentSectionSeo.points).map((point) => (
                 <div key={point} className="flex gap-3 rounded-2xl border border-white/8 bg-black/20 px-4 py-3">
                   <Star className="w-4 h-4 text-brand-purple shrink-0 mt-0.5" />
                   <span className="text-xs md:text-sm text-white/62 font-semibold leading-relaxed">
@@ -3725,7 +3957,7 @@ export default function App() {
                       {t.description}
                     </h4>
                     <p className="text-white/80 leading-relaxed text-base font-medium">
-                      {selectedOffer.description[lang]}
+                      {l(selectedOffer.description)}
                     </p>
                   </div>
 
@@ -3738,7 +3970,7 @@ export default function App() {
                             {t.issuance}
                           </h4>
                         </div>
-                        <p className="text-brand-purple font-black text-lg">{selectedOffer.cardStats.issuance[lang]}</p>
+                        <p className="text-brand-purple font-black text-lg">{l(selectedOffer.cardStats.issuance)}</p>
                       </div>
                       <div className="flex justify-between items-center group/stat">
                         <div className="flex items-center gap-3">
@@ -3747,14 +3979,14 @@ export default function App() {
                             {t.maintenance}
                           </h4>
                         </div>
-                        <p className="text-brand-purple font-black text-lg">{selectedOffer.cardStats.maintenance[lang]}</p>
+                        <p className="text-brand-purple font-black text-lg">{l(selectedOffer.cardStats.maintenance)}</p>
                       </div>
                       <div className="flex justify-between items-center group/stat">
                         <div className="flex items-center gap-3">
                           <div className="w-1.5 h-1.5 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
                           <h4 className="text-[11px] uppercase font-black text-white/30 tracking-[0.2em] group-hover/stat:text-white/60 transition-colors">Apple/Google Pay</h4>
                         </div>
-                        <p className="text-white font-bold text-base">{selectedOffer.cardStats.paySystems[lang]}</p>
+                        <p className="text-white font-bold text-base">{l(selectedOffer.cardStats.paySystems)}</p>
                       </div>
                       <div className="flex justify-between items-center group/stat">
                         <div className="flex items-center gap-3">
@@ -3763,7 +3995,7 @@ export default function App() {
                             {t.verification}
                           </h4>
                         </div>
-                        <p className="text-white font-bold text-base">{selectedOffer.cardStats.verification[lang]}</p>
+                        <p className="text-white font-bold text-base">{l(selectedOffer.cardStats.verification)}</p>
                       </div>
                       <div className="flex justify-between items-center group/stat">
                         <div className="flex items-center gap-3">
@@ -3772,7 +4004,7 @@ export default function App() {
                             {t.cashback}
                           </h4>
                         </div>
-                        <p className="text-white font-bold text-base">{selectedOffer.cardStats.cashback[lang]}</p>
+                        <p className="text-white font-bold text-base">{l(selectedOffer.cardStats.cashback)}</p>
                       </div>
                       <div className="flex justify-between items-center group/stat">
                         <div className="flex items-center gap-3">
@@ -3781,7 +4013,7 @@ export default function App() {
                             {t.topup}
                           </h4>
                         </div>
-                        <p className="text-white font-bold text-base">{selectedOffer.cardStats.topup[lang]}</p>
+                        <p className="text-white font-bold text-base">{l(selectedOffer.cardStats.topup)}</p>
                       </div>
                       <div className="flex justify-between items-center group/stat">
                         <div className="flex items-center gap-3">
@@ -3790,7 +4022,7 @@ export default function App() {
                             {t.type}
                           </h4>
                         </div>
-                        <p className="text-white font-bold text-base">{selectedOffer.cardStats.type[lang]}</p>
+                        <p className="text-white font-bold text-base">{l(selectedOffer.cardStats.type)}</p>
                       </div>
                     </div>
                   )}
@@ -3805,7 +4037,7 @@ export default function App() {
                             : t.whatToPay}
                       </h4>
                       <div className="flex flex-wrap gap-2.5">
-                        {selectedOffer.details.supports[lang]?.map((item, i) => (
+                        {lList(selectedOffer.details.supports).map((item, i) => (
                           <span key={i} className="text-xs bg-brand-purple/10 px-4 py-2 rounded-xl text-brand-purple border border-brand-purple/20 font-bold">
                             {item}
                           </span>
@@ -3820,7 +4052,7 @@ export default function App() {
                         {t.nuances}
                       </h4>
                       <ul className="space-y-3">
-                        {selectedOffer.details.nuances[lang]?.map((item, i) => (
+                        {lList(selectedOffer.details.nuances).map((item, i) => (
                           <li key={i} className="text-sm text-white/50 flex gap-3 leading-relaxed">
                             <span className="text-brand-orange mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0" />
                             {item}
@@ -3836,7 +4068,7 @@ export default function App() {
                         {t.pros}
                       </h4>
                       <ul className="space-y-3">
-                        {selectedOffer.details.pros[lang]?.map((item, i) => (
+                        {lList(selectedOffer.details.pros).map((item, i) => (
                           <li key={i} className="text-sm text-white/70 flex gap-3 leading-relaxed font-medium">
                             <span className="text-green-400 font-bold">✓</span>
                             {item}
@@ -3848,7 +4080,7 @@ export default function App() {
 
                   {selectedOffer.details?.targetAudience && (
                     <div className="pt-4 border-t border-white/5 font-display italic text-white/30 text-xs text-center">
-                      "{selectedOffer.details.targetAudience[lang]}"
+                      "{l(selectedOffer.details.targetAudience)}"
                     </div>
                   )}
 
@@ -3857,13 +4089,13 @@ export default function App() {
                       {selectedOffer.priceInfo?.main && (
                         <div>
                           <h4 className="text-[9px] uppercase font-black text-white/30 tracking-widest mb-1">{t.proxyTypes.static}</h4>
-                          <p className="text-brand-purple font-bold">{selectedOffer.priceInfo.main[lang]}</p>
+                          <p className="text-brand-purple font-bold">{l(selectedOffer.priceInfo.main)}</p>
                         </div>
                       )}
                        {selectedOffer.priceInfo?.secondary && (
                         <div>
                           <h4 className="text-[9px] uppercase font-black text-white/30 tracking-widest mb-1">{t.proxyTypes.residential}</h4>
-                          <p className="text-brand-purple font-bold">{selectedOffer.priceInfo.secondary[lang]}</p>
+                          <p className="text-brand-purple font-bold">{l(selectedOffer.priceInfo.secondary)}</p>
                         </div>
                       )}
                     </div>
@@ -3880,7 +4112,7 @@ export default function App() {
                             <h4 className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">
                               {t.freeProfiles}
                             </h4>
-                            <p className="text-white font-bold text-lg">{selectedOffer.freeProfiles[lang]}</p>
+                            <p className="text-white font-bold text-lg">{l(selectedOffer.freeProfiles)}</p>
                           </div>
                         </div>
                       )}
@@ -3893,7 +4125,7 @@ export default function App() {
                             <h4 className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">
                               {t.tariffStart}
                             </h4>
-                            <p className="text-white font-bold text-lg">{selectedOffer.tariffStartPrice[lang]}</p>
+                            <p className="text-white font-bold text-lg">{l(selectedOffer.tariffStartPrice)}</p>
                           </div>
                         </div>
                       )}
@@ -3906,7 +4138,7 @@ export default function App() {
                             <h4 className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">
                               {t.profiles100}
                             </h4>
-                            <p className="text-white font-bold text-lg">{selectedOffer.profiles100Price[lang]}</p>
+                            <p className="text-white font-bold text-lg">{l(selectedOffer.profiles100Price)}</p>
                           </div>
                         </div>
                       )}
@@ -3919,7 +4151,7 @@ export default function App() {
                             <h4 className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">
                               {t.rate}
                             </h4>
-                            <p className="text-white font-bold text-lg">{selectedOffer.details.rate[lang]}</p>
+                            <p className="text-white font-bold text-lg">{l(selectedOffer.details.rate)}</p>
                           </div>
                         </div>
                       )}
@@ -3932,7 +4164,7 @@ export default function App() {
                             <h4 className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">
                               {t.geo}
                             </h4>
-                            <p className="text-white font-bold text-lg">{selectedOffer.details.geo[lang]}</p>
+                            <p className="text-white font-bold text-lg">{l(selectedOffer.details.geo)}</p>
                           </div>
                         </div>
                       )}
@@ -3945,7 +4177,7 @@ export default function App() {
                             <h4 className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">
                               {t.types}
                             </h4>
-                            <p className="text-white font-bold text-lg">{selectedOffer.details.types[lang]}</p>
+                            <p className="text-white font-bold text-lg">{l(selectedOffer.details.types)}</p>
                           </div>
                         </div>
                       )}
@@ -3971,7 +4203,7 @@ export default function App() {
                             <h4 className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">
                               {t.paymentMethods}
                             </h4>
-                            <p className="text-white font-bold text-lg">{selectedOffer.details.paymentMethods[lang]}</p>
+                            <p className="text-white font-bold text-lg">{l(selectedOffer.details.paymentMethods)}</p>
                           </div>
                         </div>
                       )}
