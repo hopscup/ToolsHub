@@ -2073,6 +2073,377 @@ const OFFERS: Offer[] = [
   }
 ];
 
+const OFFER_TITLE_TRANSLATIONS: Partial<Record<string, Partial<Record<Language, string>>>> = {
+  'guide-mobile-ip': {
+    en: 'Changing IP with mobile internet and airplane mode on Android and iPhone',
+    es: 'Cambiar la IP con internet móvil y modo avión en Android y iPhone',
+    zh: '通过移动网络和飞行模式更换 Android 与 iPhone 的 IP',
+    ko: 'Android와 iPhone에서 모바일 인터넷과 비행기 모드로 IP 변경하기',
+  },
+  'guide-gmail-forwarding': {
+    en: 'Step-by-step guide to forwarding Gmail emails to another inbox',
+    es: 'Guía paso a paso para reenviar correos de Gmail a otro buzón',
+    zh: '将 Gmail 邮件转发到另一个邮箱的分步指南',
+    ko: 'Gmail 메일을 다른 메일함으로 전달하는 단계별 가이드',
+  },
+  'guide-account-farm': {
+    en: 'Account farm: Discord, Twitter, Google accounts, proxies, boosting, antidetects',
+    es: 'Granja de cuentas: Discord, Twitter, Google, proxies, boosting y antidetects',
+    zh: '账号农场：Discord、Twitter、Google 账号、代理、增长与反检测',
+    ko: '계정 팜: Discord, Twitter, Google 계정, 프록시, 부스트, 안티디텍트',
+  },
+  'guide-otc-kyc': {
+    en: 'OTC platforms and KYC services in crypto',
+    es: 'Plataformas OTC y servicios KYC en cripto',
+    zh: '加密领域的 OTC 平台与 KYC 服务',
+    ko: '암호화폐 OTC 플랫폼과 KYC 서비스',
+  },
+  'guide-uids-addresses': {
+    en: 'UIDs and withdrawal addresses for crypto exchanges',
+    es: 'UID y direcciones de retiro para exchanges cripto',
+    zh: '加密交易所 UID 与提现地址',
+    ko: '암호화폐 거래소용 UID와 출금 주소',
+  },
+};
+
+const OFFER_DESCRIPTION_TRANSLATIONS: Partial<Record<string, Partial<Record<Language, string>>>> = {
+  'guide-mobile-ip': {
+    es: 'Guía básica para cambiar rápido la IP móvil usando internet móvil y modo avión. Útil cuando trabajas con cuentas y necesitas renovar la IP sin servicios extra.',
+    zh: '这是一篇基础指南，讲解如何通过移动网络和飞行模式快速更换移动 IP。适合账号工作、代理逻辑和不借助额外服务刷新 IP 的场景。',
+    ko: '모바일 인터넷과 비행기 모드로 모바일 IP를 빠르게 바꾸는 기본 가이드입니다. 계정 작업이나 별도 서비스 없이 IP를 새로고침해야 할 때 유용합니다.',
+  },
+  'guide-gmail-forwarding': {
+    es: 'Guía clara para reenviar correos de Gmail a otro buzón. Sirve para reunir códigos, notificaciones y mensajes de varias cuentas en un solo lugar.',
+    zh: '清晰讲解如何把 Gmail 邮件转发到另一个邮箱。适合把多个账号的验证码、通知和邮件集中到一个地方管理。',
+    ko: 'Gmail 메일을 다른 메일함으로 전달하는 방법을 정리한 가이드입니다. 여러 계정의 코드, 알림, 메일을 한곳에 모을 때 좋습니다.',
+  },
+  'guide-account-farm': {
+    es: 'Material grande sobre dónde conseguir cuentas Discord, Twitter y Google, cómo elegir proxies, cuándo usar antidetects y cómo pensar el boosting de referidos.',
+    zh: '一篇较完整的资料，讲解从哪里获取 Discord、Twitter、Google 账号，如何选择代理，何时使用反检测，以及如何理解推荐增长。',
+    ko: 'Discord, Twitter, Google 계정을 어디서 구할지, 프록시를 어떻게 고를지, 안티디텍트를 언제 쓸지, 추천인 부스트를 어떻게 볼지 정리한 큰 자료입니다.',
+  },
+  'guide-otc-kyc': {
+    es: 'Guía sobre plataformas OTC y servicios KYC: dónde buscar verificaciones, cómo mirar las plataformas y dónde vender WL en actividades cripto.',
+    zh: '关于 OTC 平台和 KYC 服务的指南：在哪里找验证、如何筛选平台，以及在加密活动中如何出售 WL。',
+    ko: 'OTC 플랫폼과 KYC 서비스에 대한 가이드입니다. 인증을 어디서 구할지, 플랫폼을 어떻게 볼지, WL을 어디서 판매할지 다룹니다.',
+  },
+  'guide-uids-addresses': {
+    es: 'Lista práctica de UID y direcciones para retiros a exchanges cripto. Útil cuando necesitas revisar rápidamente rutas y datos de retiro.',
+    zh: '用于加密交易所提现的 UID 和地址清单。适合需要快速核对提现方向和可用信息时使用。',
+    ko: '암호화폐 거래소 출금에 쓰는 UID와 주소 모음입니다. 출금 방향과 정보를 빠르게 확인해야 할 때 유용합니다.',
+  },
+
+  p1: {
+    es: 'Servicio moderno con proxies residential, datacenter, mobile e ISP. Buena opción si buscas equilibrio entre precio, velocidad y estabilidad.',
+    zh: '现代化代理服务，提供住宅、数据中心、移动和 ISP 代理。适合需要在价格、速度和稳定性之间取得平衡的任务。',
+    ko: 'Residential, datacenter, mobile, ISP 프록시를 제공하는 현대적인 서비스입니다. 가격, 속도, 안정성의 균형이 필요한 작업에 좋습니다.',
+  },
+  p2: {
+    es: 'Servicio probado con proxies de servidor económicos. Encaja bien para scraping, automatización y tareas donde no necesitas el máximo nivel de confianza de IP.',
+    zh: '经过验证的低价服务器代理服务。适合采集、自动化以及不需要最高 IP 信任度的任务。',
+    ko: '저렴한 서버 프록시를 제공하는 검증된 서비스입니다. 스크래핑, 자동화, 최고 수준의 IP 신뢰도가 필요하지 않은 작업에 적합합니다.',
+  },
+  p3: {
+    es: 'Servicio universal con residential, datacenter, ISP y mobile proxies. Buen candidato para cuentas, anuncios, scraping y tareas donde importa el trust del IP.',
+    zh: '通用代理服务，提供住宅、数据中心、ISP 和移动代理。适合账号、广告账户、采集以及重视 IP 信任度的任务。',
+    ko: 'Residential, datacenter, ISP, mobile 프록시를 갖춘 범용 서비스입니다. 계정, 광고 계정, 스크래핑, IP 신뢰도가 중요한 작업에 좋습니다.',
+  },
+  p4: {
+    es: 'Uno de los servicios más grandes por variedad de países y tipos de proxy. Normalmente permite encontrar una opción para casi cualquier tarea.',
+    zh: '代理类型和国家选择都很丰富的大型服务之一。大多数任务都能在这里找到合适的选项。',
+    ko: '국가와 프록시 유형 선택지가 매우 많은 대형 서비스 중 하나입니다. 거의 어떤 작업에도 맞는 옵션을 찾기 쉽습니다.',
+  },
+  p5: {
+    es: 'Servicio conocido con IPv4, IPv6, shared IPv4 y MTProto a precios accesibles. Útil para tareas diarias, automatización y trabajo con muchas IP.',
+    zh: '知名代理服务，提供价格较低的 IPv4、IPv6、共享 IPv4 和 MTProto。适合日常任务、自动化和大量 IP 使用。',
+    ko: '합리적인 가격의 IPv4, IPv6, shared IPv4, MTProto를 제공하는 잘 알려진 서비스입니다. 일상 작업, 자동화, 많은 IP 작업에 적합합니다.',
+  },
+  p6: {
+    es: 'Servicio de proxies móviles con rotación de IP. Buena opción para tareas donde las plataformas son sensibles al trust del usuario.',
+    zh: '提供 IP 轮换的移动代理服务。适合平台对用户信任度非常敏感的任务。',
+    ko: 'IP 변경이 가능한 모바일 프록시 서비스입니다. 플랫폼 신뢰도가 매우 중요한 작업에 좋은 선택입니다.',
+  },
+  p7: {
+    es: 'Servicio amplio con IPv4/IPv6, shared, residential, mobile y dynamic proxies. Puede servir tanto para cuentas como para automatización.',
+    zh: '代理类型很全，包含 IPv4/IPv6、共享、住宅、移动和动态代理。账号工作和自动化任务都能使用。',
+    ko: 'IPv4/IPv6, shared, residential, mobile, dynamic 프록시를 제공하는 범용 서비스입니다. 계정 작업과 자동화 모두에 사용할 수 있습니다.',
+  },
+
+  'vpn-ppl': {
+    es: 'VPN rápido para uso diario: desbloqueos, YouTube sin anuncios y servicios internacionales. Tiene bot de Telegram cómodo y programa de referidos.',
+    zh: '适合日常使用的快速 VPN，可用于绕过限制、观看无广告 YouTube 和访问海外服务。带有方便的 Telegram 机器人和推荐计划。',
+    ko: '일상 사용에 적합한 빠른 VPN입니다. 차단 우회, 광고 없는 YouTube 시청, 해외 서비스 이용에 좋고 Telegram 봇과 추천 프로그램이 있습니다.',
+  },
+  'vpn-prosto': {
+    es: 'VPN con tecnologías propias de bypass que sigue funcionando incluso cuando aumentan las restricciones. Soporta dispositivos ilimitados y varios modos de velocidad.',
+    zh: '带有自有绕过技术的 VPN，在限制加强时也能继续工作。支持无限设备，并提供多种速度模式。',
+    ko: '자체 우회 기술을 사용하는 VPN으로 제한이 강화되어도 계속 작동하도록 설계되었습니다. 무제한 기기와 여러 속도 모드를 지원합니다.',
+  },
+  'vpn-tochka-g': {
+    es: 'VPN en formato bot de Telegram, centrado en estabilidad y reemplazo rápido de configuraciones. También tiene soluciones separadas para Telegram.',
+    zh: 'Telegram 机器人形式的 VPN 服务，重点是连接稳定和快速更换配置。也提供 Telegram 专用方案。',
+    ko: 'Telegram 봇 기반 VPN 서비스로 안정적인 연결과 빠른 설정 교체에 초점을 둡니다. Telegram 전용 솔루션도 제공합니다.',
+  },
+
+  'ant-dolphin': {
+    es: 'Uno de los antidetects principales para multiaccounting, farming, retro drops y trabajo diario con perfiles.',
+    zh: '主要反检测浏览器之一，适合多账号、账号农场、retro drops 和日常配置文件工作。',
+    ko: '멀티 계정, 파밍, 레트로 드롭, 일상적인 프로필 작업에 자주 쓰이는 주요 안티디텍트 중 하나입니다.',
+  },
+  'ant-adspower': {
+    es: 'Antidetect popular para multiaccounting, trabajo en equipo y gestión masiva de perfiles.',
+    zh: '流行的反检测浏览器，适合多账号、团队协作和大量配置文件管理。',
+    ko: '멀티 계정, 팀 작업, 대량 프로필 관리를 위한 인기 안티디텍트입니다.',
+  },
+  'ant-octo': {
+    es: 'Antidetect para tareas más exigentes y antifraude fuerte. Suele considerarse cuando las soluciones simples ya no alcanzan.',
+    zh: '面向更高要求和更强风控场景的反检测浏览器。常用于普通方案已经不够的情况。',
+    ko: '더 까다로운 작업과 강한 안티프로드 환경을 위한 안티디텍트입니다. 일반 솔루션으로 부족할 때 고려됩니다.',
+  },
+  'ant-incogniton': {
+    es: 'Antidetect para trabajo normal con perfiles y multiaccounting. Buena opción para tareas básicas y medias.',
+    zh: '适合常规配置文件工作和多账号使用的反检测浏览器。基础到中等强度任务都可以考虑。',
+    ko: '일반적인 프로필 작업과 멀티 계정에 적합한 안티디텍트입니다. 기본 및 중간 수준 작업에 사용할 수 있습니다.',
+  },
+  'ant-vision': {
+    es: 'Antidetect más fuerte para servicios con antifraude serio: betting, casinos, exchanges y plataformas con protección profunda.',
+    zh: '更强的反检测方案，适合博彩、 казино、交易所等强风控平台。',
+    ko: '강한 안티프로드가 있는 베팅, 카지노, 거래소 같은 서비스에 쓰기 좋은 강화형 안티디텍트입니다.',
+  },
+  'ant-afina': {
+    es: 'Antidetect orientado a muchos perfiles y multiaccounting. Por precio puede ser interesante cuando necesitas alrededor de 100 perfiles.',
+    zh: '面向多账号和大量配置文件的反检测浏览器。需要约 100 个配置文件时，价格上有一定吸引力。',
+    ko: '멀티 계정과 많은 프로필 작업에 맞춘 안티디텍트입니다. 100개 정도의 프로필이 필요할 때 가격 면에서 흥미로운 선택입니다.',
+  },
+  'ant-gologin': {
+    es: 'Antidetect para multiaccounting y organización sencilla de perfiles. Encaja para tareas comunes y trabajo diario.',
+    zh: '用于多账号和简单配置文件管理的反检测浏览器。适合常规任务和日常工作。',
+    ko: '멀티 계정과 간단한 프로필 정리에 적합한 안티디텍트입니다. 일반적인 작업과 일상 업무에 좋습니다.',
+  },
+  'ant-morelogin': {
+    es: 'Antidetect para multiaccounting, equipos y perfiles bajo diferentes tareas.',
+    zh: '适合多账号、团队协作和不同任务配置文件管理的反检测浏览器。',
+    ko: '멀티 계정, 팀 작업, 다양한 작업용 프로필 관리에 쓰기 좋은 안티디텍트입니다.',
+  },
+  'ant-multilogin': {
+    es: 'Solución fuerte para tareas donde importan la calidad del perfil y el trabajo con antifraude complejo.',
+    zh: '较强的反检测方案，适合重视配置文件质量并需要应对复杂风控的任务。',
+    ko: '프로필 품질과 복잡한 안티프로드 대응이 중요한 작업에 쓰는 강한 안티디텍트입니다.',
+  },
+
+  'st-dark': {
+    es: 'Mi tienda principal para cuentas de trabajo: Gmail, Telegram, Facebook, Instagram y otras redes. Buena para correos, fresh regs, cuentas farmeadas y consumibles.',
+    zh: '我常用的工作账号商店：Gmail、Telegram、Facebook、Instagram 等。适合购买邮箱、新注册账号、养号账号和注册耗材。',
+    ko: 'Gmail, Telegram, Facebook, Instagram 등 작업용 계정을 사는 주요 상점입니다. 메일, 신규 계정, 육성 계정, 등록용 소모품에 좋습니다.',
+  },
+  st1: {
+    es: 'Tienda grande de cuentas, correos, redes sociales y consumibles. Útil como fuente adicional cuando falta stock o quieres comparar precios.',
+    zh: '大型账号商店，提供邮箱、社交账号和各种耗材。当主要商店缺货或需要比价时很有用。',
+    ko: '메일, 소셜 계정, 다양한 소모품을 제공하는 큰 계정 상점입니다. 재고가 없거나 가격 비교가 필요할 때 보조 소스로 좋습니다.',
+  },
+  'st-ggsel': {
+    es: 'Marketplace de productos digitales: juegos, cuentas, claves, suscripciones y software. Útil para comprar productos de distintos vendedores.',
+    zh: '数字商品市场：游戏、账号、密钥、订阅和软件。适合从不同卖家购买游戏商品、许可证和小众数字商品。',
+    ko: '게임, 계정, 키, 구독, 소프트웨어를 다루는 디지털 상품 마켓플레이스입니다. 여러 판매자의 상품을 비교하며 구매하기 좋습니다.',
+  },
+  'st-funpay': {
+    es: 'Marketplace muy útil para compras diarias: cuentas, suscripciones, juegos, servicios, claves y productos digitales. Suele resolver rápido por la cantidad de vendedores y reseñas.',
+    zh: '非常实用的日常数字商品市场：账号、订阅、游戏商品、服务、密钥等。卖家和评价多，通常能更快解决需求。',
+    ko: '계정, 구독, 게임 상품, 서비스, 키 등 일상 구매에 유용한 마켓플레이스입니다. 판매자와 리뷰가 많아 빠르게 해결되는 경우가 많습니다.',
+  },
+  'st-plati': {
+    es: 'Marketplace clásico de juegos, claves, software, suscripciones y otros productos digitales. Buen respaldo para comparar precios y encontrar rarezas.',
+    zh: '经典数字商品市场，包含游戏、密钥、软件、订阅和其他商品。适合作为比价和寻找稀缺商品的备用选择。',
+    ko: '게임, 키, 소프트웨어, 구독 등 디지털 상품을 다루는 클래식 마켓플레이스입니다. 가격 비교와 희귀 상품 검색용으로 좋습니다.',
+  },
+  'st-lzt': {
+    es: 'Uno de los mercados de cuentas de juego más grandes de la región CIS, con garantía para cuentas.',
+    zh: '独联体地区较大的游戏账号市场之一，提供账号担保。',
+    ko: 'CIS 지역에서 큰 게임 계정 마켓 중 하나이며 계정 보증을 제공합니다.',
+  },
+  'bot-lachuga': {
+    es: 'Tienda de Telegram con cuentas y suscripciones baratas para IA y servicios populares: Gemini, GPT, Claude, CapCut, Canva y similares.',
+    zh: 'Telegram 商店，提供热门 AI 工具和服务的低价账号与订阅，例如 Gemini、GPT、Claude、CapCut、Canva 等。',
+    ko: 'Gemini, GPT, Claude, CapCut, Canva 같은 인기 AI 도구와 서비스의 저렴한 계정 및 구독을 판매하는 Telegram 상점입니다.',
+  },
+  'bot-crassus': {
+    es: 'Bot de Telegram con cuentas, suscripciones y productos digitales. Útil para comprar IA, software o suscripciones por debajo del precio oficial.',
+    zh: 'Telegram 机器人商店，提供账号、订阅和数字商品。适合以低于官方价格购买 AI 工具、软件和订阅。',
+    ko: '계정, 구독, 디지털 상품을 판매하는 Telegram 봇입니다. AI 도구, 소프트웨어, 구독을 공식가보다 저렴하게 살 때 유용합니다.',
+  },
+  'bot-apel0sin': {
+    es: 'Tienda de Telegram para productos digitales, cuentas y suscripciones. Cómoda para comprar rápido sin buscar vendedor manualmente.',
+    zh: '用于购买数字商品、账号和订阅的 Telegram 商店。适合不想手动找卖家、希望快速购买的场景。',
+    ko: '디지털 상품, 계정, 구독을 구매하는 Telegram 상점입니다. 판매자를 직접 찾지 않고 빠르게 구매할 때 편합니다.',
+  },
+  'bot-petrovich': {
+    es: 'Bot de Telegram con cuentas, claves, suscripciones y productos para servicios populares. Buena opción para compras rápidas de IA y software.',
+    zh: 'Telegram 机器人，提供热门服务的账号、密钥、订阅和商品。适合快速购买 AI 工具、软件和其他数字产品。',
+    ko: '인기 서비스의 계정, 키, 구독, 상품을 판매하는 Telegram 봇입니다. AI 도구와 소프트웨어를 빠르게 구매하기 좋습니다.',
+  },
+
+  'prosto-exchange': {
+    es: 'Exchange en Telegram para comprar y vender cripto. Cómodo para recargar presupuestos de trabajo, retirar a RUB o coordinar operaciones grandes con un manager.',
+    zh: '基于 Telegram 的加密货币买卖服务。适合补充工作余额、将加密货币换成卢布，或通过经理安排较大金额交易。',
+    ko: 'Telegram 기반 암호화폐 매매 서비스입니다. 작업 예산 충전, RUB 현금화, 매니저를 통한 큰 거래 조율에 편합니다.',
+  },
+  'keine-exchange': {
+    es: 'Exchange con solicitudes web y direcciones offline para comprar, vender e intercambiar cripto. Útil para efectivo, USDT y operaciones grandes.',
+    zh: '支持网页申请和线下方向的加密货币兑换服务。适合现金、USDT 和较大金额交易。',
+    ko: '웹 신청과 오프라인 거래 방향을 제공하는 암호화폐 교환 서비스입니다. 현금, USDT, 큰 금액 거래에 유용합니다.',
+  },
+
+  'sms-hero': {
+    es: 'Servicio de números virtuales que ganó popularidad tras el cierre de SMS-Activate. Tiene precios bajos y sirve para registros masivos.',
+    zh: '虚拟号码服务，在 SMS-Activate 关闭后变得更受欢迎。价格较低，适合批量注册。',
+    ko: 'SMS-Activate 종료 이후 인기가 높아진 가상 번호 서비스입니다. 가격이 낮고 대량 가입에 적합합니다.',
+  },
+  'sms-fast': {
+    es: 'Servicio cómodo para números virtuales con muchas direcciones y métodos de pago aptos para usuarios RU/CIS.',
+    zh: '方便的虚拟号码服务，方向较多，并支持适合 RU/CIS 用户的支付方式。',
+    ko: '여러 방향과 RU/CIS 사용자에게 편한 결제 방식을 제공하는 가상 번호 서비스입니다.',
+  },
+  'sms-pool': {
+    es: 'Servicio internacional de números virtuales con buena selección de países. Útil si pagas con cripto o tarjeta no CIS.',
+    zh: '国际虚拟号码服务，国家选择较多。适合使用加密货币或非 CIS 银行卡支付的用户。',
+    ko: '국가 선택지가 좋은 국제 가상 번호 서비스입니다. 암호화폐나 비CIS 카드로 결제할 때 유용합니다.',
+  },
+  'sms-grizzly': {
+    es: 'Servicio de SMS para registros con selección de países y servicios populares. Buen respaldo para probar otras rutas.',
+    zh: '用于账号注册的短信接码服务，支持常见国家和平台。适合作为测试其他方向的备用选择。',
+    ko: '인기 국가와 서비스를 지원하는 SMS 인증 서비스입니다. 다른 방향을 테스트할 때 보조 옵션으로 좋습니다.',
+  },
+  'sms-tiger': {
+    es: 'Servicio de números virtuales con precios bajos. Útil para volumen y para comparar disponibilidad por país o plataforma.',
+    zh: '价格较低的虚拟号码服务。适合批量使用，也适合按国家或平台比较可用性。',
+    ko: '저렴한 가상 번호 서비스입니다. 대량 작업이나 국가/플랫폼별 가용성 비교에 좋습니다.',
+  },
+  'sms-365': {
+    es: 'Servicio de números virtuales con pagos cómodos para usuarios RU. Sirve como opción estable para tareas diarias.',
+    zh: '虚拟号码服务，支付方式对 RU 用户较方便。适合作为日常任务的稳定选择。',
+    ko: 'RU 사용자에게 편한 결제 방식을 갖춘 가상 번호 서비스입니다. 일상 작업용 안정적인 선택지로 좋습니다.',
+  },
+
+  'steam-lis-skins': {
+    es: 'Marketplace de skins cómodo para recargar Steam mediante ítems. Muestra la diferencia con Steam, lo que ayuda a buscar recargas en plus.',
+    zh: '用于通过物品充值 Steam 的皮肤市场。会显示与 Steam 的价格差，便于寻找“正收益”充值机会。',
+    ko: '아이템으로 Steam을 충전할 때 편한 스킨 마켓입니다. Steam과의 가격 차이를 보여줘 플러스 충전 기회를 찾기 쉽습니다.',
+  },
+  'steam-tf2lavka': {
+    es: 'Opción práctica para recargar mediante llaves y objetos TF/Rust. Algunos ítems pueden venderse sin trade ban, por eso es cómoda cuando no quieres esperar.',
+    zh: '通过 TF/Rust 钥匙和物品充值的实用选项。部分物品没有交易冷却，因此不想等待时很方便。',
+    ko: 'TF/Rust 키와 아이템으로 충전하는 실용적인 옵션입니다. 일부 아이템은 거래 제한 없이 팔 수 있어 기다리기 싫을 때 편합니다.',
+  },
+  'steam-aim-market': {
+    es: 'Tiene recarga directa por login y opción de recarga mediante ítems. Para plus conviene comparar precios con la tabla y Steam Market.',
+    zh: '支持通过登录名直接充值，也支持通过物品充值。想获得正收益时，需要结合表格和 Steam 市场价格比较。',
+    ko: '로그인 직접 충전과 아이템 충전을 모두 지원합니다. 플러스 충전을 노릴 때는 표와 Steam Market 가격 비교가 필요합니다.',
+  },
+  'steam-csmoney': {
+    es: 'Marketplace grande de skins CS2. Puede servir para recargar Steam mediante ítems si sabes elegir skins líquidos y revisar comisiones.',
+    zh: '大型 CS2 皮肤市场。如果会选择流动性好的皮肤并核对手续费，可用于通过物品充值 Steam。',
+    ko: '큰 CS2 스킨 마켓입니다. 유동성 있는 스킨을 고르고 수수료를 확인할 수 있다면 아이템으로 Steam 충전에 활용할 수 있습니다.',
+  },
+  'steam-ggsel': {
+    es: 'Recarga rápida de Steam por login. Buena cuando quieres saldo sin comerciar ítems, pero normalmente con comisión cercana al 10%.',
+    zh: '通过 Steam 登录名快速充值。适合不想处理物品交易、只想快速到账的情况，但通常有约 10% 手续费。',
+    ko: 'Steam 로그인으로 빠르게 충전하는 옵션입니다. 아이템 거래 없이 잔액이 필요할 때 좋지만 보통 약 10% 수수료가 있습니다.',
+  },
+  'steam-playerok': {
+    es: 'Recarga rápida por login a través de vendedores del marketplace. Cómoda para resultado inmediato; revisa siempre rating y reseñas.',
+    zh: '通过市场卖家按登录名快速充值。适合需要立即到账的情况，但务必查看卖家评分和评价。',
+    ko: '마켓플레이스 판매자를 통한 로그인 빠른 충전입니다. 즉시 결과가 필요할 때 편하며, 판매자 평점과 리뷰를 꼭 확인하세요.',
+  },
+
+  zarub: {
+    es: 'Mi opción principal de tarjeta extranjera: sin KYC, recarga por SBP/USDT y funciona en muchos servicios internacionales y algunos comercios RU como OZON.',
+    zh: '我主要使用的海外卡选项：无需 KYC，支持 SBP/USDT 充值，可用于许多海外服务，也能在 OZON 等部分俄罗斯商户使用。',
+    ko: '제가 주로 쓰는 해외 카드 옵션입니다. KYC 없이 SBP/USDT 충전이 가능하고 많은 해외 서비스와 OZON 같은 일부 러시아 가맹점에서 작동합니다.',
+  },
+  cashinout: {
+    es: 'Servicio con varias funciones: tarjetas virtuales para pagos online y herramientas adicionales como recarga de Steam.',
+    zh: '功能较多的服务：可发行用于线上支付的虚拟卡，也提供 Steam 充值等额外工具。',
+    ko: '온라인 결제용 가상 카드부터 Steam 충전 같은 추가 기능까지 제공하는 서비스입니다.',
+  },
+  vezdekarta: {
+    es: 'Tarjeta virtual básica con dos tarifas. Conveniente para recargar en rublos, aunque no todos los servicios aceptan la tarjeta.',
+    zh: '基础虚拟卡，有两个 тариф。用卢布充值比较划算，但并非所有服务都能成功付款。',
+    ko: '두 가지 요금제가 있는 기본 가상 카드입니다. 루블 충전에 유리하지만 모든 서비스에서 결제가 되는 것은 아닙니다.',
+  },
+  pionex: {
+    es: 'Buena opción para la región RU/CIS: tarjeta cripto con KYC sencillo y rápido. Puede servir para pagos internacionales y cashback.',
+    zh: '适合 RU/CIS 地区的选择：加密卡，KYC 简单快速。可用于国际支付并提供返现。',
+    ko: 'RU/CIS 지역에 좋은 옵션입니다. 간단하고 빠른 KYC를 갖춘 암호화폐 카드로 해외 결제와 캐시백에 사용할 수 있습니다.',
+  },
+
+  'vps-macloud': {
+    es: 'Mi opción principal para VDS/VPS. No es la más barata, pero en mi experiencia funciona estable y sin problemas innecesarios.',
+    zh: '我主要使用的 VDS/VPS 选项。不是最便宜，但从个人经验看运行稳定，不需要额外折腾。',
+    ko: '제가 주로 쓰는 VDS/VPS 옵션입니다. 가장 저렴하진 않지만 경험상 안정적이고 불필요한 문제가 적었습니다.',
+  },
+  'vps-xorek': {
+    es: 'Opción barata para VDS/VPS. Sirve para pruebas y tareas temporales, pero no la usaría para proyectos críticos sin backups.',
+    zh: '低价 VDS/VPS 选项。适合测试和临时任务，但重要项目需要备份，不建议无备份使用。',
+    ko: '저렴한 VDS/VPS 옵션입니다. 테스트와 임시 작업에 좋지만 중요한 프로젝트에는 백업 없이 쓰기 어렵습니다.',
+  },
+  'vps-vdsina': {
+    es: 'Proveedor popular con panel claro y despliegue rápido. Buena opción universal para bots, parsers y pequeños proyectos.',
+    zh: '流行的 VDS/VPS 提供商，面板清晰，开服快速。适合机器人、采集器和小型项目。',
+    ko: '명확한 패널과 빠른 서버 생성이 장점인 인기 제공업체입니다. 봇, 파서, 작은 프로젝트에 무난합니다.',
+  },
+  'vps-spacecore': {
+    es: 'Hosting para VPS/VDS e infraestructura. Puede ser alternativa si necesitas otras ubicaciones, configuraciones o precios.',
+    zh: 'VPS/VDS 和服务器基础设施服务商。如果需要其他地区、配置或价格，可以作为备选。',
+    ko: 'VPS/VDS와 서버 인프라용 호스팅입니다. 다른 위치, 구성, 가격이 필요할 때 대안으로 볼 수 있습니다.',
+  },
+  'vps-aeza': {
+    es: 'Proveedor conocido con muchas soluciones de infraestructura. Interesante cuando necesitas configuraciones potentes o ubicaciones distintas.',
+    zh: '知名服务器和 VPS/VDS 提供商，基础设施产品较多。适合需要更强配置或不同地区的情况。',
+    ko: '다양한 인프라 제품을 제공하는 잘 알려진 서버/VPS 제공업체입니다. 강한 구성이나 다양한 위치가 필요할 때 볼 만합니다.',
+  },
+
+  'boost-twiboost': {
+    es: 'Servicio para referidos y acciones sociales. Cómodo cuando necesitas registros o actividad rápida sin buscar ejecutores manualmente.',
+    zh: '用于推荐和社交行为增长的服务。适合不想手动找执行者、需要快速获得注册或活跃度的情况。',
+    ko: '추천인과 소셜 액션을 위한 서비스입니다. 실행자를 직접 찾지 않고 빠르게 가입이나 활동이 필요할 때 편합니다.',
+  },
+  'boost-socproof': {
+    es: 'Plataforma para boosting de referidos y actividad. Encaja cuando importan velocidad, pedido claro y precio predecible por acción.',
+    zh: '用于推荐和活跃度增长的平台。适合重视速度、下单清晰和单次行为价格可预期的任务。',
+    ko: '추천인과 활동 부스트를 위한 플랫폼입니다. 속도, 명확한 주문, 예측 가능한 행동 단가가 중요할 때 좋습니다.',
+  },
+  'boost-boostgram': {
+    es: 'Servicio para acciones sociales y tareas de referidos. Útil como alternativa si buscas otros precios o disponibilidad.',
+    zh: '用于社交行为和推荐任务的服务。如果需要其他价格或方向可用性，可以作为替代选择。',
+    ko: '소셜 액션과 추천인 작업용 서비스입니다. 다른 가격이나 가용성이 필요할 때 대안으로 좋습니다.',
+  },
+  'boost-easyliker': {
+    es: 'Sitio para acciones sociales, actividad y referidos. Sirve para comparar precios, velocidad y disponibilidad de servicios.',
+    zh: '用于社交行为、活跃度和推荐任务的网站。适合比较价格、执行速度和服务可用性。',
+    ko: '소셜 액션, 활동, 추천인 작업용 사이트입니다. 가격, 처리 속도, 서비스 가용성을 비교할 때 좋습니다.',
+  },
+  'boost-smmlaba': {
+    es: 'Panel SMM para métricas sociales: likes, follows, views y tareas similares. Bueno como opción de respaldo.',
+    zh: 'SMM 面板，用于点赞、关注、观看等社交指标。适合作为备用选择。',
+    ko: '좋아요, 팔로우, 조회수 같은 소셜 지표용 SMM 패널입니다. 백업 옵션으로 좋습니다.',
+  },
+  'boost-smmprime': {
+    es: 'Panel SMM para actividad en redes sociales. Útil para comparar precios y probar proveedores distintos bajo la misma tarea.',
+    zh: '用于社交平台活跃度的 SMM 面板。适合在同一任务下比较价格并测试不同供应商。',
+    ko: '소셜 활동 부스트용 SMM 패널입니다. 같은 작업에서 가격 비교와 공급자 테스트에 유용합니다.',
+  },
+  'bux-socpublic': {
+    es: 'Bolsa de tareas probada donde personas reales hacen acciones simples por pago. Buena para registros en bots de Telegram y referidos.',
+    zh: '经过验证的任务平台，真实执行者完成简单付费操作。适合 Telegram 机器人注册和推荐任务。',
+    ko: '실제 작업자가 간단한 유료 작업을 수행하는 검증된 태스크 마켓입니다. Telegram 봇 가입과 추천인 작업에 좋습니다.',
+  },
+  'bux-unu': {
+    es: 'Bolsa de tareas más moderna para registros y referidos. Útil si necesitas acciones de personas reales y puedes revisar resultados manualmente.',
+    zh: '更现代的任务平台，适合注册和推荐任务。需要真实用户操作且愿意手动检查结果时很有用。',
+    ko: '가입과 추천인 작업을 위한 좀 더 현대적인 태스크 마켓입니다. 실제 사람의 행동이 필요하고 결과를 직접 검수할 수 있을 때 유용합니다.',
+  },
+};
+
 // --- Components ---
 const PlatformIcon = ({ name, className = "w-3.5 h-3.5" }: { name: string; className?: string }) => {
   const icons: Record<string, any> = {
@@ -2158,11 +2529,16 @@ export default function App() {
   const l = <T,>(value?: Localized<T>) => getLocalizedValue(value, lang);
   const lList = <T,>(value?: Localized<T[]>) => getLocalizedValue(value, lang) || [];
   const tx = <T,>(value: Partial<Record<Language, T>> & { en: T }) => value[lang] ?? value.en;
+  const offerTitle = (offer: Offer) => OFFER_TITLE_TRANSLATIONS[offer.id]?.[lang] || offer.name;
   const offerDescription = (offer: Offer) => {
+    const manualDescription = OFFER_DESCRIPTION_TRANSLATIONS[offer.id]?.[lang];
+    if (manualDescription) return manualDescription;
+
     const ownDescription = offer.description[lang];
     if (ownDescription) return ownDescription;
     if (lang === 'ru' || lang === 'en') return l(offer.description);
 
+    const title = offerTitle(offer);
     const types = l(offer.details?.types);
     const geo = l(offer.details?.geo);
     const paymentMethods = l(offer.details?.paymentMethods);
@@ -2170,40 +2546,40 @@ export default function App() {
 
     const templates: Record<Exclude<Language, 'ru' | 'en'>, Record<CategoryType, string>> = {
       es: {
-        Proxy: `${offer.name} es un servicio para trabajar con proxies o VPN. Encaja para cuentas, automatización, registros y tareas donde importan el tipo de IP, el GEO y la forma de pago.${extra ? ` Datos clave: ${extra}.` : ''}`,
-        Antidetect: `${offer.name} es una solución antidetect para multiaccounting y gestión de perfiles. Sirve para separar entornos, trabajar con proxies y reducir señales sospechosas para plataformas con antifraude.${extra ? ` Datos clave: ${extra}.` : ''}`,
-        Stores: `${offer.name} es una tienda o marketplace para comprar cuentas, suscripciones, claves y otros productos digitales. Útil cuando necesitas cerrar una compra rápido y comparar opciones.${extra ? ` Datos clave: ${extra}.` : ''}`,
-        Cards: `${offer.name} es un servicio de tarjetas virtuales extranjeras para pagar suscripciones, apps, anuncios, viajes y otros servicios internacionales.${extra ? ` Datos clave: ${extra}.` : ''}`,
-        Crypto: `${offer.name} es un servicio para comprar, vender o intercambiar criptomonedas online u offline. Antes de operar conviene revisar tasa, límites, red y condiciones.${extra ? ` Datos clave: ${extra}.` : ''}`,
-        SMS: `${offer.name} es un servicio de números virtuales para recibir códigos SMS y registrar cuentas. Conviene revisar el país, el servicio necesario y el porcentaje de entrega antes de comprar.${extra ? ` Datos clave: ${extra}.` : ''}`,
-        VPS: `${offer.name} es un proveedor VDS/VPS para bots, scripts, parsing, nodos y entornos de trabajo. Elige configuración, sistema operativo y ubicación según la tarea.${extra ? ` Datos clave: ${extra}.` : ''}`,
-        Social: `${offer.name} ayuda con referidos, registros, acciones sociales o tareas pagadas. Úsalo cuando necesitas volumen, pero revisa la calidad de ejecución y las pruebas antes de aprobar.${extra ? ` Datos clave: ${extra}.` : ''}`,
-        Steam: `${offer.name} es una opción para recargar Steam por login o mediante ítems. Si usas ítems, compara siempre precio, liquidez y comisión en Steam Market.${extra ? ` Datos clave: ${extra}.` : ''}`,
-        Guides: `${offer.name} es una guía práctica de Hopscup sobre herramientas, cuentas, IP, cripto o flujos de trabajo relacionados.${extra ? ` Temas: ${extra}.` : ''}`,
+        Proxy: `${title} es un servicio para trabajar con proxies o VPN. Encaja para cuentas, automatización, registros y tareas donde importan el tipo de IP, el GEO y la forma de pago.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Antidetect: `${title} es una solución antidetect para multiaccounting y gestión de perfiles. Sirve para separar entornos, trabajar con proxies y reducir señales sospechosas para plataformas con antifraude.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Stores: `${title} es una tienda o marketplace para comprar cuentas, suscripciones, claves y otros productos digitales. Útil cuando necesitas cerrar una compra rápido y comparar opciones.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Cards: `${title} es un servicio de tarjetas virtuales extranjeras para pagar suscripciones, apps, anuncios, viajes y otros servicios internacionales.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Crypto: `${title} es un servicio para comprar, vender o intercambiar criptomonedas online u offline. Antes de operar conviene revisar tasa, límites, red y condiciones.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        SMS: `${title} es un servicio de números virtuales para recibir códigos SMS y registrar cuentas. Conviene revisar el país, el servicio necesario y el porcentaje de entrega antes de comprar.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        VPS: `${title} es un proveedor VDS/VPS para bots, scripts, parsing, nodos y entornos de trabajo. Elige configuración, sistema operativo y ubicación según la tarea.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Social: `${title} ayuda con referidos, registros, acciones sociales o tareas pagadas. Úsalo cuando necesitas volumen, pero revisa la calidad de ejecución y las pruebas antes de aprobar.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Steam: `${title} es una opción para recargar Steam por login o mediante ítems. Si usas ítems, compara siempre precio, liquidez y comisión en Steam Market.${extra ? ` Datos clave: ${extra}.` : ''}`,
+        Guides: `${title} es una guía práctica de Hopscup sobre herramientas, cuentas, IP, cripto o flujos de trabajo relacionados.${extra ? ` Temas: ${extra}.` : ''}`,
       },
       zh: {
-        Proxy: `${offer.name} 是用于代理或 VPN 工作的服务，适合账号、自动化、注册以及需要关注 IP 类型、地区和支付方式的任务。${extra ? ` 关键信息：${extra}。` : ''}`,
-        Antidetect: `${offer.name} 是用于多账号和配置文件管理的反检测方案，可帮助隔离环境、配合代理使用，并减少平台风控信号。${extra ? ` 关键信息：${extra}。` : ''}`,
-        Stores: `${offer.name} 是购买账号、订阅、密钥和其他数字商品的商店或市场，适合快速购买并对比不同卖家的选择。${extra ? ` 关键信息：${extra}。` : ''}`,
-        Cards: `${offer.name} 是海外虚拟卡服务，可用于支付订阅、应用、广告、旅行和其他国际服务。${extra ? ` 关键信息：${extra}。` : ''}`,
-        Crypto: `${offer.name} 是线上或线下买卖、兑换加密货币的服务。操作前建议确认汇率、限额、网络和交易条件。${extra ? ` 关键信息：${extra}。` : ''}`,
-        SMS: `${offer.name} 是用于接收短信验证码和注册账号的虚拟号码服务。购买前建议检查国家、目标平台和到达率。${extra ? ` 关键信息：${extra}。` : ''}`,
-        VPS: `${offer.name} 是用于机器人、脚本、采集、节点和工作环境的 VDS/VPS 服务商。配置、系统和地区要按具体任务选择。${extra ? ` 关键信息：${extra}。` : ''}`,
-        Social: `${offer.name} 可用于推荐、注册、社交动作或付费任务。适合需要数量时使用，但确认前要检查执行质量和证明。${extra ? ` 关键信息：${extra}。` : ''}`,
-        Steam: `${offer.name} 是通过 Steam 登录名或物品充值的选项。使用物品充值时，务必对比价格、流动性和 Steam 市场手续费。${extra ? ` 关键信息：${extra}。` : ''}`,
-        Guides: `${offer.name} 是 Hopscup 关于工具、账号、IP、加密货币或工作流程的实用指南。${extra ? ` 主题：${extra}。` : ''}`,
+        Proxy: `${title} 是用于代理或 VPN 工作的服务，适合账号、自动化、注册以及需要关注 IP 类型、地区和支付方式的任务。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Antidetect: `${title} 是用于多账号和配置文件管理的反检测方案，可帮助隔离环境、配合代理使用，并减少平台风控信号。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Stores: `${title} 是购买账号、订阅、密钥和其他数字商品的商店或市场，适合快速购买并对比不同卖家的选择。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Cards: `${title} 是海外虚拟卡服务，可用于支付订阅、应用、广告、旅行和其他国际服务。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Crypto: `${title} 是线上或线下买卖、兑换加密货币的服务。操作前建议确认汇率、限额、网络和交易条件。${extra ? ` 关键信息：${extra}。` : ''}`,
+        SMS: `${title} 是用于接收短信验证码和注册账号的虚拟号码服务。购买前建议检查国家、目标平台和到达率。${extra ? ` 关键信息：${extra}。` : ''}`,
+        VPS: `${title} 是用于机器人、脚本、采集、节点和工作环境的 VDS/VPS 服务商。配置、系统和地区要按具体任务选择。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Social: `${title} 可用于推荐、注册、社交动作或付费任务。适合需要数量时使用，但确认前要检查执行质量和证明。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Steam: `${title} 是通过 Steam 登录名或物品充值的选项。使用物品充值时，务必对比价格、流动性和 Steam 市场手续费。${extra ? ` 关键信息：${extra}。` : ''}`,
+        Guides: `${title} 是 Hopscup 关于工具、账号、IP、加密货币或工作流程的实用指南。${extra ? ` 主题：${extra}。` : ''}`,
       },
       ko: {
-        Proxy: `${offer.name}는 프록시 또는 VPN 작업용 서비스입니다. 계정, 자동화, 가입, IP 유형과 지역, 결제 방식이 중요한 작업에 적합합니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
-        Antidetect: `${offer.name}는 멀티 계정과 프로필 관리를 위한 안티디텍트 솔루션입니다. 환경을 분리하고 프록시와 함께 사용하며 플랫폼의 의심 신호를 줄이는 데 도움이 됩니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
-        Stores: `${offer.name}는 계정, 구독, 키 및 기타 디지털 상품을 구매할 수 있는 상점 또는 마켓플레이스입니다. 빠르게 구매하고 여러 옵션을 비교할 때 유용합니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
-        Cards: `${offer.name}는 구독, 앱, 광고, 여행 및 해외 서비스 결제를 위한 해외 가상 카드 서비스입니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
-        Crypto: `${offer.name}는 온라인 또는 오프라인으로 암호화폐를 사고팔거나 교환하는 서비스입니다. 거래 전 환율, 한도, 네트워크, 조건을 확인하는 것이 좋습니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
-        SMS: `${offer.name}는 SMS 인증 코드를 받고 계정을 등록하기 위한 가상 번호 서비스입니다. 구매 전 국가, 필요한 플랫폼, 수신율을 확인하는 것이 좋습니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
-        VPS: `${offer.name}는 봇, 스크립트, 파싱, 노드, 작업 환경을 위한 VDS/VPS 제공업체입니다. 작업에 맞춰 사양, OS, 위치를 선택하세요.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
-        Social: `${offer.name}는 추천인, 가입, 소셜 액션 또는 유료 작업에 사용할 수 있습니다. 수량이 필요할 때 좋지만 승인 전 품질과 증빙을 확인해야 합니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
-        Steam: `${offer.name}는 Steam 로그인 충전 또는 아이템을 통한 충전 옵션입니다. 아이템을 사용할 때는 Steam Market 가격, 유동성, 수수료를 꼭 비교하세요.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
-        Guides: `${offer.name}는 도구, 계정, IP, 암호화폐 또는 관련 워크플로에 대한 Hopscup의 실용 가이드입니다.${extra ? ` 주제: ${extra}.` : ''}`,
+        Proxy: `${title}는 프록시 또는 VPN 작업용 서비스입니다. 계정, 자동화, 가입, IP 유형과 지역, 결제 방식이 중요한 작업에 적합합니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Antidetect: `${title}는 멀티 계정과 프로필 관리를 위한 안티디텍트 솔루션입니다. 환경을 분리하고 프록시와 함께 사용하며 플랫폼의 의심 신호를 줄이는 데 도움이 됩니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Stores: `${title}는 계정, 구독, 키 및 기타 디지털 상품을 구매할 수 있는 상점 또는 마켓플레이스입니다. 빠르게 구매하고 여러 옵션을 비교할 때 유용합니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Cards: `${title}는 구독, 앱, 광고, 여행 및 해외 서비스 결제를 위한 해외 가상 카드 서비스입니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Crypto: `${title}는 온라인 또는 오프라인으로 암호화폐를 사고팔거나 교환하는 서비스입니다. 거래 전 환율, 한도, 네트워크, 조건을 확인하는 것이 좋습니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        SMS: `${title}는 SMS 인증 코드를 받고 계정을 등록하기 위한 가상 번호 서비스입니다. 구매 전 국가, 필요한 플랫폼, 수신율을 확인하는 것이 좋습니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        VPS: `${title}는 봇, 스크립트, 파싱, 노드, 작업 환경을 위한 VDS/VPS 제공업체입니다. 작업에 맞춰 사양, OS, 위치를 선택하세요.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Social: `${title}는 추천인, 가입, 소셜 액션 또는 유료 작업에 사용할 수 있습니다. 수량이 필요할 때 좋지만 승인 전 품질과 증빙을 확인해야 합니다.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Steam: `${title}는 Steam 로그인 충전 또는 아이템을 통한 충전 옵션입니다. 아이템을 사용할 때는 Steam Market 가격, 유동성, 수수료를 꼭 비교하세요.${extra ? ` 핵심 정보: ${extra}.` : ''}`,
+        Guides: `${title}는 도구, 계정, IP, 암호화폐 또는 관련 워크플로에 대한 Hopscup의 실용 가이드입니다.${extra ? ` 주제: ${extra}.` : ''}`,
       },
     };
 
@@ -2835,7 +3211,7 @@ export default function App() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="text-white font-display font-bold text-base md:text-xl leading-snug group-hover:text-white transition-colors">
-                        {offer.name}
+                        {offerTitle(offer)}
                       </h3>
                     </div>
                     <ExternalLink className="w-5 h-5 text-white/25 group-hover:text-brand-purple shrink-0 transition-colors" />
@@ -2871,7 +3247,7 @@ export default function App() {
                           </div>
                           <div className="flex flex-col justify-center">
                             <h3 className="font-display font-bold text-xl text-white group-hover:text-brand-purple transition-colors tracking-tight leading-tight">
-                              {offer.name}
+                              {offerTitle(offer)}
                             </h3>
                           </div>
                         </div>
@@ -2905,7 +3281,7 @@ export default function App() {
                           )}
                           <div className="space-y-1">
                             <h3 className="font-display font-bold text-2xl text-white group-hover:text-brand-purple transition-colors tracking-tight">
-                              {offer.name}
+                              {offerTitle(offer)}
                             </h3>
                           </div>
                         </div>
@@ -4153,7 +4529,7 @@ export default function App() {
                   )}
                   <div className="flex flex-col justify-center">
                     <div className="flex items-center gap-3 mb-2">
-                      <h2 className="text-3xl font-display font-bold tracking-tight">{selectedOffer.name}</h2>
+                      <h2 className="text-3xl font-display font-bold tracking-tight">{offerTitle(selectedOffer)}</h2>
 
                     </div>
                   </div>
