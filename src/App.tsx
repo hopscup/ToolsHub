@@ -2822,13 +2822,6 @@ export default function App() {
     popular: tx({ ru: 'Популярное', en: 'Popular', es: 'Popular', zh: '热门', ko: '인기' }),
     bestChoice: tx({ ru: 'Лучший выбор', en: 'Best Choice', es: 'Mejor opción', zh: '最佳选择', ko: '추천 선택' }),
     footer: tx({ ru: 'Сделано с душой для Hopscup Crew', en: 'Made with soul for Hopscup Crew', es: 'Hecho con cariño para Hopscup Crew', zh: '为 Hopscup Crew 用心制作', ko: 'Hopscup Crew를 위해 정성껏 제작' }),
-    affiliateDisclosure: tx({
-      ru: 'Некоторые ссылки на сайте являются реферальными. Это не влияет на стоимость для пользователя.',
-      en: 'Some links on this website are affiliate links. This does not change the price for the user.',
-      es: 'Algunos enlaces del sitio son de afiliado. Esto no cambia el precio para el usuario.',
-      zh: '网站上的部分链接是推广链接，不会改变用户的购买价格。',
-      ko: '사이트의 일부 링크는 제휴 링크이며 사용자 가격에는 영향을 주지 않습니다.',
-    }),
     textGuide: tx({ ru: 'Текстовый гайд', en: 'Text Guide', es: 'Guía escrita', zh: '文字指南', ko: '텍스트 가이드' }),
     videoGuide: tx({ ru: 'Видео гайд', en: 'Video Guide', es: 'Videoguía', zh: '视频指南', ko: '비디오 가이드' }),
     all: tx({ ru: 'Все', en: 'All', es: 'Todo', zh: '全部', ko: '전체' }),
@@ -3621,9 +3614,6 @@ export default function App() {
         </div>
         <p className="text-white/20 text-xs font-light tracking-widest uppercase">
           &copy; 2026 HopsCup Crew
-        </p>
-        <p className="max-w-2xl mx-auto mt-4 px-6 text-white/30 text-xs leading-relaxed">
-          {t.affiliateDisclosure}
         </p>
         <div className="mt-6 flex justify-center">
           <img
