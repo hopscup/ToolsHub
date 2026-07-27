@@ -3,14 +3,13 @@ import path from 'node:path';
 
 const siteUrl = 'https://hopscup.tools';
 const distDir = path.resolve('dist');
-const today = new Date().toISOString().slice(0, 10);
 
 const languages = [
-  { code: 'ru', prefix: '', htmlLang: 'ru-RU', label: 'Русский' },
-  { code: 'en', prefix: '/en', htmlLang: 'en', label: 'English' },
-  { code: 'es', prefix: '/es', htmlLang: 'es', label: 'Español' },
-  { code: 'zh', prefix: '/zh', htmlLang: 'zh-CN', label: '中文' },
-  { code: 'ko', prefix: '/ko', htmlLang: 'ko-KR', label: '한국어' },
+  { code: 'ru', prefix: '', htmlLang: 'ru-RU', hrefLang: 'ru', ogLocale: 'ru_RU', label: 'Русский' },
+  { code: 'en', prefix: '/en', htmlLang: 'en', hrefLang: 'en', ogLocale: 'en_US', label: 'English' },
+  { code: 'es', prefix: '/es', htmlLang: 'es', hrefLang: 'es', ogLocale: 'es_ES', label: 'Español' },
+  { code: 'zh', prefix: '/zh', htmlLang: 'zh-CN', hrefLang: 'zh-CN', ogLocale: 'zh_CN', label: '中文' },
+  { code: 'ko', prefix: '/ko', htmlLang: 'ko-KR', hrefLang: 'ko-KR', ogLocale: 'ko_KR', label: '한국어' },
 ];
 
 const sections = [
@@ -580,7 +579,7 @@ const escapeJson = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
 
 const alternateLinks = (section) =>
   [
-    ...languages.map((language) => `<link rel="alternate" hreflang="${language.htmlLang}" href="${absoluteUrl(section, language)}" />`),
+    ...languages.map((language) => `<link rel="alternate" hreflang="${language.hrefLang}" href="${absoluteUrl(section, language)}" />`),
     `<link rel="alternate" hreflang="x-default" href="${absoluteUrl(section, languages[0])}" />`,
   ].join('\n    ');
 
@@ -642,41 +641,26 @@ const collectionSchema = (section, language) => ({
   },
 });
 
-const breadcrumbSchema = (section, language) => ({
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: "Hopscup's Tools Hub",
-      item: absoluteUrl(sections[0], language),
-    },
-    ...(section.route === '/'
-      ? []
-      : [
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: getLanguage(section.heading, language),
-            item: absoluteUrl(section, language),
-          },
-        ]),
-  ],
-});
-
 const websiteSchema = (language) => ({
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: "Hopscup's Tools Hub",
   url: siteUrl,
   inLanguage: language.htmlLang,
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: `${siteUrl}/?q={search_term_string}`,
-    'query-input': 'required name=search_term_string',
-  },
 });
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Hopscup',
+  url: siteUrl,
+  logo: `${siteUrl}/logo.png`,
+  sameAs: [
+    'https://www.youtube.com/@hopscup',
+    'https://www.youtube.com/@Hopscup_eng',
+    'https://t.me/hopscupcrpt',
+  ],
+};
 
 const stripSeoFallback = (html) =>
   html.replace(/\s*<article class="seo-fallback"[\s\S]*?<\/article>\s*/g, '');
@@ -686,7 +670,7 @@ const replaceHead = (html, section, language) => {
   const description = escapeHtml(getLanguage(section.description, language));
   const keywords = escapeHtml(getLanguage(section.keywords, language));
   const url = absoluteUrl(section, language);
-  const structuredData = [websiteSchema(language), collectionSchema(section, language), breadcrumbSchema(section, language)];
+  const structuredData = [websiteSchema(language), organizationSchema, collectionSchema(section, language)];
 
   return html
     .replace(/<html lang=".*?">/, `<html lang="${language.htmlLang}">`)
@@ -699,6 +683,7 @@ const replaceHead = (html, section, language) => {
     .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${title}" />`)
     .replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${description}" />`)
     .replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="${url}" />`)
+    .replace(/<meta property="og:locale" content=".*?" \/>/, `<meta property="og:locale" content="${language.ogLocale}" />`)
     .replace(/<meta name="twitter:title" content=".*?" \/>/, `<meta name="twitter:title" content="${title}" />`)
     .replace(/<meta name="twitter:description" content=".*?" \/>/, `<meta name="twitter:description" content="${description}" />`)
     .replace(/<script id="structured-data" type="application\/ld\+json">[\s\S]*?<\/script>/, `<script id="structured-data" type="application/ld+json">${escapeJson(structuredData)}</script>`);
@@ -710,33 +695,82 @@ const replaceRootContent = (html, section, language) =>
 const renderPage = (baseHtml, section, language) => replaceRootContent(replaceHead(stripSeoFallback(baseHtml), section, language), section, language);
 
 const renderSitemap = () => {
+  const sitemapAlternates = (section) =>
+    [
+      ...languages.map(
+        (language) =>
+          `    <xhtml:link rel="alternate" hreflang="${language.hrefLang}" href="${escapeHtml(absoluteUrl(section, language))}" />`,
+      ),
+      `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeHtml(absoluteUrl(section, languages[0]))}" />`,
+    ].join('\n');
+
   const urls = languages.flatMap((language) =>
     sectionPages.map((section) => `  <url>
     <loc>${escapeHtml(absoluteUrl(section, language))}</loc>
-    <lastmod>${today}</lastmod>
+${sitemapAlternates(section)}
     <changefreq>${section.changefreq}</changefreq>
     <priority>${section.priority}</priority>
   </url>`),
   );
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls.join('\n')}
 </urlset>
 `;
 };
 
 const indexHtml = await readFile(path.join(distDir, 'index.html'), 'utf8');
+const defaultSection = sections.find((section) => section.id === 'proxy');
+const defaultLanguage = languages.find((language) => language.code === 'ru');
 
 await Promise.all(
   languages.flatMap((language) =>
-    sections.map(async (section) => {
+    sectionPages.map(async (section) => {
       const pagePath = localizedPath(section, language);
-      const routeDir = pagePath === '/' ? distDir : path.join(distDir, pagePath);
+      const routeDir = path.join(distDir, pagePath);
       await mkdir(routeDir, { recursive: true });
       await writeFile(path.join(routeDir, 'index.html'), renderPage(indexHtml, section, language), 'utf8');
     }),
   ),
+);
+
+if (defaultSection && defaultLanguage) {
+  await writeFile(path.join(distDir, 'index.html'), renderPage(indexHtml, defaultSection, defaultLanguage), 'utf8');
+}
+
+await writeFile(
+  path.join(distDir, '404.html'),
+  `<!doctype html>
+<html lang="ru-RU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#08050d" />
+    <title>Страница не найдена | Hopscup Tools</title>
+    <style>
+      :root { color-scheme: dark; font-family: Inter, Arial, sans-serif; }
+      body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: #08050d; color: #fff; }
+      main { width: min(560px, calc(100% - 48px)); text-align: center; }
+      img { width: 72px; height: 72px; border-radius: 16px; }
+      h1 { margin: 24px 0 12px; font-size: clamp(32px, 8vw, 56px); }
+      p { color: #a9a3b2; line-height: 1.6; }
+      a { display: inline-block; margin-top: 20px; padding: 14px 22px; border-radius: 12px; background: #9d58ff; color: #fff; text-decoration: none; font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="/logo.png" alt="Hopscup's Tools Hub" />
+      <h1>Страница не найдена</h1>
+      <p>Такого адреса нет. Вернитесь к подборке сервисов Hopscup.</p>
+      <a href="/proxy-vpn">Перейти на главную</a>
+    </main>
+  </body>
+</html>
+`,
+  'utf8',
 );
 
 await writeFile(path.join(distDir, 'sitemap.xml'), renderSitemap(), 'utf8');

@@ -179,12 +179,12 @@ const LANGUAGE_PREFIXES: Record<Language, string> = {
   ko: '/ko',
 };
 
-const LANGUAGE_OPTIONS: { value: Language; label: string; inLanguage: string }[] = [
-  { value: 'ru', label: 'RU', inLanguage: 'ru-RU' },
-  { value: 'en', label: 'EN', inLanguage: 'en' },
-  { value: 'es', label: 'ES', inLanguage: 'es' },
-  { value: 'zh', label: '中文', inLanguage: 'zh-CN' },
-  { value: 'ko', label: 'KO', inLanguage: 'ko-KR' },
+const LANGUAGE_OPTIONS: { value: Language; label: string; inLanguage: string; hrefLang: string; ogLocale: string }[] = [
+  { value: 'ru', label: 'RU', inLanguage: 'ru-RU', hrefLang: 'ru', ogLocale: 'ru_RU' },
+  { value: 'en', label: 'EN', inLanguage: 'en', hrefLang: 'en', ogLocale: 'en_US' },
+  { value: 'es', label: 'ES', inLanguage: 'es', hrefLang: 'es', ogLocale: 'es_ES' },
+  { value: 'zh', label: '中文', inLanguage: 'zh-CN', hrefLang: 'zh-CN', ogLocale: 'zh_CN' },
+  { value: 'ko', label: 'KO', inLanguage: 'ko-KR', hrefLang: 'ko-KR', ogLocale: 'ko_KR' },
 ];
 
 const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/';
@@ -207,8 +207,6 @@ const stripLanguagePrefix = (path: string) => {
 
 const getLocalizedRoute = (category: CategoryType, language: Language) =>
   `${LANGUAGE_PREFIXES[language]}${CATEGORY_ROUTES[category]}`;
-
-const getLocalizedHomeRoute = (language: Language) => LANGUAGE_PREFIXES[language] || '/';
 
 const translateMissingString = (value: string, language: Language) => {
   if (language === 'ru' || language === 'en') return value;
@@ -2667,11 +2665,16 @@ export default function App() {
     setMeta('meta[property="og:description"]', 'property', 'og:description', description);
     setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
     setMeta('meta[property="og:type"]', 'property', 'og:type', 'website');
+    setMeta('meta[property="og:locale"]', 'property', 'og:locale', currentLanguageOption?.ogLocale || 'en_US');
     setMeta('meta[property="og:image"]', 'property', 'og:image', `${SITE_URL}/logo.png`);
-    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
+    setMeta('meta[property="og:image:width"]', 'property', 'og:image:width', '400');
+    setMeta('meta[property="og:image:height"]', 'property', 'og:image:height', '400');
+    setMeta('meta[property="og:image:alt"]', 'property', 'og:image:alt', "Hopscup's Tools Hub");
+    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary');
     setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
     setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
     setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', `${SITE_URL}/logo.png`);
+    setMeta('meta[name="twitter:image:alt"]', 'name', 'twitter:image:alt', "Hopscup's Tools Hub");
 
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {
@@ -2692,8 +2695,8 @@ export default function App() {
       alternate.setAttribute('href', href);
     };
 
-    LANGUAGE_OPTIONS.forEach(({ value, inLanguage }) => {
-      setAlternate(inLanguage, `${SITE_URL}${getLocalizedRoute(activeCategory, value)}`);
+    LANGUAGE_OPTIONS.forEach(({ value, hrefLang }) => {
+      setAlternate(hrefLang, `${SITE_URL}${getLocalizedRoute(activeCategory, value)}`);
     });
     setAlternate('x-default', `${SITE_URL}${CATEGORY_ROUTES[activeCategory]}`);
 
@@ -2704,19 +2707,49 @@ export default function App() {
       structuredData.type = 'application/ld+json';
       document.head.appendChild(structuredData);
     }
-    structuredData.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'CollectionPage',
-      name: title,
-      description,
-      url: canonicalUrl,
-      isPartOf: {
+    const sectionOffers = OFFERS.filter((offer) => offer.category === activeCategory);
+    structuredData.textContent = JSON.stringify([
+      {
+        '@context': 'https://schema.org',
         '@type': 'WebSite',
         name: "Hopscup's Tools Hub",
         url: SITE_URL,
+        inLanguage: currentLanguageOption?.inLanguage || 'en',
       },
-      inLanguage: LANGUAGE_OPTIONS.find((option) => option.value === lang)?.inLanguage || 'en',
-    });
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Hopscup',
+        url: SITE_URL,
+        logo: `${SITE_URL}/logo.png`,
+        sameAs: [
+          'https://www.youtube.com/@hopscup',
+          'https://www.youtube.com/@Hopscup_eng',
+          'https://t.me/hopscupcrpt',
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: title,
+        description,
+        url: canonicalUrl,
+        isPartOf: {
+          '@type': 'WebSite',
+          name: "Hopscup's Tools Hub",
+          url: SITE_URL,
+        },
+        inLanguage: currentLanguageOption?.inLanguage || 'en',
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: sectionOffers.map((offer, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: offerTitle(offer),
+          })),
+        },
+      },
+    ]);
   }, [activeCategory, lang]);
 
   const normalizeSearchText = (value: string) =>
@@ -2789,6 +2822,13 @@ export default function App() {
     popular: tx({ ru: 'Популярное', en: 'Popular', es: 'Popular', zh: '热门', ko: '인기' }),
     bestChoice: tx({ ru: 'Лучший выбор', en: 'Best Choice', es: 'Mejor opción', zh: '最佳选择', ko: '추천 선택' }),
     footer: tx({ ru: 'Сделано с душой для Hopscup Crew', en: 'Made with soul for Hopscup Crew', es: 'Hecho con cariño para Hopscup Crew', zh: '为 Hopscup Crew 用心制作', ko: 'Hopscup Crew를 위해 정성껏 제작' }),
+    affiliateDisclosure: tx({
+      ru: 'Некоторые ссылки на сайте являются реферальными. Это не влияет на стоимость для пользователя.',
+      en: 'Some links on this website are affiliate links. This does not change the price for the user.',
+      es: 'Algunos enlaces del sitio son de afiliado. Esto no cambia el precio para el usuario.',
+      zh: '网站上的部分链接是推广链接，不会改变用户的购买价格。',
+      ko: '사이트의 일부 링크는 제휴 링크이며 사용자 가격에는 영향을 주지 않습니다.',
+    }),
     textGuide: tx({ ru: 'Текстовый гайд', en: 'Text Guide', es: 'Guía escrita', zh: '文字指南', ko: '텍스트 가이드' }),
     videoGuide: tx({ ru: 'Видео гайд', en: 'Video Guide', es: 'Videoguía', zh: '视频指南', ko: '비디오 가이드' }),
     all: tx({ ru: 'Все', en: 'All', es: 'Todo', zh: '全部', ko: '전체' }),
@@ -3009,8 +3049,8 @@ export default function App() {
         {/* Top Row: Logo & Language Toggle */}
         <div className="py-2 px-6 md:px-12 flex justify-between items-center border-b border-white/5">
           <div className="flex items-center gap-4">
-            <a href={getLocalizedHomeRoute(lang)} aria-label="Hopscup's Tools Hub" className="w-10 h-10 rounded-xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/5 transition-transform hover:scale-105">
-              <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
+            <a href={getLocalizedRoute('Proxy', lang)} aria-label="Hopscup's Tools Hub" className="w-10 h-10 rounded-xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/5 transition-transform hover:scale-105">
+              <img src="/logo.png" alt="Hopscup's Tools Hub" className="w-full h-full object-cover" />
             </a>
             
             <div className="flex items-center gap-2">
@@ -3045,9 +3085,15 @@ export default function App() {
               const Icon = cat.icon || Globe;
               const isActive = activeCategory === cat.id;
               return (
-                <button
+                <a
                   key={cat.id}
-                  onClick={() => handleCategoryChange(cat.id)}
+                  href={getLocalizedRoute(cat.id, lang)}
+                  onClick={(event) => {
+                    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                    event.preventDefault();
+                    handleCategoryChange(cat.id);
+                  }}
+                  aria-current={isActive ? 'page' : undefined}
                   className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl font-bold transition-all duration-300 border whitespace-nowrap group ${
                     isActive 
                       ? 'bg-brand-purple border-brand-purple shadow-[0_0_25px_rgba(129,28,254,0.3)] scale-105 text-white' 
@@ -3056,7 +3102,7 @@ export default function App() {
                 >
                   <Icon className={`w-4 h-4 transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`} />
                   <span className="tracking-widest uppercase text-[9px]">{l(cat.title)}</span>
-                </button>
+                </a>
               );
             })}
           </div>
@@ -3575,6 +3621,9 @@ export default function App() {
         </div>
         <p className="text-white/20 text-xs font-light tracking-widest uppercase">
           &copy; 2026 HopsCup Crew
+        </p>
+        <p className="max-w-2xl mx-auto mt-4 px-6 text-white/30 text-xs leading-relaxed">
+          {t.affiliateDisclosure}
         </p>
         <div className="mt-6 flex justify-center">
           <img
@@ -5192,7 +5241,7 @@ export default function App() {
                   <a
                     href={selectedOffer.url}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="sponsored noopener noreferrer"
                     className="w-full flex items-center justify-center gap-3 py-6 bg-brand-purple hover:bg-white text-white hover:text-brand-purple border-2 border-brand-purple transition-all duration-500 rounded-[1.5rem] font-black text-base uppercase tracking-[0.2em] shadow-[0_15px_40px_rgba(157,88,255,0.3)]"
                   >
                     {t.visit}
