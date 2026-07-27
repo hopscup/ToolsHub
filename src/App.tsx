@@ -2648,6 +2648,7 @@ export default function App() {
     const runtimeSeo = RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
     const title = runtimeSeo?.title || getLocalizedValue(sectionSeo.title, lang) || sectionSeo.title.en;
     const description = runtimeSeo?.description || getLocalizedValue(sectionSeo.description, lang) || sectionSeo.description.en;
+    const currentLanguageOption = LANGUAGE_OPTIONS.find(({ value }) => value === lang);
 
     const setMeta = (selector: string, attribute: 'name' | 'property', key: string, content: string) => {
       let element = document.head.querySelector<HTMLMetaElement>(selector);
@@ -2659,7 +2660,7 @@ export default function App() {
       element.setAttribute('content', content);
     };
 
-    document.documentElement.lang = lang;
+    document.documentElement.lang = currentLanguageOption?.inLanguage || lang;
     document.title = title;
     setMeta('meta[name="description"]', 'name', 'description', description);
     setMeta('meta[property="og:title"]', 'property', 'og:title', title);
@@ -2667,7 +2668,7 @@ export default function App() {
     setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
     setMeta('meta[property="og:type"]', 'property', 'og:type', 'website');
     setMeta('meta[property="og:image"]', 'property', 'og:image', `${SITE_URL}/logo.png`);
-    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary');
+    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
     setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
     setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
     setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', `${SITE_URL}/logo.png`);
@@ -2691,8 +2692,8 @@ export default function App() {
       alternate.setAttribute('href', href);
     };
 
-    LANGUAGE_OPTIONS.forEach(({ value }) => {
-      setAlternate(value, `${SITE_URL}${getLocalizedRoute(activeCategory, value)}`);
+    LANGUAGE_OPTIONS.forEach(({ value, inLanguage }) => {
+      setAlternate(inLanguage, `${SITE_URL}${getLocalizedRoute(activeCategory, value)}`);
     });
     setAlternate('x-default', `${SITE_URL}${CATEGORY_ROUTES[activeCategory]}`);
 
