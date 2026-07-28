@@ -6,6 +6,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BackgroundParticles } from './components/BackgroundParticles';
+import { accountShopPages } from './data/accountShopPages.js';
 import { 
   Gamepad2,
   Globe, 
@@ -1237,6 +1238,22 @@ const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']
   },
 };
 
+const ACCOUNT_SHOP_PAGE_BY_ID = Object.fromEntries(
+  accountShopPages.map((page) => [
+    page.id,
+    {
+      ...page,
+      editorial: {
+        title: page.title,
+        ...page.editorial,
+      },
+    },
+  ]),
+) as Record<string, {
+  slug: string;
+  editorial: NonNullable<Offer['editorial']>;
+}>;
+
 const OFFERS: Offer[] = [
   // GUIDES
   {
@@ -1994,11 +2011,10 @@ const OFFERS: Offer[] = [
     id: 'st-dark',
     category: 'Stores',
     subCategory: 'Web',
+    slug: ACCOUNT_SHOP_PAGE_BY_ID['st-dark'].slug,
+    editorial: ACCOUNT_SHOP_PAGE_BY_ID['st-dark'].editorial,
     name: 'DarkStore',
-    description: { 
-      ru: 'Основной магазин для рабочих аккаунтов: Gmail, Telegram, Facebook, Instagram и другие соцсети. Хорошо подходит, когда нужны почты, свежереги, фарм-аккаунты и расходники под регистрацию, тесты или повседневную работу.', 
-      en: 'A main store for work accounts: Gmail, Telegram, Facebook, Instagram, and other social platforms. Good when you need emails, fresh accounts, aged accounts, and consumables for registrations, testing, or daily work.' 
-    },
+    description: ACCOUNT_SHOP_PAGE_BY_ID['st-dark'].editorial.description,
     url: 'https://dark.shopping/category/view/gmail?p=95083',
     logoUrl: '/darkstore.png',
     isBestChoice: true,
@@ -2010,11 +2026,10 @@ const OFFERS: Offer[] = [
     id: 'st1',
     category: 'Stores',
     subCategory: 'Web',
+    slug: ACCOUNT_SHOP_PAGE_BY_ID.st1.slug,
+    editorial: ACCOUNT_SHOP_PAGE_BY_ID.st1.editorial,
     name: 'ACCSMarket',
-    description: { 
-      ru: 'Крупный магазин аккаунтов с почтами, соцсетями и разными расходниками. Можно использовать как дополнительный источник, если нужного товара нет в основных магазинах или хочется сравнить цены.', 
-      en: 'A large account store with emails, social accounts, and different consumables. Useful as an extra source when the main stores do not have the needed stock or when you want to compare prices.' 
-    },
+    description: ACCOUNT_SHOP_PAGE_BY_ID.st1.editorial.description,
     url: 'https://accsmarket.com/en/9vV7VOzI',
     logoUrl: '/accsmarket.png',
     isPopular: true,
@@ -2026,11 +2041,10 @@ const OFFERS: Offer[] = [
     id: 'st-ggsel',
     category: 'Stores',
     subCategory: 'Web',
+    slug: ACCOUNT_SHOP_PAGE_BY_ID['st-ggsel'].slug,
+    editorial: ACCOUNT_SHOP_PAGE_BY_ID['st-ggsel'].editorial,
     name: 'GGSel',
-    description: { 
-      ru: 'Маркетплейс цифровых товаров: игры, аккаунты, ключи, подписки и софт. Удобен для покупки игровых товаров, лицензий, подписок и редких цифровых позиций у разных продавцов.', 
-      en: 'A digital goods marketplace: games, accounts, keys, subscriptions, and software. Useful for gaming goods, licenses, subscriptions, and niche digital items from different sellers.' 
-    },
+    description: ACCOUNT_SHOP_PAGE_BY_ID['st-ggsel'].editorial.description,
     url: 'https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112',
     logoUrl: '/ggsel.png',
     details: {
@@ -2041,11 +2055,10 @@ const OFFERS: Offer[] = [
     id: 'st-funpay',
     category: 'Stores',
     subCategory: 'Web',
+    slug: ACCOUNT_SHOP_PAGE_BY_ID['st-funpay'].slug,
+    editorial: ACCOUNT_SHOP_PAGE_BY_ID['st-funpay'].editorial,
     name: 'FunPay',
-    description: { 
-      ru: 'Один из самых полезных маркетплейсов для повседневных покупок: аккаунты, подписки, игровые товары, услуги, ключи и цифровые продукты. Часто закрывает задачу быстрее остальных за счёт большого выбора продавцов и отзывов.', 
-      en: 'One of the most useful marketplaces for daily purchases: accounts, subscriptions, gaming goods, services, keys, and digital products. Often solves the task faster thanks to many sellers and reviews.' 
-    },
+    description: ACCOUNT_SHOP_PAGE_BY_ID['st-funpay'].editorial.description,
     url: 'https://funpay.com/',
     logoUrl: '/funpay.png',
     details: {
@@ -2056,11 +2069,10 @@ const OFFERS: Offer[] = [
     id: 'st-plati',
     category: 'Stores',
     subCategory: 'Web',
+    slug: ACCOUNT_SHOP_PAGE_BY_ID['st-plati'].slug,
+    editorial: ACCOUNT_SHOP_PAGE_BY_ID['st-plati'].editorial,
     name: 'Plati Market',
-    description: { 
-      ru: 'Классический маркетплейс цифровых товаров: игры, ключи, софт, подписки и разные цифровые позиции. Полезен как запасной вариант для сравнения цен и поиска товаров, которых нет на FunPay или GGsel.', 
-      en: 'A classic digital goods marketplace: games, keys, software, subscriptions, and other digital items. Useful as a backup option for price comparison and goods that are not available on FunPay or GGsel.' 
-    },
+    description: ACCOUNT_SHOP_PAGE_BY_ID['st-plati'].editorial.description,
     url: 'https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112',
     logoUrl: '/plati.png',
     details: {
@@ -2071,11 +2083,10 @@ const OFFERS: Offer[] = [
     id: 'st-lzt',
     category: 'Stores',
     subCategory: 'Web',
+    slug: ACCOUNT_SHOP_PAGE_BY_ID['st-lzt'].slug,
+    editorial: ACCOUNT_SHOP_PAGE_BY_ID['st-lzt'].editorial,
     name: 'LZT Market',
-    description: {
-      ru: 'Один из крупнейших игровых маркетов в СНГ с гарантией на аккаунты.',
-      en: 'One of the largest gaming markets in the CIS with a guarantee on accounts.'
-    },
+    description: ACCOUNT_SHOP_PAGE_BY_ID['st-lzt'].editorial.description,
     url: 'https://lzt.market/',
     logoUrl: '/lzt.png',
     details: {
@@ -2087,11 +2098,10 @@ const OFFERS: Offer[] = [
     id: 'bot-lachuga',
     category: 'Stores',
     subCategory: 'Bot',
+    slug: ACCOUNT_SHOP_PAGE_BY_ID['bot-lachuga'].slug,
+    editorial: ACCOUNT_SHOP_PAGE_BY_ID['bot-lachuga'].editorial,
     name: 'Лачуга скамера',
-    description: { 
-      ru: 'Telegram-магазин с дешёвыми аккаунтами и подписками на популярные нейросети и сервисы. Чаще всего сюда заходят за Gemini, GPT, Claude, CapCut, Canva и похожими цифровыми товарами по сниженной цене.', 
-      en: 'A Telegram shop with low-cost accounts and subscriptions for popular AI tools and services. Commonly used for Gemini, GPT, Claude, CapCut, Canva, and similar discounted digital goods.' 
-    },
+    description: ACCOUNT_SHOP_PAGE_BY_ID['bot-lachuga'].editorial.description,
     url: 'https://t.me/LachugaSkamera_Bot?start=ref_467483565',
     logoUrl: '/lachuga.png',
     isBestChoice: true,
@@ -2103,11 +2113,10 @@ const OFFERS: Offer[] = [
     id: 'bot-thegod',
     category: 'Stores',
     subCategory: 'Bot',
+    slug: ACCOUNT_SHOP_PAGE_BY_ID['bot-thegod'].slug,
+    editorial: ACCOUNT_SHOP_PAGE_BY_ID['bot-thegod'].editorial,
     name: 'TheGod Shop',
-    description: {
-      ru: 'Telegram-бот-магазин с дешёвыми AI-подписками и аккаунтами. По свежим завозам встречаются ChatGPT Plus с Codex, Gemini Pro на 18 месяцев, Super Grok и другие цифровые товары. Удобен, когда нужна быстрая покупка через бота, актуальное наличие и поддержка по заменам.',
-      en: 'A Telegram bot shop with low-cost AI subscriptions and accounts. Recent stock includes ChatGPT Plus with Codex, Gemini Pro for 18 months, Super Grok, and other digital goods. Convenient when you need a quick bot-based purchase, live stock, and replacement support.'
-    },
+    description: ACCOUNT_SHOP_PAGE_BY_ID['bot-thegod'].editorial.description,
     url: 'https://t.me/bothegreategod_bot?start=ref_467483565',
     logoUrl: '/thegod.png',
     details: {
@@ -2118,11 +2127,10 @@ const OFFERS: Offer[] = [
     id: 'bot-crassus',
     category: 'Stores',
     subCategory: 'Bot',
+    slug: ACCOUNT_SHOP_PAGE_BY_ID['bot-crassus'].slug,
+    editorial: ACCOUNT_SHOP_PAGE_BY_ID['bot-crassus'].editorial,
     name: 'Crassus Market',
-    description: { 
-      ru: 'Удобный Telegram-бот с аккаунтами, подписками и цифровыми товарами. Можно использовать как альтернативу, когда нужны нейросети, софт или подписки дешевле официальной цены.', 
-      en: 'A convenient Telegram bot with accounts, subscriptions, and digital goods. Useful as an alternative when you need AI tools, software, or subscriptions below official prices.' 
-    },
+    description: ACCOUNT_SHOP_PAGE_BY_ID['bot-crassus'].editorial.description,
     url: 'https://t.me/crassus_market_bot?start=467483565',
     logoUrl: '/crassus.png',
     details: {
@@ -2133,11 +2141,10 @@ const OFFERS: Offer[] = [
     id: 'bot-apel0sin',
     category: 'Stores',
     subCategory: 'Bot',
+    slug: ACCOUNT_SHOP_PAGE_BY_ID['bot-apel0sin'].slug,
+    editorial: ACCOUNT_SHOP_PAGE_BY_ID['bot-apel0sin'].editorial,
     name: 'Apel0sin',
-    description: { 
-      ru: 'Telegram-магазин для покупки цифровых товаров, аккаунтов и подписок. Подходит для быстрых покупок через бота, когда не хочется искать продавца на маркетплейсе вручную.', 
-      en: 'A Telegram shop for digital goods, accounts, and subscriptions. Good for quick bot-based purchases when you do not want to search for a seller manually on a marketplace.' 
-    },
+    description: ACCOUNT_SHOP_PAGE_BY_ID['bot-apel0sin'].editorial.description,
     url: 'https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565',
     logoUrl: '/apel0sin.png',
     details: {
@@ -2148,14 +2155,10 @@ const OFFERS: Offer[] = [
     id: 'bot-apel0sin-market-2',
     category: 'Stores',
     subCategory: 'Bot',
+    slug: ACCOUNT_SHOP_PAGE_BY_ID['bot-apel0sin-market-2'].slug,
+    editorial: ACCOUNT_SHOP_PAGE_BY_ID['bot-apel0sin-market-2'].editorial,
     name: 'apel0sin | market 2.0',
-    description: {
-      ru: 'Новый Telegram-магазин в формате Mini App с аккаунтами, подписками и цифровыми товарами. В ассортименте появляются ChatGPT Plus, Claude, Gemini, Grok, Cursor, Canva, Figma, Perplexity, KlingAI и другие сервисы. Для части товаров предусмотрена гарантия, а о новых поступлениях можно получать уведомления внутри бота.',
-      en: 'A new Telegram Mini App shop with accounts, subscriptions, and digital goods. The catalog features ChatGPT Plus, Claude, Gemini, Grok, Cursor, Canva, Figma, Perplexity, KlingAI, and other services. Some products include a warranty, and the bot can notify users about restocks.',
-      es: 'Una nueva tienda de Telegram en formato Mini App con cuentas, suscripciones y productos digitales. En el catálogo aparecen ChatGPT Plus, Claude, Gemini, Grok, Cursor, Canva, Figma, Perplexity, KlingAI y otros servicios. Algunos productos incluyen garantía y el bot puede avisar de nuevas existencias.',
-      zh: '一款采用 Mini App 形式的新 Telegram 商店，提供账号、订阅和数字商品。目录中会出现 ChatGPT Plus、Claude、Gemini、Grok、Cursor、Canva、Figma、Perplexity、KlingAI 等服务。部分商品带有保障，并可在机器人内接收补货通知。',
-      ko: '계정, 구독, 디지털 상품을 판매하는 새로운 Telegram Mini App 상점입니다. ChatGPT Plus, Claude, Gemini, Grok, Cursor, Canva, Figma, Perplexity, KlingAI 등 다양한 서비스가 입고됩니다. 일부 상품에는 보증이 제공되며 봇에서 재입고 알림을 받을 수 있습니다.',
-    },
+    description: ACCOUNT_SHOP_PAGE_BY_ID['bot-apel0sin-market-2'].editorial.description,
     url: 'https://t.me/apel0sin_market_bot?start=ref_467483565',
     logoUrl: '/apel0sin-market-2.png',
     details: {
@@ -2226,11 +2229,10 @@ const OFFERS: Offer[] = [
     id: 'bot-petrovich',
     category: 'Stores',
     subCategory: 'Bot',
+    slug: ACCOUNT_SHOP_PAGE_BY_ID['bot-petrovich'].slug,
+    editorial: ACCOUNT_SHOP_PAGE_BY_ID['bot-petrovich'].editorial,
     name: 'Petrovich',
-    description: { 
-      ru: 'Telegram-бот с аккаунтами, ключами, подписками и товарами для популярных сервисов. Хороший вариант для быстрой покупки нейросетей, софта и других цифровых продуктов.', 
-      en: 'A Telegram bot with accounts, keys, subscriptions, and goods for popular services. A good option for quick purchases of AI tools, software, and other digital products.' 
-    },
+    description: ACCOUNT_SHOP_PAGE_BY_ID['bot-petrovich'].editorial.description,
     url: 'https://t.me/ptrv4_bot?start=467483565',
     logoUrl: '/petrovich.png',
     details: {
@@ -3456,10 +3458,12 @@ export default function App() {
   const tx = <T,>(value: Partial<Record<Language, T>> & { en: T }) => value[lang] ?? value.en;
   const offerTitle = (offer: Offer) => OFFER_TITLE_TRANSLATIONS[offer.id]?.[lang] || offer.name;
   const offerDescription = (offer: Offer) => {
+    const ownDescription = offer.description[lang];
+    if (offer.category === 'Stores' && offer.editorial && ownDescription) return ownDescription;
+
     const manualDescription = OFFER_DESCRIPTION_TRANSLATIONS[offer.id]?.[lang];
     if (manualDescription) return manualDescription;
 
-    const ownDescription = offer.description[lang];
     if (ownDescription) return ownDescription;
     if (lang === 'ru' || lang === 'en') return l(offer.description);
 

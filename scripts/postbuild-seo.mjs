@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { accountShopPages } from '../src/data/accountShopPages.js';
 
 const siteUrl = 'https://hopscup.tools';
 const distDir = path.resolve('dist');
@@ -1371,6 +1372,19 @@ const servicePages = [
       ko: ['작동하지 않는 설정은 교체가 필요할 수 있습니다.', '안정적인 설정은 바꾸지 마세요.', 'Telegram은 VPN과 프록시가 함께 필요할 수 있습니다.'],
     },
   }),
+  ...accountShopPages.map((page) => createServicePage({
+    id: page.id,
+    route: `/account-shop/${page.slug}`,
+    name: page.name,
+    logo: page.logo,
+    title: page.title,
+    description: page.description,
+    heading: page.heading,
+    intro: page.editorial.description,
+    keywords: page.keywords,
+    points: page.editorial.bestFor,
+    items: page.editorial.considerations,
+  })),
 ];
 
 const sectionPages = sections.filter((section) => section.route !== '/');
