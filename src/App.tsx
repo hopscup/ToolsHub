@@ -772,6 +772,471 @@ const RUNTIME_SEO_TRANSLATIONS: Partial<Record<CategoryType, Partial<Record<Lang
   },
 };
 
+const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']>> = {
+  proxyshard: {
+    title: {
+      ru: 'ProxyShard: обзор Residential, ISP, Mobile и Datacenter прокси | Hopscup Tools',
+      en: 'ProxyShard review: Residential, ISP, Mobile, and Datacenter proxies | Hopscup Tools',
+      es: 'ProxyShard: análisis de proxies Residential, ISP, Mobile y Datacenter | Hopscup Tools',
+      zh: 'ProxyShard 评测：Residential、ISP、Mobile 与 Datacenter 代理 | Hopscup Tools',
+      ko: 'ProxyShard 리뷰: Residential, ISP, Mobile 및 Datacenter 프록시 | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор ProxyShard: Residential, ISP, Mobile и Datacenter-прокси, более 100 стран, способы оплаты и выбор типа IP под конкретную задачу.',
+      en: 'ProxyShard review covering Residential, ISP, Mobile, and Datacenter proxies, 100+ countries, payment methods, and choosing the right IP type.',
+      es: 'Análisis de ProxyShard: proxies Residential, ISP, Mobile y Datacenter, más de 100 países, pagos y elección del tipo de IP.',
+      zh: 'ProxyShard 评测：Residential、ISP、Mobile 和 Datacenter 代理，覆盖 100 多个国家、付款方式以及不同任务的 IP 类型选择。',
+      ko: 'ProxyShard 리뷰: Residential, ISP, Mobile, Datacenter 프록시, 100개 이상의 국가, 결제 수단과 작업별 IP 유형 선택.',
+    },
+    bestFor: {
+      ru: [
+        'Работа с аккаунтами, рекламными кабинетами и площадками, где важен источник IP.',
+        'Парсинг, автоматизация и другие задачи, для которых достаточно быстрых Datacenter или ISP-прокси.',
+        'Переход между Residential, Mobile, ISP и Datacenter без поиска нового сервиса.',
+      ],
+      en: [
+        'Accounts, ad dashboards, and platforms where the IP source matters.',
+        'Scraping, automation, and other tasks that work well with fast Datacenter or ISP proxies.',
+        'Switching between Residential, Mobile, ISP, and Datacenter without changing providers.',
+      ],
+      es: [
+        'Cuentas, paneles publicitarios y plataformas donde importa el origen de la IP.',
+        'Scraping, automatización y tareas que funcionan bien con proxies Datacenter o ISP rápidos.',
+        'Cambiar entre Residential, Mobile, ISP y Datacenter sin buscar otro proveedor.',
+      ],
+      zh: [
+        '适合重视 IP 来源的账号、广告后台和平台。',
+        '适合可使用高速 Datacenter 或 ISP 代理的采集、自动化及其他任务。',
+        '无需更换服务商即可在 Residential、Mobile、ISP 和 Datacenter 之间切换。',
+      ],
+      ko: [
+        'IP 출처가 중요한 계정, 광고 대시보드와 플랫폼.',
+        '빠른 Datacenter 또는 ISP 프록시로 처리할 수 있는 스크래핑과 자동화.',
+        '공급업체를 바꾸지 않고 Residential, Mobile, ISP, Datacenter 간 전환.',
+      ],
+    },
+    considerations: {
+      ru: [
+        'Сначала определите, нужен ли площадке более трастовый источник IP или достаточно серверного адреса.',
+        'Перед покупкой проверьте нужную страну, тип прокси и доступный способ оплаты.',
+        'Mobile и Residential имеет смысл брать тогда, когда обычный Datacenter или ISP не подходит под задачу.',
+      ],
+      en: [
+        'First decide whether the platform needs a higher-trust IP source or a server address is enough.',
+        'Check the required country, proxy type, and available payment method before buying.',
+        'Mobile and Residential make sense when Datacenter or ISP does not fit the task.',
+      ],
+      es: [
+        'Primero decide si la plataforma necesita una IP de mayor confianza o basta con una dirección de servidor.',
+        'Comprueba el país, el tipo de proxy y el método de pago antes de comprar.',
+        'Mobile y Residential tienen sentido cuando Datacenter o ISP no sirven para la tarea.',
+      ],
+      zh: [
+        '先确认平台是否需要更高信任度的 IP 来源，还是服务器地址已经足够。',
+        '购买前确认所需国家、代理类型和可用付款方式。',
+        '当 Datacenter 或 ISP 不适合任务时，再考虑 Mobile 和 Residential。',
+      ],
+      ko: [
+        '플랫폼에 더 높은 신뢰도의 IP가 필요한지 서버 주소로 충분한지 먼저 판단하세요.',
+        '구매 전에 필요한 국가, 프록시 유형과 결제 수단을 확인하세요.',
+        'Datacenter 또는 ISP가 맞지 않을 때 Mobile과 Residential을 선택하면 됩니다.',
+      ],
+    },
+    verdict: {
+      ru: 'Удобный универсальный вариант, если в работе нужны разные типы прокси. Не обязательно сразу брать самый дорогой тип: выбирайте источник IP под требования конкретной площадки.',
+      en: 'A convenient all-round option when your work needs different proxy types. You do not need the most expensive type by default, so match the IP source to the platform.',
+      es: 'Una opción universal y cómoda si necesitas distintos tipos de proxy. No hace falta elegir siempre el más caro: adapta la fuente de IP a la plataforma.',
+      zh: '需要多种代理类型时，这是方便的综合选择。不必默认购买最贵的类型，应根据平台要求选择 IP 来源。',
+      ko: '여러 프록시 유형이 필요할 때 편리한 범용 선택입니다. 가장 비싼 유형부터 살 필요 없이 플랫폼 요구에 맞추면 됩니다.',
+    },
+  },
+  'proxy-seller': {
+    title: {
+      ru: 'Proxy-Seller: обзор типов прокси, гео и оплаты | Hopscup Tools',
+      en: 'Proxy-Seller review: proxy types, locations, and payments | Hopscup Tools',
+      es: 'Proxy-Seller: análisis, tipos de proxy, GEO y pagos | Hopscup Tools',
+      zh: 'Proxy-Seller 评测：代理类型、地区与支付方式 | Hopscup Tools',
+      ko: 'Proxy-Seller 리뷰: 프록시 유형, 지역 및 결제 | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор Proxy-Seller: IPv4, IPv6, ISP, Residential, Mobile и Shared-прокси, более 220 стран, оплата картой, криптовалютой или PayPal.',
+      en: 'Proxy-Seller review covering IPv4, IPv6, ISP, Residential, Mobile, and Shared proxies, 220+ countries, card, crypto, and PayPal payments.',
+      es: 'Análisis de Proxy-Seller: IPv4, IPv6, ISP, Residential, Mobile y Shared, más de 220 países y pagos con tarjeta, cripto o PayPal.',
+      zh: 'Proxy-Seller 评测：IPv4、IPv6、ISP、Residential、Mobile 和 Shared 代理，覆盖 220 多个国家，支持银行卡、加密货币和 PayPal。',
+      ko: 'Proxy-Seller 리뷰: IPv4, IPv6, ISP, Residential, Mobile, Shared 프록시, 220개 이상의 국가와 카드, 암호화폐, PayPal 결제.',
+    },
+    bestFor: {
+      ru: [
+        'Подбор прокси под конкретную страну и задачу благодаря большому каталогу.',
+        'IPv4 и ISP для стабильной работы, автоматизации и аккаунтных задач.',
+        'Residential и Mobile для площадок, которые строже проверяют источник IP.',
+      ],
+      en: [
+        'Finding proxies for a specific country and task thanks to the large catalog.',
+        'IPv4 and ISP for stable work, automation, and account tasks.',
+        'Residential and Mobile for platforms that check the IP source more strictly.',
+      ],
+      es: [
+        'Encontrar proxies para un país y una tarea concreta gracias al catálogo amplio.',
+        'IPv4 e ISP para trabajo estable, automatización y cuentas.',
+        'Residential y Mobile para plataformas que revisan con más rigor el origen de la IP.',
+      ],
+      zh: [
+        '依靠丰富目录为特定国家和任务选择代理。',
+        'IPv4 和 ISP 适合稳定工作、自动化和账号任务。',
+        'Residential 和 Mobile 适合更严格检查 IP 来源的平台。',
+      ],
+      ko: [
+        '큰 카탈로그에서 특정 국가와 작업에 맞는 프록시 선택.',
+        '안정적인 작업, 자동화와 계정용 IPv4 및 ISP.',
+        'IP 출처를 더 엄격하게 확인하는 플랫폼용 Residential 및 Mobile.',
+      ],
+    },
+    considerations: {
+      ru: [
+        'В большом каталоге важно не перепутать выделенный, Shared и трафиковый формат прокси.',
+        'Проверьте поддержку IPv6 у нужной площадки до покупки.',
+        'Цена зависит от страны, типа IP, срока аренды и выбранного объёма.',
+      ],
+      en: [
+        'In a large catalog, make sure you distinguish dedicated, Shared, and traffic-based proxy formats.',
+        'Confirm IPv6 support on the target platform before buying.',
+        'Price depends on the country, IP type, rental period, and selected volume.',
+      ],
+      es: [
+        'En un catálogo grande hay que distinguir entre proxy dedicado, Shared y pago por tráfico.',
+        'Confirma que la plataforma admite IPv6 antes de comprar.',
+        'El precio depende del país, tipo de IP, periodo y volumen.',
+      ],
+      zh: [
+        '目录较大，请分清独享、Shared 和按流量计费的代理。',
+        '购买前确认目标平台支持 IPv6。',
+        '价格取决于国家、IP 类型、租用周期和数量。',
+      ],
+      ko: [
+        '큰 카탈로그에서는 전용, Shared, 트래픽 기반 상품을 구분해야 합니다.',
+        '구매 전에 대상 플랫폼의 IPv6 지원을 확인하세요.',
+        '가격은 국가, IP 유형, 대여 기간과 수량에 따라 달라집니다.',
+      ],
+    },
+    verdict: {
+      ru: 'Сильная сторона Proxy-Seller в выборе. Сервис удобен, когда нужно сравнить несколько типов прокси и найти редкое гео в одном кабинете.',
+      en: 'Proxy-Seller stands out for its selection. It is convenient when you want to compare proxy types or find a less common location in one dashboard.',
+      es: 'El punto fuerte de Proxy-Seller es la variedad. Resulta cómodo para comparar tipos o encontrar un GEO menos habitual.',
+      zh: 'Proxy-Seller 的优势是选择丰富，适合在同一控制面板比较多种代理类型或寻找较少见的地区。',
+      ko: 'Proxy-Seller의 강점은 선택 폭입니다. 한 대시보드에서 여러 유형을 비교하거나 드문 지역을 찾기 좋습니다.',
+    },
+  },
+  'proxys-io': {
+    title: {
+      ru: 'Proxys.io: обзор IPv4, Residential, Mobile и Dynamic прокси | Hopscup Tools',
+      en: 'Proxys.io review: IPv4, Residential, Mobile, and Dynamic proxies | Hopscup Tools',
+      es: 'Proxys.io: análisis de IPv4, Residential, Mobile y Dynamic | Hopscup Tools',
+      zh: 'Proxys.io 评测：IPv4、Residential、Mobile 与 Dynamic 代理 | Hopscup Tools',
+      ko: 'Proxys.io 리뷰: IPv4, Residential, Mobile 및 Dynamic 프록시 | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор Proxys.io: IPv4, IPv6, Shared, Residential, Mobile и Dynamic-прокси, более 240 стран, способы оплаты и подходящие задачи.',
+      en: 'Proxys.io review covering IPv4, IPv6, Shared, Residential, Mobile, and Dynamic proxies, 240+ countries, payments, and use cases.',
+      es: 'Análisis de Proxys.io: IPv4, IPv6, Shared, Residential, Mobile y Dynamic, más de 240 países, pagos y usos.',
+      zh: 'Proxys.io 评测：IPv4、IPv6、Shared、Residential、Mobile 和 Dynamic 代理，覆盖 240 多个国家、付款方式及适用场景。',
+      ko: 'Proxys.io 리뷰: IPv4, IPv6, Shared, Residential, Mobile, Dynamic 프록시, 240개 이상의 국가, 결제 수단과 활용 사례.',
+    },
+    bestFor: {
+      ru: [
+        'Работа с разными типами прокси через один сервис и единый кабинет.',
+        'Аккаунты, антидетекты, автоматизация и парсинг на отдельных IPv4 или IPv6.',
+        'Residential, Mobile и Dynamic для задач со сменой адресов или более строгими проверками IP.',
+      ],
+      en: [
+        'Using different proxy types through one service and dashboard.',
+        'Accounts, antidetect browsers, automation, and scraping with separate IPv4 or IPv6.',
+        'Residential, Mobile, and Dynamic for IP rotation or stricter IP checks.',
+      ],
+      es: [
+        'Trabajar con varios tipos de proxy desde un solo servicio.',
+        'Cuentas, antidetects, automatización y scraping con IPv4 o IPv6 separados.',
+        'Residential, Mobile y Dynamic para rotación o controles de IP más estrictos.',
+      ],
+      zh: [
+        '通过同一服务和控制面板使用多种代理类型。',
+        '使用独立 IPv4 或 IPv6 处理账号、反检测浏览器、自动化和采集。',
+        'Residential、Mobile 和 Dynamic 适合地址轮换或更严格的 IP 检查。',
+      ],
+      ko: [
+        '하나의 서비스와 대시보드에서 여러 프록시 유형 사용.',
+        '개별 IPv4 또는 IPv6를 이용한 계정, 안티디텍트, 자동화와 스크래핑.',
+        'IP 변경이나 더 엄격한 검사에 필요한 Residential, Mobile, Dynamic.',
+      ],
+    },
+    considerations: {
+      ru: [
+        'Shared и Dynamic отличаются от отдельного статического IP, поэтому подходят не для всех аккаунтных задач.',
+        'IPv6 стоит выбирать только при поддержке со стороны нужного сайта или программы.',
+        'Перед оплатой сравните доступное гео, формат выдачи IP и правила смены адреса.',
+      ],
+      en: [
+        'Shared and Dynamic differ from a dedicated static IP and do not fit every account task.',
+        'Choose IPv6 only when the target site or software supports it.',
+        'Compare locations, IP delivery format, and rotation rules before paying.',
+      ],
+      es: [
+        'Shared y Dynamic no son iguales a una IP estática individual y no sirven para todas las cuentas.',
+        'Elige IPv6 solo cuando el sitio o programa lo admita.',
+        'Compara GEO, formato de entrega y reglas de rotación antes de pagar.',
+      ],
+      zh: [
+        'Shared 和 Dynamic 与独立静态 IP 不同，并不适合所有账号任务。',
+        '只有目标网站或软件支持时才选择 IPv6。',
+        '付款前比较可用地区、IP 提供方式和更换规则。',
+      ],
+      ko: [
+        'Shared와 Dynamic은 개별 고정 IP와 달라 모든 계정 작업에 적합하지 않습니다.',
+        '대상 사이트나 프로그램이 지원할 때만 IPv6를 선택하세요.',
+        '결제 전에 지역, IP 제공 방식과 변경 규칙을 비교하세요.',
+      ],
+    },
+    verdict: {
+      ru: 'Универсальный сервис с большим выбором форматов. Особенно удобен, если в разных проектах нужны как обычные серверные IP, так и динамические или более трастовые варианты.',
+      en: 'A versatile service with many formats. It is especially convenient when different projects need both regular server IPs and dynamic or higher-trust options.',
+      es: 'Un servicio versátil con muchos formatos. Es cómodo si tus proyectos necesitan tanto IP de servidor como opciones dinámicas o de mayor confianza.',
+      zh: '这是代理格式丰富的综合服务，适合不同项目同时需要普通服务器 IP、动态地址或更高信任度来源的情况。',
+      ko: '여러 형식을 제공하는 범용 서비스입니다. 프로젝트마다 일반 서버 IP와 동적 또는 높은 신뢰도 옵션이 모두 필요할 때 편리합니다.',
+    },
+  },
+  'ppl-vpn': {
+    title: {
+      ru: 'PPL VPN: обзор платформ, гео и способов оплаты | Hopscup Tools',
+      en: 'PPL VPN review: platforms, locations, and payments | Hopscup Tools',
+      es: 'PPL VPN: análisis, plataformas, GEO y pagos | Hopscup Tools',
+      zh: 'PPL VPN 评测：平台、地区与支付方式 | Hopscup Tools',
+      ko: 'PPL VPN 리뷰: 플랫폼, 지역 및 결제 | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор PPL VPN: приложения для Windows, macOS, Android, iOS и Linux, более 10 стран, Telegram-бот, веб-кабинет и способы оплаты.',
+      en: 'PPL VPN review covering Windows, macOS, Android, iOS, Linux, 10+ countries, Telegram bot, web dashboard, and payment methods.',
+      es: 'Análisis de PPL VPN: Windows, macOS, Android, iOS, Linux, más de 10 países, bot de Telegram, panel web y pagos.',
+      zh: 'PPL VPN 评测：支持 Windows、macOS、Android、iOS 和 Linux，覆盖 10 多个国家，提供 Telegram 机器人、网页面板和多种付款方式。',
+      ko: 'PPL VPN 리뷰: Windows, macOS, Android, iOS, Linux, 10개 이상의 국가, Telegram 봇, 웹 대시보드와 결제 수단.',
+    },
+    bestFor: {
+      ru: [
+        'Повседневный доступ к зарубежным сайтам, приложениям и видеосервисам.',
+        'Использование одного VPN на компьютере, смартфоне и других основных платформах.',
+        'Быстрое подключение и управление подпиской через Telegram-бот или веб-кабинет.',
+      ],
+      en: [
+        'Everyday access to foreign websites, apps, and video services.',
+        'Using one VPN across computers, smartphones, and major platforms.',
+        'Quick setup and subscription management through Telegram or the web dashboard.',
+      ],
+      es: [
+        'Acceso diario a sitios, aplicaciones y servicios de vídeo extranjeros.',
+        'Usar un VPN en ordenadores, móviles y las plataformas principales.',
+        'Conexión rápida y gestión desde Telegram o el panel web.',
+      ],
+      zh: [
+        '日常访问海外网站、应用和视频服务。',
+        '在电脑、手机和主要平台上使用同一 VPN。',
+        '通过 Telegram 机器人或网页面板快速连接并管理订阅。',
+      ],
+      ko: [
+        '해외 웹사이트, 앱과 영상 서비스에 일상적으로 접속.',
+        '컴퓨터, 스마트폰과 주요 플랫폼에서 하나의 VPN 사용.',
+        'Telegram 봇이나 웹 대시보드에서 빠른 연결과 구독 관리.',
+      ],
+    },
+    considerations: {
+      ru: [
+        'Скорость зависит от выбранной страны, провайдера и текущей нагрузки на сервер.',
+        'Для сервисов с жёсткими региональными ограничениями может понадобиться подбор подходящего гео.',
+        'Перед оплатой проверьте наличие приложения или инструкции для своего устройства.',
+      ],
+      en: [
+        'Speed depends on the selected country, internet provider, and current server load.',
+        'Services with strict regional rules may require testing several locations.',
+        'Check that an app or setup guide is available for your device before paying.',
+      ],
+      es: [
+        'La velocidad depende del país elegido, el proveedor y la carga del servidor.',
+        'Los servicios con restricciones regionales estrictas pueden requerir probar varios GEO.',
+        'Comprueba que haya aplicación o guía para tu dispositivo antes de pagar.',
+      ],
+      zh: [
+        '速度取决于所选国家、网络运营商和当前服务器负载。',
+        '区域限制严格的服务可能需要尝试多个地区。',
+        '付款前确认你的设备有应用或设置教程。',
+      ],
+      ko: [
+        '속도는 선택한 국가, 인터넷 제공업체와 서버 부하에 따라 달라집니다.',
+        '지역 제한이 엄격한 서비스는 여러 위치를 테스트해야 할 수 있습니다.',
+        '결제 전에 기기용 앱이나 설정 가이드가 있는지 확인하세요.',
+      ],
+    },
+    verdict: {
+      ru: 'Понятный вариант для обычного использования без сложной настройки. Удобно, что подключиться и управлять подпиской можно как через Telegram, так и через веб-кабинет.',
+      en: 'A straightforward option for everyday use without complicated setup. Managing the subscription through either Telegram or the web dashboard is convenient.',
+      es: 'Una opción sencilla para el uso diario sin configuración complicada. Es cómodo gestionar la suscripción desde Telegram o la web.',
+      zh: '适合无需复杂设置的日常使用，通过 Telegram 或网页面板管理订阅都很方便。',
+      ko: '복잡한 설정 없이 일상적으로 사용하기 좋은 선택입니다. Telegram과 웹 대시보드에서 모두 구독을 관리할 수 있어 편리합니다.',
+    },
+  },
+  prostovpn: {
+    title: {
+      ru: 'ProstoVPN: обзор VPN для разных устройств | Hopscup Tools',
+      en: 'ProstoVPN review: VPN for multiple devices | Hopscup Tools',
+      es: 'ProstoVPN: análisis de VPN para varios dispositivos | Hopscup Tools',
+      zh: 'ProstoVPN 评测：多设备 VPN | Hopscup Tools',
+      ko: 'ProstoVPN 리뷰: 여러 기기용 VPN | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор ProstoVPN: Windows, macOS, Android, iOS, Linux и Smart TV, более 10 стран, несколько режимов скорости и оплата картой или СБП.',
+      en: 'ProstoVPN review covering Windows, macOS, Android, iOS, Linux, Smart TV, 10+ countries, speed modes, and card or SBP payments.',
+      es: 'Análisis de ProstoVPN: Windows, macOS, Android, iOS, Linux, Smart TV, más de 10 países, modos de velocidad y pagos.',
+      zh: 'ProstoVPN 评测：支持 Windows、macOS、Android、iOS、Linux 和 Smart TV，覆盖 10 多个国家，提供多种速度模式及银行卡或 SBP 付款。',
+      ko: 'ProstoVPN 리뷰: Windows, macOS, Android, iOS, Linux, Smart TV, 10개 이상의 국가, 속도 모드와 카드 또는 SBP 결제.',
+    },
+    bestFor: {
+      ru: [
+        'Использование VPN сразу на нескольких личных устройствах.',
+        'Доступ к зарубежным сайтам и приложениям при усилении ограничений.',
+        'Подключение компьютеров, смартфонов, Linux-устройств и Smart TV.',
+      ],
+      en: [
+        'Using a VPN across multiple personal devices.',
+        'Accessing foreign websites and apps when restrictions become stronger.',
+        'Connecting computers, smartphones, Linux devices, and Smart TVs.',
+      ],
+      es: [
+        'Usar VPN en varios dispositivos personales.',
+        'Acceder a sitios y aplicaciones extranjeros cuando aumentan las restricciones.',
+        'Conectar ordenadores, móviles, Linux y Smart TV.',
+      ],
+      zh: [
+        '在多台个人设备上使用 VPN。',
+        '限制加强时访问海外网站和应用。',
+        '连接电脑、手机、Linux 设备和 Smart TV。',
+      ],
+      ko: [
+        '여러 개인 기기에서 VPN 사용.',
+        '제한이 강화될 때 해외 웹사이트와 앱 접속.',
+        '컴퓨터, 스마트폰, Linux 기기와 Smart TV 연결.',
+      ],
+    },
+    considerations: {
+      ru: [
+        'Разные режимы стоит подбирать под конкретную сеть и задачу, а не только по максимальной скорости.',
+        'Доступность отдельных стран и качество маршрута могут меняться.',
+        'Оплата в карточке указана банковскими картами и СБП, поэтому заранее проверьте подходящий способ.',
+      ],
+      en: [
+        'Choose a mode for the current network and task rather than only chasing maximum speed.',
+        'Location availability and route quality can change.',
+        'The listed payment methods are bank cards and SBP, so check that one works for you.',
+      ],
+      es: [
+        'Elige el modo según la red y la tarea, no solo por la velocidad máxima.',
+        'La disponibilidad de países y la calidad de la ruta pueden cambiar.',
+        'Los pagos indicados son tarjeta bancaria y SBP.',
+      ],
+      zh: [
+        '应根据当前网络和任务选择模式，而不是只追求最高速度。',
+        '可用国家和线路质量可能发生变化。',
+        '页面列出的付款方式是银行卡和 SBP，请提前确认是否适合。',
+      ],
+      ko: [
+        '최대 속도만 보지 말고 현재 네트워크와 작업에 맞는 모드를 선택하세요.',
+        '지역 제공 여부와 경로 품질은 달라질 수 있습니다.',
+        '표시된 결제 수단은 은행 카드와 SBP이므로 미리 확인하세요.',
+      ],
+    },
+    verdict: {
+      ru: 'Хороший вариант для пользователя с несколькими устройствами, особенно если нужен VPN не только на телефоне и компьютере, но и на Smart TV.',
+      en: 'A good choice for users with several devices, especially when VPN access is needed on a Smart TV as well as phones and computers.',
+      es: 'Una buena opción para usuarios con varios dispositivos, especialmente si también necesitas VPN en Smart TV.',
+      zh: '适合拥有多台设备的用户，尤其是除了手机和电脑，还需要在 Smart TV 上使用 VPN 的情况。',
+      ko: '여러 기기를 쓰는 사용자에게 좋은 선택이며 특히 휴대폰과 컴퓨터뿐 아니라 Smart TV에도 VPN이 필요할 때 유용합니다.',
+    },
+  },
+  'tochka-g': {
+    title: {
+      ru: 'Точка G VPN: обзор конфигов и Telegram-прокси | Hopscup Tools',
+      en: 'Tochka G VPN review: configs and Telegram proxy | Hopscup Tools',
+      es: 'Tochka G VPN: análisis de configuraciones y proxy de Telegram | Hopscup Tools',
+      zh: 'Точка G VPN 评测：VPN 配置与 Telegram 代理 | Hopscup Tools',
+      ko: 'Tochka G VPN 리뷰: VPN 설정과 Telegram 프록시 | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор VPN «Точка G»: конфиги для популярных платформ, несколько стран, замена через Telegram-бота, персональный прокси для Telegram и оплата по СБП или криптой.',
+      en: 'Tochka G VPN review covering configs for popular platforms, multiple countries, bot-based replacement, a personal Telegram proxy, and SBP or crypto payments.',
+      es: 'Análisis de Tochka G VPN: configuraciones para plataformas populares, varios países, reemplazo por bot, proxy personal de Telegram y pagos.',
+      zh: 'Точка G VPN 评测：支持主流平台的配置、多个国家、通过机器人更换配置、Telegram 专用代理以及 SBP 或加密货币付款。',
+      ko: 'Tochka G VPN 리뷰: 주요 플랫폼용 설정, 여러 국가, 봇을 통한 교체, 개인 Telegram 프록시와 SBP 또는 암호화폐 결제.',
+    },
+    bestFor: {
+      ru: [
+        'Пользователи, которым удобно получать и менять VPN-конфиги через Telegram.',
+        'Работа с Telegram, AI-сервисами и другими приложениями при нестабильных блокировках.',
+        'Ситуации, когда нужна помощь поддержки с подбором рабочего конфига.',
+      ],
+      en: [
+        'Users who prefer receiving and replacing VPN configs through Telegram.',
+        'Telegram, AI services, and other apps affected by changing restrictions.',
+        'Situations where support help is useful for finding a working config.',
+      ],
+      es: [
+        'Usuarios que prefieren recibir y cambiar configuraciones VPN por Telegram.',
+        'Telegram, servicios de IA y otras aplicaciones con bloqueos cambiantes.',
+        'Situaciones donde ayuda el soporte para encontrar una configuración funcional.',
+      ],
+      zh: [
+        '适合希望通过 Telegram 获取和更换 VPN 配置的用户。',
+        '适合限制不断变化时使用 Telegram、AI 服务和其他应用。',
+        '适合需要客服帮助选择可用配置的情况。',
+      ],
+      ko: [
+        'Telegram에서 VPN 설정을 받고 교체하는 방식을 선호하는 사용자.',
+        '제한이 자주 변하는 환경에서 Telegram, AI 서비스와 기타 앱 사용.',
+        '작동하는 설정을 찾기 위해 지원 도움이 필요한 상황.',
+      ],
+    },
+    considerations: {
+      ru: [
+        'Если рабочий конфиг перестал подключаться, его может потребоваться заменить через бота или поддержку.',
+        'Стабильно работающий конфиг лучше не менять без необходимости.',
+        'Для отдельных проблем с Telegram может понадобиться сочетание VPN и персонального прокси.',
+      ],
+      en: [
+        'If a working config stops connecting, it may need replacement through the bot or support.',
+        'Do not replace a stable config unless necessary.',
+        'Some Telegram connection issues may require both VPN and a personal proxy.',
+      ],
+      es: [
+        'Si una configuración deja de conectar, puede ser necesario cambiarla mediante el bot o soporte.',
+        'No cambies una configuración estable sin necesidad.',
+        'Algunos problemas de Telegram pueden requerir VPN y proxy personal.',
+      ],
+      zh: [
+        '如果原本可用的配置无法连接，可能需要通过机器人或客服更换。',
+        '稳定工作的配置无需随意更换。',
+        '部分 Telegram 连接问题可能需要同时使用 VPN 和专用代理。',
+      ],
+      ko: [
+        '작동하던 설정이 연결되지 않으면 봇이나 지원을 통해 교체해야 할 수 있습니다.',
+        '안정적으로 작동하는 설정은 필요 없이 바꾸지 않는 것이 좋습니다.',
+        '일부 Telegram 문제에는 VPN과 개인 프록시를 함께 사용해야 할 수 있습니다.',
+      ],
+    },
+    verdict: {
+      ru: 'Сервис подойдёт тем, кому важны Telegram-формат, быстрая замена конфигов и помощь поддержки. Отдельный прокси для Telegram полезен, когда обычного VPN недостаточно.',
+      en: 'A good fit for users who value Telegram-based management, quick config replacement, and support. The separate Telegram proxy is useful when VPN alone is not enough.',
+      es: 'Encaja para quienes valoran la gestión por Telegram, el cambio rápido de configuraciones y el soporte. El proxy de Telegram ayuda cuando el VPN no basta.',
+      zh: '适合重视 Telegram 管理、快速更换配置和客服支持的用户。当仅使用 VPN 不够时，独立 Telegram 代理会很有用。',
+      ko: 'Telegram 기반 관리, 빠른 설정 교체와 지원을 중시하는 사용자에게 적합합니다. VPN만으로 부족할 때 별도 Telegram 프록시가 유용합니다.',
+    },
+  },
+};
+
 const OFFERS: Offer[] = [
   // GUIDES
   {
@@ -789,7 +1254,7 @@ const OFFERS: Offer[] = [
         ru: ['Смена IP', 'Мобильный интернет', 'Режим самолёта'],
         en: ['IP change', 'Mobile internet', 'Airplane mode']
       }
-    }
+    },
   },
   {
     id: 'guide-gmail-forwarding',
@@ -864,6 +1329,7 @@ const OFFERS: Offer[] = [
     id: 'p1',
     category: 'Proxy',
     subCategory: 'Proxy',
+    slug: 'proxyshard',
     name: 'ProxyShard',
     description: { 
       ru: 'Современный сервис с Residential, Datacenter, Mobile и ISP-прокси. Хороший баланс между стоимостью, скоростью и стабильностью работы.', 
@@ -873,10 +1339,11 @@ const OFFERS: Offer[] = [
     logoUrl: '/proxyshard.png',
     isBestChoice: true,
     details: {
-      geo: { ru: '100+ стран', en: '100+ countries' },
-      types: { ru: 'Residential, Datacenter, Mobile, ISP', en: 'Residential, Datacenter, Mobile, ISP' },
-      paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта', en: 'Visa/Mastercard, Crypto' }
-    }
+      geo: { ru: '100+ стран', en: '100+ countries', es: 'Más de 100 países', zh: '100 多个国家', ko: '100개 이상의 국가' },
+      types: { ru: 'Residential, Datacenter, Mobile, ISP', en: 'Residential, Datacenter, Mobile, ISP', es: 'Residential, Datacenter, Mobile, ISP', zh: 'Residential、Datacenter、Mobile、ISP', ko: 'Residential, Datacenter, Mobile, ISP' },
+      paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта', en: 'Visa/Mastercard, Crypto', es: 'Visa/Mastercard, cripto', zh: 'Visa/Mastercard、加密货币', ko: 'Visa/Mastercard, 암호화폐' }
+    },
+    editorial: ADDITIONAL_PROXY_EDITORIALS.proxyshard,
   },
   {
     id: 'p2',
@@ -891,9 +1358,9 @@ const OFFERS: Offer[] = [
     url: 'https://proxyline.net?line=152448',
     logoUrl: '/proxyline.png',
     details: {
-      geo: { ru: '100+ стран', en: '100+ countries' },
-      types: { ru: 'IPv4, IPv6', en: 'IPv4, IPv6' },
-      paymentMethods: { ru: 'Visa/Mastercard, СБП, Мир, Криптовалюта', en: 'Visa/Mastercard, SBP, Mir, Crypto' }
+      geo: { ru: '100+ стран', en: '100+ countries', es: 'Más de 100 países', zh: '100 多个国家', ko: '100개 이상의 국가' },
+      types: { ru: 'IPv4, IPv6', en: 'IPv4, IPv6', es: 'IPv4, IPv6', zh: 'IPv4、IPv6', ko: 'IPv4, IPv6' },
+      paymentMethods: { ru: 'Visa/Mastercard, СБП, Мир, Криптовалюта', en: 'Visa/Mastercard, SBP, Mir, Crypto', es: 'Visa/Mastercard, SBP, Mir, cripto', zh: 'Visa/Mastercard、SBP、Mir、加密货币', ko: 'Visa/Mastercard, SBP, Mir, 암호화폐' }
     },
     editorial: {
       title: {
@@ -986,9 +1453,9 @@ const OFFERS: Offer[] = [
     url: 'https://dashboard.proxywing.com/billing/aff.php?aff=813',
     logoUrl: '/proxywing.png',
     details: {
-      geo: { ru: '200+ стран', en: '200+ countries' },
-      types: { ru: 'Residential, Datacenter, ISP, Mobile', en: 'Residential, Datacenter, ISP, Mobile' },
-      paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto' }
+      geo: { ru: '200+ стран', en: '200+ countries', es: 'Más de 200 países', zh: '200 多个国家', ko: '200개 이상의 국가' },
+      types: { ru: 'Residential, Datacenter, ISP, Mobile', en: 'Residential, Datacenter, ISP, Mobile', es: 'Residential, Datacenter, ISP, Mobile', zh: 'Residential、Datacenter、ISP、Mobile', ko: 'Residential, Datacenter, ISP, Mobile' },
+      paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto', es: 'Visa/Mastercard, SBP/Mir, cripto', zh: 'Visa/Mastercard、SBP/Mir、加密货币', ko: 'Visa/Mastercard, SBP/Mir, 암호화폐' }
     },
     editorial: {
       title: {
@@ -1072,6 +1539,7 @@ const OFFERS: Offer[] = [
     id: 'p4',
     category: 'Proxy',
     subCategory: 'Proxy',
+    slug: 'proxy-seller',
     name: 'Proxy-Seller',
     description: {
       ru: 'Один из самых крупных сервисов с огромным выбором стран и типов прокси. Практически всегда можно подобрать подходящий вариант под любую задачу.',
@@ -1081,10 +1549,11 @@ const OFFERS: Offer[] = [
     logoUrl: '/proxy-seller.png',
     isPopular: true,
     details: {
-      geo: { ru: '220+ стран', en: '220+ countries' },
-      types: { ru: 'IPv4, IPv6, ISP, Residential, Mobile, Shared', en: 'IPv4, IPv6, ISP, Residential, Mobile, Shared' },
-      paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта, PayPal', en: 'Visa/Mastercard, Crypto, PayPal' }
-    }
+      geo: { ru: '220+ стран', en: '220+ countries', es: 'Más de 220 países', zh: '220 多个国家', ko: '220개 이상의 국가' },
+      types: { ru: 'IPv4, IPv6, ISP, Residential, Mobile, Shared', en: 'IPv4, IPv6, ISP, Residential, Mobile, Shared', es: 'IPv4, IPv6, ISP, Residential, Mobile, Shared', zh: 'IPv4、IPv6、ISP、Residential、Mobile、Shared', ko: 'IPv4, IPv6, ISP, Residential, Mobile, Shared' },
+      paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта, PayPal', en: 'Visa/Mastercard, Crypto, PayPal', es: 'Visa/Mastercard, cripto, PayPal', zh: 'Visa/Mastercard、加密货币、PayPal', ko: 'Visa/Mastercard, 암호화폐, PayPal' }
+    },
+    editorial: ADDITIONAL_PROXY_EDITORIALS['proxy-seller'],
   },
   {
     id: 'p5',
@@ -1099,9 +1568,9 @@ const OFFERS: Offer[] = [
     url: 'https://px6.net/c/103460',
     logoUrl: '/proxy6.png',
     details: {
-      geo: { ru: '70+ стран', en: '70+ countries' },
-      types: { ru: 'IPv4, IPv6, Shared IPv4, MTProto', en: 'IPv4, IPv6, Shared IPv4, MTProto' },
-      paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto' }
+      geo: { ru: '70+ стран', en: '70+ countries', es: 'Más de 70 países', zh: '70 多个国家', ko: '70개 이상의 국가' },
+      types: { ru: 'IPv4, IPv6, Shared IPv4, MTProto', en: 'IPv4, IPv6, Shared IPv4, MTProto', es: 'IPv4, IPv6, Shared IPv4, MTProto', zh: 'IPv4、IPv6、Shared IPv4、MTProto', ko: 'IPv4, IPv6, Shared IPv4, MTProto' },
+      paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto', es: 'Visa/Mastercard, SBP/Mir, cripto', zh: 'Visa/Mastercard、SBP/Mir、加密货币', ko: 'Visa/Mastercard, SBP/Mir, 암호화폐' }
     },
     editorial: {
       title: {
@@ -1194,9 +1663,9 @@ const OFFERS: Offer[] = [
     url: 'https://mobileproxy.space/?p=105422',
     logoUrl: '/mobileproxy.png',
     details: {
-      geo: { ru: '20+ стран', en: '20+ countries' },
-      types: { ru: 'Mobile', en: 'Mobile' },
-      paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto' }
+      geo: { ru: '20+ стран', en: '20+ countries', es: 'Más de 20 países', zh: '20 多个国家', ko: '20개 이상의 국가' },
+      types: { ru: 'Mobile', en: 'Mobile', es: 'Mobile', zh: 'Mobile', ko: 'Mobile' },
+      paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto', es: 'Visa/Mastercard, SBP/Mir, cripto', zh: 'Visa/Mastercard、SBP/Mir、加密货币', ko: 'Visa/Mastercard, SBP/Mir, 암호화폐' }
     },
     editorial: {
       title: {
@@ -1280,6 +1749,7 @@ const OFFERS: Offer[] = [
     id: 'p7',
     category: 'Proxy',
     subCategory: 'Proxy',
+    slug: 'proxys-io',
     name: 'Proxys.io',
     description: {
       ru: 'Универсальный сервис с большим выбором прокси под разные задачи: IPv4/IPv6, shared, residential, mobile и dynamic. Подойдет как для работы с аккаунтами, так и для автоматизации.',
@@ -1288,16 +1758,18 @@ const OFFERS: Offer[] = [
     url: 'https://proxys.io/?refid=54507',
     logoUrl: '/proxys-io.png',
     details: {
-      geo: { ru: '240+ стран', en: '240+ countries' },
-      types: { ru: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic', en: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic' },
-      paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта, Alipay', en: 'Visa/Mastercard, SBP/Mir, Crypto, Alipay' }
-    }
+      geo: { ru: '240+ стран', en: '240+ countries', es: 'Más de 240 países', zh: '240 多个国家', ko: '240개 이상의 국가' },
+      types: { ru: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic', en: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic', es: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic', zh: 'IPv4、IPv6、Shared IPv4、Residential、Mobile、Dynamic', ko: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic' },
+      paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта, Alipay', en: 'Visa/Mastercard, SBP/Mir, Crypto, Alipay', es: 'Visa/Mastercard, SBP/Mir, cripto, Alipay', zh: 'Visa/Mastercard、SBP/Mir、加密货币、Alipay', ko: 'Visa/Mastercard, SBP/Mir, 암호화폐, Alipay' }
+    },
+    editorial: ADDITIONAL_PROXY_EDITORIALS['proxys-io'],
   },
   // VPN
   {
     id: 'vpn-ppl',
     category: 'Proxy',
     subCategory: 'VPN',
+    slug: 'ppl-vpn',
     name: 'PPL VPN',
     description: {
       ru: 'Быстрый VPN для повседневного использования. Подходит для обхода блокировок, просмотра YouTube без рекламы и работы с зарубежными сервисами. Есть удобный Telegram-бот и реферальная программа.',
@@ -1309,14 +1781,16 @@ const OFFERS: Offer[] = [
     isBestChoice: true,
     platforms: ['Windows', 'macOS', 'Android', 'iOS', 'Linux'],
     details: {
-      geo: { ru: 'Более 10 стран', en: '10+ countries' },
-      paymentMethods: { ru: 'Банковские карты, СБП, Криптовалюта', en: 'Bank cards, SBP, Crypto' }
-    }
+      geo: { ru: 'Более 10 стран', en: '10+ countries', es: 'Más de 10 países', zh: '10 多个国家', ko: '10개 이상의 국가' },
+      paymentMethods: { ru: 'Банковские карты, СБП, Криптовалюта', en: 'Bank cards, SBP, Crypto', es: 'Tarjetas bancarias, SBP, cripto', zh: '银行卡、SBP、加密货币', ko: '은행 카드, SBP, 암호화폐' }
+    },
+    editorial: ADDITIONAL_PROXY_EDITORIALS['ppl-vpn'],
   },
   {
     id: 'vpn-prosto',
     category: 'Proxy',
     subCategory: 'VPN',
+    slug: 'prostovpn',
     name: 'ProstoVPN',
     description: {
       ru: 'VPN с собствеными технологиями обхода блокировок, который продолжает работать даже при усилении ограничений. Поддерживает неограниченное количество устройств и несколько режимов скорости под разные задачи.',
@@ -1326,14 +1800,16 @@ const OFFERS: Offer[] = [
     logoUrl: '/prostovpn.png',
     platforms: ['Windows', 'macOS', 'Android', 'iOS', 'Linux', 'Smart TV'],
     details: {
-      geo: { ru: 'Более 10 стран', en: '10+ countries' },
-      paymentMethods: { ru: 'Банковские карты, СБП', en: 'Bank cards, SBP' }
-    }
+      geo: { ru: 'Более 10 стран', en: '10+ countries', es: 'Más de 10 países', zh: '10 多个国家', ko: '10개 이상의 국가' },
+      paymentMethods: { ru: 'Банковские карты, СБП', en: 'Bank cards, SBP', es: 'Tarjetas bancarias, SBP', zh: '银行卡、SBP', ko: '은행 카드, SBP' }
+    },
+    editorial: ADDITIONAL_PROXY_EDITORIALS.prostovpn,
   },
   {
     id: 'vpn-tochka-g',
     category: 'Proxy',
     subCategory: 'VPN',
+    slug: 'tochka-g',
     name: 'Точка G',
     description: {
       ru: 'VPN-сервис в Telegram-боте с акцентом на стабильную связь и оперативную замену конфигов. Если конкретный конфиг перестаёт работать, его можно заменить через бота или поддержку. Есть отдельные решения для Telegram, включая персональный прокси и новые VPN-конфиги для работы TG, AI-сервисов и других приложений.',
@@ -1343,12 +1819,15 @@ const OFFERS: Offer[] = [
     logoUrl: '/tochka-g.png',
     platforms: ['Windows', 'macOS', 'Android', 'iOS', 'Linux'],
     details: {
-      geo: { ru: 'Несколько стран, есть переключение в новых конфигах', en: 'Multiple countries, switching available in newer configs' },
-      types: { ru: 'VPN-конфиги, персональный прокси для Telegram', en: 'VPN configs, personal Telegram proxy' },
-      paymentMethods: { ru: 'СБП или крипта', en: 'SBP or crypto' },
+      geo: { ru: 'Несколько стран, есть переключение в новых конфигах', en: 'Multiple countries, switching available in newer configs', es: 'Varios países, con cambio en las configuraciones nuevas', zh: '多个国家，新配置支持切换', ko: '여러 국가, 새 설정에서 전환 가능' },
+      types: { ru: 'VPN-конфиги, персональный прокси для Telegram', en: 'VPN configs, personal Telegram proxy', es: 'Configuraciones VPN, proxy personal para Telegram', zh: 'VPN 配置、Telegram 专用代理', ko: 'VPN 설정, 개인 Telegram 프록시' },
+      paymentMethods: { ru: 'СБП или крипта', en: 'SBP or crypto', es: 'SBP o cripto', zh: 'SBP 或加密货币', ko: 'SBP 또는 암호화폐' },
       pros: {
         ru: ['Замена конфига через бота', 'Поддержка помогает подобрать рабочий вариант', 'Есть решение для Telegram-прокси', 'Компенсации днями при серьёзных сбоях'],
-        en: ['Config replacement via bot', 'Support helps find a working option', 'Telegram proxy solution available', 'Day compensation during serious outages']
+        en: ['Config replacement via bot', 'Support helps find a working option', 'Telegram proxy solution available', 'Day compensation during serious outages'],
+        es: ['Cambio de configuración mediante el bot', 'Soporte para encontrar una opción funcional', 'Proxy para Telegram disponible', 'Compensación en días durante fallos graves'],
+        zh: ['通过机器人更换配置', '客服帮助选择可用方案', '提供 Telegram 代理方案', '严重故障时按天补偿'],
+        ko: ['봇을 통한 설정 교체', '지원팀의 작동 옵션 안내', 'Telegram 프록시 제공', '심각한 장애 시 이용 기간 보상']
       },
       nuances: {
         ru: [
@@ -1360,9 +1839,25 @@ const OFFERS: Offer[] = [
           'Sometimes a config must be replaced when a provider or blocking rules break the connection.',
           'If everything works, it is better not to change the config unnecessarily.',
           'For Telegram issues, a VPN + personal proxy combo may be needed.'
+        ],
+        es: [
+          'A veces hay que cambiar la configuración si el proveedor o los bloqueos rompen la conexión.',
+          'Si todo funciona, es mejor no cambiar la configuración sin necesidad.',
+          'Para problemas con Telegram puede hacer falta VPN y proxy personal.'
+        ],
+        zh: [
+          '如果运营商或限制导致连接失效，可能需要更换配置。',
+          '如果当前运行稳定，无需随意更换配置。',
+          'Telegram 连接问题可能需要同时使用 VPN 和专用代理。'
+        ],
+        ko: [
+          '통신사나 제한으로 연결이 끊기면 설정을 바꿔야 할 수 있습니다.',
+          '정상 작동 중이라면 필요 없이 설정을 바꾸지 않는 것이 좋습니다.',
+          'Telegram 문제에는 VPN과 개인 프록시가 함께 필요할 수 있습니다.'
         ]
       }
-    }
+    },
+    editorial: ADDITIONAL_PROXY_EDITORIALS['tochka-g'],
   },
   // ANTIDETECT
   {
@@ -2156,7 +2651,7 @@ const OFFERS: Offer[] = [
           'Limit — up to 3 cards per user'
         ]
       }
-    }
+    },
   },
   {
     id: 'vezdekarta',

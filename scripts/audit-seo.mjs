@@ -23,10 +23,16 @@ const categoryRoutes = [
   '/guides',
 ];
 const serviceRoutes = [
+  '/proxy-vpn/proxyshard',
   '/proxy-vpn/proxyline',
   '/proxy-vpn/proxywing',
+  '/proxy-vpn/proxy-seller',
   '/proxy-vpn/proxy6',
   '/proxy-vpn/mobileproxy',
+  '/proxy-vpn/proxys-io',
+  '/proxy-vpn/ppl-vpn',
+  '/proxy-vpn/prostovpn',
+  '/proxy-vpn/tochka-g',
 ];
 const routes = [...categoryRoutes, ...serviceRoutes];
 
