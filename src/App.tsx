@@ -11,6 +11,7 @@ import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
 import { foreignCardPages } from './data/foreignCardPages.js';
 import { smsPages } from './data/smsPages.js';
+import { vpsPages } from './data/vpsPages.js';
 import { 
   Gamepad2,
   Globe, 
@@ -1386,6 +1387,22 @@ const CRYPTO_EXCHANGE_PAGE_BY_ID = Object.fromEntries(
 
 const SMS_PAGE_BY_ID = Object.fromEntries(
   smsPages.map((page) => [
+    page.id,
+    {
+      ...page,
+      editorial: {
+        title: page.title,
+        ...page.editorial,
+      },
+    },
+  ]),
+) as Record<string, {
+  slug: string;
+  editorial: NonNullable<Offer['editorial']>;
+}>;
+
+const VPS_PAGE_BY_ID = Object.fromEntries(
+  vpsPages.map((page) => [
     page.id,
     {
       ...page,
@@ -3110,111 +3127,78 @@ const OFFERS: Offer[] = [
   {
     id: 'vps-macloud',
     category: 'VPS',
+    slug: VPS_PAGE_BY_ID['vps-macloud'].slug,
+    editorial: VPS_PAGE_BY_ID['vps-macloud'].editorial,
     name: 'MaCloud',
-    description: {
-      ru: 'Мой основной вариант для VDS/VPS. Не самый дешёвый провайдер, но по личному опыту всё работало стабильно и без лишней возни. Хороший выбор, когда сервер нужен не “на попробовать”, а для нормальной постоянной работы.',
-      en: 'My main option for VDS/VPS. Not the cheapest provider, but in my experience it worked reliably without extra hassle. A good choice when you need a server for stable daily work, not just testing.'
-    },
+    description: VPS_PAGE_BY_ID['vps-macloud'].editorial.description,
     url: 'https://macloud.ru/?partner=54jxg21a99',
     logoUrl: '/macloud.png',
     isBestChoice: true,
     details: {
       geo: { ru: 'РФ и зарубежные локации', en: 'RU and foreign locations' },
       types: { ru: 'VDS/VPS, Linux, Windows, выделенные ресурсы', en: 'VDS/VPS, Linux, Windows, dedicated resources' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' },
-      pros: {
-        ru: ['Стабильная работа по личному опыту', 'Подходит для постоянных рабочих серверов', 'Есть выбор конфигураций под разные задачи'],
-        en: ['Stable in personal use', 'Good for permanent work servers', 'Configuration options for different tasks']
-      },
-      nuances: {
-        ru: ['Дороже бюджетных вариантов', 'Для тестов можно начать с минимальной конфигурации', 'Перед покупкой лучше выбрать ОС и локацию под конкретную задачу'],
-        en: ['More expensive than budget options', 'For testing, start with a minimal config', 'Choose OS and location for the exact task before buying']
-      }
+      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' }
     }
   },
   {
     id: 'vps-xorek',
     category: 'VPS',
+    slug: VPS_PAGE_BY_ID['vps-xorek'].slug,
+    editorial: VPS_PAGE_BY_ID['vps-xorek'].editorial,
     name: 'Xorek',
-    description: {
-      ru: 'Дешёвый вариант для VDS/VPS. По личному опыту цена приятная, но иногда сервер мог слетать, после чего приходилось поднимать его заново. Подходит для тестов, временных задач и проектов, где не критичен редкий простой.',
-      en: 'A cheap VDS/VPS option. In my experience, pricing is attractive, but the server could occasionally fail and need to be recreated. Good for tests, temporary tasks, and projects where rare downtime is not critical.'
-    },
+    description: VPS_PAGE_BY_ID['vps-xorek'].editorial.description,
     url: 'https://xorek.cloud/?from=20798',
     logoUrl: '/xorek.png',
     isPopular: true,
     details: {
       geo: { ru: 'Несколько локаций', en: 'Multiple locations' },
       types: { ru: 'VDS/VPS, Linux, бюджетные конфигурации', en: 'VDS/VPS, Linux, budget configs' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' },
-      pros: {
-        ru: ['Низкая цена', 'Подходит для тестов и временных серверов', 'Можно быстро поднять новый сервер'],
-        en: ['Low price', 'Good for tests and temporary servers', 'Easy to spin up a new server']
-      },
-      nuances: {
-        ru: ['Иногда сервер может слетать', 'Не лучший выбор для критичных проектов', 'Важные данные лучше бэкапить отдельно'],
-        en: ['Server may occasionally fail', 'Not the best choice for critical projects', 'Back up important data separately']
-      }
+      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' }
     }
   },
   {
     id: 'vps-vdsina',
     category: 'VPS',
+    slug: VPS_PAGE_BY_ID['vps-vdsina'].slug,
+    editorial: VPS_PAGE_BY_ID['vps-vdsina'].editorial,
     name: 'VDSina',
-    description: {
-      ru: 'Популярный провайдер VDS/VPS с понятной панелью и быстрым запуском серверов. Хороший универсальный вариант для ботов, парсеров, небольших веб-проектов и рабочих окружений.',
-      en: 'A popular VDS/VPS provider with a clear control panel and quick server deployment. A good universal option for bots, parsers, small web projects, and work environments.'
-    },
+    description: VPS_PAGE_BY_ID['vps-vdsina'].editorial.description,
     url: 'https://vdsina.ru/?partner=fd6mvbusbj46',
     logoUrl: '/vdsina.png',
     details: {
       geo: { ru: 'РФ и зарубежные локации', en: 'RU and foreign locations' },
       types: { ru: 'VDS/VPS, Linux, Windows, быстрый запуск', en: 'VDS/VPS, Linux, Windows, quick launch' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' },
-      pros: {
-        ru: ['Понятная панель', 'Быстрое создание серверов', 'Подходит для большинства типовых задач'],
-        en: ['Clear panel', 'Fast server creation', 'Works for most common tasks']
-      }
+      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' }
     }
   },
   {
     id: 'vps-spacecore',
     category: 'VPS',
+    slug: VPS_PAGE_BY_ID['vps-spacecore'].slug,
+    editorial: VPS_PAGE_BY_ID['vps-spacecore'].editorial,
     name: 'SpaceCore',
-    description: {
-      ru: 'Хостинг для VPS/VDS и серверной инфраструктуры. Можно рассматривать как альтернативу, если нужны другие локации, конфигурации или цены под конкретную задачу.',
-      en: 'A hosting provider for VPS/VDS and server infrastructure. Consider it as an alternative when you need different locations, configurations, or pricing for a specific task.'
-    },
+    description: VPS_PAGE_BY_ID['vps-spacecore'].editorial.description,
     url: 'https://billing.spacecore.pro/billmgr?from=59744',
     logoUrl: '/spacecore.png',
     details: {
       geo: { ru: 'Разные локации', en: 'Different locations' },
       types: { ru: 'VPS/VDS, серверная инфраструктура', en: 'VPS/VDS, server infrastructure' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' },
-      pros: {
-        ru: ['Альтернатива под нестандартные задачи', 'Есть разные конфигурации', 'Подходит для теста локаций и цен'],
-        en: ['Alternative for non-standard tasks', 'Different configurations available', 'Good for testing locations and pricing']
-      }
+      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' }
     }
   },
   {
     id: 'vps-aeza',
     category: 'VPS',
+    slug: VPS_PAGE_BY_ID['vps-aeza'].slug,
+    editorial: VPS_PAGE_BY_ID['vps-aeza'].editorial,
     name: 'AEZA',
-    description: {
-      ru: 'Известный провайдер серверов и VPS/VDS с большим выбором инфраструктурных решений. Можно смотреть, когда нужны мощные конфигурации, разные локации или отдельные серверные продукты.',
-      en: 'A well-known server and VPS/VDS provider with a wide range of infrastructure products. Worth checking when you need stronger configurations, different locations, or separate server products.'
-    },
+    description: VPS_PAGE_BY_ID['vps-aeza'].editorial.description,
     url: 'https://aeza.net/?ref=887153',
     logoUrl: '/aeza.png',
     details: {
       geo: { ru: 'Разные страны и дата-центры', en: 'Different countries and data centers' },
       types: { ru: 'VPS/VDS, выделенные серверы, инфраструктура', en: 'VPS/VDS, dedicated servers, infrastructure' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' },
-      pros: {
-        ru: ['Широкий выбор серверных решений', 'Подходит для более серьёзных задач', 'Есть разные локации и конфигурации'],
-        en: ['Wide range of server products', 'Works for more serious tasks', 'Different locations and configurations']
-      }
+      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' }
     }
   },
   // SOCIAL BOOST
