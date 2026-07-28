@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
+import { foreignCardPages } from './data/foreignCardPages.js';
 import { 
   Gamepad2,
   Globe, 
@@ -1258,6 +1259,22 @@ const ACCOUNT_SHOP_PAGE_BY_ID = Object.fromEntries(
 
 const ANTIDETECT_PAGE_BY_ID = Object.fromEntries(
   antidetectPages.map((page) => [
+    page.id,
+    {
+      ...page,
+      editorial: {
+        title: page.title,
+        ...page.editorial,
+      },
+    },
+  ]),
+) as Record<string, {
+  slug: string;
+  editorial: NonNullable<Offer['editorial']>;
+}>;
+
+const FOREIGN_CARD_PAGE_BY_ID = Object.fromEntries(
+  foreignCardPages.map((page) => [
     page.id,
     {
       ...page,
@@ -2600,53 +2617,88 @@ const OFFERS: Offer[] = [
     category: 'Cards',
     subCategory: 'NoKYC',
     name: 'Zarub',
-    description: { 
-      ru: 'Мой основной вариант зарубежной карты: без KYC, пополнение через СБП/USDT, проходит большинство зарубежных сервисов и часть российских мерчантов вроде OZON. Минус — комиссия при пополнении.', 
-      en: 'My main foreign card option: no KYC, SBP/USDT top-up, works with most foreign services and some Russian merchants like OZON. The downside is the top-up fee.' 
-    },
+    slug: FOREIGN_CARD_PAGE_BY_ID.zarub.slug,
+    editorial: FOREIGN_CARD_PAGE_BY_ID.zarub.editorial,
+    description: FOREIGN_CARD_PAGE_BY_ID.zarub.editorial.description,
     url: 'https://t.me/zarub_robot?start=ref_PqBrBs',
     logoUrl: '/zarub.png',
     isBestChoice: true,
     cardStats: {
-      issuance: { ru: '8$', en: '8$' },
-      maintenance: { ru: '0 $/мес', en: '0 $/mo' },
-      paySystems: { ru: 'Да', en: 'Yes' },
-      verification: { ru: 'Ненужно', en: 'Not needed' },
-      cashback: { ru: 'Нет', en: 'No' },
-      topup: { ru: 'СБП/USDT', en: 'SBP/USDT' },
-      commission: { ru: '3-5%', en: '3-5%' },
-      type: { ru: 'Visa (USA)', en: 'Visa (USA)' }
+      issuance: { ru: '8$', en: '8$', es: '8$', zh: '8 美元', ko: '8달러' },
+      maintenance: { ru: '0 $/мес', en: '$0/mo', es: '0 $/mes', zh: '0 美元/月', ko: '월 0달러' },
+      paySystems: { ru: 'Да', en: 'Yes', es: 'Sí', zh: '支持', ko: '지원' },
+      verification: { ru: 'Не нужна', en: 'Not required', es: 'No requerida', zh: '不需要', ko: '필요 없음' },
+      cashback: { ru: 'Нет', en: 'No', es: 'No', zh: '无', ko: '없음' },
+      topup: { ru: 'СБП/USDT', en: 'SBP/USDT', es: 'SBP/USDT', zh: 'SBP/USDT', ko: 'SBP/USDT' },
+      commission: { ru: '3-5%', en: '3-5%', es: '3-5%', zh: '3-5%', ko: '3-5%' },
+      type: { ru: 'Visa (США)', en: 'Visa (USA)', es: 'Visa (EE. UU.)', zh: 'Visa（美国）', ko: 'Visa(미국)' }
     },
     details: {
       supports: {
         ru: ['ChatGPT, Netflix, Spotify', 'YouTube, Apple, Google', 'Booking, Airbnb, Aviasales', 'Amazon, eBay, Ali Global', 'Игры и приложения'],
-        en: ['ChatGPT, Netflix, Spotify', 'YouTube, Apple, Google', 'Booking, Airbnb', 'Amazon, eBay, Ali Global', 'Games & Apps']
+        en: ['ChatGPT, Netflix, Spotify', 'YouTube, Apple, Google', 'Booking, Airbnb', 'Amazon, eBay, Ali Global', 'Games and apps'],
+        es: ['ChatGPT, Netflix, Spotify', 'YouTube, Apple, Google', 'Booking, Airbnb', 'Amazon, eBay, Ali Global', 'Juegos y aplicaciones'],
+        zh: ['ChatGPT、Netflix、Spotify', 'YouTube、Apple、Google', 'Booking、Airbnb', 'Amazon、eBay、Ali Global', '游戏和应用'],
+        ko: ['ChatGPT, Netflix, Spotify', 'YouTube, Apple, Google', 'Booking, Airbnb', 'Amazon, eBay, Ali Global', '게임과 앱']
       },
       nuances: {
         ru: [
-          'Выпуск карты — 8$ (разовая оплата)',
-          'Обслуживание — 0$',
-          'Комиссия за операцию — 0.35$',
-          'Комиссия за пополнение — 1.5%',
-          'Минимальное пополнение — от 10$',
-          'Конвертация (не USD) — курс + 0.3$',
-          'Лимиты — до $50 000 в сутки',
-          'Срок доставки — от минут до 24ч'
+          'Выпуск карты: 8$ единоразово',
+          'Обслуживание: 0$',
+          'Комиссия за операцию: 0.35$',
+          'Комиссия за пополнение: 1.5%',
+          'Минимальное пополнение: от 10$',
+          'Конвертация не в USD: курс + 0.3$',
+          'Лимиты: до $50 000 в сутки',
+          'Выпуск занимает от нескольких минут до 24 часов'
         ],
         en: [
-          'Issuance — 8$ (one-time)',
-          'Maintenance — 0$',
-          'Transaction fee — 0.35$',
-          'Top-up fee — 1.5%',
-          'Min. top-up — from 10$',
-          'Conversion (non-USD) — rate + 0.3$',
-          'Limits — up to $50,000 / day',
-          'Issuance time — mins up to 24h'
+          'Issuance: $8 one-time',
+          'Maintenance: $0',
+          'Transaction fee: $0.35',
+          'Top-up fee: 1.5%',
+          'Minimum top-up: from $10',
+          'Non-USD conversion: rate + $0.3',
+          'Limits: up to $50,000 per day',
+          'Issuance takes from a few minutes to 24 hours'
+        ],
+        es: [
+          'Emisión: 8 $ una sola vez',
+          'Mantenimiento: 0 $',
+          'Comisión por operación: 0,35 $',
+          'Comisión de recarga: 1,5%',
+          'Recarga mínima: desde 10 $',
+          'Conversión fuera de USD: tipo de cambio + 0,3 $',
+          'Límite: hasta 50.000 $ al día',
+          'La emisión tarda desde unos minutos hasta 24 horas'
+        ],
+        zh: [
+          '开卡费：一次性 8 美元',
+          '维护费：0 美元',
+          '交易手续费：0.35 美元',
+          '充值手续费：1.5%',
+          '最低充值：10 美元起',
+          '非美元换汇：汇率 + 0.3 美元',
+          '限额：每日最高 50,000 美元',
+          '开卡时间：几分钟至 24 小时'
+        ],
+        ko: [
+          '발급비: 1회 8달러',
+          '유지비: 0달러',
+          '결제 수수료: 0.35달러',
+          '충전 수수료: 1.5%',
+          '최소 충전: 10달러부터',
+          '비USD 환전: 환율 + 0.3달러',
+          '한도: 하루 최대 50,000달러',
+          '발급 시간: 몇 분에서 최대 24시간'
         ]
       },
       pros: {
         ru: ['Моментальный выпуск', 'Apple/Google Pay', 'Высокие лимиты (до $1M/мес)'],
-        en: ['Instant issuance', 'Apple/Google Pay', 'High limits (up to $1M/mo)']
+        en: ['Fast issuance', 'Apple/Google Pay', 'High limits up to $1M/mo'],
+        es: ['Emisión rápida', 'Apple/Google Pay', 'Límites altos de hasta 1 M$/mes'],
+        zh: ['快速开卡', 'Apple/Google Pay', '每月最高 100 万美元的高限额'],
+        ko: ['빠른 발급', 'Apple/Google Pay', '월 최대 100만 달러의 높은 한도']
       }
     }
   },
@@ -2655,45 +2707,77 @@ const OFFERS: Offer[] = [
     category: 'Cards',
     subCategory: 'WithKYC',
     name: 'Cashin Out',
-    description: { 
-      ru: 'Сервис неплох тем, что есть разнообразные функции. От виртуальных карт под любые цели, до пополнения Steam', 
-      en: 'Convenient service for top-up and card issuance via Telegram bot.' 
-    },
+    slug: FOREIGN_CARD_PAGE_BY_ID.cashinout.slug,
+    editorial: FOREIGN_CARD_PAGE_BY_ID.cashinout.editorial,
+    description: FOREIGN_CARD_PAGE_BY_ID.cashinout.editorial.description,
     url: 'https://t.me/Cashinout_bot?start=197391',
     logoUrl: '/cashinout.png',
     cardStats: {
-      issuance: { ru: '$7.5 ($5 на балик)', en: '$7.5 ($5 to bal)' },
-      maintenance: { ru: '$3/мес', en: '$3/mo' },
-      paySystems: { ru: 'Нет', en: 'No' },
-      verification: { ru: 'Нужно', en: 'Needed' },
-      cashback: { ru: 'Нет', en: 'No' },
-      topup: { ru: 'СБП/USDT', en: 'SBP/USDT' },
-      commission: { ru: '2.5%', en: '2.5%' },
-      type: { ru: 'Visa', en: 'Visa' }
+      issuance: { ru: '$7.5, из них $5 на баланс', en: '$7.5, with $5 credited', es: '7,5 $, con 5 $ de saldo', zh: '7.5 美元，5 美元到账', ko: '7.5달러, 5달러 잔액 지급' },
+      maintenance: { ru: '$3/мес', en: '$3/mo', es: '3 $/mes', zh: '3 美元/月', ko: '월 3달러' },
+      paySystems: { ru: 'Нет', en: 'No', es: 'No', zh: '不支持', ko: '미지원' },
+      verification: { ru: 'Нужна', en: 'Required', es: 'Requerida', zh: '需要', ko: '필요' },
+      cashback: { ru: 'Нет', en: 'No', es: 'No', zh: '无', ko: '없음' },
+      topup: { ru: 'СБП/USDT', en: 'SBP/USDT', es: 'SBP/USDT', zh: 'SBP/USDT', ko: 'SBP/USDT' },
+      commission: { ru: '2.5%', en: '2.5%', es: '2,5%', zh: '2.5%', ko: '2.5%' },
+      type: { ru: 'Visa', en: 'Visa', es: 'Visa', zh: 'Visa', ko: 'Visa' }
     },
     details: {
       nuances: {
         ru: [
-          'Online Card — Для подписок и интернет-покупок',
-          'Выпуск — 7.5$ ($5 зачисляется на баланс)',
-          'Обслуживание — 3$/мес',
-          'Комиссия за пополнение — 2.5%',
-          'Минимальное пополнение — от 5$',
-          'Комиссия за успешный платеж — 0.25$',
-          'Комиссия за отклонённый платёж — до 0.5$',
-          'Срок действия карты — 3 года',
-          'Лимит — до 3 карт на пользователя'
+          'Online Card подходит для подписок и интернет-покупок',
+          'Выпуск: 7.5$, из них 5$ зачисляется на баланс',
+          'Обслуживание: 3$/мес',
+          'Комиссия за пополнение: 2.5%',
+          'Минимальное пополнение: от 5$',
+          'Комиссия за успешный платеж: 0.25$',
+          'Комиссия за отклоненный платеж: до 0.5$',
+          'Срок действия карты: 3 года',
+          'Лимит: до 3 карт на пользователя'
         ],
         en: [
-          'Online Card — For subscriptions & shopping',
-          'Issuance — 7.5$ ($5 to balance)',
-          'Maintenance — 3$/mo',
-          'Top-up fee — 2.5%',
-          'Min. top-up — from 5$',
-          'Success transaction fee — 0.25$',
-          'Decline fee — up to 0.5$',
-          'Card validity — 3 years',
-          'Limit — up to 3 cards per user'
+          'Online Card is designed for subscriptions and online shopping',
+          'Issuance: $7.5, with $5 credited to the balance',
+          'Maintenance: $3/mo',
+          'Top-up fee: 2.5%',
+          'Minimum top-up: from $5',
+          'Successful payment fee: $0.25',
+          'Declined payment fee: up to $0.5',
+          'Card validity: 3 years',
+          'Limit: up to 3 cards per user'
+        ],
+        es: [
+          'Online Card sirve para suscripciones y compras por internet',
+          'Emisión: 7,5 $, con 5 $ abonados al saldo',
+          'Mantenimiento: 3 $/mes',
+          'Comisión de recarga: 2,5%',
+          'Recarga mínima: desde 5 $',
+          'Comisión por pago aprobado: 0,25 $',
+          'Comisión por pago rechazado: hasta 0,5 $',
+          'Validez de la tarjeta: 3 años',
+          'Límite: hasta 3 tarjetas por usuario'
+        ],
+        zh: [
+          'Online Card 适用于订阅和在线购物',
+          '开卡费：7.5 美元，其中 5 美元计入余额',
+          '维护费：每月 3 美元',
+          '充值手续费：2.5%',
+          '最低充值：5 美元起',
+          '成功付款手续费：0.25 美元',
+          '付款被拒手续费：最高 0.5 美元',
+          '卡片有效期：3 年',
+          '限额：每位用户最多 3 张卡'
+        ],
+        ko: [
+          'Online Card는 구독과 온라인 구매에 적합합니다',
+          '발급비: 7.5달러, 이 중 5달러는 잔액으로 지급',
+          '유지비: 월 3달러',
+          '충전 수수료: 2.5%',
+          '최소 충전: 5달러부터',
+          '승인 결제 수수료: 0.25달러',
+          '거절 결제 수수료: 최대 0.5달러',
+          '카드 유효기간: 3년',
+          '한도: 사용자당 최대 3장'
         ]
       }
     },
@@ -2703,27 +2787,29 @@ const OFFERS: Offer[] = [
     category: 'Cards',
     subCategory: 'NoKYC',
     name: 'Vezdekarta',
-    description: { 
-      ru: 'Базовая виртуалка, есть 2 тарифа. Ненудобно, что некоторые сервисы не оплачивает. Выгоднее всех для пополнения рублями', 
-      en: 'Personal foreign bank card in Telegram in 5-10 minutes.' 
-    },
+    slug: FOREIGN_CARD_PAGE_BY_ID.vezdekarta.slug,
+    editorial: FOREIGN_CARD_PAGE_BY_ID.vezdekarta.editorial,
+    description: FOREIGN_CARD_PAGE_BY_ID.vezdekarta.editorial.description,
     url: 'https://app.vezdekarta.ru/',
     logoUrl: '/vezdekarta.png',
     isBestChoice: true,
     cardStats: {
-      issuance: { ru: '10-12$', en: '10-12$' },
-      maintenance: { ru: '0 ₽ / мес', en: '0 RUB / mo' },
-      paySystems: { ru: 'Да', en: 'Yes' },
-      verification: { ru: 'Ненужно', en: 'No needed' },
-      cashback: { ru: 'Нет', en: 'No' },
-      topup: { ru: 'Рубли(СБП)', en: 'RUB(SBP)' },
-      commission: { ru: '3.5%', en: '3.5%' },
-      type: { ru: 'MC / Visa', en: 'MC / Visa' }
+      issuance: { ru: '10-12$', en: '$10-12', es: '10-12 $', zh: '10-12 美元', ko: '10-12달러' },
+      maintenance: { ru: '0 ₽/мес', en: '0 RUB/mo', es: '0 RUB/mes', zh: '0 卢布/月', ko: '월 0루블' },
+      paySystems: { ru: 'Да', en: 'Yes', es: 'Sí', zh: '支持', ko: '지원' },
+      verification: { ru: 'Не нужна', en: 'Not required', es: 'No requerida', zh: '不需要', ko: '필요 없음' },
+      cashback: { ru: 'Нет', en: 'No', es: 'No', zh: '无', ko: '없음' },
+      topup: { ru: 'Рубли, СБП', en: 'RUB, SBP', es: 'RUB, SBP', zh: '卢布、SBP', ko: '루블, SBP' },
+      commission: { ru: '3.5%', en: '3.5%', es: '3,5%', zh: '3.5%', ko: '3.5%' },
+      type: { ru: 'MC / Visa', en: 'MC / Visa', es: 'MC / Visa', zh: 'MC / Visa', ko: 'MC / Visa' }
     },
     details: {
       pros: {
         ru: ['Пополнение рублями (СБП)', 'Внутренний курс близок к ЦБ', 'Apple/Google Pay'],
-        en: ['Top-up with RUB (SBP)', 'Rate close to Central Bank', 'Apple/Google Pay']
+        en: ['RUB funding through SBP', 'Rate close to the central bank', 'Apple/Google Pay'],
+        es: ['Recarga en rublos por SBP', 'Tipo cercano al banco central', 'Apple/Google Pay'],
+        zh: ['通过 SBP 使用卢布充值', '汇率接近央行价格', 'Apple/Google Pay'],
+        ko: ['SBP를 통한 루블 충전', '중앙은행에 가까운 환율', 'Apple/Google Pay']
       },
       nuances: {
         ru: [
@@ -2737,6 +2823,24 @@ const OFFERS: Offer[] = [
           'Yarko (USA): $0.5+1% success, $1 decline',
           'No: 18+, Crypto, Casino, RU/BY/UA',
           'In-app chat support'
+        ],
+        es: [
+          'Tarifa Lyubo (Reino Unido): 0,3 $ aprobado, 0,25 $ rechazado',
+          'Tarifa Yarko (EE. UU.): 0,5 $ + 1% aprobado, 1 $ rechazado',
+          'No admite: 18+, cripto, casino, RU/BY/UA',
+          'Soporte por chat en la cuenta'
+        ],
+        zh: [
+          'Lyubo 套餐（英国）：成功付款 0.3 美元，被拒 0.25 美元',
+          'Yarko 套餐（美国）：成功付款 0.5 美元 + 1%，被拒 1 美元',
+          '不支持：成人内容、加密货币、赌场、RU/BY/UA',
+          '账户内聊天客服'
+        ],
+        ko: [
+          'Lyubo 요금제(영국): 승인 0.3달러, 거절 0.25달러',
+          'Yarko 요금제(미국): 승인 0.5달러 + 1%, 거절 1달러',
+          '지원하지 않음: 성인, 암호화폐, 카지노, RU/BY/UA',
+          '계정 내 채팅 지원'
         ]
       }
     }
@@ -2746,30 +2850,35 @@ const OFFERS: Offer[] = [
     category: 'Cards',
     subCategory: 'WithKYC',
     name: 'Pionex',
-    description: { 
-      ru: 'Лучший вариант для РУ региона — криптокарта с легким KYC за 2 минуты.', 
-      en: 'Best option for RU region — crypto card with easy KYC in 2 mins.' 
-    },
+    slug: FOREIGN_CARD_PAGE_BY_ID.pionex.slug,
+    editorial: FOREIGN_CARD_PAGE_BY_ID.pionex.editorial,
+    description: FOREIGN_CARD_PAGE_BY_ID.pionex.editorial.description,
     url: 'https://accounts.pionex.com/ru/signUp?r=0KQQCKp8q42',
     logoUrl: '/pionex.png',
     cardStats: {
-      issuance: { ru: '0$', en: '0$' },
-      maintenance: { ru: '0$', en: '0$' },
-      paySystems: { ru: 'Да', en: 'Yes' },
-      verification: { ru: 'Нужно', en: 'Needed' },
-      cashback: { ru: '1%', en: '1%' },
-      topup: { ru: 'USDT', en: 'USDT' },
-      commission: { ru: '0%', en: '0%' },
-      type: { ru: 'Visa / MC', en: 'Visa / MC' }
+      issuance: { ru: '0$', en: '$0', es: '0 $', zh: '0 美元', ko: '0달러' },
+      maintenance: { ru: '0$', en: '$0', es: '0 $', zh: '0 美元', ko: '0달러' },
+      paySystems: { ru: 'Да', en: 'Yes', es: 'Sí', zh: '支持', ko: '지원' },
+      verification: { ru: 'Нужна', en: 'Required', es: 'Requerida', zh: '需要', ko: '필요' },
+      cashback: { ru: '1%', en: '1%', es: '1%', zh: '1%', ko: '1%' },
+      topup: { ru: 'USDT', en: 'USDT', es: 'USDT', zh: 'USDT', ko: 'USDT' },
+      commission: { ru: '0%', en: '0%', es: '0%', zh: '0%', ko: '0%' },
+      type: { ru: 'Visa / MC', en: 'Visa / MC', es: 'Visa / MC', zh: 'Visa / MC', ko: 'Visa / MC' }
     },
     details: {
       pros: {
         ru: ['Кешбек 1%', '5% годовых на остаток', 'Без платы за выпуск и содержание', 'Подходит для ChatGPT'],
-        en: ['1% Cashback', '5% APY on balance', 'No issuance/maintenance fee', 'Works for ChatGPT']
+        en: ['1% cashback', '5% APY on balance', 'No issuance or maintenance fee', 'Works for ChatGPT'],
+        es: ['1% de cashback', '5% anual sobre el saldo', 'Sin comisión de emisión ni mantenimiento', 'Funciona para ChatGPT'],
+        zh: ['1% 返现', '余额 5% 年化收益', '无开卡费和维护费', '可用于 ChatGPT'],
+        ko: ['1% 캐시백', '잔액 연 5% 수익', '발급 및 유지 수수료 없음', 'ChatGPT 결제 지원']
       },
       nuances: {
         ru: ['Доступна для СНГ', 'Нужно $10+ для активации (можно вывести)', 'Добавляется в WeChat Pay'],
-        en: ['Available for CIS', '$10+ needed for activation (withdrawable)', 'Supports WeChat Pay']
+        en: ['Available in the CIS', 'Activation requires $10 or more, which can be withdrawn', 'Supports WeChat Pay'],
+        es: ['Disponible en la CEI', 'La activación requiere 10 $ o más, que se pueden retirar', 'Compatible con WeChat Pay'],
+        zh: ['CIS 地区可用', '激活需要 10 美元或以上，之后可提取', '支持 WeChat Pay'],
+        ko: ['CIS 지역 이용 가능', '활성화에 10달러 이상 필요하며 이후 출금 가능', 'WeChat Pay 지원']
       }
     }
   },
@@ -3502,7 +3611,7 @@ export default function App() {
   const offerTitle = (offer: Offer) => OFFER_TITLE_TRANSLATIONS[offer.id]?.[lang] || offer.name;
   const offerDescription = (offer: Offer) => {
     const ownDescription = offer.description[lang];
-    if ((offer.category === 'Stores' || offer.category === 'Antidetect') && offer.editorial && ownDescription) {
+    if ((offer.category === 'Stores' || offer.category === 'Antidetect' || offer.category === 'Cards') && offer.editorial && ownDescription) {
       return ownDescription;
     }
 
