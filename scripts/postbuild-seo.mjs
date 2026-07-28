@@ -4,8 +4,10 @@ import { accountShopPages } from '../src/data/accountShopPages.js';
 import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
+import { guidePages } from '../src/data/guidePages.js';
 import { smsPages } from '../src/data/smsPages.js';
 import { socialPages } from '../src/data/socialPages.js';
+import { steamPages } from '../src/data/steamPages.js';
 import { vpsPages } from '../src/data/vpsPages.js';
 
 const siteUrl = 'https://hopscup.tools';
@@ -1517,6 +1519,32 @@ const servicePages = [
     route: `/social-boost/${page.slug}`,
     name: page.name,
     logo: page.logo,
+    title: page.title,
+    description: page.description,
+    heading: page.heading,
+    intro: page.editorial.description,
+    keywords: page.keywords,
+    points: page.editorial.bestFor,
+    items: page.editorial.considerations,
+  })),
+  ...steamPages.map((page) => createServicePage({
+    id: page.id,
+    route: `/steam-topup/${page.slug}`,
+    name: page.name,
+    logo: page.logo,
+    title: page.title,
+    description: page.description,
+    heading: page.heading,
+    intro: page.editorial.description,
+    keywords: page.keywords,
+    points: page.editorial.bestFor,
+    items: page.editorial.considerations,
+  })),
+  ...guidePages.map((page) => createServicePage({
+    id: page.id,
+    route: `/guides/${page.slug}`,
+    name: page.name.ru,
+    logo: '/logo.png',
     title: page.title,
     description: page.description,
     heading: page.heading,

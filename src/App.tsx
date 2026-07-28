@@ -10,8 +10,10 @@ import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
 import { foreignCardPages } from './data/foreignCardPages.js';
+import { guidePages } from './data/guidePages.js';
 import { smsPages } from './data/smsPages.js';
 import { socialPages } from './data/socialPages.js';
+import { steamPages } from './data/steamPages.js';
 import { vpsPages } from './data/vpsPages.js';
 import { 
   Gamepad2,
@@ -21,6 +23,7 @@ import {
   ShoppingBag, 
   MessageSquare, 
   ExternalLink, 
+  ChevronRight,
   Languages,
   Github,
   Youtube,
@@ -625,14 +628,23 @@ const SECTION_SEO: Record<CategoryType, {
     heading: {
       ru: 'Полезные гайды Hopscup',
       en: 'Useful Hopscup guides',
+      es: 'Guías útiles de Hopscup',
+      zh: 'Hopscup 实用指南',
+      ko: 'Hopscup 유용한 가이드',
     },
     intro: {
       ru: 'Здесь собраны отдельные материалы, которые помогают настроить базовую инфраструктуру: почты, IP, аккаунты, адреса и KYC/OTC-процессы.',
       en: 'This section collects practical materials for basic infrastructure: emails, IPs, accounts, addresses, and KYC/OTC processes.',
+      es: 'Aquí están mis materiales sobre la infraestructura básica: correos, IP, cuentas, direcciones y procesos KYC/OTC.',
+      zh: '这里收集了我的基础设施实用资料：邮箱、IP、账号、地址以及 KYC/OTC 流程。',
+      ko: '이곳에는 이메일, IP, 계정, 주소, KYC/OTC 과정 등 기본 인프라에 대한 실용 자료를 모았습니다.',
     },
     points: {
       ru: ['Начать можно с гайда по смене IP и форвардингу Gmail.', 'Для фермы аккаунтов полезен большой материал по почтам, прокси и антидетектам.', 'Крипто-гайды помогают с UID, адресами и верификациями.'],
       en: ['Start with the IP change and Gmail forwarding guides.', 'The account farm guide covers emails, proxies, and antidetect browsers.', 'Crypto guides help with UIDs, addresses, and verifications.'],
+      es: ['Puedes empezar con las guías de cambio de IP y reenvío de Gmail.', 'La guía de granja cubre correos, proxies y navegadores antidetect.', 'Las guías cripto ayudan con UID, direcciones y verificaciones.'],
+      zh: ['可以从更换 IP 和 Gmail 转发指南开始。', '账号农场指南涵盖邮箱、代理和反检测浏览器。', '加密指南介绍 UID、地址和验证。'],
+      ko: ['IP 변경과 Gmail 포워딩 가이드부터 시작할 수 있습니다.', '계정 팜 가이드는 이메일, 프록시, 안티디텍트 브라우저를 다룹니다.', '암호화폐 가이드는 UID, 주소와 인증에 도움이 됩니다.'],
     },
   },
 };
@@ -1434,22 +1446,62 @@ const SOCIAL_PAGE_BY_ID = Object.fromEntries(
   editorial: NonNullable<Offer['editorial']>;
 }>;
 
+const STEAM_PAGE_BY_ID = Object.fromEntries(
+  steamPages.map((page) => [
+    page.id,
+    {
+      ...page,
+      editorial: {
+        title: page.title,
+        ...page.editorial,
+      },
+    },
+  ]),
+) as Record<string, {
+  slug: string;
+  editorial: NonNullable<Offer['editorial']>;
+}>;
+
+const GUIDE_PAGE_BY_ID = Object.fromEntries(
+  guidePages.map((page) => [
+    page.id,
+    {
+      ...page,
+      editorial: {
+        title: page.title,
+        ...page.editorial,
+      },
+    },
+  ]),
+) as Record<string, {
+  slug: string;
+  editorial: NonNullable<Offer['editorial']>;
+}>;
+
 const OFFERS: Offer[] = [
   // GUIDES
   {
     id: 'guide-mobile-ip',
     category: 'Guides',
     name: 'Смена айпи мобильным интернетом и режимом "самолета". Android и iPhone',
-    description: {
-      ru: 'Основной гайд по смене IP через мобильный интернет и режим самолёта на Android и iPhone. Полезен для работы с аккаунтами, прокси-логикой и быстрым обновлением мобильного IP без лишних сервисов.',
-      en: 'A core guide on changing IP via mobile internet and airplane mode on Android and iPhone. Useful for account work, proxy logic, and quickly refreshing mobile IP without extra services.'
-    },
+    slug: GUIDE_PAGE_BY_ID['guide-mobile-ip'].slug,
+    editorial: GUIDE_PAGE_BY_ID['guide-mobile-ip'].editorial,
+    description: GUIDE_PAGE_BY_ID['guide-mobile-ip'].editorial.description,
     url: 'https://telegra.ph/Smena-ajpi-mobilnym-internetom-i-rezhimom-samoleta-Android-i-Iphone-06-10',
     details: {
-      types: { ru: 'Мобильный IP, Android, iPhone', en: 'Mobile IP, Android, iPhone' },
+      types: {
+        ru: 'Мобильный IP, Android, iPhone',
+        en: 'Mobile IP, Android, iPhone',
+        es: 'IP móvil, Android, iPhone',
+        zh: '移动 IP、Android、iPhone',
+        ko: '모바일 IP, Android, iPhone'
+      },
       supports: {
         ru: ['Смена IP', 'Мобильный интернет', 'Режим самолёта'],
-        en: ['IP change', 'Mobile internet', 'Airplane mode']
+        en: ['IP change', 'Mobile internet', 'Airplane mode'],
+        es: ['Cambio de IP', 'Internet móvil', 'Modo avión'],
+        zh: ['更换 IP', '移动网络', '飞行模式'],
+        ko: ['IP 변경', '모바일 인터넷', '비행기 모드']
       }
     },
   },
@@ -1457,16 +1509,24 @@ const OFFERS: Offer[] = [
     id: 'guide-gmail-forwarding',
     category: 'Guides',
     name: 'Пошаговый гайд по настройке переадресации писем из Gmail на другую почту',
-    description: {
-      ru: 'Пошаговый гайд по настройке переадресации писем из Gmail на другую почту. Удобно, когда нужно собирать коды, письма и уведомления с нескольких аккаунтов в одном месте.',
-      en: 'A step-by-step guide on forwarding Gmail emails to another inbox. Useful when you need to collect codes, messages, and notifications from multiple accounts in one place.'
-    },
+    slug: GUIDE_PAGE_BY_ID['guide-gmail-forwarding'].slug,
+    editorial: GUIDE_PAGE_BY_ID['guide-gmail-forwarding'].editorial,
+    description: GUIDE_PAGE_BY_ID['guide-gmail-forwarding'].editorial.description,
     url: 'https://telegra.ph/Poshagovyj-gajd-po-nastrojke-pereadresacii-forvardinga-pisem-iz-Gmail-na-druguyu-pochtu-06-10',
     details: {
-      types: { ru: 'Gmail, почты, форвардинг', en: 'Gmail, emails, forwarding' },
+      types: {
+        ru: 'Gmail, почты, форвардинг',
+        en: 'Gmail, emails, forwarding',
+        es: 'Gmail, correos, reenvío',
+        zh: 'Gmail、邮箱、转发',
+        ko: 'Gmail, 이메일, 포워딩'
+      },
       supports: {
         ru: ['Переадресация Gmail', 'Работа с почтами', 'Сбор писем'],
-        en: ['Gmail forwarding', 'Email work', 'Message collection']
+        en: ['Gmail forwarding', 'Email work', 'Message collection'],
+        es: ['Reenvío de Gmail', 'Trabajo con correos', 'Reunir mensajes'],
+        zh: ['Gmail 转发', '邮箱管理', '集中收取邮件'],
+        ko: ['Gmail 포워딩', '이메일 관리', '메일 모으기']
       }
     }
   },
@@ -1474,16 +1534,24 @@ const OFFERS: Offer[] = [
     id: 'guide-account-farm',
     category: 'Guides',
     name: 'Ферма аккаунтов. Где брать аккаунты Discord, Twitter, Google. Прокси, накрутка, антидетекты?',
-    description: {
-      ru: 'Большой материал про то, где брать аккаунты Discord, Twitter, Google, как думать про прокси, накрутку и антидетекты. Хорошая база для тех, кто собирает рабочую инфраструктуру под мультиаккаунтинг.',
-      en: 'A large material about where to get Discord, Twitter, and Google accounts, plus how to think about proxies, boosting, and antidetect browsers. A good base for building multi-accounting infrastructure.'
-    },
+    slug: GUIDE_PAGE_BY_ID['guide-account-farm'].slug,
+    editorial: GUIDE_PAGE_BY_ID['guide-account-farm'].editorial,
+    description: GUIDE_PAGE_BY_ID['guide-account-farm'].editorial.description,
     url: 'https://teletype.in/@hopscupcrpt/GIuM0McUUie',
     details: {
-      types: { ru: 'Аккаунты, прокси, антидетекты', en: 'Accounts, proxies, antidetects' },
+      types: {
+        ru: 'Аккаунты, прокси, антидетекты',
+        en: 'Accounts, proxies, antidetects',
+        es: 'Cuentas, proxies, antidetects',
+        zh: '账号、代理、反检测',
+        ko: '계정, 프록시, 안티디텍트'
+      },
       supports: {
         ru: ['Discord, Twitter, Google', 'Прокси и антидетекты', 'Накрутка и рефералы'],
-        en: ['Discord, Twitter, Google', 'Proxies and antidetects', 'Boosting and referrals']
+        en: ['Discord, Twitter, Google', 'Proxies and antidetects', 'Boosting and referrals'],
+        es: ['Discord, Twitter, Google', 'Proxies y antidetects', 'Boosting y referidos'],
+        zh: ['Discord、Twitter、Google', '代理和反检测', '增长和推荐'],
+        ko: ['Discord, Twitter, Google', '프록시와 안티디텍트', '부스트와 추천인']
       }
     }
   },
@@ -1491,16 +1559,18 @@ const OFFERS: Offer[] = [
     id: 'guide-otc-kyc',
     category: 'Guides',
     name: 'OTC площадки и KYC сервисы в крипте. Где брать верификации и продавать WL?',
-    description: {
-      ru: 'Гайд по OTC-площадкам и KYC-сервисам в крипте: где брать верификации, как смотреть площадки и где продавать WL. Подойдёт тем, кто работает с крипто-активностями и вайтлистами.',
-      en: 'A guide about OTC platforms and KYC services in crypto: where to get verifications, how to look at platforms, and where to sell WL. Useful for crypto activities and whitelists.'
-    },
+    slug: GUIDE_PAGE_BY_ID['guide-otc-kyc'].slug,
+    editorial: GUIDE_PAGE_BY_ID['guide-otc-kyc'].editorial,
+    description: GUIDE_PAGE_BY_ID['guide-otc-kyc'].editorial.description,
     url: 'https://teletype.in/@hopscupcrpt/gM3FcGi4Wn1',
     details: {
-      types: { ru: 'OTC, KYC, WL', en: 'OTC, KYC, WL' },
+      types: { ru: 'OTC, KYC, WL', en: 'OTC, KYC, WL', es: 'OTC, KYC, WL', zh: 'OTC、KYC、WL', ko: 'OTC, KYC, WL' },
       supports: {
         ru: ['KYC-сервисы', 'OTC-площадки', 'Продажа WL'],
-        en: ['KYC services', 'OTC platforms', 'WL selling']
+        en: ['KYC services', 'OTC platforms', 'WL selling'],
+        es: ['Servicios KYC', 'Plataformas OTC', 'Venta de WL'],
+        zh: ['KYC 服务', 'OTC 平台', '出售 WL'],
+        ko: ['KYC 서비스', 'OTC 플랫폼', 'WL 판매']
       }
     }
   },
@@ -1508,16 +1578,24 @@ const OFFERS: Offer[] = [
     id: 'guide-uids-addresses',
     category: 'Guides',
     name: 'Много UID и адресов для вывода на криптобиржи',
-    description: {
-      ru: 'Подборка UID и адресов для вывода на криптобиржи. Полезно, когда нужно быстро свериться с направлениями вывода и рабочими реквизитами.',
-      en: 'A collection of UIDs and addresses for withdrawals to crypto exchanges. Useful when you need to quickly check withdrawal directions and working details.'
-    },
+    slug: GUIDE_PAGE_BY_ID['guide-uids-addresses'].slug,
+    editorial: GUIDE_PAGE_BY_ID['guide-uids-addresses'].editorial,
+    description: GUIDE_PAGE_BY_ID['guide-uids-addresses'].editorial.description,
     url: 'https://teletype.in/@hopscupcrpt/iic_Q3_E19h',
     details: {
-      types: { ru: 'UID, адреса, биржи', en: 'UIDs, addresses, exchanges' },
+      types: {
+        ru: 'UID, адреса, биржи',
+        en: 'UIDs, addresses, exchanges',
+        es: 'UID, direcciones, exchanges',
+        zh: 'UID、地址、交易所',
+        ko: 'UID, 주소, 거래소'
+      },
       supports: {
         ru: ['UID для бирж', 'Адреса вывода', 'Криптобиржи'],
-        en: ['Exchange UIDs', 'Withdrawal addresses', 'Crypto exchanges']
+        en: ['Exchange UIDs', 'Withdrawal addresses', 'Crypto exchanges'],
+        es: ['UID de exchanges', 'Direcciones de retiro', 'Exchanges cripto'],
+        zh: ['交易所 UID', '提现地址', '加密交易所'],
+        ko: ['거래소 UID', '출금 주소', '암호화폐 거래소']
       }
     }
   },
@@ -2751,20 +2829,27 @@ const OFFERS: Offer[] = [
     category: 'Steam',
     subCategory: 'SteamItems',
     name: 'LIS-SKINS',
-    description: {
-      ru: 'Один из самых удобных вариантов для пополнения Steam через предметы: на витрине сразу видно разницу цены относительно Steam, поэтому проще искать предметы, которые можно продать в плюс или хотя бы дешевле прямого пополнения.',
-      en: 'One of the most convenient options for topping up Steam through items: the marketplace shows the price difference versus Steam, which makes it easier to find items that can be sold with profit or at least cheaper than direct top-up.'
-    },
+    slug: STEAM_PAGE_BY_ID['steam-lis-skins'].slug,
+    editorial: STEAM_PAGE_BY_ID['steam-lis-skins'].editorial,
+    description: STEAM_PAGE_BY_ID['steam-lis-skins'].editorial.description,
     url: 'https://lis-skins.com/?rf=3576023',
     logoUrl: '/lis-skins.png',
     isBestChoice: true,
     details: {
-      rate: { ru: 'до +30%', en: 'up to +30%' },
-      types: { ru: 'Предметами CS/TF/Rust', en: 'CS/TF/Rust items' },
-      paymentMethods: { ru: 'Мир/СБП, карты, крипта', en: 'Mir/SBP, cards, crypto' },
-      nuances: {
-        ru: ['Обязательно сверяйте цену с Steam Market', 'Проверяйте ликвидность и историю продаж предмета', 'Фактический плюс зависит от комиссии Steam и скорости продажи'],
-        en: ['Always compare the price with Steam Market', 'Check item liquidity and sales history', 'Real profit depends on Steam fees and sale speed']
+      rate: { ru: 'до +30%', en: 'up to +30%', es: 'hasta +30%', zh: '最高 +30%', ko: '최대 +30%' },
+      types: {
+        ru: 'Предметами CS/TF/Rust',
+        en: 'CS/TF/Rust items',
+        es: 'Ítems de CS/TF/Rust',
+        zh: 'CS/TF/Rust 物品',
+        ko: 'CS/TF/Rust 아이템'
+      },
+      paymentMethods: {
+        ru: 'Мир/СБП, карты, крипта',
+        en: 'Mir/SBP, cards, crypto',
+        es: 'Mir/SBP, tarjetas, cripto',
+        zh: 'Mir/SBP、银行卡、加密货币',
+        ko: 'Mir/SBP, 카드, 암호화폐'
       }
     }
   },
@@ -2773,19 +2858,32 @@ const OFFERS: Offer[] = [
     category: 'Steam',
     subCategory: 'SteamItems',
     name: 'TF2Lavka',
-    description: {
-      ru: 'Площадка с ключами и предметами TF2/Rust. Главный плюс — Rust/TF2 предметы часто используют для быстрого пополнения без ожидания трейдбана, поэтому их можно сразу выставлять и продавать на Steam Market. Перед покупкой всё равно проверяйте конкретный предмет.',
-      en: 'A marketplace with TF2/Rust keys and items. The main advantage is that Rust/TF2 items are often used for faster top-ups without waiting for a trade ban, so they can be listed and sold on Steam Market right away. Still, check the exact item before buying.'
-    },
+    slug: STEAM_PAGE_BY_ID['steam-tf2lavka'].slug,
+    editorial: STEAM_PAGE_BY_ID['steam-tf2lavka'].editorial,
+    description: STEAM_PAGE_BY_ID['steam-tf2lavka'].editorial.description,
     url: 'https://tf2lavka.ru/',
     logoUrl: '/tf2lavka.png',
     details: {
-      rate: { ru: 'до +10%', en: 'up to +10%' },
-      types: { ru: 'Предметами CS/TF/Rust', en: 'CS/TF/Rust items' },
-      paymentMethods: { ru: 'Мир/СБП, карты, крипта', en: 'Mir/SBP, cards, crypto' },
-      nuances: {
-        ru: ['Хороший вариант, если не хочется ждать 7 дней', 'Проверяйте цену продажи в Steam до покупки', 'Плюс зависит от выбранного предмета'],
-        en: ['Good option if you do not want to wait 7 days', 'Check the Steam sale price before buying', 'Profit depends on the selected item']
+      rate: {
+        ru: '~ +15%',
+        en: '~ +15%',
+        es: '~ +15%',
+        zh: '~ +15%',
+        ko: '~ +15%'
+      },
+      types: {
+        ru: 'Предметами TF/Rust',
+        en: 'TF/Rust items',
+        es: 'Ítems de TF/Rust',
+        zh: 'TF/Rust 物品',
+        ko: 'TF/Rust 아이템'
+      },
+      paymentMethods: {
+        ru: 'Мир/СБП, карты, крипта',
+        en: 'Mir/SBP, cards, crypto',
+        es: 'Mir/SBP, tarjetas, cripto',
+        zh: 'Mir/SBP、银行卡、加密货币',
+        ko: 'Mir/SBP, 카드, 암호화폐'
       }
     }
   },
@@ -2794,19 +2892,26 @@ const OFFERS: Offer[] = [
     category: 'Steam',
     subCategory: 'SteamItems',
     name: 'AIM.market',
-    description: {
-      ru: 'Есть прямое пополнение Steam примерно с 10% комиссией, но главная польза — предметы через таблицу сравнения цен. При удачном выборе можно пополнить баланс заметно выгоднее прямого способа.',
-      en: 'Has direct Steam top-up at around 10% fee, but the main value is item top-up through price comparison. With a good item choice, you can top up noticeably cheaper than direct methods.'
-    },
+    slug: STEAM_PAGE_BY_ID['steam-aim-market'].slug,
+    editorial: STEAM_PAGE_BY_ID['steam-aim-market'].editorial,
+    description: STEAM_PAGE_BY_ID['steam-aim-market'].editorial.description,
     url: 'https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd',
     logoUrl: '/aim-market.png',
     details: {
-      rate: { ru: 'до +30%', en: 'up to +30%' },
-      types: { ru: 'Предметами CS/TF/Rust', en: 'CS/TF/Rust items' },
-      paymentMethods: { ru: 'Мир/СБП, карты, крипта', en: 'Mir/SBP, cards, crypto' },
-      nuances: {
-        ru: ['Для быстрого пополнения проще выбрать прямой способ', 'Для плюса сверяйтесь с таблицей и Steam Market', 'Не берите неликвидные предметы ради красивого процента'],
-        en: ['For fast top-up, direct method is simpler', 'For profit, compare table data with Steam Market', 'Do not buy illiquid items just because the percentage looks good']
+      rate: { ru: 'до +30%', en: 'up to +30%', es: 'hasta +30%', zh: '最高 +30%', ko: '최대 +30%' },
+      types: {
+        ru: 'Предметами CS/TF/Rust',
+        en: 'CS/TF/Rust items',
+        es: 'Ítems de CS/TF/Rust',
+        zh: 'CS/TF/Rust 物品',
+        ko: 'CS/TF/Rust 아이템'
+      },
+      paymentMethods: {
+        ru: 'Мир/СБП, карты, крипта',
+        en: 'Mir/SBP, cards, crypto',
+        es: 'Mir/SBP, tarjetas, cripto',
+        zh: 'Mir/SBP、银行卡、加密货币',
+        ko: 'Mir/SBP, 카드, 암호화폐'
       }
     }
   },
@@ -2815,19 +2920,26 @@ const OFFERS: Offer[] = [
     category: 'Steam',
     subCategory: 'SteamItems',
     name: 'CS.MONEY',
-    description: {
-      ru: 'Крупная площадка для покупки и обмена CS2-скинов. Удобна для пополнения Steam через предметы, если вы умеете выбирать ликвидные скины и сверять цену с торговой площадкой Steam.',
-      en: 'A large CS2 skin marketplace and trading platform. Useful for Steam top-ups through items if you know how to choose liquid skins and compare prices with Steam Market.'
-    },
+    slug: STEAM_PAGE_BY_ID['steam-csmoney'].slug,
+    editorial: STEAM_PAGE_BY_ID['steam-csmoney'].editorial,
+    description: STEAM_PAGE_BY_ID['steam-csmoney'].editorial.description,
     url: 'https://cs.money/',
     logoUrl: '/cs-money.png',
     details: {
-      rate: { ru: 'до +30%', en: 'up to +30%' },
-      types: { ru: 'Предметами CS/TF/Rust', en: 'CS/TF/Rust items' },
-      paymentMethods: { ru: 'Карты, PayPal, крипта и локальные методы', en: 'Cards, PayPal, crypto, local methods' },
-      nuances: {
-        ru: ['CS2-предметы могут иметь ограничения и ожидание', 'Смотрите ликвидность, цену и комиссию Steam', 'Подходит тем, кто понимает рынок скинов'],
-        en: ['CS2 items may have restrictions and waiting time', 'Check liquidity, price, and Steam fee', 'Best for people who understand the skin market']
+      rate: { ru: 'до +30%', en: 'up to +30%', es: 'hasta +30%', zh: '最高 +30%', ko: '최대 +30%' },
+      types: {
+        ru: 'Предметами CS2',
+        en: 'CS2 items',
+        es: 'Ítems de CS2',
+        zh: 'CS2 物品',
+        ko: 'CS2 아이템'
+      },
+      paymentMethods: {
+        ru: 'Мир/СБП, карты, крипта',
+        en: 'Mir/SBP, cards, crypto',
+        es: 'Mir/SBP, tarjetas, cripto',
+        zh: 'Mir/SBP、银行卡、加密货币',
+        ko: 'Mir/SBP, 카드, 암호화폐'
       }
     }
   },
@@ -2836,16 +2948,27 @@ const OFFERS: Offer[] = [
     category: 'Steam',
     subCategory: 'SteamFast',
     name: 'GGsel',
-    description: {
-      ru: 'Быстрое пополнение Steam по логину. Подходит, когда нужно пополнить баланс без возни с предметами и ожиданием продажи, но комиссия обычно около 10%.',
-      en: 'Fast Steam top-up by login. Good when you need balance without item trading and waiting for a sale, but the fee is usually around 10%.'
-    },
+    slug: STEAM_PAGE_BY_ID['steam-ggsel'].slug,
+    editorial: STEAM_PAGE_BY_ID['steam-ggsel'].editorial,
+    description: STEAM_PAGE_BY_ID['steam-ggsel'].editorial.description,
     url: 'https://ggsel.net/',
     logoUrl: '/ggsel.png',
     details: {
-      rate: { ru: '-10%', en: '-10%' },
-      types: { ru: 'По логину Steam', en: 'By Steam login' },
-      paymentMethods: { ru: 'Мир/СБП, карты, крипта', en: 'Mir/SBP, cards, crypto' }
+      rate: { ru: '-8%', en: '-8%', es: '-8%', zh: '-8%', ko: '-8%' },
+      types: {
+        ru: 'По логину Steam',
+        en: 'By Steam login',
+        es: 'Por login de Steam',
+        zh: '通过 Steam 登录名',
+        ko: 'Steam 로그인으로'
+      },
+      paymentMethods: {
+        ru: 'Мир/СБП, карты, крипта',
+        en: 'Mir/SBP, cards, crypto',
+        es: 'Mir/SBP, tarjetas, cripto',
+        zh: 'Mir/SBP、银行卡、加密货币',
+        ko: 'Mir/SBP, 카드, 암호화폐'
+      }
     }
   },
   {
@@ -2853,19 +2976,26 @@ const OFFERS: Offer[] = [
     category: 'Steam',
     subCategory: 'SteamFast',
     name: 'Playerok',
-    description: {
-      ru: 'Быстрое пополнение Steam по логину через продавцов на маркетплейсе. Удобно, когда нужен моментальный результат; комиссия обычно ниже, чем у многих прямых способов, примерно около 5%.',
-      en: 'Fast Steam top-up by login through marketplace sellers. Convenient when you need an instant result; the fee is usually lower than many direct methods, around 5%.'
-    },
+    slug: STEAM_PAGE_BY_ID['steam-playerok'].slug,
+    editorial: STEAM_PAGE_BY_ID['steam-playerok'].editorial,
+    description: STEAM_PAGE_BY_ID['steam-playerok'].editorial.description,
     url: 'https://playerok.com/',
     logoUrl: '/playerok.png',
     details: {
-      rate: { ru: '-5%', en: '-5%' },
-      types: { ru: 'По логину Steam', en: 'By Steam login' },
-      paymentMethods: { ru: 'Мир/СБП, карты, крипта', en: 'Mir/SBP, cards, crypto' },
-      nuances: {
-        ru: ['Проверяйте рейтинг продавца и отзывы', 'Лучше начинать с небольшой суммы', 'Условия зависят от конкретного продавца'],
-        en: ['Check seller rating and reviews', 'Start with a small amount', 'Terms depend on the specific seller']
+      rate: { ru: '-5%', en: '-5%', es: '-5%', zh: '-5%', ko: '-5%' },
+      types: {
+        ru: 'По логину Steam',
+        en: 'By Steam login',
+        es: 'Por login de Steam',
+        zh: '通过 Steam 登录名',
+        ko: 'Steam 로그인으로'
+      },
+      paymentMethods: {
+        ru: 'Мир/СБП, карты, крипта',
+        en: 'Mir/SBP, cards, crypto',
+        es: 'Mir/SBP, tarjetas, cripto',
+        zh: 'Mir/SBP、银行卡、加密货币',
+        ko: 'Mir/SBP, 카드, 암호화폐'
       }
     }
   },
@@ -3915,7 +4045,7 @@ export default function App() {
   const offerTitle = (offer: Offer) => OFFER_TITLE_TRANSLATIONS[offer.id]?.[lang] || offer.name;
   const offerDescription = (offer: Offer) => {
     const ownDescription = offer.description[lang];
-    if ((offer.category === 'Stores' || offer.category === 'Antidetect' || offer.category === 'Cards' || offer.category === 'Crypto') && offer.editorial && ownDescription) {
+    if ((offer.category === 'Stores' || offer.category === 'Antidetect' || offer.category === 'Cards' || offer.category === 'Crypto' || offer.category === 'Guides') && offer.editorial && ownDescription) {
       return ownDescription;
     }
 
@@ -4798,9 +4928,12 @@ export default function App() {
                   <motion.a
                     layout
                     key={offer.id}
-                    href={offer.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={getLocalizedOfferRoute(offer, lang)}
+                    onClick={(event) => {
+                      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                      event.preventDefault();
+                      handleOfferOpen(offer);
+                    }}
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.98 }}
@@ -4815,7 +4948,7 @@ export default function App() {
                         {offerTitle(offer)}
                       </h3>
                     </div>
-                    <ExternalLink className="w-5 h-5 text-white/25 group-hover:text-brand-purple shrink-0 transition-colors" />
+                    <ChevronRight className="w-5 h-5 text-white/25 group-hover:text-brand-purple shrink-0 transition-colors" />
                   </motion.a>
                 ))}
               </div>
@@ -6186,11 +6319,11 @@ export default function App() {
                     </h3>
                     <p>
                       {tx({
-                        ru: 'Для РФ самый простой бытовой вариант — найти Steam в поиске Сбербанка или OZON Банка и пополнить по логину. Обычно комиссия около 10%, зато всё происходит быстро и без предметов. Из маркетплейсов можно смотреть GGsel и Playerok: у Playerok часто встречается пополнение около 5%, но всегда проверяйте продавца, рейтинг и условия.',
-                        en: 'For Russia, the simplest everyday option is to search for Steam inside Sberbank or OZON Bank and top up by login. The fee is usually around 10%, but it is fast and does not involve items. Among marketplaces, check GGsel and Playerok: Playerok often has offers around 5%, but always check seller rating and terms.',
-                        es: 'Para Rusia, la opción más simple es buscar Steam dentro de Sberbank u OZON Bank y recargar por login. La comisión suele rondar el 10%, pero es rápido y sin ítems. En marketplaces mira GGsel y Playerok: en Playerok a veces hay ofertas cerca del 5%, pero revisa siempre vendedor, rating y condiciones.',
-                        zh: '在俄罗斯，最简单的日常方式是在 Sberbank 或 OZON Bank 里搜索 Steam，然后按登录名充值。手续费通常约 10%，但速度快且不需要物品。市场平台可以看 GGsel 和 Playerok：Playerok 经常有约 5% 的充值，但一定要检查卖家、评分和条件。',
-                        ko: '러시아에서는 Sberbank 또는 OZON Bank에서 Steam을 검색해 로그인으로 충전하는 것이 가장 쉽습니다. 수수료는 보통 약 10%지만 빠르고 아이템이 필요 없습니다. 마켓플레이스는 GGsel과 Playerok을 볼 수 있습니다. Playerok은 5% 정도의 제안도 있지만 판매자, 평점, 조건을 꼭 확인하세요.'
+                        ru: 'Для РФ самый простой бытовой вариант: найти Steam в поиске Сбербанка или OZON Банка и пополнить по логину. Обычно комиссия около 10%, зато всё происходит быстро и без предметов. Из маркетплейсов можно смотреть GGsel и Playerok: у Playerok часто встречается пополнение около 5%.',
+                        en: 'For Russia, the simplest everyday option is to search for Steam inside Sberbank or OZON Bank and top up by login. The fee is usually around 10%, but it is fast and does not involve items. Among marketplaces, check GGsel and Playerok: Playerok often has offers around 5%.',
+                        es: 'Para Rusia, la opción más simple es buscar Steam dentro de Sberbank u OZON Bank y recargar por login. La comisión suele rondar el 10%, pero es rápido y sin ítems. En marketplaces mira GGsel y Playerok: en Playerok a veces hay ofertas cerca del 5%.',
+                        zh: '在俄罗斯，最简单的日常方式是在 Sberbank 或 OZON Bank 里搜索 Steam，然后按登录名充值。手续费通常约 10%，但速度快且不需要物品。市场平台可以看 GGsel 和 Playerok：Playerok 经常有约 5% 的充值。',
+                        ko: '러시아에서는 Sberbank 또는 OZON Bank에서 Steam을 검색해 로그인으로 충전하는 것이 가장 쉽습니다. 수수료는 보통 약 10%지만 빠르고 아이템이 필요 없습니다. 마켓플레이스는 GGsel과 Playerok을 볼 수 있으며 Playerok에는 5% 정도의 제안도 있습니다.'
                       })}
                     </p>
                   </section>

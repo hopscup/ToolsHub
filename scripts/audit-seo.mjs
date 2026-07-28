@@ -4,8 +4,10 @@ import { accountShopPages } from '../src/data/accountShopPages.js';
 import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
+import { guidePages } from '../src/data/guidePages.js';
 import { smsPages } from '../src/data/smsPages.js';
 import { socialPages } from '../src/data/socialPages.js';
+import { steamPages } from '../src/data/steamPages.js';
 import { vpsPages } from '../src/data/vpsPages.js';
 
 const distDir = path.resolve('dist');
@@ -48,6 +50,8 @@ const serviceRoutes = [
   ...smsPages.map((page) => `/sms-activators/${page.slug}`),
   ...vpsPages.map((page) => `/vps/${page.slug}`),
   ...socialPages.map((page) => `/social-boost/${page.slug}`),
+  ...steamPages.map((page) => `/steam-topup/${page.slug}`),
+  ...guidePages.map((page) => `/guides/${page.slug}`),
 ];
 const routes = [...categoryRoutes, ...serviceRoutes];
 
