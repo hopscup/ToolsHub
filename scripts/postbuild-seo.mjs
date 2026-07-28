@@ -568,14 +568,14 @@ const sections = [
 
 const servicePageLabels = {
   bestFor: {
-    ru: 'Кому подходит',
+    ru: 'Для чего подойдёт',
     en: 'Best for',
     es: 'Para quién sirve',
     zh: '适合谁',
     ko: '추천 대상',
   },
   considerations: {
-    ru: 'Что учитывать',
+    ru: 'Что стоит учитывать',
     en: 'What to consider',
     es: 'Qué tener en cuenta',
     zh: '需要注意',
@@ -623,7 +623,7 @@ const servicePages = [
       ko: 'ProxyWing: Residential, ISP, Mobile 및 Datacenter 프록시',
     },
     intro: {
-      ru: 'ProxyWing удобен тем, что в одном кабинете можно взять обычные IPv4, ISP, Residential и Mobile-прокси. IPv4 подходят для большинства повседневных задач с аккаунтами, антидетектами, автоматизацией и парсингом. Если площадка строже проверяет источник IP, можно перейти на ISP, Residential или Mobile, не меняя сервис.',
+      ru: 'В ProxyWing есть обычные IPv4, ISP, Residential и Mobile-прокси. Я бы начинал с IPv4: их хватает для Gmail, Twitter, Discord, Telegram, антидетектов, парсинга и большинства обычных задач. Если конкретная площадка принимает их плохо, уже можно перейти на более дорогой тип и не менять сервис.',
       en: 'ProxyWing is convenient because regular IPv4, ISP, Residential, and Mobile proxies are available in one dashboard. IPv4 covers most everyday account, antidetect, automation, and scraping tasks. If a platform checks the IP source more strictly, you can switch types without changing providers.',
       es: 'ProxyWing reúne IPv4 normal, ISP, Residential y Mobile en un solo panel. IPv4 cubre la mayoría de tareas cotidianas con cuentas, antidetects, automatización y scraping. Para plataformas más estrictas puedes cambiar de tipo sin cambiar de proveedor.',
       zh: 'ProxyWing 在同一控制面板提供普通 IPv4、ISP、Residential 和 Mobile。IPv4 可满足大多数账号、反检测浏览器、自动化和采集任务；遇到检查更严格的平台时，无需更换服务商即可切换类型。',
@@ -637,14 +637,14 @@ const servicePages = [
       ko: 'ProxyWing 리뷰, ProxyWing 프록시, residential 프록시, mobile 프록시, ISP 프록시, datacenter 프록시',
     },
     pointsHeading: {
-      ru: 'Кому подходит',
+      ru: 'Для чего подойдёт',
       en: 'Best for',
       es: 'Para quién sirve',
       zh: '适合谁',
       ko: '추천 대상',
     },
     itemsHeading: {
-      ru: 'Что учитывать',
+      ru: 'Что стоит учитывать',
       en: 'What to consider',
       es: 'Qué tener en cuenta',
       zh: '需要注意',
@@ -652,9 +652,9 @@ const servicePages = [
     },
     points: {
       ru: [
-        'Обычные IPv4 для аккаунтов, антидетектов, Gmail, Twitter, Discord, Telegram, web3, Яндекса и нейросетей.',
-        'Парсинг, автоматизация и другие задачи, где важны скорость, стабильность и отдельный IP.',
-        'ISP, Residential и Mobile для площадок, которые строже проверяют источник и траст IP.',
+        'Обычные IPv4 для Gmail, Twitter, Discord, Telegram, Яндекса, нейронок и других повседневных задач.',
+        'ISP для рекламных кабинетов, мультиаккаунтов бирж и более сложных задач.',
+        'Residential и Mobile, когда нужен максимальный траст.',
       ],
       en: [
         'Regular IPv4 for accounts, antidetect browsers, Gmail, Twitter, Discord, Telegram, web3, Yandex, and AI tools.',
@@ -679,9 +679,9 @@ const servicePages = [
     },
     items: {
       ru: [
-        'Если не знаете, какой протокол выбрать для антидетекта или рабочего профиля, начинайте с SOCKS5.',
-        'Residential обычно оплачиваются за использованный трафик, а Mobile обходятся дороже обычных IPv4.',
-        'Datacenter IPv4 могут определяться как proxy/VPN из-за серверного происхождения; для базовых задач это обычно не критично.',
+        'Не знаете, какой протокол выбрать для антидетекта, берите SOCKS5.',
+        'Residential обычно оплачиваются за трафик, а Mobile стоят дороже обычных IPv4. Покупать их просто на всякий случай смысла нет.',
+        'IPv4 часто определяются как proxy или VPN просто потому, что они серверные. Это не делает их плохими, и я такие IP вообще редко проверяю.',
       ],
       en: [
         'If you are unsure which protocol to use for an antidetect browser or work profile, start with SOCKS5.',
@@ -735,7 +735,7 @@ const servicePages = [
       ko: 'Proxyline: 합리적인 IPv4 및 IPv6 프록시',
     },
     intro: {
-      ru: 'Proxyline предлагает обычные серверные IPv4 и IPv6. Это понятный вариант для парсинга, автоматизации, антидетектов и аккаунтных задач, где не требуется мобильный или резидентский источник IP.',
+      ru: 'Proxyline продаёт обычные серверные IPv4 и IPv6. Я бы смотрел его для парсинга, автоматизации, антидетектов и других задач, где не нужен мобильный или Residential-прокси.',
       en: 'Proxyline offers regular server IPv4 and IPv6 proxies. It is a straightforward option for scraping, automation, antidetect browsers, and account tasks that do not require a mobile or residential IP source.',
       es: 'Proxyline ofrece proxies IPv4 e IPv6 de servidor. Es una opción sencilla para scraping, automatización, antidetects y cuentas que no necesitan una IP móvil o residencial.',
       zh: 'Proxyline 提供普通服务器 IPv4 和 IPv6。适合不需要移动或住宅 IP 来源的采集、自动化、反检测浏览器和账号任务。',
@@ -749,14 +749,14 @@ const servicePages = [
       ko: 'Proxyline 리뷰, Proxyline 프록시, IPv4 프록시, IPv6 프록시, 서버 프록시',
     },
     pointsHeading: {
-      ru: 'Кому подходит',
+      ru: 'Для чего подойдёт',
       en: 'Best for',
       es: 'Para quién sirve',
       zh: '适合谁',
       ko: '추천 대상',
     },
     itemsHeading: {
-      ru: 'Что учитывать',
+      ru: 'Что стоит учитывать',
       en: 'What to consider',
       es: 'Qué tener en cuenta',
       zh: '需要注意',
@@ -764,9 +764,9 @@ const servicePages = [
     },
     points: {
       ru: [
-        'Парсинг, автоматизация и другие задачи, где важны стабильный IP и понятная стоимость.',
-        'Работа с аккаунтами и антидетектами, когда площадке подходит обычный серверный IPv4.',
-        'Покупка нескольких отдельных IP нужной страны без оплаты за трафик.',
+        'Gmail, Twitter, Discord, Telegram, web3, Яндекс и другие обычные аккаунтные задачи.',
+        'Парсинг, автоматизация и антидетекты, для которых хватает отдельного IPv4.',
+        'Покупка нескольких IP нужной страны без оплаты за использованный трафик.',
       ],
       en: [
         'Scraping, automation, and other tasks where a stable IP and predictable price matter.',
@@ -791,9 +791,9 @@ const servicePages = [
     },
     items: {
       ru: [
-        'Это серверные IPv4 и IPv6, поэтому некоторые проверки могут отмечать их как proxy или VPN.',
-        'IPv6 стоит брать только для сервисов и программ, которые его поддерживают.',
-        'Для площадок со строгой проверкой источника IP может понадобиться ISP, Residential или Mobile у другого сервиса.',
+        'Некоторые чекеры будут отмечать эти IP как proxy или VPN просто потому, что они серверные. Для парсинга и простой автоматизации это обычно вообще не проблема.',
+        'IPv6 берите только если точно знаете, что нужный сервис его поддерживает.',
+        'Если конкретная площадка плохо принимает обычные IPv4, тогда уже стоит смотреть ISP, Residential или Mobile.',
       ],
       en: [
         'These are server IPv4 and IPv6 addresses, so some checks may label them as proxy or VPN.',
@@ -847,7 +847,7 @@ const servicePages = [
       ko: 'Proxy6: IPv4, IPv6, Shared IPv4 및 MTProto',
     },
     intro: {
-      ru: 'Proxy6 подойдет тем, кому нужны доступные серверные прокси и разные форматы покупки. В сервисе есть отдельные IPv4, IPv6, Shared IPv4 и MTProto для Telegram.',
+      ru: 'В Proxy6 есть отдельные IPv4, IPv6, Shared IPv4 и MTProto для Telegram. Сервис я бы смотрел, когда нужны недорогие серверные прокси или сразу много IP.',
       en: 'Proxy6 suits users who need affordable server proxies and several purchase formats. The service offers dedicated IPv4, IPv6, Shared IPv4, and MTProto for Telegram.',
       es: 'Proxy6 sirve para quienes necesitan proxies de servidor económicos y varios formatos de compra. Ofrece IPv4 individual, IPv6, Shared IPv4 y MTProto para Telegram.',
       zh: 'Proxy6 适合需要价格实惠的服务器代理和多种购买方式的用户。服务提供独立 IPv4、IPv6、Shared IPv4 以及 Telegram 使用的 MTProto。',
@@ -861,14 +861,14 @@ const servicePages = [
       ko: 'Proxy6 리뷰, Proxy6 프록시, IPv4 프록시, IPv6 프록시, Shared IPv4, MTProto 프록시',
     },
     pointsHeading: {
-      ru: 'Кому подходит',
+      ru: 'Для чего подойдёт',
       en: 'Best for',
       es: 'Para quién sirve',
       zh: '适合谁',
       ko: '추천 대상',
     },
     itemsHeading: {
-      ru: 'Что учитывать',
+      ru: 'Что стоит учитывать',
       en: 'What to consider',
       es: 'Qué tener en cuenta',
       zh: '需要注意',
@@ -876,9 +876,9 @@ const servicePages = [
     },
     points: {
       ru: [
-        'Повседневные задачи с аккаунтами, антидетектами, автоматизацией и отдельными IP.',
-        'Работа с большим количеством прокси, когда важна доступная цена.',
-        'MTProto для Telegram и Shared IPv4 для задач, где выделенный адрес не обязателен.',
+        'Gmail, Twitter, Discord, Telegram и другие базовые задачи на отдельных IPv4.',
+        'Работа с большим количеством прокси, когда хочется сэкономить.',
+        'MTProto-прокси для Telegram.',
       ],
       en: [
         'Daily account, antidetect, automation, and separate IP tasks.',
@@ -903,9 +903,9 @@ const servicePages = [
     },
     items: {
       ru: [
-        'Shared IPv4 используется несколькими клиентами и подходит не для каждой площадки.',
-        'IPv6 нужно выбирать только при подтвержденной поддержке со стороны нужного сервиса.',
-        'Обычные IPv4 могут определяться как proxy или VPN из-за серверного происхождения, для базовых задач это обычно не критично.',
+        'Shared IPv4 продают нескольким клиентам. Я такие прокси не беру, потому что вы не контролируете действия других пользователей этого IP.',
+        'IPv6 нужен далеко не везде, поэтому сначала проверьте поддержку у нужного сервиса.',
+        'Обычные IPv4 могут определяться как proxy или VPN из-за серверного происхождения. Для базовых задач это обычно не критично.',
       ],
       en: [
         'Shared IPv4 is used by multiple customers and is not suitable for every platform.',
@@ -959,7 +959,7 @@ const servicePages = [
       ko: 'MobileProxy: IP 변경이 가능한 모바일 프록시',
     },
     intro: {
-      ru: 'MobileProxy предлагает мобильные адреса с возможностью смены IP. Такой тип нужен, когда площадка строже относится к серверным прокси или рабочей схеме важен мобильный оператор.',
+      ru: 'MobileProxy я пользуюсь больше трёх лет. Здесь можно взять мобильный прокси и менять IP много раз, что удобно для соцсетей, приложений и задач, где обычные серверные адреса режутся сильнее.',
       en: 'MobileProxy provides mobile addresses with IP rotation. This type is useful when a platform treats server proxies more strictly or the workflow requires a mobile carrier.',
       es: 'MobileProxy ofrece direcciones móviles con cambio de IP. Este tipo resulta útil cuando una plataforma controla con más rigor los proxies de servidor o el flujo necesita un operador móvil.',
       zh: 'MobileProxy 提供支持更换 IP 的移动地址。目标平台严格限制服务器代理，或工作流程需要移动运营商时，这类代理更合适。',
@@ -973,14 +973,14 @@ const servicePages = [
       ko: 'MobileProxy 리뷰, 모바일 프록시, IP 변경 프록시, 모바일 IP, 계정 프록시',
     },
     pointsHeading: {
-      ru: 'Кому подходит',
+      ru: 'Для чего подойдёт',
       en: 'Best for',
       es: 'Para quién sirve',
       zh: '适合谁',
       ko: '추천 대상',
     },
     itemsHeading: {
-      ru: 'Что учитывать',
+      ru: 'Что стоит учитывать',
       en: 'What to consider',
       es: 'Qué tener en cuenta',
       zh: '需要注意',
@@ -988,9 +988,9 @@ const servicePages = [
     },
     points: {
       ru: [
-        'Площадки, которые строже относятся к серверным IP и лучше принимают мобильные адреса.',
-        'Социальные сети, приложения и аккаунтные задачи, где полезна смена IP по кнопке.',
-        'Рабочие схемы, которым нужен мобильный оператор и конкретная страна.',
+        'Любые задачи, где нужен максимально трастовый мобильный IP.',
+        'Работа с ПК и телефона, когда нужно часто менять адрес по кнопке.',
+        'Большие объёмы, где один мобильный тариф может заменить пачку отдельных IPv4.',
       ],
       en: [
         'Platforms that treat server IPs more strictly and accept mobile addresses more readily.',
@@ -1015,9 +1015,9 @@ const servicePages = [
     },
     items: {
       ru: [
-        'Мобильные прокси обычно стоят дороже обычных IPv4, поэтому брать их для каждой задачи необязательно.',
-        'Заранее проверьте доступные страны, оператора и способ смены IP.',
-        'Если площадке подходит обычный IPv4, он может оказаться проще и выгоднее.',
+        'Трафик безлимитный, а IP меняется по кнопке. Адрес можно менять столько раз, сколько нужно.',
+        'Одновременно запустить несколько профилей с разными IP не получится. Профили придётся отрабатывать по очереди, каждый раз меняя адрес.',
+        'Если проект нормально принимает обычный IPv4, переплачивать за мобильный прокси не нужно.',
       ],
       en: [
         'Mobile proxies usually cost more than regular IPv4, so they are not necessary for every task.',
@@ -1068,7 +1068,7 @@ const servicePages = [
       ko: 'ProxyShard: 하나의 서비스에서 여러 프록시 유형',
     },
     intro: {
-      ru: 'ProxyShard объединяет Residential, Mobile, ISP и Datacenter-прокси. Это удобно, когда разные проекты требуют разного источника IP, но менять сервис и кабинет не хочется.',
+      ru: 'В ProxyShard есть Residential, Mobile, ISP и Datacenter-прокси. Я бы начал с более дешёвого Datacenter или ISP, а если конкретная площадка принимает его плохо, уже перешёл на Residential или Mobile.',
       en: 'ProxyShard combines Residential, Mobile, ISP, and Datacenter proxies. It is convenient when projects need different IP sources without changing providers.',
       es: 'ProxyShard reúne Residential, Mobile, ISP y Datacenter. Es cómodo cuando distintos proyectos necesitan fuentes de IP diferentes.',
       zh: 'ProxyShard 提供 Residential、Mobile、ISP 和 Datacenter 代理，适合不同项目需要不同 IP 来源但不想更换服务商的情况。',
@@ -1082,14 +1082,14 @@ const servicePages = [
       ko: 'ProxyShard 리뷰, Residential 프록시, Mobile 프록시, ISP 프록시, Datacenter 프록시',
     },
     points: {
-      ru: ['Аккаунты и рекламные кабинеты, где важен источник IP.', 'Парсинг и автоматизация на Datacenter или ISP.', 'Переход между типами прокси внутри одного сервиса.'],
+      ru: ['Обычные задачи на Datacenter или ISP.', 'Рекламные кабинеты и сложные задачи на Residential или Mobile.', 'Работа с разными типами прокси через один сервис.'],
       en: ['Accounts and ad dashboards where the IP source matters.', 'Scraping and automation with Datacenter or ISP.', 'Switching proxy types inside one service.'],
       es: ['Cuentas y paneles publicitarios donde importa el origen de IP.', 'Scraping y automatización con Datacenter o ISP.', 'Cambio de tipo dentro del mismo servicio.'],
       zh: ['重视 IP 来源的账号和广告后台。', '使用 Datacenter 或 ISP 进行采集和自动化。', '在同一服务内切换代理类型。'],
       ko: ['IP 출처가 중요한 계정과 광고 대시보드.', 'Datacenter 또는 ISP를 이용한 스크래핑과 자동화.', '한 서비스 안에서 프록시 유형 전환.'],
     },
     items: {
-      ru: ['Выбирайте тип IP под требования площадки.', 'Перед покупкой проверьте страну и способ оплаты.', 'Mobile и Residential нужны не для каждой задачи.'],
+      ru: ['Для начала попробуйте Datacenter или ISP.', 'Mobile и Residential нужны, если серверный IP не подходит.', 'Перед оплатой проверьте страну и формат прокси.'],
       en: ['Match the IP type to the platform.', 'Check the country and payment method before buying.', 'Mobile and Residential are not required for every task.'],
       es: ['Adapta el tipo de IP a la plataforma.', 'Comprueba país y pago antes de comprar.', 'Mobile y Residential no hacen falta para todo.'],
       zh: ['根据平台要求选择 IP 类型。', '购买前确认国家和付款方式。', '并非所有任务都需要 Mobile 和 Residential。'],
@@ -1123,7 +1123,7 @@ const servicePages = [
       ko: 'Proxy-Seller: 다양한 프록시와 지역',
     },
     intro: {
-      ru: 'Proxy-Seller предлагает большой выбор стран и форматов: IPv4, IPv6, ISP, Residential, Mobile и Shared. Сервис удобен, когда нужно сравнить несколько вариантов под одну задачу.',
+      ru: 'Proxy-Seller один из самых качественных сервисов с прокси, которые я знаю. Особенно понравились их Residential. Большой выбор стран и типов здесь идёт приятным бонусом.',
       en: 'Proxy-Seller offers a large selection of countries and formats including IPv4, IPv6, ISP, Residential, Mobile, and Shared.',
       es: 'Proxy-Seller ofrece muchos países y formatos: IPv4, IPv6, ISP, Residential, Mobile y Shared.',
       zh: 'Proxy-Seller 提供丰富的国家和格式，包括 IPv4、IPv6、ISP、Residential、Mobile 和 Shared。',
@@ -1137,14 +1137,14 @@ const servicePages = [
       ko: 'Proxy-Seller 리뷰, 프록시 구매, IPv4, ISP, Residential, Mobile 프록시',
     },
     points: {
-      ru: ['Поиск нужной страны в большом каталоге.', 'IPv4 и ISP для стабильной работы.', 'Residential и Mobile для более строгих площадок.'],
+      ru: ['Задачи, где качество важнее минимальной цены.', 'IPv4 и ISP для обычной и более сложной работы.', 'Residential и Mobile для максимального траста.'],
       en: ['Finding a required country in a large catalog.', 'IPv4 and ISP for stable work.', 'Residential and Mobile for stricter platforms.'],
       es: ['Encontrar el país necesario.', 'IPv4 e ISP para trabajo estable.', 'Residential y Mobile para plataformas estrictas.'],
       zh: ['在丰富目录中寻找所需国家。', 'IPv4 和 ISP 适合稳定工作。', 'Residential 和 Mobile 适合更严格的平台。'],
       ko: ['큰 카탈로그에서 필요한 국가 찾기.', '안정적인 작업용 IPv4와 ISP.', '엄격한 플랫폼용 Residential과 Mobile.'],
     },
     items: {
-      ru: ['Не путайте выделенный, Shared и трафиковый формат.', 'Проверяйте поддержку IPv6.', 'Цена зависит от страны, типа и срока.'],
+      ru: ['Не перепутайте отдельный IP, Shared и оплату за трафик.', 'IPv6 берите только при поддержке нужного сервиса.', 'Для простых задач качественного IPv4 или ISP часто хватает.'],
       en: ['Distinguish dedicated, Shared, and traffic-based formats.', 'Confirm IPv6 support.', 'Price depends on country, type, and term.'],
       es: ['Distingue dedicado, Shared y pago por tráfico.', 'Confirma soporte IPv6.', 'El precio depende de país, tipo y plazo.'],
       zh: ['分清独享、Shared 和按流量计费。', '确认 IPv6 支持。', '价格取决于国家、类型和周期。'],
@@ -1178,7 +1178,7 @@ const servicePages = [
       ko: 'Proxys.io: 범용 프록시 카탈로그',
     },
     intro: {
-      ru: 'Proxys.io объединяет обычные IPv4 и IPv6, Shared, Residential, Mobile и Dynamic-прокси. Это позволяет подобрать формат для автоматизации, аккаунтов или задач со сменой IP.',
+      ru: 'Proxys.io могу рекомендовать и для обычных IPv4, и для Residential. Оба типа я здесь тестировал, всё работало хорошо. Для простых задач начал бы с IPv4.',
       en: 'Proxys.io combines IPv4, IPv6, Shared, Residential, Mobile, and Dynamic proxies for automation, accounts, and IP rotation.',
       es: 'Proxys.io reúne IPv4, IPv6, Shared, Residential, Mobile y Dynamic para automatización, cuentas y rotación.',
       zh: 'Proxys.io 提供 IPv4、IPv6、Shared、Residential、Mobile 和 Dynamic，适合自动化、账号和 IP 轮换。',
@@ -1192,14 +1192,14 @@ const servicePages = [
       ko: 'Proxys.io 리뷰, IPv4, IPv6, Shared, Residential, Mobile, Dynamic 프록시',
     },
     points: {
-      ru: ['Несколько типов прокси в одном кабинете.', 'Аккаунты, антидетекты и автоматизация.', 'Dynamic и Mobile для смены IP.'],
+      ru: ['Обычные аккаунты, антидетекты и автоматизация на IPv4.', 'Residential и Mobile для более высокого траста.', 'Dynamic-прокси, когда нужно часто менять IP.'],
       en: ['Several proxy types in one dashboard.', 'Accounts, antidetect, and automation.', 'Dynamic and Mobile for IP rotation.'],
       es: ['Varios tipos en un panel.', 'Cuentas, antidetect y automatización.', 'Dynamic y Mobile para rotación.'],
       zh: ['一个面板中的多种代理类型。', '账号、反检测和自动化。', 'Dynamic 和 Mobile 适合 IP 轮换。'],
       ko: ['한 대시보드의 여러 프록시 유형.', '계정, 안티디텍트와 자동화.', 'IP 변경용 Dynamic과 Mobile.'],
     },
     items: {
-      ru: ['Shared и Dynamic не равны отдельному статическому IP.', 'Проверяйте поддержку IPv6.', 'Сравнивайте гео и правила смены адреса.'],
+      ru: ['Для важных аккаунтов я бы не брал Shared.', 'IPv6 нужен далеко не всем сервисам.', 'У Dynamic заранее проверьте правила смены адреса.'],
       en: ['Shared and Dynamic differ from a dedicated static IP.', 'Confirm IPv6 support.', 'Compare locations and rotation rules.'],
       es: ['Shared y Dynamic no son una IP estática individual.', 'Confirma IPv6.', 'Compara GEO y reglas de rotación.'],
       zh: ['Shared 和 Dynamic 不等于独立静态 IP。', '确认 IPv6 支持。', '比较地区和更换规则。'],
@@ -1233,7 +1233,7 @@ const servicePages = [
       ko: '일상 사용을 위한 PPL VPN',
     },
     intro: {
-      ru: 'PPL VPN подходит для зарубежных сайтов, приложений и видеосервисов. Подпиской можно управлять через Telegram-бот или веб-кабинет.',
+      ru: 'PPL VPN подойдёт для YouTube, зарубежных сайтов, приложений и обычного использования на каждый день. Удобно, что подпиской можно управлять и через Telegram, и через обычный сайт.',
       en: 'PPL VPN is made for foreign websites, apps, and video services, with management through Telegram or a web dashboard.',
       es: 'PPL VPN sirve para sitios, aplicaciones y vídeo extranjeros, con gestión por Telegram o web.',
       zh: 'PPL VPN 适合海外网站、应用和视频服务，可通过 Telegram 或网页面板管理。',
@@ -1247,14 +1247,14 @@ const servicePages = [
       ko: 'PPL VPN 리뷰, Telegram VPN, Windows Android iOS macOS Linux VPN',
     },
     points: {
-      ru: ['Зарубежные сайты и приложения.', 'Основные настольные и мобильные платформы.', 'Управление через Telegram или веб.'],
+      ru: ['YouTube, зарубежные сайты и приложения.', 'Один VPN для компьютера и телефона.', 'Управление через Telegram или веб-кабинет.'],
       en: ['Foreign websites and apps.', 'Major desktop and mobile platforms.', 'Management through Telegram or web.'],
       es: ['Sitios y aplicaciones extranjeros.', 'Principales plataformas.', 'Gestión por Telegram o web.'],
       zh: ['海外网站和应用。', '主流桌面和移动平台。', '通过 Telegram 或网页管理。'],
       ko: ['해외 웹사이트와 앱.', '주요 데스크톱과 모바일 플랫폼.', 'Telegram 또는 웹 관리.'],
     },
     items: {
-      ru: ['Скорость зависит от страны и нагрузки.', 'Для строгих сервисов подбирайте гео.', 'Проверьте приложение для своего устройства.'],
+      ru: ['Скорость зависит от страны и вашего провайдера.', 'Если сервис не открылся, попробуйте другое гео.', 'Проверьте приложение для своего устройства.'],
       en: ['Speed depends on location and load.', 'Test locations for strict services.', 'Check device app availability.'],
       es: ['La velocidad depende del GEO y carga.', 'Prueba GEO para servicios estrictos.', 'Comprueba la aplicación.'],
       zh: ['速度取决于地区和负载。', '严格服务需要测试地区。', '确认设备应用可用。'],
@@ -1288,7 +1288,7 @@ const servicePages = [
       ko: '여러 기기용 ProstoVPN',
     },
     intro: {
-      ru: 'ProstoVPN поддерживает основные платформы и Smart TV. Несколько режимов позволяют подобрать подключение под текущую сеть и задачу.',
+      ru: 'ProstoVPN можно подключить к компьютеру, телефону, Linux и Smart TV. Я бы смотрел его, если VPN нужен сразу на нескольких устройствах и не хочется покупать отдельную подписку для каждого.',
       en: 'ProstoVPN supports major platforms and Smart TV, with modes for different networks and tasks.',
       es: 'ProstoVPN admite plataformas principales y Smart TV, con modos para distintas redes.',
       zh: 'ProstoVPN 支持主流平台和 Smart TV，并提供适合不同网络和任务的模式。',
@@ -1302,14 +1302,14 @@ const servicePages = [
       ko: 'ProstoVPN 리뷰, Smart TV VPN, 여러 기기 VPN',
     },
     points: {
-      ru: ['Несколько личных устройств.', 'Зарубежные сайты и приложения.', 'Компьютеры, телефоны, Linux и Smart TV.'],
+      ru: ['VPN сразу для нескольких устройств.', 'Зарубежные сайты и приложения.', 'Компьютеры, телефоны, Linux и Smart TV.'],
       en: ['Multiple personal devices.', 'Foreign websites and apps.', 'Computers, phones, Linux, and Smart TV.'],
       es: ['Varios dispositivos.', 'Sitios y aplicaciones extranjeros.', 'Ordenadores, móviles, Linux y Smart TV.'],
       zh: ['多台个人设备。', '海外网站和应用。', '电脑、手机、Linux 和 Smart TV。'],
       ko: ['여러 개인 기기.', '해외 웹사이트와 앱.', '컴퓨터, 휴대폰, Linux와 Smart TV.'],
     },
     items: {
-      ru: ['Подбирайте режим под сеть.', 'Доступность стран может меняться.', 'Оплата указана картами и СБП.'],
+      ru: ['Если один режим медленный, попробуйте другой.', 'Скорость и доступность стран могут меняться.', 'Оплата банковскими картами или через СБП.'],
       en: ['Choose a mode for the network.', 'Location availability can change.', 'Listed payments are cards and SBP.'],
       es: ['Elige modo según la red.', 'Los países pueden cambiar.', 'Pagos: tarjeta y SBP.'],
       zh: ['根据网络选择模式。', '可用国家可能变化。', '付款方式为银行卡和 SBP。'],
@@ -1343,7 +1343,7 @@ const servicePages = [
       ko: 'Tochka G: VPN 설정과 Telegram 프록시',
     },
     intro: {
-      ru: '«Точка G» работает через Telegram-бота и делает акцент на замене конфигов и поддержке. Для Telegram есть отдельный персональный прокси.',
+      ru: 'Главный плюс Точки G в простоте: получил конфиг в Telegram и подключился. Если он перестал работать, можно быстро заменить его через бота или написать поддержке. Для Telegram отдельно дают персональный прокси.',
       en: 'Tochka G works through Telegram and focuses on config replacement and support, with a separate personal Telegram proxy.',
       es: 'Tochka G funciona por Telegram y se centra en reemplazar configuraciones y dar soporte.',
       zh: 'Точка G 通过 Telegram 提供服务，重点是更换配置和客服支持，并提供独立 Telegram 代理。',
@@ -1357,14 +1357,14 @@ const servicePages = [
       ko: 'Tochka G VPN 리뷰, Telegram VPN 봇, VPN 설정, Telegram 프록시',
     },
     points: {
-      ru: ['Получение и замена конфигов через Telegram.', 'Telegram, AI-сервисы и другие приложения.', 'Помощь поддержки с рабочим конфигом.'],
+      ru: ['Telegram, нейронки, зарубежные сайты и приложения.', 'Получение и замена конфигов через Telegram.', 'Помощь поддержки, если самому разбираться не хочется.'],
       en: ['Receiving and replacing configs through Telegram.', 'Telegram, AI services, and other apps.', 'Support help with working configs.'],
       es: ['Recibir y cambiar configuraciones por Telegram.', 'Telegram, IA y otras aplicaciones.', 'Ayuda del soporte.'],
       zh: ['通过 Telegram 获取和更换配置。', 'Telegram、AI 服务和其他应用。', '客服协助选择可用配置。'],
       ko: ['Telegram에서 설정 수신과 교체.', 'Telegram, AI 서비스와 기타 앱.', '작동하는 설정을 찾는 지원.'],
     },
     items: {
-      ru: ['Нерабочий конфиг может потребовать замены.', 'Рабочий конфиг лучше не менять.', 'Для Telegram может понадобиться VPN и прокси вместе.'],
+      ru: ['Если конфиг перестал работать, его можно заменить.', 'Рабочий конфиг просто так лучше не менять.', 'Для Telegram иногда помогают VPN и прокси вместе.'],
       en: ['A broken config may need replacement.', 'Do not replace a stable config.', 'Telegram may require VPN and proxy together.'],
       es: ['Una configuración puede requerir cambio.', 'No cambies una configuración estable.', 'Telegram puede necesitar VPN y proxy.'],
       zh: ['失效配置可能需要更换。', '稳定配置无需随意更换。', 'Telegram 可能需要同时使用 VPN 和代理。'],
