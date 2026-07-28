@@ -5,6 +5,7 @@ import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { smsPages } from '../src/data/smsPages.js';
+import { socialPages } from '../src/data/socialPages.js';
 import { vpsPages } from '../src/data/vpsPages.js';
 
 const distDir = path.resolve('dist');
@@ -46,6 +47,7 @@ const serviceRoutes = [
   ...cryptoExchangePages.map((page) => `/crypto-exchange/${page.slug}`),
   ...smsPages.map((page) => `/sms-activators/${page.slug}`),
   ...vpsPages.map((page) => `/vps/${page.slug}`),
+  ...socialPages.map((page) => `/social-boost/${page.slug}`),
 ];
 const routes = [...categoryRoutes, ...serviceRoutes];
 

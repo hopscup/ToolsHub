@@ -11,6 +11,7 @@ import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
 import { foreignCardPages } from './data/foreignCardPages.js';
 import { smsPages } from './data/smsPages.js';
+import { socialPages } from './data/socialPages.js';
 import { vpsPages } from './data/vpsPages.js';
 import { 
   Gamepad2,
@@ -572,8 +573,8 @@ const SECTION_SEO: Record<CategoryType, {
       en: 'Social boost and task exchanges for referrals | Hopscup Tools',
     },
     description: {
-      ru: 'Сайты накрутки и буксы для рефералов, регистраций, социальных действий и Telegram-заданий с оплатой картой, СБП/Мир и криптой.',
-      en: 'Social boost sites and task exchanges for referrals, registrations, social actions, and Telegram tasks with card, local, and crypto payments.',
+      ru: 'Сайты накрутки и буксы для рефералов, регистраций и социальных действий с оплатой картой, СБП/Мир и криптой.',
+      en: 'Social boost sites and task exchanges for referrals, registrations, and social actions with card, local, and crypto payments.',
     },
     heading: {
       ru: 'Накрутка и буксы для рефералов',
@@ -584,8 +585,8 @@ const SECTION_SEO: Record<CategoryType, {
       en: 'This section is for registrations, referrals, and simple user actions: boost sites provide speed, while task exchanges offer a more manual format.',
     },
     points: {
-      ru: ['Сайты накрутки удобнее, когда важна скорость.', 'Буксы полезны, когда нужно подтверждение вроде скрина или Telegram-логина.', 'Перед подтверждением задания лучше проверять исполнителей и повторы.'],
-      en: ['Boost sites are convenient when speed matters.', 'Task exchanges are useful when proof like screenshots or Telegram logins is needed.', 'Check performers and duplicate submissions before approval.'],
+      ru: ['Сайты накрутки удобнее, когда важна скорость.', 'Буксы полезны, когда нужны действия от реальных людей и подтверждение результата.', 'Перед подтверждением задания лучше проверять исполнителей и повторы.'],
+      en: ['Boost sites are convenient when speed matters.', 'Task exchanges are useful when you need actions from real people and proof of completion.', 'Check performers and duplicate submissions before approval.'],
     },
   },
   Steam: {
@@ -1403,6 +1404,22 @@ const SMS_PAGE_BY_ID = Object.fromEntries(
 
 const VPS_PAGE_BY_ID = Object.fromEntries(
   vpsPages.map((page) => [
+    page.id,
+    {
+      ...page,
+      editorial: {
+        title: page.title,
+        ...page.editorial,
+      },
+    },
+  ]),
+) as Record<string, {
+  slug: string;
+  editorial: NonNullable<Offer['editorial']>;
+}>;
+
+const SOCIAL_PAGE_BY_ID = Object.fromEntries(
+  socialPages.map((page) => [
     page.id,
     {
       ...page,
@@ -3207,19 +3224,26 @@ const OFFERS: Offer[] = [
     category: 'Social',
     subCategory: 'BoostSites',
     name: 'TwiBoost',
-    description: {
-      ru: 'Сайт накрутки для рефералов и социальных действий. Удобный вариант, когда нужно быстро набрать регистрации или активность без ручного поиска исполнителей.',
-      en: 'A boost service for referrals and social actions. Convenient when you need to quickly get registrations or activity without manually searching for performers.'
-    },
+    slug: SOCIAL_PAGE_BY_ID['boost-twiboost'].slug,
+    editorial: SOCIAL_PAGE_BY_ID['boost-twiboost'].editorial,
+    description: SOCIAL_PAGE_BY_ID['boost-twiboost'].editorial.description,
     url: 'https://twiboost.com/ref2287193',
     logoUrl: '/twiboost.png',
     isBestChoice: true,
     details: {
-      types: { ru: 'Рефералы, регистрации, социальные действия', en: 'Referrals, registrations, social actions' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' },
-      nuances: {
-        ru: ['Быстро и удобно для массовых задач', 'Ники и профили могут выглядеть ботскими', 'Перед крупным объёмом лучше тестировать небольшой заказ'],
-        en: ['Fast and convenient for volume tasks', 'Names and profiles may look bot-like', 'Test a small order before buying volume']
+      types: {
+        ru: 'Рефералы, регистрации, социальные действия',
+        en: 'Referrals, registrations, social actions',
+        es: 'Referidos, registros, acciones sociales',
+        zh: '推荐、注册、社交互动',
+        ko: '추천, 가입, 소셜 활동'
+      },
+      paymentMethods: {
+        ru: 'СБП/Мир, Visa/MC, Крипта',
+        en: 'SBP/Mir, Visa/MC, Crypto',
+        es: 'SBP/Mir, Visa/MC, Cripto',
+        zh: 'SBP/Mir、Visa/MC、加密货币',
+        ko: 'SBP/Mir, Visa/MC, 암호화폐'
       }
     }
   },
@@ -3228,15 +3252,26 @@ const OFFERS: Offer[] = [
     category: 'Social',
     subCategory: 'BoostSites',
     name: 'Soc-proof',
-    description: {
-      ru: 'Партнёрская площадка для накрутки рефералов и активности. Подходит для задач, где важны скорость, понятный заказ и прогнозируемая цена за действие.',
-      en: 'A partner platform for referral and activity boosting. Good for tasks where speed, clear order setup, and predictable action price matter.'
-    },
+    slug: SOCIAL_PAGE_BY_ID['boost-socproof'].slug,
+    editorial: SOCIAL_PAGE_BY_ID['boost-socproof'].editorial,
+    description: SOCIAL_PAGE_BY_ID['boost-socproof'].editorial.description,
     url: 'https://partner.soc-proof.su/ref/slgw3',
     logoUrl: '/soc-proof.png',
     details: {
-      types: { ru: 'Рефералы, регистрации, активность', en: 'Referrals, registrations, activity' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' }
+      types: {
+        ru: 'Рефералы, регистрации, активность',
+        en: 'Referrals, registrations, activity',
+        es: 'Referidos, registros, actividad',
+        zh: '推荐、注册、互动',
+        ko: '추천, 가입, 활동'
+      },
+      paymentMethods: {
+        ru: 'СБП/Мир, Visa/MC, Крипта',
+        en: 'SBP/Mir, Visa/MC, Crypto',
+        es: 'SBP/Mir, Visa/MC, Cripto',
+        zh: 'SBP/Mir、Visa/MC、加密货币',
+        ko: 'SBP/Mir, Visa/MC, 암호화폐'
+      }
     }
   },
   {
@@ -3244,15 +3279,26 @@ const OFFERS: Offer[] = [
     category: 'Social',
     subCategory: 'BoostSites',
     name: 'Boost-gram',
-    description: {
-      ru: 'Сервис накрутки для социальных действий и реферальных задач. Можно использовать как альтернативу, если нужны другие цены или доступность по конкретному направлению.',
-      en: 'A boost service for social actions and referral tasks. Useful as an alternative when you need different pricing or availability for a specific direction.'
-    },
+    slug: SOCIAL_PAGE_BY_ID['boost-boostgram'].slug,
+    editorial: SOCIAL_PAGE_BY_ID['boost-boostgram'].editorial,
+    description: SOCIAL_PAGE_BY_ID['boost-boostgram'].editorial.description,
     url: 'https://boost-gram.online/ref1860138',
     logoUrl: '/boost-gram.png',
     details: {
-      types: { ru: 'Соцсети, рефералы, регистрации', en: 'Social networks, referrals, registrations' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' }
+      types: {
+        ru: 'Соцсети, рефералы, регистрации',
+        en: 'Social networks, referrals, registrations',
+        es: 'Redes sociales, referidos, registros',
+        zh: '社交平台、推荐、注册',
+        ko: '소셜 네트워크, 추천, 가입'
+      },
+      paymentMethods: {
+        ru: 'СБП/Мир, Visa/MC, Крипта',
+        en: 'SBP/Mir, Visa/MC, Crypto',
+        es: 'SBP/Mir, Visa/MC, Cripto',
+        zh: 'SBP/Mir、Visa/MC、加密货币',
+        ko: 'SBP/Mir, Visa/MC, 암호화폐'
+      }
     }
   },
   {
@@ -3260,15 +3306,26 @@ const OFFERS: Offer[] = [
     category: 'Social',
     subCategory: 'BoostSites',
     name: 'EasyLiker',
-    description: {
-      ru: 'Сайт накрутки для социальных действий, активности и реферальных задач. Можно использовать как ещё один источник для сравнения цен, скорости выполнения и доступности нужных услуг.',
-      en: 'A boost site for social actions, activity, and referral tasks. Useful as another source for comparing prices, completion speed, and available services.'
-    },
+    slug: SOCIAL_PAGE_BY_ID['boost-easyliker'].slug,
+    editorial: SOCIAL_PAGE_BY_ID['boost-easyliker'].editorial,
+    description: SOCIAL_PAGE_BY_ID['boost-easyliker'].editorial.description,
     url: 'https://easyliker.ru/register?ref=XMFXYSMN',
     logoUrl: '/easyliker.png',
     details: {
-      types: { ru: 'Соцсети, активность, рефералы', en: 'Social networks, activity, referrals' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' }
+      types: {
+        ru: 'Соцсети, активность, рефералы',
+        en: 'Social networks, activity, referrals',
+        es: 'Redes sociales, actividad, referidos',
+        zh: '社交平台、互动、推荐',
+        ko: '소셜 네트워크, 활동, 추천'
+      },
+      paymentMethods: {
+        ru: 'СБП/Мир, Visa/MC, Крипта',
+        en: 'SBP/Mir, Visa/MC, Crypto',
+        es: 'SBP/Mir, Visa/MC, Cripto',
+        zh: 'SBP/Mir、Visa/MC、加密货币',
+        ko: 'SBP/Mir, Visa/MC, 암호화폐'
+      }
     }
   },
   {
@@ -3276,15 +3333,26 @@ const OFFERS: Offer[] = [
     category: 'Social',
     subCategory: 'BoostSites',
     name: 'SMMlaba',
-    description: {
-      ru: 'SMM-панель для накрутки и социальных метрик. Полезна как запасной вариант для лайков, подписок, просмотров и похожих задач.',
-      en: 'An SMM panel for boosting and social metrics. Useful as a backup option for likes, follows, views, and similar tasks.'
-    },
+    slug: SOCIAL_PAGE_BY_ID['boost-smmlaba'].slug,
+    editorial: SOCIAL_PAGE_BY_ID['boost-smmlaba'].editorial,
+    description: SOCIAL_PAGE_BY_ID['boost-smmlaba'].editorial.description,
     url: 'https://smmlaba.com/',
     logoUrl: '/smmlaba.png',
     details: {
-      types: { ru: 'SMM-метрики, соцсети, активность', en: 'SMM metrics, social networks, activity' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' }
+      types: {
+        ru: 'SMM-метрики, соцсети, активность',
+        en: 'SMM metrics, social networks, activity',
+        es: 'Métricas SMM, redes sociales, actividad',
+        zh: 'SMM 指标、社交平台、互动',
+        ko: 'SMM 지표, 소셜 네트워크, 활동'
+      },
+      paymentMethods: {
+        ru: 'СБП/Мир, Visa/MC, Крипта',
+        en: 'SBP/Mir, Visa/MC, Crypto',
+        es: 'SBP/Mir, Visa/MC, Cripto',
+        zh: 'SBP/Mir、Visa/MC、加密货币',
+        ko: 'SBP/Mir, Visa/MC, 암호화폐'
+      }
     }
   },
   {
@@ -3292,15 +3360,26 @@ const OFFERS: Offer[] = [
     category: 'Social',
     subCategory: 'BoostSites',
     name: 'SMMPrime',
-    description: {
-      ru: 'SMM-панель для накрутки активности в соцсетях. Можно использовать для сравнения цен и теста разных поставщиков под одну задачу.',
-      en: 'An SMM panel for boosting social activity. Useful for comparing prices and testing different providers for the same task.'
-    },
+    slug: SOCIAL_PAGE_BY_ID['boost-smmprime'].slug,
+    editorial: SOCIAL_PAGE_BY_ID['boost-smmprime'].editorial,
+    description: SOCIAL_PAGE_BY_ID['boost-smmprime'].editorial.description,
     url: 'https://smmprime.com/ref/wvevp',
     logoUrl: '/smmprime.png',
     details: {
-      types: { ru: 'SMM-метрики, соцсети, активность', en: 'SMM metrics, social networks, activity' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' }
+      types: {
+        ru: 'SMM-метрики, соцсети, активность',
+        en: 'SMM metrics, social networks, activity',
+        es: 'Métricas SMM, redes sociales, actividad',
+        zh: 'SMM 指标、社交平台、互动',
+        ko: 'SMM 지표, 소셜 네트워크, 활동'
+      },
+      paymentMethods: {
+        ru: 'СБП/Мир, Visa/MC, Крипта',
+        en: 'SBP/Mir, Visa/MC, Crypto',
+        es: 'SBP/Mir, Visa/MC, Cripto',
+        zh: 'SBP/Mir、Visa/MC、加密货币',
+        ko: 'SBP/Mir, Visa/MC, 암호화폐'
+      }
     }
   },
   {
@@ -3308,19 +3387,26 @@ const OFFERS: Offer[] = [
     category: 'Social',
     subCategory: 'Bux',
     name: 'Socpublic',
-    description: {
-      ru: 'Проверенный букс: биржа заданий, где реальные исполнители делают простые действия за оплату. Хорошо подходит для регистраций в Telegram-ботах и реферальных заданий.',
-      en: 'A proven task marketplace where real performers complete simple paid actions. Good for Telegram bot registrations and referral tasks.'
-    },
+    slug: SOCIAL_PAGE_BY_ID['bux-socpublic'].slug,
+    editorial: SOCIAL_PAGE_BY_ID['bux-socpublic'].editorial,
+    description: SOCIAL_PAGE_BY_ID['bux-socpublic'].editorial.description,
     url: 'https://socpublic.com/?i=9368855',
     logoUrl: '/socpublic.png',
     isPopular: true,
     details: {
-      types: { ru: 'Биржа заданий, регистрации, подтверждение скрином/логином', en: 'Task marketplace, registrations, screenshot/login proof' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' },
-      nuances: {
-        ru: ['Задание на регистрацию часто стоит от 7-10 рублей', 'Перед подтверждением проверяйте логин, скрин и повторные выполнения', 'Встречаются исполнители, которые пытаются обмануть'],
-        en: ['Registration tasks often start around 7-10 RUB', 'Before approval, check login, screenshot, and repeated submissions', 'Some performers may try to cheat']
+      types: {
+        ru: 'Биржа заданий, регистрации, подтверждение скрином/логином',
+        en: 'Task marketplace, registrations, screenshot/login proof',
+        es: 'Plataforma de tareas, registros, prueba por captura o usuario',
+        zh: '任务平台、注册、截图或用户名证明',
+        ko: '작업 마켓, 가입, 스크린샷 또는 아이디 증명'
+      },
+      paymentMethods: {
+        ru: 'СБП/Мир, Visa/MC, Крипта',
+        en: 'SBP/Mir, Visa/MC, Crypto',
+        es: 'SBP/Mir, Visa/MC, Cripto',
+        zh: 'SBP/Mir、Visa/MC、加密货币',
+        ko: 'SBP/Mir, Visa/MC, 암호화폐'
       }
     }
   },
@@ -3329,18 +3415,25 @@ const OFFERS: Offer[] = [
     category: 'Social',
     subCategory: 'Bux',
     name: 'UNU',
-    description: {
-      ru: 'Более современный букс для заданий и реферальных регистраций. Удобен, когда нужны действия от реальных людей, но вы готовы вручную проверять результаты.',
-      en: 'A more modern task marketplace for assignments and referral registrations. Useful when you need actions from real people and are ready to manually check results.'
-    },
+    slug: SOCIAL_PAGE_BY_ID['bux-unu'].slug,
+    editorial: SOCIAL_PAGE_BY_ID['bux-unu'].editorial,
+    description: SOCIAL_PAGE_BY_ID['bux-unu'].editorial.description,
     url: 'https://unu.im/re/3105327',
     logoUrl: '/unu.png',
     details: {
-      types: { ru: 'Биржа заданий, регистрации, простые действия', en: 'Task marketplace, registrations, simple actions' },
-      paymentMethods: { ru: 'СБП/Мир, Visa/MC, Крипта', en: 'SBP/Mir, Visa/MC, Crypto' },
-      nuances: {
-        ru: ['Подходит для заданий с подтверждением через скрин или Telegram-логин', 'Цена зависит от популярности задания и требований', 'Чем точнее ТЗ, тем меньше мусорных выполнений'],
-        en: ['Good for tasks with screenshot or Telegram login proof', 'Price depends on task popularity and requirements', 'A clearer task description reduces low-quality submissions']
+      types: {
+        ru: 'Биржа заданий, регистрации, простые действия',
+        en: 'Task marketplace, registrations, simple actions',
+        es: 'Plataforma de tareas, registros, acciones simples',
+        zh: '任务平台、注册、简单操作',
+        ko: '작업 마켓, 가입, 간단한 활동'
+      },
+      paymentMethods: {
+        ru: 'СБП/Мир, Visa/MC, Крипта',
+        en: 'SBP/Mir, Visa/MC, Crypto',
+        es: 'SBP/Mir, Visa/MC, Cripto',
+        zh: 'SBP/Mir、Visa/MC、加密货币',
+        ko: 'SBP/Mir, Visa/MC, 암호화폐'
       }
     }
   }
@@ -5942,27 +6035,27 @@ export default function App() {
                       {tx({
                         ru: (
                         <>
-                          Есть два основных способа: <span className="text-brand-purple font-bold">сайты накрутки</span> и <span className="text-brand-purple font-bold">буксы</span>. Про ферму социальных аккаунтов я уже отдельно писал в <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">большой статье</a>, а здесь оставил именно сервисы, где можно брать рефералов под Telegram-ботов, активности и похожие задачи.
+                          Есть два основных способа: <span className="text-brand-purple font-bold">сайты накрутки</span> и <span className="text-brand-purple font-bold">буксы</span>. Про ферму социальных аккаунтов я уже отдельно писал в <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">большой статье</a>, а здесь оставил сервисы для рефералов, регистраций и других простых действий.
                         </>
                         ),
                         en: (
                         <>
-                          There are two main ways: <span className="text-brand-purple font-bold">boost sites</span> and <span className="text-brand-purple font-bold">task exchanges</span>. I already wrote a bigger article about social account farms <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">here</a>; this section focuses on services where you can get referrals for Telegram bots, activity, and similar tasks.
+                          There are two main ways: <span className="text-brand-purple font-bold">boost sites</span> and <span className="text-brand-purple font-bold">task exchanges</span>. I already wrote a bigger article about social account farms <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">here</a>; this section focuses on referrals, registrations, and other simple actions.
                         </>
                         ),
                         es: (
                         <>
-                          Hay dos formas principales: <span className="text-brand-purple font-bold">sitios de boost</span> y <span className="text-brand-purple font-bold">bolsas de tareas</span>. Ya escribí una <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">guía grande</a> sobre granjas de cuentas sociales; aquí dejé servicios para conseguir referidos para bots de Telegram, actividad y tareas similares.
+                          Hay dos formas principales: <span className="text-brand-purple font-bold">sitios de boost</span> y <span className="text-brand-purple font-bold">bolsas de tareas</span>. Ya escribí una <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">guía grande</a> sobre granjas de cuentas sociales; aquí dejé servicios para referidos, registros y otras acciones simples.
                         </>
                         ),
                         zh: (
                         <>
-                          主要有两种方式：<span className="text-brand-purple font-bold">增长网站</span> 和 <span className="text-brand-purple font-bold">任务平台</span>。我已经写过一篇关于社交账号农场的 <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">长文</a>；这里重点放可以为 Telegram 机器人、活动和类似任务获取推荐人的服务。
+                          主要有两种方式：<span className="text-brand-purple font-bold">增长网站</span> 和 <span className="text-brand-purple font-bold">任务平台</span>。我已经写过一篇关于社交账号农场的 <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">长文</a>；这里收集的是推荐、注册和其他简单操作服务。
                         </>
                         ),
                         ko: (
                         <>
-                          방법은 크게 두 가지입니다: <span className="text-brand-purple font-bold">부스트 사이트</span>와 <span className="text-brand-purple font-bold">태스크 거래소</span>. 소셜 계정 팜에 대해서는 이미 <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">큰 글</a>을 썼고, 여기서는 Telegram 봇, 활동, 비슷한 작업에 쓸 레퍼럴을 구할 수 있는 서비스에 집중했습니다.
+                          방법은 크게 두 가지입니다: <span className="text-brand-purple font-bold">부스트 사이트</span>와 <span className="text-brand-purple font-bold">태스크 거래소</span>. 소셜 계정 팜에 대해서는 이미 <a href="https://t.me/hopscupcrpt/108" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">큰 글</a>을 썼고, 여기서는 추천, 가입과 다른 간단한 활동을 위한 서비스를 모았습니다.
                         </>
                         )
                       })}
@@ -5976,11 +6069,11 @@ export default function App() {
                     </h3>
                     <p>
                       {tx({
-                        ru: 'Это самый быстрый и простой вариант: выбираете услугу, указываете ссылку или задачу, пополняете баланс и ждёте выполнение. Я пользовался ими активнее всего, потому что это удобно. Минус — ники и профили часто выглядят ботскими. Зато конкуренция среди сервисов выросла, и цены заметно снизились: например, реф в NotPixel мог стоить около 14 рублей.',
-                        en: 'This is the fastest and simplest option: choose a service, add a link or task, top up the balance, and wait for completion. I used these most actively because they are convenient. The downside is that names and profiles often look bot-like. Competition between services has grown, so prices became much lower.',
-                        es: 'Es la opción más rápida y simple: eliges un servicio, añades un enlace o tarea, recargas saldo y esperas el resultado. La usé más porque es cómoda. El punto débil es que los nombres y perfiles suelen parecer bots. Aun así, la competencia creció y los precios bajaron bastante.',
-                        zh: '这是最快最简单的方式：选择服务，添加链接或任务，充值余额，等待完成。我用得最多，因为方便。缺点是昵称和资料经常看起来像机器人。不过服务竞争变强后，价格明显下降。',
-                        ko: '가장 빠르고 쉬운 방법입니다. 서비스를 고르고 링크나 작업을 넣고 잔액을 충전한 뒤 완료를 기다리면 됩니다. 편해서 가장 많이 사용했습니다. 단점은 닉네임과 프로필이 봇처럼 보이는 경우가 많다는 점입니다. 대신 경쟁이 늘어서 가격은 많이 내려갔습니다.'
+                        ru: 'Это самый быстрый и простой вариант: выбираете услугу, указываете ссылку или нужное действие, пополняете баланс и ждёте выполнение. Я пользовался такими сайтами активнее всего, потому что это удобно. Главный минус: ники и профили часто выглядят ботскими. Перед большим заказом лучше сначала проверить сервис на небольшой сумме.',
+                        en: 'This is the fastest and simplest option: choose a service, add a link or required action, top up the balance, and wait for completion. I used these sites most often because they are convenient. The main downside is that names and profiles often look automated. Test a small order before buying a large volume.',
+                        es: 'Es la opción más rápida y sencilla: eliges un servicio, añades el enlace o la acción necesaria, recargas saldo y esperas el resultado. Usé estos sitios más que otros porque son cómodos. El principal inconveniente es que los nombres y perfiles pueden parecer automatizados. Prueba primero con un pedido pequeño.',
+                        zh: '这是最快也最简单的方式：选择服务，填写链接或所需操作，充值后等待完成。我最常使用这类网站，因为很方便。主要缺点是昵称和资料可能看起来像自动账号。大批量下单前先测试小订单。',
+                        ko: '가장 빠르고 쉬운 방법입니다. 서비스를 고르고 링크나 필요한 활동을 입력한 뒤 잔액을 충전하고 완료를 기다리면 됩니다. 편해서 이런 사이트를 가장 자주 사용했습니다. 가장 큰 단점은 닉네임과 프로필이 자동 계정처럼 보일 수 있다는 점입니다. 대량 주문 전에 소량으로 테스트하세요.'
                       })}
                     </p>
                   </section>
@@ -5992,11 +6085,11 @@ export default function App() {
                     </h3>
                     <p>
                       {tx({
-                        ru: 'Буксы — это биржи заданий, где реальные люди выполняют простые действия за деньги. Вы регистрируетесь как заказчик, пополняете баланс и создаёте задание вроде “Регистрация в Telegram-боте”. В подтверждение можно просить Telegram-логин или скрин выполненного задания. Обычно регистрация в боте стоит от 7-10 рублей, но цена зависит от популярности задания и требований.',
-                        en: 'Task exchanges are platforms where real people complete simple actions for money. You register as a customer, top up your balance, and create a task like “Register in a Telegram bot”. For proof, you can ask for a Telegram username or a screenshot. A bot registration task often starts around 7-10 RUB, but the price depends on task popularity and requirements.',
-                        es: 'Las bolsas de tareas son plataformas donde personas reales hacen acciones simples por dinero. Te registras como cliente, recargas saldo y creas una tarea tipo “registrarse en un bot de Telegram”. Como prueba puedes pedir usuario de Telegram o captura. Una tarea así suele empezar desde 7-10 RUB, según popularidad y requisitos.',
-                        zh: '任务平台是让真人为报酬完成简单操作的服务。你作为客户注册、充值，然后创建类似“注册 Telegram 机器人”的任务。证明可以要求 Telegram 用户名或截图。机器人注册任务通常从 7-10 卢布起，具体取决于任务热度和要求。',
-                        ko: '태스크 거래소는 실제 사람들이 돈을 받고 간단한 행동을 수행하는 플랫폼입니다. 고객으로 가입해 잔액을 충전하고 “Telegram 봇 가입” 같은 작업을 만듭니다. 확인용으로 Telegram 아이디나 스크린샷을 요청할 수 있습니다. 봇 가입 작업은 보통 7-10 RUB부터 시작하지만, 작업 인기와 요구사항에 따라 달라집니다.'
+                        ru: 'Буксы это биржи заданий, где реальные люди выполняют простые действия за деньги. Вы регистрируетесь как заказчик, пополняете баланс и подробно описываете, что нужно сделать. В качестве подтверждения можно попросить логин или скрин результата. Цена зависит от сложности задания, требований и количества доступных исполнителей.',
+                        en: 'Task exchanges are platforms where real people complete simple paid actions. Register as a customer, top up the balance, and describe the required action in detail. You can request a username or screenshot as proof. Pricing depends on task complexity, requirements, and the number of available performers.',
+                        es: 'Las bolsas de tareas son plataformas donde personas reales realizan acciones simples por dinero. Te registras como cliente, recargas saldo y describes con detalle lo que deben hacer. Puedes pedir un usuario o una captura como prueba. El precio depende de la dificultad, los requisitos y la cantidad de personas disponibles.',
+                        zh: '任务平台由真人付费完成简单操作。你以客户身份注册、充值，并清楚说明需要完成的动作。可以要求用户名或截图作为证明。价格取决于任务难度、要求和可用执行者数量。',
+                        ko: '태스크 거래소는 실제 사람들이 돈을 받고 간단한 활동을 수행하는 플랫폼입니다. 고객으로 가입해 잔액을 충전하고 필요한 작업을 자세히 설명합니다. 확인용으로 아이디나 스크린샷을 요청할 수 있습니다. 가격은 작업 난이도, 요구사항과 작업자 수에 따라 달라집니다.'
                       })}
                     </p>
                   </section>
@@ -6009,11 +6102,11 @@ export default function App() {
                     <ul className="space-y-4">
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{tx({ ru: 'В буксах перед подтверждением проверяйте Telegram-логин, скрин, уникальность выполнения и повторы.', en: 'On task exchanges, check the Telegram username, screenshot, uniqueness, and repeated submissions before approval.', es: 'En bolsas de tareas, antes de aprobar revisa el usuario de Telegram, la captura, la unicidad y repeticiones.', zh: '在任务平台确认前，检查 Telegram 用户名、截图、唯一性和重复提交。', ko: '태스크 거래소에서는 승인 전에 Telegram 아이디, 스크린샷, 중복 여부와 반복 제출을 확인하세요.' })}</p>
+                        <p>{tx({ ru: 'В буксах перед подтверждением проверяйте логин, скрин, уникальность выполнения и повторы.', en: 'On task exchanges, check the username, screenshot, uniqueness, and repeated submissions before approval.', es: 'En bolsas de tareas, antes de aprobar revisa el usuario, la captura, la unicidad y repeticiones.', zh: '在任务平台确认前，检查用户名、截图、唯一性和重复提交。', ko: '태스크 거래소에서는 승인 전에 아이디, 스크린샷, 중복 여부와 반복 제출을 확인하세요.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
-                        <p>{tx({ ru: 'Не запускайте сразу большой объём: сначала сделайте тест на 10-20 выполнений и посмотрите качество.', en: 'Do not start with high volume: test 10-20 completions first and check quality.', es: 'No lances mucho volumen de golpe: prueba primero 10-20 ejecuciones y revisa la calidad.', zh: '不要一开始就放大量任务：先测试 10-20 个完成结果，看质量。', ko: '처음부터 큰 물량을 넣지 말고 10-20건으로 먼저 테스트해 품질을 확인하세요.' })}</p>
+                        <p>{tx({ ru: 'Не запускайте сразу большой объём. Сначала сделайте небольшой тест и посмотрите качество.', en: 'Do not start with high volume. Run a small test first and check the quality.', es: 'No empieces con mucho volumen. Haz primero una prueba pequeña y revisa la calidad.', zh: '不要一开始就放大量任务。先做小规模测试并检查质量。', ko: '처음부터 큰 물량을 넣지 마세요. 먼저 소량으로 테스트하고 품질을 확인하세요.' })}</p>
                       </li>
                       <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-brand-purple mt-2 shrink-0" />
