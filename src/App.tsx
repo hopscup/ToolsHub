@@ -4,7 +4,7 @@
  */
 
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, LazyMotion, domAnimation, m as motion } from 'motion/react';
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
@@ -4641,6 +4641,7 @@ export default function App() {
   };
 
   return (
+    <LazyMotion features={domAnimation} strict>
     <div className="min-h-screen pb-20 selection:bg-brand-purple selection:text-white relative">
       <BackgroundParticles />
       <div className="mesh-gradient" />
@@ -6942,6 +6943,7 @@ export default function App() {
         )}
       </AnimatePresence>
     </div>
+    </LazyMotion>
   );
 }
 

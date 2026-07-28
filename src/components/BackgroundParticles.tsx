@@ -31,10 +31,21 @@ export const BackgroundParticles = () => {
     if (!ctx || !fctx) return;
 
     const isMobile = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
-    const numStars = isMobile ? 140 : 320;
-    const targetFrameMs = isMobile ? 1000 / 30 : 1000 / 60;
+    const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
+    const isLowPowerDevice = isMobile && (
+      navigator.hardwareConcurrency <= 4
+      || (deviceMemory !== undefined && deviceMemory <= 4)
+    );
+    const numStars = isLowPowerDevice ? 90 : isMobile ? 120 : 320;
+    const targetFrameMs = isLowPowerDevice ? 1000 / 24 : isMobile ? 1000 / 30 : 1000 / 60;
     let stars: Star[] = [];
     let shootingStars: ShootingStar[] = [];
+    const grainCanvas = document.createElement('canvas');
+    const grainContext = grainCanvas.getContext('2d');
+    const grainSize = 160;
+    grainCanvas.width = grainSize;
+    grainCanvas.height = grainSize;
+    const grainPattern = fctx.createPattern(grainCanvas, 'repeat');
     const getNextShootingStarDelay = () => 5000 + Math.random() * 5000;
     let nextShootingStarAt = Date.now() + getNextShootingStarDelay();
     let isPageVisible = !document.hidden;
@@ -83,15 +94,19 @@ export const BackgroundParticles = () => {
     };
 
     const generateGrain = () => {
-      if (isMobile) return;
-      const imgData = fctx.createImageData(filmCanvas.width, filmCanvas.height);
+      if (isMobile || !grainContext) return;
+      const imgData = grainContext.createImageData(grainSize, grainSize);
       const data = imgData.data;
       for (let i = 0; i < data.length; i += 4) {
         const noise = Math.random() * 50 + 10;
         data[i] = data[i+1] = data[i+2] = noise;
         data[i+3] = 25; // grain strength
       }
-      fctx.putImageData(imgData, 0, 0);
+      grainContext.putImageData(imgData, 0, 0);
+      if (grainPattern) {
+        fctx.fillStyle = grainPattern;
+        fctx.fillRect(0, 0, filmCanvas.width, filmCanvas.height);
+      }
     };
 
     const drawScratches = () => {
@@ -116,7 +131,6 @@ export const BackgroundParticles = () => {
     const animate = (frameTime = 0) => {
       if (!canvas || !filmCanvas || !ctx || !fctx) return;
       if (!isPageVisible) {
-        animationFrameId = requestAnimationFrame(animate);
         return;
       }
 
@@ -131,13 +145,14 @@ export const BackgroundParticles = () => {
 
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
+      const now = Date.now();
 
       stars.forEach((star) => {
         star.angle += star.speed;
         const x = centerX + Math.cos(star.angle) * star.radius;
         const y = centerY + Math.sin(star.angle) * star.radius;
 
-        const flicker = 0.4 + Math.sin(Date.now() * 0.003 + star.flickerOffset) * 0.3;
+        const flicker = 0.4 + Math.sin(now * 0.003 + star.flickerOffset) * 0.3;
         
         ctx.fillStyle = `rgba(255, 255, 255, ${flicker})`;
         ctx.beginPath();
@@ -167,13 +182,12 @@ export const BackgroundParticles = () => {
       }
 
       // Film effect - update grain only occasionally for performance
-      const now = Date.now();
       if (now >= nextShootingStarAt) {
         spawnShootingStar();
         nextShootingStarAt = now + getNextShootingStarDelay();
       }
 
-      if (!isMobile && now - lastGrainTime > 100) {
+      if (!isMobile && now - lastGrainTime > 150) {
         fctx.clearRect(0, 0, filmCanvas.width, filmCanvas.height);
         generateGrain();
         drawScratches();
@@ -185,6 +199,11 @@ export const BackgroundParticles = () => {
 
     const handleVisibilityChange = () => {
       isPageVisible = !document.hidden;
+      cancelAnimationFrame(animationFrameId);
+      if (isPageVisible) {
+        lastFrameTime = 0;
+        animationFrameId = requestAnimationFrame(animate);
+      }
     };
 
     window.addEventListener('resize', resize);
