@@ -10,6 +10,7 @@ import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
 import { foreignCardPages } from './data/foreignCardPages.js';
+import { smsPages } from './data/smsPages.js';
 import { 
   Gamepad2,
   Globe, 
@@ -1383,6 +1384,22 @@ const CRYPTO_EXCHANGE_PAGE_BY_ID = Object.fromEntries(
   editorial: NonNullable<Offer['editorial']>;
 }>;
 
+const SMS_PAGE_BY_ID = Object.fromEntries(
+  smsPages.map((page) => [
+    page.id,
+    {
+      ...page,
+      editorial: {
+        title: page.title,
+        ...page.editorial,
+      },
+    },
+  ]),
+) as Record<string, {
+  slug: string;
+  editorial: NonNullable<Offer['editorial']>;
+}>;
+
 const OFFERS: Offer[] = [
   // GUIDES
   {
@@ -2612,11 +2629,10 @@ const OFFERS: Offer[] = [
   {
     id: 'sms-hero',
     category: 'SMS',
+    slug: SMS_PAGE_BY_ID['sms-hero'].slug,
+    editorial: SMS_PAGE_BY_ID['sms-hero'].editorial,
     name: 'HeroSMS',
-    description: { 
-      ru: 'Получил особую популярность после закрытия SMS-Activate в конце 2025 года: часть инфраструктуры и сети поставщиков, после 10 лет работы, была передана именно сюда. Одни из самых дешёвых номеров на рынке.', 
-      en: 'Gained particular popularity after the closure of SMS-Activate in late 2025. Some of the cheapest numbers on the market.' 
-    },
+    description: SMS_PAGE_BY_ID['sms-hero'].editorial.description,
     url: 'https://hero-sms.com/?ref=687296',
     logoUrl: '/hero-sms.png',
     isBestChoice: true,
@@ -2628,11 +2644,10 @@ const OFFERS: Offer[] = [
   {
     id: 'sms-fast',
     category: 'SMS',
+    slug: SMS_PAGE_BY_ID['sms-fast'].slug,
+    editorial: SMS_PAGE_BY_ID['sms-fast'].editorial,
     name: 'SMS Fast',
-    description: { 
-      ru: 'Номера из 190+ стран на реальных симках. У каждого номера есть "процент доставки", что дает понимание какое ГЕО сейчас лучше всего работает. Аренда от 1 дня до месяца.', 
-      en: 'Numbers from 190+ countries on real SIM cards. Delivery percentage shown. Rent from 1 day to a month.' 
-    },
+    description: SMS_PAGE_BY_ID['sms-fast'].editorial.description,
     url: 'https://smsfast.pro/?ref=1100157',
     logoUrl: '/sms-fast.png',
     details: { 
@@ -2643,11 +2658,10 @@ const OFFERS: Offer[] = [
   {
     id: 'sms-pool',
     category: 'SMS',
+    slug: SMS_PAGE_BY_ID['sms-pool'].slug,
+    editorial: SMS_PAGE_BY_ID['sms-pool'].editorial,
     name: 'SMSPool',
-    description: { 
-      ru: 'Процент успеха пишется прямо у номера, функционала много. Аренда - от 1 дня до 28 дней.', 
-      en: 'Success rate is written right by the number, lots of functionality. Rental from 1 to 28 days.' 
-    },
+    description: SMS_PAGE_BY_ID['sms-pool'].editorial.description,
     url: 'https://smspool.net/?r=AcN28TiKAr',
     logoUrl: '/sms-pool.png',
     details: { 
@@ -2658,11 +2672,10 @@ const OFFERS: Offer[] = [
   {
     id: 'sms-grizzly',
     category: 'SMS',
+    slug: SMS_PAGE_BY_ID['sms-grizzly'].slug,
+    editorial: SMS_PAGE_BY_ID['sms-grizzly'].editorial,
     name: 'GrizzlySMS',
-    description: { 
-      ru: 'Старичок рынка, зарекомендовал себя с положительной стороны. Сразу видно процент успешных активаций, что есть не во всех сервисах', 
-      en: 'Market veteran, well-established. Success percentage visible immediately.' 
-    },
+    description: SMS_PAGE_BY_ID['sms-grizzly'].editorial.description,
     url: 'https://grizzlysms.com/ru/?r=1654440',
     logoUrl: '/grizzly-sms.png',
     details: { 
@@ -2673,11 +2686,10 @@ const OFFERS: Offer[] = [
   {
     id: 'sms-tiger',
     category: 'SMS',
+    slug: SMS_PAGE_BY_ID['sms-tiger'].slug,
+    editorial: SMS_PAGE_BY_ID['sms-tiger'].editorial,
     name: 'Tiger SMS',
-    description: { 
-      ru: 'Бюджетный вариант, соответственно качество такое же. Сервисов много, стран тоже. Есть бесплатные номера, на которых можно уже что-то порегать.', 
-      en: 'Budget option with corresponding quality. Many services and countries. Free numbers available.' 
-    },
+    description: SMS_PAGE_BY_ID['sms-tiger'].editorial.description,
     url: 'https://tiger-sms.com/?ref=672048',
     logoUrl: '/tiger-sms.png',
     details: { 
@@ -2688,11 +2700,10 @@ const OFFERS: Offer[] = [
   {
     id: 'sms-365',
     category: 'SMS',
+    slug: SMS_PAGE_BY_ID['sms-365'].slug,
+    editorial: SMS_PAGE_BY_ID['sms-365'].editorial,
     name: '365-SMS',
-    description: { 
-      ru: 'Пользовался им еще лет 5 назад, когда абузил БК. Работает до сих пор. Если брать не дешевые номера, СМС почти всегда доходит.', 
-      en: 'Been using it for 5 years. Still works. SMS almost always arrives if choosing premium numbers.' 
-    },
+    description: SMS_PAGE_BY_ID['sms-365'].editorial.description,
     url: 'https://365sms.vip/?ref=37269',
     logoUrl: '/365-sms.png',
     details: { 

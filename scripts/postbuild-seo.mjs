@@ -4,6 +4,7 @@ import { accountShopPages } from '../src/data/accountShopPages.js';
 import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
+import { smsPages } from '../src/data/smsPages.js';
 
 const siteUrl = 'https://hopscup.tools';
 const distDir = path.resolve('dist');
@@ -1473,6 +1474,19 @@ const servicePages = [
   ...cryptoExchangePages.map((page) => createServicePage({
     id: page.id,
     route: `/crypto-exchange/${page.slug}`,
+    name: page.name,
+    logo: page.logo,
+    title: page.title,
+    description: page.description,
+    heading: page.heading,
+    intro: page.editorial.description,
+    keywords: page.keywords,
+    points: page.editorial.bestFor,
+    items: page.editorial.considerations,
+  })),
+  ...smsPages.map((page) => createServicePage({
+    id: page.id,
+    route: `/sms-activators/${page.slug}`,
     name: page.name,
     logo: page.logo,
     title: page.title,
