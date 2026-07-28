@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { accountShopPages } from './data/accountShopPages.js';
@@ -1240,6 +1240,83 @@ const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']
       ko: 'Telegram 기반 관리, 빠른 설정 교체와 지원을 중시하는 사용자에게 적합합니다. VPN만으로 부족할 때 별도 Telegram 프록시가 유용합니다.',
     },
   },
+  'giga-dollar-vpn': {
+    title: {
+      ru: 'Giga Dollar VPN: обзор тарифов, HAPP и Ускорителя | Hopscup Tools',
+      en: 'Giga Dollar VPN review: plans, HAPP, and Accelerator | Hopscup Tools',
+      es: 'Giga Dollar VPN: tarifas, HAPP y Acelerador | Hopscup Tools',
+      zh: 'Giga Dollar VPN 评测：套餐、HAPP 与加速器 | Hopscup Tools',
+      ko: 'Giga Dollar VPN 리뷰: 요금제, HAPP 및 가속기 | Hopscup Tools',
+    },
+    description: {
+      ru: 'VPN с тарифами по дням и месяцам, выбором до 15 устройств, заморозкой подписки, Авто-сервером HAPP и отдельным Ускорителем для сетей с белыми списками.',
+      en: 'VPN with daily and monthly plans, support for up to 15 devices, subscription freeze, HAPP Auto Server, and a separate Accelerator for allowlist-only networks.',
+      es: 'VPN con tarifas diarias y mensuales, hasta 15 dispositivos, pausa de suscripción, Servidor automático de HAPP y un Acelerador para redes con listas blancas.',
+      zh: '提供按日和按月套餐，最多支持 15 台设备，支持暂停订阅、HAPP 自动服务器，以及用于白名单网络的独立加速器。',
+      ko: '일일 및 월간 요금제, 최대 15대 기기, 구독 일시 정지, HAPP 자동 서버와 화이트리스트 네트워크용 별도 가속기를 제공하는 VPN입니다.',
+    },
+    bestFor: {
+      ru: [
+        'VPN сразу для нескольких устройств. Можно выбрать от 1 до 15.',
+        'Короткая подписка на несколько дней, когда месяц не нужен.',
+        'Интернет в сетях с белыми списками через отдельный Ускоритель.',
+      ],
+      en: [
+        'Using one VPN on 1 to 15 devices.',
+        'Short daily plans when a full month is unnecessary.',
+        'Connecting on allowlist-only networks through the separate Accelerator.',
+      ],
+      es: [
+        'Usar un VPN en entre 1 y 15 dispositivos.',
+        'Tarifas diarias cuando no necesitas pagar un mes completo.',
+        'Conectarse en redes con listas blancas mediante el Acelerador.',
+      ],
+      zh: [
+        '在 1 至 15 台设备上使用同一个 VPN。',
+        '不需要整月订阅时选择按日套餐。',
+        '通过独立加速器在白名单网络中连接互联网。',
+      ],
+      ko: [
+        '1대부터 15대까지 여러 기기에서 VPN 사용.',
+        '한 달이 필요하지 않을 때 일일 요금제 사용.',
+        '별도 가속기로 화이트리스트 네트워크에서 연결.',
+      ],
+    },
+    considerations: {
+      ru: [
+        'Ускоритель подключается отдельно и работает только вместе с активной VPN-подпиской.',
+        'Заморозить активную подписку можно один раз.',
+        'Актуальные страны, приложения и цены лучше проверить в боте перед оплатой.',
+      ],
+      en: [
+        'The Accelerator is purchased separately and requires an active VPN subscription.',
+        'An active subscription can be frozen once.',
+        'Check the bot for current locations, apps, and prices before paying.',
+      ],
+      es: [
+        'El Acelerador se compra por separado y requiere una suscripción VPN activa.',
+        'Una suscripción activa se puede pausar una vez.',
+        'Comprueba en el bot los países, aplicaciones y precios actuales antes de pagar.',
+      ],
+      zh: [
+        '加速器需要单独购买，并且必须搭配有效的 VPN 订阅使用。',
+        '有效订阅只能暂停一次。',
+        '付款前请在机器人中查看当前地区、应用和价格。',
+      ],
+      ko: [
+        '가속기는 별도 구매이며 활성 VPN 구독이 필요합니다.',
+        '활성 구독은 한 번만 일시 정지할 수 있습니다.',
+        '결제 전에 봇에서 현재 지역, 앱과 가격을 확인하세요.',
+      ],
+    },
+    verdict: {
+      ru: 'Giga Dollar VPN подойдет, если VPN нужен сразу на нескольких устройствах или всего на несколько дней. Отдельный плюс в Авто-сервере HAPP и Ускорителе для сетей с белыми списками.',
+      en: 'Giga Dollar VPN is useful when you need VPN access on several devices or only for a few days. HAPP Auto Server and the allowlist-network Accelerator are the main extras.',
+      es: 'Giga Dollar VPN encaja si necesitas VPN en varios dispositivos o solo durante unos días. El Servidor automático de HAPP y el Acelerador para listas blancas son sus extras principales.',
+      zh: '如果你需要在多台设备上使用 VPN，或只需要几天，Giga Dollar VPN 很合适。HAPP 自动服务器和白名单网络加速器是它的主要特色。',
+      ko: '여러 기기에서 VPN이 필요하거나 며칠만 이용하려는 경우에 적합합니다. HAPP 자동 서버와 화이트리스트 네트워크용 가속기가 주요 장점입니다.',
+    },
+  },
 };
 
 const ACCOUNT_SHOP_PAGE_BY_ID = Object.fromEntries(
@@ -1927,6 +2004,61 @@ const OFFERS: Offer[] = [
       }
     },
     editorial: ADDITIONAL_PROXY_EDITORIALS['tochka-g'],
+  },
+  {
+    id: 'vpn-giga-dollar',
+    category: 'Proxy',
+    subCategory: 'VPN',
+    slug: 'giga-dollar-vpn',
+    name: 'Giga Dollar VPN',
+    description: {
+      ru: 'VPN с гибкими тарифами по дням и месяцам. Можно выбрать от 1 до 15 устройств, один раз заморозить активную подписку и использовать Авто-сервер HAPP. Для сетей с белыми списками есть отдельный Ускоритель без ограничений по трафику.',
+      en: 'VPN with flexible daily and monthly plans. You can choose 1 to 15 devices, freeze an active subscription once, and use HAPP Auto Server. A separate traffic-unlimited Accelerator is available for allowlist-only networks.',
+      es: 'VPN con tarifas flexibles por días y meses. Puedes elegir entre 1 y 15 dispositivos, pausar una vez la suscripción activa y usar el Servidor automático de HAPP. Hay un Acelerador sin límite de tráfico para redes con listas blancas.',
+      zh: '提供灵活的按日和按月套餐，可选择 1 至 15 台设备，有效订阅可暂停一次，并支持 HAPP 自动服务器。白名单网络还可使用不限流量的独立加速器。',
+      ko: '일일 및 월간 요금제를 제공하며 1대부터 15대까지 선택할 수 있습니다. 활성 구독은 한 번 일시 정지할 수 있고 HAPP 자동 서버를 지원합니다. 화이트리스트 네트워크용 무제한 트래픽 가속기도 별도로 제공됩니다.',
+    },
+    url: 'https://t.me/GigaDollarVPN_bot?start=DNL0ZO6T',
+    logoUrl: '/giga-dollar-vpn.png',
+    platforms: ['Windows', 'macOS', 'Linux', 'Android', 'iOS', 'Android TV', 'tvOS'],
+    details: {
+      geo: {
+        ru: '6 стран: Германия, Финляндия, Швеция, Нидерланды, Латвия и Польша',
+        en: '6 countries: Germany, Finland, Sweden, the Netherlands, Latvia, and Poland',
+        es: '6 países: Alemania, Finlandia, Suecia, Países Bajos, Letonia y Polonia',
+        zh: '6 个国家：德国、芬兰、瑞典、荷兰、拉脱维亚和波兰',
+        ko: '6개 국가: 독일, 핀란드, 스웨덴, 네덜란드, 라트비아, 폴란드',
+      },
+      types: {
+        ru: 'VPN, Авто-сервер HAPP, Ускоритель для белых списков',
+        en: 'VPN, HAPP Auto Server, allowlist-network Accelerator',
+        es: 'VPN, Servidor automático de HAPP, Acelerador para listas blancas',
+        zh: 'VPN、HAPP 自动服务器、白名单网络加速器',
+        ko: 'VPN, HAPP 자동 서버, 화이트리스트 네트워크 가속기',
+      },
+      paymentMethods: {
+        ru: 'Stars, банковская карта, СБП, криптовалюта',
+        en: 'Telegram Stars, bank card, SBP, crypto',
+        es: 'Telegram Stars, tarjeta bancaria, SBP, cripto',
+        zh: 'Telegram Stars、银行卡、SBP、加密货币',
+        ko: 'Telegram Stars, 은행 카드, SBP, 암호화폐',
+      },
+      pros: {
+        ru: ['От 1 до 15 устройств', 'Посуточные тарифы и подписки на 1-12 месяцев', 'Авто-сервер сам выбирает подходящую страну', 'Ускоритель без ограничений по трафику'],
+        en: ['1 to 15 devices', 'Daily plans and subscriptions from 1 to 12 months', 'Auto Server selects a suitable country', 'Accelerator without traffic limits'],
+        es: ['Entre 1 y 15 dispositivos', 'Tarifas diarias y suscripciones de 1 a 12 meses', 'El Servidor automático elige un país adecuado', 'Acelerador sin límite de tráfico'],
+        zh: ['支持 1 至 15 台设备', '按日套餐及 1 至 12 个月订阅', '自动服务器选择合适国家', '加速器不限流量'],
+        ko: ['1대부터 15대 기기', '일일 요금제 및 1개월에서 12개월 구독', '자동 서버가 적합한 국가 선택', '트래픽 제한 없는 가속기'],
+      },
+      nuances: {
+        ru: ['Ускоритель покупается отдельно и требует активную VPN-подписку.', 'Заморозка доступна один раз для каждой активной подписки.', 'Актуальную стоимость и доступные страны лучше смотреть в боте.'],
+        en: ['The Accelerator is purchased separately and requires an active VPN subscription.', 'Each active subscription can be frozen once.', 'Check the bot for current prices and available locations.'],
+        es: ['El Acelerador se compra por separado y requiere una suscripción VPN activa.', 'Cada suscripción activa se puede pausar una vez.', 'Consulta en el bot los precios y países actuales.'],
+        zh: ['加速器需要单独购买，并且必须有有效的 VPN 订阅。', '每个有效订阅只能暂停一次。', '当前价格和可用地区请在机器人中查看。'],
+        ko: ['가속기는 별도 구매이며 활성 VPN 구독이 필요합니다.', '각 활성 구독은 한 번만 일시 정지할 수 있습니다.', '현재 가격과 제공 지역은 봇에서 확인하세요.'],
+      },
+    },
+    editorial: ADDITIONAL_PROXY_EDITORIALS['giga-dollar-vpn'],
   },
   // ANTIDETECT
   {
@@ -3670,6 +3802,9 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState<CategoryType>(initialCategory);
   const [subFilter, setSubFilter] = useState<SubCategory>(getDefaultSubFilter());
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(getOfferFromPath());
+  const activeCategoryRef = useRef(activeCategory);
+  const subFilterRef = useRef(subFilter);
+  const closingSubFilterRef = useRef<SubCategory | null>(null);
   const [isProxyGuideOpen, setIsProxyGuideOpen] = useState(false);
   const [isProxyCheckerOpen, setIsProxyCheckerOpen] = useState(false);
   const [isAntidetectGuideOpen, setIsAntidetectGuideOpen] = useState(false);
@@ -3751,6 +3886,11 @@ export default function App() {
   };
 
   useEffect(() => {
+    activeCategoryRef.current = activeCategory;
+    subFilterRef.current = subFilter;
+  }, [activeCategory, subFilter]);
+
+  useEffect(() => {
     const currentWord = words[wordIndex];
     
     const handleTyping = () => {
@@ -3776,10 +3916,17 @@ export default function App() {
     const handleRouteChange = () => {
       const nextCategory = getCategoryFromPath();
       const nextLanguage = getLanguageFromPath();
+      const restoredSubFilter = window.history.state?.subFilter as SubCategory | undefined;
+      const nextSubFilter = closingSubFilterRef.current
+        ?? restoredSubFilter
+        ?? (nextCategory === activeCategoryRef.current ? subFilterRef.current : getDefaultSubFilter());
+      closingSubFilterRef.current = null;
       setActiveCategory(nextCategory);
       setLang(nextLanguage);
       setSelectedOffer(getOfferFromPath());
-      setSubFilter(getDefaultSubFilter());
+      setSubFilter(nextSubFilter);
+      activeCategoryRef.current = nextCategory;
+      subFilterRef.current = nextSubFilter;
       setSearchQuery('');
     };
 
@@ -4201,14 +4348,22 @@ export default function App() {
   };
 
   const handleOfferOpen = (offer: Offer) => {
+    const nextSubFilter = offer.category === activeCategory ? subFilter : getDefaultSubFilter();
     if (offer.slug) {
       const nextRoute = getLocalizedOfferRoute(offer, lang);
       if (window.location.pathname !== nextRoute) {
-        window.history.pushState({ offerModal: true }, '', nextRoute);
+        window.history.replaceState(
+          { ...(window.history.state || {}), subFilter },
+          '',
+          window.location.href,
+        );
+        window.history.pushState({ offerModal: true, subFilter: nextSubFilter }, '', nextRoute);
       }
     }
     setActiveCategory(offer.category);
-    setSubFilter(getDefaultSubFilter());
+    setSubFilter(nextSubFilter);
+    activeCategoryRef.current = offer.category;
+    subFilterRef.current = nextSubFilter;
     setSelectedOffer(offer);
   };
 
@@ -4216,6 +4371,7 @@ export default function App() {
     if (!selectedOffer) return;
 
     if (selectedOffer.slug && window.history.state?.offerModal) {
+      closingSubFilterRef.current = subFilter;
       window.history.back();
       return;
     }
@@ -4730,7 +4886,9 @@ export default function App() {
                         <InfoRow icon={CreditCard} label={t.tariffStart} value={l(offer.tariffStartPrice)} />
                         <InfoRow icon={Percent} label={t.rate} value={l(offer.details?.rate)} />
                         <InfoRow icon={Globe} label={t.geo} value={l(offer.details?.geo)} />
-                        <InfoRow icon={Layers} label={t.types} value={l(offer.details?.types)} />
+                        {offer.subCategory !== 'VPN' && (
+                          <InfoRow icon={Layers} label={t.types} value={l(offer.details?.types)} />
+                        )}
                         <InfoRow icon={Monitor} label={t.platforms} value={offer.platforms?.join(', ')} />
                         <InfoRow icon={Coins} label={t.paymentMethods} value={l(offer.details?.paymentMethods)} />
                       </div>
