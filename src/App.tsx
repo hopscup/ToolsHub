@@ -7,6 +7,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { accountShopPages } from './data/accountShopPages.js';
+import { antidetectPages } from './data/antidetectPages.js';
 import { 
   Gamepad2,
   Globe, 
@@ -90,6 +91,7 @@ interface Offer {
   freeProfiles?: Localized;
   tariffStartPrice?: Localized;
   profiles100Price?: Localized;
+  profilesPriceLabel?: Localized;
   priceInfo?: {
     main?: Localized;
     secondary?: Localized;
@@ -1254,6 +1256,22 @@ const ACCOUNT_SHOP_PAGE_BY_ID = Object.fromEntries(
   editorial: NonNullable<Offer['editorial']>;
 }>;
 
+const ANTIDETECT_PAGE_BY_ID = Object.fromEntries(
+  antidetectPages.map((page) => [
+    page.id,
+    {
+      ...page,
+      editorial: {
+        title: page.title,
+        ...page.editorial,
+      },
+    },
+  ]),
+) as Record<string, {
+  slug: string;
+  editorial: NonNullable<Offer['editorial']>;
+}>;
+
 const OFFERS: Offer[] = [
   // GUIDES
   {
@@ -1881,130 +1899,155 @@ const OFFERS: Offer[] = [
     id: 'ant-dolphin',
     category: 'Antidetect',
     subCategory: 'PCBasic',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-dolphin'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-dolphin'].editorial,
     name: 'Dolphin{anty}',
-    description: { ru: 'Один из основных антидетектов для мультиакков, фарма, ретродропов и повседневной работы с профилями.', en: 'One of the core antidetect browsers for multi-accounting, farming, retro drops, and daily profile work.' },
+    description: ANTIDETECT_PAGE_BY_ID['ant-dolphin'].editorial.description,
     url: 'https://dolphin-anty.net/a/1384647/nvjWq92',
     logoUrl: '/dolphin.png',
     isBestChoice: true,
     freeProfiles: { ru: '5', en: '5' },
-    tariffStartPrice: { ru: 'от ≈ $10/мес', en: 'from ≈ $10/mo' },
-    profiles100Price: { ru: '≈ $49/мес', en: '≈ $49/mo' },
+    tariffStartPrice: { ru: 'от ≈ $10/мес', en: 'from ≈ $10/mo', es: 'desde ≈ $10/mes', zh: '约 $10/月起', ko: '약 $10/월부터' },
+    profiles100Price: { ru: '≈ $49/мес', en: '≈ $49/mo', es: '≈ $49/mes', zh: '约 $49/月', ko: '약 $49/월' },
     platforms: ['Windows', 'macOS', 'Linux'],
-    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto' } }
+    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } }
   },
   {
     id: 'ant-adspower',
     category: 'Antidetect',
     subCategory: 'PCBasic',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-adspower'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-adspower'].editorial,
     name: 'AdsPower',
-    description: { ru: 'Популярный антидетект для мультиаккаунтинга, командной работы и массового ведения профилей.', en: 'A popular antidetect browser for multi-accounting, team work, and managing many profiles.' },
+    description: ANTIDETECT_PAGE_BY_ID['ant-adspower'].editorial.description,
     url: 'https://www.adspower-ru.com/share/e1UrIy',
     logoUrl: '/adspower.png',
     isPopular: true,
     freeProfiles: { ru: '2', en: '2' },
-    tariffStartPrice: { ru: 'от ≈ $9.9/мес', en: 'from ≈ $9.9/mo' },
-    profiles100Price: { ru: '≈ $36-45/мес', en: '≈ $36-45/mo' },
+    tariffStartPrice: { ru: 'от ≈ $9.9/мес', en: 'from ≈ $9.9/mo', es: 'desde ≈ $9.9/mes', zh: '约 $9.9/月起', ko: '약 $9.9/월부터' },
+    profiles100Price: { ru: '≈ $36-45/мес', en: '≈ $36-45/mo', es: '≈ $36-45/mes', zh: '约 $36-45/月', ko: '약 $36-45/월' },
     platforms: ['Windows', 'macOS', 'Linux'],
-    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto' } }
+    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } }
   },
   {
     id: 'ant-octo',
     category: 'Antidetect',
     subCategory: 'PCAdvanced',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-octo'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-octo'].editorial,
     name: 'Octo Browser',
-    description: { ru: 'Антидетект для более требовательных задач и сильного антифрода. Часто рассматривается, когда обычных решений уже недостаточно.', en: 'An antidetect browser for more demanding tasks and stronger antifraud. Often considered when simpler solutions are no longer enough.' },
+    description: ANTIDETECT_PAGE_BY_ID['ant-octo'].editorial.description,
     url: 'https://octobrowser.org/signup/?p=10441198',
     logoUrl: '/octo-browser.png',
     freeProfiles: { ru: '0', en: '0' },
-    tariffStartPrice: { ru: 'от ≈ €29/мес', en: 'from ≈ €29/mo' },
-    profiles100Price: { ru: '≈ €79/мес', en: '≈ €79/mo' },
+    tariffStartPrice: { ru: 'от ≈ €29/мес', en: 'from ≈ €29/mo', es: 'desde ≈ €29/mes', zh: '约 €29/月起', ko: '약 €29/월부터' },
+    profiles100Price: { ru: '≈ €79/мес', en: '≈ €79/mo', es: '≈ €79/mes', zh: '约 €79/月', ko: '약 €79/월' },
     platforms: ['Windows', 'macOS', 'Linux'],
-    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto' } }
+    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } }
   },
   {
     id: 'ant-incogniton',
     category: 'Antidetect',
     subCategory: 'PCBasic',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-incogniton'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-incogniton'].editorial,
     name: 'Incogniton',
-    description: { ru: 'Антидетект для обычной работы с профилями и мультиакками. Можно рассматривать для базовых и средних задач.', en: 'An antidetect browser for regular profile work and multi-accounting. A viable option for basic and medium tasks.' },
+    description: ANTIDETECT_PAGE_BY_ID['ant-incogniton'].editorial.description,
     url: 'https://incogniton.com/aff/1873747/',
     logoUrl: '/incogniton.png',
     freeProfiles: { ru: '3 (10 первые 2 месяца)', en: '3 (10 for first 2 months)' },
-    tariffStartPrice: { ru: 'от ≈ $13/мес', en: 'from ≈ $13/mo' },
-    profiles100Price: { ru: '≈ $40-50/мес', en: '≈ $40-50/mo' },
+    tariffStartPrice: { ru: 'от ≈ $13/мес', en: 'from ≈ $13/mo', es: 'desde ≈ $13/mes', zh: '约 $13/月起', ko: '약 $13/월부터' },
+    profiles100Price: { ru: '≈ $40-50/мес', en: '≈ $40-50/mo', es: '≈ $40-50/mes', zh: '约 $40-50/月', ko: '약 $40-50/월' },
     platforms: ['Windows', 'macOS'],
-    details: { paymentMethods: { ru: 'Visa/MC, Крипта', en: 'Visa/MC, Crypto' } }
+    details: { paymentMethods: { ru: 'Visa/MC, Крипта', en: 'Visa/MC, Crypto', es: 'Visa/MC, cripto', zh: 'Visa/MC、加密货币', ko: 'Visa/MC, 암호화폐' } }
   },
   {
     id: 'ant-vision',
     category: 'Antidetect',
     subCategory: 'PCAdvanced',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-vision'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-vision'].editorial,
     name: 'Vision',
-    description: { ru: 'Усиленный антидетект для задач со строгим антифродом: букмекерки, казино, биржи и другие сервисы с глубокой защитой.', en: 'A stronger antidetect browser for strict antifraud tasks: betting, casinos, exchanges, and other services with deeper protection.' },
+    description: ANTIDETECT_PAGE_BY_ID['ant-vision'].editorial.description,
     url: 'https://browser.vision/r/5b695838-2bf1-4da8-9b56-2997cdd5b612',
     logoUrl: '/vision.png',
     isBestChoice: true,
     freeProfiles: { ru: '0', en: '0' },
-    tariffStartPrice: { ru: '$29 за 50 профилей', en: '$29 for 50 profiles' },
-    profiles100Price: { ru: '$79 за 150 профилей', en: '$79 for 150 profiles' },
+    tariffStartPrice: { ru: '$29 за 50 профилей', en: '$29 for 50 profiles', es: '$29 por 50 perfiles', zh: '$29 / 50 个配置文件', ko: '$29 / 프로필 50개' },
+    profiles100Price: { ru: '$79 за 150 профилей', en: '$79 for 150 profiles', es: '$79 por 150 perfiles', zh: '$79 / 150 个配置文件', ko: '$79 / 프로필 150개' },
+    profilesPriceLabel: {
+      ru: '150 профилей',
+      en: '150 Profiles',
+      es: '150 perfiles',
+      zh: '150 个配置文件',
+      ko: '프로필 150개',
+    },
     platforms: ['Windows', 'macOS', 'Linux'],
-    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto' } }
+    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } }
   },
   {
     id: 'ant-afina',
     category: 'Antidetect',
     subCategory: 'PCBasic',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-afina'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-afina'].editorial,
     name: 'Afina',
-    description: { ru: 'Антидетект для мультиаккаунтинга и работы с большим количеством профилей. По тарифам выглядит интересным вариантом для 100 профилей.', en: 'An antidetect browser for multi-accounting and working with many profiles. Pricing makes it an interesting option for 100 profiles.' },
+    description: ANTIDETECT_PAGE_BY_ID['ant-afina'].editorial.description,
     url: 'https://afina.io/en/plan?aff=3UQNPJEN',
     logoUrl: '/afina.png',
     freeProfiles: { ru: '0', en: '0' },
-    tariffStartPrice: { ru: 'от ≈ $30/мес', en: 'from ≈ $30/mo' },
-    profiles100Price: { ru: '≈ $30/мес', en: '≈ $30/mo' },
+    tariffStartPrice: { ru: 'от ≈ $30/мес', en: 'from ≈ $30/mo', es: 'desde ≈ $30/mes', zh: '约 $30/月起', ko: '약 $30/월부터' },
+    profiles100Price: { ru: '≈ $30/мес', en: '≈ $30/mo', es: '≈ $30/mes', zh: '约 $30/月', ko: '약 $30/월' },
     platforms: ['Windows', 'macOS', 'Linux'],
-    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto' } }
+    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } }
   },
   {
     id: 'ant-gologin',
     category: 'Antidetect',
     subCategory: 'PCBasic',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-gologin'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-gologin'].editorial,
     name: 'GoLogin',
-    description: { ru: 'Антидетект для мультиаккаунтинга и работы с профилями. Подходит для обычных задач и простой организации аккаунтов.', en: 'An antidetect browser for multi-accounting and profile work. Good for common tasks and simple account organization.' },
+    description: ANTIDETECT_PAGE_BY_ID['ant-gologin'].editorial.description,
     url: 'https://gologin.com/join/gologin-IKNNLII',
     logoUrl: '/gologin.png',
     freeProfiles: { ru: '3', en: '3' },
-    tariffStartPrice: { ru: 'от ≈ $24/мес', en: 'from ≈ $24/mo' },
-    profiles100Price: { ru: '≈ $49/мес', en: '≈ $49/mo' },
+    tariffStartPrice: { ru: 'от ≈ $24/мес', en: 'from ≈ $24/mo', es: 'desde ≈ $24/mes', zh: '约 $24/月起', ko: '약 $24/월부터' },
+    profiles100Price: { ru: '≈ $49/мес', en: '≈ $49/mo', es: '≈ $49/mes', zh: '约 $49/月', ko: '약 $49/월' },
     platforms: ['Windows', 'macOS', 'Linux'],
-    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto' } }
+    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } }
   },
   {
     id: 'ant-morelogin',
     category: 'Antidetect',
     subCategory: 'PCBasic',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-morelogin'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-morelogin'].editorial,
     name: 'MoreLogin',
-    description: { ru: 'Антидетект для мультиаккаунтинга, командной работы и профилей под разные задачи.', en: 'An antidetect browser for multi-accounting, team work, and profiles for different tasks.' },
+    description: ANTIDETECT_PAGE_BY_ID['ant-morelogin'].editorial.description,
     url: 'https://www.morelogin.com/?from=AA8n0exLQF5U',
     logoUrl: '/morelogin.png',
     freeProfiles: { ru: '2', en: '2' },
-    tariffStartPrice: { ru: 'от ≈ $9/мес', en: 'from ≈ $9/mo' },
-    profiles100Price: { ru: '≈ $39-49/мес', en: '≈ $39-49/mo' },
+    tariffStartPrice: { ru: 'от ≈ $9/мес', en: 'from ≈ $9/mo', es: 'desde ≈ $9/mes', zh: '约 $9/月起', ko: '약 $9/월부터' },
+    profiles100Price: { ru: '≈ $39-49/мес', en: '≈ $39-49/mo', es: '≈ $39-49/mes', zh: '约 $39-49/月', ko: '약 $39-49/월' },
     platforms: ['Windows', 'macOS'],
-    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto' } }
+    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } }
   },
   {
     id: 'ant-multilogin',
     category: 'Antidetect',
     subCategory: 'PCAdvanced',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-multilogin'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-multilogin'].editorial,
     name: 'Multilogin',
-    description: { ru: 'Один из усиленных антидетектов для задач, где важны качество профилей и работа со сложным антифродом.', en: 'One of the stronger antidetect browsers for tasks where profile quality and complex antifraud matter.' },
+    description: ANTIDETECT_PAGE_BY_ID['ant-multilogin'].editorial.description,
     url: 'https://app.multilogin.com/',
     logoUrl: '/multilogin.png',
     freeProfiles: { ru: '0', en: '0' },
-    tariffStartPrice: { ru: 'от ≈ €29/мес', en: 'from ≈ €29/mo' },
-    profiles100Price: { ru: '≈ €79-99/мес', en: '≈ €79-99/mo' },
+    tariffStartPrice: { ru: 'от ≈ €29/мес', en: 'from ≈ €29/mo', es: 'desde ≈ €29/mes', zh: '约 €29/月起', ko: '약 €29/월부터' },
+    profiles100Price: { ru: '≈ €79-99/мес', en: '≈ €79-99/mo', es: '≈ €79-99/mes', zh: '约 €79-99/月', ko: '약 €79-99/월' },
     platforms: ['Windows', 'macOS', 'Linux'],
-    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto' } }
+    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } }
   },
   // STORES
   {
@@ -3459,7 +3502,9 @@ export default function App() {
   const offerTitle = (offer: Offer) => OFFER_TITLE_TRANSLATIONS[offer.id]?.[lang] || offer.name;
   const offerDescription = (offer: Offer) => {
     const ownDescription = offer.description[lang];
-    if (offer.category === 'Stores' && offer.editorial && ownDescription) return ownDescription;
+    if ((offer.category === 'Stores' || offer.category === 'Antidetect') && offer.editorial && ownDescription) {
+      return ownDescription;
+    }
 
     const manualDescription = OFFER_DESCRIPTION_TRANSLATIONS[offer.id]?.[lang];
     if (manualDescription) return manualDescription;
@@ -6169,7 +6214,7 @@ export default function App() {
                           </div>
                           <div>
                             <h4 className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">
-                              {t.profiles100}
+                              {l(selectedOffer.profilesPriceLabel) || t.profiles100}
                             </h4>
                             <p className="text-white font-bold text-lg">{l(selectedOffer.profiles100Price)}</p>
                           </div>

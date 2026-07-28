@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { accountShopPages } from '../src/data/accountShopPages.js';
+import { antidetectPages } from '../src/data/antidetectPages.js';
 
 const siteUrl = 'https://hopscup.tools';
 const distDir = path.resolve('dist');
@@ -1375,6 +1376,19 @@ const servicePages = [
   ...accountShopPages.map((page) => createServicePage({
     id: page.id,
     route: `/account-shop/${page.slug}`,
+    name: page.name,
+    logo: page.logo,
+    title: page.title,
+    description: page.description,
+    heading: page.heading,
+    intro: page.editorial.description,
+    keywords: page.keywords,
+    points: page.editorial.bestFor,
+    items: page.editorial.considerations,
+  })),
+  ...antidetectPages.map((page) => createServicePage({
+    id: page.id,
+    route: `/antidetect/${page.slug}`,
     name: page.name,
     logo: page.logo,
     title: page.title,

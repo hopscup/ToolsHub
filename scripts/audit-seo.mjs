@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { accountShopPages } from '../src/data/accountShopPages.js';
+import { antidetectPages } from '../src/data/antidetectPages.js';
 
 const distDir = path.resolve('dist');
 const siteUrl = 'https://hopscup.tools';
@@ -35,6 +36,7 @@ const serviceRoutes = [
   '/proxy-vpn/prostovpn',
   '/proxy-vpn/tochka-g',
   ...accountShopPages.map((page) => `/account-shop/${page.slug}`),
+  ...antidetectPages.map((page) => `/antidetect/${page.slug}`),
 ];
 const routes = [...categoryRoutes, ...serviceRoutes];
 
