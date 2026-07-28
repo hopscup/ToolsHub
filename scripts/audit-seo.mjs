@@ -10,7 +10,7 @@ const languages = [
   { prefix: '/zh', htmlLang: 'zh-CN', hrefLang: 'zh-CN' },
   { prefix: '/ko', htmlLang: 'ko-KR', hrefLang: 'ko-KR' },
 ];
-const routes = [
+const categoryRoutes = [
   '/proxy-vpn',
   '/antidetect',
   '/account-shop',
@@ -22,6 +22,13 @@ const routes = [
   '/steam-topup',
   '/guides',
 ];
+const serviceRoutes = [
+  '/proxy-vpn/proxyline',
+  '/proxy-vpn/proxywing',
+  '/proxy-vpn/proxy6',
+  '/proxy-vpn/mobileproxy',
+];
+const routes = [...categoryRoutes, ...serviceRoutes];
 
 const errors = [];
 const titles = new Set();
@@ -58,12 +65,13 @@ for (const language of languages) {
     if (html.match(/<html lang="([^"]+)"/)?.[1] !== language.htmlLang) errors.push(`Wrong lang: ${localizedRoute}`);
     if (alternates.length !== languages.length + 1) errors.push(`Wrong hreflang count: ${localizedRoute}`);
     if (h1Count !== 1) errors.push(`Expected one H1: ${localizedRoute}`);
-    if (internalLinkCount < routes.length) errors.push(`Missing crawlable navigation: ${localizedRoute}`);
+    if (internalLinkCount < categoryRoutes.length) errors.push(`Missing crawlable navigation: ${localizedRoute}`);
 
     try {
       const structuredData = JSON.parse(structuredDataText || 'null');
       const types = Array.isArray(structuredData) ? structuredData.map((item) => item?.['@type']) : [];
-      for (const requiredType of ['WebSite', 'Organization', 'CollectionPage']) {
+      const pageType = serviceRoutes.includes(route) ? 'WebPage' : 'CollectionPage';
+      for (const requiredType of ['WebSite', 'Organization', pageType]) {
         if (!types.includes(requiredType)) errors.push(`Missing ${requiredType} schema: ${localizedRoute}`);
       }
     } catch {

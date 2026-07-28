@@ -73,6 +73,7 @@ interface Offer {
   id: string;
   category: CategoryType;
   subCategory?: SubCategory;
+  slug?: string;
   name: string;
   description: Localized;
   url: string;
@@ -115,6 +116,13 @@ interface Offer {
     pros?: Localized<string[]>;
     targetAudience?: Localized;
     descriptionDetailed?: Localized;
+  };
+  editorial?: {
+    title: Localized;
+    description: Localized;
+    bestFor: Localized<string[]>;
+    considerations: Localized<string[]>;
+    verdict: Localized;
   };
 }
 
@@ -207,6 +215,9 @@ const stripLanguagePrefix = (path: string) => {
 
 const getLocalizedRoute = (category: CategoryType, language: Language) =>
   `${LANGUAGE_PREFIXES[language]}${CATEGORY_ROUTES[category]}`;
+
+const getLocalizedOfferRoute = (offer: Offer, language: Language) =>
+  `${getLocalizedRoute(offer.category, language)}/${offer.slug}`;
 
 const translateMissingString = (value: string, language: Language) => {
   if (language === 'ru' || language === 'en') return value;
@@ -372,7 +383,9 @@ const getDefaultSubFilter = (): SubCategory => 'None';
 
 const getCategoryFromPath = (path = typeof window !== 'undefined' ? window.location.pathname : '/'): CategoryType => {
   const normalizedPath = stripLanguagePrefix(path);
-  const match = Object.entries(CATEGORY_ROUTES).find(([, route]) => route === normalizedPath);
+  const match = Object.entries(CATEGORY_ROUTES).find(([, route]) =>
+    normalizedPath === route || normalizedPath.startsWith(`${route}/`),
+  );
   return (match?.[0] as CategoryType | undefined) || 'Proxy';
 };
 
@@ -869,6 +882,7 @@ const OFFERS: Offer[] = [
     id: 'p2',
     category: 'Proxy',
     subCategory: 'Proxy',
+    slug: 'proxyline',
     name: 'Proxyline',
     description: {
       ru: 'Проверенный сервис с недорогими серверными прокси. Хороший вариант для парсинга, автоматизации и задач, где не требуется максимальный уровень траста.',
@@ -880,16 +894,94 @@ const OFFERS: Offer[] = [
       geo: { ru: '100+ стран', en: '100+ countries' },
       types: { ru: 'IPv4, IPv6', en: 'IPv4, IPv6' },
       paymentMethods: { ru: 'Visa/Mastercard, СБП, Мир, Криптовалюта', en: 'Visa/Mastercard, SBP, Mir, Crypto' }
+    },
+    editorial: {
+      title: {
+        ru: 'Proxyline: обзор IPv4 и IPv6 прокси | Hopscup Tools',
+        en: 'Proxyline review: IPv4 and IPv6 proxies | Hopscup Tools',
+        es: 'Proxyline: análisis de proxies IPv4 e IPv6 | Hopscup Tools',
+        zh: 'Proxyline 评测：IPv4 与 IPv6 代理 | Hopscup Tools',
+        ko: 'Proxyline 리뷰: IPv4 및 IPv6 프록시 | Hopscup Tools',
+      },
+      description: {
+        ru: 'Обзор Proxyline: недорогие IPv4 и IPv6 прокси, более 100 стран, варианты оплаты и задачи, для которых подходят серверные IP.',
+        en: 'Proxyline review covering affordable IPv4 and IPv6 proxies, 100+ countries, payment options, and suitable server IP use cases.',
+        es: 'Análisis de Proxyline: proxies IPv4 e IPv6 económicos, más de 100 países, métodos de pago y usos adecuados para IP de servidor.',
+        zh: 'Proxyline 评测：价格实惠的 IPv4 与 IPv6 代理、覆盖 100 多个国家、付款方式以及服务器 IP 的适用场景。',
+        ko: 'Proxyline 리뷰: 합리적인 IPv4 및 IPv6 프록시, 100개 이상의 국가, 결제 수단과 서버 IP 활용 사례.',
+      },
+      bestFor: {
+        ru: [
+          'Парсинг, автоматизация и другие задачи, где важны стабильный IP и понятная стоимость.',
+          'Работа с аккаунтами и антидетектами, когда площадке подходит обычный серверный IPv4.',
+          'Покупка нескольких отдельных IP нужной страны без оплаты за трафик.',
+        ],
+        en: [
+          'Scraping, automation, and other tasks where a stable IP and predictable price matter.',
+          'Accounts and antidetect browsers when a regular server IPv4 is suitable for the target platform.',
+          'Buying several separate IPs in the required country without traffic-based billing.',
+        ],
+        es: [
+          'Scraping, automatización y tareas donde importan una IP estable y un precio predecible.',
+          'Cuentas y navegadores antidetect cuando la plataforma admite un IPv4 de servidor normal.',
+          'Comprar varias IP separadas del país necesario sin pagar por tráfico.',
+        ],
+        zh: [
+          '适合需要稳定 IP 和明确价格的采集、自动化及其他任务。',
+          '目标平台可以使用普通服务器 IPv4 时，适合账号和反检测浏览器。',
+          '无需按流量计费即可购买所需国家的多个独立 IP。',
+        ],
+        ko: [
+          '안정적인 IP와 예측 가능한 비용이 중요한 스크래핑, 자동화 및 기타 작업.',
+          '대상 플랫폼에서 일반 서버 IPv4를 사용할 수 있는 계정 및 안티디텍트 브라우저 작업.',
+          '트래픽 과금 없이 필요한 국가의 개별 IP 여러 개를 구매하는 경우.',
+        ],
+      },
+      considerations: {
+        ru: [
+          'Это серверные IPv4 и IPv6, поэтому некоторые проверки могут отмечать их как proxy или VPN.',
+          'IPv6 стоит брать только для сервисов и программ, которые его поддерживают.',
+          'Для площадок со строгой проверкой источника IP может понадобиться ISP, Residential или Mobile у другого сервиса.',
+        ],
+        en: [
+          'These are server IPv4 and IPv6 addresses, so some checks may label them as proxy or VPN.',
+          'Choose IPv6 only for services and software that support it.',
+          'Platforms with stricter IP source checks may require ISP, Residential, or Mobile proxies from another provider.',
+        ],
+        es: [
+          'Son direcciones IPv4 e IPv6 de servidor, por lo que algunas verificaciones pueden marcarlas como proxy o VPN.',
+          'Elige IPv6 solo para servicios y programas compatibles.',
+          'Las plataformas con controles más estrictos pueden requerir ISP, Residential o Mobile de otro proveedor.',
+        ],
+        zh: [
+          '这些是服务器 IPv4 和 IPv6，因此部分检测可能会将其标记为代理或 VPN。',
+          '只有目标服务和软件支持时才选择 IPv6。',
+          '对 IP 来源检查更严格的平台可能需要其他服务商的 ISP、Residential 或 Mobile 代理。',
+        ],
+        ko: [
+          '서버 IPv4 및 IPv6이므로 일부 검사에서 프록시 또는 VPN으로 표시될 수 있습니다.',
+          'IPv6는 해당 서비스와 프로그램이 지원할 때만 선택하세요.',
+          'IP 출처를 엄격하게 확인하는 플랫폼은 다른 공급업체의 ISP, Residential 또는 Mobile이 필요할 수 있습니다.',
+        ],
+      },
+      verdict: {
+        ru: 'Хороший вариант, когда нужен недорогой отдельный серверный IP без лишней сложности. Для большинства обычных задач логично начинать с IPv4.',
+        en: 'A good option when you need an affordable dedicated server IP without extra complexity. For most common tasks, IPv4 is the sensible starting point.',
+        es: 'Una buena opción cuando necesitas una IP de servidor individual y económica sin complicaciones. Para la mayoría de tareas conviene empezar con IPv4.',
+        zh: '需要价格实惠、使用简单的独立服务器 IP 时，这是不错的选择。大多数常见任务可以从 IPv4 开始。',
+        ko: '복잡하지 않게 저렴한 개별 서버 IP가 필요할 때 좋은 선택입니다. 대부분의 일반 작업은 IPv4부터 시작하는 것이 합리적입니다.',
+      },
     }
   },
   {
     id: 'p3',
     category: 'Proxy',
     subCategory: 'Proxy',
+    slug: 'proxywing',
     name: 'ProxyWing',
     description: {
-      ru: 'Универсальный прокси-сервис с Residential, Datacenter, ISP и Mobile-прокси. Хороший вариант для аккаунтов, рекламных кабинетов, парсинга и задач, где важен высокий траст IP.',
-      en: 'A universal proxy service with Residential, Datacenter, ISP, and Mobile proxies. A strong option for accounts, ad cabinets, scraping, and tasks where high IP trust matters.'
+      ru: 'ProxyWing удобен тем, что в одном кабинете можно взять обычные IPv4, ISP, Residential и Mobile-прокси. IPv4 подходят для большинства повседневных задач с аккаунтами, антидетектами, автоматизацией и парсингом. Если площадка строже проверяет источник IP, можно перейти на ISP, Residential или Mobile, не меняя сервис.',
+      en: 'ProxyWing is convenient because regular IPv4, ISP, Residential, and Mobile proxies are available in one dashboard. IPv4 covers most everyday account, antidetect, automation, and scraping tasks. If a platform checks the IP source more strictly, you can switch to ISP, Residential, or Mobile without changing providers.'
     },
     url: 'https://dashboard.proxywing.com/billing/aff.php?aff=813',
     logoUrl: '/proxywing.png',
@@ -897,6 +989,83 @@ const OFFERS: Offer[] = [
       geo: { ru: '200+ стран', en: '200+ countries' },
       types: { ru: 'Residential, Datacenter, ISP, Mobile', en: 'Residential, Datacenter, ISP, Mobile' },
       paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto' }
+    },
+    editorial: {
+      title: {
+        ru: 'ProxyWing: обзор прокси, типы, гео и оплата | Hopscup Tools',
+        en: 'ProxyWing review: proxy types, locations, and payments | Hopscup Tools',
+        es: 'ProxyWing: análisis, tipos de proxy, GEO y pagos | Hopscup Tools',
+        zh: 'ProxyWing 评测：代理类型、地区与支付方式 | Hopscup Tools',
+        ko: 'ProxyWing 리뷰: 프록시 유형, 지역 및 결제 | Hopscup Tools',
+      },
+      description: {
+        ru: 'Обзор ProxyWing: Residential, Datacenter, ISP и Mobile-прокси, 200+ локаций, HTTP/SOCKS5 и оплата картой, СБП/Мир или криптовалютой.',
+        en: 'ProxyWing review covering Residential, Datacenter, ISP, and Mobile proxies, 200+ locations, HTTP/SOCKS5, and card, SBP/Mir, or crypto payments.',
+        es: 'Análisis de ProxyWing: proxies Residential, Datacenter, ISP y Mobile, más de 200 ubicaciones, HTTP/SOCKS5 y pagos con tarjeta, SBP/Mir o cripto.',
+        zh: 'ProxyWing 评测：Residential、Datacenter、ISP 和 Mobile 代理，覆盖 200 多个地区，支持 HTTP/SOCKS5，以及银行卡、SBP/Mir 或加密货币付款。',
+        ko: 'ProxyWing 리뷰: Residential, Datacenter, ISP, Mobile 프록시, 200개 이상의 지역, HTTP/SOCKS5, 카드, SBP/Mir 및 암호화폐 결제.',
+      },
+      bestFor: {
+        ru: [
+          'Обычные IPv4 для аккаунтов, антидетектов, Gmail, Twitter, Discord, Telegram, web3, Яндекса и нейросетей.',
+          'Парсинг, автоматизация и другие задачи, где важны скорость, стабильность и отдельный IP.',
+          'ISP, Residential и Mobile для площадок, которые строже проверяют источник и траст IP.',
+        ],
+        en: [
+          'Regular IPv4 for accounts, antidetect browsers, Gmail, Twitter, Discord, Telegram, web3, Yandex, and AI tools.',
+          'Scraping, automation, and other tasks where speed, stability, and a separate IP matter.',
+          'ISP, Residential, and Mobile for platforms that check the IP source and trust more strictly.',
+        ],
+        es: [
+          'IPv4 normal para cuentas, antidetects, Gmail, Twitter, Discord, Telegram, web3, Yandex y herramientas de IA.',
+          'Scraping, automatización y otras tareas donde importan la velocidad, la estabilidad y una IP separada.',
+          'ISP, Residential y Mobile para plataformas que revisan con más rigor el origen y la confianza de la IP.',
+        ],
+        zh: [
+          '普通 IPv4 适合账号、反检测浏览器、Gmail、Twitter、Discord、Telegram、web3、Yandex 和 AI 工具。',
+          '适合重视速度、稳定性和独立 IP 的采集、自动化及其他任务。',
+          '对 IP 来源和信任度检查更严格的平台可选择 ISP、Residential 或 Mobile。',
+        ],
+        ko: [
+          '계정, 안티디텍트 브라우저, Gmail, Twitter, Discord, Telegram, web3, Yandex, AI 도구용 일반 IPv4.',
+          '속도, 안정성, 개별 IP가 중요한 스크래핑, 자동화 및 기타 작업.',
+          'IP 출처와 신뢰도를 더 엄격하게 확인하는 플랫폼용 ISP, Residential, Mobile.',
+        ],
+      },
+      considerations: {
+        ru: [
+          'Если не знаете, какой протокол выбрать для антидетекта или рабочего профиля, начинайте с SOCKS5.',
+          'Residential обычно оплачиваются за использованный трафик, а Mobile обходятся дороже обычных IPv4.',
+          'Datacenter IPv4 могут определяться как proxy/VPN просто из-за серверного происхождения. Это не делает их плохими и для базовых задач обычно не критично.',
+        ],
+        en: [
+          'If you are unsure which protocol to use for an antidetect browser or work profile, start with SOCKS5.',
+          'Residential is usually billed by used traffic, while Mobile costs more than regular IPv4.',
+          'Datacenter IPv4 may be labeled as proxy/VPN simply because it comes from server infrastructure. That does not make it bad and is usually not critical for basic tasks.',
+        ],
+        es: [
+          'Si no sabes qué protocolo usar con un antidetect o perfil de trabajo, empieza con SOCKS5.',
+          'Residential normalmente se cobra por tráfico utilizado, mientras Mobile cuesta más que un IPv4 normal.',
+          'Datacenter IPv4 puede marcarse como proxy/VPN por su origen de servidor. Eso no significa que sea malo y normalmente no es crítico para tareas básicas.',
+        ],
+        zh: [
+          '如果不确定反检测浏览器或工作资料该用哪种协议，可先选择 SOCKS5。',
+          'Residential 通常按使用流量计费，Mobile 的价格则高于普通 IPv4。',
+          'Datacenter IPv4 可能仅因服务器来源而被标记为 proxy/VPN。这不代表质量差，对基础任务通常并不重要。',
+        ],
+        ko: [
+          '안티디텍트 브라우저나 작업 프로필에서 어떤 프로토콜을 써야 할지 모르겠다면 SOCKS5부터 시작하세요.',
+          'Residential은 보통 사용한 트래픽 기준으로 과금되고 Mobile은 일반 IPv4보다 비쌉니다.',
+          'Datacenter IPv4는 서버 출처라는 이유만으로 proxy/VPN으로 표시될 수 있습니다. 품질이 나쁘다는 뜻은 아니며 기본 작업에는 대개 중요하지 않습니다.',
+        ],
+      },
+      verdict: {
+        ru: 'Для большинства задач логично начинать с обычных IPv4. Более дорогой тип прокси стоит брать тогда, когда этого требует конкретная площадка или рабочая схема.',
+        en: 'For most tasks, regular IPv4 is the sensible starting point. Choose a more expensive proxy type when the target platform or workflow actually requires it.',
+        es: 'Para la mayoría de tareas tiene sentido empezar con IPv4 normal. Elige un tipo más caro cuando la plataforma o el flujo de trabajo realmente lo exijan.',
+        zh: '大多数任务可以从普通 IPv4 开始。只有目标平台或工作流程确实需要时，再选择价格更高的代理类型。',
+        ko: '대부분의 작업은 일반 IPv4부터 시작하는 것이 합리적입니다. 대상 플랫폼이나 작업 방식이 실제로 요구할 때 더 비싼 유형을 선택하면 됩니다.',
+      },
     }
   },
   {
@@ -921,6 +1090,7 @@ const OFFERS: Offer[] = [
     id: 'p5',
     category: 'Proxy',
     subCategory: 'Proxy',
+    slug: 'proxy6',
     name: 'Proxy6',
     description: {
       ru: 'Один из самых известных сервисов с доступными IPv4/IPv6, shared IPv4 и MTProto-прокси. Подходит для повседневных задач, автоматизации и работы с большим количеством IP.',
@@ -932,12 +1102,90 @@ const OFFERS: Offer[] = [
       geo: { ru: '70+ стран', en: '70+ countries' },
       types: { ru: 'IPv4, IPv6, Shared IPv4, MTProto', en: 'IPv4, IPv6, Shared IPv4, MTProto' },
       paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto' }
+    },
+    editorial: {
+      title: {
+        ru: 'Proxy6: обзор IPv4, IPv6 и MTProto прокси | Hopscup Tools',
+        en: 'Proxy6 review: IPv4, IPv6, and MTProto proxies | Hopscup Tools',
+        es: 'Proxy6: análisis de proxies IPv4, IPv6 y MTProto | Hopscup Tools',
+        zh: 'Proxy6 评测：IPv4、IPv6 与 MTProto 代理 | Hopscup Tools',
+        ko: 'Proxy6 리뷰: IPv4, IPv6 및 MTProto 프록시 | Hopscup Tools',
+      },
+      description: {
+        ru: 'Обзор Proxy6: IPv4, IPv6, Shared IPv4 и MTProto прокси, более 70 стран, способы оплаты и подходящие сценарии использования.',
+        en: 'Proxy6 review covering IPv4, IPv6, Shared IPv4, and MTProto proxies, 70+ countries, payment methods, and suitable use cases.',
+        es: 'Análisis de Proxy6: proxies IPv4, IPv6, Shared IPv4 y MTProto, más de 70 países, pagos y usos recomendados.',
+        zh: 'Proxy6 评测：IPv4、IPv6、Shared IPv4 和 MTProto 代理，覆盖 70 多个国家、付款方式及适用场景。',
+        ko: 'Proxy6 리뷰: IPv4, IPv6, Shared IPv4, MTProto 프록시, 70개 이상의 국가, 결제 수단과 활용 사례.',
+      },
+      bestFor: {
+        ru: [
+          'Повседневные задачи с аккаунтами, антидетектами, автоматизацией и отдельными IP.',
+          'Работа с большим количеством прокси, когда важна доступная цена.',
+          'MTProto для Telegram и Shared IPv4 для задач, где выделенный адрес не обязателен.',
+        ],
+        en: [
+          'Daily account, antidetect, automation, and separate IP tasks.',
+          'Working with many proxies when an affordable price matters.',
+          'MTProto for Telegram and Shared IPv4 when a dedicated address is not required.',
+        ],
+        es: [
+          'Tareas cotidianas con cuentas, antidetects, automatización e IP separadas.',
+          'Trabajo con muchos proxies cuando importa un precio accesible.',
+          'MTProto para Telegram y Shared IPv4 cuando no necesitas una dirección dedicada.',
+        ],
+        zh: [
+          '适合账号、反检测浏览器、自动化和独立 IP 等日常任务。',
+          '需要大量代理并重视价格时使用。',
+          'MTProto 适合 Telegram，Shared IPv4 适合不要求独享地址的任务。',
+        ],
+        ko: [
+          '계정, 안티디텍트, 자동화와 개별 IP가 필요한 일상 작업.',
+          '합리적인 가격으로 많은 프록시를 사용해야 하는 경우.',
+          'Telegram용 MTProto와 전용 주소가 필요 없는 작업용 Shared IPv4.',
+        ],
+      },
+      considerations: {
+        ru: [
+          'Shared IPv4 используется несколькими клиентами и подходит не для каждой площадки.',
+          'IPv6 нужно выбирать только при подтвержденной поддержке со стороны нужного сервиса.',
+          'Обычные IPv4 могут определяться как proxy или VPN из-за серверного происхождения, для базовых задач это обычно не критично.',
+        ],
+        en: [
+          'Shared IPv4 is used by multiple customers and is not suitable for every platform.',
+          'Choose IPv6 only when the target service is confirmed to support it.',
+          'Regular IPv4 may be labeled as proxy or VPN because of its server origin, which is usually not critical for basic tasks.',
+        ],
+        es: [
+          'Shared IPv4 se comparte entre varios clientes y no sirve para todas las plataformas.',
+          'Elige IPv6 solo cuando el servicio de destino confirme que es compatible.',
+          'Un IPv4 normal puede marcarse como proxy o VPN por su origen de servidor, algo que normalmente no es crítico para tareas básicas.',
+        ],
+        zh: [
+          'Shared IPv4 由多个客户共同使用，并不适合所有平台。',
+          '只有确认目标服务支持时才选择 IPv6。',
+          '普通 IPv4 可能因服务器来源被标记为代理或 VPN，对基础任务通常并不重要。',
+        ],
+        ko: [
+          'Shared IPv4는 여러 고객이 함께 사용하므로 모든 플랫폼에 적합하지는 않습니다.',
+          '대상 서비스의 지원이 확인된 경우에만 IPv6를 선택하세요.',
+          '일반 IPv4는 서버 출처로 인해 프록시 또는 VPN으로 표시될 수 있지만 기본 작업에는 대개 중요하지 않습니다.',
+        ],
+      },
+      verdict: {
+        ru: 'Практичный сервис для недорогих серверных прокси и большого количества IP. Перед покупкой достаточно выбрать между отдельным IPv4, Shared IPv4, IPv6 и MTProto под конкретную задачу.',
+        en: 'A practical service for affordable server proxies and larger IP volumes. Choose between dedicated IPv4, Shared IPv4, IPv6, and MTProto based on the actual task.',
+        es: 'Un servicio práctico para proxies de servidor económicos y muchos IP. Elige entre IPv4 individual, Shared IPv4, IPv6 y MTProto según la tarea.',
+        zh: '适合购买价格实惠的服务器代理和较多 IP。根据实际任务在独立 IPv4、Shared IPv4、IPv6 和 MTProto 之间选择即可。',
+        ko: '저렴한 서버 프록시와 많은 IP가 필요할 때 실용적인 서비스입니다. 실제 작업에 맞춰 개별 IPv4, Shared IPv4, IPv6, MTProto 중에서 선택하면 됩니다.',
+      },
     }
   },
   {
     id: 'p6',
     category: 'Proxy',
     subCategory: 'Proxy',
+    slug: 'mobileproxy',
     name: 'MobileProxy',
     description: {
       ru: 'Сервис мобильных прокси с возможностью смены IP. Отличный выбор для задач, где важен максимально высокий уровень доверия со стороны площадок.',
@@ -949,6 +1197,83 @@ const OFFERS: Offer[] = [
       geo: { ru: '20+ стран', en: '20+ countries' },
       types: { ru: 'Mobile', en: 'Mobile' },
       paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto' }
+    },
+    editorial: {
+      title: {
+        ru: 'MobileProxy: обзор мобильных прокси со сменой IP | Hopscup Tools',
+        en: 'MobileProxy review: mobile proxies with IP rotation | Hopscup Tools',
+        es: 'MobileProxy: análisis de proxies móviles con cambio de IP | Hopscup Tools',
+        zh: 'MobileProxy 评测：支持更换 IP 的移动代理 | Hopscup Tools',
+        ko: 'MobileProxy 리뷰: IP 변경이 가능한 모바일 프록시 | Hopscup Tools',
+      },
+      description: {
+        ru: 'Обзор MobileProxy: мобильные прокси со сменой IP, более 20 стран, способы оплаты и задачи, где нужен мобильный источник адреса.',
+        en: 'MobileProxy review covering rotating mobile proxies, 20+ countries, payment methods, and tasks that need a mobile IP source.',
+        es: 'Análisis de MobileProxy: proxies móviles con cambio de IP, más de 20 países, métodos de pago y usos que necesitan una IP móvil.',
+        zh: 'MobileProxy 评测：支持更换 IP 的移动代理、覆盖 20 多个国家、付款方式以及需要移动网络 IP 的场景。',
+        ko: 'MobileProxy 리뷰: IP 변경이 가능한 모바일 프록시, 20개 이상의 국가, 결제 수단과 모바일 IP가 필요한 활용 사례.',
+      },
+      bestFor: {
+        ru: [
+          'Площадки, которые строже относятся к серверным IP и лучше принимают мобильные адреса.',
+          'Социальные сети, приложения и аккаунтные задачи, где полезна смена IP по кнопке.',
+          'Рабочие схемы, которым нужен мобильный оператор и конкретная страна.',
+        ],
+        en: [
+          'Platforms that treat server IPs more strictly and accept mobile addresses more readily.',
+          'Social networks, apps, and account tasks where one-click IP rotation is useful.',
+          'Workflows that require a mobile carrier and a specific country.',
+        ],
+        es: [
+          'Plataformas más estrictas con IP de servidor que aceptan mejor direcciones móviles.',
+          'Redes sociales, aplicaciones y tareas con cuentas donde conviene cambiar la IP con un botón.',
+          'Flujos de trabajo que necesitan un operador móvil y un país concreto.',
+        ],
+        zh: [
+          '适合严格限制服务器 IP、对移动地址接受度更高的平台。',
+          '适合需要一键更换 IP 的社交网络、应用和账号任务。',
+          '适合需要特定国家和移动运营商的工作流程。',
+        ],
+        ko: [
+          '서버 IP를 엄격하게 확인하고 모바일 주소를 더 잘 받아들이는 플랫폼.',
+          '버튼 한 번으로 IP를 변경하면 유용한 소셜 네트워크, 앱과 계정 작업.',
+          '특정 국가와 모바일 통신사가 필요한 작업 방식.',
+        ],
+      },
+      considerations: {
+        ru: [
+          'Мобильные прокси обычно стоят дороже обычных IPv4, поэтому брать их для каждой задачи необязательно.',
+          'Заранее проверьте доступные страны, оператора и способ смены IP.',
+          'Если площадке подходит обычный IPv4, он может оказаться проще и выгоднее.',
+        ],
+        en: [
+          'Mobile proxies usually cost more than regular IPv4, so they are not necessary for every task.',
+          'Check the available countries, carrier, and IP rotation method before buying.',
+          'If a regular IPv4 works for the platform, it may be simpler and more affordable.',
+        ],
+        es: [
+          'Los proxies móviles suelen costar más que un IPv4 normal, por lo que no son necesarios para todas las tareas.',
+          'Comprueba los países, el operador y el método de cambio de IP antes de comprar.',
+          'Si la plataforma acepta un IPv4 normal, puede ser una opción más sencilla y económica.',
+        ],
+        zh: [
+          '移动代理通常比普通 IPv4 更贵，因此并非所有任务都需要使用。',
+          '购买前请确认可用国家、运营商和更换 IP 的方式。',
+          '如果平台可以使用普通 IPv4，它可能更简单也更划算。',
+        ],
+        ko: [
+          '모바일 프록시는 일반 IPv4보다 비싼 편이므로 모든 작업에 필요한 것은 아닙니다.',
+          '구매 전에 지원 국가, 통신사와 IP 변경 방식을 확인하세요.',
+          '플랫폼에서 일반 IPv4가 통한다면 더 간단하고 저렴할 수 있습니다.',
+        ],
+      },
+      verdict: {
+        ru: 'Выбирать MobileProxy стоит именно ради мобильного источника IP и удобной смены адреса. Для обычного парсинга или простой автоматизации переплачивать за мобильный тип чаще всего нет смысла.',
+        en: 'Choose MobileProxy specifically for a mobile IP source and convenient address rotation. Paying extra for mobile proxies is usually unnecessary for basic scraping or simple automation.',
+        es: 'Elige MobileProxy cuando realmente necesites una IP móvil y un cambio de dirección cómodo. Para scraping básico o automatización simple normalmente no hace falta pagar más.',
+        zh: '需要移动网络来源和方便更换地址时再选择 MobileProxy。基础采集或简单自动化通常没有必要为移动代理支付更高费用。',
+        ko: '모바일 IP 출처와 편리한 주소 변경이 필요할 때 MobileProxy를 선택하면 됩니다. 기본 스크래핑이나 단순 자동화에는 추가 비용을 낼 필요가 없는 경우가 많습니다.',
+      },
     }
   },
   {
@@ -1323,6 +1648,84 @@ const OFFERS: Offer[] = [
     details: {
       paymentMethods: { ru: 'Visa, Крипта, СБП/RU карты', en: 'Visa, Crypto, SBP/RU cards' }
     }
+  },
+  {
+    id: 'bot-apel0sin-market-2',
+    category: 'Stores',
+    subCategory: 'Bot',
+    name: 'apel0sin | market 2.0',
+    description: {
+      ru: 'Новый Telegram-магазин в формате Mini App с аккаунтами, подписками и цифровыми товарами. В ассортименте появляются ChatGPT Plus, Claude, Gemini, Grok, Cursor, Canva, Figma, Perplexity, KlingAI и другие сервисы. Для части товаров предусмотрена гарантия, а о новых поступлениях можно получать уведомления внутри бота.',
+      en: 'A new Telegram Mini App shop with accounts, subscriptions, and digital goods. The catalog features ChatGPT Plus, Claude, Gemini, Grok, Cursor, Canva, Figma, Perplexity, KlingAI, and other services. Some products include a warranty, and the bot can notify users about restocks.',
+      es: 'Una nueva tienda de Telegram en formato Mini App con cuentas, suscripciones y productos digitales. En el catálogo aparecen ChatGPT Plus, Claude, Gemini, Grok, Cursor, Canva, Figma, Perplexity, KlingAI y otros servicios. Algunos productos incluyen garantía y el bot puede avisar de nuevas existencias.',
+      zh: '一款采用 Mini App 形式的新 Telegram 商店，提供账号、订阅和数字商品。目录中会出现 ChatGPT Plus、Claude、Gemini、Grok、Cursor、Canva、Figma、Perplexity、KlingAI 等服务。部分商品带有保障，并可在机器人内接收补货通知。',
+      ko: '계정, 구독, 디지털 상품을 판매하는 새로운 Telegram Mini App 상점입니다. ChatGPT Plus, Claude, Gemini, Grok, Cursor, Canva, Figma, Perplexity, KlingAI 등 다양한 서비스가 입고됩니다. 일부 상품에는 보증이 제공되며 봇에서 재입고 알림을 받을 수 있습니다.',
+    },
+    url: 'https://t.me/apel0sin_market_bot?start=ref_467483565',
+    logoUrl: '/apel0sin-market-2.png',
+    details: {
+      paymentMethods: {
+        ru: 'СБП, CryptoBot, Крипта, Telegram Stars',
+        en: 'SBP, CryptoBot, Crypto, Telegram Stars',
+        es: 'SBP, CryptoBot, cripto, Telegram Stars',
+        zh: 'SBP、CryptoBot、加密货币、Telegram Stars',
+        ko: 'SBP, CryptoBot, 암호화폐, Telegram Stars',
+      },
+      supports: {
+        ru: [
+          'ИИ-подписки: ChatGPT, Claude, Gemini, Grok',
+          'Софт и сервисы: Cursor, Canva, Figma, Perplexity',
+          'Готовые аккаунты, ключи и другие цифровые товары',
+        ],
+        en: [
+          'AI subscriptions: ChatGPT, Claude, Gemini, Grok',
+          'Software and services: Cursor, Canva, Figma, Perplexity',
+          'Ready-made accounts, keys, and other digital goods',
+        ],
+        es: [
+          'Suscripciones de IA: ChatGPT, Claude, Gemini, Grok',
+          'Software y servicios: Cursor, Canva, Figma, Perplexity',
+          'Cuentas listas, claves y otros productos digitales',
+        ],
+        zh: [
+          'AI 订阅：ChatGPT、Claude、Gemini、Grok',
+          '软件与服务：Cursor、Canva、Figma、Perplexity',
+          '成品账号、密钥和其他数字商品',
+        ],
+        ko: [
+          'AI 구독: ChatGPT, Claude, Gemini, Grok',
+          '소프트웨어 및 서비스: Cursor, Canva, Figma, Perplexity',
+          '완성 계정, 키와 기타 디지털 상품',
+        ],
+      },
+      nuances: {
+        ru: [
+          'Наличие и цены зависят от текущего поступления.',
+          'Срок гарантии отличается у разных товаров.',
+          'Перед оплатой стоит проверить описание и условия конкретной позиции.',
+        ],
+        en: [
+          'Availability and prices depend on current stock.',
+          'Warranty periods vary between products.',
+          'Check the description and terms of the specific item before paying.',
+        ],
+        es: [
+          'La disponibilidad y los precios dependen de las existencias actuales.',
+          'El periodo de garantía varía según el producto.',
+          'Revisa la descripción y las condiciones del artículo antes de pagar.',
+        ],
+        zh: [
+          '库存和价格会随当前补货情况变化。',
+          '不同商品的保障期限不同。',
+          '付款前请查看具体商品的说明和条件。',
+        ],
+        ko: [
+          '재고와 가격은 현재 입고 상황에 따라 달라집니다.',
+          '보증 기간은 상품마다 다릅니다.',
+          '결제 전에 해당 상품의 설명과 조건을 확인하세요.',
+        ],
+      },
+    },
   },
   {
     id: 'bot-petrovich',
@@ -2086,6 +2489,15 @@ const OFFERS: Offer[] = [
   }
 ];
 
+const getOfferFromPath = (
+  path = typeof window !== 'undefined' ? window.location.pathname : '/',
+): Offer | null => {
+  const normalizedPath = stripLanguagePrefix(path);
+  return OFFERS.find((offer) =>
+    Boolean(offer.slug) && normalizedPath === `${CATEGORY_ROUTES[offer.category]}/${offer.slug}`,
+  ) || null;
+};
+
 const OFFER_TITLE_TRANSLATIONS: Partial<Record<string, Partial<Record<Language, string>>>> = {
   'guide-mobile-ip': {
     en: 'Changing IP with mobile internet and airplane mode on Android and iPhone',
@@ -2157,9 +2569,9 @@ const OFFER_DESCRIPTION_TRANSLATIONS: Partial<Record<string, Partial<Record<Lang
     ko: '저렴한 서버 프록시를 제공하는 검증된 서비스입니다. 스크래핑, 자동화, 최고 수준의 IP 신뢰도가 필요하지 않은 작업에 적합합니다.',
   },
   p3: {
-    es: 'Servicio universal con residential, datacenter, ISP y mobile proxies. Buen candidato para cuentas, anuncios, scraping y tareas donde importa el trust del IP.',
-    zh: '通用代理服务，提供住宅、数据中心、ISP 和移动代理。适合账号、广告账户、采集以及重视 IP 信任度的任务。',
-    ko: 'Residential, datacenter, ISP, mobile 프록시를 갖춘 범용 서비스입니다. 계정, 광고 계정, 스크래핑, IP 신뢰도가 중요한 작업에 좋습니다.',
+    es: 'ProxyWing reúne IPv4 normal, ISP, Residential y Mobile en un solo panel. IPv4 cubre la mayoría de tareas cotidianas con cuentas, antidetects, automatización y scraping; para plataformas más estrictas puedes cambiar de tipo sin cambiar de proveedor.',
+    zh: 'ProxyWing 在同一控制面板提供普通 IPv4、ISP、Residential 和 Mobile。IPv4 可满足大多数账号、反检测浏览器、自动化和采集任务；遇到检查更严格的平台时，无需更换服务商即可切换类型。',
+    ko: 'ProxyWing은 일반 IPv4, ISP, Residential, Mobile을 하나의 대시보드에서 제공합니다. IPv4는 대부분의 계정, 안티디텍트, 자동화, 스크래핑 작업에 충분하며 더 엄격한 플랫폼에서는 공급업체를 바꾸지 않고 유형을 전환할 수 있습니다.',
   },
   p4: {
     es: 'Uno de los servicios más grandes por variedad de países y tipos de proxy. Normalmente permite encontrar una opción para casi cualquier tarea.',
@@ -2527,7 +2939,7 @@ export default function App() {
   const [lang, setLang] = useState<Language>(getLanguageFromPath());
   const [activeCategory, setActiveCategory] = useState<CategoryType>(initialCategory);
   const [subFilter, setSubFilter] = useState<SubCategory>(getDefaultSubFilter());
-  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(getOfferFromPath());
   const [isProxyGuideOpen, setIsProxyGuideOpen] = useState(false);
   const [isProxyCheckerOpen, setIsProxyCheckerOpen] = useState(false);
   const [isAntidetectGuideOpen, setIsAntidetectGuideOpen] = useState(false);
@@ -2632,6 +3044,7 @@ export default function App() {
       const nextLanguage = getLanguageFromPath();
       setActiveCategory(nextCategory);
       setLang(nextLanguage);
+      setSelectedOffer(getOfferFromPath());
       setSubFilter(getDefaultSubFilter());
       setSearchQuery('');
     };
@@ -2642,10 +3055,20 @@ export default function App() {
 
   useEffect(() => {
     const sectionSeo = SECTION_SEO[activeCategory];
-    const canonicalUrl = `${SITE_URL}${getLocalizedRoute(activeCategory, lang)}`;
+    const offerSeo = selectedOffer?.slug ? selectedOffer.editorial : undefined;
+    const canonicalPath = selectedOffer?.slug
+      ? getLocalizedOfferRoute(selectedOffer, lang)
+      : getLocalizedRoute(activeCategory, lang);
+    const canonicalUrl = `${SITE_URL}${canonicalPath}`;
     const runtimeSeo = RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
-    const title = runtimeSeo?.title || getLocalizedValue(sectionSeo.title, lang) || sectionSeo.title.en;
-    const description = runtimeSeo?.description || getLocalizedValue(sectionSeo.description, lang) || sectionSeo.description.en;
+    const title = getLocalizedValue(offerSeo?.title, lang)
+      || runtimeSeo?.title
+      || getLocalizedValue(sectionSeo.title, lang)
+      || sectionSeo.title.en;
+    const description = getLocalizedValue(offerSeo?.description, lang)
+      || runtimeSeo?.description
+      || getLocalizedValue(sectionSeo.description, lang)
+      || sectionSeo.description.en;
     const currentLanguageOption = LANGUAGE_OPTIONS.find(({ value }) => value === lang);
 
     const setMeta = (selector: string, attribute: 'name' | 'property', key: string, content: string) => {
@@ -2696,9 +3119,17 @@ export default function App() {
     };
 
     LANGUAGE_OPTIONS.forEach(({ value, hrefLang }) => {
-      setAlternate(hrefLang, `${SITE_URL}${getLocalizedRoute(activeCategory, value)}`);
+      const alternatePath = selectedOffer?.slug
+        ? getLocalizedOfferRoute(selectedOffer, value)
+        : getLocalizedRoute(activeCategory, value);
+      setAlternate(hrefLang, `${SITE_URL}${alternatePath}`);
     });
-    setAlternate('x-default', `${SITE_URL}${CATEGORY_ROUTES[activeCategory]}`);
+    setAlternate(
+      'x-default',
+      `${SITE_URL}${selectedOffer?.slug
+        ? getLocalizedOfferRoute(selectedOffer, 'ru')
+        : CATEGORY_ROUTES[activeCategory]}`,
+    );
 
     let structuredData = document.head.querySelector<HTMLScriptElement>('#structured-data');
     if (!structuredData) {
@@ -2708,6 +3139,48 @@ export default function App() {
       document.head.appendChild(structuredData);
     }
     const sectionOffers = OFFERS.filter((offer) => offer.category === activeCategory);
+    const pageEntity = selectedOffer?.slug
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: title,
+          description,
+          url: canonicalUrl,
+          inLanguage: currentLanguageOption?.inLanguage || 'en',
+          isPartOf: {
+            '@type': 'WebSite',
+            name: "Hopscup's Tools Hub",
+            url: SITE_URL,
+          },
+          mainEntity: {
+            '@type': 'Service',
+            name: offerTitle(selectedOffer),
+            description,
+            url: canonicalUrl,
+            image: `${SITE_URL}${selectedOffer.logoUrl || '/logo.png'}`,
+          },
+        }
+      : {
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: title,
+          description,
+          url: canonicalUrl,
+          isPartOf: {
+            '@type': 'WebSite',
+            name: "Hopscup's Tools Hub",
+            url: SITE_URL,
+          },
+          inLanguage: currentLanguageOption?.inLanguage || 'en',
+          mainEntity: {
+            '@type': 'ItemList',
+            itemListElement: sectionOffers.map((offer, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              name: offerTitle(offer),
+            })),
+          },
+        };
     structuredData.textContent = JSON.stringify([
       {
         '@context': 'https://schema.org',
@@ -2728,29 +3201,9 @@ export default function App() {
           'https://t.me/hopscupcrpt',
         ],
       },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'CollectionPage',
-        name: title,
-        description,
-        url: canonicalUrl,
-        isPartOf: {
-          '@type': 'WebSite',
-          name: "Hopscup's Tools Hub",
-          url: SITE_URL,
-        },
-        inLanguage: currentLanguageOption?.inLanguage || 'en',
-        mainEntity: {
-          '@type': 'ItemList',
-          itemListElement: sectionOffers.map((offer, index) => ({
-            '@type': 'ListItem',
-            position: index + 1,
-            name: offerTitle(offer),
-          })),
-        },
-      },
+      pageEntity,
     ]);
-  }, [activeCategory, lang]);
+  }, [activeCategory, lang, selectedOffer]);
 
   const normalizeSearchText = (value: string) =>
     value
@@ -2889,6 +3342,8 @@ export default function App() {
     whatToPay: tx({ ru: 'Что можно оплачивать:', en: 'Supported Services:', es: 'Servicios compatibles:', zh: '支持的服务：', ko: '지원 서비스:' }),
     nuances: tx({ ru: 'Нюансы и ограничения:', en: 'Nuances & Limitations:', es: 'Matices y limitaciones:', zh: '注意事项与限制：', ko: '주의점 및 제한:' }),
     pros: tx({ ru: 'Плюсы:', en: 'Pros:', es: 'Ventajas:', zh: '优点：', ko: '장점:' }),
+    bestFor: tx({ ru: 'Кому подходит', en: 'Best for', es: 'Para quién sirve', zh: '适合谁', ko: '추천 대상' }),
+    editorialVerdict: tx({ ru: 'Короткий вывод', en: 'Short verdict', es: 'Conclusión breve', zh: '简短结论', ko: '짧은 결론' }),
     rate: tx({ ru: 'Процент пополнения', en: 'Top-up Rate', es: 'Tasa de recarga', zh: '充值比例', ko: '충전 비율' }),
     description: tx({ ru: 'Описание', en: 'Description', es: 'Descripción', zh: '描述', ko: '설명' }),
     emptyCategory: tx({ ru: 'В этой категории пока пусто', en: 'Empty Category', es: 'Categoría vacía', zh: '该分类暂无内容', ko: '비어 있는 카테고리' }),
@@ -2993,20 +3448,65 @@ export default function App() {
       window.history.pushState(null, '', nextRoute);
     }
     setActiveCategory(cat);
+    setSelectedOffer(null);
     setSubFilter(getDefaultSubFilter());
     setSearchQuery('');
     scrollToPageTop();
   };
 
   const handleLanguageChange = (nextLanguage: Language) => {
-    const nextRoute = getLocalizedRoute(activeCategory, nextLanguage);
+    const nextRoute = selectedOffer?.slug
+      ? getLocalizedOfferRoute(selectedOffer, nextLanguage)
+      : getLocalizedRoute(activeCategory, nextLanguage);
     if (window.location.pathname !== nextRoute) {
-      window.history.pushState(null, '', nextRoute);
+      window.history.pushState(selectedOffer?.slug ? { offerModal: true } : null, '', nextRoute);
     }
     setLang(nextLanguage);
     setSearchQuery('');
     scrollToPageTop();
   };
+
+  const handleOfferOpen = (offer: Offer) => {
+    if (offer.slug) {
+      const nextRoute = getLocalizedOfferRoute(offer, lang);
+      if (window.location.pathname !== nextRoute) {
+        window.history.pushState({ offerModal: true }, '', nextRoute);
+      }
+    }
+    setActiveCategory(offer.category);
+    setSubFilter(getDefaultSubFilter());
+    setSelectedOffer(offer);
+  };
+
+  const handleOfferClose = () => {
+    if (!selectedOffer) return;
+
+    if (selectedOffer.slug && window.history.state?.offerModal) {
+      window.history.back();
+      return;
+    }
+
+    if (selectedOffer.slug) {
+      window.history.replaceState(null, '', getLocalizedRoute(selectedOffer.category, lang));
+    }
+    setSelectedOffer(null);
+  };
+
+  useEffect(() => {
+    if (!selectedOffer) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') handleOfferClose();
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedOffer, lang]);
 
   const activeCategoryData = CATEGORIES.find(c => c.id === activeCategory);
   const currentSectionSeo = SECTION_SEO[activeCategory];
@@ -3505,12 +4005,26 @@ export default function App() {
 
                   <div className="space-y-4 relative z-10 pt-1">
                     <div className="flex flex-col gap-3">
-                      <button
-                        onClick={() => setSelectedOffer(offer)}
-                        className="w-full flex items-center justify-center gap-3 py-5 bg-brand-purple hover:bg-white text-white hover:text-brand-purple border-2 border-brand-purple transition-all duration-300 rounded-[1.5rem] font-black text-sm uppercase tracking-[0.2em] shadow-[0_10px_30px_rgba(157,88,255,0.2)] hover:shadow-[0_15px_40px_rgba(157,88,255,0.4)]"
-                      >
-                        {t.open}
-                      </button>
+                      {offer.slug ? (
+                        <a
+                          href={getLocalizedOfferRoute(offer, lang)}
+                          onClick={(event) => {
+                            if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                            event.preventDefault();
+                            handleOfferOpen(offer);
+                          }}
+                          className="w-full flex items-center justify-center gap-3 py-5 bg-brand-purple hover:bg-white text-white hover:text-brand-purple border-2 border-brand-purple transition-all duration-300 rounded-[1.5rem] font-black text-sm uppercase tracking-[0.2em] shadow-[0_10px_30px_rgba(157,88,255,0.2)] hover:shadow-[0_15px_40px_rgba(157,88,255,0.4)]"
+                        >
+                          {t.open}
+                        </a>
+                      ) : (
+                        <button
+                          onClick={() => handleOfferOpen(offer)}
+                          className="w-full flex items-center justify-center gap-3 py-5 bg-brand-purple hover:bg-white text-white hover:text-brand-purple border-2 border-brand-purple transition-all duration-300 rounded-[1.5rem] font-black text-sm uppercase tracking-[0.2em] shadow-[0_10px_30px_rgba(157,88,255,0.2)] hover:shadow-[0_15px_40px_rgba(157,88,255,0.4)]"
+                        >
+                          {t.open}
+                        </button>
+                      )}
                       {offer.promoCode && (
                         <button 
                           onClick={() => copyToClipboard(offer.promoCode || '')}
@@ -4403,27 +4917,27 @@ export default function App() {
                       {tx({
                         ru: (
                         <>
-                          Telegram-боты - это удобные мини-магазины, где чаще всего продаются дешёвые аккаунты и подписки на популярные нейросети и сервисы: Gemini, GPT, Claude, CapCut, Canva и похожие продукты. Про покупку дешёвых ИИ-подписок есть отдельный <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">видео-гайд</a>. Такие боты удобно проверять, когда нужна подписка “здесь и сейчас” или хочется найти цену ниже официальной. Из вариантов можно смотреть <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Лачугу скамера</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a> и <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
+                          Telegram-боты - это удобные мини-магазины, где чаще всего продаются дешёвые аккаунты и подписки на популярные нейросети и сервисы: Gemini, GPT, Claude, CapCut, Canva и похожие продукты. Про покупку дешёвых ИИ-подписок есть отдельный <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">видео-гайд</a>. Такие боты удобно проверять, когда нужна подписка “здесь и сейчас” или хочется найти цену ниже официальной. Из вариантов можно смотреть <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Лачугу скамера</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a> и <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
                         </>
                         ),
                         en: (
                         <>
-                          Telegram bots are convenient mini-shops that usually sell low-cost accounts and subscriptions for popular AI tools and services: Gemini, GPT, Claude, CapCut, Canva, and similar products. There is a separate <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">video guide</a> about buying cheap AI subscriptions. They are useful when you need a subscription right now or want a lower-than-official price. Options include <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, and <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
+                          Telegram bots are convenient mini-shops that usually sell low-cost accounts and subscriptions for popular AI tools and services: Gemini, GPT, Claude, CapCut, Canva, and similar products. There is a separate <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">video guide</a> about buying cheap AI subscriptions. They are useful when you need a subscription right now or want a lower-than-official price. Options include <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a>, and <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
                         </>
                         ),
                         es: (
                         <>
-                          Los bots de Telegram son mini-tiendas cómodas donde suelen vender cuentas y suscripciones baratas para herramientas de IA y servicios populares: Gemini, GPT, Claude, CapCut, Canva y similares. Hay una <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">videoguía</a> aparte sobre suscripciones de IA baratas. Son útiles cuando necesitas una suscripción aquí y ahora o un precio por debajo del oficial. Opciones: <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a> y <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
+                          Los bots de Telegram son mini-tiendas cómodas donde suelen vender cuentas y suscripciones baratas para herramientas de IA y servicios populares: Gemini, GPT, Claude, CapCut, Canva y similares. Hay una <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">videoguía</a> aparte sobre suscripciones de IA baratas. Son útiles cuando necesitas una suscripción aquí y ahora o un precio por debajo del oficial. Opciones: <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a> y <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
                         </>
                         ),
                         zh: (
                         <>
-                          Telegram 机器人是方便的小商店，通常售卖热门 AI 工具和服务的低价账号或订阅：Gemini、GPT、Claude、CapCut、Canva 等。关于购买便宜 AI 订阅有单独的 <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">视频指南</a>。当你需要立刻开通订阅，或想找低于官方价格的方案时很方便。可以看 <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>、<a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>、<a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>、<a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a> 和 <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>。
+                          Telegram 机器人是方便的小商店，通常售卖热门 AI 工具和服务的低价账号或订阅：Gemini、GPT、Claude、CapCut、Canva 等。关于购买便宜 AI 订阅有单独的 <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">视频指南</a>。当你需要立刻开通订阅，或想找低于官方价格的方案时很方便。可以看 <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>、<a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>、<a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>、<a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>、<a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a> 和 <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>。
                         </>
                         ),
                         ko: (
                         <>
-                          Telegram 봇은 Gemini, GPT, Claude, CapCut, Canva 같은 인기 AI 도구와 서비스의 저렴한 계정 및 구독을 파는 미니 상점입니다. 저렴한 AI 구독 구매는 별도 <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">비디오 가이드</a>가 있습니다. 지금 바로 구독이 필요하거나 공식가보다 낮은 가격을 찾을 때 유용합니다. <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>를 볼 수 있습니다.
+                          Telegram 봇은 Gemini, GPT, Claude, CapCut, Canva 같은 인기 AI 도구와 서비스의 저렴한 계정 및 구독을 파는 미니 상점입니다. 저렴한 AI 구독 구매는 별도 <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">비디오 가이드</a>가 있습니다. 지금 바로 구독이 필요하거나 공식가보다 낮은 가격을 찾을 때 유용합니다. <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a>, <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>를 볼 수 있습니다.
                         </>
                         )
                       })}
@@ -4925,17 +5439,21 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setSelectedOffer(null)}
+              onClick={handleOfferClose}
               className="absolute inset-0 bg-black/80 backdrop-blur-sm"
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="offer-modal-title"
               className="relative bg-bg-dark border border-white/10 w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl"
             >
               <button 
-                onClick={() => setSelectedOffer(null)}
+                onClick={handleOfferClose}
+                aria-label={tx({ ru: 'Закрыть', en: 'Close', es: 'Cerrar', zh: '关闭', ko: '닫기' })}
                 className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/5 transition-colors z-20"
               >
                 <X className="w-6 h-6 text-white/40 hover:text-white" />
@@ -4961,7 +5479,7 @@ export default function App() {
                   )}
                   <div className="flex flex-col justify-center">
                     <div className="flex items-center gap-3 mb-2">
-                      <h2 className="text-3xl font-display font-bold tracking-tight">{offerTitle(selectedOffer)}</h2>
+                      <h2 id="offer-modal-title" className="text-3xl font-display font-bold tracking-tight">{offerTitle(selectedOffer)}</h2>
 
                     </div>
                   </div>
@@ -5224,6 +5742,53 @@ export default function App() {
                         </div>
                       )}
                     </div>
+                  )}
+
+                  {selectedOffer.editorial && (
+                    <>
+                      <section className="space-y-4">
+                        <h3 className="flex items-center gap-2 text-[11px] uppercase font-black text-brand-purple tracking-[0.2em]">
+                          <Zap className="w-4 h-4" />
+                          {t.bestFor}
+                        </h3>
+                        <ul className="space-y-3">
+                          {lList(selectedOffer.editorial.bestFor).map((item, index) => (
+                            <li
+                              key={index}
+                              className="flex gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.03] px-4 py-3 text-sm font-medium leading-relaxed text-white/70"
+                            >
+                              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-purple shadow-[0_0_9px_rgba(189,123,255,0.8)]" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
+
+                      <section className="space-y-4">
+                        <h3 className="flex items-center gap-2 text-[11px] uppercase font-black text-brand-orange tracking-[0.2em]">
+                          <Info className="w-4 h-4" />
+                          {t.nuances}
+                        </h3>
+                        <ul className="space-y-3">
+                          {lList(selectedOffer.editorial.considerations).map((item, index) => (
+                            <li key={index} className="flex gap-3 text-sm leading-relaxed text-white/55">
+                              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
+
+                      <section className="rounded-2xl border border-brand-purple/20 bg-brand-purple/[0.07] p-5">
+                        <h3 className="mb-3 flex items-center gap-2 text-[11px] uppercase font-black text-brand-purple tracking-[0.2em]">
+                          <Star className="w-4 h-4" />
+                          {t.editorialVerdict}
+                        </h3>
+                        <p className="text-sm font-medium leading-relaxed text-white/75">
+                          {l(selectedOffer.editorial.verdict)}
+                        </p>
+                      </section>
+                    </>
                   )}
                 </div>
 

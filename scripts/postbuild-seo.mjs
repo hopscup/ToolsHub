@@ -110,6 +110,12 @@ const sections = [
       ko: ['신뢰가 중요한 작업에는 mobile, residential, ISP 프록시가 더 적합합니다.', '스크래핑과 단순 자동화에는 IPv4/IPv6로 충분한 경우가 많습니다.', '구매 전 GEO, 프록시 유형, 결제 방식, fraud score를 확인하세요.'],
     },
     items: ['ProxyShard', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'MobileProxy', 'Proxys.io', 'PPL VPN', 'ProstoVPN', 'Точка G'],
+    serviceLinks: {
+      Proxyline: '/proxy-vpn/proxyline',
+      ProxyWing: '/proxy-vpn/proxywing',
+      Proxy6: '/proxy-vpn/proxy6',
+      MobileProxy: '/proxy-vpn/mobileproxy',
+    },
   },
   {
     id: 'antidetect',
@@ -207,7 +213,7 @@ const sections = [
       zh: ['DarkStore 和 FunPay 是很多任务的良好起点。', 'Telegram 商店常有折扣 AI 订阅。', '购买前务必检查评价、替换规则和商品描述。'],
       ko: ['DarkStore와 FunPay는 많은 작업의 좋은 시작점입니다.', 'Telegram 상점에는 할인된 AI 구독이 자주 있습니다.', '구매 전 리뷰, 교체 규칙, 상품 설명을 확인하세요.'],
     },
-    items: ['DarkStore', 'ACCSMarket', 'GGSel', 'FunPay', 'Plati Market', 'LZT Market', 'Лачуга скамера', 'TheGod Shop', 'Crassus Market', 'Apel0sin', 'Petrovich'],
+    items: ['DarkStore', 'ACCSMarket', 'GGSel', 'FunPay', 'Plati Market', 'LZT Market', 'Лачуга скамера', 'TheGod Shop', 'Crassus Market', 'Apel0sin', 'apel0sin | market 2.0', 'Petrovich'],
   },
   {
     id: 'cards',
@@ -554,7 +560,459 @@ const sections = [
   },
 ];
 
+const servicePages = [
+  {
+    id: 'proxywing',
+    type: 'service',
+    route: '/proxy-vpn/proxywing',
+    priority: '0.85',
+    changefreq: 'monthly',
+    name: 'ProxyWing',
+    logo: '/proxywing.png',
+    title: {
+      ru: 'ProxyWing: обзор прокси, типы, гео и оплата | Hopscup Tools',
+      en: 'ProxyWing review: proxy types, locations, and payments | Hopscup Tools',
+      es: 'ProxyWing: análisis, tipos de proxy, GEO y pagos | Hopscup Tools',
+      zh: 'ProxyWing 评测：代理类型、地区与支付方式 | Hopscup Tools',
+      ko: 'ProxyWing 리뷰: 프록시 유형, 지역 및 결제 | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор ProxyWing: Residential, Datacenter, ISP и Mobile-прокси, 200+ локаций, HTTP/SOCKS5 и оплата картой, СБП/Мир или криптовалютой.',
+      en: 'ProxyWing review covering Residential, Datacenter, ISP, and Mobile proxies, 200+ locations, HTTP/SOCKS5, and card, SBP/Mir, or crypto payments.',
+      es: 'Análisis de ProxyWing: proxies Residential, Datacenter, ISP y Mobile, más de 200 ubicaciones, HTTP/SOCKS5 y pagos con tarjeta, SBP/Mir o cripto.',
+      zh: 'ProxyWing 评测：Residential、Datacenter、ISP 和 Mobile 代理，覆盖 200 多个地区，支持 HTTP/SOCKS5，以及银行卡、SBP/Mir 或加密货币付款。',
+      ko: 'ProxyWing 리뷰: Residential, Datacenter, ISP, Mobile 프록시, 200개 이상의 지역, HTTP/SOCKS5, 카드, SBP/Mir 및 암호화폐 결제.',
+    },
+    heading: {
+      ru: 'ProxyWing: Residential, ISP, Mobile и Datacenter-прокси',
+      en: 'ProxyWing: Residential, ISP, Mobile, and Datacenter proxies',
+      es: 'ProxyWing: proxies Residential, ISP, Mobile y Datacenter',
+      zh: 'ProxyWing：Residential、ISP、Mobile 与 Datacenter 代理',
+      ko: 'ProxyWing: Residential, ISP, Mobile 및 Datacenter 프록시',
+    },
+    intro: {
+      ru: 'ProxyWing удобен тем, что в одном кабинете можно взять обычные IPv4, ISP, Residential и Mobile-прокси. IPv4 подходят для большинства повседневных задач с аккаунтами, антидетектами, автоматизацией и парсингом. Если площадка строже проверяет источник IP, можно перейти на ISP, Residential или Mobile, не меняя сервис.',
+      en: 'ProxyWing is convenient because regular IPv4, ISP, Residential, and Mobile proxies are available in one dashboard. IPv4 covers most everyday account, antidetect, automation, and scraping tasks. If a platform checks the IP source more strictly, you can switch types without changing providers.',
+      es: 'ProxyWing reúne IPv4 normal, ISP, Residential y Mobile en un solo panel. IPv4 cubre la mayoría de tareas cotidianas con cuentas, antidetects, automatización y scraping. Para plataformas más estrictas puedes cambiar de tipo sin cambiar de proveedor.',
+      zh: 'ProxyWing 在同一控制面板提供普通 IPv4、ISP、Residential 和 Mobile。IPv4 可满足大多数账号、反检测浏览器、自动化和采集任务；遇到检查更严格的平台时，无需更换服务商即可切换类型。',
+      ko: 'ProxyWing은 일반 IPv4, ISP, Residential, Mobile을 하나의 대시보드에서 제공합니다. IPv4는 대부분의 계정, 안티디텍트, 자동화, 스크래핑 작업에 충분하며 더 엄격한 플랫폼에서는 공급업체를 바꾸지 않고 유형을 전환할 수 있습니다.',
+    },
+    keywords: {
+      ru: 'ProxyWing обзор, ProxyWing прокси, residential прокси, mobile прокси, ISP прокси, datacenter прокси, купить прокси',
+      en: 'ProxyWing review, ProxyWing proxies, residential proxy, mobile proxy, ISP proxy, datacenter proxy',
+      es: 'ProxyWing análisis, proxies ProxyWing, proxy residential, proxy móvil, proxy ISP, proxy datacenter',
+      zh: 'ProxyWing 评测, ProxyWing 代理, 住宅代理, 移动代理, ISP 代理, 数据中心代理',
+      ko: 'ProxyWing 리뷰, ProxyWing 프록시, residential 프록시, mobile 프록시, ISP 프록시, datacenter 프록시',
+    },
+    pointsHeading: {
+      ru: 'Кому подходит',
+      en: 'Best for',
+      es: 'Para quién sirve',
+      zh: '适合谁',
+      ko: '추천 대상',
+    },
+    itemsHeading: {
+      ru: 'Что учитывать',
+      en: 'What to consider',
+      es: 'Qué tener en cuenta',
+      zh: '需要注意',
+      ko: '확인할 점',
+    },
+    points: {
+      ru: [
+        'Обычные IPv4 для аккаунтов, антидетектов, Gmail, Twitter, Discord, Telegram, web3, Яндекса и нейросетей.',
+        'Парсинг, автоматизация и другие задачи, где важны скорость, стабильность и отдельный IP.',
+        'ISP, Residential и Mobile для площадок, которые строже проверяют источник и траст IP.',
+      ],
+      en: [
+        'Regular IPv4 for accounts, antidetect browsers, Gmail, Twitter, Discord, Telegram, web3, Yandex, and AI tools.',
+        'Scraping, automation, and other tasks where speed, stability, and a separate IP matter.',
+        'ISP, Residential, and Mobile for platforms that check the IP source and trust more strictly.',
+      ],
+      es: [
+        'IPv4 normal para cuentas, antidetects, Gmail, Twitter, Discord, Telegram, web3, Yandex y herramientas de IA.',
+        'Scraping, automatización y otras tareas donde importan la velocidad, la estabilidad y una IP separada.',
+        'ISP, Residential y Mobile para plataformas que revisan con más rigor el origen y la confianza de la IP.',
+      ],
+      zh: [
+        '普通 IPv4 适合账号、反检测浏览器、Gmail、Twitter、Discord、Telegram、web3、Yandex 和 AI 工具。',
+        '适合重视速度、稳定性和独立 IP 的采集、自动化及其他任务。',
+        '对 IP 来源和信任度检查更严格的平台可选择 ISP、Residential 或 Mobile。',
+      ],
+      ko: [
+        '계정, 안티디텍트 브라우저, Gmail, Twitter, Discord, Telegram, web3, Yandex, AI 도구용 일반 IPv4.',
+        '속도, 안정성, 개별 IP가 중요한 스크래핑, 자동화 및 기타 작업.',
+        'IP 출처와 신뢰도를 더 엄격하게 확인하는 플랫폼용 ISP, Residential, Mobile.',
+      ],
+    },
+    items: {
+      ru: [
+        'Если не знаете, какой протокол выбрать для антидетекта или рабочего профиля, начинайте с SOCKS5.',
+        'Residential обычно оплачиваются за использованный трафик, а Mobile обходятся дороже обычных IPv4.',
+        'Datacenter IPv4 могут определяться как proxy/VPN из-за серверного происхождения; для базовых задач это обычно не критично.',
+      ],
+      en: [
+        'If you are unsure which protocol to use for an antidetect browser or work profile, start with SOCKS5.',
+        'Residential is usually billed by used traffic, while Mobile costs more than regular IPv4.',
+        'Datacenter IPv4 may be labeled as proxy/VPN because of its server origin; this is usually not critical for basic tasks.',
+      ],
+      es: [
+        'Si no sabes qué protocolo usar con un antidetect o perfil de trabajo, empieza con SOCKS5.',
+        'Residential normalmente se cobra por tráfico utilizado, mientras Mobile cuesta más que un IPv4 normal.',
+        'Datacenter IPv4 puede marcarse como proxy/VPN por su origen de servidor; normalmente no es crítico para tareas básicas.',
+      ],
+      zh: [
+        '如果不确定反检测浏览器或工作资料该用哪种协议，可先选择 SOCKS5。',
+        'Residential 通常按使用流量计费，Mobile 的价格则高于普通 IPv4。',
+        'Datacenter IPv4 可能因服务器来源而被标记为 proxy/VPN；对基础任务通常并不重要。',
+      ],
+      ko: [
+        '안티디텍트 브라우저나 작업 프로필에서 어떤 프로토콜을 써야 할지 모르겠다면 SOCKS5부터 시작하세요.',
+        'Residential은 보통 사용한 트래픽 기준으로 과금되고 Mobile은 일반 IPv4보다 비쌉니다.',
+        'Datacenter IPv4는 서버 출처로 인해 proxy/VPN으로 표시될 수 있지만 기본 작업에는 대개 중요하지 않습니다.',
+      ],
+    },
+  },
+  {
+    id: 'proxyline',
+    type: 'service',
+    route: '/proxy-vpn/proxyline',
+    priority: '0.8',
+    changefreq: 'monthly',
+    name: 'Proxyline',
+    logo: '/proxyline.png',
+    title: {
+      ru: 'Proxyline: обзор IPv4 и IPv6 прокси | Hopscup Tools',
+      en: 'Proxyline review: IPv4 and IPv6 proxies | Hopscup Tools',
+      es: 'Proxyline: análisis de proxies IPv4 e IPv6 | Hopscup Tools',
+      zh: 'Proxyline 评测：IPv4 与 IPv6 代理 | Hopscup Tools',
+      ko: 'Proxyline 리뷰: IPv4 및 IPv6 프록시 | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор Proxyline: недорогие IPv4 и IPv6 прокси, более 100 стран, варианты оплаты и задачи, для которых подходят серверные IP.',
+      en: 'Proxyline review covering affordable IPv4 and IPv6 proxies, 100+ countries, payment options, and suitable server IP use cases.',
+      es: 'Análisis de Proxyline: proxies IPv4 e IPv6 económicos, más de 100 países, métodos de pago y usos adecuados para IP de servidor.',
+      zh: 'Proxyline 评测：价格实惠的 IPv4 与 IPv6 代理、覆盖 100 多个国家、付款方式以及服务器 IP 的适用场景。',
+      ko: 'Proxyline 리뷰: 합리적인 IPv4 및 IPv6 프록시, 100개 이상의 국가, 결제 수단과 서버 IP 활용 사례.',
+    },
+    heading: {
+      ru: 'Proxyline: недорогие IPv4 и IPv6 прокси',
+      en: 'Proxyline: affordable IPv4 and IPv6 proxies',
+      es: 'Proxyline: proxies IPv4 e IPv6 económicos',
+      zh: 'Proxyline：价格实惠的 IPv4 与 IPv6 代理',
+      ko: 'Proxyline: 합리적인 IPv4 및 IPv6 프록시',
+    },
+    intro: {
+      ru: 'Proxyline предлагает обычные серверные IPv4 и IPv6. Это понятный вариант для парсинга, автоматизации, антидетектов и аккаунтных задач, где не требуется мобильный или резидентский источник IP.',
+      en: 'Proxyline offers regular server IPv4 and IPv6 proxies. It is a straightforward option for scraping, automation, antidetect browsers, and account tasks that do not require a mobile or residential IP source.',
+      es: 'Proxyline ofrece proxies IPv4 e IPv6 de servidor. Es una opción sencilla para scraping, automatización, antidetects y cuentas que no necesitan una IP móvil o residencial.',
+      zh: 'Proxyline 提供普通服务器 IPv4 和 IPv6。适合不需要移动或住宅 IP 来源的采集、自动化、反检测浏览器和账号任务。',
+      ko: 'Proxyline은 일반 서버 IPv4 및 IPv6 프록시를 제공합니다. 모바일 또는 주거용 IP가 필요 없는 스크래핑, 자동화, 안티디텍트와 계정 작업에 적합합니다.',
+    },
+    keywords: {
+      ru: 'Proxyline обзор, Proxyline прокси, IPv4 прокси, IPv6 прокси, серверные прокси, купить прокси',
+      en: 'Proxyline review, Proxyline proxies, IPv4 proxy, IPv6 proxy, server proxies',
+      es: 'Proxyline análisis, proxies Proxyline, proxy IPv4, proxy IPv6, proxies de servidor',
+      zh: 'Proxyline 评测, Proxyline 代理, IPv4 代理, IPv6 代理, 服务器代理',
+      ko: 'Proxyline 리뷰, Proxyline 프록시, IPv4 프록시, IPv6 프록시, 서버 프록시',
+    },
+    pointsHeading: {
+      ru: 'Кому подходит',
+      en: 'Best for',
+      es: 'Para quién sirve',
+      zh: '适合谁',
+      ko: '추천 대상',
+    },
+    itemsHeading: {
+      ru: 'Что учитывать',
+      en: 'What to consider',
+      es: 'Qué tener en cuenta',
+      zh: '需要注意',
+      ko: '확인할 점',
+    },
+    points: {
+      ru: [
+        'Парсинг, автоматизация и другие задачи, где важны стабильный IP и понятная стоимость.',
+        'Работа с аккаунтами и антидетектами, когда площадке подходит обычный серверный IPv4.',
+        'Покупка нескольких отдельных IP нужной страны без оплаты за трафик.',
+      ],
+      en: [
+        'Scraping, automation, and other tasks where a stable IP and predictable price matter.',
+        'Accounts and antidetect browsers when a regular server IPv4 is suitable for the target platform.',
+        'Buying several separate IPs in the required country without traffic-based billing.',
+      ],
+      es: [
+        'Scraping, automatización y tareas donde importan una IP estable y un precio predecible.',
+        'Cuentas y navegadores antidetect cuando la plataforma admite un IPv4 de servidor normal.',
+        'Comprar varias IP separadas del país necesario sin pagar por tráfico.',
+      ],
+      zh: [
+        '适合需要稳定 IP 和明确价格的采集、自动化及其他任务。',
+        '目标平台可以使用普通服务器 IPv4 时，适合账号和反检测浏览器。',
+        '无需按流量计费即可购买所需国家的多个独立 IP。',
+      ],
+      ko: [
+        '안정적인 IP와 예측 가능한 비용이 중요한 스크래핑, 자동화 및 기타 작업.',
+        '대상 플랫폼에서 일반 서버 IPv4를 사용할 수 있는 계정 및 안티디텍트 브라우저 작업.',
+        '트래픽 과금 없이 필요한 국가의 개별 IP 여러 개를 구매하는 경우.',
+      ],
+    },
+    items: {
+      ru: [
+        'Это серверные IPv4 и IPv6, поэтому некоторые проверки могут отмечать их как proxy или VPN.',
+        'IPv6 стоит брать только для сервисов и программ, которые его поддерживают.',
+        'Для площадок со строгой проверкой источника IP может понадобиться ISP, Residential или Mobile у другого сервиса.',
+      ],
+      en: [
+        'These are server IPv4 and IPv6 addresses, so some checks may label them as proxy or VPN.',
+        'Choose IPv6 only for services and software that support it.',
+        'Platforms with stricter IP source checks may require ISP, Residential, or Mobile proxies from another provider.',
+      ],
+      es: [
+        'Son direcciones IPv4 e IPv6 de servidor, por lo que algunas verificaciones pueden marcarlas como proxy o VPN.',
+        'Elige IPv6 solo para servicios y programas compatibles.',
+        'Las plataformas con controles más estrictos pueden requerir ISP, Residential o Mobile de otro proveedor.',
+      ],
+      zh: [
+        '这些是服务器 IPv4 和 IPv6，因此部分检测可能会将其标记为代理或 VPN。',
+        '只有目标服务和软件支持时才选择 IPv6。',
+        '对 IP 来源检查更严格的平台可能需要其他服务商的 ISP、Residential 或 Mobile 代理。',
+      ],
+      ko: [
+        '서버 IPv4 및 IPv6이므로 일부 검사에서 프록시 또는 VPN으로 표시될 수 있습니다.',
+        'IPv6는 해당 서비스와 프로그램이 지원할 때만 선택하세요.',
+        'IP 출처를 엄격하게 확인하는 플랫폼은 다른 공급업체의 ISP, Residential 또는 Mobile이 필요할 수 있습니다.',
+      ],
+    },
+  },
+  {
+    id: 'proxy6',
+    type: 'service',
+    route: '/proxy-vpn/proxy6',
+    priority: '0.8',
+    changefreq: 'monthly',
+    name: 'Proxy6',
+    logo: '/proxy6.png',
+    title: {
+      ru: 'Proxy6: обзор IPv4, IPv6 и MTProto прокси | Hopscup Tools',
+      en: 'Proxy6 review: IPv4, IPv6, and MTProto proxies | Hopscup Tools',
+      es: 'Proxy6: análisis de proxies IPv4, IPv6 y MTProto | Hopscup Tools',
+      zh: 'Proxy6 评测：IPv4、IPv6 与 MTProto 代理 | Hopscup Tools',
+      ko: 'Proxy6 리뷰: IPv4, IPv6 및 MTProto 프록시 | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор Proxy6: IPv4, IPv6, Shared IPv4 и MTProto прокси, более 70 стран, способы оплаты и подходящие сценарии использования.',
+      en: 'Proxy6 review covering IPv4, IPv6, Shared IPv4, and MTProto proxies, 70+ countries, payment methods, and suitable use cases.',
+      es: 'Análisis de Proxy6: proxies IPv4, IPv6, Shared IPv4 y MTProto, más de 70 países, pagos y usos recomendados.',
+      zh: 'Proxy6 评测：IPv4、IPv6、Shared IPv4 和 MTProto 代理，覆盖 70 多个国家、付款方式及适用场景。',
+      ko: 'Proxy6 리뷰: IPv4, IPv6, Shared IPv4, MTProto 프록시, 70개 이상의 국가, 결제 수단과 활용 사례.',
+    },
+    heading: {
+      ru: 'Proxy6: IPv4, IPv6, Shared IPv4 и MTProto',
+      en: 'Proxy6: IPv4, IPv6, Shared IPv4, and MTProto',
+      es: 'Proxy6: IPv4, IPv6, Shared IPv4 y MTProto',
+      zh: 'Proxy6：IPv4、IPv6、Shared IPv4 与 MTProto',
+      ko: 'Proxy6: IPv4, IPv6, Shared IPv4 및 MTProto',
+    },
+    intro: {
+      ru: 'Proxy6 подойдет тем, кому нужны доступные серверные прокси и разные форматы покупки. В сервисе есть отдельные IPv4, IPv6, Shared IPv4 и MTProto для Telegram.',
+      en: 'Proxy6 suits users who need affordable server proxies and several purchase formats. The service offers dedicated IPv4, IPv6, Shared IPv4, and MTProto for Telegram.',
+      es: 'Proxy6 sirve para quienes necesitan proxies de servidor económicos y varios formatos de compra. Ofrece IPv4 individual, IPv6, Shared IPv4 y MTProto para Telegram.',
+      zh: 'Proxy6 适合需要价格实惠的服务器代理和多种购买方式的用户。服务提供独立 IPv4、IPv6、Shared IPv4 以及 Telegram 使用的 MTProto。',
+      ko: 'Proxy6는 저렴한 서버 프록시와 다양한 구매 방식을 원하는 사용자에게 적합합니다. 개별 IPv4, IPv6, Shared IPv4와 Telegram용 MTProto를 제공합니다.',
+    },
+    keywords: {
+      ru: 'Proxy6 обзор, Proxy6 прокси, IPv4 прокси, IPv6 прокси, Shared IPv4, MTProto прокси',
+      en: 'Proxy6 review, Proxy6 proxies, IPv4 proxy, IPv6 proxy, Shared IPv4, MTProto proxy',
+      es: 'Proxy6 análisis, proxies Proxy6, proxy IPv4, proxy IPv6, Shared IPv4, proxy MTProto',
+      zh: 'Proxy6 评测, Proxy6 代理, IPv4 代理, IPv6 代理, Shared IPv4, MTProto 代理',
+      ko: 'Proxy6 리뷰, Proxy6 프록시, IPv4 프록시, IPv6 프록시, Shared IPv4, MTProto 프록시',
+    },
+    pointsHeading: {
+      ru: 'Кому подходит',
+      en: 'Best for',
+      es: 'Para quién sirve',
+      zh: '适合谁',
+      ko: '추천 대상',
+    },
+    itemsHeading: {
+      ru: 'Что учитывать',
+      en: 'What to consider',
+      es: 'Qué tener en cuenta',
+      zh: '需要注意',
+      ko: '확인할 점',
+    },
+    points: {
+      ru: [
+        'Повседневные задачи с аккаунтами, антидетектами, автоматизацией и отдельными IP.',
+        'Работа с большим количеством прокси, когда важна доступная цена.',
+        'MTProto для Telegram и Shared IPv4 для задач, где выделенный адрес не обязателен.',
+      ],
+      en: [
+        'Daily account, antidetect, automation, and separate IP tasks.',
+        'Working with many proxies when an affordable price matters.',
+        'MTProto for Telegram and Shared IPv4 when a dedicated address is not required.',
+      ],
+      es: [
+        'Tareas cotidianas con cuentas, antidetects, automatización e IP separadas.',
+        'Trabajo con muchos proxies cuando importa un precio accesible.',
+        'MTProto para Telegram y Shared IPv4 cuando no necesitas una dirección dedicada.',
+      ],
+      zh: [
+        '适合账号、反检测浏览器、自动化和独立 IP 等日常任务。',
+        '需要大量代理并重视价格时使用。',
+        'MTProto 适合 Telegram，Shared IPv4 适合不要求独享地址的任务。',
+      ],
+      ko: [
+        '계정, 안티디텍트, 자동화와 개별 IP가 필요한 일상 작업.',
+        '합리적인 가격으로 많은 프록시를 사용해야 하는 경우.',
+        'Telegram용 MTProto와 전용 주소가 필요 없는 작업용 Shared IPv4.',
+      ],
+    },
+    items: {
+      ru: [
+        'Shared IPv4 используется несколькими клиентами и подходит не для каждой площадки.',
+        'IPv6 нужно выбирать только при подтвержденной поддержке со стороны нужного сервиса.',
+        'Обычные IPv4 могут определяться как proxy или VPN из-за серверного происхождения, для базовых задач это обычно не критично.',
+      ],
+      en: [
+        'Shared IPv4 is used by multiple customers and is not suitable for every platform.',
+        'Choose IPv6 only when the target service is confirmed to support it.',
+        'Regular IPv4 may be labeled as proxy or VPN because of its server origin, which is usually not critical for basic tasks.',
+      ],
+      es: [
+        'Shared IPv4 se comparte entre varios clientes y no sirve para todas las plataformas.',
+        'Elige IPv6 solo cuando el servicio de destino confirme que es compatible.',
+        'Un IPv4 normal puede marcarse como proxy o VPN por su origen de servidor, algo que normalmente no es crítico para tareas básicas.',
+      ],
+      zh: [
+        'Shared IPv4 由多个客户共同使用，并不适合所有平台。',
+        '只有确认目标服务支持时才选择 IPv6。',
+        '普通 IPv4 可能因服务器来源被标记为代理或 VPN，对基础任务通常并不重要。',
+      ],
+      ko: [
+        'Shared IPv4는 여러 고객이 함께 사용하므로 모든 플랫폼에 적합하지는 않습니다.',
+        '대상 서비스의 지원이 확인된 경우에만 IPv6를 선택하세요.',
+        '일반 IPv4는 서버 출처로 인해 프록시 또는 VPN으로 표시될 수 있지만 기본 작업에는 대개 중요하지 않습니다.',
+      ],
+    },
+  },
+  {
+    id: 'mobileproxy',
+    type: 'service',
+    route: '/proxy-vpn/mobileproxy',
+    priority: '0.8',
+    changefreq: 'monthly',
+    name: 'MobileProxy',
+    logo: '/mobileproxy.png',
+    title: {
+      ru: 'MobileProxy: обзор мобильных прокси со сменой IP | Hopscup Tools',
+      en: 'MobileProxy review: mobile proxies with IP rotation | Hopscup Tools',
+      es: 'MobileProxy: análisis de proxies móviles con cambio de IP | Hopscup Tools',
+      zh: 'MobileProxy 评测：支持更换 IP 的移动代理 | Hopscup Tools',
+      ko: 'MobileProxy 리뷰: IP 변경이 가능한 모바일 프록시 | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор MobileProxy: мобильные прокси со сменой IP, более 20 стран, способы оплаты и задачи, где нужен мобильный источник адреса.',
+      en: 'MobileProxy review covering rotating mobile proxies, 20+ countries, payment methods, and tasks that need a mobile IP source.',
+      es: 'Análisis de MobileProxy: proxies móviles con cambio de IP, más de 20 países, métodos de pago y usos que necesitan una IP móvil.',
+      zh: 'MobileProxy 评测：支持更换 IP 的移动代理、覆盖 20 多个国家、付款方式以及需要移动网络 IP 的场景。',
+      ko: 'MobileProxy 리뷰: IP 변경이 가능한 모바일 프록시, 20개 이상의 국가, 결제 수단과 모바일 IP가 필요한 활용 사례.',
+    },
+    heading: {
+      ru: 'MobileProxy: мобильные прокси со сменой IP',
+      en: 'MobileProxy: mobile proxies with IP rotation',
+      es: 'MobileProxy: proxies móviles con cambio de IP',
+      zh: 'MobileProxy：支持更换 IP 的移动代理',
+      ko: 'MobileProxy: IP 변경이 가능한 모바일 프록시',
+    },
+    intro: {
+      ru: 'MobileProxy предлагает мобильные адреса с возможностью смены IP. Такой тип нужен, когда площадка строже относится к серверным прокси или рабочей схеме важен мобильный оператор.',
+      en: 'MobileProxy provides mobile addresses with IP rotation. This type is useful when a platform treats server proxies more strictly or the workflow requires a mobile carrier.',
+      es: 'MobileProxy ofrece direcciones móviles con cambio de IP. Este tipo resulta útil cuando una plataforma controla con más rigor los proxies de servidor o el flujo necesita un operador móvil.',
+      zh: 'MobileProxy 提供支持更换 IP 的移动地址。目标平台严格限制服务器代理，或工作流程需要移动运营商时，这类代理更合适。',
+      ko: 'MobileProxy는 IP 변경이 가능한 모바일 주소를 제공합니다. 플랫폼이 서버 프록시를 엄격하게 확인하거나 작업에 모바일 통신사가 필요할 때 유용합니다.',
+    },
+    keywords: {
+      ru: 'MobileProxy обзор, мобильные прокси, прокси со сменой IP, mobile proxy, прокси для аккаунтов',
+      en: 'MobileProxy review, mobile proxies, rotating mobile proxy, mobile IP, proxies for accounts',
+      es: 'MobileProxy análisis, proxies móviles, proxy con cambio IP, IP móvil, proxies para cuentas',
+      zh: 'MobileProxy 评测, 移动代理, 更换 IP, 移动 IP, 账号代理',
+      ko: 'MobileProxy 리뷰, 모바일 프록시, IP 변경 프록시, 모바일 IP, 계정 프록시',
+    },
+    pointsHeading: {
+      ru: 'Кому подходит',
+      en: 'Best for',
+      es: 'Para quién sirve',
+      zh: '适合谁',
+      ko: '추천 대상',
+    },
+    itemsHeading: {
+      ru: 'Что учитывать',
+      en: 'What to consider',
+      es: 'Qué tener en cuenta',
+      zh: '需要注意',
+      ko: '확인할 점',
+    },
+    points: {
+      ru: [
+        'Площадки, которые строже относятся к серверным IP и лучше принимают мобильные адреса.',
+        'Социальные сети, приложения и аккаунтные задачи, где полезна смена IP по кнопке.',
+        'Рабочие схемы, которым нужен мобильный оператор и конкретная страна.',
+      ],
+      en: [
+        'Platforms that treat server IPs more strictly and accept mobile addresses more readily.',
+        'Social networks, apps, and account tasks where one-click IP rotation is useful.',
+        'Workflows that require a mobile carrier and a specific country.',
+      ],
+      es: [
+        'Plataformas más estrictas con IP de servidor que aceptan mejor direcciones móviles.',
+        'Redes sociales, aplicaciones y tareas con cuentas donde conviene cambiar la IP con un botón.',
+        'Flujos de trabajo que necesitan un operador móvil y un país concreto.',
+      ],
+      zh: [
+        '适合严格限制服务器 IP、对移动地址接受度更高的平台。',
+        '适合需要一键更换 IP 的社交网络、应用和账号任务。',
+        '适合需要特定国家和移动运营商的工作流程。',
+      ],
+      ko: [
+        '서버 IP를 엄격하게 확인하고 모바일 주소를 더 잘 받아들이는 플랫폼.',
+        '버튼 한 번으로 IP를 변경하면 유용한 소셜 네트워크, 앱과 계정 작업.',
+        '특정 국가와 모바일 통신사가 필요한 작업 방식.',
+      ],
+    },
+    items: {
+      ru: [
+        'Мобильные прокси обычно стоят дороже обычных IPv4, поэтому брать их для каждой задачи необязательно.',
+        'Заранее проверьте доступные страны, оператора и способ смены IP.',
+        'Если площадке подходит обычный IPv4, он может оказаться проще и выгоднее.',
+      ],
+      en: [
+        'Mobile proxies usually cost more than regular IPv4, so they are not necessary for every task.',
+        'Check the available countries, carrier, and IP rotation method before buying.',
+        'If a regular IPv4 works for the platform, it may be simpler and more affordable.',
+      ],
+      es: [
+        'Los proxies móviles suelen costar más que un IPv4 normal, por lo que no son necesarios para todas las tareas.',
+        'Comprueba los países, el operador y el método de cambio de IP antes de comprar.',
+        'Si la plataforma acepta un IPv4 normal, puede ser una opción más sencilla y económica.',
+      ],
+      zh: [
+        '移动代理通常比普通 IPv4 更贵，因此并非所有任务都需要使用。',
+        '购买前请确认可用国家、运营商和更换 IP 的方式。',
+        '如果平台可以使用普通 IPv4，它可能更简单也更划算。',
+      ],
+      ko: [
+        '모바일 프록시는 일반 IPv4보다 비싼 편이므로 모든 작업에 필요한 것은 아닙니다.',
+        '구매 전에 지원 국가, 통신사와 IP 변경 방식을 확인하세요.',
+        '플랫폼에서 일반 IPv4가 통한다면 더 간단하고 저렴할 수 있습니다.',
+      ],
+    },
+  },
+];
+
 const sectionPages = sections.filter((section) => section.route !== '/');
+const indexablePages = [...sectionPages, ...servicePages];
 const fallbackLabels = {
   ru: { includes: 'Что есть в разделе', services: 'Сервисы', nav: 'Разделы сайта' },
   en: { includes: 'What this page includes', services: 'Services', nav: 'Site sections' },
@@ -592,7 +1050,15 @@ const renderStaticContent = (section, language) => {
   const title = getLanguage(section.heading, language);
   const intro = getLanguage(section.intro, language);
   const points = getLanguage(section.points, language);
+  const items = Array.isArray(section.items) ? section.items : getLanguage(section.items, language);
   const labels = fallbackLabels[language.code] || fallbackLabels.en;
+  const pointsHeading = section.pointsHeading ? getLanguage(section.pointsHeading, language) : labels.includes;
+  const itemsHeading = section.itemsHeading ? getLanguage(section.itemsHeading, language) : labels.services;
+  const renderItem = (item) => {
+    const serviceRoute = section.serviceLinks?.[item];
+    if (!serviceRoute) return escapeHtml(item);
+    return `<a href="${language.prefix}${serviceRoute}">${escapeHtml(item)}</a>`;
+  };
 
   return `
       <article class="seo-fallback" aria-label="${escapeHtml(title)}">
@@ -602,15 +1068,15 @@ const renderStaticContent = (section, language) => {
           <p>${escapeHtml(intro)}</p>
         </header>
         <section>
-          <h2>${escapeHtml(labels.includes)}</h2>
+          <h2>${escapeHtml(pointsHeading)}</h2>
           <ul>
             ${points.map((point) => `<li>${escapeHtml(point)}</li>`).join('\n            ')}
           </ul>
         </section>
         <section>
-          <h2>${escapeHtml(labels.services)}</h2>
+          <h2>${escapeHtml(itemsHeading)}</h2>
           <ul>
-            ${section.items.map((item) => `<li>${escapeHtml(item)}</li>`).join('\n            ')}
+            ${items.map((item) => `<li>${renderItem(item)}</li>`).join('\n            ')}
           </ul>
         </section>
         <nav aria-label="${escapeHtml(labels.nav)}">
@@ -638,6 +1104,27 @@ const collectionSchema = (section, language) => ({
       position: index + 1,
       name,
     })),
+  },
+});
+
+const serviceSchema = (section, language) => ({
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: getLanguage(section.title, language),
+  description: getLanguage(section.description, language),
+  url: absoluteUrl(section, language),
+  inLanguage: language.htmlLang,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: "Hopscup's Tools Hub",
+    url: siteUrl,
+  },
+  mainEntity: {
+    '@type': 'Service',
+    name: section.name,
+    description: getLanguage(section.description, language),
+    url: absoluteUrl(section, language),
+    image: `${siteUrl}${section.logo}`,
   },
 });
 
@@ -670,7 +1157,10 @@ const replaceHead = (html, section, language) => {
   const description = escapeHtml(getLanguage(section.description, language));
   const keywords = escapeHtml(getLanguage(section.keywords, language));
   const url = absoluteUrl(section, language);
-  const structuredData = [websiteSchema(language), organizationSchema, collectionSchema(section, language)];
+  const pageSchema = section.type === 'service'
+    ? serviceSchema(section, language)
+    : collectionSchema(section, language);
+  const structuredData = [websiteSchema(language), organizationSchema, pageSchema];
 
   return html
     .replace(/<html lang=".*?">/, `<html lang="${language.htmlLang}">`)
@@ -705,7 +1195,7 @@ const renderSitemap = () => {
     ].join('\n');
 
   const urls = languages.flatMap((language) =>
-    sectionPages.map((section) => `  <url>
+    indexablePages.map((section) => `  <url>
     <loc>${escapeHtml(absoluteUrl(section, language))}</loc>
 ${sitemapAlternates(section)}
     <changefreq>${section.changefreq}</changefreq>
@@ -727,7 +1217,7 @@ const defaultLanguage = languages.find((language) => language.code === 'ru');
 
 await Promise.all(
   languages.flatMap((language) =>
-    sectionPages.map(async (section) => {
+    indexablePages.map(async (section) => {
       const pagePath = localizedPath(section, language);
       const routeDir = path.join(distDir, pagePath);
       await mkdir(routeDir, { recursive: true });
