@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
+import { cryptoExchangePages } from './data/cryptoExchangePages.js';
 import { foreignCardPages } from './data/foreignCardPages.js';
 import { 
   Gamepad2,
@@ -1289,6 +1290,22 @@ const FOREIGN_CARD_PAGE_BY_ID = Object.fromEntries(
   editorial: NonNullable<Offer['editorial']>;
 }>;
 
+const CRYPTO_EXCHANGE_PAGE_BY_ID = Object.fromEntries(
+  cryptoExchangePages.map((page) => [
+    page.id,
+    {
+      ...page,
+      editorial: {
+        title: page.title,
+        ...page.editorial,
+      },
+    },
+  ]),
+) as Record<string, {
+  slug: string;
+  editorial: NonNullable<Offer['editorial']>;
+}>;
+
 const OFFERS: Offer[] = [
   // GUIDES
   {
@@ -2303,30 +2320,41 @@ const OFFERS: Offer[] = [
   {
     id: 'prosto-exchange',
     category: 'Crypto',
+    slug: CRYPTO_EXCHANGE_PAGE_BY_ID['prosto-exchange'].slug,
+    editorial: CRYPTO_EXCHANGE_PAGE_BY_ID['prosto-exchange'].editorial,
     name: 'Prosto Exchange',
-    description: {
-      ru: 'Обменник для покупки и продажи криптовалюты через Telegram. Удобен, когда нужно быстро пополнить рабочий баланс, вывести крипту в рубли или провести обмен через менеджера. Подходит и для небольших онлайн-операций, и для более крупных сделок, где лучше заранее уточнить курс, лимиты и формат обмена.',
-      en: 'A Telegram-based exchange service for buying and selling crypto. Useful for topping up work balances, cashing out crypto to RUB, or arranging an exchange with a manager. Works for quick online operations and larger deals where rate, limits, and format should be confirmed first.'
-    },
+    description: CRYPTO_EXCHANGE_PAGE_BY_ID['prosto-exchange'].editorial.description,
     url: 'https://t.me/prostoexbot?start=467483565',
     logoUrl: '/prosto-exchange.png',
     isBestChoice: true,
     details: {
       geo: {
         ru: 'Онлайн: РФ/СНГ; офлайн: по доступным городам через бота',
-        en: 'Online: RU/CIS; offline: available cities via bot'
+        en: 'Online: RU/CIS; offline: available cities via bot',
+        es: 'Online: RU/CEI; presencial: ciudades disponibles en el bot',
+        zh: '在线：RU/CIS；线下：机器人中显示的可用城市',
+        ko: '온라인: RU/CIS, 오프라인: 봇에서 지원 도시 확인'
       },
       types: {
         ru: 'Покупка/продажа крипты, онлайн обмен, офлайн обмен',
-        en: 'Crypto buy/sell, online exchange, offline exchange'
+        en: 'Crypto buy/sell, online exchange, offline exchange',
+        es: 'Compra y venta de cripto, cambio online y presencial',
+        zh: '加密货币买卖、在线兑换、线下兑换',
+        ko: '암호화폐 매매, 온라인 환전, 오프라인 환전'
       },
       paymentMethods: {
         ru: 'Банковские карты, СБП, USDT/криптовалюта',
-        en: 'Bank cards, SBP, USDT/crypto'
+        en: 'Bank cards, SBP, USDT/crypto',
+        es: 'Tarjetas bancarias, SBP, USDT/cripto',
+        zh: '银行卡、SBP、USDT/加密货币',
+        ko: '은행 카드, SBP, USDT/암호화폐'
       },
       supports: {
         ru: ['Покупка USDT и другой крипты', 'Продажа крипты на карту/СБП', 'Обмен крипта-крипта', 'Офлайн обмен через менеджера'],
-        en: ['Buying USDT and other crypto', 'Selling crypto to card/SBP', 'Crypto-to-crypto exchange', 'Offline exchange via manager']
+        en: ['Buying USDT and other crypto', 'Selling crypto to card/SBP', 'Crypto-to-crypto exchange', 'Offline exchange via manager'],
+        es: ['Compra de USDT y otras criptos', 'Venta de cripto a tarjeta o SBP', 'Cambio entre criptomonedas', 'Cambio presencial con gestor'],
+        zh: ['购买 USDT 和其他加密货币', '出售加密货币到银行卡或 SBP', '币币兑换', '通过经理进行线下兑换'],
+        ko: ['USDT 및 기타 암호화폐 구매', '카드 또는 SBP로 암호화폐 판매', '암호화폐 간 교환', '매니저를 통한 오프라인 환전']
       },
       nuances: {
         ru: [
@@ -2340,40 +2368,72 @@ const OFFERS: Offer[] = [
           'For larger amounts, agree on the format with a manager first.',
           'Before sending crypto, double-check the network, wallet address, and amount.',
           'For the first exchange, start with a small test amount.'
+        ],
+        es: [
+          'Comprueba la tasa actual y el importe mínimo en el bot antes del cambio.',
+          'Para importes grandes, acuerda primero el formato con un gestor.',
+          'Antes de enviar cripto, comprueba de nuevo la red, la dirección y el importe.',
+          'En el primer cambio, empieza con una cantidad pequeña de prueba.'
+        ],
+        zh: [
+          '兑换前在机器人中检查当前汇率和最低金额。',
+          '大额交易应先与经理确认交易方式。',
+          '发送加密货币前再次检查网络、钱包地址和金额。',
+          '第一次兑换建议先用小额测试。'
+        ],
+        ko: [
+          '환전 전에 봇에서 현재 환율과 최소 금액을 확인하세요.',
+          '큰 금액은 매니저와 거래 방식을 먼저 합의하세요.',
+          '암호화폐 전송 전에 네트워크, 지갑 주소와 금액을 다시 확인하세요.',
+          '첫 환전은 소액으로 테스트하세요.'
         ]
       },
       pros: {
         ru: ['Работает прямо в Telegram', 'Есть онлайн и офлайн формат', 'Удобно для пополнения и вывода рабочих бюджетов'],
-        en: ['Works directly in Telegram', 'Online and offline formats', 'Convenient for topping up and cashing out work budgets']
+        en: ['Works directly in Telegram', 'Online and offline formats', 'Convenient for topping up and cashing out work budgets'],
+        es: ['Funciona directamente en Telegram', 'Formato online y presencial', 'Cómodo para recargar y retirar presupuestos de trabajo'],
+        zh: ['直接在 Telegram 中操作', '支持在线和线下模式', '适合补充和提取工作资金'],
+        ko: ['Telegram에서 바로 이용', '온라인과 오프라인 방식 지원', '작업 예산 충전과 출금에 편리']
       }
     }
   },
   {
     id: 'keine-exchange',
     category: 'Crypto',
+    slug: CRYPTO_EXCHANGE_PAGE_BY_ID['keine-exchange'].slug,
+    editorial: CRYPTO_EXCHANGE_PAGE_BY_ID['keine-exchange'].editorial,
     name: 'Keine Exchange',
-    description: {
-      ru: 'Обменник с веб-заявками и офлайн-направлениями для покупки, продажи и обмена криптовалюты. Хорошо подходит, когда нужно работать с наличными, USDT или крупными суммами через понятную заявку на сайте. Перед сделкой важно проверять актуальный курс, лимиты, город и условия AML/KYC.',
-      en: 'An exchange service with web orders and offline directions for buying, selling, and swapping crypto. Useful for cash deals, USDT operations, and larger amounts through a structured website request. Before a deal, check the current rate, limits, city, and AML/KYC terms.'
-    },
+    description: CRYPTO_EXCHANGE_PAGE_BY_ID['keine-exchange'].editorial.description,
     url: 'https://keine-exchange.com/?rid=63626',
     logoUrl: '/keine-exchange.png',
     details: {
       geo: {
         ru: 'Онлайн + офлайн офисы: Москва, СПб, Екатеринбург, Краснодар, Сочи, Самара и др.',
-        en: 'Online + offline offices: Moscow, Saint Petersburg, Yekaterinburg, Krasnodar, Sochi, Samara, and more'
+        en: 'Online + offline offices: Moscow, Saint Petersburg, Yekaterinburg, Krasnodar, Sochi, Samara, and more',
+        es: 'Online y oficinas: Moscú, San Petersburgo, Ekaterimburgo, Krasnodar, Sochi, Samara y más',
+        zh: '在线及线下办公室：莫斯科、圣彼得堡、叶卡捷琳堡、克拉斯诺达尔、索契、萨马拉等',
+        ko: '온라인 및 오프라인 사무실: 모스크바, 상트페테르부르크, 예카테린부르크, 크라스노다르, 소치, 사마라 등'
       },
       types: {
         ru: 'Наличные, USDT, BTC, ETH, LTC, XMR, крипта-крипта',
-        en: 'Cash, USDT, BTC, ETH, LTC, XMR, crypto-to-crypto'
+        en: 'Cash, USDT, BTC, ETH, LTC, XMR, crypto-to-crypto',
+        es: 'Efectivo, USDT, BTC, ETH, LTC, XMR y cambio entre criptos',
+        zh: '现金、USDT、BTC、ETH、LTC、XMR、币币兑换',
+        ko: '현금, USDT, BTC, ETH, LTC, XMR, 암호화폐 간 교환'
       },
       paymentMethods: {
         ru: 'Наличные RUB/USD/EUR, банковские направления, криптовалюта',
-        en: 'Cash RUB/USD/EUR, bank directions, crypto'
+        en: 'Cash RUB/USD/EUR, bank directions, crypto',
+        es: 'Efectivo RUB/USD/EUR, transferencias bancarias y cripto',
+        zh: 'RUB/USD/EUR 现金、银行转账、加密货币',
+        ko: 'RUB/USD/EUR 현금, 은행 송금, 암호화폐'
       },
       supports: {
         ru: ['Покупка и продажа USDT', 'Обмен наличных на крипту', 'Вывод крипты в наличные', 'Крипта-крипта обмен', 'Заявки через сайт'],
-        en: ['Buying and selling USDT', 'Cash-to-crypto exchange', 'Crypto-to-cash withdrawal', 'Crypto-to-crypto exchange', 'Website requests']
+        en: ['Buying and selling USDT', 'Cash-to-crypto exchange', 'Crypto-to-cash withdrawal', 'Crypto-to-crypto exchange', 'Website requests'],
+        es: ['Compra y venta de USDT', 'Cambio de efectivo a cripto', 'Retiro de cripto en efectivo', 'Cambio entre criptos', 'Solicitudes desde el sitio'],
+        zh: ['购买和出售 USDT', '现金兑换加密货币', '加密货币兑换现金', '币币兑换', '通过网站提交申请'],
+        ko: ['USDT 구매 및 판매', '현금을 암호화폐로 환전', '암호화폐를 현금으로 출금', '암호화폐 간 교환', '웹사이트 신청']
       },
       nuances: {
         ru: [
@@ -2387,11 +2447,32 @@ const OFFERS: Offer[] = [
           'For offline deals, check the city, limits, and current rate before creating a request.',
           'A document may be needed to enter the business center in many cities.',
           'For larger amounts, agree on the terms and rate-fixing format in advance.'
+        ],
+        es: [
+          'El servicio revisa las transacciones con herramientas AML y puede rechazar fondos de alto riesgo.',
+          'Para operaciones presenciales, revisa ciudad, límites y tasa antes de crear la solicitud.',
+          'En muchas ciudades puede hacer falta un documento para entrar al edificio.',
+          'Para importes grandes, acuerda antes las condiciones y cómo se fija la tasa.'
+        ],
+        zh: [
+          '该服务使用 AML 工具检查交易，高风险资金可能被拒绝。',
+          '线下交易前请确认城市、限额和当前汇率。',
+          '在许多城市进入商务中心可能需要身份证件。',
+          '大额交易应提前确认条件和汇率锁定方式。'
+        ],
+        ko: [
+          '거래는 AML 도구로 검사되며 고위험 자금은 거절될 수 있습니다.',
+          '오프라인 거래는 신청 전에 도시, 한도와 현재 환율을 확인하세요.',
+          '여러 도시의 비즈니스 센터 출입에는 신분증이 필요할 수 있습니다.',
+          '큰 금액은 조건과 환율 고정 방식을 미리 합의하세요.'
         ]
       },
       pros: {
         ru: ['Есть сайт с заявками', 'Поддерживаются наличные направления', 'Подходит для крупных обменов при согласовании условий'],
-        en: ['Website-based requests', 'Cash directions supported', 'Works for larger exchanges when terms are agreed in advance']
+        en: ['Website-based requests', 'Cash directions supported', 'Works for larger exchanges when terms are agreed in advance'],
+        es: ['Solicitudes desde el sitio', 'Admite operaciones en efectivo', 'Sirve para cambios grandes con condiciones acordadas'],
+        zh: ['通过网站提交申请', '支持现金方向', '提前协商条件后适合大额兑换'],
+        ko: ['웹사이트 신청', '현금 방향 지원', '조건을 합의한 큰 금액 환전에 적합']
       }
     }
   },
@@ -3611,7 +3692,7 @@ export default function App() {
   const offerTitle = (offer: Offer) => OFFER_TITLE_TRANSLATIONS[offer.id]?.[lang] || offer.name;
   const offerDescription = (offer: Offer) => {
     const ownDescription = offer.description[lang];
-    if ((offer.category === 'Stores' || offer.category === 'Antidetect' || offer.category === 'Cards') && offer.editorial && ownDescription) {
+    if ((offer.category === 'Stores' || offer.category === 'Antidetect' || offer.category === 'Cards' || offer.category === 'Crypto') && offer.editorial && ownDescription) {
       return ownDescription;
     }
 

@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { accountShopPages } from '../src/data/accountShopPages.js';
 import { antidetectPages } from '../src/data/antidetectPages.js';
+import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 
 const distDir = path.resolve('dist');
@@ -39,6 +40,7 @@ const serviceRoutes = [
   ...accountShopPages.map((page) => `/account-shop/${page.slug}`),
   ...antidetectPages.map((page) => `/antidetect/${page.slug}`),
   ...foreignCardPages.map((page) => `/foreign-cards/${page.slug}`),
+  ...cryptoExchangePages.map((page) => `/crypto-exchange/${page.slug}`),
 ];
 const routes = [...categoryRoutes, ...serviceRoutes];
 

@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { accountShopPages } from '../src/data/accountShopPages.js';
 import { antidetectPages } from '../src/data/antidetectPages.js';
+import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 
 const siteUrl = 'https://hopscup.tools';
@@ -1403,6 +1404,19 @@ const servicePages = [
   ...foreignCardPages.map((page) => createServicePage({
     id: page.id,
     route: `/foreign-cards/${page.slug}`,
+    name: page.name,
+    logo: page.logo,
+    title: page.title,
+    description: page.description,
+    heading: page.heading,
+    intro: page.editorial.description,
+    keywords: page.keywords,
+    points: page.editorial.bestFor,
+    items: page.editorial.considerations,
+  })),
+  ...cryptoExchangePages.map((page) => createServicePage({
+    id: page.id,
+    route: `/crypto-exchange/${page.slug}`,
     name: page.name,
     logo: page.logo,
     title: page.title,
