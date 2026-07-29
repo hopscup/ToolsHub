@@ -87,6 +87,14 @@ const STORE_AI_VIDEO_URL = 'https://youtu.be/3wjIQRrOdd0?si=04kDWjWwLatAVipc';
 const STORE_ACCOUNTS_VIDEO_URL = 'https://youtu.be/DkJjFX7oRUc?si=444gvvOtNxjLF1ti';
 const STEAM_PRICE_TABLE_URL = 'https://pulse.tradeon.space?ref=4484789789';
 
+const DEFAULT_HERO_SUBTITLE: Localized = {
+  ru: 'Здесь собраны все полезные сервисы, которые я использую для работы',
+  en: 'Here are all the useful services that I use for my work',
+  es: 'Aquí están todos los servicios útiles que uso para trabajar',
+  zh: '这里收集了我工作中常用的实用服务',
+  ko: '업무에 사용하는 유용한 서비스들을 모아두었습니다',
+};
+
 const CATEGORY_HERO_SUBTITLES: Record<CategoryType, Localized> = {
   Proxy: {
     ru: 'Подберите прокси или VPN для аккаунтов, рекламы и других задач',
@@ -117,11 +125,11 @@ const CATEGORY_HERO_SUBTITLES: Record<CategoryType, Localized> = {
     ko: '카드를 선택하고 루블이나 암호화폐로 해외 서비스를 결제하세요',
   },
   Crypto: {
-    ru: 'Покупайте и продавайте крипту онлайн или за наличные',
-    en: 'Buy and sell crypto online or for cash without unnecessary steps',
-    es: 'Compra y vende cripto online o en efectivo sin pasos innecesarios',
-    zh: '在线或使用现金轻松买卖加密货币',
-    ko: '불필요한 절차 없이 온라인이나 현금으로 암호화폐를 사고파세요',
+    ru: 'Надёжный обмен крипты онлайн или за наличные',
+    en: 'Reliable crypto exchange online or for cash',
+    es: 'Intercambio de cripto fiable online o en efectivo',
+    zh: '可靠的线上或现金加密货币兑换',
+    ko: '온라인 또는 현금으로 이용하는 신뢰할 수 있는 암호화폐 환전',
   },
   SMS: {
     ru: 'Номера для регистраций с оплатой картой, СБП или криптой',
@@ -4099,6 +4107,9 @@ export default function App() {
   const initialCategory = getCategoryFromPath();
   const [lang, setLang] = useState<Language>(getLanguageFromPath());
   const [activeCategory, setActiveCategory] = useState<CategoryType>(initialCategory);
+  const [isHomeRoute, setIsHomeRoute] = useState(
+    () => stripLanguagePrefix(window.location.pathname) === '/',
+  );
   const [subFilter, setSubFilter] = useState<SubCategory>(getDefaultSubFilter());
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(getOfferFromPath());
   const activeCategoryRef = useRef(activeCategory);
@@ -4267,6 +4278,7 @@ export default function App() {
         ?? (nextCategory === activeCategoryRef.current ? subFilterRef.current : getDefaultSubFilter());
       closingSubFilterRef.current = null;
       setActiveCategory(nextCategory);
+      setIsHomeRoute(stripLanguagePrefix(window.location.pathname) === '/');
       setLang(nextLanguage);
       setSelectedOffer(getOfferFromPath());
       setSubFilter(nextSubFilter);
@@ -4489,7 +4501,7 @@ export default function App() {
 
   const t = {
     heroTitle: "Hopscup's Tools Hub",
-    heroSub: l(CATEGORY_HERO_SUBTITLES[activeCategory]),
+    heroSub: l(isHomeRoute ? DEFAULT_HERO_SUBTITLE : CATEGORY_HERO_SUBTITLES[activeCategory]),
     visitSite: tx({ ru: 'Перейти', en: 'Visit', es: 'Abrir', zh: '访问', ko: '열기' }),
     promo: tx({ ru: 'Промокод', en: 'Promo', es: 'Promo', zh: '优惠码', ko: '프로모 코드' }),
     popular: tx({ ru: 'Популярное', en: 'Popular', es: 'Popular', zh: '热门', ko: '인기' }),
@@ -4680,6 +4692,7 @@ export default function App() {
     if (window.location.pathname !== nextRoute) {
       window.history.pushState(null, '', nextRoute);
     }
+    setIsHomeRoute(false);
     setActiveCategory(cat);
     setSelectedOffer(null);
     setSubFilter(getDefaultSubFilter());
@@ -4694,6 +4707,7 @@ export default function App() {
     if (window.location.pathname !== nextRoute) {
       window.history.pushState(selectedOffer?.slug ? { offerModal: true } : null, '', nextRoute);
     }
+    setIsHomeRoute(false);
     setLang(nextLanguage);
     setSearchQuery('');
     scrollToPageTop();
@@ -4708,6 +4722,7 @@ export default function App() {
       language: lang,
     });
 
+    setIsHomeRoute(false);
     const nextSubFilter = offer.category === activeCategory ? subFilter : getDefaultSubFilter();
     if (offer.slug) {
       const nextRoute = getLocalizedOfferRoute(offer, lang);
