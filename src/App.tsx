@@ -87,6 +87,79 @@ const STORE_AI_VIDEO_URL = 'https://youtu.be/3wjIQRrOdd0?si=04kDWjWwLatAVipc';
 const STORE_ACCOUNTS_VIDEO_URL = 'https://youtu.be/DkJjFX7oRUc?si=444gvvOtNxjLF1ti';
 const STEAM_PRICE_TABLE_URL = 'https://pulse.tradeon.space?ref=4484789789';
 
+const CATEGORY_HERO_SUBTITLES: Record<CategoryType, Localized> = {
+  Proxy: {
+    ru: 'Подберите прокси или VPN для аккаунтов, рекламы и других задач',
+    en: 'Find the right proxy or VPN for accounts, ads, and everyday work',
+    es: 'Encuentra el proxy o VPN adecuado para cuentas, publicidad y trabajo diario',
+    zh: '为账号、广告和日常工作选择合适的代理或 VPN',
+    ko: '계정, 광고, 일상 업무에 맞는 프록시나 VPN을 찾아보세요',
+  },
+  Antidetect: {
+    ru: 'Сравните антидетекты по цене и выберите подходящий вариант',
+    en: 'Compare antidetect browsers by price and features, then choose what fits',
+    es: 'Compara navegadores antidetect por precio y funciones y elige el adecuado',
+    zh: '按价格和功能比较反检测浏览器，选择适合你的方案',
+    ko: '가격과 기능으로 안티디텍트 브라우저를 비교하고 맞는 서비스를 선택하세요',
+  },
+  Stores: {
+    ru: 'Аккаунты, подписки и цифровые товары по выгодной цене',
+    en: 'Find accounts, subscriptions, and digital products at better prices',
+    es: 'Encuentra cuentas, suscripciones y productos digitales a mejores precios',
+    zh: '以更合适的价格找到账号、订阅和数字商品',
+    ko: '계정, 구독, 디지털 상품을 더 좋은 가격에 찾아보세요',
+  },
+  Cards: {
+    ru: 'Карты для оплаты зарубежных сервисов рублями или криптой',
+    en: 'Choose a card and pay for international services with rubles or crypto',
+    es: 'Elige una tarjeta y paga servicios internacionales con rublos o cripto',
+    zh: '选择合适的卡片，用卢布或加密货币支付海外服务',
+    ko: '카드를 선택하고 루블이나 암호화폐로 해외 서비스를 결제하세요',
+  },
+  Crypto: {
+    ru: 'Покупайте и продавайте крипту онлайн или за наличные',
+    en: 'Buy and sell crypto online or for cash without unnecessary steps',
+    es: 'Compra y vende cripto online o en efectivo sin pasos innecesarios',
+    zh: '在线或使用现金轻松买卖加密货币',
+    ko: '불필요한 절차 없이 온라인이나 현금으로 암호화폐를 사고파세요',
+  },
+  SMS: {
+    ru: 'Номера для регистраций с оплатой картой, СБП или криптой',
+    en: 'Choose a number for registration and pay by card, SBP, or crypto',
+    es: 'Elige un número para registrarte y paga con tarjeta, SBP o cripto',
+    zh: '选择注册所需的号码，并使用银行卡、SBP 或加密货币付款',
+    ko: '가입용 번호를 고르고 카드, SBP 또는 암호화폐로 결제하세요',
+  },
+  VPS: {
+    ru: 'Серверы для ботов, автоматизации, нод и рабочих задач',
+    en: 'Choose a server for bots, automation, nodes, and other work tasks',
+    es: 'Elige un servidor para bots, automatización, nodos y otras tareas',
+    zh: '为机器人、自动化、节点和其他工作任务选择服务器',
+    ko: '봇, 자동화, 노드 및 기타 업무에 맞는 서버를 선택하세요',
+  },
+  Social: {
+    ru: 'Рефералы, регистрации и продвижение без ручного поиска',
+    en: 'Get referrals, registrations, and promotion without searching for performers manually',
+    es: 'Consigue referidos, registros y promoción sin buscar ejecutores manualmente',
+    zh: '无需手动寻找执行者，即可获得推荐用户、注册和推广',
+    ko: '작업자를 직접 찾지 않고 추천인, 가입, 홍보를 확보하세요',
+  },
+  Steam: {
+    ru: 'Пополняйте Steam по логину или выгоднее через предметы',
+    en: 'Top up Steam quickly by login or get more value through items',
+    es: 'Recarga Steam rápidamente por login o consigue más saldo mediante ítems',
+    zh: '通过登录名快速充值 Steam，或通过物品获得更多余额',
+    ko: '로그인으로 Steam을 빠르게 충전하거나 아이템으로 더 유리하게 충전하세요',
+  },
+  Guides: {
+    ru: 'Практические гайды, которые экономят время и деньги',
+    en: 'Practical guides that save time and money and help you avoid mistakes',
+    es: 'Guías prácticas para ahorrar tiempo y dinero y evitar errores',
+    zh: '实用指南，帮你节省时间和费用并避免错误',
+    ko: '시간과 비용을 아끼고 실수를 피할 수 있는 실전 가이드',
+  },
+};
+
 interface Offer {
   id: string;
   category: CategoryType;
@@ -4416,13 +4489,7 @@ export default function App() {
 
   const t = {
     heroTitle: "Hopscup's Tools Hub",
-    heroSub: tx({
-      ru: 'Здесь собраны все полезные сервисы, которые я использую для работы',
-      en: 'Here are all the useful services that I use for my work',
-      es: 'Aquí están todos los servicios útiles que uso para trabajar',
-      zh: '这里收集了我工作中常用的实用服务',
-      ko: '업무에 사용하는 유용한 서비스들을 모아두었습니다',
-    }),
+    heroSub: l(CATEGORY_HERO_SUBTITLES[activeCategory]),
     visitSite: tx({ ru: 'Перейти', en: 'Visit', es: 'Abrir', zh: '访问', ko: '열기' }),
     promo: tx({ ru: 'Промокод', en: 'Promo', es: 'Promo', zh: '优惠码', ko: '프로모 코드' }),
     popular: tx({ ru: 'Популярное', en: 'Popular', es: 'Popular', zh: '热门', ko: '인기' }),
