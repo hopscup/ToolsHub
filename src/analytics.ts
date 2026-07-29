@@ -12,12 +12,13 @@ declare global {
 }
 
 let analyticsInitialized = false;
+let analyticsConfigured = false;
 let lastTrackedPage = '';
 
 const ensureGoogleTagQueue = () => {
   window.dataLayer = window.dataLayer || [];
-  window.gtag = window.gtag || function gtag(...args: unknown[]) {
-    window.dataLayer.push(args);
+  window.gtag = window.gtag || function gtag() {
+    window.dataLayer.push(arguments);
   };
 };
 
@@ -46,10 +47,6 @@ const initializeGoogleAnalytics = () => {
   }
 
   window.gtag('js', new Date());
-  window.gtag('config', MEASUREMENT_ID, {
-    send_page_view: false,
-  });
-
   analyticsInitialized = true;
 };
 
@@ -76,6 +73,13 @@ export const updateAnalyticsConsent = (consent: Exclude<AnalyticsConsent, null>)
     ad_user_data: 'denied',
     ad_personalization: 'denied',
   });
+
+  if (consent === 'granted' && !analyticsConfigured) {
+    window.gtag('config', MEASUREMENT_ID, {
+      send_page_view: false,
+    });
+    analyticsConfigured = true;
+  }
 };
 
 export const initializeAnalyticsFromConsent = () => {
