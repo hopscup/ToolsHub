@@ -884,75 +884,75 @@ const RUNTIME_SEO_TRANSLATIONS: Partial<Record<CategoryType, Partial<Record<Lang
 const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']>> = {
   proxyshard: {
     title: {
-      ru: 'ProxyShard: обзор Residential, ISP, Mobile и Datacenter прокси | Hopscup Tools',
-      en: 'ProxyShard review: Residential, ISP, Mobile, and Datacenter proxies | Hopscup Tools',
-      es: 'ProxyShard: análisis de proxies Residential, ISP, Mobile y Datacenter | Hopscup Tools',
-      zh: 'ProxyShard 评测：Residential、ISP、Mobile 与 Datacenter 代理 | Hopscup Tools',
-      ko: 'ProxyShard 리뷰: Residential, ISP, Mobile 및 Datacenter 프록시 | Hopscup Tools',
+      ru: 'ProxyShard: обзор IPv4, ISP, Residential и Mobile прокси | Hopscup Tools',
+      en: 'ProxyShard review: IPv4, ISP, Residential, and Mobile proxies | Hopscup Tools',
+      es: 'ProxyShard: análisis de proxies IPv4, ISP, Residential y Mobile | Hopscup Tools',
+      zh: 'ProxyShard 评测：IPv4、ISP、Residential 与 Mobile 代理 | Hopscup Tools',
+      ko: 'ProxyShard 리뷰: IPv4, ISP, Residential 및 Mobile 프록시 | Hopscup Tools',
     },
     description: {
-      ru: 'Обзор ProxyShard: Residential, ISP, Mobile и Datacenter-прокси, более 100 стран, способы оплаты и выбор типа IP под конкретную задачу.',
-      en: 'ProxyShard review covering Residential, ISP, Mobile, and Datacenter proxies, 100+ countries, payment methods, and choosing the right IP type.',
-      es: 'Análisis de ProxyShard: proxies Residential, ISP, Mobile y Datacenter, más de 100 países, pagos y elección del tipo de IP.',
-      zh: 'ProxyShard 评测：Residential、ISP、Mobile 和 Datacenter 代理，覆盖 100 多个国家、付款方式以及不同任务的 IP 类型选择。',
-      ko: 'ProxyShard 리뷰: Residential, ISP, Mobile, Datacenter 프록시, 100개 이상의 국가, 결제 수단과 작업별 IP 유형 선택.',
+      ru: 'Обзор ProxyShard: IPv4, ISP, Residential и Mobile-прокси, более 100 стран, способы оплаты и выбор типа IP под конкретную задачу.',
+      en: 'ProxyShard review covering IPv4, ISP, Residential, and Mobile proxies, 100+ countries, payment methods, and choosing the right IP type.',
+      es: 'Análisis de ProxyShard: proxies IPv4, ISP, Residential y Mobile, más de 100 países, pagos y elección del tipo de IP.',
+      zh: 'ProxyShard 评测：IPv4、ISP、Residential 和 Mobile 代理，覆盖 100 多个国家、付款方式以及不同任务的 IP 类型选择。',
+      ko: 'ProxyShard 리뷰: IPv4, ISP, Residential, Mobile 프록시, 100개 이상의 국가, 결제 수단과 작업별 IP 유형 선택.',
     },
     bestFor: {
       ru: [
-        'Обычные задачи с аккаунтами, парсингом и автоматизацией на Datacenter или ISP.',
+        'Обычные задачи с аккаунтами, парсингом и автоматизацией на IPv4 или ISP.',
         'Рекламные кабинеты и более сложные задачи, где может понадобиться Residential или Mobile.',
         'Работа с разными типами прокси через один сервис.',
       ],
       en: [
         'Accounts, ad dashboards, and platforms where the IP source matters.',
-        'Scraping, automation, and other tasks that work well with fast Datacenter or ISP proxies.',
-        'Switching between Residential, Mobile, ISP, and Datacenter without changing providers.',
+        'Scraping, automation, and other tasks that work well with fast IPv4 or ISP proxies.',
+        'Switching between IPv4, ISP, Residential, and Mobile without changing providers.',
       ],
       es: [
         'Cuentas, paneles publicitarios y plataformas donde importa el origen de la IP.',
-        'Scraping, automatización y tareas que funcionan bien con proxies Datacenter o ISP rápidos.',
-        'Cambiar entre Residential, Mobile, ISP y Datacenter sin buscar otro proveedor.',
+        'Scraping, automatización y tareas que funcionan bien con proxies IPv4 o ISP rápidos.',
+        'Cambiar entre IPv4, ISP, Residential y Mobile sin buscar otro proveedor.',
       ],
       zh: [
         '适合重视 IP 来源的账号、广告后台和平台。',
-        '适合可使用高速 Datacenter 或 ISP 代理的采集、自动化及其他任务。',
-        '无需更换服务商即可在 Residential、Mobile、ISP 和 Datacenter 之间切换。',
+        '适合可使用高速 IPv4 或 ISP 代理的采集、自动化及其他任务。',
+        '无需更换服务商即可在 IPv4、ISP、Residential 和 Mobile 之间切换。',
       ],
       ko: [
         'IP 출처가 중요한 계정, 광고 대시보드와 플랫폼.',
-        '빠른 Datacenter 또는 ISP 프록시로 처리할 수 있는 스크래핑과 자동화.',
-        '공급업체를 바꾸지 않고 Residential, Mobile, ISP, Datacenter 간 전환.',
+        '빠른 IPv4 또는 ISP 프록시로 처리할 수 있는 스크래핑과 자동화.',
+        '공급업체를 바꾸지 않고 IPv4, ISP, Residential, Mobile 간 전환.',
       ],
     },
     considerations: {
       ru: [
-        'Я бы сначала пробовал Datacenter или ISP. Они дешевле и для многих задач подходят без проблем.',
+        'Я бы сначала пробовал IPv4 или ISP. Они дешевле и для многих задач подходят без проблем.',
         'Mobile и Residential есть смысл брать, если обычный серверный IP конкретная площадка принимает плохо.',
         'Перед оплатой проверьте нужную страну и формат прокси, чтобы случайно не взять не тот тариф.',
       ],
       en: [
         'First decide whether the platform needs a higher-trust IP source or a server address is enough.',
         'Check the required country, proxy type, and available payment method before buying.',
-        'Mobile and Residential make sense when Datacenter or ISP does not fit the task.',
+        'Mobile and Residential make sense when IPv4 or ISP does not fit the task.',
       ],
       es: [
         'Primero decide si la plataforma necesita una IP de mayor confianza o basta con una dirección de servidor.',
         'Comprueba el país, el tipo de proxy y el método de pago antes de comprar.',
-        'Mobile y Residential tienen sentido cuando Datacenter o ISP no sirven para la tarea.',
+        'Mobile y Residential tienen sentido cuando IPv4 o ISP no sirven para la tarea.',
       ],
       zh: [
         '先确认平台是否需要更高信任度的 IP 来源，还是服务器地址已经足够。',
         '购买前确认所需国家、代理类型和可用付款方式。',
-        '当 Datacenter 或 ISP 不适合任务时，再考虑 Mobile 和 Residential。',
+        '当 IPv4 或 ISP 不适合任务时，再考虑 Mobile 和 Residential。',
       ],
       ko: [
         '플랫폼에 더 높은 신뢰도의 IP가 필요한지 서버 주소로 충분한지 먼저 판단하세요.',
         '구매 전에 필요한 국가, 프록시 유형과 결제 수단을 확인하세요.',
-        'Datacenter 또는 ISP가 맞지 않을 때 Mobile과 Residential을 선택하면 됩니다.',
+        'IPv4 또는 ISP가 맞지 않을 때 Mobile과 Residential을 선택하면 됩니다.',
       ],
     },
     verdict: {
-      ru: 'ProxyShard даёт хороший баланс между ценой, скоростью и качеством. Для простых задач я бы начал с Datacenter или ISP, а Residential и Mobile оставил для случаев, где нужен максимальный траст.',
+      ru: 'ProxyShard даёт хороший баланс между ценой, скоростью и качеством. Для простых задач я бы начал с IPv4 или ISP, а Residential и Mobile оставил для случаев, где нужен максимальный траст.',
       en: 'A convenient all-round option when your work needs different proxy types. You do not need the most expensive type by default, so match the IP source to the platform.',
       es: 'Una opción universal y cómoda si necesitas distintos tipos de proxy. No hace falta elegir siempre el más caro: adapta la fuente de IP a la plataforma.',
       zh: '需要多种代理类型时，这是方便的综合选择。不必默认购买最贵的类型，应根据平台要求选择 IP 来源。',
@@ -968,11 +968,11 @@ const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']
       ko: 'Proxy-Seller 리뷰: 프록시 유형, 지역 및 결제 | Hopscup Tools',
     },
     description: {
-      ru: 'Обзор Proxy-Seller: IPv4, IPv6, ISP, Residential, Mobile и Shared-прокси, более 220 стран, оплата картой, криптовалютой или PayPal.',
-      en: 'Proxy-Seller review covering IPv4, IPv6, ISP, Residential, Mobile, and Shared proxies, 220+ countries, card, crypto, and PayPal payments.',
-      es: 'Análisis de Proxy-Seller: IPv4, IPv6, ISP, Residential, Mobile y Shared, más de 220 países y pagos con tarjeta, cripto o PayPal.',
-      zh: 'Proxy-Seller 评测：IPv4、IPv6、ISP、Residential、Mobile 和 Shared 代理，覆盖 220 多个国家，支持银行卡、加密货币和 PayPal。',
-      ko: 'Proxy-Seller 리뷰: IPv4, IPv6, ISP, Residential, Mobile, Shared 프록시, 220개 이상의 국가와 카드, 암호화폐, PayPal 결제.',
+      ru: 'Обзор Proxy-Seller: IPv4, IPv6, ISP, Residential и Mobile-прокси, более 220 стран, оплата картой, криптовалютой или PayPal.',
+      en: 'Proxy-Seller review covering IPv4, IPv6, ISP, Residential, and Mobile proxies, 220+ countries, card, crypto, and PayPal payments.',
+      es: 'Análisis de Proxy-Seller: IPv4, IPv6, ISP, Residential y Mobile, más de 220 países y pagos con tarjeta, cripto o PayPal.',
+      zh: 'Proxy-Seller 评测：IPv4、IPv6、ISP、Residential 和 Mobile 代理，覆盖 220 多个国家，支持银行卡、加密货币和 PayPal。',
+      ko: 'Proxy-Seller 리뷰: IPv4, IPv6, ISP, Residential, Mobile 프록시, 220개 이상의 국가와 카드, 암호화폐, PayPal 결제.',
     },
     bestFor: {
       ru: [
@@ -1003,27 +1003,27 @@ const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']
     },
     considerations: {
       ru: [
-        'Каталог большой, поэтому внимательно смотрите, что покупаете: отдельный IP, Shared или прокси с оплатой за трафик.',
+        'Каталог большой, поэтому внимательно смотрите, что покупаете: отдельный IP или прокси с оплатой за трафик.',
         'IPv6 берите только если точно знаете, что нужный сайт или программа его поддерживает.',
         'Для простых задач не обязательно сразу брать Residential или Mobile. Качественного IPv4 или ISP часто хватает.',
       ],
       en: [
-        'In a large catalog, make sure you distinguish dedicated, Shared, and traffic-based proxy formats.',
+        'In a large catalog, make sure you distinguish dedicated and traffic-based proxy formats.',
         'Confirm IPv6 support on the target platform before buying.',
         'Price depends on the country, IP type, rental period, and selected volume.',
       ],
       es: [
-        'En un catálogo grande hay que distinguir entre proxy dedicado, Shared y pago por tráfico.',
+        'En un catálogo grande hay que distinguir entre proxy dedicado y pago por tráfico.',
         'Confirma que la plataforma admite IPv6 antes de comprar.',
         'El precio depende del país, tipo de IP, periodo y volumen.',
       ],
       zh: [
-        '目录较大，请分清独享、Shared 和按流量计费的代理。',
+        '目录较大，请分清独享代理和按流量计费的代理。',
         '购买前确认目标平台支持 IPv6。',
         '价格取决于国家、IP 类型、租用周期和数量。',
       ],
       ko: [
-        '큰 카탈로그에서는 전용, Shared, 트래픽 기반 상품을 구분해야 합니다.',
+        '큰 카탈로그에서는 전용 상품과 트래픽 기반 상품을 구분해야 합니다.',
         '구매 전에 대상 플랫폼의 IPv6 지원을 확인하세요.',
         '가격은 국가, IP 유형, 대여 기간과 수량에 따라 달라집니다.',
       ],
@@ -1696,15 +1696,15 @@ const OFFERS: Offer[] = [
     slug: 'proxyshard',
     name: 'ProxyShard',
     description: { 
-      ru: 'Современный сервис с Residential, Datacenter, Mobile и ISP-прокси. Хороший баланс между стоимостью, скоростью и стабильностью работы.', 
-      en: 'Modern service with Residential, Datacenter, Mobile, and ISP proxies. A good balance of price, speed, and stability.' 
+      ru: 'Современный сервис с IPv4, ISP, Residential и Mobile-прокси. Хороший баланс между стоимостью, скоростью и стабильностью работы.',
+      en: 'Modern service with IPv4, ISP, Residential, and Mobile proxies. A good balance of price, speed, and stability.'
     },
     url: 'https://proxyshard.com?ref=hopscup',
     logoUrl: '/proxyshard.png',
     isBestChoice: true,
     details: {
       geo: { ru: '100+ стран', en: '100+ countries', es: 'Más de 100 países', zh: '100 多个国家', ko: '100개 이상의 국가' },
-      types: { ru: 'Residential, Datacenter, Mobile, ISP', en: 'Residential, Datacenter, Mobile, ISP', es: 'Residential, Datacenter, Mobile, ISP', zh: 'Residential、Datacenter、Mobile、ISP', ko: 'Residential, Datacenter, Mobile, ISP' },
+      types: { ru: 'IPv4, ISP, Residential, Mobile', en: 'IPv4, ISP, Residential, Mobile', es: 'IPv4, ISP, Residential, Mobile', zh: 'IPv4、ISP、Residential、Mobile', ko: 'IPv4, ISP, Residential, Mobile' },
       paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта', en: 'Visa/Mastercard, Crypto', es: 'Visa/Mastercard, cripto', zh: 'Visa/Mastercard、加密货币', ko: 'Visa/Mastercard, 암호화폐' }
     },
     editorial: ADDITIONAL_PROXY_EDITORIALS.proxyshard,
@@ -1818,7 +1818,7 @@ const OFFERS: Offer[] = [
     logoUrl: '/proxywing.png',
     details: {
       geo: { ru: '200+ стран', en: '200+ countries', es: 'Más de 200 países', zh: '200 多个国家', ko: '200개 이상의 국가' },
-      types: { ru: 'Residential, Datacenter, ISP, Mobile', en: 'Residential, Datacenter, ISP, Mobile', es: 'Residential, Datacenter, ISP, Mobile', zh: 'Residential、Datacenter、ISP、Mobile', ko: 'Residential, Datacenter, ISP, Mobile' },
+      types: { ru: 'IPv4, ISP, Residential, Mobile', en: 'IPv4, ISP, Residential, Mobile', es: 'IPv4, ISP, Residential, Mobile', zh: 'IPv4、ISP、Residential、Mobile', ko: 'IPv4, ISP, Residential, Mobile' },
       paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto', es: 'Visa/Mastercard, SBP/Mir, cripto', zh: 'Visa/Mastercard、SBP/Mir、加密货币', ko: 'Visa/Mastercard, SBP/Mir, 암호화폐' }
     },
     editorial: {
@@ -1830,11 +1830,11 @@ const OFFERS: Offer[] = [
         ko: 'ProxyWing 리뷰: 프록시 유형, 지역 및 결제 | Hopscup Tools',
       },
       description: {
-        ru: 'Обзор ProxyWing: Residential, Datacenter, ISP и Mobile-прокси, 200+ локаций, HTTP/SOCKS5 и оплата картой, СБП/Мир или криптовалютой.',
-        en: 'ProxyWing review covering Residential, Datacenter, ISP, and Mobile proxies, 200+ locations, HTTP/SOCKS5, and card, SBP/Mir, or crypto payments.',
-        es: 'Análisis de ProxyWing: proxies Residential, Datacenter, ISP y Mobile, más de 200 ubicaciones, HTTP/SOCKS5 y pagos con tarjeta, SBP/Mir o cripto.',
-        zh: 'ProxyWing 评测：Residential、Datacenter、ISP 和 Mobile 代理，覆盖 200 多个地区，支持 HTTP/SOCKS5，以及银行卡、SBP/Mir 或加密货币付款。',
-        ko: 'ProxyWing 리뷰: Residential, Datacenter, ISP, Mobile 프록시, 200개 이상의 지역, HTTP/SOCKS5, 카드, SBP/Mir 및 암호화폐 결제.',
+        ru: 'Обзор ProxyWing: IPv4, ISP, Residential и Mobile-прокси, 200+ локаций, HTTP/SOCKS5 и оплата картой, СБП/Мир или криптовалютой.',
+        en: 'ProxyWing review covering IPv4, ISP, Residential, and Mobile proxies, 200+ locations, HTTP/SOCKS5, and card, SBP/Mir, or crypto payments.',
+        es: 'Análisis de ProxyWing: proxies IPv4, ISP, Residential y Mobile, más de 200 ubicaciones, HTTP/SOCKS5 y pagos con tarjeta, SBP/Mir o cripto.',
+        zh: 'ProxyWing 评测：IPv4、ISP、Residential 和 Mobile 代理，覆盖 200 多个地区，支持 HTTP/SOCKS5，以及银行卡、SBP/Mir 或加密货币付款。',
+        ko: 'ProxyWing 리뷰: IPv4, ISP, Residential, Mobile 프록시, 200개 이상의 지역, HTTP/SOCKS5, 카드, SBP/Mir 및 암호화폐 결제.',
       },
       bestFor: {
         ru: [
@@ -1872,22 +1872,22 @@ const OFFERS: Offer[] = [
         en: [
           'If you are unsure which protocol to use for an antidetect browser or work profile, start with SOCKS5.',
           'Residential is usually billed by used traffic, while Mobile costs more than regular IPv4.',
-          'Datacenter IPv4 may be labeled as proxy/VPN simply because it comes from server infrastructure. That does not make it bad and is usually not critical for basic tasks.',
+          'IPv4 may be labeled as proxy/VPN simply because it comes from server infrastructure. That does not make it bad and is usually not critical for basic tasks.',
         ],
         es: [
           'Si no sabes qué protocolo usar con un antidetect o perfil de trabajo, empieza con SOCKS5.',
           'Residential normalmente se cobra por tráfico utilizado, mientras Mobile cuesta más que un IPv4 normal.',
-          'Datacenter IPv4 puede marcarse como proxy/VPN por su origen de servidor. Eso no significa que sea malo y normalmente no es crítico para tareas básicas.',
+          'IPv4 puede marcarse como proxy/VPN por su origen de servidor. Eso no significa que sea malo y normalmente no es crítico para tareas básicas.',
         ],
         zh: [
           '如果不确定反检测浏览器或工作资料该用哪种协议，可先选择 SOCKS5。',
           'Residential 通常按使用流量计费，Mobile 的价格则高于普通 IPv4。',
-          'Datacenter IPv4 可能仅因服务器来源而被标记为 proxy/VPN。这不代表质量差，对基础任务通常并不重要。',
+          'IPv4 可能仅因服务器来源而被标记为 proxy/VPN。这不代表质量差，对基础任务通常并不重要。',
         ],
         ko: [
           '안티디텍트 브라우저나 작업 프로필에서 어떤 프로토콜을 써야 할지 모르겠다면 SOCKS5부터 시작하세요.',
           'Residential은 보통 사용한 트래픽 기준으로 과금되고 Mobile은 일반 IPv4보다 비쌉니다.',
-          'Datacenter IPv4는 서버 출처라는 이유만으로 proxy/VPN으로 표시될 수 있습니다. 품질이 나쁘다는 뜻은 아니며 기본 작업에는 대개 중요하지 않습니다.',
+          'IPv4는 서버 출처라는 이유만으로 proxy/VPN으로 표시될 수 있습니다. 품질이 나쁘다는 뜻은 아니며 기본 작업에는 대개 중요하지 않습니다.',
         ],
       },
       verdict: {
@@ -1914,7 +1914,7 @@ const OFFERS: Offer[] = [
     isPopular: true,
     details: {
       geo: { ru: '220+ стран', en: '220+ countries', es: 'Más de 220 países', zh: '220 多个国家', ko: '220개 이상의 국가' },
-      types: { ru: 'IPv4, IPv6, ISP, Residential, Mobile, Shared', en: 'IPv4, IPv6, ISP, Residential, Mobile, Shared', es: 'IPv4, IPv6, ISP, Residential, Mobile, Shared', zh: 'IPv4、IPv6、ISP、Residential、Mobile、Shared', ko: 'IPv4, IPv6, ISP, Residential, Mobile, Shared' },
+      types: { ru: 'IPv4, IPv6, ISP, Residential, Mobile', en: 'IPv4, IPv6, ISP, Residential, Mobile', es: 'IPv4, IPv6, ISP, Residential, Mobile', zh: 'IPv4、IPv6、ISP、Residential、Mobile', ko: 'IPv4, IPv6, ISP, Residential, Mobile' },
       paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта, PayPal', en: 'Visa/Mastercard, Crypto, PayPal', es: 'Visa/Mastercard, cripto, PayPal', zh: 'Visa/Mastercard、加密货币、PayPal', ko: 'Visa/Mastercard, 암호화폐, PayPal' }
     },
     editorial: ADDITIONAL_PROXY_EDITORIALS['proxy-seller'],
@@ -3728,9 +3728,9 @@ const OFFER_DESCRIPTION_TRANSLATIONS: Partial<Record<string, Partial<Record<Lang
   },
 
   p1: {
-    es: 'Servicio moderno con proxies residential, datacenter, mobile e ISP. Buena opción si buscas equilibrio entre precio, velocidad y estabilidad.',
-    zh: '现代化代理服务，提供住宅、数据中心、移动和 ISP 代理。适合需要在价格、速度和稳定性之间取得平衡的任务。',
-    ko: 'Residential, datacenter, mobile, ISP 프록시를 제공하는 현대적인 서비스입니다. 가격, 속도, 안정성의 균형이 필요한 작업에 좋습니다.',
+    es: 'Servicio moderno con proxies IPv4, ISP, Residential y Mobile. Buena opción si buscas equilibrio entre precio, velocidad y estabilidad.',
+    zh: '现代化代理服务，提供 IPv4、ISP、Residential 和 Mobile 代理。适合需要在价格、速度和稳定性之间取得平衡的任务。',
+    ko: 'IPv4, ISP, Residential, Mobile 프록시를 제공하는 현대적인 서비스입니다. 가격, 속도, 안정성의 균형이 필요한 작업에 좋습니다.',
   },
   p2: {
     es: 'Servicio probado con proxies de servidor económicos. Encaja bien para scraping, automatización y tareas donde no necesitas el máximo nivel de confianza de IP.',
@@ -5592,27 +5592,27 @@ export default function App() {
                       {tx({
                         ru: (
                         <>
-                          Для браузерных нод, мультиакков бирж, части букмекерок, более сложного абуза, капризных сервисов и залива трафика лучше смотреть в сторону <span className="text-brand-purple font-bold">ISP</span>. Они дороже IPv4, но выглядят естественнее и часто проходят там, где обычные датацентровые IP уже детектятся.
+                          Для браузерных нод, мультиакков бирж, части букмекерок, более сложного абуза, капризных сервисов и залива трафика лучше смотреть в сторону <span className="text-brand-purple font-bold">ISP</span>. Они дороже IPv4, но выглядят естественнее и часто проходят там, где обычные IPv4 уже детектятся.
                         </>
                         ),
                         en: (
                         <>
-                          For browser nodes, exchange multi-accounting, some betting sites, more complex abuse, strict services, and ad traffic, look at <span className="text-brand-purple font-bold">ISP</span>. They cost more than IPv4 but look more natural and often work where datacenter IPs get detected.
+                          For browser nodes, exchange multi-accounting, some betting sites, more complex abuse, strict services, and ad traffic, look at <span className="text-brand-purple font-bold">ISP</span>. They cost more than IPv4 but look more natural and often work where regular IPv4 gets detected.
                         </>
                         ),
                         es: (
                         <>
-                          Para nodos de navegador, multiaccounting en exchanges, algunas casas de apuestas, abuso más complejo, servicios exigentes y tráfico publicitario, mira hacia <span className="text-brand-purple font-bold">ISP</span>. Cuestan más que IPv4, pero parecen más naturales y suelen pasar donde las IP de datacenter ya se detectan.
+                          Para nodos de navegador, multiaccounting en exchanges, algunas casas de apuestas, abuso más complejo, servicios exigentes y tráfico publicitario, mira hacia <span className="text-brand-purple font-bold">ISP</span>. Cuestan más que IPv4, pero parecen más naturales y suelen pasar donde las IPv4 normales ya se detectan.
                         </>
                         ),
                         zh: (
                         <>
-                          浏览器节点、交易所多账号、部分博彩站、更复杂的操作、风控严格的服务和投放流量，建议看 <span className="text-brand-purple font-bold">ISP</span>。它们比 IPv4 贵，但看起来更自然，很多普通机房 IP 被识别的场景它们能过。
+                          浏览器节点、交易所多账号、部分博彩站、更复杂的操作、风控严格的服务和投放流量，建议看 <span className="text-brand-purple font-bold">ISP</span>。它们比 IPv4 贵，但看起来更自然，很多普通 IPv4 被识别的场景它们能过。
                         </>
                         ),
                         ko: (
                         <>
-                          브라우저 노드, 거래소 멀티계정, 일부 베팅 사이트, 더 까다로운 작업, 민감한 서비스, 트래픽 작업은 <span className="text-brand-purple font-bold">ISP</span>를 보는 게 좋습니다. IPv4보다 비싸지만 더 자연스럽고, 데이터센터 IP가 잡히는 곳에서도 통과하는 경우가 많습니다.
+                          브라우저 노드, 거래소 멀티계정, 일부 베팅 사이트, 더 까다로운 작업, 민감한 서비스, 트래픽 작업은 <span className="text-brand-purple font-bold">ISP</span>를 보는 게 좋습니다. IPv4보다 비싸지만 더 자연스럽고, 일반 IPv4가 잡히는 곳에서도 통과하는 경우가 많습니다.
                         </>
                         )
                       })}
@@ -5733,10 +5733,10 @@ export default function App() {
                 <p className="text-white/60 text-sm md:text-base leading-relaxed font-medium mb-8">
                   {tx({
                     ru: 'После покупки прокси можно быстро проверить IP на риск, fraud score, VPN/proxy-детект и общее качество. Если показатели слишком плохие, лучше заменить IP до работы с аккаунтами. При этом IPv4 часто детектятся как VPN или proxy и получают ниже score просто потому, что они серверные. Это не критично: я редко проверяю обычные IPv4, если задача базовая.',
-                    en: 'After buying a proxy, you can quickly check IP risk, fraud score, VPN/proxy detection, and overall quality. If the score is too bad, replace the IP before using it with accounts. Server IPv4 proxies are often detected as VPN or proxy and get a lower score simply because they are datacenter IPs. This is not critical: I rarely check regular IPv4 for basic tasks.',
-                    es: 'Después de comprar un proxy puedes revisar rápido el riesgo de la IP, fraud score, detección VPN/proxy y calidad general. Si los indicadores son malos, es mejor cambiar la IP antes de trabajar con cuentas. Los IPv4 de servidor a menudo se detectan como VPN o proxy y reciben menos score solo por ser de datacenter. No es crítico: para tareas básicas rara vez reviso IPv4 normales.',
-                    zh: '购买代理后，可以快速检查 IP 风险、fraud score、VPN/proxy 检测和整体质量。如果指标太差，最好在用于账号前更换 IP。服务器 IPv4 经常会被识别成 VPN 或 proxy，只因为它们是机房 IP，所以分数更低。这不一定严重：基础任务里我很少检查普通 IPv4。',
-                    ko: '프록시 구매 후 IP 위험도, fraud score, VPN/proxy 감지, 전체 품질을 빠르게 확인할 수 있습니다. 지표가 너무 나쁘면 계정 작업 전에 IP를 교체하는 것이 좋습니다. 서버 IPv4는 데이터센터 IP라는 이유만으로 VPN 또는 proxy로 감지되어 점수가 낮게 나오는 경우가 많습니다. 기본 작업에서는 치명적이지 않아 저는 일반 IPv4를 자주 확인하지 않습니다.'
+                    en: 'After buying a proxy, you can quickly check IP risk, fraud score, VPN/proxy detection, and overall quality. If the score is too bad, replace the IP before using it with accounts. Regular IPv4 proxies are often detected as VPN or proxy and get a lower score simply because they come from server infrastructure. This is not critical: I rarely check regular IPv4 for basic tasks.',
+                    es: 'Después de comprar un proxy puedes revisar rápido el riesgo de la IP, fraud score, detección VPN/proxy y calidad general. Si los indicadores son malos, es mejor cambiar la IP antes de trabajar con cuentas. Los IPv4 normales a menudo se detectan como VPN o proxy y reciben menos score solo por proceder de infraestructura de servidor. No es crítico: para tareas básicas rara vez reviso IPv4 normales.',
+                    zh: '购买代理后，可以快速检查 IP 风险、fraud score、VPN/proxy 检测和整体质量。如果指标太差，最好在用于账号前更换 IP。普通 IPv4 经常会被识别成 VPN 或 proxy，仅仅因为它们来自服务器基础设施，所以分数更低。这不一定严重：基础任务里我很少检查普通 IPv4。',
+                    ko: '프록시 구매 후 IP 위험도, fraud score, VPN/proxy 감지, 전체 품질을 빠르게 확인할 수 있습니다. 지표가 너무 나쁘면 계정 작업 전에 IP를 교체하는 것이 좋습니다. 일반 IPv4는 서버 인프라에서 나온다는 이유만으로 VPN 또는 proxy로 감지되어 점수가 낮게 나오는 경우가 많습니다. 기본 작업에서는 치명적이지 않아 저는 일반 IPv4를 자주 확인하지 않습니다.'
                   })}
                 </p>
 
@@ -6799,24 +6799,26 @@ export default function App() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="offer-modal-title"
-              className="relative bg-bg-dark border border-white/10 w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl"
+              className={`relative flex max-h-[calc(100dvh-2rem)] w-full flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-bg-dark shadow-2xl ${
+                selectedOffer.category === 'Proxy' ? 'max-w-2xl' : 'max-w-lg'
+              }`}
             >
               <button 
                 onClick={handleOfferClose}
                 aria-label={tx({ ru: 'Закрыть', en: 'Close', es: 'Cerrar', zh: '关闭', ko: '닫기' })}
-                className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/5 transition-colors z-20"
+                className="absolute right-5 top-5 z-20 rounded-full p-2 transition-colors hover:bg-white/5"
               >
                 <X className="w-6 h-6 text-white/40 hover:text-white" />
               </button>
 
-              <div className="p-8">
-                <div className="flex gap-6 mb-8">
+              <div className="flex min-h-0 flex-1 flex-col">
+                <div className="flex shrink-0 gap-5 border-b border-white/5 p-6 pr-16 md:p-8 md:pr-20">
                   {selectedOffer.category === 'Guides' ? (
-                    <div className="w-20 h-20 rounded-3xl bg-brand-purple/10 border border-brand-purple/30 shrink-0 flex items-center justify-center shadow-[0_0_35px_rgba(129,28,254,0.14)]">
-                      <FileText className="w-9 h-9 text-brand-purple" />
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-brand-purple/30 bg-brand-purple/10 shadow-[0_0_35px_rgba(129,28,254,0.14)] md:h-20 md:w-20 md:rounded-3xl">
+                      <FileText className="h-8 w-8 text-brand-purple md:h-9 md:w-9" />
                     </div>
                   ) : (
-                    <div className="w-20 h-20 rounded-3xl bg-white/5 border border-white/10 overflow-hidden shrink-0">
+                    <div className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-white/5 md:h-20 md:w-20 md:rounded-3xl">
                       <img
                         src={selectedOffer.logoUrl || '/logo.png'}
                         alt={selectedOffer.name}
@@ -6828,14 +6830,15 @@ export default function App() {
                     </div>
                   )}
                   <div className="flex flex-col justify-center">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h2 id="offer-modal-title" className="text-3xl font-display font-bold tracking-tight">{offerTitle(selectedOffer)}</h2>
-
+                    <div className="flex items-center gap-3">
+                      <h2 id="offer-modal-title" className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+                        {offerTitle(selectedOffer)}
+                      </h2>
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-8 overflow-y-auto max-h-[60vh] pr-2 scrollbar-thin">
+                <div className="min-h-0 flex-1 space-y-6 overflow-y-auto px-6 py-5 custom-scrollbar md:px-8 md:py-6">
                   <div>
                     <h4 className="text-[11px] uppercase font-black text-brand-purple tracking-[0.2em] mb-3">
                       {t.description}
@@ -6986,7 +6989,13 @@ export default function App() {
                   )}
 
                   {(selectedOffer.freeProfiles || selectedOffer.tariffStartPrice || selectedOffer.profiles100Price || selectedOffer.details?.rate || selectedOffer.details?.geo || selectedOffer.details?.types || selectedOffer.platforms?.length || selectedOffer.details?.paymentMethods) && (
-                    <div className="space-y-6 py-6 border-y border-white/5">
+                    <div
+                      className={
+                        selectedOffer.category === 'Proxy'
+                          ? 'grid grid-cols-1 gap-3 border-y border-white/5 py-5'
+                          : 'space-y-6 border-y border-white/5 py-6'
+                      }
+                    >
                       {selectedOffer.freeProfiles && (
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
@@ -7040,7 +7049,7 @@ export default function App() {
                         </div>
                       )}
                       {selectedOffer.details?.geo && (
-                        <div className="flex items-center gap-4">
+                        <div className={selectedOffer.category === 'Proxy' ? 'flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.03] p-4' : 'flex items-center gap-4'}>
                           <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
                             <Globe className="w-5 h-5 text-brand-purple" />
                           </div>
@@ -7053,7 +7062,7 @@ export default function App() {
                         </div>
                       )}
                       {selectedOffer.details?.types && (
-                        <div className="flex items-center gap-4">
+                        <div className={selectedOffer.category === 'Proxy' ? 'flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.03] p-4' : 'flex items-center gap-4'}>
                           <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
                             <Layers className="w-5 h-5 text-brand-purple" />
                           </div>
@@ -7066,7 +7075,7 @@ export default function App() {
                         </div>
                       )}
                       {!!selectedOffer.platforms?.length && (
-                        <div className="flex items-center gap-4">
+                        <div className={selectedOffer.category === 'Proxy' ? 'flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.03] p-4' : 'flex items-center gap-4'}>
                           <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
                             <Monitor className="w-5 h-5 text-brand-purple" />
                           </div>
@@ -7079,7 +7088,7 @@ export default function App() {
                         </div>
                       )}
                       {selectedOffer.details?.paymentMethods && (
-                        <div className="flex items-center gap-4">
+                        <div className={selectedOffer.category === 'Proxy' ? 'flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.03] p-4' : 'flex items-center gap-4'}>
                           <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
                             <Coins className="w-5 h-5 text-brand-purple" />
                           </div>
@@ -7095,7 +7104,7 @@ export default function App() {
                   )}
 
                   {selectedOffer.editorial && (
-                    <>
+                    <div className="space-y-6">
                       <section className="space-y-4">
                         <h3 className="flex items-center gap-2 text-[11px] uppercase font-black text-brand-purple tracking-[0.2em]">
                           <Zap className="w-4 h-4" />
@@ -7138,11 +7147,11 @@ export default function App() {
                           {l(selectedOffer.editorial.verdict)}
                         </p>
                       </section>
-                    </>
+                    </div>
                   )}
                 </div>
 
-                <div className="mt-10 flex flex-col gap-4">
+                <div className="flex shrink-0 flex-col gap-3 border-t border-white/10 bg-bg-dark/95 p-4 md:px-8 md:py-5">
                   <a
                     href={selectedOffer.url}
                     target="_blank"
@@ -7154,7 +7163,7 @@ export default function App() {
                       destination: selectedOffer.url.startsWith('https://t.me/') ? 'telegram' : 'website',
                       language: lang,
                     })}
-                    className="w-full flex items-center justify-center gap-3 py-6 bg-brand-purple hover:bg-white text-white hover:text-brand-purple border-2 border-brand-purple transition-all duration-500 rounded-[1.5rem] font-black text-base uppercase tracking-[0.2em] shadow-[0_15px_40px_rgba(157,88,255,0.3)]"
+                    className="flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl border-2 border-brand-purple bg-brand-purple px-5 py-4 text-center text-sm font-black uppercase tracking-[0.1em] text-white shadow-[0_15px_40px_rgba(157,88,255,0.3)] transition-all duration-500 hover:bg-white hover:text-brand-purple md:tracking-[0.14em]"
                   >
                     {selectedOffer.category === 'Guides'
                       ? t.readGuide
@@ -7181,7 +7190,7 @@ export default function App() {
                         destination: 'website_secondary',
                         language: lang,
                       })}
-                      className="w-full flex items-center justify-center gap-3 py-5 bg-white/5 border-2 border-white/10 rounded-[1.5rem] hover:bg-white/10 hover:border-brand-purple/40 text-white/60 hover:text-white transition-all font-black text-xs uppercase tracking-[0.2em]"
+                      className="flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/10 bg-white/5 px-5 py-3 text-xs font-black uppercase tracking-[0.12em] text-white/60 transition-all hover:border-brand-purple/40 hover:bg-white/10 hover:text-white"
                     >
                       {t.openWebsite}
                       <ExternalLink className="w-5 h-5" />
@@ -7190,7 +7199,7 @@ export default function App() {
                   {selectedOffer.promoCode && (
                     <button 
                       onClick={() => copyToClipboard(selectedOffer.promoCode || '')}
-                      className="w-full flex items-center justify-center gap-3 py-5 bg-white/5 border-2 border-white/10 rounded-[1.5rem] hover:bg-brand-orange/10 hover:border-brand-orange/50 text-white/40 hover:text-brand-orange transition-all font-black text-xs uppercase tracking-[0.2em]"
+                      className="flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/10 bg-white/5 px-5 py-3 text-xs font-black uppercase tracking-[0.12em] text-white/40 transition-all hover:border-brand-orange/50 hover:bg-brand-orange/10 hover:text-brand-orange"
                     >
                       <Copy className="w-5 h-5" />
                       {t.promo}: {selectedOffer.promoCode}
