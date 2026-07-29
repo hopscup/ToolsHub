@@ -15,6 +15,14 @@ import { smsPages } from './data/smsPages.js';
 import { socialPages } from './data/socialPages.js';
 import { steamPages } from './data/steamPages.js';
 import { vpsPages } from './data/vpsPages.js';
+import {
+  getAnalyticsConsent,
+  initializeAnalyticsFromConsent,
+  trackAnalyticsEvent,
+  trackPageView,
+  updateAnalyticsConsent,
+  type AnalyticsConsent,
+} from './analytics';
 import { 
   Gamepad2,
   Globe, 
@@ -4032,6 +4040,8 @@ export default function App() {
   const [isSocialGuideOpen, setIsSocialGuideOpen] = useState(false);
   const [isSteamGuideOpen, setIsSteamGuideOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsent>(() => getAnalyticsConsent());
+  const [isAnalyticsSettingsOpen, setIsAnalyticsSettingsOpen] = useState(false);
   const [placeholderText, setPlaceholderText] = useState('');
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -4039,6 +4049,7 @@ export default function App() {
   const typingSpeed = 150;
   const deletingSpeed = 100;
   const pauseTime = 2000;
+  const lastTrackedSearchRef = useRef('');
   const l = <T,>(value?: Localized<T>) => getLocalizedValue(value, lang);
   const lList = <T,>(value?: Localized<T[]>) => getLocalizedValue(value, lang) || [];
   const tx = <T,>(value: Partial<Record<Language, T>> & { en: T }) => value[lang] ?? value.en;
@@ -4103,10 +4114,53 @@ export default function App() {
     return templates[lang][offer.category];
   };
 
+  const saveAnalyticsConsent = (consent: Exclude<AnalyticsConsent, null>) => {
+    updateAnalyticsConsent(consent);
+    setAnalyticsConsent(consent);
+    setIsAnalyticsSettingsOpen(false);
+  };
+
+  const trackGuideOpen = (guideId: string) => {
+    trackAnalyticsEvent('guide_open', {
+      guide_id: guideId,
+      category: activeCategory,
+      language: lang,
+    });
+  };
+
   useEffect(() => {
     activeCategoryRef.current = activeCategory;
     subFilterRef.current = subFilter;
   }, [activeCategory, subFilter]);
+
+  useEffect(() => {
+    initializeAnalyticsFromConsent();
+  }, []);
+
+  useEffect(() => {
+    if (analyticsConsent !== 'granted') return;
+    const timeout = window.setTimeout(() => {
+      trackPageView(window.location.pathname, document.title);
+    }, 0);
+
+    return () => window.clearTimeout(timeout);
+  }, [activeCategory, selectedOffer?.id, lang, analyticsConsent]);
+
+  useEffect(() => {
+    const searchTerm = searchQuery.trim();
+    if (searchTerm.length < 2 || searchTerm === lastTrackedSearchRef.current) return;
+
+    const timeout = window.setTimeout(() => {
+      lastTrackedSearchRef.current = searchTerm;
+      trackAnalyticsEvent('search', {
+        search_term: searchTerm,
+        category: activeCategory,
+        language: lang,
+      });
+    }, 800);
+
+    return () => window.clearTimeout(timeout);
+  }, [searchQuery, activeCategory, lang]);
 
   useEffect(() => {
     const currentWord = words[wordIndex];
@@ -4448,6 +4502,17 @@ export default function App() {
     emptyCategory: tx({ ru: 'В этой категории пока пусто', en: 'Empty Category', es: 'Categoría vacía', zh: '该分类暂无内容', ko: '비어 있는 카테고리' }),
     visit: tx({ ru: 'Перейти', en: 'Visit Site', es: 'Visitar sitio', zh: '访问网站', ko: '사이트 방문' }),
     open: tx({ ru: 'Открыть', en: 'View Details', es: 'Ver detalles', zh: '查看详情', ko: '자세히 보기' }),
+    analyticsSettings: tx({ ru: 'Настройки аналитики', en: 'Analytics settings', es: 'Ajustes de analítica', zh: '分析设置', ko: '분석 설정' }),
+    consentTitle: tx({ ru: 'Помогите сделать сайт полезнее', en: 'Help make the site more useful', es: 'Ayuda a mejorar el sitio', zh: '帮助改进网站', ko: '사이트 개선에 도움을 주세요' }),
+    consentText: tx({
+      ru: 'Разрешите аналитику посещений: она покажет, какие разделы, карточки и ссылки действительно полезны. Используется Google Analytics без рекламных cookies, а выбор всегда можно изменить внизу сайта.',
+      en: 'Allow visit analytics so I can see which sections, cards, and links are genuinely useful. Google Analytics is used without advertising cookies, and you can change your choice in the footer.',
+      es: 'Permite la analítica de visitas para saber qué secciones, tarjetas y enlaces son realmente útiles. Se usa Google Analytics sin cookies publicitarias y puedes cambiar tu elección en el pie.',
+      zh: '允许访问分析，以了解哪些分类、卡片和链接真正有用。网站使用不含广告 Cookie 的 Google Analytics，您可随时在页脚更改选择。',
+      ko: '방문 분석을 허용하면 실제로 유용한 섹션, 카드, 링크를 파악할 수 있습니다. 광고 쿠키 없이 Google Analytics를 사용하며 선택은 푸터에서 언제든 변경할 수 있습니다.',
+    }),
+    consentAllow: tx({ ru: 'Разрешить', en: 'Allow', es: 'Permitir', zh: '允许', ko: '허용' }),
+    consentNecessary: tx({ ru: 'Только необходимое', en: 'Necessary only', es: 'Solo necesarias', zh: '仅必要功能', ko: '필수 항목만' }),
     types: tx({ ru: 'Типы', en: 'Types', es: 'Tipos', zh: '类型', ko: '유형' }),
     subFilters: {
       Proxy: tx({ ru: 'Прокси', en: 'Proxy', es: 'Proxy', zh: '代理', ko: '프록시' }),
@@ -4566,6 +4631,14 @@ export default function App() {
   };
 
   const handleOfferOpen = (offer: Offer) => {
+    trackAnalyticsEvent('card_open', {
+      service_id: offer.id,
+      service_name: offer.name,
+      category: offer.category,
+      subcategory: offer.subCategory,
+      language: lang,
+    });
+
     const nextSubFilter = offer.category === activeCategory ? subFilter : getDefaultSubFilter();
     if (offer.slug) {
       const nextRoute = getLocalizedOfferRoute(offer, lang);
@@ -4786,14 +4859,20 @@ export default function App() {
                 {activeCategory === 'Proxy' ? (
                   <>
                     <button
-                      onClick={() => setIsProxyCheckerOpen(true)}
+                      onClick={() => {
+                        trackGuideOpen('proxy_checker');
+                        setIsProxyCheckerOpen(true);
+                      }}
                       className="flex items-center gap-2.5 px-8 py-4 bg-white/[0.04] hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <Search className="w-5 h-5" />
                       {t.proxyChecker}
                     </button>
                     <button
-                      onClick={() => setIsProxyGuideOpen(true)}
+                      onClick={() => {
+                        trackGuideOpen('proxy_choice');
+                        setIsProxyGuideOpen(true);
+                      }}
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <Zap className="w-5 h-5" />
@@ -4802,7 +4881,10 @@ export default function App() {
                   </>
                 ) : activeCategory === 'Antidetect' ? (
                   <button
-                    onClick={() => setIsAntidetectGuideOpen(true)}
+                    onClick={() => {
+                      trackGuideOpen('antidetect_choice');
+                      setIsAntidetectGuideOpen(true);
+                    }}
                     className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                   >
                     <Zap className="w-5 h-5" />
@@ -4811,7 +4893,10 @@ export default function App() {
                 ) : activeCategory === 'Stores' ? (
                   <>
                     <button 
-                      onClick={() => setIsStoresGuideOpen(true)}
+                      onClick={() => {
+                        trackGuideOpen('account_shop_choice');
+                        setIsStoresGuideOpen(true);
+                      }}
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <Zap className="w-5 h-5" />
@@ -4821,7 +4906,10 @@ export default function App() {
                 ) : activeCategory === 'Social' ? (
                   <>
                     <button
-                      onClick={() => setIsSocialGuideOpen(true)}
+                      onClick={() => {
+                        trackGuideOpen('referral_choice');
+                        setIsSocialGuideOpen(true);
+                      }}
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <Users className="w-5 h-5" />
@@ -4831,6 +4919,7 @@ export default function App() {
                       href={SOCIAL_VIDEO_URL}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackGuideOpen('referral_video')}
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <Video className="w-5 h-5" />
@@ -4840,7 +4929,10 @@ export default function App() {
                 ) : activeCategory === 'Steam' ? (
                   <>
                     <button
-                      onClick={() => setIsSteamGuideOpen(true)}
+                      onClick={() => {
+                        trackGuideOpen('steam_topup_choice');
+                        setIsSteamGuideOpen(true);
+                      }}
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <Zap className="w-5 h-5" />
@@ -4850,6 +4942,7 @@ export default function App() {
                       href={STEAM_PRICE_TABLE_URL}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackGuideOpen('steam_price_table')}
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <FileText className="w-5 h-5" />
@@ -4859,7 +4952,10 @@ export default function App() {
                 ) : activeCategory === 'Cards' ? (
                   <>
                     <button
-                      onClick={() => setIsCardsGuideOpen(true)}
+                      onClick={() => {
+                        trackGuideOpen('foreign_cards_choice');
+                        setIsCardsGuideOpen(true);
+                      }}
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <CreditCard className="w-5 h-5" />
@@ -4869,6 +4965,7 @@ export default function App() {
                       href={CARDS_VIDEO_URL}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackGuideOpen('foreign_cards_video')}
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
                       <Video className="w-5 h-5" />
@@ -4882,6 +4979,7 @@ export default function App() {
                         href={activeCategoryData.guides.text} 
                         target="_blank" 
                         rel="noopener noreferrer"
+                        onClick={() => trackGuideOpen(`${activeCategory}_text_guide`)}
                         className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                       >
                         <FileText className="w-5 h-5" />
@@ -4893,6 +4991,7 @@ export default function App() {
                         href={activeCategoryData.guides.video} 
                         target="_blank" 
                         rel="noopener noreferrer"
+                        onClick={() => trackGuideOpen(`${activeCategory}_video_guide`)}
                         className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                       >
                         <Video className="w-5 h-5" />
@@ -4907,7 +5006,10 @@ export default function App() {
             {activeCategory === 'SMS' && (
               <div className="flex justify-center w-full md:w-auto">
                 <button
-                  onClick={() => setIsActivatorGuideOpen(true)}
+                  onClick={() => {
+                    trackGuideOpen('sms_activator_choice');
+                    setIsActivatorGuideOpen(true);
+                  }}
                   className="flex items-center gap-2.5 px-10 py-5 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[12px] font-black uppercase tracking-widest"
                 >
                   <Zap className="w-5 h-5" />
@@ -5250,7 +5352,57 @@ export default function App() {
             className="w-12 h-12 object-contain opacity-70 hover:opacity-100 transition-opacity"
           />
         </div>
+        <button
+          type="button"
+          onClick={() => setIsAnalyticsSettingsOpen(true)}
+          className="mt-5 text-[10px] font-bold uppercase tracking-widest text-white/25 transition-colors hover:text-brand-purple"
+        >
+          {t.analyticsSettings}
+        </button>
       </footer>
+
+      <AnimatePresence>
+        {(analyticsConsent === null || isAnalyticsSettingsOpen) && (
+          <motion.aside
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 24 }}
+            role="dialog"
+            aria-labelledby="analytics-consent-title"
+            className="fixed bottom-4 left-4 right-4 z-[140] mx-auto max-w-md rounded-2xl border border-white/10 bg-[#111111]/95 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.55)] backdrop-blur-xl md:bottom-6 md:left-auto md:right-6 md:mx-0"
+          >
+            <div className="flex items-start gap-4">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand-purple/25 bg-brand-purple/10">
+                <Shield className="h-5 w-5 text-brand-purple" />
+              </div>
+              <div>
+                <h2 id="analytics-consent-title" className="font-display text-base font-bold text-white">
+                  {t.consentTitle}
+                </h2>
+                <p className="mt-2 text-xs font-medium leading-relaxed text-white/55">
+                  {t.consentText}
+                </p>
+              </div>
+            </div>
+            <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={() => saveAnalyticsConsent('granted')}
+                className="min-h-11 rounded-xl border border-brand-purple bg-brand-purple px-4 py-3 text-xs font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-brand-purple"
+              >
+                {t.consentAllow}
+              </button>
+              <button
+                type="button"
+                onClick={() => saveAnalyticsConsent('denied')}
+                className="min-h-11 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-black uppercase tracking-wider text-white/60 transition-colors hover:border-white/25 hover:text-white"
+              >
+                {t.consentNecessary}
+              </button>
+            </div>
+          </motion.aside>
+        )}
+      </AnimatePresence>
 
       {/* Proxy Guide Modal */}
       <AnimatePresence>
@@ -6911,6 +7063,13 @@ export default function App() {
                     href={selectedOffer.url}
                     target="_blank"
                     rel="sponsored noopener noreferrer"
+                    onClick={() => trackAnalyticsEvent('service_click', {
+                      service_id: selectedOffer.id,
+                      service_name: selectedOffer.name,
+                      category: selectedOffer.category,
+                      destination: selectedOffer.url.startsWith('https://t.me/') ? 'telegram' : 'website',
+                      language: lang,
+                    })}
                     className="w-full flex items-center justify-center gap-3 py-6 bg-brand-purple hover:bg-white text-white hover:text-brand-purple border-2 border-brand-purple transition-all duration-500 rounded-[1.5rem] font-black text-base uppercase tracking-[0.2em] shadow-[0_15px_40px_rgba(157,88,255,0.3)]"
                   >
                     {t.visit}
@@ -6921,6 +7080,13 @@ export default function App() {
                       href={selectedOffer.webUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackAnalyticsEvent('service_click', {
+                        service_id: selectedOffer.id,
+                        service_name: selectedOffer.name,
+                        category: selectedOffer.category,
+                        destination: 'website_secondary',
+                        language: lang,
+                      })}
                       className="w-full flex items-center justify-center gap-3 py-5 bg-white/5 border-2 border-white/10 rounded-[1.5rem] hover:bg-white/10 hover:border-brand-purple/40 text-white/60 hover:text-white transition-all font-black text-xs uppercase tracking-[0.2em]"
                     >
                       Web
