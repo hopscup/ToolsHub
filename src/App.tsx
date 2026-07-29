@@ -4500,8 +4500,10 @@ export default function App() {
     rate: tx({ ru: 'Процент пополнения', en: 'Top-up Rate', es: 'Tasa de recarga', zh: '充值比例', ko: '충전 비율' }),
     description: tx({ ru: 'Описание', en: 'Description', es: 'Descripción', zh: '描述', ko: '설명' }),
     emptyCategory: tx({ ru: 'В этой категории пока пусто', en: 'Empty Category', es: 'Categoría vacía', zh: '该分类暂无内容', ko: '비어 있는 카테고리' }),
-    visit: tx({ ru: 'Перейти', en: 'Visit Site', es: 'Visitar sitio', zh: '访问网站', ko: '사이트 방문' }),
-    open: tx({ ru: 'Открыть', en: 'View Details', es: 'Ver detalles', zh: '查看详情', ko: '자세히 보기' }),
+    open: tx({ ru: 'Подробнее', en: 'View details', es: 'Ver detalles', zh: '查看详情', ko: '자세히 보기' }),
+    openTelegramBot: tx({ ru: 'Открыть Telegram-бот', en: 'Open Telegram bot', es: 'Abrir bot de Telegram', zh: '打开 Telegram 机器人', ko: 'Telegram 봇 열기' }),
+    openWebsite: tx({ ru: 'Открыть сайт', en: 'Open website', es: 'Abrir sitio web', zh: '打开网站', ko: '웹사이트 열기' }),
+    readGuide: tx({ ru: 'Читать гайд', en: 'Read guide', es: 'Leer guía', zh: '阅读指南', ko: '가이드 읽기' }),
     analyticsSettings: tx({ ru: 'Настройки аналитики', en: 'Analytics settings', es: 'Ajustes de analítica', zh: '分析设置', ko: '분석 설정' }),
     consentTitle: tx({ ru: 'Помогите сделать сайт полезнее', en: 'Help make the site more useful', es: 'Ayuda a mejorar el sitio', zh: '帮助改进网站', ko: '사이트 개선에 도움을 주세요' }),
     consentText: tx({
@@ -7072,7 +7074,17 @@ export default function App() {
                     })}
                     className="w-full flex items-center justify-center gap-3 py-6 bg-brand-purple hover:bg-white text-white hover:text-brand-purple border-2 border-brand-purple transition-all duration-500 rounded-[1.5rem] font-black text-base uppercase tracking-[0.2em] shadow-[0_15px_40px_rgba(157,88,255,0.3)]"
                   >
-                    {t.visit}
+                    {selectedOffer.category === 'Guides'
+                      ? t.readGuide
+                      : selectedOffer.url.startsWith('https://t.me/')
+                        ? t.openTelegramBot
+                        : tx({
+                            ru: `Перейти в ${offerTitle(selectedOffer)}`,
+                            en: `Visit ${offerTitle(selectedOffer)}`,
+                            es: `Ir a ${offerTitle(selectedOffer)}`,
+                            zh: `访问 ${offerTitle(selectedOffer)}`,
+                            ko: `${offerTitle(selectedOffer)} 방문`,
+                          })}
                     <ExternalLink className="w-5 h-5" />
                   </a>
                   {selectedOffer.webUrl && (
@@ -7089,7 +7101,7 @@ export default function App() {
                       })}
                       className="w-full flex items-center justify-center gap-3 py-5 bg-white/5 border-2 border-white/10 rounded-[1.5rem] hover:bg-white/10 hover:border-brand-purple/40 text-white/60 hover:text-white transition-all font-black text-xs uppercase tracking-[0.2em]"
                     >
-                      Web
+                      {t.openWebsite}
                       <ExternalLink className="w-5 h-5" />
                     </a>
                   )}
