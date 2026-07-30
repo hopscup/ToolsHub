@@ -2912,6 +2912,39 @@ const OFFERS: Offer[] = [
       paymentMethods: { ru: 'Visa/Mastercard, Крипта, СБП/RU карты', en: 'Visa/Mastercard, Crypto, SBP/RU cards' }
     }
   },
+  {
+    id: 'sms-numera',
+    category: 'SMS',
+    slug: SMS_PAGE_BY_ID['sms-numera'].slug,
+    editorial: SMS_PAGE_BY_ID['sms-numera'].editorial,
+    name: 'NumeraSMS',
+    description: SMS_PAGE_BY_ID['sms-numera'].editorial.description,
+    url: 'https://numerasms.com/ref/e56de5cfd219f9f3bb34f93b',
+    logoUrl: '/numerasms.png',
+    details: {
+      geo: {
+        ru: '100+ стран',
+        en: '100+ countries',
+        es: '100+ países',
+        zh: '100+ 个国家',
+        ko: '100개 이상 국가'
+      },
+      types: {
+        ru: 'Активации, длительная аренда',
+        en: 'Activations, long-term rental',
+        es: 'Activaciones, alquiler prolongado',
+        zh: '短信验证、长期租用',
+        ko: 'SMS 인증, 장기 대여'
+      },
+      paymentMethods: {
+        ru: 'Криптовалюта, UPI',
+        en: 'Cryptocurrency, UPI',
+        es: 'Criptomonedas, UPI',
+        zh: '加密货币、UPI',
+        ko: '암호화폐, UPI'
+      }
+    }
+  },
   // STEAM
   {
     id: 'steam-lis-skins',

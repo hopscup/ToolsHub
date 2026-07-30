@@ -363,8 +363,8 @@ const sections = [
       ko: '가상 번호는 가입용 SMS 코드를 받는 데 사용됩니다. 국가, 대상 서비스, 도달률, 결제 방식을 확인하세요.',
     },
     keywords: {
-      ru: 'sms активатор, виртуальный номер, купить номер для регистрации, смс активация, sms fast, smspool, hero sms',
-      en: 'sms activator, virtual number, buy number for registration, sms verification, SMS Fast, SMSPool, Hero SMS',
+      ru: 'sms активатор, виртуальный номер, купить номер для регистрации, смс активация, длительная аренда номера, NumeraSMS',
+      en: 'sms activator, virtual number, buy number for registration, sms verification, long-term number rental, NumeraSMS',
       es: 'activador sms, número virtual, comprar número para registro, verificación sms',
       zh: '短信接码, 虚拟号码, 注册号码, SMS 验证',
       ko: 'SMS 인증, 가상 번호, 가입 번호 구매, SMS verification',
@@ -376,7 +376,7 @@ const sections = [
       zh: ['尽量让号码国家与代理或 VPN 一致。', '检查目标服务和地区的到达率。', '验证码未收到时，很多服务会退还失败激活费用。'],
       ko: ['가능하면 번호 국가를 프록시/VPN과 맞추세요.', '대상 서비스와 GEO의 도달률을 확인하세요.', '코드가 오지 않으면 실패한 인증 비용을 환불하는 서비스가 많습니다.'],
     },
-    items: ['HeroSMS', 'SMS Fast', 'SMSPool', 'GrizzlySMS', 'Tiger SMS', '365-SMS'],
+    items: ['HeroSMS', 'SMS Fast', 'SMSPool', 'GrizzlySMS', 'Tiger SMS', '365-SMS', 'NumeraSMS'],
   },
   {
     id: 'vps',
