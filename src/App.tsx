@@ -1700,7 +1700,7 @@ const OFFERS: Offer[] = [
       en: 'Modern service with IPv4, ISP, Residential, and Mobile proxies. A good balance of price, speed, and stability.'
     },
     url: 'https://proxyshard.com?ref=hopscup',
-    logoUrl: '/proxyshard.png',
+    logoUrl: '/proxyshard.webp',
     isBestChoice: true,
     details: {
       geo: { ru: '100+ стран', en: '100+ countries', es: 'Más de 100 países', zh: '100 多个国家', ko: '100개 이상의 국가' },
@@ -1720,7 +1720,7 @@ const OFFERS: Offer[] = [
       en: 'A proven service with affordable server proxies. Good for parsing, automation, and tasks that do not require maximum IP trust.'
     },
     url: 'https://proxyline.net?line=152448',
-    logoUrl: '/proxyline.png',
+    logoUrl: '/proxyline.webp',
     details: {
       geo: { ru: '100+ стран', en: '100+ countries', es: 'Más de 100 países', zh: '100 多个国家', ko: '100개 이상의 국가' },
       types: { ru: 'IPv4, IPv6', en: 'IPv4, IPv6', es: 'IPv4, IPv6', zh: 'IPv4、IPv6', ko: 'IPv4, IPv6' },
@@ -1815,7 +1815,7 @@ const OFFERS: Offer[] = [
       en: 'ProxyWing is convenient because regular IPv4, ISP, Residential, and Mobile proxies are available in one dashboard. IPv4 covers most everyday account, antidetect, automation, and scraping tasks. If a platform checks the IP source more strictly, you can switch to ISP, Residential, or Mobile without changing providers.'
     },
     url: 'https://dashboard.proxywing.com/billing/aff.php?aff=813',
-    logoUrl: '/proxywing.png',
+    logoUrl: '/proxywing.webp',
     details: {
       geo: { ru: '200+ стран', en: '200+ countries', es: 'Más de 200 países', zh: '200 多个国家', ko: '200개 이상의 국가' },
       types: { ru: 'IPv4, ISP, Residential, Mobile', en: 'IPv4, ISP, Residential, Mobile', es: 'IPv4, ISP, Residential, Mobile', zh: 'IPv4、ISP、Residential、Mobile', ko: 'IPv4, ISP, Residential, Mobile' },
@@ -1910,7 +1910,7 @@ const OFFERS: Offer[] = [
       en: 'One of the largest services with a huge selection of countries and proxy types. You can usually find a suitable option for almost any task.'
     },
     url: 'https://proxy-seller.com/?partner=RIPC5NDAEYRZPZ',
-    logoUrl: '/proxy-seller.png',
+    logoUrl: '/proxy-seller.webp',
     isPopular: true,
     details: {
       geo: { ru: '220+ стран', en: '220+ countries', es: 'Más de 220 países', zh: '220 多个国家', ko: '220개 이상의 국가' },
@@ -1930,7 +1930,7 @@ const OFFERS: Offer[] = [
       en: 'One of the best-known services with affordable IPv4/IPv6, shared IPv4, and MTProto proxies. Suitable for daily tasks, automation, and working with many IPs.'
     },
     url: 'https://px6.net/c/103460',
-    logoUrl: '/proxy6.png',
+    logoUrl: '/proxy6.webp',
     details: {
       geo: { ru: '70+ стран', en: '70+ countries', es: 'Más de 70 países', zh: '70 多个国家', ko: '70개 이상의 국가' },
       types: { ru: 'IPv4, IPv6, Shared IPv4, MTProto', en: 'IPv4, IPv6, Shared IPv4, MTProto', es: 'IPv4, IPv6, Shared IPv4, MTProto', zh: 'IPv4、IPv6、Shared IPv4、MTProto', ko: 'IPv4, IPv6, Shared IPv4, MTProto' },
@@ -2025,7 +2025,7 @@ const OFFERS: Offer[] = [
       en: 'Mobile proxy service with IP rotation. A great choice for tasks where the highest possible platform trust is important.'
     },
     url: 'https://mobileproxy.space/?p=105422',
-    logoUrl: '/mobileproxy.png',
+    logoUrl: '/mobileproxy.webp',
     details: {
       geo: { ru: '20+ стран', en: '20+ countries', es: 'Más de 20 países', zh: '20 多个国家', ko: '20개 이상의 국가' },
       types: { ru: 'Mobile', en: 'Mobile', es: 'Mobile', zh: 'Mobile', ko: 'Mobile' },
@@ -2120,7 +2120,7 @@ const OFFERS: Offer[] = [
       en: 'A universal service with a wide proxy selection for different tasks: IPv4/IPv6, shared, residential, mobile, and dynamic proxies. Good for both account work and automation.'
     },
     url: 'https://proxys.io/?refid=54507',
-    logoUrl: '/proxys-io.png',
+    logoUrl: '/proxys-io.webp',
     details: {
       geo: { ru: '240+ стран', en: '240+ countries', es: 'Más de 240 países', zh: '240 多个国家', ko: '240개 이상의 국가' },
       types: { ru: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic', en: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic', es: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic', zh: 'IPv4、IPv6、Shared IPv4、Residential、Mobile、Dynamic', ko: 'IPv4, IPv6, Shared IPv4, Residential, Mobile, Dynamic' },
@@ -2141,7 +2141,7 @@ const OFFERS: Offer[] = [
     },
     url: 'https://t.me/VPNPPLBot?start=dXNlcl9pZD00NDMwODM',
     webUrl: 'https://app.privatepeople.top/?partner_id=443083',
-    logoUrl: '/ppl-vpn.png',
+    logoUrl: '/ppl-vpn.webp',
     isBestChoice: true,
     platforms: ['Windows', 'macOS', 'Android', 'iOS', 'Linux'],
     details: {
@@ -2161,7 +2161,7 @@ const OFFERS: Offer[] = [
       en: 'VPN with proprietary block-bypass technologies that keeps working even when restrictions get stronger. Supports unlimited devices and multiple speed modes for different tasks.'
     },
     url: 'https://t.me/prostovpnrubot?start=tg_467483565',
-    logoUrl: '/prostovpn.png',
+    logoUrl: '/prostovpn.webp',
     platforms: ['Windows', 'macOS', 'Android', 'iOS', 'Linux', 'Smart TV'],
     details: {
       geo: { ru: 'Более 10 стран', en: '10+ countries', es: 'Más de 10 países', zh: '10 多个国家', ko: '10개 이상의 국가' },
@@ -2180,7 +2180,7 @@ const OFFERS: Offer[] = [
       en: 'A Telegram-bot VPN service focused on staying connected and quickly replacing configs. If a config stops working, it can be replaced through the bot or support. There are separate Telegram solutions, including a personal proxy and newer VPN configs for Telegram, AI services, and other apps.'
     },
     url: 'https://t.me/tochka_GI_bot?start=811308241',
-    logoUrl: '/tochka-g.png',
+    logoUrl: '/tochka-g.webp',
     platforms: ['Windows', 'macOS', 'Android', 'iOS', 'Linux'],
     details: {
       geo: { ru: 'Несколько стран, есть переключение в новых конфигах', en: 'Multiple countries, switching available in newer configs', es: 'Varios países, con cambio en las configuraciones nuevas', zh: '多个国家，新配置支持切换', ko: '여러 국가, 새 설정에서 전환 가능' },
@@ -2237,7 +2237,7 @@ const OFFERS: Offer[] = [
       ko: '일일 및 월간 요금제를 제공하며 1대부터 15대까지 선택할 수 있습니다. 활성 구독은 한 번 일시 정지할 수 있고 HAPP 자동 서버를 지원합니다. 화이트리스트 네트워크용 무제한 트래픽 가속기도 별도로 제공됩니다.',
     },
     url: 'https://t.me/GigaDollarVPN_bot?start=DNL0ZO6T',
-    logoUrl: '/giga-dollar-vpn.png',
+    logoUrl: '/giga-dollar-vpn.webp',
     platforms: ['Windows', 'macOS', 'Linux', 'Android', 'iOS', 'Android TV', 'tvOS'],
     details: {
       geo: {
@@ -2288,7 +2288,7 @@ const OFFERS: Offer[] = [
     name: 'Dolphin{anty}',
     description: ANTIDETECT_PAGE_BY_ID['ant-dolphin'].editorial.description,
     url: 'https://dolphin-anty.net/a/1384647/nvjWq92',
-    logoUrl: '/dolphin.png',
+    logoUrl: '/dolphin.webp',
     isBestChoice: true,
     freeProfiles: { ru: '5', en: '5' },
     tariffStartPrice: { ru: 'от ≈ $10/мес', en: 'from ≈ $10/mo', es: 'desde ≈ $10/mes', zh: '约 $10/月起', ko: '약 $10/월부터' },
@@ -2305,7 +2305,7 @@ const OFFERS: Offer[] = [
     name: 'AdsPower',
     description: ANTIDETECT_PAGE_BY_ID['ant-adspower'].editorial.description,
     url: 'https://www.adspower-ru.com/share/e1UrIy',
-    logoUrl: '/adspower.png',
+    logoUrl: '/adspower.webp',
     isPopular: true,
     freeProfiles: { ru: '2', en: '2' },
     tariffStartPrice: { ru: 'от ≈ $9.9/мес', en: 'from ≈ $9.9/mo', es: 'desde ≈ $9.9/mes', zh: '约 $9.9/月起', ko: '약 $9.9/월부터' },
@@ -2322,7 +2322,7 @@ const OFFERS: Offer[] = [
     name: 'Octo Browser',
     description: ANTIDETECT_PAGE_BY_ID['ant-octo'].editorial.description,
     url: 'https://octobrowser.org/signup/?p=10441198',
-    logoUrl: '/octo-browser.png',
+    logoUrl: '/octo-browser.webp',
     freeProfiles: { ru: '0', en: '0' },
     tariffStartPrice: { ru: 'от ≈ €29/мес', en: 'from ≈ €29/mo', es: 'desde ≈ €29/mes', zh: '约 €29/月起', ko: '약 €29/월부터' },
     profiles100Price: { ru: '≈ €79/мес', en: '≈ €79/mo', es: '≈ €79/mes', zh: '约 €79/月', ko: '약 €79/월' },
@@ -2338,7 +2338,7 @@ const OFFERS: Offer[] = [
     name: 'Incogniton',
     description: ANTIDETECT_PAGE_BY_ID['ant-incogniton'].editorial.description,
     url: 'https://incogniton.com/aff/1873747/',
-    logoUrl: '/incogniton.png',
+    logoUrl: '/incogniton.webp',
     freeProfiles: { ru: '3 (10 первые 2 месяца)', en: '3 (10 for first 2 months)' },
     tariffStartPrice: { ru: 'от ≈ $13/мес', en: 'from ≈ $13/mo', es: 'desde ≈ $13/mes', zh: '约 $13/月起', ko: '약 $13/월부터' },
     profiles100Price: { ru: '≈ $40-50/мес', en: '≈ $40-50/mo', es: '≈ $40-50/mes', zh: '约 $40-50/月', ko: '약 $40-50/월' },
@@ -2354,7 +2354,7 @@ const OFFERS: Offer[] = [
     name: 'Vision',
     description: ANTIDETECT_PAGE_BY_ID['ant-vision'].editorial.description,
     url: 'https://browser.vision/r/5b695838-2bf1-4da8-9b56-2997cdd5b612',
-    logoUrl: '/vision.png',
+    logoUrl: '/vision.webp',
     isBestChoice: true,
     freeProfiles: { ru: '0', en: '0' },
     tariffStartPrice: { ru: '$29 за 50 профилей', en: '$29 for 50 profiles', es: '$29 por 50 perfiles', zh: '$29 / 50 个配置文件', ko: '$29 / 프로필 50개' },
@@ -2378,7 +2378,7 @@ const OFFERS: Offer[] = [
     name: 'Afina',
     description: ANTIDETECT_PAGE_BY_ID['ant-afina'].editorial.description,
     url: 'https://afina.io/en/plan?aff=3UQNPJEN',
-    logoUrl: '/afina.png',
+    logoUrl: '/afina.webp',
     freeProfiles: { ru: '0', en: '0' },
     tariffStartPrice: { ru: 'от ≈ $30/мес', en: 'from ≈ $30/mo', es: 'desde ≈ $30/mes', zh: '约 $30/月起', ko: '약 $30/월부터' },
     profiles100Price: { ru: '≈ $30/мес', en: '≈ $30/mo', es: '≈ $30/mes', zh: '约 $30/月', ko: '약 $30/월' },
@@ -2394,7 +2394,7 @@ const OFFERS: Offer[] = [
     name: 'GoLogin',
     description: ANTIDETECT_PAGE_BY_ID['ant-gologin'].editorial.description,
     url: 'https://gologin.com/join/gologin-IKNNLII',
-    logoUrl: '/gologin.png',
+    logoUrl: '/gologin.webp',
     freeProfiles: { ru: '3', en: '3' },
     tariffStartPrice: { ru: 'от ≈ $24/мес', en: 'from ≈ $24/mo', es: 'desde ≈ $24/mes', zh: '约 $24/月起', ko: '약 $24/월부터' },
     profiles100Price: { ru: '≈ $49/мес', en: '≈ $49/mo', es: '≈ $49/mes', zh: '约 $49/月', ko: '약 $49/월' },
@@ -2410,7 +2410,7 @@ const OFFERS: Offer[] = [
     name: 'MoreLogin',
     description: ANTIDETECT_PAGE_BY_ID['ant-morelogin'].editorial.description,
     url: 'https://www.morelogin.com/?from=AA8n0exLQF5U',
-    logoUrl: '/morelogin.png',
+    logoUrl: '/morelogin.webp',
     freeProfiles: { ru: '2', en: '2' },
     tariffStartPrice: { ru: 'от ≈ $9/мес', en: 'from ≈ $9/mo', es: 'desde ≈ $9/mes', zh: '约 $9/月起', ko: '약 $9/월부터' },
     profiles100Price: { ru: '≈ $39-49/мес', en: '≈ $39-49/mo', es: '≈ $39-49/mes', zh: '约 $39-49/月', ko: '약 $39-49/월' },
@@ -2426,7 +2426,7 @@ const OFFERS: Offer[] = [
     name: 'Multilogin',
     description: ANTIDETECT_PAGE_BY_ID['ant-multilogin'].editorial.description,
     url: 'https://app.multilogin.com/',
-    logoUrl: '/multilogin.png',
+    logoUrl: '/multilogin.webp',
     freeProfiles: { ru: '0', en: '0' },
     tariffStartPrice: { ru: 'от ≈ €29/мес', en: 'from ≈ €29/mo', es: 'desde ≈ €29/mes', zh: '约 €29/月起', ko: '약 €29/월부터' },
     profiles100Price: { ru: '≈ €79-99/мес', en: '≈ €79-99/mo', es: '≈ €79-99/mes', zh: '约 €79-99/月', ko: '약 €79-99/월' },
@@ -2443,7 +2443,7 @@ const OFFERS: Offer[] = [
     name: 'DarkStore',
     description: ACCOUNT_SHOP_PAGE_BY_ID['st-dark'].editorial.description,
     url: 'https://dark.shopping/category/view/gmail?p=95083',
-    logoUrl: '/darkstore.png',
+    logoUrl: '/darkstore.webp',
     isBestChoice: true,
     details: {
       paymentMethods: { ru: 'Visa/Mastercard, Крипта, СБП/RU карты', en: 'Visa/Mastercard, Crypto, SBP/RU cards' }
@@ -2458,7 +2458,7 @@ const OFFERS: Offer[] = [
     name: 'ACCSMarket',
     description: ACCOUNT_SHOP_PAGE_BY_ID.st1.editorial.description,
     url: 'https://accsmarket.com/en/9vV7VOzI',
-    logoUrl: '/accsmarket.png',
+    logoUrl: '/accsmarket.webp',
     isPopular: true,
     details: {
       paymentMethods: { ru: 'Крипта', en: 'Crypto' }
@@ -2473,7 +2473,7 @@ const OFFERS: Offer[] = [
     name: 'GGSel',
     description: ACCOUNT_SHOP_PAGE_BY_ID['st-ggsel'].editorial.description,
     url: 'https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112',
-    logoUrl: '/ggsel.png',
+    logoUrl: '/ggsel.webp',
     details: {
       paymentMethods: { ru: 'Visa/Mastercard, СБП/RU карты', en: 'Visa/Mastercard, SBP/RU cards' }
     }
@@ -2487,7 +2487,7 @@ const OFFERS: Offer[] = [
     name: 'FunPay',
     description: ACCOUNT_SHOP_PAGE_BY_ID['st-funpay'].editorial.description,
     url: 'https://funpay.com/',
-    logoUrl: '/funpay.png',
+    logoUrl: '/funpay.webp',
     details: {
       paymentMethods: { ru: 'Visa/Mastercard, Крипта, СБП/RU карты', en: 'Visa/Mastercard, Crypto, SBP/RU cards' }
     }
@@ -2501,7 +2501,7 @@ const OFFERS: Offer[] = [
     name: 'Plati Market',
     description: ACCOUNT_SHOP_PAGE_BY_ID['st-plati'].editorial.description,
     url: 'https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112',
-    logoUrl: '/plati.png',
+    logoUrl: '/plati.webp',
     details: {
       paymentMethods: { ru: 'Visa/Mastercard, Крипта, СБП/RU карты', en: 'Visa/Mastercard, Crypto, SBP/RU cards' }
     }
@@ -2515,7 +2515,7 @@ const OFFERS: Offer[] = [
     name: 'LZT Market',
     description: ACCOUNT_SHOP_PAGE_BY_ID['st-lzt'].editorial.description,
     url: 'https://lzt.market/',
-    logoUrl: '/lzt.png',
+    logoUrl: '/lzt.webp',
     details: {
       paymentMethods: { ru: 'Visa/Mastercard, Крипта', en: 'Visa/Mastercard, Crypto' }
     }
@@ -2530,7 +2530,7 @@ const OFFERS: Offer[] = [
     name: 'Лачуга скамера',
     description: ACCOUNT_SHOP_PAGE_BY_ID['bot-lachuga'].editorial.description,
     url: 'https://t.me/LachugaSkamera_Bot?start=ref_467483565',
-    logoUrl: '/lachuga.png',
+    logoUrl: '/lachuga.webp',
     isBestChoice: true,
     details: {
       paymentMethods: { ru: 'Крипта, СБП/RU карты', en: 'Crypto, SBP/RU cards' }
@@ -2545,7 +2545,7 @@ const OFFERS: Offer[] = [
     name: 'TheGod Shop',
     description: ACCOUNT_SHOP_PAGE_BY_ID['bot-thegod'].editorial.description,
     url: 'https://t.me/bothegreategod_bot?start=ref_467483565',
-    logoUrl: '/thegod.png',
+    logoUrl: '/thegod.webp',
     details: {
       paymentMethods: { ru: 'СБП/RU карты, Крипта', en: 'SBP/RU cards, Crypto' }
     }
@@ -2559,7 +2559,7 @@ const OFFERS: Offer[] = [
     name: 'Crassus Market',
     description: ACCOUNT_SHOP_PAGE_BY_ID['bot-crassus'].editorial.description,
     url: 'https://t.me/crassus_market_bot?start=467483565',
-    logoUrl: '/crassus.png',
+    logoUrl: '/crassus.webp',
     details: {
       paymentMethods: { ru: 'Крипта, СБП/RU карты', en: 'Crypto, SBP/RU cards' }
     }
@@ -2573,7 +2573,7 @@ const OFFERS: Offer[] = [
     name: 'Apel0sin',
     description: ACCOUNT_SHOP_PAGE_BY_ID['bot-apel0sin'].editorial.description,
     url: 'https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565',
-    logoUrl: '/apel0sin.png',
+    logoUrl: '/apel0sin.webp',
     details: {
       paymentMethods: { ru: 'Visa, Крипта, СБП/RU карты', en: 'Visa, Crypto, SBP/RU cards' }
     }
@@ -2587,7 +2587,7 @@ const OFFERS: Offer[] = [
     name: 'apel0sin | market 2.0',
     description: ACCOUNT_SHOP_PAGE_BY_ID['bot-apel0sin-market-2'].editorial.description,
     url: 'https://t.me/apel0sin_market_bot?start=ref_467483565',
-    logoUrl: '/apel0sin-market-2.png',
+    logoUrl: '/apel0sin-market-2.webp',
     details: {
       paymentMethods: {
         ru: 'СБП, CryptoBot, Крипта, Telegram Stars',
@@ -2661,7 +2661,7 @@ const OFFERS: Offer[] = [
     name: 'Petrovich',
     description: ACCOUNT_SHOP_PAGE_BY_ID['bot-petrovich'].editorial.description,
     url: 'https://t.me/ptrv4_bot?start=467483565',
-    logoUrl: '/petrovich.png',
+    logoUrl: '/petrovich.webp',
     details: {
       paymentMethods: { ru: 'Крипта, СБП/RU карты', en: 'Crypto, SBP/RU cards' }
     }
@@ -2675,7 +2675,7 @@ const OFFERS: Offer[] = [
     name: 'Prosto Exchange',
     description: CRYPTO_EXCHANGE_PAGE_BY_ID['prosto-exchange'].editorial.description,
     url: 'https://t.me/prostoexbot?start=467483565',
-    logoUrl: '/prosto-exchange.png',
+    logoUrl: '/prosto-exchange.webp',
     isBestChoice: true,
     details: {
       geo: {
@@ -2755,7 +2755,7 @@ const OFFERS: Offer[] = [
     name: 'Keine Exchange',
     description: CRYPTO_EXCHANGE_PAGE_BY_ID['keine-exchange'].editorial.description,
     url: 'https://keine-exchange.com/?rid=63626',
-    logoUrl: '/keine-exchange.png',
+    logoUrl: '/keine-exchange.webp',
     details: {
       geo: {
         ru: 'Онлайн + офлайн офисы: Москва, СПб, Екатеринбург, Краснодар, Сочи, Самара и др.',
@@ -2835,7 +2835,7 @@ const OFFERS: Offer[] = [
     name: 'HeroSMS',
     description: SMS_PAGE_BY_ID['sms-hero'].editorial.description,
     url: 'https://hero-sms.com/?ref=687296',
-    logoUrl: '/hero-sms.png',
+    logoUrl: '/hero-sms.webp',
     isBestChoice: true,
     details: { 
       geo: { ru: '40+ стран', en: '40+ countries' }, 
@@ -2850,7 +2850,7 @@ const OFFERS: Offer[] = [
     name: 'SMS Fast',
     description: SMS_PAGE_BY_ID['sms-fast'].editorial.description,
     url: 'https://smsfast.pro/?ref=1100157',
-    logoUrl: '/sms-fast.png',
+    logoUrl: '/sms-fast.webp',
     details: { 
       geo: { ru: '190+ стран', en: '190+ countries' }, 
       paymentMethods: { ru: 'Visa/Mastercard, Крипта, СБП/RU карты', en: 'Visa/Mastercard, Crypto, SBP/RU cards' }
@@ -2864,7 +2864,7 @@ const OFFERS: Offer[] = [
     name: 'SMSPool',
     description: SMS_PAGE_BY_ID['sms-pool'].editorial.description,
     url: 'https://smspool.net/?r=AcN28TiKAr',
-    logoUrl: '/sms-pool.png',
+    logoUrl: '/sms-pool.webp',
     details: { 
       geo: { ru: '50+ стран', en: '50+ countries' }, 
       paymentMethods: { ru: 'Visa/Mastercard, Крипта', en: 'Visa/Mastercard, Crypto' }
@@ -2878,7 +2878,7 @@ const OFFERS: Offer[] = [
     name: 'GrizzlySMS',
     description: SMS_PAGE_BY_ID['sms-grizzly'].editorial.description,
     url: 'https://grizzlysms.com/ru/?r=1654440',
-    logoUrl: '/grizzly-sms.png',
+    logoUrl: '/grizzly-sms.webp',
     details: { 
       geo: { ru: '30+ стран', en: '30+ countries' }, 
       paymentMethods: { ru: 'Крипта, Visa/Mastercard', en: 'Crypto, Visa/Mastercard' }
@@ -2892,7 +2892,7 @@ const OFFERS: Offer[] = [
     name: 'Tiger SMS',
     description: SMS_PAGE_BY_ID['sms-tiger'].editorial.description,
     url: 'https://tiger-sms.com/?ref=672048',
-    logoUrl: '/tiger-sms.png',
+    logoUrl: '/tiger-sms.webp',
     details: { 
       geo: { ru: '35+ стран', en: '35+ countries' }, 
       paymentMethods: { ru: 'Visa/Mastercard, Крипта, СБП/RU карты', en: 'Visa/Mastercard, Crypto, SBP/RU cards' }
@@ -2906,7 +2906,7 @@ const OFFERS: Offer[] = [
     name: '365-SMS',
     description: SMS_PAGE_BY_ID['sms-365'].editorial.description,
     url: 'https://365sms.vip/?ref=37269',
-    logoUrl: '/365-sms.png',
+    logoUrl: '/365-sms.webp',
     details: { 
       geo: { ru: '25+ стран', en: '25+ countries' }, 
       paymentMethods: { ru: 'Visa/Mastercard, Крипта, СБП/RU карты', en: 'Visa/Mastercard, Crypto, SBP/RU cards' }
@@ -2920,7 +2920,7 @@ const OFFERS: Offer[] = [
     name: 'NumeraSMS',
     description: SMS_PAGE_BY_ID['sms-numera'].editorial.description,
     url: 'https://numerasms.com/ref/e56de5cfd219f9f3bb34f93b',
-    logoUrl: '/numerasms.png',
+    logoUrl: '/numerasms.webp',
     details: {
       geo: {
         ru: '100+ стран',
@@ -2955,7 +2955,7 @@ const OFFERS: Offer[] = [
     editorial: STEAM_PAGE_BY_ID['steam-lis-skins'].editorial,
     description: STEAM_PAGE_BY_ID['steam-lis-skins'].editorial.description,
     url: 'https://lis-skins.com/?rf=3576023',
-    logoUrl: '/lis-skins.png',
+    logoUrl: '/lis-skins.webp',
     isBestChoice: true,
     details: {
       rate: { ru: 'до +30%', en: 'up to +30%', es: 'hasta +30%', zh: '最高 +30%', ko: '최대 +30%' },
@@ -2984,7 +2984,7 @@ const OFFERS: Offer[] = [
     editorial: STEAM_PAGE_BY_ID['steam-tf2lavka'].editorial,
     description: STEAM_PAGE_BY_ID['steam-tf2lavka'].editorial.description,
     url: 'https://tf2lavka.ru/',
-    logoUrl: '/tf2lavka.png',
+    logoUrl: '/tf2lavka.webp',
     details: {
       rate: {
         ru: '~ +15%',
@@ -3018,7 +3018,7 @@ const OFFERS: Offer[] = [
     editorial: STEAM_PAGE_BY_ID['steam-aim-market'].editorial,
     description: STEAM_PAGE_BY_ID['steam-aim-market'].editorial.description,
     url: 'https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd',
-    logoUrl: '/aim-market.png',
+    logoUrl: '/aim-market.webp',
     details: {
       rate: { ru: 'до +30%', en: 'up to +30%', es: 'hasta +30%', zh: '最高 +30%', ko: '최대 +30%' },
       types: {
@@ -3046,7 +3046,7 @@ const OFFERS: Offer[] = [
     editorial: STEAM_PAGE_BY_ID['steam-csmoney'].editorial,
     description: STEAM_PAGE_BY_ID['steam-csmoney'].editorial.description,
     url: 'https://cs.money/',
-    logoUrl: '/cs-money.png',
+    logoUrl: '/cs-money.webp',
     details: {
       rate: { ru: 'до +30%', en: 'up to +30%', es: 'hasta +30%', zh: '最高 +30%', ko: '최대 +30%' },
       types: {
@@ -3074,7 +3074,7 @@ const OFFERS: Offer[] = [
     editorial: STEAM_PAGE_BY_ID['steam-ggsel'].editorial,
     description: STEAM_PAGE_BY_ID['steam-ggsel'].editorial.description,
     url: 'https://ggsel.net/',
-    logoUrl: '/ggsel.png',
+    logoUrl: '/ggsel.webp',
     details: {
       rate: { ru: '-8%', en: '-8%', es: '-8%', zh: '-8%', ko: '-8%' },
       types: {
@@ -3102,7 +3102,7 @@ const OFFERS: Offer[] = [
     editorial: STEAM_PAGE_BY_ID['steam-playerok'].editorial,
     description: STEAM_PAGE_BY_ID['steam-playerok'].editorial.description,
     url: 'https://playerok.com/',
-    logoUrl: '/playerok.png',
+    logoUrl: '/playerok.webp',
     details: {
       rate: { ru: '-5%', en: '-5%', es: '-5%', zh: '-5%', ko: '-5%' },
       types: {
@@ -3131,7 +3131,7 @@ const OFFERS: Offer[] = [
     editorial: FOREIGN_CARD_PAGE_BY_ID.zarub.editorial,
     description: FOREIGN_CARD_PAGE_BY_ID.zarub.editorial.description,
     url: 'https://t.me/zarub_robot?start=ref_PqBrBs',
-    logoUrl: '/zarub.png',
+    logoUrl: '/zarub.webp',
     isBestChoice: true,
     cardStats: {
       issuance: { ru: '8$', en: '8$', es: '8$', zh: '8 美元', ko: '8달러' },
@@ -3221,7 +3221,7 @@ const OFFERS: Offer[] = [
     editorial: FOREIGN_CARD_PAGE_BY_ID.cashinout.editorial,
     description: FOREIGN_CARD_PAGE_BY_ID.cashinout.editorial.description,
     url: 'https://t.me/Cashinout_bot?start=197391',
-    logoUrl: '/cashinout.png',
+    logoUrl: '/cashinout.webp',
     cardStats: {
       issuance: { ru: '$7.5, из них $5 на баланс', en: '$7.5, with $5 credited', es: '7,5 $, con 5 $ de saldo', zh: '7.5 美元，5 美元到账', ko: '7.5달러, 5달러 잔액 지급' },
       maintenance: { ru: '$3/мес', en: '$3/mo', es: '3 $/mes', zh: '3 美元/月', ko: '월 3달러' },
@@ -3301,7 +3301,7 @@ const OFFERS: Offer[] = [
     editorial: FOREIGN_CARD_PAGE_BY_ID.vezdekarta.editorial,
     description: FOREIGN_CARD_PAGE_BY_ID.vezdekarta.editorial.description,
     url: 'https://app.vezdekarta.ru/',
-    logoUrl: '/vezdekarta.png',
+    logoUrl: '/vezdekarta.webp',
     isBestChoice: true,
     cardStats: {
       issuance: { ru: '10-12$', en: '$10-12', es: '10-12 $', zh: '10-12 美元', ko: '10-12달러' },
@@ -3364,7 +3364,7 @@ const OFFERS: Offer[] = [
     editorial: FOREIGN_CARD_PAGE_BY_ID.pionex.editorial,
     description: FOREIGN_CARD_PAGE_BY_ID.pionex.editorial.description,
     url: 'https://accounts.pionex.com/ru/signUp?r=0KQQCKp8q42',
-    logoUrl: '/pionex.png',
+    logoUrl: '/pionex.webp',
     cardStats: {
       issuance: { ru: '0$', en: '$0', es: '0 $', zh: '0 美元', ko: '0달러' },
       maintenance: { ru: '0$', en: '$0', es: '0 $', zh: '0 美元', ko: '0달러' },
@@ -3401,7 +3401,7 @@ const OFFERS: Offer[] = [
     name: 'MaCloud',
     description: VPS_PAGE_BY_ID['vps-macloud'].editorial.description,
     url: 'https://macloud.ru/?partner=54jxg21a99',
-    logoUrl: '/macloud.png',
+    logoUrl: '/macloud.webp',
     isBestChoice: true,
     details: {
       geo: { ru: 'РФ и зарубежные локации', en: 'RU and foreign locations' },
@@ -3417,7 +3417,7 @@ const OFFERS: Offer[] = [
     name: 'Xorek',
     description: VPS_PAGE_BY_ID['vps-xorek'].editorial.description,
     url: 'https://xorek.cloud/?from=20798',
-    logoUrl: '/xorek.png',
+    logoUrl: '/xorek.webp',
     isPopular: true,
     details: {
       geo: { ru: 'Несколько локаций', en: 'Multiple locations' },
@@ -3433,7 +3433,7 @@ const OFFERS: Offer[] = [
     name: 'VDSina',
     description: VPS_PAGE_BY_ID['vps-vdsina'].editorial.description,
     url: 'https://vdsina.ru/?partner=fd6mvbusbj46',
-    logoUrl: '/vdsina.png',
+    logoUrl: '/vdsina.webp',
     details: {
       geo: { ru: 'РФ и зарубежные локации', en: 'RU and foreign locations' },
       types: { ru: 'VDS/VPS, Linux, Windows, быстрый запуск', en: 'VDS/VPS, Linux, Windows, quick launch' },
@@ -3448,7 +3448,7 @@ const OFFERS: Offer[] = [
     name: 'SpaceCore',
     description: VPS_PAGE_BY_ID['vps-spacecore'].editorial.description,
     url: 'https://billing.spacecore.pro/billmgr?from=59744',
-    logoUrl: '/spacecore.png',
+    logoUrl: '/spacecore.webp',
     details: {
       geo: { ru: 'Разные локации', en: 'Different locations' },
       types: { ru: 'VPS/VDS, серверная инфраструктура', en: 'VPS/VDS, server infrastructure' },
@@ -3463,7 +3463,7 @@ const OFFERS: Offer[] = [
     name: 'AEZA',
     description: VPS_PAGE_BY_ID['vps-aeza'].editorial.description,
     url: 'https://aeza.net/?ref=887153',
-    logoUrl: '/aeza.png',
+    logoUrl: '/aeza.webp',
     details: {
       geo: { ru: 'Разные страны и дата-центры', en: 'Different countries and data centers' },
       types: { ru: 'VPS/VDS, выделенные серверы, инфраструктура', en: 'VPS/VDS, dedicated servers, infrastructure' },
@@ -3480,7 +3480,7 @@ const OFFERS: Offer[] = [
     editorial: SOCIAL_PAGE_BY_ID['boost-twiboost'].editorial,
     description: SOCIAL_PAGE_BY_ID['boost-twiboost'].editorial.description,
     url: 'https://twiboost.com/ref2287193',
-    logoUrl: '/twiboost.png',
+    logoUrl: '/twiboost.webp',
     isBestChoice: true,
     details: {
       types: {
@@ -3508,7 +3508,7 @@ const OFFERS: Offer[] = [
     editorial: SOCIAL_PAGE_BY_ID['boost-socproof'].editorial,
     description: SOCIAL_PAGE_BY_ID['boost-socproof'].editorial.description,
     url: 'https://partner.soc-proof.su/ref/slgw3',
-    logoUrl: '/soc-proof.png',
+    logoUrl: '/soc-proof.webp',
     details: {
       types: {
         ru: 'Рефералы, регистрации, активность',
@@ -3535,7 +3535,7 @@ const OFFERS: Offer[] = [
     editorial: SOCIAL_PAGE_BY_ID['boost-boostgram'].editorial,
     description: SOCIAL_PAGE_BY_ID['boost-boostgram'].editorial.description,
     url: 'https://boost-gram.online/ref1860138',
-    logoUrl: '/boost-gram.png',
+    logoUrl: '/boost-gram.webp',
     details: {
       types: {
         ru: 'Соцсети, рефералы, регистрации',
@@ -3562,7 +3562,7 @@ const OFFERS: Offer[] = [
     editorial: SOCIAL_PAGE_BY_ID['boost-easyliker'].editorial,
     description: SOCIAL_PAGE_BY_ID['boost-easyliker'].editorial.description,
     url: 'https://easyliker.ru/register?ref=XMFXYSMN',
-    logoUrl: '/easyliker.png',
+    logoUrl: '/easyliker.webp',
     details: {
       types: {
         ru: 'Соцсети, активность, рефералы',
@@ -3589,7 +3589,7 @@ const OFFERS: Offer[] = [
     editorial: SOCIAL_PAGE_BY_ID['boost-smmlaba'].editorial,
     description: SOCIAL_PAGE_BY_ID['boost-smmlaba'].editorial.description,
     url: 'https://smmlaba.com/',
-    logoUrl: '/smmlaba.png',
+    logoUrl: '/smmlaba.webp',
     details: {
       types: {
         ru: 'SMM-метрики, соцсети, активность',
@@ -3616,7 +3616,7 @@ const OFFERS: Offer[] = [
     editorial: SOCIAL_PAGE_BY_ID['boost-smmprime'].editorial,
     description: SOCIAL_PAGE_BY_ID['boost-smmprime'].editorial.description,
     url: 'https://smmprime.com/ref/wvevp',
-    logoUrl: '/smmprime.png',
+    logoUrl: '/smmprime.webp',
     details: {
       types: {
         ru: 'SMM-метрики, соцсети, активность',
@@ -3643,7 +3643,7 @@ const OFFERS: Offer[] = [
     editorial: SOCIAL_PAGE_BY_ID['bux-socpublic'].editorial,
     description: SOCIAL_PAGE_BY_ID['bux-socpublic'].editorial.description,
     url: 'https://socpublic.com/?i=9368855',
-    logoUrl: '/socpublic.png',
+    logoUrl: '/socpublic.webp',
     isPopular: true,
     details: {
       types: {
@@ -3671,7 +3671,7 @@ const OFFERS: Offer[] = [
     editorial: SOCIAL_PAGE_BY_ID['bux-unu'].editorial,
     description: SOCIAL_PAGE_BY_ID['bux-unu'].editorial.description,
     url: 'https://unu.im/re/3105327',
-    logoUrl: '/unu.png',
+    logoUrl: '/unu.webp',
     details: {
       types: {
         ru: 'Биржа заданий, регистрации, простые действия',
@@ -4842,7 +4842,7 @@ export default function App() {
         <div className="py-2 px-6 md:px-12 flex justify-between items-center border-b border-white/5">
           <div className="flex items-center gap-4">
             <a href={getLocalizedRoute('Proxy', lang)} aria-label="Hopscup's Tools Hub" className="w-10 h-10 rounded-xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/5 transition-transform hover:scale-105">
-              <img src="/logo.png" alt="Hopscup's Tools Hub" className="w-full h-full object-cover" />
+              <img src="/logo.webp" alt="Hopscup's Tools Hub" className="w-full h-full object-cover" />
             </a>
             
             <div className="flex items-center gap-2">
@@ -5196,7 +5196,7 @@ export default function App() {
                               loading="lazy"
                               decoding="async"
                               onError={(event) => {
-                                event.currentTarget.src = '/logo.png';
+                                event.currentTarget.src = '/logo.webp';
                               }}
                               className="w-full h-full object-cover"
                             />
@@ -5231,7 +5231,7 @@ export default function App() {
                                 loading="lazy"
                                 decoding="async"
                                 onError={(event) => {
-                                  event.currentTarget.src = '/logo.png';
+                                  event.currentTarget.src = '/logo.webp';
                                 }}
                                 className="w-full h-full object-cover"
                               />
@@ -5468,7 +5468,7 @@ export default function App() {
         </p>
         <div className="mt-6 flex justify-center">
           <img
-            src="/logo.png"
+            src="/logo.webp"
             alt="HopsCup"
             loading="lazy"
             decoding="async"
@@ -6859,11 +6859,11 @@ export default function App() {
                   ) : (
                     <div className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-white/5 md:h-20 md:w-20 md:rounded-3xl">
                       <img
-                        src={selectedOffer.logoUrl || '/logo.png'}
+                        src={selectedOffer.logoUrl || '/logo.webp'}
                         alt={selectedOffer.name}
                         decoding="async"
                         onError={(event) => {
-                          event.currentTarget.src = '/logo.png';
+                          event.currentTarget.src = '/logo.webp';
                         }}
                         className="w-full h-full object-cover"
                       />
