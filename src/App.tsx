@@ -5193,6 +5193,8 @@ export default function App() {
                             <img
                               src={offer.logoUrl}
                               alt={offer.name}
+                              loading="lazy"
+                              decoding="async"
                               onError={(event) => {
                                 event.currentTarget.src = '/logo.png';
                               }}
@@ -5226,6 +5228,8 @@ export default function App() {
                               <img
                                 src={offer.logoUrl}
                                 alt={offer.name}
+                                loading="lazy"
+                                decoding="async"
                                 onError={(event) => {
                                   event.currentTarget.src = '/logo.png';
                                 }}
@@ -5466,6 +5470,8 @@ export default function App() {
           <img
             src="/logo.png"
             alt="HopsCup"
+            loading="lazy"
+            decoding="async"
             className="w-12 h-12 object-contain opacity-70 hover:opacity-100 transition-opacity"
           />
         </div>
@@ -6855,6 +6861,7 @@ export default function App() {
                       <img
                         src={selectedOffer.logoUrl || '/logo.png'}
                         alt={selectedOffer.name}
+                        decoding="async"
                         onError={(event) => {
                           event.currentTarget.src = '/logo.png';
                         }}
