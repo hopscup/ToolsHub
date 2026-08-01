@@ -11,6 +11,7 @@ import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
 import { foreignCardPages } from './data/foreignCardPages.js';
 import { guidePages } from './data/guidePages.js';
+import { seoLandingPages } from './data/seoLandingPages.js';
 import { smsPages } from './data/smsPages.js';
 import { socialPages } from './data/socialPages.js';
 import { steamPages } from './data/steamPages.js';
@@ -226,6 +227,27 @@ interface Offer {
   };
 }
 
+interface SeoLandingPage {
+  id: string;
+  route: string;
+  category: CategoryType;
+  subFilter: SubCategory;
+  eyebrow: Localized;
+  title: Localized;
+  description: Localized;
+  heading: Localized;
+  heroHeading: Localized;
+  heroIntro: Localized;
+  intro: Localized;
+  points: Localized<string[]>;
+  keywords: Localized;
+  linkLabel: Localized;
+  items: string[];
+  serviceLinks: Record<string, string>;
+}
+
+const SEO_LANDING_PAGES = seoLandingPages as SeoLandingPage[];
+
 // --- Data ---
 const CATEGORIES: { id: CategoryType; icon: any; title: Localized; subFilters?: SubCategory[]; guides?: { text: string | boolean; video: string } }[] = [
   { 
@@ -318,6 +340,16 @@ const getLocalizedRoute = (category: CategoryType, language: Language) =>
 
 const getLocalizedOfferRoute = (offer: Offer, language: Language) =>
   `${getLocalizedRoute(offer.category, language)}/${offer.slug}`;
+
+const getSeoLandingFromPath = (
+  path = typeof window !== 'undefined' ? window.location.pathname : '/',
+): SeoLandingPage | undefined => {
+  const normalizedPath = stripLanguagePrefix(path);
+  return SEO_LANDING_PAGES.find((page) => normalizedPath === page.route);
+};
+
+const getLocalizedSeoLandingRoute = (page: SeoLandingPage, language: Language) =>
+  `${LANGUAGE_PREFIXES[language]}${page.route}`;
 
 const translateMissingString = (value: string, language: Language) => {
   if (language === 'ru' || language === 'en') return value;
@@ -479,7 +511,9 @@ const translateMissingValue = <T,>(value: T, language: Language): T => {
 const getLocalizedValue = <T,>(value: Localized<T> | undefined, language: Language): T | undefined =>
   value?.[language] ?? (value?.en !== undefined ? translateMissingValue(value.en, language) : value?.ru);
 
-const getDefaultSubFilter = (): SubCategory => 'None';
+const getDefaultSubFilter = (
+  path = typeof window !== 'undefined' ? window.location.pathname : '/',
+): SubCategory => getSeoLandingFromPath(path)?.subFilter || 'None';
 
 const getCategoryFromPath = (path = typeof window !== 'undefined' ? window.location.pathname : '/'): CategoryType => {
   const normalizedPath = stripLanguagePrefix(path);
@@ -4138,6 +4172,7 @@ const LanguageToggle = ({ lang, onChange }: { lang: Language; onChange: (languag
 
 export default function App() {
   const initialCategory = getCategoryFromPath();
+  const currentSeoLanding = getSeoLandingFromPath();
   const [lang, setLang] = useState<Language>(getLanguageFromPath());
   const [activeCategory, setActiveCategory] = useState<CategoryType>(initialCategory);
   const [isHomeRoute, setIsHomeRoute] = useState(
@@ -4325,13 +4360,16 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const sectionSeo = SECTION_SEO[activeCategory];
+    const seoLanding = selectedOffer ? undefined : getSeoLandingFromPath();
+    const sectionSeo = seoLanding || SECTION_SEO[activeCategory];
     const offerSeo = selectedOffer?.slug ? selectedOffer.editorial : undefined;
     const canonicalPath = selectedOffer?.slug
       ? getLocalizedOfferRoute(selectedOffer, lang)
-      : getLocalizedRoute(activeCategory, lang);
+      : seoLanding
+        ? getLocalizedSeoLandingRoute(seoLanding, lang)
+        : getLocalizedRoute(activeCategory, lang);
     const canonicalUrl = `${SITE_URL}${canonicalPath}`;
-    const runtimeSeo = RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
+    const runtimeSeo = seoLanding ? undefined : RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
     const title = getLocalizedValue(offerSeo?.title, lang)
       || runtimeSeo?.title
       || getLocalizedValue(sectionSeo.title, lang)
@@ -4392,14 +4430,16 @@ export default function App() {
     LANGUAGE_OPTIONS.forEach(({ value, hrefLang }) => {
       const alternatePath = selectedOffer?.slug
         ? getLocalizedOfferRoute(selectedOffer, value)
-        : getLocalizedRoute(activeCategory, value);
+        : seoLanding
+          ? getLocalizedSeoLandingRoute(seoLanding, value)
+          : getLocalizedRoute(activeCategory, value);
       setAlternate(hrefLang, `${SITE_URL}${alternatePath}`);
     });
     setAlternate(
       'x-default',
       `${SITE_URL}${selectedOffer?.slug
         ? getLocalizedOfferRoute(selectedOffer, 'ru')
-        : CATEGORY_ROUTES[activeCategory]}`,
+        : seoLanding?.route || CATEGORY_ROUTES[activeCategory]}`,
     );
 
     let structuredData = document.head.querySelector<HTMLScriptElement>('#structured-data');
@@ -4409,7 +4449,10 @@ export default function App() {
       structuredData.type = 'application/ld+json';
       document.head.appendChild(structuredData);
     }
-    const sectionOffers = OFFERS.filter((offer) => offer.category === activeCategory);
+    const sectionOffers = OFFERS.filter((offer) =>
+      offer.category === activeCategory
+      && (!seoLanding?.subFilter || offer.subCategory === seoLanding.subFilter),
+    );
     const pageEntity = selectedOffer?.slug
       ? {
           '@context': 'https://schema.org',
@@ -4474,7 +4517,7 @@ export default function App() {
       },
       pageEntity,
     ]);
-  }, [activeCategory, lang, selectedOffer]);
+  }, [activeCategory, currentSeoLanding?.id, lang, selectedOffer]);
 
   const normalizeSearchText = (value: string) =>
     value
@@ -4500,7 +4543,7 @@ export default function App() {
     const compactQuery = compactSearchText(searchQuery);
     const hasQuery = query.length > 0;
 
-    return OFFERS.filter(o => {
+    const offers = OFFERS.filter(o => {
       if (!hasQuery) {
         const matchesCategory = o.category === activeCategory;
         const matchesSub = subFilter === 'None' || o.subCategory === subFilter;
@@ -4518,6 +4561,15 @@ export default function App() {
 
       return normalizedText.includes(query) || (compactQuery.length > 1 && compactText.includes(compactQuery));
     });
+
+    const proxyOrder = ['MobileProxy', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'ProxyShard', 'Proxys.io'];
+    return offers.sort((first, second) => {
+      if (first.category !== 'Proxy' || second.category !== 'Proxy') return 0;
+      const firstIndex = proxyOrder.indexOf(first.name);
+      const secondIndex = proxyOrder.indexOf(second.name);
+      if (firstIndex === -1 || secondIndex === -1) return 0;
+      return firstIndex - secondIndex;
+    });
   }, [activeCategory, subFilter, searchQuery]);
 
   const renderGuideIcon = (id: string, className: string) => {
@@ -4534,7 +4586,9 @@ export default function App() {
 
   const t = {
     heroTitle: "Hopscup's Tools Hub",
-    heroSub: l(isHomeRoute ? DEFAULT_HERO_SUBTITLE : CATEGORY_HERO_SUBTITLES[activeCategory]),
+    heroSub: currentSeoLanding
+      ? l(DEFAULT_HERO_SUBTITLE)
+      : l(isHomeRoute ? DEFAULT_HERO_SUBTITLE : CATEGORY_HERO_SUBTITLES[activeCategory]),
     visitSite: tx({ ru: 'Перейти', en: 'Visit', es: 'Abrir', zh: '访问', ko: '열기' }),
     promo: tx({ ru: 'Промокод', en: 'Promo', es: 'Promo', zh: '优惠码', ko: '프로모 코드' }),
     popular: tx({ ru: 'Популярное', en: 'Popular', es: 'Popular', zh: '热门', ko: '인기' }),
@@ -4736,7 +4790,9 @@ export default function App() {
   const handleLanguageChange = (nextLanguage: Language) => {
     const nextRoute = selectedOffer?.slug
       ? getLocalizedOfferRoute(selectedOffer, nextLanguage)
-      : getLocalizedRoute(activeCategory, nextLanguage);
+      : currentSeoLanding
+        ? getLocalizedSeoLandingRoute(currentSeoLanding, nextLanguage)
+        : getLocalizedRoute(activeCategory, nextLanguage);
     if (window.location.pathname !== nextRoute) {
       window.history.pushState(selectedOffer?.slug ? { offerModal: true } : null, '', nextRoute);
     }
@@ -4807,7 +4863,7 @@ export default function App() {
   }, [selectedOffer, lang]);
 
   const activeCategoryData = CATEGORIES.find(c => c.id === activeCategory);
-  const currentSectionSeo = SECTION_SEO[activeCategory];
+  const currentSectionSeo = currentSeoLanding || SECTION_SEO[activeCategory];
   const hasSectionControls = Boolean(activeCategoryData?.subFilters || activeCategoryData?.guides || activeCategory === 'SMS');
 
   const InfoRow = ({ icon: Icon, label, value }: { icon: any; label: string; value?: string }) => {
@@ -5402,7 +5458,7 @@ export default function App() {
           <div className="flex flex-col lg:flex-row gap-6 lg:items-start lg:justify-between">
             <div className="max-w-2xl">
               <p className="text-[10px] uppercase tracking-[0.24em] text-brand-purple font-black mb-3">
-                {l(activeCategoryData?.title)}
+                {currentSeoLanding ? l(currentSeoLanding.eyebrow) : l(activeCategoryData?.title)}
               </p>
               <h2 className="font-display text-2xl md:text-3xl font-black text-white tracking-tight mb-3">
                 {l(currentSectionSeo.heading)}
@@ -5410,6 +5466,15 @@ export default function App() {
               <p className="text-sm md:text-base text-white/60 leading-relaxed">
                 {l(currentSectionSeo.intro)}
               </p>
+              {activeCategory === 'Proxy' && !currentSeoLanding && (
+                <a
+                  href={getLocalizedSeoLandingRoute(SEO_LANDING_PAGES[0], lang)}
+                  className="inline-flex items-center gap-1.5 mt-4 text-sm font-bold text-brand-purple hover:text-white transition-colors"
+                >
+                  {l(SEO_LANDING_PAGES[0].linkLabel)}
+                  <ChevronRight className="w-4 h-4" />
+                </a>
+              )}
             </div>
             <div className="grid gap-3 w-full lg:max-w-md">
               {lList(currentSectionSeo.points).map((point) => (

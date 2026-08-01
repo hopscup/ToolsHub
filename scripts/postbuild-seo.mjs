@@ -5,6 +5,7 @@ import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { guidePages } from '../src/data/guidePages.js';
+import { seoLandingPages } from '../src/data/seoLandingPages.js';
 import { smsPages } from '../src/data/smsPages.js';
 import { socialPages } from '../src/data/socialPages.js';
 import { steamPages } from '../src/data/steamPages.js';
@@ -575,6 +576,14 @@ const sections = [
     items: ['Смена IP мобильным интернетом', 'Gmail forwarding', 'Ферма аккаунтов', 'OTC и KYC сервисы', 'UID и адреса для бирж'],
   },
 ];
+
+sections.push(
+  ...seoLandingPages.map((page) => ({
+    ...page,
+    priority: '0.9',
+    changefreq: 'weekly',
+  })),
+);
 
 const servicePageLabels = {
   bestFor: {
@@ -1593,6 +1602,8 @@ const internalLinks = (language) =>
 const renderStaticContent = (section, language) => {
   const title = getLanguage(section.heading, language);
   const intro = getLanguage(section.intro, language);
+  const heroTitle = section.heroHeading ? getLanguage(section.heroHeading, language) : title;
+  const heroIntro = section.heroIntro ? getLanguage(section.heroIntro, language) : intro;
   const points = getLanguage(section.points, language);
   const items = Array.isArray(section.items) ? section.items : getLanguage(section.items, language);
   const labels = fallbackLabels[language.code] || fallbackLabels.en;
@@ -1607,10 +1618,14 @@ const renderStaticContent = (section, language) => {
   return `
       <article class="seo-fallback" aria-label="${escapeHtml(title)}">
         <header>
-          <p>Hopscup's Tools Hub</p>
-          <h1>${escapeHtml(title)}</h1>
-          <p>${escapeHtml(intro)}</p>
+          <h1>${escapeHtml(heroTitle)}</h1>
+          <p>${escapeHtml(heroIntro)}</p>
         </header>
+        ${section.heroHeading ? `
+        <section>
+          <h2>${escapeHtml(title)}</h2>
+          <p>${escapeHtml(intro)}</p>
+        </section>` : ''}
         <section>
           <h2>${escapeHtml(pointsHeading)}</h2>
           <ul>

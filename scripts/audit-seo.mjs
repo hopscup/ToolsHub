@@ -5,6 +5,7 @@ import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { guidePages } from '../src/data/guidePages.js';
+import { seoLandingPages } from '../src/data/seoLandingPages.js';
 import { smsPages } from '../src/data/smsPages.js';
 import { socialPages } from '../src/data/socialPages.js';
 import { steamPages } from '../src/data/steamPages.js';
@@ -30,6 +31,7 @@ const categoryRoutes = [
   '/social-boost',
   '/steam-topup',
   '/guides',
+  ...seoLandingPages.map((page) => page.route),
 ];
 const serviceRoutes = [
   '/proxy-vpn/proxyshard',
@@ -78,7 +80,7 @@ for (const language of languages) {
     const canonical = html.match(/<link rel="canonical" href="([^"]+)" \/>/)?.[1];
     const alternates = matches(html, /<link rel="alternate" hreflang="([^"]+)" href="([^"]+)" \/>/g);
     const h1Count = matches(html, /<h1[\s>]/g).length;
-    const internalLinkCount = matches(html, /<a href="\/(?:en\/|es\/|zh\/|ko\/)?(?:proxy-vpn|antidetect|account-shop|foreign-cards|crypto-exchange|sms-activators|vps|social-boost|steam-topup|guides)"/g).length;
+    const internalLinkCount = matches(html, /<a href="\/(?:en\/|es\/|zh\/|ko\/)?(?:proxy-vpn|antidetect|account-shop|foreign-cards|crypto-exchange|sms-activators|vps|social-boost|steam-topup|guides)(?:\/[^"]*)?"/g).length;
     const structuredDataText = html.match(/<script id="structured-data" type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
     const minimumDescriptionLength = language.hrefLang.startsWith('zh') ? 20 : 50;
 
