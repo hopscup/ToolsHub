@@ -338,6 +338,9 @@ const stripLanguagePrefix = (path: string) => {
 const getLocalizedRoute = (category: CategoryType, language: Language) =>
   `${LANGUAGE_PREFIXES[language]}${CATEGORY_ROUTES[category]}`;
 
+const getLocalizedHomeRoute = (language: Language) =>
+  LANGUAGE_PREFIXES[language] || '/';
+
 const getLocalizedOfferRoute = (offer: Offer, language: Language) =>
   `${getLocalizedRoute(offer.category, language)}/${offer.slug}`;
 
@@ -592,7 +595,7 @@ const SECTION_SEO: Record<CategoryType, {
       en: 'Account, subscription, and digital goods stores',
     },
     intro: {
-      ru: 'Здесь собраны площадки, где можно купить аккаунты, подписки на нейросети и другие цифровые товары. Основной фокус — удобство, отзывы, способы оплаты и понятные правила покупки.',
+      ru: 'Здесь собраны площадки, где можно купить аккаунты, подписки на нейросети и другие цифровые товары. Основной фокус: удобство, отзывы, способы оплаты и понятные правила покупки.',
       en: 'This section lists marketplaces for accounts, AI subscriptions, and digital goods with a focus on convenience, reviews, payment methods, and clear purchase rules.',
     },
     points: {
@@ -4451,7 +4454,7 @@ export default function App() {
     }
     const sectionOffers = OFFERS.filter((offer) =>
       offer.category === activeCategory
-      && (!seoLanding?.subFilter || offer.subCategory === seoLanding.subFilter),
+      && (!seoLanding?.subFilter || seoLanding.subFilter === 'None' || offer.subCategory === seoLanding.subFilter),
     );
     const pageEntity = selectedOffer?.slug
       ? {
@@ -4792,11 +4795,13 @@ export default function App() {
       ? getLocalizedOfferRoute(selectedOffer, nextLanguage)
       : currentSeoLanding
         ? getLocalizedSeoLandingRoute(currentSeoLanding, nextLanguage)
-        : getLocalizedRoute(activeCategory, nextLanguage);
+        : isHomeRoute
+          ? getLocalizedHomeRoute(nextLanguage)
+          : getLocalizedRoute(activeCategory, nextLanguage);
     if (window.location.pathname !== nextRoute) {
       window.history.pushState(selectedOffer?.slug ? { offerModal: true } : null, '', nextRoute);
     }
-    setIsHomeRoute(false);
+    setIsHomeRoute(isHomeRoute);
     setLang(nextLanguage);
     setSearchQuery('');
     scrollToPageTop();
@@ -4863,7 +4868,15 @@ export default function App() {
   }, [selectedOffer, lang]);
 
   const activeCategoryData = CATEGORIES.find(c => c.id === activeCategory);
-  const currentSectionSeo = currentSeoLanding || SECTION_SEO[activeCategory];
+  const currentSectionSeo = SECTION_SEO[activeCategory];
+  const currentCategorySeoLanding = SEO_LANDING_PAGES.find((page) => page.category === activeCategory);
+  const sectionDetailsLabel = l({
+    ru: 'Подробнее о разделе',
+    en: 'More about this section',
+    es: 'Más sobre esta sección',
+    zh: '本版块详情',
+    ko: '섹션 자세히 보기',
+  });
   const hasSectionControls = Boolean(activeCategoryData?.subFilters || activeCategoryData?.guides || activeCategory === 'SMS');
 
   const InfoRow = ({ icon: Icon, label, value }: { icon: any; label: string; value?: string }) => {
@@ -4897,7 +4910,7 @@ export default function App() {
         {/* Top Row: Logo & Language Toggle */}
         <div className="py-2 px-6 md:px-12 flex justify-between items-center border-b border-white/5">
           <div className="flex items-center gap-4">
-            <a href={getLocalizedRoute('Proxy', lang)} aria-label="Hopscup's Tools Hub" className="w-10 h-10 rounded-xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/5 transition-transform hover:scale-105">
+            <a href={getLocalizedHomeRoute(lang)} aria-label="Hopscup's Tools Hub" className="w-10 h-10 rounded-xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/5 transition-transform hover:scale-105">
               <img src="/logo.webp" alt="Hopscup's Tools Hub" className="w-full h-full object-cover" />
             </a>
             
@@ -5041,8 +5054,10 @@ export default function App() {
                       <Search className="w-5 h-5" />
                       {t.proxyChecker}
                     </button>
-                    <button
-                      onClick={() => {
+                    <a
+                      href={currentCategorySeoLanding ? getLocalizedSeoLandingRoute(currentCategorySeoLanding, lang) : '#'}
+                      onClick={(event) => {
+                        event.preventDefault();
                         trackGuideOpen('proxy_choice');
                         setIsProxyGuideOpen(true);
                       }}
@@ -5050,11 +5065,13 @@ export default function App() {
                     >
                       <Zap className="w-5 h-5" />
                       {t.proxyGuideTitle}
-                    </button>
+                    </a>
                   </>
                 ) : activeCategory === 'Antidetect' ? (
-                  <button
-                    onClick={() => {
+                  <a
+                    href={currentCategorySeoLanding ? getLocalizedSeoLandingRoute(currentCategorySeoLanding, lang) : '#'}
+                    onClick={(event) => {
+                      event.preventDefault();
                       trackGuideOpen('antidetect_choice');
                       setIsAntidetectGuideOpen(true);
                     }}
@@ -5062,11 +5079,13 @@ export default function App() {
                   >
                     <Zap className="w-5 h-5" />
                     {t.antidetectGuideTitle}
-                  </button>
+                  </a>
                 ) : activeCategory === 'Stores' ? (
                   <>
-                    <button 
-                      onClick={() => {
+                    <a
+                      href={currentCategorySeoLanding ? getLocalizedSeoLandingRoute(currentCategorySeoLanding, lang) : '#'}
+                      onClick={(event) => {
+                        event.preventDefault();
                         trackGuideOpen('account_shop_choice');
                         setIsStoresGuideOpen(true);
                       }}
@@ -5074,7 +5093,7 @@ export default function App() {
                     >
                       <Zap className="w-5 h-5" />
                       {t.guideTitle}
-                    </button>
+                    </a>
                   </>
                 ) : activeCategory === 'Social' ? (
                   <>
@@ -5101,8 +5120,10 @@ export default function App() {
                   </>
                 ) : activeCategory === 'Steam' ? (
                   <>
-                    <button
-                      onClick={() => {
+                    <a
+                      href={currentCategorySeoLanding ? getLocalizedSeoLandingRoute(currentCategorySeoLanding, lang) : '#'}
+                      onClick={(event) => {
+                        event.preventDefault();
                         trackGuideOpen('steam_topup_choice');
                         setIsSteamGuideOpen(true);
                       }}
@@ -5110,7 +5131,7 @@ export default function App() {
                     >
                       <Zap className="w-5 h-5" />
                       {t.steamGuideTitle}
-                    </button>
+                    </a>
                     <a
                       href={STEAM_PRICE_TABLE_URL}
                       target="_blank"
@@ -5124,8 +5145,10 @@ export default function App() {
                   </>
                 ) : activeCategory === 'Cards' ? (
                   <>
-                    <button
-                      onClick={() => {
+                    <a
+                      href={currentCategorySeoLanding ? getLocalizedSeoLandingRoute(currentCategorySeoLanding, lang) : '#'}
+                      onClick={(event) => {
+                        event.preventDefault();
                         trackGuideOpen('foreign_cards_choice');
                         setIsCardsGuideOpen(true);
                       }}
@@ -5133,7 +5156,7 @@ export default function App() {
                     >
                       <CreditCard className="w-5 h-5" />
                       {t.cardGuideTitle}
-                    </button>
+                    </a>
                     <a
                       href={CARDS_VIDEO_URL}
                       target="_blank"
@@ -5178,8 +5201,10 @@ export default function App() {
 
             {activeCategory === 'SMS' && (
               <div className="flex justify-center w-full md:w-auto">
-                <button
-                  onClick={() => {
+                <a
+                  href={currentCategorySeoLanding ? getLocalizedSeoLandingRoute(currentCategorySeoLanding, lang) : '#'}
+                  onClick={(event) => {
+                    event.preventDefault();
                     trackGuideOpen('sms_activator_choice');
                     setIsActivatorGuideOpen(true);
                   }}
@@ -5187,7 +5212,7 @@ export default function App() {
                 >
                   <Zap className="w-5 h-5" />
                   {t.activatorGuideTitle}
-                </button>
+                </a>
               </div>
             )}
           </div>
@@ -5461,20 +5486,17 @@ export default function App() {
                 {currentSeoLanding ? l(currentSeoLanding.eyebrow) : l(activeCategoryData?.title)}
               </p>
               <h2 className="font-display text-2xl md:text-3xl font-black text-white tracking-tight mb-3">
-                {l(currentSectionSeo.heading)}
+                {!currentSeoLanding && currentCategorySeoLanding ? (
+                  <a href={getLocalizedSeoLandingRoute(currentCategorySeoLanding, lang)}>
+                    {l(currentSectionSeo.heading)}
+                  </a>
+                ) : (
+                  l(currentSectionSeo.heading)
+                )}
               </h2>
               <p className="text-sm md:text-base text-white/60 leading-relaxed">
                 {l(currentSectionSeo.intro)}
               </p>
-              {activeCategory === 'Proxy' && !currentSeoLanding && (
-                <a
-                  href={getLocalizedSeoLandingRoute(SEO_LANDING_PAGES[0], lang)}
-                  className="inline-flex items-center gap-1.5 mt-4 text-sm font-bold text-brand-purple hover:text-white transition-colors"
-                >
-                  {l(SEO_LANDING_PAGES[0].linkLabel)}
-                  <ChevronRight className="w-4 h-4" />
-                </a>
-              )}
             </div>
             <div className="grid gap-3 w-full lg:max-w-md">
               {lList(currentSectionSeo.points).map((point) => (
@@ -5489,6 +5511,33 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      {currentSeoLanding && (
+        <section className="max-w-4xl mx-auto px-6 mt-5 relative z-10">
+          <details className="group">
+            <summary className="mx-auto flex w-fit cursor-pointer list-none items-center gap-1.5 text-[10px] font-bold text-white/15 transition-colors hover:text-white/35 [&::-webkit-details-marker]:hidden">
+              {sectionDetailsLabel}
+              <ChevronRight className="w-3 h-3 transition-transform group-open:rotate-90" />
+            </summary>
+            <div className="mt-5 rounded-2xl border border-white/[0.06] bg-black/20 p-5 text-left">
+              <h2 className="font-display text-lg font-bold text-white/75">
+                {l(currentSeoLanding.heading)}
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-white/45">
+                {l(currentSeoLanding.intro)}
+              </p>
+              <ul className="mt-4 space-y-2">
+                {lList(currentSeoLanding.points).map((point) => (
+                  <li key={point} className="flex gap-2.5 text-xs leading-relaxed text-white/40">
+                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-brand-purple/60" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </details>
+        </section>
+      )}
 
       {/* Global Tips for Crypto */}
       {activeCategory === 'Crypto' && (
@@ -5528,25 +5577,34 @@ export default function App() {
             );
           })}
         </div>
-        <p className="text-white/20 text-xs font-light tracking-widest uppercase">
-          &copy; 2026 HopsCup Crew
-        </p>
-        <div className="mt-6 flex justify-center">
-          <img
-            src="/logo.webp"
-            alt="HopsCup"
-            loading="lazy"
-            decoding="async"
-            className="w-12 h-12 object-contain opacity-70 hover:opacity-100 transition-opacity"
-          />
+        <div className="flex flex-wrap items-center justify-center gap-3 text-[10px] font-bold uppercase tracking-widest text-white/25">
+          <span className="font-light">
+            &copy; 2026 HopsCup Crew
+          </span>
+          <span aria-hidden="true" className="h-3 w-px bg-white/10" />
+          <button
+            type="button"
+            onClick={() => setIsAnalyticsSettingsOpen(true)}
+            className="transition-colors hover:text-brand-purple"
+          >
+            {t.analyticsSettings}
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={() => setIsAnalyticsSettingsOpen(true)}
-          className="mt-5 text-[10px] font-bold uppercase tracking-widest text-white/25 transition-colors hover:text-brand-purple"
-        >
-          {t.analyticsSettings}
-        </button>
+        <div className="mt-6 flex justify-center">
+          <a
+            href={getLocalizedHomeRoute(lang)}
+            aria-label="Hopscup's Tools Hub"
+            className="block transition-transform hover:scale-105"
+          >
+            <img
+              src="/logo.webp"
+              alt="HopsCup"
+              loading="lazy"
+              decoding="async"
+              className="w-12 h-12 object-contain opacity-70 hover:opacity-100 transition-opacity"
+            />
+          </a>
+        </div>
       </footer>
 
       <AnimatePresence>
