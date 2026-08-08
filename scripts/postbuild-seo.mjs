@@ -181,7 +181,7 @@ const sections = [
       zh: ['基础工具适合普通多账号。', '高级方案更适合严格风控。', '要看价格、免费资料、团队功能和稳定性。'],
       ko: ['기본 도구는 일반 멀티 계정 작업에 적합합니다.', '고급 옵션은 더 강한 antifraud 작업에 사용됩니다.', '가격, 무료 프로필, 팀 기능, 안정성을 함께 확인하세요.'],
     },
-    items: ['Dolphin Anty', 'AdsPower', 'Octo Browser', 'Incogniton', 'Vision', 'GoLogin', 'MoreLogin', 'Multilogin', 'Afina'],
+    items: ['Dolphin Anty', 'AdsPower', 'Octo Browser', 'Incogniton', 'Vision', 'GoLogin', 'MoreLogin', 'GeeLark', 'VMOS Cloud', 'DuoPlus', 'Multilogin', 'Afina'],
   },
   {
     id: 'stores',

@@ -33,7 +33,7 @@ import {
   MessageSquare, 
   ExternalLink, 
   ChevronRight,
-  Languages,
+  ChevronDown,
   Github,
   Youtube,
   Send,
@@ -69,7 +69,8 @@ import {
   Terminal,
   Tv,
   Palette,
-  Percent
+  Percent,
+  Clock
 } from 'lucide-react';
 
 // --- Types ---
@@ -173,6 +174,7 @@ interface Offer {
   id: string;
   category: CategoryType;
   subCategory?: SubCategory;
+  subCategories?: SubCategory[];
   slug?: string;
   name: string;
   description: Localized;
@@ -190,6 +192,11 @@ interface Offer {
   tariffStartPrice?: Localized;
   profiles100Price?: Localized;
   profilesPriceLabel?: Localized;
+  mobileDetails?: {
+    control: Localized;
+    format: Localized;
+    trial?: Localized;
+  };
   priceInfo?: {
     main?: Localized;
     secondary?: Localized;
@@ -309,12 +316,12 @@ const LANGUAGE_PREFIXES: Record<Language, string> = {
   ko: '/ko',
 };
 
-const LANGUAGE_OPTIONS: { value: Language; label: string; inLanguage: string; hrefLang: string; ogLocale: string }[] = [
-  { value: 'ru', label: 'RU', inLanguage: 'ru-RU', hrefLang: 'ru', ogLocale: 'ru_RU' },
-  { value: 'en', label: 'EN', inLanguage: 'en', hrefLang: 'en', ogLocale: 'en_US' },
-  { value: 'es', label: 'ES', inLanguage: 'es', hrefLang: 'es', ogLocale: 'es_ES' },
-  { value: 'zh', label: '中文', inLanguage: 'zh-CN', hrefLang: 'zh-CN', ogLocale: 'zh_CN' },
-  { value: 'ko', label: 'KO', inLanguage: 'ko-KR', hrefLang: 'ko-KR', ogLocale: 'ko_KR' },
+const LANGUAGE_OPTIONS: { value: Language; label: string; name: string; inLanguage: string; hrefLang: string; ogLocale: string }[] = [
+  { value: 'ru', label: 'RU', name: 'Русский', inLanguage: 'ru-RU', hrefLang: 'ru', ogLocale: 'ru_RU' },
+  { value: 'en', label: 'EN', name: 'English', inLanguage: 'en', hrefLang: 'en', ogLocale: 'en_US' },
+  { value: 'es', label: 'ES', name: 'Español', inLanguage: 'es', hrefLang: 'es', ogLocale: 'es_ES' },
+  { value: 'zh', label: '中文', name: '中文', inLanguage: 'zh-CN', hrefLang: 'zh-CN', ogLocale: 'zh_CN' },
+  { value: 'ko', label: 'KO', name: '한국어', inLanguage: 'ko-KR', hrefLang: 'ko-KR', ogLocale: 'ko_KR' },
 ];
 
 const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/';
@@ -2360,7 +2367,7 @@ const OFFERS: Offer[] = [
     description: ANTIDETECT_PAGE_BY_ID['ant-octo'].editorial.description,
     url: 'https://octobrowser.org/signup/?p=10441198',
     logoUrl: '/octo-browser.webp',
-    freeProfiles: { ru: '0', en: '0' },
+    freeProfiles: { ru: '0', en: '0', es: '0', zh: '0', ko: '0' },
     tariffStartPrice: { ru: 'от ≈ €29/мес', en: 'from ≈ €29/mo', es: 'desde ≈ €29/mes', zh: '约 €29/月起', ko: '약 €29/월부터' },
     profiles100Price: { ru: '≈ €79/мес', en: '≈ €79/mo', es: '≈ €79/mes', zh: '约 €79/月', ko: '약 €79/월' },
     platforms: ['Windows', 'macOS', 'Linux'],
@@ -2453,6 +2460,120 @@ const OFFERS: Offer[] = [
     profiles100Price: { ru: '≈ $39-49/мес', en: '≈ $39-49/mo', es: '≈ $39-49/mes', zh: '约 $39-49/月', ko: '약 $39-49/월' },
     platforms: ['Windows', 'macOS'],
     details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } }
+  },
+  {
+    id: 'ant-octo-mobile',
+    category: 'Antidetect',
+    subCategory: 'Mobile',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-octo-mobile'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-octo-mobile'].editorial,
+    name: 'Octo Browser Mobile',
+    description: ANTIDETECT_PAGE_BY_ID['ant-octo-mobile'].editorial.description,
+    url: 'https://octobrowser.org/signup/?p=10441198',
+    logoUrl: '/octo-browser.webp',
+    mobileDetails: {
+      control: { ru: 'С iPhone или iPad', en: 'From iPhone or iPad', es: 'Desde iPhone o iPad', zh: '通过 iPhone 或 iPad', ko: 'iPhone 또는 iPad에서' },
+      format: { ru: 'Антидетект-браузер для iOS', en: 'Antidetect browser for iOS', es: 'Navegador antidetect para iOS', zh: 'iOS 反检测浏览器', ko: 'iOS 안티디텍트 브라우저' },
+      trial: { ru: '100 iOS-профилей бесплатно во время открытого теста', en: '100 free iOS profiles during open testing', es: '100 perfiles iOS gratis durante la prueba abierta', zh: '公开测试期间免费提供 100 个 iOS 配置文件', ko: '오픈 테스트 기간 무료 iOS 프로필 100개' },
+    },
+    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } },
+  },
+  {
+    id: 'ant-gologin-mobile',
+    category: 'Antidetect',
+    subCategory: 'Mobile',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-gologin-mobile'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-gologin-mobile'].editorial,
+    name: 'GoLogin Mobile',
+    description: ANTIDETECT_PAGE_BY_ID['ant-gologin-mobile'].editorial.description,
+    url: 'https://gologin.com/join/hopscup-IOKNLPB',
+    logoUrl: '/gologin.webp',
+    mobileDetails: {
+      control: { ru: 'С Android-смартфона или планшета', en: 'From an Android phone or tablet', es: 'Desde un teléfono o tablet Android', zh: '通过 Android 手机或平板', ko: 'Android 스마트폰 또는 태블릿에서' },
+      format: { ru: 'Антидетект-браузер для Android', en: 'Antidetect browser for Android', es: 'Navegador antidetect para Android', zh: 'Android 反检测浏览器', ko: 'Android 안티디텍트 브라우저' },
+      trial: { ru: '3 профиля бесплатно, в начале есть пробный период', en: '3 free profiles with an initial trial', es: '3 perfiles gratis y prueba inicial', zh: '3 个免费配置文件，并提供初始试用', ko: '무료 프로필 3개와 초기 체험 기간' },
+    },
+    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } },
+  },
+  {
+    id: 'ant-morelogin-mobile',
+    category: 'Antidetect',
+    subCategory: 'Mobile',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-morelogin-mobile'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-morelogin-mobile'].editorial,
+    name: 'MoreLogin Mobile',
+    description: ANTIDETECT_PAGE_BY_ID['ant-morelogin-mobile'].editorial.description,
+    url: 'https://www.morelogin.com/?from=AA8n0exLQF5U',
+    logoUrl: '/morelogin.webp',
+    mobileDetails: {
+      control: { ru: 'С ПК', en: 'From a computer', es: 'Desde PC', zh: '通过电脑', ko: 'PC에서' },
+      format: { ru: 'Облачный Android с приложениями', en: 'Cloud Android with apps', es: 'Android en la nube con aplicaciones', zh: '可安装应用的云端 Android', ko: '앱 설치가 가능한 클라우드 Android' },
+      trial: { ru: '100 минут облачного телефона', en: '100 cloud phone minutes', es: '100 minutos de teléfono en la nube', zh: '100 分钟云手机时长', ko: '클라우드 폰 100분' },
+    },
+    details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } },
+  },
+  {
+    id: 'ant-geelark',
+    category: 'Antidetect',
+    subCategory: 'Mobile',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-geelark'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-geelark'].editorial,
+    name: 'GeeLark',
+    description: ANTIDETECT_PAGE_BY_ID['ant-geelark'].editorial.description,
+    url: 'https://www.geelark.com/?invite_code=d5KK4c',
+    logoUrl: '/geelark.webp',
+    tariffStartPrice: { ru: 'Base от ≈ $5/мес', en: 'Base from ≈ $5/mo', es: 'Base desde ≈ $5/mes', zh: 'Base 约 $5/月起', ko: 'Base 약 $5/월부터' },
+    mobileDetails: {
+      control: { ru: 'С ПК', en: 'From a computer', es: 'Desde PC', zh: '通过电脑', ko: 'PC에서' },
+      format: { ru: 'Облачный Android с приложениями', en: 'Cloud Android with apps', es: 'Android en la nube con aplicaciones', zh: '可安装应用的云端 Android', ko: '앱 설치가 가능한 클라우드 Android' },
+      trial: { ru: '2 профиля и 30 минут бесплатно', en: '2 profiles and 30 free minutes', es: '2 perfiles y 30 minutos gratis', zh: '2 个配置文件和 30 分钟免费时长', ko: '프로필 2개와 무료 30분' },
+    },
+    details: {
+      types: { ru: 'Облачные Android-телефоны', en: 'Cloud Android phones', es: 'Teléfonos Android en la nube', zh: '云端 Android 手机', ko: '클라우드 Android 폰' },
+      paymentMethods: { ru: 'Актуальные способы на сайте', en: 'Current methods on the website', es: 'Métodos actuales en el sitio', zh: '请在网站查看当前方式', ko: '현재 결제 방식은 사이트에서 확인' },
+    },
+  },
+  {
+    id: 'ant-vmos-cloud',
+    category: 'Antidetect',
+    subCategory: 'Mobile',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-vmos-cloud'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-vmos-cloud'].editorial,
+    name: 'VMOS Cloud',
+    description: ANTIDETECT_PAGE_BY_ID['ant-vmos-cloud'].editorial.description,
+    url: 'https://www.vmoscloud.com/',
+    logoUrl: '/vmos-cloud.webp',
+    tariffStartPrice: { ru: 'примерно $4-10 за телефон', en: 'about $4-10 per phone', es: 'aprox. $4-10 por teléfono', zh: '每台约 $4-10', ko: '폰 1대당 약 $4-10' },
+    mobileDetails: {
+      control: { ru: 'С Android-смартфона', en: 'From an Android phone', es: 'Desde un teléfono Android', zh: '通过 Android 手机', ko: 'Android 스마트폰에서' },
+      format: { ru: 'Облачный Android с приложениями', en: 'Cloud Android with apps', es: 'Android en la nube con aplicaciones', zh: '可安装应用的云端 Android', ko: '앱 설치가 가능한 클라우드 Android' },
+      trial: { ru: 'До 6 часов для теста', en: 'Up to 6 hours for testing', es: 'Hasta 6 horas de prueba', zh: '最多 6 小时试用', ko: '최대 6시간 체험' },
+    },
+    details: {
+      types: { ru: 'Удалённый Android', en: 'Remote Android', es: 'Android remoto', zh: '远程 Android', ko: '원격 Android' },
+      paymentMethods: { ru: 'Актуальные способы в приложении', en: 'Current methods in the app', es: 'Métodos actuales en la aplicación', zh: '请在应用中查看当前方式', ko: '현재 결제 방식은 앱에서 확인' },
+    },
+  },
+  {
+    id: 'ant-duoplus',
+    category: 'Antidetect',
+    subCategory: 'Mobile',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-duoplus'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-duoplus'].editorial,
+    name: 'DuoPlus',
+    description: ANTIDETECT_PAGE_BY_ID['ant-duoplus'].editorial.description,
+    url: 'https://www.duoplus.net/',
+    logoUrl: '/duoplus.webp',
+    tariffStartPrice: { ru: 'от $2/мес + время запуска', en: 'from $2/mo plus runtime', es: 'desde $2/mes más tiempo de uso', zh: '$2/月起，另计运行时长', ko: '$2/월부터, 실행 시간 별도' },
+    mobileDetails: {
+      control: { ru: 'С телефона или ПК в браузере', en: 'From a phone or computer in a browser', es: 'Desde móvil o PC en el navegador', zh: '通过手机或电脑浏览器', ko: '스마트폰 또는 PC 브라우저에서' },
+      format: { ru: 'Облачный Android с приложениями', en: 'Cloud Android with apps', es: 'Android en la nube con aplicaciones', zh: '可安装应用的云端 Android', ko: '앱 설치가 가능한 클라우드 Android' },
+      trial: { ru: '1 телефон на 30 дней и 30 минут запуска', en: '1 phone for 30 days with 30 runtime minutes', es: '1 teléfono durante 30 días y 30 minutos de uso', zh: '1 台云手机 30 天，含 30 分钟运行时长', ko: '클라우드 폰 1대 30일, 실행 30분 포함' },
+    },
+    details: {
+      types: { ru: 'Облачные Android-телефоны', en: 'Cloud Android phones', es: 'Teléfonos Android en la nube', zh: '云端 Android 手机', ko: '클라우드 Android 폰' },
+      paymentMethods: { ru: 'PayPal, Alipay, WeChat', en: 'PayPal, Alipay, WeChat', es: 'PayPal, Alipay, WeChat', zh: 'PayPal、Alipay、WeChat', ko: 'PayPal, Alipay, WeChat' },
+    },
   },
   {
     id: 'ant-multilogin',
@@ -4155,23 +4276,145 @@ const PlatformIcon = ({ name, className = "w-3.5 h-3.5" }: { name: string; class
   return <Icon className={className} />;
 };
 
-const LanguageToggle = ({ lang, onChange }: { lang: Language; onChange: (language: Language) => void }) => (
-  <label className="flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 hover:border-brand-purple transition-all duration-300 group cursor-pointer">
-    <Languages className="w-4 h-4 text-brand-purple group-hover:scale-110 transition-transform" />
-    <select
-      value={lang}
-      onChange={(event) => onChange(event.target.value as Language)}
-      className="bg-transparent text-xs font-medium uppercase tracking-wider text-white focus:outline-none cursor-pointer"
-      aria-label="Language"
-    >
-      {LANGUAGE_OPTIONS.map((option) => (
-        <option key={option.value} value={option.value} className="bg-bg-dark text-white">
-          {option.label}
-        </option>
-      ))}
-    </select>
-  </label>
-);
+const LanguageFlag = ({ language, className = '' }: { language: Language; className?: string }) => {
+  const flagClassName = `shrink-0 overflow-hidden rounded-[3px] ring-1 ring-white/15 ${className}`;
+
+  if (language === 'ru') {
+    return (
+      <svg viewBox="0 0 24 16" aria-hidden="true" className={flagClassName}>
+        <rect width="24" height="16" fill="#fff" />
+        <rect y="5.333" width="24" height="5.334" fill="#1c57a7" />
+        <rect y="10.667" width="24" height="5.333" fill="#d52b1e" />
+      </svg>
+    );
+  }
+
+  if (language === 'en') {
+    return (
+      <svg viewBox="0 0 24 16" aria-hidden="true" className={flagClassName}>
+        <rect width="24" height="16" fill="#173f8a" />
+        <path d="M0 0l24 16M24 0L0 16" stroke="#fff" strokeWidth="4" />
+        <path d="M0 0l24 16M24 0L0 16" stroke="#cf1b2b" strokeWidth="1.6" />
+        <path d="M12 0v16M0 8h24" stroke="#fff" strokeWidth="5" />
+        <path d="M12 0v16M0 8h24" stroke="#cf1b2b" strokeWidth="2.6" />
+      </svg>
+    );
+  }
+
+  if (language === 'es') {
+    return (
+      <svg viewBox="0 0 24 16" aria-hidden="true" className={flagClassName}>
+        <rect width="24" height="16" fill="#aa151b" />
+        <rect y="4" width="24" height="8" fill="#f1bf00" />
+        <rect x="6" y="6" width="1.8" height="4" rx="0.4" fill="#aa151b" />
+      </svg>
+    );
+  }
+
+  if (language === 'zh') {
+    return (
+      <svg viewBox="0 0 24 16" aria-hidden="true" className={flagClassName}>
+        <rect width="24" height="16" fill="#ee1c25" />
+        <path d="M5 2.3l.7 1.45 1.6.23-1.15 1.12.27 1.58L5 5.93l-1.42.75.27-1.58L2.7 3.98l1.6-.23z" fill="#ffde00" />
+        <circle cx="9" cy="2.6" r=".65" fill="#ffde00" />
+        <circle cx="10.5" cy="4.3" r=".65" fill="#ffde00" />
+        <circle cx="10.4" cy="6.6" r=".65" fill="#ffde00" />
+        <circle cx="8.8" cy="8" r=".65" fill="#ffde00" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 16" aria-hidden="true" className={flagClassName}>
+      <rect width="24" height="16" fill="#fff" />
+      <path d="M12 4a4 4 0 0 1 0 8 2 2 0 0 1 0-4 2 2 0 0 0 0-4z" fill="#cd2e3a" />
+      <path d="M12 12a4 4 0 0 1 0-8 2 2 0 0 1 0 4 2 2 0 0 0 0 4z" fill="#0047a0" />
+      <g stroke="#111" strokeWidth=".65">
+        <path d="M4 4l2-2M4.8 4.8l2-2M17.2 13.2l2-2M18 14l2-2" />
+        <path d="M18 4l-2-2M19.2 4.8l-2-2M4.8 13.2l2-2M4 14l2-2" />
+      </g>
+    </svg>
+  );
+};
+
+const LanguageToggle = ({ lang, onChange }: { lang: Language; onChange: (language: Language) => void }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const currentLanguage = LANGUAGE_OPTIONS.find((option) => option.value === lang) || LANGUAGE_OPTIONS[0];
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (!menuRef.current?.contains(event.target as Node)) setIsOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+
+    document.addEventListener('pointerdown', closeOnOutsideClick);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsideClick);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [isOpen]);
+
+  return (
+    <div ref={menuRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setIsOpen((open) => !open)}
+        className="flex min-h-10 items-center gap-2 rounded-full border border-white/10 bg-black/20 px-3.5 py-2 text-white transition-colors hover:border-brand-purple/60 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/70"
+        aria-label="Language"
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+      >
+        <LanguageFlag language={lang} className="h-3.5 w-[21px]" />
+        <span className="text-xs font-semibold uppercase tracking-wider">{currentLanguage.label}</span>
+        <ChevronDown className={`h-3.5 w-3.5 text-white/45 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -4, scale: 0.98 }}
+            transition={{ duration: 0.14 }}
+            role="menu"
+            aria-label="Language"
+            className="absolute right-0 top-[calc(100%+8px)] z-[130] w-44 overflow-hidden rounded-lg border border-white/10 bg-[#0c0911]/95 p-1.5 shadow-[0_18px_45px_rgba(0,0,0,0.55)] backdrop-blur-xl"
+          >
+            {LANGUAGE_OPTIONS.map((option) => {
+              const isSelected = option.value === lang;
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  role="menuitemradio"
+                  aria-checked={isSelected}
+                  onClick={() => {
+                    setIsOpen(false);
+                    if (!isSelected) onChange(option.value);
+                  }}
+                  className={`flex min-h-10 w-full items-center gap-3 rounded-md px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-purple/70 ${
+                    isSelected
+                      ? 'bg-brand-purple/15 text-white'
+                      : 'text-white/70 hover:bg-white/[0.06] hover:text-white'
+                  }`}
+                >
+                  <LanguageFlag language={option.value} className="h-3.5 w-[21px]" />
+                  <span lang={option.inLanguage} className="text-sm font-medium">{option.name}</span>
+                </button>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 export default function App() {
   const initialCategory = getCategoryFromPath();
@@ -4454,7 +4697,12 @@ export default function App() {
     }
     const sectionOffers = OFFERS.filter((offer) =>
       offer.category === activeCategory
-      && (!seoLanding?.subFilter || seoLanding.subFilter === 'None' || offer.subCategory === seoLanding.subFilter),
+      && (
+        !seoLanding?.subFilter
+        || seoLanding.subFilter === 'None'
+        || offer.subCategory === seoLanding.subFilter
+        || offer.subCategories?.includes(seoLanding.subFilter)
+      ),
     );
     const pageEntity = selectedOffer?.slug
       ? {
@@ -4549,7 +4797,7 @@ export default function App() {
     const offers = OFFERS.filter(o => {
       if (!hasQuery) {
         const matchesCategory = o.category === activeCategory;
-        const matchesSub = subFilter === 'None' || o.subCategory === subFilter;
+        const matchesSub = subFilter === 'None' || o.subCategory === subFilter || o.subCategories?.includes(subFilter);
         return matchesCategory && matchesSub;
       }
 
@@ -4661,6 +4909,9 @@ export default function App() {
     freeProfiles: tx({ ru: 'Бесплатные профили', en: 'Free Profiles', es: 'Perfiles gratis', zh: '免费配置文件', ko: '무료 프로필' }),
     tariffStart: tx({ ru: 'Стартовый тариф', en: 'Starter Plan', es: 'Plan inicial', zh: '入门套餐', ko: '시작 요금제' }),
     profiles100: tx({ ru: '100 профилей', en: '100 Profiles', es: '100 perfiles', zh: '100 个配置文件', ko: '프로필 100개' }),
+    control: tx({ ru: 'Управление', en: 'Control', es: 'Control', zh: '操作设备', ko: '제어 기기' }),
+    format: tx({ ru: 'Формат', en: 'Format', es: 'Formato', zh: '形式', ko: '형식' }),
+    trial: tx({ ru: 'Тест', en: 'Trial', es: 'Prueba', zh: '试用', ko: '체험' }),
     whatToPay: tx({ ru: 'Что можно оплачивать:', en: 'Supported Services:', es: 'Servicios compatibles:', zh: '支持的服务：', ko: '지원 서비스:' }),
     nuances: tx({ ru: 'Что стоит учитывать', en: 'Nuances & Limitations:', es: 'Matices y limitaciones:', zh: '注意事项与限制：', ko: '주의점 및 제한:' }),
     pros: tx({ ru: 'Плюсы:', en: 'Pros:', es: 'Ventajas:', zh: '优点：', ko: '장점:' }),
@@ -4878,6 +5129,11 @@ export default function App() {
     ko: '섹션 자세히 보기',
   });
   const hasSectionControls = Boolean(activeCategoryData?.subFilters || activeCategoryData?.guides || activeCategory === 'SMS');
+  const isSelectedOfferMobileAntidetect = Boolean(
+    selectedOffer?.category === 'Antidetect'
+      && selectedOffer.mobileDetails
+      && (subFilter === 'Mobile' || selectedOffer.subCategory === 'Mobile'),
+  );
 
   const InfoRow = ({ icon: Icon, label, value }: { icon: any; label: string; value?: string }) => {
     if (!value) return null;
@@ -5305,7 +5561,7 @@ export default function App() {
                               <FileText className="w-7 h-7 text-brand-purple" />
                             </div>
                           ) : (
-                            <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 overflow-hidden shrink-0 group-hover:border-brand-purple/50 transition-colors">
+                            <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 overflow-hidden shrink-0 group-hover:border-brand-purple/50 transition-colors flex items-center justify-center">
                               <img
                                 src={offer.logoUrl}
                                 alt={offer.name}
@@ -5406,17 +5662,27 @@ export default function App() {
                       </div>
                     )}
 
-                    {(offer.details || offer.platforms?.length) && offer.category !== 'Stores' && offer.category !== 'SMS' && offer.category !== 'Cards' && (
+                    {(offer.details || offer.platforms?.length || offer.mobileDetails) && offer.category !== 'Stores' && offer.category !== 'SMS' && offer.category !== 'Cards' && (
                       <div className="flex flex-col gap-4 mb-8">
-                        <InfoRow icon={Users} label={t.freeProfiles} value={l(offer.freeProfiles)} />
-                        <InfoRow icon={CreditCard} label={t.tariffStart} value={l(offer.tariffStartPrice)} />
-                        <InfoRow icon={Percent} label={t.rate} value={l(offer.details?.rate)} />
-                        <InfoRow icon={Globe} label={t.geo} value={l(offer.details?.geo)} />
-                        {offer.subCategory !== 'VPN' && (
-                          <InfoRow icon={Layers} label={t.types} value={l(offer.details?.types)} />
+                        {offer.category === 'Antidetect' && (subFilter === 'Mobile' || offer.subCategory === 'Mobile') && offer.mobileDetails ? (
+                          <>
+                            <InfoRow icon={Smartphone} label={t.control} value={l(offer.mobileDetails.control)} />
+                            <InfoRow icon={Layers} label={t.format} value={l(offer.mobileDetails.format)} />
+                            <InfoRow icon={Clock} label={t.trial} value={l(offer.mobileDetails.trial)} />
+                          </>
+                        ) : (
+                          <>
+                            <InfoRow icon={Users} label={t.freeProfiles} value={l(offer.freeProfiles)} />
+                            <InfoRow icon={CreditCard} label={t.tariffStart} value={l(offer.tariffStartPrice)} />
+                            <InfoRow icon={Percent} label={t.rate} value={l(offer.details?.rate)} />
+                            <InfoRow icon={Globe} label={t.geo} value={l(offer.details?.geo)} />
+                            {offer.subCategory !== 'VPN' && (
+                              <InfoRow icon={Layers} label={t.types} value={l(offer.details?.types)} />
+                            )}
+                            <InfoRow icon={Monitor} label={t.platforms} value={offer.platforms?.join(', ')} />
+                            <InfoRow icon={Coins} label={t.paymentMethods} value={l(offer.details?.paymentMethods)} />
+                          </>
                         )}
-                        <InfoRow icon={Monitor} label={t.platforms} value={offer.platforms?.join(', ')} />
-                        <InfoRow icon={Coins} label={t.paymentMethods} value={l(offer.details?.paymentMethods)} />
                       </div>
                     )}
                   </div>
@@ -6980,7 +7246,7 @@ export default function App() {
                       <FileText className="h-8 w-8 text-brand-purple md:h-9 md:w-9" />
                     </div>
                   ) : (
-                    <div className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-white/5 md:h-20 md:w-20 md:rounded-3xl">
+                    <div className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-white/5 md:h-20 md:w-20 md:rounded-3xl flex items-center justify-center">
                       <img
                         src={selectedOffer.logoUrl || '/logo.webp'}
                         alt={selectedOffer.name}
@@ -7151,7 +7417,7 @@ export default function App() {
                     </div>
                   )}
 
-                  {(selectedOffer.freeProfiles || selectedOffer.tariffStartPrice || selectedOffer.profiles100Price || selectedOffer.details?.rate || selectedOffer.details?.geo || selectedOffer.details?.types || selectedOffer.platforms?.length || selectedOffer.details?.paymentMethods) && (
+                  {(selectedOffer.mobileDetails || selectedOffer.freeProfiles || selectedOffer.tariffStartPrice || selectedOffer.profiles100Price || selectedOffer.details?.rate || selectedOffer.details?.geo || selectedOffer.details?.types || selectedOffer.platforms?.length || selectedOffer.details?.paymentMethods) && (
                     <div
                       className={
                         selectedOffer.category === 'Proxy'
@@ -7159,7 +7425,40 @@ export default function App() {
                           : 'space-y-6 border-y border-white/5 py-6'
                       }
                     >
-                      {selectedOffer.freeProfiles && (
+                      {isSelectedOfferMobileAntidetect && selectedOffer.mobileDetails && (
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
+                            <Smartphone className="w-5 h-5 text-brand-purple" />
+                          </div>
+                          <div>
+                            <h4 className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">{t.control}</h4>
+                            <p className="text-white font-bold text-lg">{l(selectedOffer.mobileDetails.control)}</p>
+                          </div>
+                        </div>
+                      )}
+                      {isSelectedOfferMobileAntidetect && selectedOffer.mobileDetails && (
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
+                            <Layers className="w-5 h-5 text-brand-purple" />
+                          </div>
+                          <div>
+                            <h4 className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">{t.format}</h4>
+                            <p className="text-white font-bold text-lg">{l(selectedOffer.mobileDetails.format)}</p>
+                          </div>
+                        </div>
+                      )}
+                      {isSelectedOfferMobileAntidetect && selectedOffer.mobileDetails?.trial && (
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
+                            <Clock className="w-5 h-5 text-brand-purple" />
+                          </div>
+                          <div>
+                            <h4 className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">{t.trial}</h4>
+                            <p className="text-white font-bold text-lg">{l(selectedOffer.mobileDetails.trial)}</p>
+                          </div>
+                        </div>
+                      )}
+                      {!isSelectedOfferMobileAntidetect && selectedOffer.freeProfiles && (
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
                             <Users className="w-5 h-5 text-brand-purple" />
@@ -7172,7 +7471,7 @@ export default function App() {
                           </div>
                         </div>
                       )}
-                      {selectedOffer.tariffStartPrice && (
+                      {(!isSelectedOfferMobileAntidetect || selectedOffer.subCategory === 'Mobile') && selectedOffer.tariffStartPrice && (
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
                             <CreditCard className="w-5 h-5 text-brand-purple" />
@@ -7185,7 +7484,7 @@ export default function App() {
                           </div>
                         </div>
                       )}
-                      {selectedOffer.profiles100Price && (
+                      {!isSelectedOfferMobileAntidetect && selectedOffer.profiles100Price && (
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
                             <Layers className="w-5 h-5 text-brand-purple" />
@@ -7237,7 +7536,7 @@ export default function App() {
                           </div>
                         </div>
                       )}
-                      {!!selectedOffer.platforms?.length && (
+                      {!isSelectedOfferMobileAntidetect && !!selectedOffer.platforms?.length && (
                         <div className={selectedOffer.category === 'Proxy' ? 'flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.03] p-4' : 'flex items-center gap-4'}>
                           <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
                             <Monitor className="w-5 h-5 text-brand-purple" />
