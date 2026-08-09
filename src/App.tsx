@@ -2541,11 +2541,11 @@ const OFFERS: Offer[] = [
     editorial: ANTIDETECT_PAGE_BY_ID['ant-vmos-cloud'].editorial,
     name: 'VMOS Cloud',
     description: ANTIDETECT_PAGE_BY_ID['ant-vmos-cloud'].editorial.description,
-    url: 'https://www.vmoscloud.com/',
+    url: 'https://www.vmoscloud.com/invite/vmosagxpapvm',
     logoUrl: '/vmos-cloud.webp',
     tariffStartPrice: { ru: 'примерно $4-10 за телефон', en: 'about $4-10 per phone', es: 'aprox. $4-10 por teléfono', zh: '每台约 $4-10', ko: '폰 1대당 약 $4-10' },
     mobileDetails: {
-      control: { ru: 'С Android-смартфона', en: 'From an Android phone', es: 'Desde un teléfono Android', zh: '通过 Android 手机', ko: 'Android 스마트폰에서' },
+      control: { ru: 'С ПК или Android-смартфона', en: 'From a computer or Android phone', es: 'Desde PC o teléfono Android', zh: '通过电脑或 Android 手机', ko: 'PC 또는 Android 스마트폰에서' },
       format: { ru: 'Облачный Android с приложениями', en: 'Cloud Android with apps', es: 'Android en la nube con aplicaciones', zh: '可安装应用的云端 Android', ko: '앱 설치가 가능한 클라우드 Android' },
       trial: { ru: 'До 6 часов для теста', en: 'Up to 6 hours for testing', es: 'Hasta 6 horas de prueba', zh: '最多 6 小时试用', ko: '최대 6시간 체험' },
     },
