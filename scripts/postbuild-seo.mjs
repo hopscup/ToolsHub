@@ -621,25 +621,25 @@ const servicePages = [
     name: 'ProxyWing',
     logo: '/proxywing.png',
     title: {
-      ru: 'ProxyWing: обзор прокси, типы, гео и оплата | Hopscup Tools',
-      en: 'ProxyWing review: proxy types, locations, and payments | Hopscup Tools',
-      es: 'ProxyWing: análisis, tipos de proxy, GEO y pagos | Hopscup Tools',
-      zh: 'ProxyWing 评测：代理类型、地区与支付方式 | Hopscup Tools',
-      ko: 'ProxyWing 리뷰: 프록시 유형, 지역 및 결제 | Hopscup Tools',
+      ru: 'ProxyWing: обзор IPv4, ISP, Residential и Mobile прокси | Hopscup Tools',
+      en: 'ProxyWing review: IPv4, ISP, Residential, and Mobile proxies | Hopscup Tools',
+      es: 'ProxyWing: análisis de proxies IPv4, ISP, Residential y Mobile | Hopscup Tools',
+      zh: 'ProxyWing 评测：IPv4、ISP、Residential 与 Mobile 代理 | Hopscup Tools',
+      ko: 'ProxyWing 리뷰: IPv4, ISP, Residential 및 Mobile 프록시 | Hopscup Tools',
     },
     description: {
-      ru: 'Обзор ProxyWing: Residential, Datacenter, ISP и Mobile-прокси, 200+ локаций, HTTP/SOCKS5 и оплата картой, СБП/Мир или криптовалютой.',
-      en: 'ProxyWing review covering Residential, Datacenter, ISP, and Mobile proxies, 200+ locations, HTTP/SOCKS5, and card, SBP/Mir, or crypto payments.',
-      es: 'Análisis de ProxyWing: proxies Residential, Datacenter, ISP y Mobile, más de 200 ubicaciones, HTTP/SOCKS5 y pagos con tarjeta, SBP/Mir o cripto.',
-      zh: 'ProxyWing 评测：Residential、Datacenter、ISP 和 Mobile 代理，覆盖 200 多个地区，支持 HTTP/SOCKS5，以及银行卡、SBP/Mir 或加密货币付款。',
-      ko: 'ProxyWing 리뷰: Residential, Datacenter, ISP, Mobile 프록시, 200개 이상의 지역, HTTP/SOCKS5, 카드, SBP/Mir 및 암호화폐 결제.',
+      ru: 'Обзор ProxyWing: IPv4, ISP, Residential и Mobile-прокси, 200+ локаций, HTTP/SOCKS5 и оплата картой, СБП/Мир или криптовалютой.',
+      en: 'ProxyWing review covering IPv4, ISP, Residential, and Mobile proxies, 200+ locations, HTTP/SOCKS5, and card, SBP/Mir, or crypto payments.',
+      es: 'Análisis de ProxyWing: proxies IPv4, ISP, Residential y Mobile, más de 200 ubicaciones, HTTP/SOCKS5 y pagos con tarjeta, SBP/Mir o cripto.',
+      zh: 'ProxyWing 评测：IPv4、ISP、Residential 和 Mobile 代理，覆盖 200 多个地区，支持 HTTP/SOCKS5，以及银行卡、SBP/Mir 或加密货币付款。',
+      ko: 'ProxyWing 리뷰: IPv4, ISP, Residential, Mobile 프록시, 200개 이상의 지역, HTTP/SOCKS5, 카드, SBP/Mir 및 암호화폐 결제.',
     },
     heading: {
-      ru: 'ProxyWing: Residential, ISP, Mobile и Datacenter-прокси',
-      en: 'ProxyWing: Residential, ISP, Mobile, and Datacenter proxies',
-      es: 'ProxyWing: proxies Residential, ISP, Mobile y Datacenter',
-      zh: 'ProxyWing：Residential、ISP、Mobile 与 Datacenter 代理',
-      ko: 'ProxyWing: Residential, ISP, Mobile 및 Datacenter 프록시',
+      ru: 'ProxyWing: IPv4, ISP, Residential и Mobile-прокси',
+      en: 'ProxyWing: IPv4, ISP, Residential, and Mobile proxies',
+      es: 'ProxyWing: proxies IPv4, ISP, Residential y Mobile',
+      zh: 'ProxyWing：IPv4、ISP、Residential 与 Mobile 代理',
+      ko: 'ProxyWing: IPv4, ISP, Residential 및 Mobile 프록시',
     },
     intro: {
       ru: 'В ProxyWing есть обычные IPv4, ISP, Residential и Mobile-прокси. Я бы начинал с IPv4: их хватает для Gmail, Twitter, Discord, Telegram, антидетектов, парсинга и большинства обычных задач. Если конкретная площадка принимает их плохо, уже можно перейти на более дорогой тип и не менять сервис.',
@@ -649,11 +649,11 @@ const servicePages = [
       ko: 'ProxyWing은 일반 IPv4, ISP, Residential, Mobile을 하나의 대시보드에서 제공합니다. IPv4는 대부분의 계정, 안티디텍트, 자동화, 스크래핑 작업에 충분하며 더 엄격한 플랫폼에서는 공급업체를 바꾸지 않고 유형을 전환할 수 있습니다.',
     },
     keywords: {
-      ru: 'ProxyWing обзор, ProxyWing прокси, residential прокси, mobile прокси, ISP прокси, datacenter прокси, купить прокси',
-      en: 'ProxyWing review, ProxyWing proxies, residential proxy, mobile proxy, ISP proxy, datacenter proxy',
-      es: 'ProxyWing análisis, proxies ProxyWing, proxy residential, proxy móvil, proxy ISP, proxy datacenter',
-      zh: 'ProxyWing 评测, ProxyWing 代理, 住宅代理, 移动代理, ISP 代理, 数据中心代理',
-      ko: 'ProxyWing 리뷰, ProxyWing 프록시, residential 프록시, mobile 프록시, ISP 프록시, datacenter 프록시',
+      ru: 'ProxyWing обзор, ProxyWing прокси, IPv4 прокси, residential прокси, mobile прокси, ISP прокси, купить прокси',
+      en: 'ProxyWing review, ProxyWing proxies, IPv4 proxy, residential proxy, mobile proxy, ISP proxy',
+      es: 'ProxyWing análisis, proxies ProxyWing, proxy IPv4, proxy residential, proxy móvil, proxy ISP',
+      zh: 'ProxyWing 评测, ProxyWing 代理, IPv4 代理, 住宅代理, 移动代理, ISP 代理',
+      ko: 'ProxyWing 리뷰, ProxyWing 프록시, IPv4 프록시, residential 프록시, mobile 프록시, ISP 프록시',
     },
     pointsHeading: {
       ru: 'Для чего подойдёт',
@@ -1066,11 +1066,11 @@ const servicePages = [
     name: 'ProxyShard',
     logo: '/proxyshard.png',
     title: {
-      ru: 'ProxyShard: обзор Residential, ISP, Mobile и Datacenter прокси | Hopscup Tools',
-      en: 'ProxyShard review: Residential, ISP, Mobile, and Datacenter proxies | Hopscup Tools',
-      es: 'ProxyShard: análisis de proxies Residential, ISP, Mobile y Datacenter | Hopscup Tools',
-      zh: 'ProxyShard 评测：Residential、ISP、Mobile 与 Datacenter 代理 | Hopscup Tools',
-      ko: 'ProxyShard 리뷰: Residential, ISP, Mobile 및 Datacenter 프록시 | Hopscup Tools',
+      ru: 'ProxyShard: обзор IPv4, ISP, Residential и Mobile прокси | Hopscup Tools',
+      en: 'ProxyShard review: IPv4, ISP, Residential, and Mobile proxies | Hopscup Tools',
+      es: 'ProxyShard: análisis de proxies IPv4, ISP, Residential y Mobile | Hopscup Tools',
+      zh: 'ProxyShard 评测：IPv4、ISP、Residential 与 Mobile 代理 | Hopscup Tools',
+      ko: 'ProxyShard 리뷰: IPv4, ISP, Residential 및 Mobile 프록시 | Hopscup Tools',
     },
     description: {
       ru: 'Обзор ProxyShard: Residential, ISP, Mobile и Datacenter-прокси, более 100 стран, способы оплаты и выбор типа IP под конкретную задачу.',
@@ -1121,11 +1121,11 @@ const servicePages = [
     name: 'Proxy-Seller',
     logo: '/proxy-seller.png',
     title: {
-      ru: 'Proxy-Seller: обзор типов прокси, гео и оплаты | Hopscup Tools',
-      en: 'Proxy-Seller review: proxy types, locations, and payments | Hopscup Tools',
-      es: 'Proxy-Seller: análisis, tipos de proxy, GEO y pagos | Hopscup Tools',
-      zh: 'Proxy-Seller 评测：代理类型、地区与支付方式 | Hopscup Tools',
-      ko: 'Proxy-Seller 리뷰: 프록시 유형, 지역 및 결제 | Hopscup Tools',
+      ru: 'Proxy-Seller: обзор IPv4, ISP, Residential и Mobile прокси | Hopscup Tools',
+      en: 'Proxy-Seller review: IPv4, ISP, Residential, and Mobile proxies | Hopscup Tools',
+      es: 'Proxy-Seller: análisis de proxies IPv4, ISP, Residential y Mobile | Hopscup Tools',
+      zh: 'Proxy-Seller 评测：IPv4、ISP、Residential 与 Mobile 代理 | Hopscup Tools',
+      ko: 'Proxy-Seller 리뷰: IPv4, ISP, Residential 및 Mobile 프록시 | Hopscup Tools',
     },
     description: {
       ru: 'Обзор Proxy-Seller: IPv4, IPv6, ISP, Residential, Mobile и Shared-прокси, более 220 стран, оплата картой, криптовалютой или PayPal.',
@@ -1566,6 +1566,20 @@ const servicePages = [
 
 const sectionPages = sections.filter((section) => section.route !== '/');
 const indexablePages = [...sectionPages, ...servicePages];
+const vpnServiceRoutes = new Set([
+  '/proxy-vpn/ppl-vpn',
+  '/proxy-vpn/prostovpn',
+  '/proxy-vpn/tochka-g',
+  '/proxy-vpn/giga-dollar-vpn',
+]);
+const isMoneyRoute = (route) =>
+  route === '/proxy-vpn' ||
+  (route.startsWith('/proxy-vpn/') && !vpnServiceRoutes.has(route)) ||
+  route === '/antidetect' ||
+  route.startsWith('/antidetect/');
+const moneyPages = indexablePages.filter((page) => isMoneyRoute(page.route));
+const corePages = sections.filter((page) => !isMoneyRoute(page.route));
+const otherServicePages = servicePages.filter((page) => !isMoneyRoute(page.route));
 const fallbackLabels = {
   ru: { includes: 'Что есть в разделе', services: 'Сервисы', nav: 'Разделы сайта' },
   en: { includes: 'What this page includes', services: 'Services', nav: 'Site sections' },
@@ -1743,7 +1757,7 @@ const replaceRootContent = (html, section, language) =>
 
 const renderPage = (baseHtml, section, language) => replaceRootContent(replaceHead(stripSeoFallback(baseHtml), section, language), section, language);
 
-const renderSitemap = () => {
+const renderSitemap = (pages) => {
   const sitemapAlternates = (section) =>
     [
       ...languages.map(
@@ -1754,7 +1768,7 @@ const renderSitemap = () => {
     ].join('\n');
 
   const urls = languages.flatMap((language) =>
-    indexablePages.map((section) => `  <url>
+    pages.map((section) => `  <url>
     <loc>${escapeHtml(absoluteUrl(section, language))}</loc>
 ${sitemapAlternates(section)}
     <changefreq>${section.changefreq}</changefreq>
@@ -1770,8 +1784,16 @@ ${urls.join('\n')}
 `;
 };
 
+const renderSitemapIndex = () => `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>${siteUrl}/sitemap-money.xml</loc></sitemap>
+  <sitemap><loc>${siteUrl}/sitemap-core.xml</loc></sitemap>
+  <sitemap><loc>${siteUrl}/sitemap-services.xml</loc></sitemap>
+</sitemapindex>
+`;
+
 const indexHtml = await readFile(path.join(distDir, 'index.html'), 'utf8');
-const defaultSection = sections.find((section) => section.id === 'proxy');
+const defaultSection = sections.find((section) => section.id === 'home');
 const defaultLanguage = languages.find((language) => language.code === 'ru');
 
 await Promise.all(
@@ -1784,6 +1806,19 @@ await Promise.all(
     }),
   ),
 );
+
+const homeSection = sections.find((section) => section.id === 'home');
+if (homeSection) {
+  await Promise.all(
+    languages
+      .filter((language) => language.prefix)
+      .map(async (language) => {
+        const routeDir = path.join(distDir, language.prefix);
+        await mkdir(routeDir, { recursive: true });
+        await writeFile(path.join(routeDir, 'index.html'), renderPage(indexHtml, homeSection, language), 'utf8');
+      }),
+  );
+}
 
 if (defaultSection && defaultLanguage) {
   await writeFile(path.join(distDir, 'index.html'), renderPage(indexHtml, defaultSection, defaultLanguage), 'utf8');
@@ -1822,7 +1857,10 @@ await writeFile(
   'utf8',
 );
 
-await writeFile(path.join(distDir, 'sitemap.xml'), renderSitemap(), 'utf8');
+await writeFile(path.join(distDir, 'sitemap.xml'), renderSitemapIndex(), 'utf8');
+await writeFile(path.join(distDir, 'sitemap-money.xml'), renderSitemap(moneyPages), 'utf8');
+await writeFile(path.join(distDir, 'sitemap-core.xml'), renderSitemap(corePages), 'utf8');
+await writeFile(path.join(distDir, 'sitemap-services.xml'), renderSitemap(otherServicePages), 'utf8');
 await writeFile(path.join(distDir, 'robots.txt'), `User-agent: *
 Allow: /
 

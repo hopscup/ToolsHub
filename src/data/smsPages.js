@@ -12,9 +12,15 @@ export const smsPages = [
     slug: 'herosms',
     name: 'HeroSMS',
     logo: '/hero-sms.png',
-    title: smsTitle('HeroSMS'),
+    title: {
+      ru: 'HeroSMS (ХироСМС): виртуальные номера и SMS-активации | Hopscup Tools',
+      en: 'HeroSMS review: virtual numbers and SMS activation | Hopscup Tools',
+      es: 'HeroSMS: números virtuales y activación SMS | Hopscup Tools',
+      zh: 'HeroSMS 评测：虚拟号码与短信验证 | Hopscup Tools',
+      ko: 'HeroSMS 리뷰: 가상 번호와 SMS 인증 | Hopscup Tools',
+    },
     description: {
-      ru: 'Обзор HeroSMS: недорогие виртуальные номера, большой выбор сервисов и статистика успешности для SMS-регистраций.',
+      ru: 'Обзор HeroSMS, или ХироСМС: недорогие виртуальные номера, большой выбор сервисов и статистика успешности SMS-регистраций.',
       en: 'HeroSMS review covering affordable virtual numbers, a broad service catalog, and success statistics for SMS registrations.',
       es: 'Análisis de HeroSMS: números virtuales baratos, muchos servicios y estadísticas de éxito para registros por SMS.',
       zh: 'HeroSMS 评测：价格较低的虚拟号码、丰富的平台选择和短信注册成功率统计。',
@@ -360,7 +366,13 @@ export const smsPages = [
     slug: 'numerasms',
     name: 'NumeraSMS',
     logo: '/numerasms.png',
-    title: smsTitle('NumeraSMS'),
+    title: {
+      ru: 'NumeraSMS: виртуальные номера и длительная аренда | Hopscup Tools',
+      en: 'NumeraSMS review: virtual numbers and long-term rental | Hopscup Tools',
+      es: 'NumeraSMS: números virtuales y alquiler prolongado | Hopscup Tools',
+      zh: 'NumeraSMS 评测：虚拟号码与长期租用 | Hopscup Tools',
+      ko: 'NumeraSMS 리뷰: 가상 번호와 장기 대여 | Hopscup Tools',
+    },
     description: {
       ru: 'Обзор NumeraSMS: виртуальные номера из 100+ стран, разовые активации, длительная аренда, повторные SMS и API.',
       en: 'NumeraSMS review covering virtual numbers from 100+ countries, one-time activations, long-term rental, repeat SMS, and API access.',

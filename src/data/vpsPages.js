@@ -70,7 +70,13 @@ export const vpsPages = [
     slug: 'xorek',
     name: 'Xorek',
     logo: '/xorek.png',
-    title: vpsTitle('Xorek'),
+    title: {
+      ru: 'Xorek: обзор недорогого VDS/VPS для ботов и тестов | Hopscup Tools',
+      en: 'Xorek review: affordable VDS/VPS for bots and testing | Hopscup Tools',
+      es: 'Xorek: VDS/VPS económico para bots y pruebas | Hopscup Tools',
+      zh: 'Xorek 评测：适合机器人与测试的低价 VDS/VPS | Hopscup Tools',
+      ko: 'Xorek 리뷰: 봇과 테스트용 저렴한 VDS/VPS | Hopscup Tools',
+    },
     description: {
       ru: 'Обзор Xorek на основе личного опыта: недорогие VDS/VPS для тестов, ботов, временных задач и проектов, где редкий простой не критичен.',
       en: 'Xorek review based on personal use, covering affordable VDS/VPS for testing, bots, temporary workloads, and non-critical projects.',

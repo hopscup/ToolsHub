@@ -310,7 +310,13 @@ export const socialPages = [
     slug: 'smmprime',
     name: 'SMMPrime',
     logo: '/smmprime.png',
-    title: socialTitle('SMMPrime'),
+    title: {
+      ru: 'SMMPrime: обзор SMM-панели, услуг и способов оплаты | Hopscup Tools',
+      en: 'SMMPrime review: SMM panel, services, prices, and payments | Hopscup Tools',
+      es: 'SMMPrime: análisis del panel SMM, servicios y pagos | Hopscup Tools',
+      zh: 'SMMPrime 评测：SMM 面板、服务、价格与付款 | Hopscup Tools',
+      ko: 'SMMPrime 리뷰: SMM 패널, 서비스, 가격과 결제 | Hopscup Tools',
+    },
     description: {
       ru: 'Обзор SMMPrime: SMM-панель для социальной активности, сравнения поставщиков, цен, скорости и качества выполнения.',
       en: 'SMMPrime review covering social activity, supplier comparison, prices, completion speed, and service quality.',

@@ -186,7 +186,13 @@ export const foreignCardPages = [
     slug: 'pionex-card',
     name: 'Pionex',
     logo: '/pionex.png',
-    title: cardTitle('Pionex'),
+    title: {
+      ru: 'Pionex Card: комиссии, KYC и пополнение через USDT | Hopscup Tools',
+      en: 'Pionex Card review: fees, KYC, and USDT payments | Hopscup Tools',
+      es: 'Pionex Card: comisiones, KYC y pagos con USDT | Hopscup Tools',
+      zh: 'Pionex Card 评测：费用、KYC 与 USDT 付款 | Hopscup Tools',
+      ko: 'Pionex Card 리뷰: 수수료, KYC와 USDT 결제 | Hopscup Tools',
+    },
     description: {
       ru: 'Обзор криптокарты Pionex с KYC: бесплатный выпуск и обслуживание, пополнение USDT, кешбэк и оплата зарубежных сервисов.',
       en: 'Pionex crypto card review covering KYC, free issuance and maintenance, USDT funding, cashback, and foreign payments.',

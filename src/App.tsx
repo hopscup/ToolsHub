@@ -97,6 +97,23 @@ const DEFAULT_HERO_SUBTITLE: Localized = {
   ko: '업무에 사용하는 유용한 서비스들을 모아두었습니다',
 };
 
+const HOME_SEO = {
+  title: {
+    ru: "Hopscup's Tools Hub - полезные сервисы для работы",
+    en: "Hopscup's Tools Hub - useful services for digital work",
+    es: "Hopscup's Tools Hub - servicios útiles para el trabajo digital",
+    zh: "Hopscup's Tools Hub - 实用数字工具和服务",
+    ko: "Hopscup's Tools Hub - 유용한 디지털 도구와 서비스",
+  } satisfies Localized,
+  description: {
+    ru: 'Проверенные сервисы для прокси, антидетектов, аккаунтов, зарубежных карт, крипты, SMS, VPS, Steam и других рабочих задач.',
+    en: 'Curated services for proxies, antidetect browsers, accounts, virtual cards, crypto, SMS, VPS, Steam, and other digital tasks.',
+    es: 'Servicios seleccionados de proxies, navegadores antidetect, cuentas, tarjetas virtuales, cripto, SMS, VPS, Steam y otras tareas digitales.',
+    zh: '精选代理、反检测浏览器、账号、虚拟卡、加密货币、短信、VPS、Steam 等数字服务。',
+    ko: '프록시, 안티디텍트 브라우저, 계정, 가상 카드, 암호화폐, SMS, VPS, Steam 등을 위한 엄선된 서비스입니다.',
+  } satisfies Localized,
+};
+
 const CATEGORY_HERO_SUBTITLES: Record<CategoryType, Localized> = {
   Proxy: {
     ru: 'Подберите прокси или VPN для аккаунтов, рекламы и других задач',
@@ -254,6 +271,19 @@ interface SeoLandingPage {
 }
 
 const SEO_LANDING_PAGES = seoLandingPages as SeoLandingPage[];
+const SERVICE_PAGE_SEO_BY_ID = Object.fromEntries(
+  [
+    ...accountShopPages,
+    ...antidetectPages,
+    ...cryptoExchangePages,
+    ...foreignCardPages,
+    ...guidePages,
+    ...smsPages,
+    ...socialPages,
+    ...steamPages,
+    ...vpsPages,
+  ].map((page) => [page.id, { title: page.title, description: page.description }]),
+) as Record<string, { title: Localized; description: Localized }>;
 
 // --- Data ---
 const CATEGORIES: { id: CategoryType; icon: any; title: Localized; subFilters?: SubCategory[]; guides?: { text: string | boolean; video: string } }[] = [
@@ -1005,11 +1035,11 @@ const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']
   },
   'proxy-seller': {
     title: {
-      ru: 'Proxy-Seller: обзор типов прокси, гео и оплаты | Hopscup Tools',
-      en: 'Proxy-Seller review: proxy types, locations, and payments | Hopscup Tools',
-      es: 'Proxy-Seller: análisis, tipos de proxy, GEO y pagos | Hopscup Tools',
-      zh: 'Proxy-Seller 评测：代理类型、地区与支付方式 | Hopscup Tools',
-      ko: 'Proxy-Seller 리뷰: 프록시 유형, 지역 및 결제 | Hopscup Tools',
+      ru: 'Proxy-Seller: обзор IPv4, ISP, Residential и Mobile прокси | Hopscup Tools',
+      en: 'Proxy-Seller review: IPv4, ISP, Residential, and Mobile proxies | Hopscup Tools',
+      es: 'Proxy-Seller: análisis de proxies IPv4, ISP, Residential y Mobile | Hopscup Tools',
+      zh: 'Proxy-Seller 评测：IPv4、ISP、Residential 与 Mobile 代理 | Hopscup Tools',
+      ko: 'Proxy-Seller 리뷰: IPv4, ISP, Residential 및 Mobile 프록시 | Hopscup Tools',
     },
     description: {
       ru: 'Обзор Proxy-Seller: IPv4, IPv6, ISP, Residential и Mobile-прокси, более 220 стран, оплата картой, криптовалютой или PayPal.',
@@ -1159,8 +1189,8 @@ const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']
   },
   'ppl-vpn': {
     title: {
-      ru: 'PPL VPN: обзор платформ, гео и способов оплаты | Hopscup Tools',
-      en: 'PPL VPN review: platforms, locations, and payments | Hopscup Tools',
+      ru: 'PPL VPN: обзор, страны, устройства и способы оплаты | Hopscup Tools',
+      en: 'PPL VPN review: countries, devices, and payment methods | Hopscup Tools',
       es: 'PPL VPN: análisis, plataformas, GEO y pagos | Hopscup Tools',
       zh: 'PPL VPN 评测：平台、地区与支付方式 | Hopscup Tools',
       ko: 'PPL VPN 리뷰: 플랫폼, 지역 및 결제 | Hopscup Tools',
@@ -1236,8 +1266,8 @@ const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']
   },
   prostovpn: {
     title: {
-      ru: 'ProstoVPN: обзор VPN для разных устройств | Hopscup Tools',
-      en: 'ProstoVPN review: VPN for multiple devices | Hopscup Tools',
+      ru: 'ProstoVPN: обзор, устройства, страны и способы оплаты | Hopscup Tools',
+      en: 'ProstoVPN review: devices, countries, and payment methods | Hopscup Tools',
       es: 'ProstoVPN: análisis de VPN para varios dispositivos | Hopscup Tools',
       zh: 'ProstoVPN 评测：多设备 VPN | Hopscup Tools',
       ko: 'ProstoVPN 리뷰: 여러 기기용 VPN | Hopscup Tools',
@@ -1867,11 +1897,11 @@ const OFFERS: Offer[] = [
     },
     editorial: {
       title: {
-        ru: 'ProxyWing: обзор прокси, типы, гео и оплата | Hopscup Tools',
-        en: 'ProxyWing review: proxy types, locations, and payments | Hopscup Tools',
-        es: 'ProxyWing: análisis, tipos de proxy, GEO y pagos | Hopscup Tools',
-        zh: 'ProxyWing 评测：代理类型、地区与支付方式 | Hopscup Tools',
-        ko: 'ProxyWing 리뷰: 프록시 유형, 지역 및 결제 | Hopscup Tools',
+        ru: 'ProxyWing: обзор IPv4, ISP, Residential и Mobile прокси | Hopscup Tools',
+        en: 'ProxyWing review: IPv4, ISP, Residential, and Mobile proxies | Hopscup Tools',
+        es: 'ProxyWing: análisis de proxies IPv4, ISP, Residential y Mobile | Hopscup Tools',
+        zh: 'ProxyWing 评测：IPv4、ISP、Residential 与 Mobile 代理 | Hopscup Tools',
+        ko: 'ProxyWing 리뷰: IPv4, ISP, Residential 및 Mobile 프록시 | Hopscup Tools',
       },
       description: {
         ru: 'Обзор ProxyWing: IPv4, ISP, Residential и Mobile-прокси, 200+ локаций, HTTP/SOCKS5 и оплата картой, СБП/Мир или криптовалютой.',
@@ -4609,21 +4639,28 @@ export default function App() {
     const seoLanding = selectedOffer ? undefined : getSeoLandingFromPath();
     const sectionSeo = seoLanding || SECTION_SEO[activeCategory];
     const offerSeo = selectedOffer?.slug ? selectedOffer.editorial : undefined;
+    const servicePageSeo = selectedOffer?.id ? SERVICE_PAGE_SEO_BY_ID[selectedOffer.id] : undefined;
     const canonicalPath = selectedOffer?.slug
       ? getLocalizedOfferRoute(selectedOffer, lang)
       : seoLanding
         ? getLocalizedSeoLandingRoute(seoLanding, lang)
-        : getLocalizedRoute(activeCategory, lang);
+        : isHomeRoute
+          ? getLocalizedHomeRoute(lang)
+          : getLocalizedRoute(activeCategory, lang);
     const canonicalUrl = `${SITE_URL}${canonicalPath}`;
-    const runtimeSeo = seoLanding ? undefined : RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
-    const title = getLocalizedValue(offerSeo?.title, lang)
-      || runtimeSeo?.title
-      || getLocalizedValue(sectionSeo.title, lang)
-      || sectionSeo.title.en;
-    const description = getLocalizedValue(offerSeo?.description, lang)
-      || runtimeSeo?.description
-      || getLocalizedValue(sectionSeo.description, lang)
-      || sectionSeo.description.en;
+    const runtimeSeo = seoLanding || isHomeRoute ? undefined : RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
+    const title = isHomeRoute
+      ? getLocalizedValue(HOME_SEO.title, lang) || HOME_SEO.title.en
+      : getLocalizedValue(servicePageSeo?.title || offerSeo?.title, lang)
+        || runtimeSeo?.title
+        || getLocalizedValue(sectionSeo.title, lang)
+        || sectionSeo.title.en;
+    const description = isHomeRoute
+      ? getLocalizedValue(HOME_SEO.description, lang) || HOME_SEO.description.en
+      : getLocalizedValue(servicePageSeo?.description || offerSeo?.description, lang)
+        || runtimeSeo?.description
+        || getLocalizedValue(sectionSeo.description, lang)
+        || sectionSeo.description.en;
     const currentLanguageOption = LANGUAGE_OPTIONS.find(({ value }) => value === lang);
 
     const setMeta = (selector: string, attribute: 'name' | 'property', key: string, content: string) => {
@@ -4678,14 +4715,16 @@ export default function App() {
         ? getLocalizedOfferRoute(selectedOffer, value)
         : seoLanding
           ? getLocalizedSeoLandingRoute(seoLanding, value)
-          : getLocalizedRoute(activeCategory, value);
+          : isHomeRoute
+            ? getLocalizedHomeRoute(value)
+            : getLocalizedRoute(activeCategory, value);
       setAlternate(hrefLang, `${SITE_URL}${alternatePath}`);
     });
     setAlternate(
       'x-default',
       `${SITE_URL}${selectedOffer?.slug
         ? getLocalizedOfferRoute(selectedOffer, 'ru')
-        : seoLanding?.route || CATEGORY_ROUTES[activeCategory]}`,
+        : seoLanding?.route || (isHomeRoute ? '/' : CATEGORY_ROUTES[activeCategory])}`,
     );
 
     let structuredData = document.head.querySelector<HTMLScriptElement>('#structured-data');
@@ -4695,15 +4734,17 @@ export default function App() {
       structuredData.type = 'application/ld+json';
       document.head.appendChild(structuredData);
     }
-    const sectionOffers = OFFERS.filter((offer) =>
-      offer.category === activeCategory
-      && (
-        !seoLanding?.subFilter
-        || seoLanding.subFilter === 'None'
-        || offer.subCategory === seoLanding.subFilter
-        || offer.subCategories?.includes(seoLanding.subFilter)
-      ),
-    );
+    const sectionOffers = isHomeRoute
+      ? OFFERS
+      : OFFERS.filter((offer) =>
+          offer.category === activeCategory
+          && (
+            !seoLanding?.subFilter
+            || seoLanding.subFilter === 'None'
+            || offer.subCategory === seoLanding.subFilter
+            || offer.subCategories?.includes(seoLanding.subFilter)
+          ),
+        );
     const pageEntity = selectedOffer?.slug
       ? {
           '@context': 'https://schema.org',
@@ -4768,7 +4809,7 @@ export default function App() {
       },
       pageEntity,
     ]);
-  }, [activeCategory, currentSeoLanding?.id, lang, selectedOffer]);
+  }, [activeCategory, currentSeoLanding?.id, isHomeRoute, lang, selectedOffer]);
 
   const normalizeSearchText = (value: string) =>
     value

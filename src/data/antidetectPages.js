@@ -1,9 +1,9 @@
 const pageTitle = (name) => ({
-  ru: `${name}: обзор, бесплатные профили и тарифы | Hopscup Tools`,
-  en: `${name} review: free profiles and pricing | Hopscup Tools`,
-  es: `${name}: análisis, perfiles gratis y tarifas | Hopscup Tools`,
-  zh: `${name} 评测：免费配置文件与价格 | Hopscup Tools`,
-  ko: `${name} 리뷰: 무료 프로필과 요금 | Hopscup Tools`,
+  ru: `${name}: обзор антидетект-браузера и тарифов | Hopscup Tools`,
+  en: `${name} antidetect browser review and pricing | Hopscup Tools`,
+  es: `${name}: análisis del navegador antidetect y tarifas | Hopscup Tools`,
+  zh: `${name} 反检测浏览器评测与价格 | Hopscup Tools`,
+  ko: `${name} 안티디텍트 브라우저 리뷰와 요금 | Hopscup Tools`,
 });
 
 const basicConsiderations = {

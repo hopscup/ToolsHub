@@ -108,15 +108,26 @@ for (const language of languages) {
 }
 
 const rootHtml = await read('index.html');
-if (!rootHtml.includes(`<link rel="canonical" href="${siteUrl}/proxy-vpn" />`)) {
-  errors.push('Root page must canonicalize to /proxy-vpn');
+if (!rootHtml.includes(`<link rel="canonical" href="${siteUrl}" />`)) {
+  errors.push('Root page must use a self-referencing canonical');
 }
 
 const sitemap = await read('sitemap.xml');
-if (matches(sitemap, /<loc>/g).length !== languages.length * routes.length) {
+if (
+  !sitemap.includes(`${siteUrl}/sitemap-money.xml`) ||
+  !sitemap.includes(`${siteUrl}/sitemap-core.xml`) ||
+  !sitemap.includes(`${siteUrl}/sitemap-services.xml`)
+) {
+  errors.push('Sitemap index does not reference all child sitemaps');
+}
+const moneySitemap = await read('sitemap-money.xml');
+const coreSitemap = await read('sitemap-core.xml');
+const serviceSitemap = await read('sitemap-services.xml');
+const combinedSitemaps = `${moneySitemap}\n${coreSitemap}\n${serviceSitemap}`;
+if (matches(combinedSitemaps, /<loc>/g).length !== languages.length * (routes.length + 1)) {
   errors.push('Sitemap has an unexpected number of canonical URLs');
 }
-if (matches(sitemap, /<xhtml:link /g).length !== languages.length * routes.length * (languages.length + 1)) {
+if (matches(combinedSitemaps, /<xhtml:link /g).length !== languages.length * (routes.length + 1) * (languages.length + 1)) {
   errors.push('Sitemap has an unexpected number of language alternates');
 }
 
@@ -131,5 +142,5 @@ if (errors.length) {
   errors.forEach((error) => console.error(`- ${error}`));
   process.exitCode = 1;
 } else {
-  console.log(`SEO audit passed: ${languages.length * routes.length} localized pages, sitemap, robots.txt, and 404.html.`);
+  console.log(`SEO audit passed: ${languages.length * (routes.length + 1)} localized pages, sitemap index, robots.txt, and 404.html.`);
 }
