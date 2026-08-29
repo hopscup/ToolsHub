@@ -209,8 +209,34 @@ body:has(.proxy-guide-article) {
   border-color: rgba(39, 32, 45, 0.1) !important;
 }
 
+.proxy-guide-article .article-theme-toggle {
+  color: #bd7bff !important;
+  background: rgba(157, 88, 255, 0.13) !important;
+  border-color: rgba(189, 123, 255, 0.38) !important;
+  box-shadow: inset 0 0 0 1px rgba(189, 123, 255, 0.04);
+}
+
+.proxy-guide-article .article-theme-toggle:hover {
+  color: #d8aeff !important;
+  background: rgba(157, 88, 255, 0.2) !important;
+  border-color: rgba(189, 123, 255, 0.62) !important;
+}
+
+.proxy-guide-article .article-theme-toggle:focus-visible {
+  outline: 2px solid rgba(189, 123, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.proxy-guide-article[data-article-theme="light"] .article-theme-toggle {
+  color: #7c3aed !important;
+  background: rgba(124, 58, 237, 0.1) !important;
+  border-color: rgba(124, 58, 237, 0.32) !important;
+}
+
 .proxy-guide-article[data-article-theme="light"] .article-theme-toggle:hover {
-  color: var(--color-brand-purple) !important;
+  color: #6d28d9 !important;
+  background: rgba(124, 58, 237, 0.16) !important;
+  border-color: rgba(124, 58, 237, 0.48) !important;
 }
 
 html[data-article-theme="light"] body {
