@@ -6,6 +6,12 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { AnimatePresence, LazyMotion, domAnimation, m as motion } from 'motion/react';
 import { BackgroundParticles } from './components/BackgroundParticles';
+import { ProxyGuideArticle } from './components/ProxyGuideArticle';
+import { MobileIpGuideArticle } from './components/MobileIpGuideArticle';
+import { GmailForwardingGuideArticle } from './components/GmailForwardingGuideArticle';
+import { AccountFarmGuideArticle } from './components/AccountFarmGuideArticle';
+import { OtcKycGuideArticle } from './components/OtcKycGuideArticle';
+import { ExchangeUidsGuideArticle } from './components/ExchangeUidsGuideArticle';
 import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
@@ -63,6 +69,7 @@ import {
   Layers,
   Lock,
   Shield,
+  ShieldCheck,
   Cloud,
   Database,
   Code,
@@ -377,6 +384,37 @@ const getLocalizedRoute = (category: CategoryType, language: Language) =>
 
 const getLocalizedHomeRoute = (language: Language) =>
   LANGUAGE_PREFIXES[language] || '/';
+
+const PROXY_GUIDE_ARTICLE_ROUTE = '/proxy-vpn/luchshie-proksi';
+const MOBILE_IP_GUIDE_ARTICLE_ROUTE = '/guides/mobile-ip-airplane-mode';
+const GMAIL_FORWARDING_GUIDE_ARTICLE_ROUTE = '/guides/gmail-forwarding';
+const ACCOUNT_FARM_GUIDE_ARTICLE_ROUTE = '/guides/account-farm';
+const OTC_KYC_GUIDE_ARTICLE_ROUTE = '/guides/crypto-otc-kyc';
+const EXCHANGE_UIDS_GUIDE_ARTICLE_ROUTE = '/guides/exchange-uids-addresses';
+
+const isProxyGuideArticlePath = (
+  path = typeof window !== 'undefined' ? window.location.pathname : '/',
+) => stripLanguagePrefix(path) === PROXY_GUIDE_ARTICLE_ROUTE;
+
+const isMobileIpGuideArticlePath = (
+  path = typeof window !== 'undefined' ? window.location.pathname : '/',
+) => stripLanguagePrefix(path) === MOBILE_IP_GUIDE_ARTICLE_ROUTE;
+
+const isGmailForwardingGuideArticlePath = (
+  path = typeof window !== 'undefined' ? window.location.pathname : '/',
+) => stripLanguagePrefix(path) === GMAIL_FORWARDING_GUIDE_ARTICLE_ROUTE;
+
+const isAccountFarmGuideArticlePath = (
+  path = typeof window !== 'undefined' ? window.location.pathname : '/',
+) => stripLanguagePrefix(path) === ACCOUNT_FARM_GUIDE_ARTICLE_ROUTE;
+
+const isOtcKycGuideArticlePath = (
+  path = typeof window !== 'undefined' ? window.location.pathname : '/',
+) => stripLanguagePrefix(path) === OTC_KYC_GUIDE_ARTICLE_ROUTE;
+
+const isExchangeUidsGuideArticlePath = (
+  path = typeof window !== 'undefined' ? window.location.pathname : '/',
+) => stripLanguagePrefix(path) === EXCHANGE_UIDS_GUIDE_ARTICLE_ROUTE;
 
 const getLocalizedOfferRoute = (offer: Offer, language: Language) =>
   `${getLocalizedRoute(offer.category, language)}/${offer.slug}`;
@@ -4636,11 +4674,21 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const proxyArticle = isProxyGuideArticlePath();
+    const guideArticle = guidePages.find(
+      (page) => stripLanguagePrefix(window.location.pathname) === `/guides/${page.slug}`,
+    );
+    const russianOnlyArticle = proxyArticle || Boolean(guideArticle);
+    const untranslatedArticle = russianOnlyArticle && lang !== 'ru';
     const seoLanding = selectedOffer ? undefined : getSeoLandingFromPath();
     const sectionSeo = seoLanding || SECTION_SEO[activeCategory];
     const offerSeo = selectedOffer?.slug ? selectedOffer.editorial : undefined;
     const servicePageSeo = selectedOffer?.id ? SERVICE_PAGE_SEO_BY_ID[selectedOffer.id] : undefined;
-    const canonicalPath = selectedOffer?.slug
+    const canonicalPath = proxyArticle
+      ? PROXY_GUIDE_ARTICLE_ROUTE
+      : guideArticle
+        ? `/guides/${guideArticle.slug}`
+      : selectedOffer?.slug
       ? getLocalizedOfferRoute(selectedOffer, lang)
       : seoLanding
         ? getLocalizedSeoLandingRoute(seoLanding, lang)
@@ -4649,13 +4697,21 @@ export default function App() {
           : getLocalizedRoute(activeCategory, lang);
     const canonicalUrl = `${SITE_URL}${canonicalPath}`;
     const runtimeSeo = seoLanding || isHomeRoute ? undefined : RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
-    const title = isHomeRoute
+    const title = proxyArticle
+      ? 'Лучшие прокси-сервисы для аккаунтов: что выбрать в 2026 году | Hopscup Tools'
+      : guideArticle
+        ? getLocalizedValue(guideArticle.title, 'ru') || guideArticle.title.en
+      : isHomeRoute
       ? getLocalizedValue(HOME_SEO.title, lang) || HOME_SEO.title.en
       : getLocalizedValue(servicePageSeo?.title || offerSeo?.title, lang)
         || runtimeSeo?.title
         || getLocalizedValue(sectionSeo.title, lang)
         || sectionSeo.title.en;
-    const description = isHomeRoute
+    const description = proxyArticle
+      ? 'Сравнение семи прокси-сервисов, которыми пользуется Hopscup. IPv4, ISP, Residential и Mobile для аккаунтов, антидетектов, рекламы, парсинга и автоматизации.'
+      : guideArticle
+        ? getLocalizedValue(guideArticle.description, 'ru') || guideArticle.description.en
+      : isHomeRoute
       ? getLocalizedValue(HOME_SEO.description, lang) || HOME_SEO.description.en
       : getLocalizedValue(servicePageSeo?.description || offerSeo?.description, lang)
         || runtimeSeo?.description
@@ -4673,14 +4729,22 @@ export default function App() {
       element.setAttribute('content', content);
     };
 
-    document.documentElement.lang = currentLanguageOption?.inLanguage || lang;
+    document.documentElement.lang = russianOnlyArticle ? 'ru-RU' : currentLanguageOption?.inLanguage || lang;
     document.title = title;
     setMeta('meta[name="description"]', 'name', 'description', description);
+    setMeta(
+      'meta[name="robots"]',
+      'name',
+      'robots',
+      untranslatedArticle
+        ? 'noindex, follow'
+        : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large',
+    );
     setMeta('meta[property="og:title"]', 'property', 'og:title', title);
     setMeta('meta[property="og:description"]', 'property', 'og:description', description);
     setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
-    setMeta('meta[property="og:type"]', 'property', 'og:type', 'website');
-    setMeta('meta[property="og:locale"]', 'property', 'og:locale', currentLanguageOption?.ogLocale || 'en_US');
+    setMeta('meta[property="og:type"]', 'property', 'og:type', proxyArticle || guideArticle ? 'article' : 'website');
+    setMeta('meta[property="og:locale"]', 'property', 'og:locale', russianOnlyArticle ? 'ru_RU' : currentLanguageOption?.ogLocale || 'en_US');
     setMeta('meta[property="og:image"]', 'property', 'og:image', `${SITE_URL}/logo.png`);
     setMeta('meta[property="og:image:width"]', 'property', 'og:image:width', '400');
     setMeta('meta[property="og:image:height"]', 'property', 'og:image:height', '400');
@@ -4710,21 +4774,30 @@ export default function App() {
       alternate.setAttribute('href', href);
     };
 
-    LANGUAGE_OPTIONS.forEach(({ value, hrefLang }) => {
-      const alternatePath = selectedOffer?.slug
-        ? getLocalizedOfferRoute(selectedOffer, value)
-        : seoLanding
-          ? getLocalizedSeoLandingRoute(seoLanding, value)
-          : isHomeRoute
-            ? getLocalizedHomeRoute(value)
-            : getLocalizedRoute(activeCategory, value);
-      setAlternate(hrefLang, `${SITE_URL}${alternatePath}`);
-    });
+    document.head.querySelectorAll('link[rel="alternate"][hreflang]').forEach((element) => element.remove());
+    if (russianOnlyArticle) {
+      setAlternate('ru', canonicalUrl);
+    } else {
+      LANGUAGE_OPTIONS.forEach(({ value, hrefLang }) => {
+        const alternatePath = selectedOffer?.slug
+          ? getLocalizedOfferRoute(selectedOffer, value)
+          : seoLanding
+            ? getLocalizedSeoLandingRoute(seoLanding, value)
+            : isHomeRoute
+              ? getLocalizedHomeRoute(value)
+              : getLocalizedRoute(activeCategory, value);
+        setAlternate(hrefLang, `${SITE_URL}${alternatePath}`);
+      });
+    }
     setAlternate(
       'x-default',
       `${SITE_URL}${selectedOffer?.slug
         ? getLocalizedOfferRoute(selectedOffer, 'ru')
-        : seoLanding?.route || (isHomeRoute ? '/' : CATEGORY_ROUTES[activeCategory])}`,
+        : proxyArticle
+          ? PROXY_GUIDE_ARTICLE_ROUTE
+          : guideArticle
+            ? `/guides/${guideArticle.slug}`
+          : seoLanding?.route || (isHomeRoute ? '/' : CATEGORY_ROUTES[activeCategory])}`,
     );
 
     let structuredData = document.head.querySelector<HTMLScriptElement>('#structured-data');
@@ -4745,7 +4818,28 @@ export default function App() {
             || offer.subCategories?.includes(seoLanding.subFilter)
           ),
         );
-    const pageEntity = selectedOffer?.slug
+    const pageEntity = proxyArticle || guideArticle
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: title,
+          description,
+          url: canonicalUrl,
+          inLanguage: russianOnlyArticle ? 'ru-RU' : currentLanguageOption?.inLanguage || 'en',
+          author: {
+            '@type': 'Person',
+            name: 'Hopscup',
+          },
+          publisher: {
+            '@type': 'Organization',
+            name: 'Hopscup',
+            logo: {
+              '@type': 'ImageObject',
+              url: `${SITE_URL}/logo.png`,
+            },
+          },
+        }
+      : selectedOffer?.slug
       ? {
           '@context': 'https://schema.org',
           '@type': 'WebPage',
@@ -5144,6 +5238,25 @@ export default function App() {
   };
 
   useEffect(() => {
+    if (
+      isProxyGuideArticlePath()
+      || isMobileIpGuideArticlePath()
+      || isGmailForwardingGuideArticlePath()
+      || isAccountFarmGuideArticlePath()
+      || isOtcKycGuideArticlePath()
+      || isExchangeUidsGuideArticlePath()
+    ) {
+      document.body.style.removeProperty('overflow');
+      document.body.style.setProperty('overflow-y', 'auto');
+      document.documentElement.style.setProperty('overflow-y', 'auto');
+
+      return () => {
+        document.body.style.removeProperty('overflow');
+        document.body.style.removeProperty('overflow-y');
+        document.documentElement.style.removeProperty('overflow-y');
+      };
+    }
+
     if (!selectedOffer) return;
 
     const previousOverflow = document.body.style.overflow;
@@ -5176,6 +5289,13 @@ export default function App() {
       && (subFilter === 'Mobile' || selectedOffer.subCategory === 'Mobile'),
   );
 
+  const isProxyGuideArticle = isProxyGuideArticlePath();
+  const isMobileIpGuideArticle = isMobileIpGuideArticlePath();
+  const isGmailForwardingGuideArticle = isGmailForwardingGuideArticlePath();
+  const isAccountFarmGuideArticle = isAccountFarmGuideArticlePath();
+  const isOtcKycGuideArticle = isOtcKycGuideArticlePath();
+  const isExchangeUidsGuideArticle = isExchangeUidsGuideArticlePath();
+
   const InfoRow = ({ icon: Icon, label, value }: { icon: any; label: string; value?: string }) => {
     if (!value) return null;
 
@@ -5195,6 +5315,30 @@ export default function App() {
       </div>
     );
   };
+
+  if (isProxyGuideArticle) {
+    return <ProxyGuideArticle />;
+  }
+
+  if (isMobileIpGuideArticle) {
+    return <MobileIpGuideArticle />;
+  }
+
+  if (isGmailForwardingGuideArticle) {
+    return <GmailForwardingGuideArticle />;
+  }
+
+  if (isAccountFarmGuideArticle) {
+    return <AccountFarmGuideArticle />;
+  }
+
+  if (isOtcKycGuideArticle) {
+    return <OtcKycGuideArticle />;
+  }
+
+  if (isExchangeUidsGuideArticle) {
+    return <ExchangeUidsGuideArticle />;
+  }
 
   return (
     <LazyMotion features={domAnimation} strict>
@@ -5522,12 +5666,39 @@ export default function App() {
           {filteredOffers.length > 0 ? (
             activeCategory === 'Guides' ? (
               <div className="max-w-4xl mx-auto w-full space-y-4">
+                {lang === 'ru' && (
+                  <motion.a
+                    href={PROXY_GUIDE_ARTICLE_ROUTE}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="group flex min-h-[88px] w-full items-center gap-5 rounded-[1.5rem] border border-brand-purple/25 bg-brand-purple/[0.08] px-5 py-5 shadow-[0_0_45px_rgba(129,28,254,0.1)] backdrop-blur-xl transition-all duration-300 hover:border-brand-purple/60 hover:bg-brand-purple/15 md:px-7"
+                  >
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-brand-purple/30 bg-brand-purple/10 transition-colors group-hover:bg-brand-purple md:h-16 md:w-16">
+                      <ShieldCheck className="h-6 w-6 text-brand-purple transition-colors group-hover:text-white md:h-7 md:w-7" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="mb-1 text-[9px] font-black uppercase tracking-[0.2em] text-brand-purple">Большой гайд</p>
+                      <h3 className="font-display text-base font-bold leading-snug text-white md:text-xl">
+                        Лучшие прокси-сервисы для аккаунтов: что выбрать
+                      </h3>
+                    </div>
+                    <ChevronRight className="h-5 w-5 shrink-0 text-white/25 transition-colors group-hover:text-brand-purple" />
+                  </motion.a>
+                )}
                 {filteredOffers.map((offer, index) => (
                   <motion.a
                     layout
                     key={offer.id}
                     href={getLocalizedOfferRoute(offer, lang)}
                     onClick={(event) => {
+                      if (
+                        offer.id === 'guide-mobile-ip'
+                        || offer.id === 'guide-gmail-forwarding'
+                        || offer.id === 'guide-account-farm'
+                        || offer.id === 'guide-otc-kyc'
+                        || offer.id === 'guide-uids-addresses'
+                      ) return;
                       if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
                       event.preventDefault();
                       handleOfferOpen(offer);

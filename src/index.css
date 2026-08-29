@@ -135,6 +135,92 @@
   filter: blur(80px);
 }
 
+.proxy-guide-article {
+  color-scheme: dark;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+html:has(.proxy-guide-article),
+body:has(.proxy-guide-article) {
+  height: auto !important;
+  overflow-y: auto !important;
+  touch-action: auto !important;
+}
+
+.proxy-guide-article .article-particles,
+.proxy-guide-article .mesh-gradient {
+  pointer-events: none;
+}
+
+.proxy-guide-article .article-header,
+.proxy-guide-article .article-card,
+.proxy-guide-article .article-toc,
+.proxy-guide-article [class*="bg-white/"],
+.proxy-guide-article [class*="border-white/"] {
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.proxy-guide-article[data-article-theme="light"] {
+  color-scheme: light;
+  background: #f3f4f7 !important;
+  color: #201c24;
+}
+
+.proxy-guide-article[data-article-theme="light"] .article-header {
+  background: rgba(247, 248, 250, 0.9) !important;
+  border-color: rgba(39, 32, 45, 0.1) !important;
+}
+
+.proxy-guide-article[data-article-theme="light"] .article-card,
+.proxy-guide-article[data-article-theme="light"] .article-toc {
+  background: rgba(250, 250, 252, 0.94) !important;
+  border-color: rgba(39, 32, 45, 0.11) !important;
+  box-shadow: 0 24px 70px rgba(46, 36, 54, 0.1);
+}
+
+.proxy-guide-article[data-article-theme="light"] .mesh-gradient {
+  background:
+    radial-gradient(at 0% 0%, rgba(189, 123, 255, 0.16) 0, transparent 48%),
+    radial-gradient(at 100% 100%, rgba(255, 122, 0, 0.08) 0, transparent 45%);
+  filter: blur(90px);
+}
+
+.proxy-guide-article[data-article-theme="light"] .article-particles {
+  opacity: 0.14;
+}
+
+.proxy-guide-article[data-article-theme="light"] [class~="text-white"] {
+  color: #201c24 !important;
+}
+
+.proxy-guide-article[data-article-theme="light"] [class*="text-white/"] {
+  color: #625c68 !important;
+}
+
+.proxy-guide-article[data-article-theme="light"] [class*="border-white/"] {
+  border-color: rgba(39, 32, 45, 0.11) !important;
+}
+
+.proxy-guide-article[data-article-theme="light"] [class*="bg-white/"] {
+  background-color: rgba(39, 32, 45, 0.035) !important;
+}
+
+.proxy-guide-article[data-article-theme="light"] [class*="divide-white/"] > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(39, 32, 45, 0.1) !important;
+}
+
+.proxy-guide-article[data-article-theme="light"] .article-theme-toggle:hover {
+  color: var(--color-brand-purple) !important;
+}
+
+html[data-article-theme="light"] body {
+  background: #f3f4f7;
+}
+
+html[data-article-theme="light"] ::-webkit-scrollbar-track {
+  background: #eef0f3;
+}
+
 .glass {
   @apply bg-black/40 border border-white/5 backdrop-blur-md;
 }

@@ -1549,8 +1549,25 @@ const servicePages = [
     points: page.editorial.bestFor,
     items: page.editorial.considerations,
   })),
+  createServicePage({
+    id: 'guide-best-proxies',
+    type: 'article',
+    russianOnly: true,
+    route: '/proxy-vpn/luchshie-proksi',
+    name: 'Лучшие прокси-сервисы',
+    logo: '/logo.png',
+    title: { ru: 'Лучшие прокси-сервисы для аккаунтов: что выбрать в 2026 году | Hopscup Tools' },
+    description: { ru: 'Сравнение семи прокси-сервисов: IPv4, ISP, Residential и Mobile для аккаунтов, антидетектов, рекламы, парсинга и автоматизации.' },
+    heading: { ru: 'Какие прокси выбрать в 2026 году' },
+    intro: { ru: 'Практическое сравнение ProxyWing, Proxy-Seller, Proxyline, Proxy6, MobileProxy, ProxyShard и Proxys.io.' },
+    keywords: { ru: 'лучшие прокси, прокси для аккаунтов, IPv4 прокси, мобильные прокси, прокси для антидетекта' },
+    points: { ru: ['Выбор типа прокси под задачу.', 'Сравнение сервисов и тарифов.', 'Настройка и проверка IP.'] },
+    items: { ru: ['IPv4, ISP, Residential и Mobile.', 'SOCKS5 и HTTP.', 'Fraud Score и практические ограничения.'] },
+  }),
   ...guidePages.map((page) => createServicePage({
     id: page.id,
+    type: 'article',
+    russianOnly: true,
     route: `/guides/${page.slug}`,
     name: page.name.ru,
     logo: '/logo.png',
@@ -1592,6 +1609,7 @@ const getLanguage = (value, language) => value[language.code] || value.en || val
 const localizedPath = (section, language) =>
   section.route === '/' ? language.prefix || '/' : `${language.prefix}${section.route}`;
 const absoluteUrl = (section, language) => `${siteUrl}${localizedPath(section, language) === '/' ? '' : localizedPath(section, language)}`;
+const canonicalUrl = (section, language) => absoluteUrl(section, section.russianOnly ? languages[0] : language);
 
 const escapeHtml = (value) =>
   String(value)
@@ -1604,7 +1622,8 @@ const escapeJson = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
 
 const alternateLinks = (section) =>
   [
-    ...languages.map((language) => `<link rel="alternate" hreflang="${language.hrefLang}" href="${absoluteUrl(section, language)}" />`),
+    ...(section.russianOnly ? languages.slice(0, 1) : languages)
+      .map((language) => `<link rel="alternate" hreflang="${language.hrefLang}" href="${absoluteUrl(section, language)}" />`),
     `<link rel="alternate" hreflang="x-default" href="${absoluteUrl(section, languages[0])}" />`,
   ].join('\n    ');
 
@@ -1701,6 +1720,21 @@ const serviceSchema = (section, language) => ({
   },
 });
 
+const articleSchema = (section, language) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: getLanguage(section.title, section.russianOnly ? languages[0] : language),
+  description: getLanguage(section.description, section.russianOnly ? languages[0] : language),
+  url: canonicalUrl(section, language),
+  inLanguage: section.russianOnly ? 'ru-RU' : language.htmlLang,
+  author: { '@type': 'Person', name: 'Hopscup' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Hopscup',
+    logo: { '@type': 'ImageObject', url: `${siteUrl}/logo.png` },
+  },
+});
+
 const websiteSchema = (language) => ({
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -1726,27 +1760,32 @@ const stripSeoFallback = (html) =>
   html.replace(/\s*<article class="seo-fallback"[\s\S]*?<\/article>\s*/g, '');
 
 const replaceHead = (html, section, language) => {
-  const title = escapeHtml(getLanguage(section.title, language));
-  const description = escapeHtml(getLanguage(section.description, language));
-  const keywords = escapeHtml(getLanguage(section.keywords, language));
-  const url = absoluteUrl(section, language);
-  const pageSchema = section.type === 'service'
-    ? serviceSchema(section, language)
-    : collectionSchema(section, language);
-  const structuredData = [websiteSchema(language), organizationSchema, pageSchema];
+  const contentLanguage = section.russianOnly ? languages[0] : language;
+  const title = escapeHtml(getLanguage(section.title, contentLanguage));
+  const description = escapeHtml(getLanguage(section.description, contentLanguage));
+  const keywords = escapeHtml(getLanguage(section.keywords, contentLanguage));
+  const url = canonicalUrl(section, language);
+  const pageSchema = section.type === 'article'
+    ? articleSchema(section, language)
+    : section.type === 'service'
+      ? serviceSchema(section, language)
+      : collectionSchema(section, language);
+  const structuredData = [websiteSchema(contentLanguage), organizationSchema, pageSchema];
 
   return html
-    .replace(/<html lang=".*?">/, `<html lang="${language.htmlLang}">`)
+    .replace(/<html lang=".*?">/, `<html lang="${contentLanguage.htmlLang}">`)
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`)
     .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${description}" />`)
     .replace(/<meta name="keywords" content=".*?" \/>/, `<meta name="keywords" content="${keywords}" />`)
+    .replace(/<meta name="robots" content=".*?" \/>/, `<meta name="robots" content="${section.russianOnly && language.code !== 'ru' ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large'}" />`)
     .replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="${url}" />`)
     .replace(/\n\s*<link rel="alternate" hreflang=".*?" href=".*?" \/>/g, '')
     .replace(/<link rel="canonical" href=".*?" \/>/, (canonical) => `${canonical}\n    ${alternateLinks(section)}`)
     .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${title}" />`)
     .replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${description}" />`)
     .replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="${url}" />`)
-    .replace(/<meta property="og:locale" content=".*?" \/>/, `<meta property="og:locale" content="${language.ogLocale}" />`)
+    .replace(/<meta property="og:type" content=".*?" \/>/, `<meta property="og:type" content="${section.type === 'article' ? 'article' : 'website'}" />`)
+    .replace(/<meta property="og:locale" content=".*?" \/>/, `<meta property="og:locale" content="${contentLanguage.ogLocale}" />`)
     .replace(/<meta name="twitter:title" content=".*?" \/>/, `<meta name="twitter:title" content="${title}" />`)
     .replace(/<meta name="twitter:description" content=".*?" \/>/, `<meta name="twitter:description" content="${description}" />`)
     .replace(/<script id="structured-data" type="application\/ld\+json">[\s\S]*?<\/script>/, `<script id="structured-data" type="application/ld+json">${escapeJson(structuredData)}</script>`);
@@ -1760,7 +1799,7 @@ const renderPage = (baseHtml, section, language) => replaceRootContent(replaceHe
 const renderSitemap = (pages) => {
   const sitemapAlternates = (section) =>
     [
-      ...languages.map(
+      ...(section.russianOnly ? languages.slice(0, 1) : languages).map(
         (language) =>
           `    <xhtml:link rel="alternate" hreflang="${language.hrefLang}" href="${escapeHtml(absoluteUrl(section, language))}" />`,
       ),
@@ -1768,7 +1807,7 @@ const renderSitemap = (pages) => {
     ].join('\n');
 
   const urls = languages.flatMap((language) =>
-    pages.map((section) => `  <url>
+    pages.filter((section) => !section.russianOnly || language.code === 'ru').map((section) => `  <url>
     <loc>${escapeHtml(absoluteUrl(section, language))}</loc>
 ${sitemapAlternates(section)}
     <changefreq>${section.changefreq}</changefreq>

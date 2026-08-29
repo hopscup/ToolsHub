@@ -34,6 +34,7 @@ const categoryRoutes = [
   ...seoLandingPages.map((page) => page.route),
 ];
 const serviceRoutes = [
+  '/proxy-vpn/luchshie-proksi',
   '/proxy-vpn/proxyshard',
   '/proxy-vpn/proxyline',
   '/proxy-vpn/proxywing',
@@ -56,6 +57,10 @@ const serviceRoutes = [
   ...guidePages.map((page) => `/guides/${page.slug}`),
 ];
 const routes = [...categoryRoutes, ...serviceRoutes];
+const articleRoutes = new Set([
+  '/proxy-vpn/luchshie-proksi',
+  ...guidePages.map((page) => `/guides/${page.slug}`),
+]);
 
 const errors = [];
 const titles = new Set();
@@ -78,6 +83,7 @@ for (const language of languages) {
     const title = html.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim();
     const description = html.match(/<meta name="description" content="([^"]+)" \/>/)?.[1]?.trim();
     const canonical = html.match(/<link rel="canonical" href="([^"]+)" \/>/)?.[1];
+    const robotsMeta = html.match(/<meta name="robots" content="([^"]+)" \/>/)?.[1];
     const alternates = matches(html, /<link rel="alternate" hreflang="([^"]+)" href="([^"]+)" \/>/g);
     const h1Count = matches(html, /<h1[\s>]/g).length;
     const internalLinkCount = matches(html, /<a href="\/(?:en\/|es\/|zh\/|ko\/)?(?:proxy-vpn|antidetect|account-shop|foreign-cards|crypto-exchange|sms-activators|vps|social-boost|steam-topup|guides)(?:\/[^"]*)?"/g).length;
@@ -85,19 +91,26 @@ for (const language of languages) {
     const minimumDescriptionLength = language.hrefLang.startsWith('zh') ? 20 : 50;
 
     if (!title) errors.push(`Missing title: ${localizedRoute}`);
-    if (title && titles.has(title)) errors.push(`Duplicate title: ${title}`);
-    if (title) titles.add(title);
+    const russianOnlyArticle = articleRoutes.has(route);
+    const untranslatedArticle = russianOnlyArticle && language.hrefLang !== 'ru';
+    if (title && !untranslatedArticle && titles.has(title)) errors.push(`Duplicate title: ${title}`);
+    if (title && !untranslatedArticle) titles.add(title);
     if (!description || description.length < minimumDescriptionLength) errors.push(`Weak description: ${localizedRoute}`);
-    if (canonical !== `${siteUrl}${localizedRoute}`) errors.push(`Wrong canonical: ${localizedRoute}`);
-    if (html.match(/<html lang="([^"]+)"/)?.[1] !== language.htmlLang) errors.push(`Wrong lang: ${localizedRoute}`);
-    if (alternates.length !== languages.length + 1) errors.push(`Wrong hreflang count: ${localizedRoute}`);
+    const expectedCanonical = russianOnlyArticle ? `${siteUrl}${route}` : `${siteUrl}${localizedRoute}`;
+    if (canonical !== expectedCanonical) errors.push(`Wrong canonical: ${localizedRoute}`);
+    const expectedLang = russianOnlyArticle ? languages[0].htmlLang : language.htmlLang;
+    if (html.match(/<html lang="([^"]+)"/)?.[1] !== expectedLang) errors.push(`Wrong lang: ${localizedRoute}`);
+    const expectedAlternates = russianOnlyArticle ? 2 : languages.length + 1;
+    if (alternates.length !== expectedAlternates) errors.push(`Wrong hreflang count: ${localizedRoute}`);
+    if (untranslatedArticle && robotsMeta !== 'noindex, follow') errors.push(`Untranslated article is indexable: ${localizedRoute}`);
+    if (!untranslatedArticle && !robotsMeta?.startsWith('index, follow')) errors.push(`Indexable page has wrong robots meta: ${localizedRoute}`);
     if (h1Count !== 1) errors.push(`Expected one H1: ${localizedRoute}`);
     if (internalLinkCount < categoryRoutes.length) errors.push(`Missing crawlable navigation: ${localizedRoute}`);
 
     try {
       const structuredData = JSON.parse(structuredDataText || 'null');
       const types = Array.isArray(structuredData) ? structuredData.map((item) => item?.['@type']) : [];
-      const pageType = serviceRoutes.includes(route) ? 'WebPage' : 'CollectionPage';
+      const pageType = articleRoutes.has(route) ? 'Article' : serviceRoutes.includes(route) ? 'WebPage' : 'CollectionPage';
       for (const requiredType of ['WebSite', 'Organization', pageType]) {
         if (!types.includes(requiredType)) errors.push(`Missing ${requiredType} schema: ${localizedRoute}`);
       }
@@ -124,10 +137,12 @@ const moneySitemap = await read('sitemap-money.xml');
 const coreSitemap = await read('sitemap-core.xml');
 const serviceSitemap = await read('sitemap-services.xml');
 const combinedSitemaps = `${moneySitemap}\n${coreSitemap}\n${serviceSitemap}`;
-if (matches(combinedSitemaps, /<loc>/g).length !== languages.length * (routes.length + 1)) {
+const expectedSitemapUrls = languages.length * (routes.length + 1) - (languages.length - 1) * articleRoutes.size;
+if (matches(combinedSitemaps, /<loc>/g).length !== expectedSitemapUrls) {
   errors.push('Sitemap has an unexpected number of canonical URLs');
 }
-if (matches(combinedSitemaps, /<xhtml:link /g).length !== languages.length * (routes.length + 1) * (languages.length + 1)) {
+const expectedSitemapAlternates = (expectedSitemapUrls - articleRoutes.size) * (languages.length + 1) + articleRoutes.size * 2;
+if (matches(combinedSitemaps, /<xhtml:link /g).length !== expectedSitemapAlternates) {
   errors.push('Sitemap has an unexpected number of language alternates');
 }
 
@@ -142,5 +157,5 @@ if (errors.length) {
   errors.forEach((error) => console.error(`- ${error}`));
   process.exitCode = 1;
 } else {
-  console.log(`SEO audit passed: ${languages.length * (routes.length + 1)} localized pages, sitemap index, robots.txt, and 404.html.`);
+  console.log(`SEO audit passed: ${languages.length * (routes.length + 1)} rendered pages, ${expectedSitemapUrls} canonical sitemap URLs, robots.txt, and 404.html.`);
 }
