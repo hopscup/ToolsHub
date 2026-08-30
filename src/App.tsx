@@ -53,6 +53,7 @@ import {
   Star,
   Info,
   Copy,
+  Check,
   Zap,
   X,
   Mail,
@@ -206,6 +207,7 @@ interface Offer {
   webUrl?: string;
   logoUrl?: string;
   promoCode?: string;
+  promoDiscount?: Localized;
   badge?: Localized;
   isPopular?: boolean;
   isBestChoice?: boolean;
@@ -1379,6 +1381,83 @@ const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']
       ko: '여러 기기를 쓰는 사용자에게 좋은 선택이며 특히 휴대폰과 컴퓨터뿐 아니라 Smart TV에도 VPN이 필요할 때 유용합니다.',
     },
   },
+  'giga-vpn': {
+    title: {
+      ru: 'GIGA VPN: обзор Telegram-бота, Incy и Happ | Hopscup Tools',
+      en: 'GIGA VPN review: Telegram bot, Incy, and Happ | Hopscup Tools',
+      es: 'GIGA VPN: bot de Telegram, Incy y Happ | Hopscup Tools',
+      zh: 'GIGA VPN 评测：Telegram 机器人、Incy 与 Happ | Hopscup Tools',
+      ko: 'GIGA VPN 리뷰: Telegram 봇, Incy 및 Happ | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор GIGA VPN в Telegram: три бесплатных дня, подключение через Incy или Happ и установка на Windows, macOS, Android и iOS.',
+      en: 'GIGA VPN review: three free days, Telegram-based setup through Incy or Happ, and support for Windows, macOS, Android, and iOS.',
+      es: 'Análisis de GIGA VPN: tres días gratis, configuración por Telegram con Incy o Happ y soporte para Windows, macOS, Android e iOS.',
+      zh: 'GIGA VPN 评测：提供三天免费试用，可通过 Telegram 使用 Incy 或 Happ 配置，支持 Windows、macOS、Android 和 iOS。',
+      ko: 'GIGA VPN 리뷰: 3일 무료 이용, Telegram에서 Incy 또는 Happ를 통한 설정, Windows, macOS, Android 및 iOS 지원.',
+    },
+    bestFor: {
+      ru: [
+        'Telegram, зарубежные сайты, Gemini, Polymarket и другие сервисы.',
+        'Тем, кому удобно получить подписку и инструкцию через Telegram-бота.',
+        'Windows, macOS, Android и iOS без привязки к одной платформе.',
+      ],
+      en: [
+        'Telegram, international websites, Gemini, Polymarket, and other services.',
+        'Users who prefer receiving a subscription and setup guide through Telegram.',
+        'Windows, macOS, Android, and iOS users.',
+      ],
+      es: [
+        'Telegram, sitios internacionales, Gemini, Polymarket y otros servicios.',
+        'Usuarios que prefieren recibir la suscripción y la guía por Telegram.',
+        'Windows, macOS, Android e iOS.',
+      ],
+      zh: [
+        '适用于 Telegram、海外网站、Gemini、Polymarket 等服务。',
+        '适合希望通过 Telegram 获取订阅和安装说明的用户。',
+        '支持 Windows、macOS、Android 和 iOS。',
+      ],
+      ko: [
+        'Telegram, 해외 웹사이트, Gemini, Polymarket 및 기타 서비스.',
+        'Telegram으로 구독과 설치 안내를 받는 방식을 선호하는 사용자.',
+        'Windows, macOS, Android 및 iOS 사용자.',
+      ],
+    },
+    considerations: {
+      ru: [
+        'Для подключения используется отдельное приложение. Сам сервис рекомендует Incy, Happ оставлен как альтернатива.',
+        'Три бесплатных дня заявлены в Telegram-канале сервиса; актуальность предложения лучше проверить в боте.',
+        'Актуальные тарифы, страны и способы оплаты нужно смотреть непосредственно перед подключением.',
+      ],
+      en: [
+        'A separate client app is required. The service recommends Incy, with Happ available as an alternative.',
+        'Three free days are advertised in the service channel; confirm availability in the bot.',
+        'Check current plans, locations, and payment methods in the bot before subscribing.',
+      ],
+      es: [
+        'Hace falta una aplicación cliente. El servicio recomienda Incy y mantiene Happ como alternativa.',
+        'El canal anuncia tres días gratis; confirma la oferta en el bot.',
+        'Consulta en el bot los precios, países y métodos de pago actuales.',
+      ],
+      zh: [
+        '需要使用独立客户端。服务方推荐 Incy，Happ 可作为替代。',
+        '频道中宣传三天免费试用，使用前请在机器人中确认。',
+        '订阅前请在机器人中查看当前套餐、地区和付款方式。',
+      ],
+      ko: [
+        '별도 클라이언트 앱이 필요합니다. 서비스는 Incy를 권장하며 Happ도 대안으로 제공합니다.',
+        '채널에서 3일 무료 이용을 안내하지만 봇에서 현재 제공 여부를 확인하세요.',
+        '구독 전에 봇에서 최신 요금제, 지역 및 결제 수단을 확인하세요.',
+      ],
+    },
+    verdict: {
+      ru: 'GIGA VPN стоит смотреть, если нужен простой запуск через Telegram и хочется сначала проверить соединение бесплатно. Для подключения потребуется Incy или Happ, поэтому это не полностью самостоятельное приложение.',
+      en: 'GIGA VPN is worth considering for a simple Telegram-based start and a free connection test. It requires Incy or Happ rather than working as a standalone app.',
+      es: 'GIGA VPN encaja si quieres empezar desde Telegram y probar la conexión gratis. Requiere Incy o Happ, no funciona como aplicación independiente.',
+      zh: '如果你希望通过 Telegram 快速开始并先免费测试连接，可以考虑 GIGA VPN。它需要 Incy 或 Happ，并非独立应用。',
+      ko: 'Telegram에서 간단히 시작하고 연결을 무료로 시험하려면 GIGA VPN을 고려할 수 있습니다. 독립 앱이 아니라 Incy 또는 Happ가 필요합니다.',
+    },
+  },
   'tochka-g': {
     title: {
       ru: 'Точка G VPN: обзор конфигов и Telegram-прокси | Hopscup Tools',
@@ -1813,6 +1892,7 @@ const OFFERS: Offer[] = [
     },
     url: 'https://proxyshard.com?ref=hopscup',
     logoUrl: '/proxyshard.webp',
+    promoCode: 'hoscup',
     isBestChoice: true,
     details: {
       geo: { ru: '100+ стран', en: '100+ countries', es: 'Más de 100 países', zh: '100 多个国家', ko: '100개 이상의 국가' },
@@ -1833,6 +1913,8 @@ const OFFERS: Offer[] = [
     },
     url: 'https://proxyline.net?line=152448',
     logoUrl: '/proxyline.webp',
+    promoCode: 'hopscup',
+    promoDiscount: { ru: '−10%', en: '−10%', es: '−10%', zh: '−10%', ko: '−10%' },
     details: {
       geo: { ru: '100+ стран', en: '100+ countries', es: 'Más de 100 países', zh: '100 多个国家', ko: '100개 이상의 국가' },
       types: { ru: 'IPv4, IPv6', en: 'IPv4, IPv6', es: 'IPv4, IPv6', zh: 'IPv4、IPv6', ko: 'IPv4, IPv6' },
@@ -1928,9 +2010,11 @@ const OFFERS: Offer[] = [
     },
     url: 'https://dashboard.proxywing.com/billing/aff.php?aff=813',
     logoUrl: '/proxywing.webp',
+    promoCode: 'hopscup',
+    promoDiscount: { ru: '−10%', en: '−10%', es: '−10%', zh: '−10%', ko: '−10%' },
     details: {
       geo: { ru: '200+ стран', en: '200+ countries', es: 'Más de 200 países', zh: '200 多个国家', ko: '200개 이상의 국가' },
-      types: { ru: 'IPv4, ISP, Residential, Mobile', en: 'IPv4, ISP, Residential, Mobile', es: 'IPv4, ISP, Residential, Mobile', zh: 'IPv4、ISP、Residential、Mobile', ko: 'IPv4, ISP, Residential, Mobile' },
+      types: { ru: 'IPv4, ISP, Residential', en: 'IPv4, ISP, Residential', es: 'IPv4, ISP, Residential', zh: 'IPv4、ISP、Residential', ko: 'IPv4, ISP, Residential' },
       paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto', es: 'Visa/Mastercard, SBP/Mir, cripto', zh: 'Visa/Mastercard、SBP/Mir、加密货币', ko: 'Visa/Mastercard, SBP/Mir, 암호화폐' }
     },
     editorial: {
@@ -2023,6 +2107,8 @@ const OFFERS: Offer[] = [
     },
     url: 'https://proxy-seller.com/?partner=RIPC5NDAEYRZPZ',
     logoUrl: '/proxy-seller.webp',
+    promoCode: 'hopscup',
+    promoDiscount: { ru: '−10%', en: '−10%', es: '−10%', zh: '−10%', ko: '−10%' },
     isPopular: true,
     details: {
       geo: { ru: '220+ стран', en: '220+ countries', es: 'Más de 220 países', zh: '220 多个国家', ko: '220개 이상의 국가' },
@@ -2043,6 +2129,8 @@ const OFFERS: Offer[] = [
     },
     url: 'https://px6.net/c/103460',
     logoUrl: '/proxy6.webp',
+    promoCode: 'hopscup',
+    promoDiscount: { ru: '−5%', en: '−5%', es: '−5%', zh: '−5%', ko: '−5%' },
     details: {
       geo: { ru: '70+ стран', en: '70+ countries', es: 'Más de 70 países', zh: '70 多个国家', ko: '70개 이상의 국가' },
       types: { ru: 'IPv4, IPv6, Shared IPv4, MTProto', en: 'IPv4, IPv6, Shared IPv4, MTProto', es: 'IPv4, IPv6, Shared IPv4, MTProto', zh: 'IPv4、IPv6、Shared IPv4、MTProto', ko: 'IPv4, IPv6, Shared IPv4, MTProto' },
@@ -2136,8 +2224,10 @@ const OFFERS: Offer[] = [
       ru: 'Сервис мобильных прокси с возможностью смены IP. Отличный выбор для задач, где важен максимально высокий уровень доверия со стороны площадок.',
       en: 'Mobile proxy service with IP rotation. A great choice for tasks where the highest possible platform trust is important.'
     },
-    url: 'https://mobileproxy.space/?p=105422',
+    url: 'https://mobileproxy.rent/user.html?free&p=105422',
     logoUrl: '/mobileproxy.webp',
+    promoCode: 'hopscup',
+    promoDiscount: { ru: '−20%', en: '−20%', es: '−20%', zh: '−20%', ko: '−20%' },
     details: {
       geo: { ru: '20+ стран', en: '20+ countries', es: 'Más de 20 países', zh: '20 多个国家', ko: '20개 이상의 국가' },
       types: { ru: 'Mobile', en: 'Mobile', es: 'Mobile', zh: 'Mobile', ko: 'Mobile' },
@@ -2282,6 +2372,45 @@ const OFFERS: Offer[] = [
     editorial: ADDITIONAL_PROXY_EDITORIALS.prostovpn,
   },
   {
+    id: 'vpn-giga',
+    category: 'Proxy',
+    subCategory: 'VPN',
+    slug: 'giga-vpn',
+    name: 'GIGA VPN',
+    description: {
+      ru: 'VPN через Telegram-бота с тремя бесплатными днями. Подключается через Incy или Happ и работает на Windows, macOS, Android и iOS.',
+      en: 'A Telegram-based VPN with three free days. It connects through Incy or Happ and supports Windows, macOS, Android, and iOS.'
+    },
+    url: 'https://t.me/giga_vpnbot?start=ref_6923253972',
+    logoUrl: '/giga-vpn.png',
+    platforms: ['Windows', 'macOS', 'Android', 'iOS'],
+    details: {
+      geo: { ru: 'Более 10 стран', en: '10+ countries', es: 'Más de 10 países', zh: '10 多个国家', ko: '10개 이상의 국가' },
+      types: { ru: 'VPN через Incy или Happ', en: 'VPN through Incy or Happ', es: 'VPN mediante Incy o Happ', zh: '通过 Incy 或 Happ 使用 VPN', ko: 'Incy 또는 Happ를 통한 VPN' },
+      paymentMethods: { ru: 'СБП (QR), карта РФ, криптовалюта, Telegram Stars', en: 'SBP (QR), Russian bank card, crypto, Telegram Stars', es: 'SBP (QR), tarjeta bancaria rusa, cripto, Telegram Stars', zh: 'SBP（二维码）、俄罗斯银行卡、加密货币、Telegram Stars', ko: 'SBP(QR), 러시아 은행 카드, 암호화폐, Telegram Stars' },
+      pros: {
+        ru: ['3 дня бесплатно', 'Установка через Telegram-бота', 'Поддержка четырёх основных платформ'],
+        en: ['3 free days', 'Setup through a Telegram bot', 'Four major platforms supported'],
+        es: ['3 días gratis', 'Instalación mediante bot de Telegram', 'Compatible con cuatro plataformas principales'],
+        zh: ['免费使用 3 天', '通过 Telegram 机器人安装', '支持四大主流平台'],
+        ko: ['3일 무료', 'Telegram 봇을 통한 설치', '4개 주요 플랫폼 지원']
+      },
+      nuances: {
+        ru: [
+          'Для подключения понадобится клиент Incy или Happ.',
+          'Сервис рекомендует использовать Incy как более стабильный вариант.',
+          'Актуальные тарифы и условия лучше проверить в боте.'
+        ],
+        en: [
+          'The Incy or Happ client is required.',
+          'The service recommends Incy as the more stable option.',
+          'Check current plans and terms in the bot.'
+        ]
+      }
+    },
+    editorial: ADDITIONAL_PROXY_EDITORIALS['giga-vpn'],
+  },
+  {
     id: 'vpn-tochka-g',
     category: 'Proxy',
     subCategory: 'VPN',
@@ -2295,7 +2424,7 @@ const OFFERS: Offer[] = [
     logoUrl: '/tochka-g.webp',
     platforms: ['Windows', 'macOS', 'Android', 'iOS', 'Linux'],
     details: {
-      geo: { ru: 'Несколько стран, есть переключение в новых конфигах', en: 'Multiple countries, switching available in newer configs', es: 'Varios países, con cambio en las configuraciones nuevas', zh: '多个国家，新配置支持切换', ko: '여러 국가, 새 설정에서 전환 가능' },
+      geo: { ru: 'Более 10 стран', en: '10+ countries', es: 'Más de 10 países', zh: '10 多个国家', ko: '10개 이상의 국가' },
       types: { ru: 'VPN-конфиги, персональный прокси для Telegram', en: 'VPN configs, personal Telegram proxy', es: 'Configuraciones VPN, proxy personal para Telegram', zh: 'VPN 配置、Telegram 专用代理', ko: 'VPN 설정, 개인 Telegram 프록시' },
       paymentMethods: { ru: 'СБП или крипта', en: 'SBP or crypto', es: 'SBP o cripto', zh: 'SBP 或加密货币', ko: 'SBP 또는 암호화폐' },
       pros: {
@@ -2353,11 +2482,11 @@ const OFFERS: Offer[] = [
     platforms: ['Windows', 'macOS', 'Linux', 'Android', 'iOS', 'Android TV', 'tvOS'],
     details: {
       geo: {
-        ru: '6 стран: Германия, Финляндия, Швеция, Нидерланды, Латвия и Польша',
-        en: '6 countries: Germany, Finland, Sweden, the Netherlands, Latvia, and Poland',
-        es: '6 países: Alemania, Finlandia, Suecia, Países Bajos, Letonia y Polonia',
-        zh: '6 个国家：德国、芬兰、瑞典、荷兰、拉脱维亚和波兰',
-        ko: '6개 국가: 독일, 핀란드, 스웨덴, 네덜란드, 라트비아, 폴란드',
+        ru: 'Более 6 стран',
+        en: '6+ countries',
+        es: 'Más de 6 países',
+        zh: '6 个以上国家',
+        ko: '6개 이상의 국가',
       },
       types: {
         ru: 'VPN, Авто-сервер HAPP, Ускоритель для белых списков',
@@ -2658,6 +2787,25 @@ const OFFERS: Offer[] = [
     profiles100Price: { ru: '≈ €79-99/мес', en: '≈ €79-99/mo', es: '≈ €79-99/mes', zh: '约 €79-99/月', ko: '약 €79-99/월' },
     platforms: ['Windows', 'macOS', 'Linux'],
     details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } }
+  },
+  {
+    id: 'ant-shardx',
+    category: 'Antidetect',
+    subCategory: 'PCBasic',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-shardx'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-shardx'].editorial,
+    name: 'ShardX',
+    description: ANTIDETECT_PAGE_BY_ID['ant-shardx'].editorial.description,
+    url: 'https://github.com/ProxyShard/ShardBrowser',
+    logoUrl: '/proxyshard.webp',
+    freeProfiles: { ru: 'Без ограничений', en: 'Unlimited', es: 'Ilimitados', zh: '无限', ko: '무제한' },
+    tariffStartPrice: { ru: '0$', en: '$0', es: '0 $', zh: '0 美元', ko: '0달러' },
+    profiles100Price: { ru: '0$', en: '$0', es: '0 $', zh: '0 美元', ko: '0달러' },
+    platforms: ['Windows', 'macOS', 'Linux'],
+    details: {
+      types: { ru: 'HTTP/SOCKS5, UDP, API/CDP', en: 'HTTP/SOCKS5, UDP, API/CDP', es: 'HTTP/SOCKS5, UDP, API/CDP', zh: 'HTTP/SOCKS5、UDP、API/CDP', ko: 'HTTP/SOCKS5, UDP, API/CDP' },
+      paymentMethods: { ru: 'Бесплатно', en: 'Free', es: 'Gratis', zh: '免费', ko: '무료' },
+    },
   },
   // STORES
   {
@@ -3360,7 +3508,7 @@ const OFFERS: Offer[] = [
     logoUrl: '/zarub.webp',
     isBestChoice: true,
     cardStats: {
-      issuance: { ru: '8$', en: '8$', es: '8$', zh: '8 美元', ko: '8달러' },
+      issuance: { ru: '19$', en: '$19', es: '19 $', zh: '19 美元', ko: '19달러' },
       maintenance: { ru: '0 $/мес', en: '$0/mo', es: '0 $/mes', zh: '0 美元/月', ko: '월 0달러' },
       paySystems: { ru: 'Да', en: 'Yes', es: 'Sí', zh: '支持', ko: '지원' },
       verification: { ru: 'Не нужна', en: 'Not required', es: 'No requerida', zh: '不需要', ko: '필요 없음' },
@@ -3379,7 +3527,7 @@ const OFFERS: Offer[] = [
       },
       nuances: {
         ru: [
-          'Выпуск карты: 8$ единоразово',
+          'Выпуск карты: 19$ единоразово',
           'Обслуживание: 0$',
           'Комиссия за операцию: 0.35$',
           'Комиссия за пополнение: 1.5%',
@@ -3389,7 +3537,7 @@ const OFFERS: Offer[] = [
           'Выпуск занимает от нескольких минут до 24 часов'
         ],
         en: [
-          'Issuance: $8 one-time',
+          'Issuance: $19 one-time',
           'Maintenance: $0',
           'Transaction fee: $0.35',
           'Top-up fee: 1.5%',
@@ -3399,7 +3547,7 @@ const OFFERS: Offer[] = [
           'Issuance takes from a few minutes to 24 hours'
         ],
         es: [
-          'Emisión: 8 $ una sola vez',
+          'Emisión: 19 $ una sola vez',
           'Mantenimiento: 0 $',
           'Comisión por operación: 0,35 $',
           'Comisión de recarga: 1,5%',
@@ -3409,7 +3557,7 @@ const OFFERS: Offer[] = [
           'La emisión tarda desde unos minutos hasta 24 horas'
         ],
         zh: [
-          '开卡费：一次性 8 美元',
+          '开卡费：一次性 19 美元',
           '维护费：0 美元',
           '交易手续费：0.35 美元',
           '充值手续费：1.5%',
@@ -3419,7 +3567,7 @@ const OFFERS: Offer[] = [
           '开卡时间：几分钟至 24 小时'
         ],
         ko: [
-          '발급비: 1회 8달러',
+          '발급비: 1회 19달러',
           '유지비: 0달러',
           '결제 수수료: 0.35달러',
           '충전 수수료: 1.5%',
@@ -3449,7 +3597,7 @@ const OFFERS: Offer[] = [
     url: 'https://t.me/Cashinout_bot?start=197391',
     logoUrl: '/cashinout.webp',
     cardStats: {
-      issuance: { ru: '$7.5, из них $5 на баланс', en: '$7.5, with $5 credited', es: '7,5 $, con 5 $ de saldo', zh: '7.5 美元，5 美元到账', ko: '7.5달러, 5달러 잔액 지급' },
+      issuance: { ru: '7.5$ (5$ на баланс)', en: '$7.5 ($5 credited)', es: '7,5 $ (5 $ de saldo)', zh: '7.5 美元（到账 5 美元）', ko: '7.5달러(5달러 잔액)' },
       maintenance: { ru: '$3/мес', en: '$3/mo', es: '3 $/mes', zh: '3 美元/月', ko: '월 3달러' },
       paySystems: { ru: 'Нет', en: 'No', es: 'No', zh: '不支持', ko: '미지원' },
       verification: { ru: 'Нужна', en: 'Required', es: 'Requerida', zh: '需要', ko: '필요' },
@@ -4032,6 +4180,11 @@ const OFFER_DESCRIPTION_TRANSLATIONS: Partial<Record<string, Partial<Record<Lang
     zh: '带有自有绕过技术的 VPN，在限制加强时也能继续工作。支持无限设备，并提供多种速度模式。',
     ko: '자체 우회 기술을 사용하는 VPN으로 제한이 강화되어도 계속 작동하도록 설계되었습니다. 무제한 기기와 여러 속도 모드를 지원합니다.',
   },
+  'vpn-giga': {
+    es: 'VPN mediante bot de Telegram con tres días gratis. Funciona con Incy o Happ en Windows, macOS, Android e iOS.',
+    zh: '通过 Telegram 机器人使用的 VPN，提供三天免费试用。可通过 Incy 或 Happ 在 Windows、macOS、Android 和 iOS 上连接。',
+    ko: 'Telegram 봇 기반 VPN으로 3일 무료 이용을 제공합니다. Windows, macOS, Android 및 iOS에서 Incy 또는 Happ로 연결합니다.',
+  },
   'vpn-tochka-g': {
     es: 'VPN en formato bot de Telegram, centrado en estabilidad y reemplazo rápido de configuraciones. También tiene soluciones separadas para Telegram.',
     zh: 'Telegram 机器人形式的 VPN 服务，重点是连接稳定和快速更换配置。也提供 Telegram 专用方案。',
@@ -4511,6 +4664,8 @@ export default function App() {
   const [placeholderText, setPlaceholderText] = useState('');
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [copiedPromoId, setCopiedPromoId] = useState<string | null>(null);
+  const copiedPromoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const words = ['Dolphin Anty', 'Proxy6', 'Zarub'];
   const typingSpeed = 150;
   const deletingSpeed = 100;
@@ -4601,6 +4756,10 @@ export default function App() {
 
   useEffect(() => {
     initializeAnalyticsFromConsent();
+  }, []);
+
+  useEffect(() => () => {
+    if (copiedPromoTimerRef.current) clearTimeout(copiedPromoTimerRef.current);
   }, []);
 
   useEffect(() => {
@@ -4977,6 +5136,7 @@ export default function App() {
       : l(isHomeRoute ? DEFAULT_HERO_SUBTITLE : CATEGORY_HERO_SUBTITLES[activeCategory]),
     visitSite: tx({ ru: 'Перейти', en: 'Visit', es: 'Abrir', zh: '访问', ko: '열기' }),
     promo: tx({ ru: 'Промокод', en: 'Promo', es: 'Promo', zh: '优惠码', ko: '프로모 코드' }),
+    copied: tx({ ru: 'Скопировано', en: 'Copied', es: 'Copiado', zh: '已复制', ko: '복사됨' }),
     popular: tx({ ru: 'Популярное', en: 'Popular', es: 'Popular', zh: '热门', ko: '인기' }),
     bestChoice: tx({ ru: 'Лучший выбор', en: 'Best Choice', es: 'Mejor opción', zh: '最佳选择', ko: '추천 선택' }),
     footer: tx({ ru: 'Сделано с душой для Hopscup Crew', en: 'Made with soul for Hopscup Crew', es: 'Hecho con cariño para Hopscup Crew', zh: '为 Hopscup Crew 用心制作', ko: 'Hopscup Crew를 위해 정성껏 제작' }),
@@ -5129,14 +5289,25 @@ export default function App() {
     ]
   };
 
-  const copyToClipboard = (text: string) => {
+  const markPromoAsCopied = (sourceId: string) => {
+    setCopiedPromoId(sourceId);
+    if (copiedPromoTimerRef.current) clearTimeout(copiedPromoTimerRef.current);
+    copiedPromoTimerRef.current = setTimeout(() => {
+      setCopiedPromoId(null);
+      copiedPromoTimerRef.current = null;
+    }, 1800);
+  };
+
+  const copyToClipboard = (text: string, sourceId: string) => {
     if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).catch(err => {
-        console.error('Clipboard write failed', err);
-        fallbackCopy(text);
-      });
+      navigator.clipboard.writeText(text)
+        .then(() => markPromoAsCopied(sourceId))
+        .catch(err => {
+          console.error('Clipboard write failed', err);
+          if (fallbackCopy(text)) markPromoAsCopied(sourceId);
+        });
     } else {
-      fallbackCopy(text);
+      if (fallbackCopy(text)) markPromoAsCopied(sourceId);
     }
   };
 
@@ -5149,12 +5320,14 @@ export default function App() {
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
+    let didCopy = false;
     try {
-      document.execCommand('copy');
+      didCopy = document.execCommand('copy');
     } catch (err) {
       console.error('Fallback copy failed', err);
     }
     document.body.removeChild(textArea);
+    return didCopy;
   };
 
   const scrollToPageTop = () => {
@@ -5875,7 +6048,7 @@ export default function App() {
                     )}
 
                     {(offer.details || offer.platforms?.length || offer.mobileDetails) && offer.category !== 'Stores' && offer.category !== 'SMS' && offer.category !== 'Cards' && (
-                      <div className="flex flex-col gap-4 mb-8">
+                      <div className={`flex flex-col gap-4 ${offer.promoCode ? 'mb-3' : 'mb-8'}`}>
                         {offer.category === 'Antidetect' && (subFilter === 'Mobile' || offer.subCategory === 'Mobile') && offer.mobileDetails ? (
                           <>
                             <InfoRow icon={Smartphone} label={t.control} value={l(offer.mobileDetails.control)} />
@@ -5896,6 +6069,37 @@ export default function App() {
                           </>
                         )}
                       </div>
+                    )}
+                    {offer.promoCode && (
+                      <button
+                        onClick={() => copyToClipboard(offer.promoCode || '', `card-${offer.id}`)}
+                        aria-label={`${copiedPromoId === `card-${offer.id}` ? t.copied : t.promo} ${offer.promoCode}`}
+                        title={`${t.promo}: ${offer.promoCode}`}
+                        aria-live="polite"
+                        className="group/copy flex min-h-12 w-full items-center justify-between gap-3 rounded-2xl border border-brand-purple/45 bg-brand-purple/5 px-3 py-2 text-left transition-all hover:border-[#BD7BFF]/75 hover:bg-brand-purple/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BD7BFF]/60"
+                      >
+                        <div className="flex min-w-0 items-center gap-2.5">
+                          <Percent className="h-4 w-4 shrink-0 text-[#BD7BFF]" />
+                          <div className="flex min-w-0 items-baseline gap-2">
+                            <span className="shrink-0 text-[9px] font-black uppercase tracking-[0.14em] text-[#BD7BFF]/75">
+                              {copiedPromoId === `card-${offer.id}` ? t.copied : t.promo}
+                            </span>
+                            <span className="truncate font-mono text-sm font-black tracking-normal text-white">{offer.promoCode}</span>
+                          </div>
+                        </div>
+                        <div className="flex shrink-0 items-center gap-2">
+                          {offer.promoDiscount && (
+                            <span className="text-[11px] font-black text-[#BD7BFF]">
+                              {l(offer.promoDiscount)}
+                            </span>
+                          )}
+                          {copiedPromoId === `card-${offer.id}` ? (
+                            <Check className="h-4 w-4 text-[#BD7BFF]" />
+                          ) : (
+                            <Copy className="h-3.5 w-3.5 text-white/35 transition-colors group-hover/copy:text-[#BD7BFF]" />
+                          )}
+                        </div>
+                      </button>
                     )}
                   </div>
 
@@ -5919,18 +6123,6 @@ export default function App() {
                           className="w-full flex items-center justify-center gap-3 py-5 bg-brand-purple hover:bg-white text-white hover:text-brand-purple border-2 border-brand-purple transition-all duration-300 rounded-[1.5rem] font-black text-sm uppercase tracking-[0.2em] shadow-[0_10px_30px_rgba(157,88,255,0.2)] hover:shadow-[0_15px_40px_rgba(157,88,255,0.4)]"
                         >
                           {t.open}
-                        </button>
-                      )}
-                      {offer.promoCode && (
-                        <button 
-                          onClick={() => copyToClipboard(offer.promoCode || '')}
-                          className="w-full flex items-center justify-center gap-2 py-4 bg-white/5 border border-white/10 rounded-[1.5rem] hover:bg-white/10 transition-all group/copy relative text-[10px] font-black uppercase tracking-widest text-brand-orange"
-                        >
-                          <Copy className="w-4 h-4" />
-                          {t.promo}
-                          <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-brand-orange text-white text-[8px] rounded opacity-0 group-active/copy:opacity-100 transition-opacity">
-                            Copied!
-                          </div>
                         </button>
                       )}
                     </div>
@@ -7871,12 +8063,34 @@ export default function App() {
                     </a>
                   )}
                   {selectedOffer.promoCode && (
-                    <button 
-                      onClick={() => copyToClipboard(selectedOffer.promoCode || '')}
-                      className="flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/10 bg-white/5 px-5 py-3 text-xs font-black uppercase tracking-[0.12em] text-white/40 transition-all hover:border-brand-orange/50 hover:bg-brand-orange/10 hover:text-brand-orange"
+                    <button
+                      onClick={() => copyToClipboard(selectedOffer.promoCode || '', `modal-${selectedOffer.id}`)}
+                      aria-label={`${copiedPromoId === `modal-${selectedOffer.id}` ? t.copied : t.promo} ${selectedOffer.promoCode}`}
+                      title={`${t.promo}: ${selectedOffer.promoCode}`}
+                      aria-live="polite"
+                      className="group/copy flex min-h-12 w-full items-center justify-between gap-3 rounded-2xl border border-brand-purple/45 bg-brand-purple/5 px-4 py-2 text-left transition-all hover:border-[#BD7BFF]/75 hover:bg-brand-purple/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BD7BFF]/60"
                     >
-                      <Copy className="w-5 h-5" />
-                      {t.promo}: {selectedOffer.promoCode}
+                      <div className="flex min-w-0 items-center gap-2.5">
+                        <Percent className="h-4 w-4 shrink-0 text-[#BD7BFF]" />
+                        <div className="flex min-w-0 items-baseline gap-2">
+                          <span className="shrink-0 text-[9px] font-black uppercase tracking-[0.14em] text-[#BD7BFF]/75">
+                            {copiedPromoId === `modal-${selectedOffer.id}` ? t.copied : t.promo}
+                          </span>
+                          <span className="truncate font-mono text-sm font-black tracking-normal text-white">{selectedOffer.promoCode}</span>
+                        </div>
+                      </div>
+                      <div className="flex shrink-0 items-center gap-2">
+                        {selectedOffer.promoDiscount && (
+                          <span className="text-[11px] font-black text-[#BD7BFF]">
+                            {l(selectedOffer.promoDiscount)}
+                          </span>
+                        )}
+                        {copiedPromoId === `modal-${selectedOffer.id}` ? (
+                          <Check className="h-4 w-4 text-[#BD7BFF]" />
+                        ) : (
+                          <Copy className="h-3.5 w-3.5 text-white/35 transition-colors group-hover/copy:text-[#BD7BFF]" />
+                        )}
+                      </div>
                     </button>
                   )}
                 </div>
