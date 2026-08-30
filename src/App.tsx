@@ -6076,7 +6076,7 @@ export default function App() {
                         aria-label={`${copiedPromoId === `card-${offer.id}` ? t.copied : t.promo} ${offer.promoCode}`}
                         title={`${t.promo}: ${offer.promoCode}`}
                         aria-live="polite"
-                        className="group/copy flex min-h-12 w-full items-center justify-between gap-3 rounded-2xl border border-brand-purple/45 bg-brand-purple/5 px-3 py-2 text-left transition-all hover:border-[#BD7BFF]/75 hover:bg-brand-purple/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BD7BFF]/60"
+                        className="group/copy flex min-h-12 w-full items-center justify-between gap-3 rounded-2xl border border-white/[0.07] bg-brand-purple/5 px-3 py-2 text-left transition-all hover:border-white/15 hover:bg-brand-purple/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BD7BFF]/60"
                       >
                         <div className="flex min-w-0 items-center gap-2.5">
                           <Percent className="h-4 w-4 shrink-0 text-[#BD7BFF]" />
@@ -8068,7 +8068,7 @@ export default function App() {
                       aria-label={`${copiedPromoId === `modal-${selectedOffer.id}` ? t.copied : t.promo} ${selectedOffer.promoCode}`}
                       title={`${t.promo}: ${selectedOffer.promoCode}`}
                       aria-live="polite"
-                      className="group/copy flex min-h-12 w-full items-center justify-between gap-3 rounded-2xl border border-brand-purple/45 bg-brand-purple/5 px-4 py-2 text-left transition-all hover:border-[#BD7BFF]/75 hover:bg-brand-purple/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BD7BFF]/60"
+                      className="group/copy flex min-h-12 w-full items-center justify-between gap-3 rounded-2xl border border-white/[0.07] bg-brand-purple/5 px-4 py-2 text-left transition-all hover:border-white/15 hover:bg-brand-purple/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BD7BFF]/60"
                     >
                       <div className="flex min-w-0 items-center gap-2.5">
                         <Percent className="h-4 w-4 shrink-0 text-[#BD7BFF]" />
