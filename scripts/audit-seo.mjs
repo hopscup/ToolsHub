@@ -44,6 +44,7 @@ const serviceRoutes = [
   '/proxy-vpn/proxys-io',
   '/proxy-vpn/ppl-vpn',
   '/proxy-vpn/prostovpn',
+  '/proxy-vpn/giga-vpn',
   '/proxy-vpn/tochka-g',
   '/proxy-vpn/giga-dollar-vpn',
   ...accountShopPages.map((page) => `/account-shop/${page.slug}`),
