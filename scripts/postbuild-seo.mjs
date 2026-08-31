@@ -5,6 +5,7 @@ import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { guidePages } from '../src/data/guidePages.js';
+import { legacyIndexedRoutes } from '../src/data/legacyIndexedRoutes.js';
 import { seoLandingPages } from '../src/data/seoLandingPages.js';
 import { smsPages } from '../src/data/smsPages.js';
 import { socialPages } from '../src/data/socialPages.js';
@@ -21,6 +22,9 @@ const languages = [
   { code: 'zh', prefix: '/zh', htmlLang: 'zh-CN', hrefLang: 'zh-CN', ogLocale: 'zh_CN', label: '中文' },
   { code: 'ko', prefix: '/ko', htmlLang: 'ko-KR', hrefLang: 'ko-KR', ogLocale: 'ko_KR', label: '한국어' },
 ];
+const indexLanguages = languages.filter(({ code }) => code === 'ru' || code === 'en');
+const isIndexLanguage = (language) => indexLanguages.some(({ code }) => code === language.code);
+const legacyIndexedRouteSet = new Set(legacyIndexedRoutes);
 
 const sections = [
   {
@@ -1666,7 +1670,15 @@ const getLanguage = (value, language) => value[language.code] || value.en || val
 const localizedPath = (section, language) =>
   section.route === '/' ? language.prefix || '/' : `${language.prefix}${section.route}`;
 const absoluteUrl = (section, language) => `${siteUrl}${localizedPath(section, language) === '/' ? '' : localizedPath(section, language)}`;
-const canonicalUrl = (section, language) => absoluteUrl(section, section.russianOnly ? languages[0] : language);
+const isPreservedLegacyPage = (section, language) => legacyIndexedRouteSet.has(localizedPath(section, language));
+const canonicalUrl = (section, language) => {
+  const canonicalLanguage = section.russianOnly
+    ? languages[0]
+    : isIndexLanguage(language) || isPreservedLegacyPage(section, language)
+      ? language
+      : indexLanguages.find(({ code }) => code === 'en');
+  return absoluteUrl(section, canonicalLanguage);
+};
 
 const escapeHtml = (value) =>
   String(value)
@@ -1679,7 +1691,7 @@ const escapeJson = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
 
 const alternateLinks = (section) =>
   [
-    ...(section.russianOnly ? languages.slice(0, 1) : languages)
+    ...(section.russianOnly ? indexLanguages.slice(0, 1) : indexLanguages)
       .map((language) => `<link rel="alternate" hreflang="${language.hrefLang}" href="${absoluteUrl(section, language)}" />`),
     `<link rel="alternate" hreflang="x-default" href="${absoluteUrl(section, languages[0])}" />`,
   ].join('\n    ');
@@ -1834,7 +1846,7 @@ const replaceHead = (html, section, language) => {
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`)
     .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${description}" />`)
     .replace(/<meta name="keywords" content=".*?" \/>/, `<meta name="keywords" content="${keywords}" />`)
-    .replace(/<meta name="robots" content=".*?" \/>/, `<meta name="robots" content="${section.russianOnly && language.code !== 'ru' ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large'}" />`)
+    .replace(/<meta name="robots" content=".*?" \/>/, `<meta name="robots" content="${(section.russianOnly && language.code !== 'ru') || (!isIndexLanguage(language) && !isPreservedLegacyPage(section, language)) ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large'}" />`)
     .replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="${url}" />`)
     .replace(/\n\s*<link rel="alternate" hreflang=".*?" href=".*?" \/>/g, '')
     .replace(/<link rel="canonical" href=".*?" \/>/, (canonical) => `${canonical}\n    ${alternateLinks(section)}`)
@@ -1856,14 +1868,14 @@ const renderPage = (baseHtml, section, language) => replaceRootContent(replaceHe
 const renderSitemap = (pages) => {
   const sitemapAlternates = (section) =>
     [
-      ...(section.russianOnly ? languages.slice(0, 1) : languages).map(
+      ...(section.russianOnly ? indexLanguages.slice(0, 1) : indexLanguages).map(
         (language) =>
           `    <xhtml:link rel="alternate" hreflang="${language.hrefLang}" href="${escapeHtml(absoluteUrl(section, language))}" />`,
       ),
       `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeHtml(absoluteUrl(section, languages[0]))}" />`,
     ].join('\n');
 
-  const urls = languages.flatMap((language) =>
+  const urls = indexLanguages.flatMap((language) =>
     pages.filter((section) => !section.russianOnly || language.code === 'ru').map((section) => `  <url>
     <loc>${escapeHtml(absoluteUrl(section, language))}</loc>
 ${sitemapAlternates(section)}

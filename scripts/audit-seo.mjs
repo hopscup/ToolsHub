@@ -5,6 +5,7 @@ import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { guidePages } from '../src/data/guidePages.js';
+import { legacyIndexedRoutes } from '../src/data/legacyIndexedRoutes.js';
 import { seoLandingPages } from '../src/data/seoLandingPages.js';
 import { smsPages } from '../src/data/smsPages.js';
 import { socialPages } from '../src/data/socialPages.js';
@@ -14,12 +15,14 @@ import { vpsPages } from '../src/data/vpsPages.js';
 const distDir = path.resolve('dist');
 const siteUrl = 'https://hopscup.tools';
 const languages = [
-  { prefix: '', htmlLang: 'ru-RU', hrefLang: 'ru' },
-  { prefix: '/en', htmlLang: 'en', hrefLang: 'en' },
-  { prefix: '/es', htmlLang: 'es', hrefLang: 'es' },
-  { prefix: '/zh', htmlLang: 'zh-CN', hrefLang: 'zh-CN' },
-  { prefix: '/ko', htmlLang: 'ko-KR', hrefLang: 'ko-KR' },
+  { prefix: '', htmlLang: 'ru-RU', hrefLang: 'ru', indexable: true },
+  { prefix: '/en', htmlLang: 'en', hrefLang: 'en', indexable: true },
+  { prefix: '/es', htmlLang: 'es', hrefLang: 'es', indexable: false },
+  { prefix: '/zh', htmlLang: 'zh-CN', hrefLang: 'zh-CN', indexable: false },
+  { prefix: '/ko', htmlLang: 'ko-KR', hrefLang: 'ko-KR', indexable: false },
 ];
+const indexLanguages = languages.filter(({ indexable }) => indexable);
+const legacyIndexedRouteSet = new Set(legacyIndexedRoutes);
 const categoryRoutes = [
   '/proxy-vpn',
   '/antidetect',
@@ -94,17 +97,25 @@ for (const language of languages) {
     if (!title) errors.push(`Missing title: ${localizedRoute}`);
     const russianOnlyArticle = articleRoutes.has(route);
     const untranslatedArticle = russianOnlyArticle && language.hrefLang !== 'ru';
-    if (title && !untranslatedArticle && titles.has(title)) errors.push(`Duplicate title: ${title}`);
-    if (title && !untranslatedArticle) titles.add(title);
+    const preservedLegacyPage = legacyIndexedRouteSet.has(localizedRoute);
+    const indexablePage = (language.indexable || preservedLegacyPage) && !untranslatedArticle;
+    if (title && indexablePage && titles.has(title)) errors.push(`Duplicate title: ${title}`);
+    if (title && indexablePage) titles.add(title);
     if (!description || description.length < minimumDescriptionLength) errors.push(`Weak description: ${localizedRoute}`);
-    const expectedCanonical = russianOnlyArticle ? `${siteUrl}${route}` : `${siteUrl}${localizedRoute}`;
+    const expectedCanonical = russianOnlyArticle
+      ? `${siteUrl}${route}`
+      : language.indexable
+        ? `${siteUrl}${localizedRoute}`
+        : preservedLegacyPage
+          ? `${siteUrl}${localizedRoute}`
+        : `${siteUrl}/en${route}`;
     if (canonical !== expectedCanonical) errors.push(`Wrong canonical: ${localizedRoute}`);
     const expectedLang = russianOnlyArticle ? languages[0].htmlLang : language.htmlLang;
     if (html.match(/<html lang="([^"]+)"/)?.[1] !== expectedLang) errors.push(`Wrong lang: ${localizedRoute}`);
-    const expectedAlternates = russianOnlyArticle ? 2 : languages.length + 1;
+    const expectedAlternates = russianOnlyArticle ? 2 : indexLanguages.length + 1;
     if (alternates.length !== expectedAlternates) errors.push(`Wrong hreflang count: ${localizedRoute}`);
-    if (untranslatedArticle && robotsMeta !== 'noindex, follow') errors.push(`Untranslated article is indexable: ${localizedRoute}`);
-    if (!untranslatedArticle && !robotsMeta?.startsWith('index, follow')) errors.push(`Indexable page has wrong robots meta: ${localizedRoute}`);
+    if (!indexablePage && robotsMeta !== 'noindex, follow') errors.push(`Retired or untranslated page is indexable: ${localizedRoute}`);
+    if (indexablePage && !robotsMeta?.startsWith('index, follow')) errors.push(`Indexable page has wrong robots meta: ${localizedRoute}`);
     if (h1Count !== 1) errors.push(`Expected one H1: ${localizedRoute}`);
     if (internalLinkCount < categoryRoutes.length) errors.push(`Missing crawlable navigation: ${localizedRoute}`);
 
@@ -138,11 +149,11 @@ const moneySitemap = await read('sitemap-money.xml');
 const coreSitemap = await read('sitemap-core.xml');
 const serviceSitemap = await read('sitemap-services.xml');
 const combinedSitemaps = `${moneySitemap}\n${coreSitemap}\n${serviceSitemap}`;
-const expectedSitemapUrls = languages.length * (routes.length + 1) - (languages.length - 1) * articleRoutes.size;
+const expectedSitemapUrls = indexLanguages.length * (routes.length + 1) - (indexLanguages.length - 1) * articleRoutes.size;
 if (matches(combinedSitemaps, /<loc>/g).length !== expectedSitemapUrls) {
   errors.push('Sitemap has an unexpected number of canonical URLs');
 }
-const expectedSitemapAlternates = (expectedSitemapUrls - articleRoutes.size) * (languages.length + 1) + articleRoutes.size * 2;
+const expectedSitemapAlternates = (expectedSitemapUrls - articleRoutes.size) * (indexLanguages.length + 1) + articleRoutes.size * 2;
 if (matches(combinedSitemaps, /<xhtml:link /g).length !== expectedSitemapAlternates) {
   errors.push('Sitemap has an unexpected number of language alternates');
 }

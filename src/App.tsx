@@ -17,6 +17,7 @@ import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
 import { foreignCardPages } from './data/foreignCardPages.js';
 import { guidePages } from './data/guidePages.js';
+import { legacyIndexedRoutes } from './data/legacyIndexedRoutes.js';
 import { seoLandingPages } from './data/seoLandingPages.js';
 import { smsPages } from './data/smsPages.js';
 import { socialPages } from './data/socialPages.js';
@@ -362,6 +363,10 @@ const LANGUAGE_OPTIONS: { value: Language; label: string; name: string; inLangua
   { value: 'zh', label: '中文', name: '中文', inLanguage: 'zh-CN', hrefLang: 'zh-CN', ogLocale: 'zh_CN' },
   { value: 'ko', label: 'KO', name: '한국어', inLanguage: 'ko-KR', hrefLang: 'ko-KR', ogLocale: 'ko_KR' },
 ];
+
+const ACTIVE_LANGUAGE_OPTIONS = LANGUAGE_OPTIONS.filter(({ value }) => value === 'ru' || value === 'en');
+const isActiveLanguage = (language: Language) => language === 'ru' || language === 'en';
+const LEGACY_INDEXED_ROUTES = new Set(legacyIndexedRoutes);
 
 const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/';
 
@@ -4607,7 +4612,7 @@ const LanguageToggle = ({ lang, onChange }: { lang: Language; onChange: (languag
             aria-label="Language"
             className="absolute right-0 top-[calc(100%+8px)] z-[130] w-44 overflow-hidden rounded-lg border border-white/10 bg-[#0c0911]/95 p-1.5 shadow-[0_18px_45px_rgba(0,0,0,0.55)] backdrop-blur-xl"
           >
-            {LANGUAGE_OPTIONS.map((option) => {
+            {ACTIVE_LANGUAGE_OPTIONS.map((option) => {
               const isSelected = option.value === lang;
               return (
                 <button
@@ -4839,6 +4844,9 @@ export default function App() {
     );
     const russianOnlyArticle = proxyArticle || Boolean(guideArticle);
     const untranslatedArticle = russianOnlyArticle && lang !== 'ru';
+    const retiredLanguage = !isActiveLanguage(lang);
+    const preservedLegacyPage = retiredLanguage && LEGACY_INDEXED_ROUTES.has(normalizePath(window.location.pathname));
+    const canonicalLanguage: Language = retiredLanguage && !preservedLegacyPage ? 'en' : lang;
     const seoLanding = selectedOffer ? undefined : getSeoLandingFromPath();
     const sectionSeo = seoLanding || SECTION_SEO[activeCategory];
     const offerSeo = selectedOffer?.slug ? selectedOffer.editorial : undefined;
@@ -4848,12 +4856,12 @@ export default function App() {
       : guideArticle
         ? `/guides/${guideArticle.slug}`
       : selectedOffer?.slug
-      ? getLocalizedOfferRoute(selectedOffer, lang)
+      ? getLocalizedOfferRoute(selectedOffer, canonicalLanguage)
       : seoLanding
-        ? getLocalizedSeoLandingRoute(seoLanding, lang)
+        ? getLocalizedSeoLandingRoute(seoLanding, canonicalLanguage)
         : isHomeRoute
-          ? getLocalizedHomeRoute(lang)
-          : getLocalizedRoute(activeCategory, lang);
+          ? getLocalizedHomeRoute(canonicalLanguage)
+          : getLocalizedRoute(activeCategory, canonicalLanguage);
     const canonicalUrl = `${SITE_URL}${canonicalPath}`;
     const runtimeSeo = seoLanding || isHomeRoute ? undefined : RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
     const title = proxyArticle
@@ -4895,7 +4903,7 @@ export default function App() {
       'meta[name="robots"]',
       'name',
       'robots',
-      untranslatedArticle
+      untranslatedArticle || (retiredLanguage && !preservedLegacyPage)
         ? 'noindex, follow'
         : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large',
     );
@@ -4937,7 +4945,7 @@ export default function App() {
     if (russianOnlyArticle) {
       setAlternate('ru', canonicalUrl);
     } else {
-      LANGUAGE_OPTIONS.forEach(({ value, hrefLang }) => {
+      ACTIVE_LANGUAGE_OPTIONS.forEach(({ value, hrefLang }) => {
         const alternatePath = selectedOffer?.slug
           ? getLocalizedOfferRoute(selectedOffer, value)
           : seoLanding
@@ -5373,6 +5381,9 @@ export default function App() {
       category: offer.category,
       subcategory: offer.subCategory,
       language: lang,
+      placement: 'catalog_card',
+      promo_code: offer.promoCode,
+      promo_discount: offer.promoDiscount ? l(offer.promoDiscount) : undefined,
     });
 
     setIsHomeRoute(false);
@@ -8028,6 +8039,10 @@ export default function App() {
                       category: selectedOffer.category,
                       destination: selectedOffer.url.startsWith('https://t.me/') ? 'telegram' : 'website',
                       language: lang,
+                      placement: 'modal_primary',
+                      link_url: selectedOffer.url,
+                      promo_code: selectedOffer.promoCode,
+                      promo_discount: selectedOffer.promoDiscount ? l(selectedOffer.promoDiscount) : undefined,
                     })}
                     className="flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl border-2 border-brand-purple bg-brand-purple px-5 py-4 text-center text-sm font-black uppercase tracking-[0.1em] text-white shadow-[0_15px_40px_rgba(157,88,255,0.3)] transition-all duration-500 hover:bg-white hover:text-brand-purple md:tracking-[0.14em]"
                   >
@@ -8055,6 +8070,8 @@ export default function App() {
                         category: selectedOffer.category,
                         destination: 'website_secondary',
                         language: lang,
+                        placement: 'modal_secondary',
+                        link_url: selectedOffer.webUrl,
                       })}
                       className="flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/10 bg-white/5 px-5 py-3 text-xs font-black uppercase tracking-[0.12em] text-white/60 transition-all hover:border-brand-purple/40 hover:bg-white/10 hover:text-white"
                     >

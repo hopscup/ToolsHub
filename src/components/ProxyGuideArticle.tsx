@@ -19,64 +19,85 @@ import { RelatedGuides } from './RelatedGuides';
 import { trackAnalyticsEvent } from '../analytics';
 
 type Provider = {
+  id: string;
   name: string;
   logo: string;
   url: string;
   types: string;
   choice: string;
   note: string;
+  promoCode?: string;
+  promoDiscount?: string;
 };
 
 const providers: Provider[] = [
   {
+    id: 'p3',
     name: 'ProxyWing',
     logo: '/proxywing.webp',
     url: 'https://dashboard.proxywing.com/billing/aff.php?aff=813',
     types: 'IPv4, ISP, Residential, Mobile',
     choice: 'Универсальный вариант',
     note: 'Я бы начинал с их IPv4. Если площадка принимает их плохо, в том же сервисе можно перейти на ISP, Residential или Mobile.',
+    promoCode: 'hopscup',
+    promoDiscount: '−10%',
   },
   {
+    id: 'p4',
     name: 'Proxy-Seller',
     logo: '/proxy-seller.webp',
     url: 'https://proxy-seller.com/?partner=RIPC5NDAEYRZPZ',
     types: 'IPv4, IPv6, ISP, Residential, Mobile',
     choice: 'Качество и большой выбор',
     note: 'Один из сервисов, куда я смотрю, когда важно качество. Особенно нравится выбор Residential и большое количество стран.',
+    promoCode: 'hopscup',
+    promoDiscount: '−10%',
   },
   {
+    id: 'p2',
     name: 'Proxyline',
     logo: '/proxyline.webp',
     url: 'https://proxyline.net?line=152448',
     types: 'IPv4, IPv6',
     choice: 'Недорогие IPv4',
     note: 'Проверенный вариант для аккаунтов, парсинга и автоматизации, если под задачу хватает обычного отдельного IPv4.',
+    promoCode: 'hopscup',
+    promoDiscount: '−10%',
   },
   {
+    id: 'p5',
     name: 'Proxy6',
     logo: '/proxy6.webp',
     url: 'https://px6.net/c/103460',
     types: 'IPv4, IPv6, Shared IPv4, MTProto',
     choice: 'Много IP без переплаты',
     note: 'Подходит для повседневных задач и автоматизации. Shared для серьезной работы я бы не брал, лучше отдельный IPv4.',
+    promoCode: 'hopscup',
+    promoDiscount: '−5%',
   },
   {
+    id: 'p6',
     name: 'MobileProxy',
     logo: '/mobileproxy.webp',
-    url: 'https://mobileproxy.space/?p=105422',
+    url: 'https://mobileproxy.rent/user.html?free&p=105422',
     types: 'Mobile',
     choice: 'Мобильные прокси',
     note: 'Пользуюсь больше трех лет. Трафик безлимитный, IP меняется по кнопке, но несколько профилей с разными IP придется отрабатывать по очереди.',
+    promoCode: 'hopscup',
+    promoDiscount: '−20%',
   },
   {
+    id: 'p1',
     name: 'ProxyShard',
     logo: '/proxyshard.webp',
     url: 'https://proxyshard.com?ref=hopscup',
     types: 'IPv4, ISP, Residential, Mobile',
     choice: 'Баланс цены и качества',
     note: 'Универсальный сервис с основными типами прокси. Удобно, если для разных проектов нужны и обычные IPv4, и более трастовые варианты.',
+    promoCode: 'hoscup',
   },
   {
+    id: 'p7',
     name: 'Proxys.io',
     logo: '/proxys-io.webp',
     url: 'https://proxys.io/?refid=54507',
@@ -131,10 +152,14 @@ const OutboundButton = ({ provider }: { provider: Provider }) => (
     rel="sponsored noopener noreferrer"
     onClick={() => trackAnalyticsEvent('service_click', {
       service_name: provider.name,
-      service_id: `article-${provider.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+      service_id: provider.id,
       category: 'Proxy',
-      destination: provider.url,
-      source: 'best-proxy-article',
+      destination: 'website',
+      link_url: provider.url,
+      placement: 'article_cta',
+      language: 'ru',
+      promo_code: provider.promoCode,
+      promo_discount: provider.promoDiscount,
     })}
     className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-purple px-5 py-3 text-xs font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-brand-purple"
   >
@@ -273,10 +298,14 @@ export const ProxyGuideArticle = () => {
                           rel="sponsored noopener noreferrer"
                           onClick={() => trackAnalyticsEvent('service_click', {
                             service_name: provider.name,
-                            service_id: `article-table-${provider.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+                            service_id: provider.id,
                             category: 'Proxy',
-                            destination: provider.url,
-                            source: 'best-proxy-comparison',
+                            destination: 'website',
+                            link_url: provider.url,
+                            placement: 'article_table',
+                            language: 'ru',
+                            promo_code: provider.promoCode,
+                            promo_discount: provider.promoDiscount,
                           })}
                           className="inline-flex items-center gap-1.5 transition-colors hover:text-brand-purple"
                         >
