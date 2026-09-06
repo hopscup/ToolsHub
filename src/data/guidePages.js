@@ -352,4 +352,46 @@ export const guidePages = [
       },
     },
   },
+  {
+    id: 'guide-antidetect-setup',
+    slug: 'kak-nastroit-antidetect-brauzer',
+    name: {
+      ru: 'Как настроить антидетект-браузер',
+      en: 'How to configure an antidetect browser',
+    },
+    title: guideTitle({
+      ru: 'Как настроить антидетект-браузер: Dolphin, AdsPower и ShardX',
+      en: 'How to configure an antidetect browser: Dolphin, AdsPower, and ShardX',
+    }),
+    description: {
+      ru: 'Практическая настройка антидетект-браузера на примере Dolphin Anty, AdsPower и ShardX: прокси, WebRTC, часовой пояс, язык, геолокация и проверка отпечатка.',
+      en: 'A practical antidetect browser setup guide using Dolphin Anty, AdsPower, and ShardX: proxies, WebRTC, timezone, language, geolocation, and fingerprint checks.',
+    },
+    heading: {
+      ru: 'Как правильно настроить антидетект-браузер',
+      en: 'How to configure an antidetect browser correctly',
+    },
+    keywords: {
+      ru: 'как настроить антидетект браузер, настройка Dolphin Anty, настройка AdsPower, настройка ShardX, WebRTC прокси, проверка антидетекта',
+      en: 'how to configure antidetect browser, Dolphin Anty setup, AdsPower setup, ShardX setup, WebRTC proxy, antidetect browser test',
+    },
+    editorial: {
+      description: {
+        ru: 'Памятка без бессмысленной ручной подкрутки десятков параметров. Сначала разбираемся, какие данные должны сочетаться между собой, затем создаём профиль в Dolphin, AdsPower или ShardX и проверяем результат.',
+        en: 'A practical checklist without pointless manual tweaking. First understand which values must stay consistent, then create a profile in Dolphin, AdsPower, or ShardX and verify the result.',
+      },
+      bestFor: {
+        ru: ['Создание первого аккуратного профиля.', 'Настройка прокси, WebRTC и GEO.', 'Проверка профиля перед работой.'],
+        en: ['Creating a clean first profile.', 'Configuring proxy, WebRTC, and GEO.', 'Checking a profile before use.'],
+      },
+      considerations: {
+        ru: ['Антидетект не меняет IP без прокси или мобильного интернета.', 'Не рандомизируй сохранённый отпечаток при каждом запуске.', 'Автоматические настройки обычно логичнее случайного ручного набора.'],
+        en: ['An antidetect browser does not change your IP without a proxy or mobile connection.', 'Do not regenerate a saved fingerprint on every launch.', 'Automatic settings are usually more consistent than random manual values.'],
+      },
+      verdict: {
+        ru: 'Главное не количество изменённых параметров, а их согласованность. Для большинства задач достаточно нормального профиля на автоматических настройках и отдельного IP.',
+        en: 'The important part is consistency, not the number of modified parameters. For most tasks, sensible automatic settings and a separate IP are enough.',
+      },
+    },
+  },
 ];

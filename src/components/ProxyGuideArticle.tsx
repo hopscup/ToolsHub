@@ -420,6 +420,9 @@ export const ProxyGuideArticle = () => {
             <p className="text-sm font-medium leading-7 text-white/60">
               С мобильными прокси логика отличается. Обычно вы подключаете прокси один раз, а новый IP получаете кнопкой в кабинете сервиса. После смены адреса обновляете или перезапускаете профиль.
             </p>
+            <a href="/proxy-vpn/luchshie-mobilnye-proksi" className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-brand-purple transition-colors hover:text-white">
+              Сравнить мобильные прокси <ArrowRight className="h-4 w-4" />
+            </a>
             <div className="mt-8 grid items-start gap-5 md:grid-cols-2">
               <ArticleScreenshot
                 src="/article/proxy/mobileproxy-copy-formats.png"
@@ -520,10 +523,10 @@ export const ProxyGuideArticle = () => {
             </a>
           </section>
           <RelatedGuides items={[
+            { href: '/proxy-vpn/luchshie-mobilnye-proksi', label: 'Mobile', title: 'Лучшие мобильные прокси', description: 'Сравнение MobileProxy, ProxyWing и Proxy-Seller без переплаты за ненужный тип.' },
             { href: '/antidetect', label: 'Антидетекты', title: 'Выбрать антидетект-браузер', description: 'Сравнение базовых, усиленных и мобильных решений.' },
             { href: '/guides/account-farm', label: 'Аккаунты', title: 'Как собрать ферму аккаунтов', description: 'Аккаунты, номера, прокси, антидетекты и сервисы активности.' },
             { href: '/guides/mobile-ip-airplane-mode', label: 'Мобильный IP', title: 'Смена IP режимом самолета', description: 'Вариант для небольшого числа профилей без покупки отдельного прокси.' },
-            { href: '/proxy-vpn', label: 'Каталог', title: 'Все прокси и VPN', description: 'Полная подборка сервисов с тарифами и условиями.' },
           ]} />
         </article>
       </div>

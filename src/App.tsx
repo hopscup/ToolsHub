@@ -7,11 +7,13 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { AnimatePresence, LazyMotion, domAnimation, m as motion } from 'motion/react';
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { ProxyGuideArticle } from './components/ProxyGuideArticle';
+import { MobileProxyComparisonArticle } from './components/MobileProxyComparisonArticle';
 import { MobileIpGuideArticle } from './components/MobileIpGuideArticle';
 import { GmailForwardingGuideArticle } from './components/GmailForwardingGuideArticle';
 import { AccountFarmGuideArticle } from './components/AccountFarmGuideArticle';
 import { OtcKycGuideArticle } from './components/OtcKycGuideArticle';
 import { ExchangeUidsGuideArticle } from './components/ExchangeUidsGuideArticle';
+import { AntidetectSetupGuideArticle } from './components/AntidetectSetupGuideArticle';
 import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
@@ -393,15 +395,21 @@ const getLocalizedHomeRoute = (language: Language) =>
   LANGUAGE_PREFIXES[language] || '/';
 
 const PROXY_GUIDE_ARTICLE_ROUTE = '/proxy-vpn/luchshie-proksi';
+const MOBILE_PROXY_COMPARISON_ARTICLE_ROUTE = '/proxy-vpn/luchshie-mobilnye-proksi';
 const MOBILE_IP_GUIDE_ARTICLE_ROUTE = '/guides/mobile-ip-airplane-mode';
 const GMAIL_FORWARDING_GUIDE_ARTICLE_ROUTE = '/guides/gmail-forwarding';
 const ACCOUNT_FARM_GUIDE_ARTICLE_ROUTE = '/guides/account-farm';
 const OTC_KYC_GUIDE_ARTICLE_ROUTE = '/guides/crypto-otc-kyc';
 const EXCHANGE_UIDS_GUIDE_ARTICLE_ROUTE = '/guides/exchange-uids-addresses';
+const ANTIDETECT_SETUP_GUIDE_ARTICLE_ROUTE = '/guides/kak-nastroit-antidetect-brauzer';
 
 const isProxyGuideArticlePath = (
   path = typeof window !== 'undefined' ? window.location.pathname : '/',
 ) => stripLanguagePrefix(path) === PROXY_GUIDE_ARTICLE_ROUTE;
+
+const isMobileProxyComparisonArticlePath = (
+  path = typeof window !== 'undefined' ? window.location.pathname : '/',
+) => stripLanguagePrefix(path) === MOBILE_PROXY_COMPARISON_ARTICLE_ROUTE;
 
 const isMobileIpGuideArticlePath = (
   path = typeof window !== 'undefined' ? window.location.pathname : '/',
@@ -422,6 +430,10 @@ const isOtcKycGuideArticlePath = (
 const isExchangeUidsGuideArticlePath = (
   path = typeof window !== 'undefined' ? window.location.pathname : '/',
 ) => stripLanguagePrefix(path) === EXCHANGE_UIDS_GUIDE_ARTICLE_ROUTE;
+
+const isAntidetectSetupGuideArticlePath = (
+  path = typeof window !== 'undefined' ? window.location.pathname : '/',
+) => stripLanguagePrefix(path) === ANTIDETECT_SETUP_GUIDE_ARTICLE_ROUTE;
 
 const getLocalizedOfferRoute = (offer: Offer, language: Language) =>
   `${getLocalizedRoute(offer.category, language)}/${offer.slug}`;
@@ -1884,6 +1896,25 @@ const OFFERS: Offer[] = [
       }
     }
   },
+  {
+    id: 'guide-antidetect-setup',
+    category: 'Guides',
+    name: 'Как настроить антидетект-браузер: Dolphin, AdsPower и ShardX',
+    slug: GUIDE_PAGE_BY_ID['guide-antidetect-setup'].slug,
+    editorial: GUIDE_PAGE_BY_ID['guide-antidetect-setup'].editorial,
+    description: GUIDE_PAGE_BY_ID['guide-antidetect-setup'].editorial.description,
+    url: PROXY_ANTIDETECT_VIDEO_URL,
+    details: {
+      types: {
+        ru: 'Dolphin, AdsPower, ShardX',
+        en: 'Dolphin, AdsPower, ShardX',
+      },
+      supports: {
+        ru: ['Настройка отпечатка', 'Прокси и WebRTC', 'Проверка профиля'],
+        en: ['Fingerprint setup', 'Proxy and WebRTC', 'Profile checks'],
+      },
+    },
+  },
   // PROXY
   {
     id: 'p1',
@@ -2792,6 +2823,44 @@ const OFFERS: Offer[] = [
     profiles100Price: { ru: '≈ €79-99/мес', en: '≈ €79-99/mo', es: '≈ €79-99/mes', zh: '约 €79-99/月', ko: '약 €79-99/월' },
     platforms: ['Windows', 'macOS', 'Linux'],
     details: { paymentMethods: { ru: 'Visa/MC, Мир/СБП, Крипта', en: 'Visa/MC, Mir/SBP, Crypto', es: 'Visa/MC, Mir/SBP, cripto', zh: 'Visa/MC、Mir/SBP、加密货币', ko: 'Visa/MC, Mir/SBP, 암호화폐' } }
+  },
+  {
+    id: 'ant-bitbrowser',
+    category: 'Antidetect',
+    subCategory: 'PCBasic',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-bitbrowser'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-bitbrowser'].editorial,
+    name: 'BitBrowser',
+    description: ANTIDETECT_PAGE_BY_ID['ant-bitbrowser'].editorial.description,
+    url: 'https://www.bitbrowser.net/',
+    logoUrl: '/bitbrowser.ico',
+    freeProfiles: { ru: '10', en: '10', es: '10', zh: '10', ko: '10' },
+    tariffStartPrice: { ru: '$10 за 50 профилей', en: '$10 for 50 profiles', es: '$10 por 50 perfiles', zh: '$10 / 50 个配置文件', ko: '$10 / 프로필 50개' },
+    profiles100Price: { ru: '$15/мес', en: '$15/mo', es: '$15/mes', zh: '$15/月', ko: '$15/월' },
+    platforms: ['Windows', 'macOS'],
+    details: {
+      types: { ru: 'HTTP/HTTPS, SOCKS5, SSH, API/RPA', en: 'HTTP/HTTPS, SOCKS5, SSH, API/RPA', es: 'HTTP/HTTPS, SOCKS5, SSH, API/RPA', zh: 'HTTP/HTTPS、SOCKS5、SSH、API/RPA', ko: 'HTTP/HTTPS, SOCKS5, SSH, API/RPA' },
+      paymentMethods: { ru: 'Visa/MC, СБП, ЮMoney и другие', en: 'Visa/MC, SBP, YooMoney, and more', es: 'Visa/MC, SBP, YooMoney y otros', zh: 'Visa/MC、SBP、YooMoney 等', ko: 'Visa/MC, SBP, YooMoney 등' },
+    },
+  },
+  {
+    id: 'ant-donut',
+    category: 'Antidetect',
+    subCategory: 'PCBasic',
+    slug: ANTIDETECT_PAGE_BY_ID['ant-donut'].slug,
+    editorial: ANTIDETECT_PAGE_BY_ID['ant-donut'].editorial,
+    name: 'Donut Browser',
+    description: ANTIDETECT_PAGE_BY_ID['ant-donut'].editorial.description,
+    url: 'https://donutbrowser.com/ru/',
+    logoUrl: '/donut-browser.svg',
+    freeProfiles: { ru: 'Без ограничений', en: 'Unlimited', es: 'Ilimitados', zh: '无限', ko: '무제한' },
+    tariffStartPrice: { ru: '0$', en: '$0', es: '0 $', zh: '0 美元', ko: '0달러' },
+    profiles100Price: { ru: '0$', en: '$0', es: '0 $', zh: '0 美元', ko: '0달러' },
+    platforms: ['Windows', 'macOS', 'Linux'],
+    details: {
+      types: { ru: 'HTTP/HTTPS, SOCKS4/5, WireGuard, API/MCP', en: 'HTTP/HTTPS, SOCKS4/5, WireGuard, API/MCP', es: 'HTTP/HTTPS, SOCKS4/5, WireGuard, API/MCP', zh: 'HTTP/HTTPS、SOCKS4/5、WireGuard、API/MCP', ko: 'HTTP/HTTPS, SOCKS4/5, WireGuard, API/MCP' },
+      paymentMethods: { ru: 'Бесплатно', en: 'Free', es: 'Gratis', zh: '免费', ko: '무료' },
+    },
   },
   {
     id: 'ant-shardx',
@@ -4110,6 +4179,9 @@ const OFFER_TITLE_TRANSLATIONS: Partial<Record<string, Partial<Record<Language, 
     zh: '加密交易所 UID 与提现地址',
     ko: '암호화폐 거래소용 UID와 출금 주소',
   },
+  'guide-antidetect-setup': {
+    en: 'How to configure an antidetect browser: Dolphin, AdsPower, and ShardX',
+  },
 };
 
 const OFFER_DESCRIPTION_TRANSLATIONS: Partial<Record<string, Partial<Record<Language, string>>>> = {
@@ -4838,7 +4910,9 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const proxyArticle = isProxyGuideArticlePath();
+    const proxyGuideArticle = isProxyGuideArticlePath();
+    const mobileProxyComparisonArticle = isMobileProxyComparisonArticlePath();
+    const proxyArticle = proxyGuideArticle || mobileProxyComparisonArticle;
     const guideArticle = guidePages.find(
       (page) => stripLanguagePrefix(window.location.pathname) === `/guides/${page.slug}`,
     );
@@ -4851,8 +4925,10 @@ export default function App() {
     const sectionSeo = seoLanding || SECTION_SEO[activeCategory];
     const offerSeo = selectedOffer?.slug ? selectedOffer.editorial : undefined;
     const servicePageSeo = selectedOffer?.id ? SERVICE_PAGE_SEO_BY_ID[selectedOffer.id] : undefined;
-    const canonicalPath = proxyArticle
+    const canonicalPath = proxyGuideArticle
       ? PROXY_GUIDE_ARTICLE_ROUTE
+      : mobileProxyComparisonArticle
+        ? MOBILE_PROXY_COMPARISON_ARTICLE_ROUTE
       : guideArticle
         ? `/guides/${guideArticle.slug}`
       : selectedOffer?.slug
@@ -4864,8 +4940,10 @@ export default function App() {
           : getLocalizedRoute(activeCategory, canonicalLanguage);
     const canonicalUrl = `${SITE_URL}${canonicalPath}`;
     const runtimeSeo = seoLanding || isHomeRoute ? undefined : RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
-    const title = proxyArticle
+    const title = proxyGuideArticle
       ? 'Лучшие прокси-сервисы для аккаунтов: что выбрать в 2026 году | Hopscup Tools'
+      : mobileProxyComparisonArticle
+        ? 'Лучшие мобильные прокси 2026: сравнение сервисов | Hopscup Tools'
       : guideArticle
         ? getLocalizedValue(guideArticle.title, 'ru') || guideArticle.title.en
       : isHomeRoute
@@ -4874,8 +4952,10 @@ export default function App() {
         || runtimeSeo?.title
         || getLocalizedValue(sectionSeo.title, lang)
         || sectionSeo.title.en;
-    const description = proxyArticle
+    const description = proxyGuideArticle
       ? 'Сравнение семи прокси-сервисов, которыми пользуется Hopscup. IPv4, ISP, Residential и Mobile для аккаунтов, антидетектов, рекламы, парсинга и автоматизации.'
+      : mobileProxyComparisonArticle
+        ? 'Сравнение MobileProxy, ProxyWing и Proxy-Seller: GEO, ротация IP, трафик, цены, ограничения и промокоды на мобильные прокси.'
       : guideArticle
         ? getLocalizedValue(guideArticle.description, 'ru') || guideArticle.description.en
       : isHomeRoute
@@ -4960,8 +5040,10 @@ export default function App() {
       'x-default',
       `${SITE_URL}${selectedOffer?.slug
         ? getLocalizedOfferRoute(selectedOffer, 'ru')
-        : proxyArticle
+        : proxyGuideArticle
           ? PROXY_GUIDE_ARTICLE_ROUTE
+          : mobileProxyComparisonArticle
+            ? MOBILE_PROXY_COMPARISON_ARTICLE_ROUTE
           : guideArticle
             ? `/guides/${guideArticle.slug}`
           : seoLanding?.route || (isHomeRoute ? '/' : CATEGORY_ROUTES[activeCategory])}`,
@@ -5132,6 +5214,7 @@ export default function App() {
       'guide-account-farm': Users,
       'guide-otc-kyc': Shield,
       'guide-uids-addresses': Database,
+      'guide-antidetect-setup': ShieldCheck,
     };
     const Icon = guideIcons[id] || FileText;
     return <Icon className={className} />;
@@ -5424,11 +5507,13 @@ export default function App() {
   useEffect(() => {
     if (
       isProxyGuideArticlePath()
+      || isMobileProxyComparisonArticlePath()
       || isMobileIpGuideArticlePath()
       || isGmailForwardingGuideArticlePath()
       || isAccountFarmGuideArticlePath()
       || isOtcKycGuideArticlePath()
       || isExchangeUidsGuideArticlePath()
+      || isAntidetectSetupGuideArticlePath()
     ) {
       document.body.style.removeProperty('overflow');
       document.body.style.setProperty('overflow-y', 'auto');
@@ -5474,11 +5559,13 @@ export default function App() {
   );
 
   const isProxyGuideArticle = isProxyGuideArticlePath();
+  const isMobileProxyComparisonArticle = isMobileProxyComparisonArticlePath();
   const isMobileIpGuideArticle = isMobileIpGuideArticlePath();
   const isGmailForwardingGuideArticle = isGmailForwardingGuideArticlePath();
   const isAccountFarmGuideArticle = isAccountFarmGuideArticlePath();
   const isOtcKycGuideArticle = isOtcKycGuideArticlePath();
   const isExchangeUidsGuideArticle = isExchangeUidsGuideArticlePath();
+  const isAntidetectSetupGuideArticle = isAntidetectSetupGuideArticlePath();
 
   const InfoRow = ({ icon: Icon, label, value }: { icon: any; label: string; value?: string }) => {
     if (!value) return null;
@@ -5504,6 +5591,10 @@ export default function App() {
     return <ProxyGuideArticle />;
   }
 
+  if (isMobileProxyComparisonArticle) {
+    return <MobileProxyComparisonArticle />;
+  }
+
   if (isMobileIpGuideArticle) {
     return <MobileIpGuideArticle />;
   }
@@ -5522,6 +5613,10 @@ export default function App() {
 
   if (isExchangeUidsGuideArticle) {
     return <ExchangeUidsGuideArticle />;
+  }
+
+  if (isAntidetectSetupGuideArticle) {
+    return <AntidetectSetupGuideArticle />;
   }
 
   return (
@@ -5882,6 +5977,7 @@ export default function App() {
                         || offer.id === 'guide-account-farm'
                         || offer.id === 'guide-otc-kyc'
                         || offer.id === 'guide-uids-addresses'
+                        || offer.id === 'guide-antidetect-setup'
                       ) return;
                       if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
                       event.preventDefault();
@@ -5966,7 +6062,7 @@ export default function App() {
                                 onError={(event) => {
                                   event.currentTarget.src = '/logo.webp';
                                 }}
-                                className="w-full h-full object-cover"
+                                className={offer.id === 'ant-donut' ? 'w-full h-full object-cover invert' : 'w-full h-full object-cover'}
                               />
                             </div>
                           )}
@@ -7669,7 +7765,7 @@ export default function App() {
                         onError={(event) => {
                           event.currentTarget.src = '/logo.webp';
                         }}
-                        className="w-full h-full object-cover"
+                        className={selectedOffer.id === 'ant-donut' ? 'w-full h-full object-cover invert' : 'w-full h-full object-cover'}
                       />
                     </div>
                   )}
@@ -8014,6 +8110,18 @@ export default function App() {
                           ))}
                         </ul>
                       </section>
+
+                      {selectedOffer.id === 'ant-shardx' && (
+                        <a
+                          href={PROXY_ANTIDETECT_VIDEO_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-brand-purple/35 bg-brand-purple/10 px-4 py-2 text-xs font-black text-brand-purple transition-colors hover:bg-brand-purple hover:text-white"
+                        >
+                          Смотреть видеогайд по настройке
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      )}
 
                       <section className="rounded-2xl border border-brand-purple/20 bg-brand-purple/[0.07] p-5">
                         <h3 className="mb-3 flex items-center gap-2 text-[11px] uppercase font-black text-brand-purple tracking-[0.2em]">

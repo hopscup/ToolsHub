@@ -38,6 +38,7 @@ const categoryRoutes = [
 ];
 const serviceRoutes = [
   '/proxy-vpn/luchshie-proksi',
+  '/proxy-vpn/luchshie-mobilnye-proksi',
   '/proxy-vpn/proxyshard',
   '/proxy-vpn/proxyline',
   '/proxy-vpn/proxywing',
@@ -63,6 +64,7 @@ const serviceRoutes = [
 const routes = [...categoryRoutes, ...serviceRoutes];
 const articleRoutes = new Set([
   '/proxy-vpn/luchshie-proksi',
+  '/proxy-vpn/luchshie-mobilnye-proksi',
   ...guidePages.map((page) => `/guides/${page.slug}`),
 ]);
 
