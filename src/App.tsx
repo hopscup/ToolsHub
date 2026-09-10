@@ -1244,6 +1244,51 @@ const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']
       ko: '여러 형식을 제공하는 범용 서비스입니다. 프로젝트마다 일반 서버 IP와 동적 또는 높은 신뢰도 옵션이 모두 필요할 때 편리합니다.',
     },
   },
+  'all-vpn': {
+    title: {
+      ru: 'ALL VPN: обзор подписки, серверов и устройств | Hopscup Tools',
+      en: 'ALL VPN review: subscription, servers, and devices | Hopscup Tools',
+      es: 'ALL VPN: suscripción, servidores y dispositivos | Hopscup Tools',
+      zh: 'ALL VPN 评测：订阅、服务器与设备 | Hopscup Tools',
+      ko: 'ALL VPN 리뷰: 구독, 서버 및 기기 | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор ALL VPN: более 50 VPN и 100 серверов в одной подписке, безлимитный трафик, до 10 устройств и оплата через Telegram.',
+      en: 'ALL VPN review covering 50+ VPN options, 100+ servers, unlimited traffic, up to 10 devices, and Telegram payments.',
+      es: 'Análisis de ALL VPN: más de 50 VPN, 100 servidores, tráfico ilimitado, hasta 10 dispositivos y pagos por Telegram.',
+      zh: 'ALL VPN 评测：一份订阅包含 50 多种 VPN、100 多台服务器、无限流量、最多 10 台设备及 Telegram 付款。',
+      ko: 'ALL VPN 리뷰: 하나의 구독으로 50개 이상의 VPN, 100개 이상의 서버, 무제한 트래픽, 최대 10대 기기와 Telegram 결제.',
+    },
+    bestFor: {
+      ru: [
+        'Тем, кто не хочет покупать новый VPN каждый раз, когда старый перестаёт подключаться.',
+        'Одна подписка сразу для телефона, компьютера и устройств близких.',
+        'YouTube, Telegram, зарубежные сайты и обычное использование на каждый день.',
+      ],
+      en: ['Switching to another connection when one VPN stops working.', 'Using one subscription on up to 10 devices.', 'Everyday access to websites, apps, and video services.'],
+      es: ['Cambiar de conexión cuando un VPN deja de funcionar.', 'Usar una suscripción en hasta 10 dispositivos.', 'Acceso diario a sitios, aplicaciones y vídeo.'],
+      zh: ['某个 VPN 失效时切换到其他连接。', '一份订阅最多用于 10 台设备。', '日常访问网站、应用和视频服务。'],
+      ko: ['한 VPN이 작동하지 않을 때 다른 연결로 전환.', '하나의 구독을 최대 10대 기기에서 사용.', '웹사이트, 앱과 영상 서비스의 일상적 이용.'],
+    },
+    considerations: {
+      ru: [
+        'Это набор разных VPN и серверов внутри одной подписки, а не отдельное самостоятельное приложение.',
+        'Для подключения используется Happ или другое совместимое приложение.',
+        'Акции и цена тарифа «Навсегда» меняются, поэтому перед оплатой смотрите итоговую сумму в боте.',
+      ],
+      en: ['This is a bundle of VPN connections rather than a standalone client.', 'Happ or another compatible client is required.', 'Lifetime pricing and promotions can change, so check the bot before paying.'],
+      es: ['Es un conjunto de conexiones VPN, no una aplicación independiente.', 'Se necesita Happ u otro cliente compatible.', 'El precio de por vida y las promociones pueden cambiar; revisa el bot.'],
+      zh: ['这是多种 VPN 连接的集合，并非独立客户端。', '需要 Happ 或其他兼容客户端。', '永久套餐价格和活动可能变化，请在付款前查看机器人。'],
+      ko: ['독립 클라이언트가 아니라 여러 VPN 연결을 묶은 서비스입니다.', 'Happ 또는 다른 호환 앱이 필요합니다.', '평생 요금과 프로모션은 바뀔 수 있으므로 결제 전에 봇을 확인하세요.'],
+    },
+    verdict: {
+      ru: 'Главная идея ALL VPN нормальная: если один вариант перестал работать, не нужно снова искать и оплачивать другой сервис. Просто переключаетесь на другой VPN внутри той же подписки. Особенно удобно, если подключать сразу несколько устройств.',
+      en: 'ALL VPN is useful when you want several fallback connections under one subscription. If one option fails, you can switch without buying another service, and the multi-device allowance is convenient.',
+      es: 'ALL VPN resulta útil para tener varias conexiones de reserva en una suscripción. Si una falla, puedes cambiar sin comprar otro servicio y usar varios dispositivos.',
+      zh: 'ALL VPN 适合希望一份订阅中有多个备用连接的用户。某个方案失效时无需购买新服务即可切换，多设备支持也很方便。',
+      ko: 'ALL VPN은 하나의 구독에 여러 대체 연결이 필요할 때 유용합니다. 한 옵션이 실패해도 새 서비스를 구매하지 않고 전환할 수 있고 여러 기기에서 쓰기 편합니다.',
+    },
+  },
   'ppl-vpn': {
     title: {
       ru: 'PPL VPN: обзор, страны, устройства и способы оплаты | Hopscup Tools',
@@ -2368,6 +2413,34 @@ const OFFERS: Offer[] = [
   },
   // VPN
   {
+    id: 'vpn-all',
+    category: 'Proxy',
+    subCategory: 'VPN',
+    slug: 'all-vpn',
+    name: 'ALL VPN',
+    description: {
+      ru: 'Более 50 VPN и 100 серверов в одной подписке. Если один вариант перестал работать, можно переключиться на другой без покупки нового сервиса. Безлимитный трафик и до 10 устройств.',
+      en: 'More than 50 VPN options and 100 servers in one subscription. Switch to another connection without buying a new service when one stops working. Unlimited traffic and up to 10 devices.'
+    },
+    url: 'https://t.me/allvpn?start=refBCRyVZUr',
+    logoUrl: '/all-vpn.png',
+    isBestChoice: true,
+    platforms: ['Windows', 'macOS', 'Android', 'iOS'],
+    details: {
+      geo: { ru: '100+ серверов', en: '100+ servers', es: 'Más de 100 servidores', zh: '100 多台服务器', ko: '100개 이상의 서버' },
+      types: { ru: '50+ VPN в одной подписке', en: '50+ VPN options in one plan', es: 'Más de 50 VPN en un plan', zh: '一份套餐包含 50 多种 VPN', ko: '한 요금제에 50개 이상의 VPN' },
+      paymentMethods: { ru: 'СБП, карта, Telegram Stars, CryptoBot', en: 'SBP, bank card, Telegram Stars, CryptoBot', es: 'SBP, tarjeta, Telegram Stars, CryptoBot', zh: 'SBP、银行卡、Telegram Stars、CryptoBot', ko: 'SBP, 은행 카드, Telegram Stars, CryptoBot' },
+      pros: {
+        ru: ['Безлимитный трафик', 'До 10 устройств', 'Можно переключаться между разными VPN'],
+        en: ['Unlimited traffic', 'Up to 10 devices', 'Switch between different VPN connections'],
+        es: ['Tráfico ilimitado', 'Hasta 10 dispositivos', 'Cambio entre distintas conexiones VPN'],
+        zh: ['无限流量', '最多 10 台设备', '可在不同 VPN 连接之间切换'],
+        ko: ['무제한 트래픽', '최대 10대 기기', '여러 VPN 연결 간 전환']
+      }
+    },
+    editorial: ADDITIONAL_PROXY_EDITORIALS['all-vpn'],
+  },
+  {
     id: 'vpn-ppl',
     category: 'Proxy',
     subCategory: 'VPN',
@@ -3196,6 +3269,67 @@ const OFFERS: Offer[] = [
     }
   },
   {
+    id: 'pgon-exchange',
+    category: 'Crypto',
+    slug: CRYPTO_EXCHANGE_PAGE_BY_ID['pgon-exchange'].slug,
+    editorial: CRYPTO_EXCHANGE_PAGE_BY_ID['pgon-exchange'].editorial,
+    name: 'PGON',
+    description: CRYPTO_EXCHANGE_PAGE_BY_ID['pgon-exchange'].editorial.description,
+    url: 'https://t.me/pgon?start=ref_1ob10bl6',
+    logoUrl: '/pgon.png',
+    details: {
+      geo: {
+        ru: 'Россия, вывод онлайн через Telegram',
+        en: 'Russia, online withdrawals through Telegram',
+        es: 'Rusia, retiros online mediante Telegram',
+        zh: '俄罗斯，通过 Telegram 在线提现',
+        ko: '러시아, Telegram 온라인 출금'
+      },
+      types: {
+        ru: 'Вывод крипты в рубли через ОСТ, обмен крипты, оплата по QR',
+        en: 'Crypto-to-RUB OST payouts, crypto exchange, QR payments',
+        es: 'Pagos OST de cripto a RUB, cambio de cripto y pagos QR',
+        zh: '加密货币兑卢布 OST 付款、币币兑换、二维码付款',
+        ko: '암호화폐-RUB OST 지급, 암호화폐 교환, QR 결제'
+      },
+      paymentMethods: {
+        ru: 'Криптовалюта; вывод на карту или по СБП',
+        en: 'Crypto; withdrawals to a card or via SBP',
+        es: 'Cripto; retiros a tarjeta o por SBP',
+        zh: '加密货币；提现到银行卡或 SBP',
+        ko: '암호화폐, 카드 또는 SBP 출금'
+      },
+      supports: {
+        ru: ['Вывод на карту: 5%, от 3500 ₽', 'Вывод по СБП: 6,5%, от 1500 ₽', 'ОСТ-выплата от юридического лица', 'Обмен и вывод криптовалюты'],
+        en: ['Card withdrawal: 5%, from RUB 3,500', 'SBP withdrawal: 6.5%, from RUB 1,500', 'OST payout from a legal entity', 'Crypto exchange and withdrawal'],
+        es: ['Retiro a tarjeta: 5%, desde 3500 RUB', 'Retiro por SBP: 6,5%, desde 1500 RUB', 'Pago OST de una entidad jurídica', 'Cambio y retiro de cripto'],
+        zh: ['银行卡提现：5%，最低 3500 卢布', 'SBP 提现：6.5%，最低 1500 卢布', '法人发起的 OST 付款', '加密货币兑换与提现'],
+        ko: ['카드 출금: 5%, 3,500루블부터', 'SBP 출금: 6.5%, 1,500루블부터', '법인의 OST 지급', '암호화폐 교환 및 출금']
+      },
+      nuances: {
+        ru: [
+          'По тарифам канала, из эквивалента 100 000 ₽ после комиссии останется около 95 000 ₽ на карту или 93 500 ₽ по СБП.',
+          'Одна сделка — до 300 000 ₽.',
+          'Проверяй финальную сумму и курс прямо перед подтверждением: условия могут измениться.',
+          'ОСТ безопаснее случайного P2P-контрагента, но не является гарантией от банковской проверки.',
+          'Сохраняй чеки и подтверждение происхождения средств.',
+          'Для первого вывода лучше использовать небольшую тестовую сумму.'
+        ],
+        en: ['At the published fees, a RUB 100,000 equivalent leaves about RUB 95,000 to a card or RUB 93,500 via SBP.', 'One transaction is limited to RUB 300,000.', 'Check the final amount and rate before confirming.', 'OST is safer than an unknown P2P counterparty but does not guarantee that a bank will not review the operation.', 'Keep receipts and proof of funds.', 'Use a small test amount for the first withdrawal.'],
+        es: ['Con las tarifas publicadas, de 100 000 RUB quedan unos 95 000 RUB en tarjeta o 93 500 RUB por SBP.', 'Una operación está limitada a 300 000 RUB.', 'Comprueba el total y la tasa antes de confirmar.', 'OST es más seguro que un P2P desconocido, pero no evita posibles controles bancarios.', 'Guarda recibos y pruebas del origen de fondos.', 'Usa una cantidad pequeña para el primer retiro.'],
+        zh: ['按公布费率，等值 100000 卢布提现到银行卡约剩 95000 卢布，通过 SBP 约剩 93500 卢布。', '单笔交易限额为 300000 卢布。', '确认前检查最终金额和汇率。', 'OST 比陌生 P2P 对手方更安全，但不能保证银行不会审查。', '保留交易凭证和资金来源证明。', '首次提现建议使用小额测试。'],
+        ko: ['공개 수수료 기준 100,000루블 상당액은 카드로 약 95,000루블, SBP로 약 93,500루블이 남습니다.', '한 건의 거래 한도는 300,000루블입니다.', '확인 전 최종 금액과 환율을 확인하세요.', 'OST는 모르는 P2P 상대보다 안전하지만 은행 검사가 없다고 보장하지 않습니다.', '영수증과 자금 출처 자료를 보관하세요.', '첫 출금은 소액으로 테스트하세요.']
+      },
+      pros: {
+        ru: ['Выплата приходит от юридического лица', 'Нет сделки со случайным P2P-покупателем', 'Сумма и комиссия показываются до подтверждения'],
+        en: ['Payout from a legal entity', 'No deal with an unknown P2P buyer', 'Amount and fee shown before confirmation'],
+        es: ['Pago de una entidad jurídica', 'Sin operación con un comprador P2P desconocido', 'Importe y comisión antes de confirmar'],
+        zh: ['法人付款', '无需与陌生 P2P 买家交易', '确认前显示金额和手续费'],
+        ko: ['법인의 지급', '모르는 P2P 구매자와 거래하지 않음', '확인 전 금액과 수수료 표시']
+      }
+    }
+  },
+  {
     id: 'keine-exchange',
     category: 'Crypto',
     slug: CRYPTO_EXCHANGE_PAGE_BY_ID['keine-exchange'].slug,
@@ -3837,6 +3971,74 @@ const OFFERS: Offer[] = [
         es: ['Disponible en la CEI', 'La activación requiere 10 $ o más, que se pueden retirar', 'Compatible con WeChat Pay'],
         zh: ['CIS 地区可用', '激活需要 10 美元或以上，之后可提取', '支持 WeChat Pay'],
         ko: ['CIS 지역 이용 가능', '활성화에 10달러 이상 필요하며 이후 출금 가능', 'WeChat Pay 지원']
+      }
+    }
+  },
+  {
+    id: 'pgon',
+    category: 'Cards',
+    subCategory: 'WithKYC',
+    subCategories: ['NoKYC', 'WithKYC'],
+    name: 'PGON',
+    slug: FOREIGN_CARD_PAGE_BY_ID.pgon.slug,
+    editorial: FOREIGN_CARD_PAGE_BY_ID.pgon.editorial,
+    description: FOREIGN_CARD_PAGE_BY_ID.pgon.editorial.description,
+    url: 'https://t.me/pgon?start=ref_1ob10bl6',
+    logoUrl: '/pgon.png',
+    cardStats: {
+      issuance: { ru: 'около 8$', en: 'about $8', es: 'unos 8 $', zh: '约 8 美元', ko: '약 8달러' },
+      maintenance: { ru: '0 $/мес', en: '$0/mo', es: '0 $/mes', zh: '0 美元/月', ko: '월 0달러' },
+      paySystems: { ru: 'Да', en: 'Yes', es: 'Sí', zh: '支持', ko: '지원' },
+      verification: { ru: 'Частично', en: 'Partial', es: 'Parcial', zh: '部分需要', ko: '부분 필요' },
+      cashback: { ru: 'Нет', en: 'No', es: 'No', zh: '无', ko: '없음' },
+      topup: { ru: 'СБП/USDT', en: 'SBP/USDT', es: 'SBP/USDT', zh: 'SBP/USDT', ko: 'SBP/USDT' },
+      commission: { ru: '5% / 15%', en: '5% / 15%', es: '5% / 15%', zh: '5% / 15%', ko: '5% / 15%' },
+      type: { ru: 'Visa', en: 'Visa', es: 'Visa', zh: 'Visa', ko: 'Visa' }
+    },
+    details: {
+      pros: {
+        ru: ['Оплата криптой по QR СБП/НСПК в РФ', 'Виртуальная Visa для зарубежных сервисов', 'Пополнение через СБП или USDT'],
+        en: ['Crypto payments through SBP/NSPK QR codes in Russia', 'Virtual Visa for foreign services', 'Funding through SBP or USDT'],
+        es: ['Pagos con cripto mediante QR SBP/NSPK en Rusia', 'Visa virtual para servicios extranjeros', 'Recarga mediante SBP o USDT'],
+        zh: ['在俄罗斯通过 SBP/NSPK 二维码使用加密货币付款', '用于海外服务的虚拟 Visa 卡', '通过 SBP 或 USDT 充值'],
+        ko: ['러시아에서 SBP/NSPK QR로 암호화폐 결제', '해외 서비스용 가상 Visa', 'SBP 또는 USDT 충전']
+      },
+      nuances: {
+        ru: [
+          'Выпуск виртуальной карты: около 8$',
+          'KYC обязателен только для пополнения рублями. При пополнении криптовалютой и использовании основных функций он не нужен',
+          'Оплата по QR: 5% с KYC и 15% без KYC по текущим условиям в боте',
+          'Крипта конвертируется в рубли внутри сервиса, продавец получает обычную оплату через QR',
+          'Точные комиссии, курс и доступные лимиты показываются в боте перед подтверждением операции'
+        ],
+        en: [
+          'Virtual card issuance: about $8',
+          'KYC is required only for RUB top-ups. It is not needed for crypto funding or the main wallet features',
+          'QR payments currently cost 5% with KYC and 15% without KYC according to the in-bot terms',
+          'Crypto is converted to RUB inside the service and the merchant receives a regular QR payment',
+          'The exact fee, exchange rate, and available limits are shown in the bot before confirmation'
+        ],
+        es: [
+          'Emisión de la tarjeta virtual: unos 8 $',
+          'El KYC solo es obligatorio para recargas en rublos. No hace falta para recargar con cripto ni usar las funciones principales',
+          'Los pagos QR cuestan actualmente un 5% con KYC y un 15% sin KYC según las condiciones del bot',
+          'La cripto se convierte en rublos dentro del servicio y el comercio recibe un pago QR normal',
+          'La comisión, el tipo de cambio y los límites exactos aparecen en el bot antes de confirmar'
+        ],
+        zh: [
+          '虚拟卡开卡费：约 8 美元',
+          '只有使用卢布充值时才需要 KYC。使用加密货币充值和主要功能无需 KYC',
+          '根据机器人当前条款，二维码付款完成 KYC 为 5%，未完成 KYC 为 15%',
+          '加密货币在服务内兑换为卢布，商户收到普通二维码付款',
+          '确认前，机器人会显示准确费用、汇率和可用限额'
+        ],
+        ko: [
+          '가상 카드 발급비: 약 8달러',
+          'KYC는 루블 충전에만 필요합니다. 암호화폐 충전과 주요 기능 사용에는 필요하지 않습니다',
+          '현재 봇 조건상 QR 결제 수수료는 KYC 완료 시 5%, 미완료 시 15%입니다',
+          '암호화폐는 서비스 내부에서 루블로 환전되고 판매자는 일반 QR 결제로 받습니다',
+          '정확한 수수료, 환율, 한도는 승인 전에 봇에 표시됩니다'
+        ]
       }
     }
   },
@@ -5198,7 +5400,11 @@ export default function App() {
     });
 
     const proxyOrder = ['MobileProxy', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'ProxyShard', 'Proxys.io'];
+    const cardOrder = ['Zarub', 'PGON', 'Vezdekarta', 'Pionex', 'Cashin Out'];
     return offers.sort((first, second) => {
+      if (first.category === 'Cards' && second.category === 'Cards') {
+        return cardOrder.indexOf(first.name) - cardOrder.indexOf(second.name);
+      }
       if (first.category !== 'Proxy' || second.category !== 'Proxy') return 0;
       const firstIndex = proxyOrder.indexOf(first.name);
       const secondIndex = proxyOrder.indexOf(second.name);
@@ -8096,7 +8302,7 @@ export default function App() {
                         </ul>
                       </section>
 
-                      <section className="space-y-4">
+                      {selectedOffer.id !== 'pgon-exchange' && <section className="space-y-4">
                         <h3 className="flex items-center gap-2 text-[11px] uppercase font-black text-brand-orange tracking-[0.2em]">
                           <Info className="w-4 h-4" />
                           {t.nuances}
@@ -8109,7 +8315,7 @@ export default function App() {
                             </li>
                           ))}
                         </ul>
-                      </section>
+                      </section>}
 
                       {selectedOffer.id === 'ant-shardx' && (
                         <a

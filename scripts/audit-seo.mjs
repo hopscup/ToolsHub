@@ -46,6 +46,7 @@ const serviceRoutes = [
   '/proxy-vpn/proxy6',
   '/proxy-vpn/mobileproxy',
   '/proxy-vpn/proxys-io',
+  '/proxy-vpn/all-vpn',
   '/proxy-vpn/ppl-vpn',
   '/proxy-vpn/prostovpn',
   '/proxy-vpn/giga-vpn',

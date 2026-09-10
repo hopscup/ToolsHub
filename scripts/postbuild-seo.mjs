@@ -123,7 +123,7 @@ const sections = [
       zh: ['移动、住宅和 ISP 代理更适合高信任度任务。', 'IPv4/IPv6 通常足够用于采集和简单自动化。', '购买前检查地区、代理类型、支付方式和 fraud score。'],
       ko: ['신뢰가 중요한 작업에는 mobile, residential, ISP 프록시가 더 적합합니다.', '스크래핑과 단순 자동화에는 IPv4/IPv6로 충분한 경우가 많습니다.', '구매 전 GEO, 프록시 유형, 결제 방식, fraud score를 확인하세요.'],
     },
-    items: ['ProxyShard', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'MobileProxy', 'Proxys.io', 'PPL VPN', 'ProstoVPN', 'GIGA VPN', 'Точка G', 'Giga Dollar VPN'],
+    items: ['ProxyShard', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'MobileProxy', 'Proxys.io', 'ALL VPN', 'PPL VPN', 'ProstoVPN', 'GIGA VPN', 'Точка G', 'Giga Dollar VPN'],
     serviceLinks: {
       ProxyShard: '/proxy-vpn/proxyshard',
       Proxyline: '/proxy-vpn/proxyline',
@@ -132,6 +132,7 @@ const sections = [
       Proxy6: '/proxy-vpn/proxy6',
       MobileProxy: '/proxy-vpn/mobileproxy',
       'Proxys.io': '/proxy-vpn/proxys-io',
+      'ALL VPN': '/proxy-vpn/all-vpn',
       'PPL VPN': '/proxy-vpn/ppl-vpn',
       ProstoVPN: '/proxy-vpn/prostovpn',
       'GIGA VPN': '/proxy-vpn/giga-vpn',
@@ -333,7 +334,7 @@ const sections = [
       zh: ['兑换前检查汇率、手续费、网络和最低金额。', '第一次先用小额测试。', '大额交易前先确认交易方式和收款信息。'],
       ko: ['환전 전 환율, 수수료, 네트워크, 최소 금액을 확인하세요.', '첫 전송은 소액 테스트로 하세요.', '큰 금액은 거래 방식과 정보를 미리 확인하세요.'],
     },
-    items: ['Prosto Exchange', 'Keine Exchange'],
+    items: ['Prosto Exchange', 'PGON', 'Keine Exchange'],
   },
   {
     id: 'sms',
@@ -1231,6 +1232,61 @@ const servicePages = [
     },
   }),
   createServicePage({
+    id: 'all-vpn',
+    route: '/proxy-vpn/all-vpn',
+    name: 'ALL VPN',
+    logo: '/all-vpn.png',
+    title: {
+      ru: 'ALL VPN: обзор подписки, серверов и устройств | Hopscup Tools',
+      en: 'ALL VPN review: subscription, servers, and devices | Hopscup Tools',
+      es: 'ALL VPN: suscripción, servidores y dispositivos | Hopscup Tools',
+      zh: 'ALL VPN 评测：订阅、服务器与设备 | Hopscup Tools',
+      ko: 'ALL VPN 리뷰: 구독, 서버 및 기기 | Hopscup Tools',
+    },
+    description: {
+      ru: 'Обзор ALL VPN: более 50 VPN и 100 серверов в одной подписке, безлимитный трафик, до 10 устройств и оплата через Telegram.',
+      en: 'ALL VPN review covering 50+ VPN options, 100+ servers, unlimited traffic, up to 10 devices, and Telegram payments.',
+      es: 'Análisis de ALL VPN: más de 50 VPN, 100 servidores, tráfico ilimitado, hasta 10 dispositivos y pagos por Telegram.',
+      zh: 'ALL VPN 评测：一份订阅包含 50 多种 VPN、100 多台服务器、无限流量、最多 10 台设备及 Telegram 付款。',
+      ko: 'ALL VPN 리뷰: 하나의 구독으로 50개 이상의 VPN, 100개 이상의 서버, 무제한 트래픽, 최대 10대 기기와 Telegram 결제.',
+    },
+    heading: {
+      ru: 'ALL VPN: несколько VPN в одной подписке',
+      en: 'ALL VPN: multiple VPN connections in one subscription',
+      es: 'ALL VPN: varias conexiones en una suscripción',
+      zh: 'ALL VPN：一份订阅包含多种 VPN',
+      ko: 'ALL VPN: 하나의 구독으로 여러 VPN 연결',
+    },
+    intro: {
+      ru: 'ALL VPN собирает более 50 VPN и 100 серверов в одной подписке. Если один вариант перестал подключаться, можно переключиться на другой без поиска и покупки нового сервиса.',
+      en: 'ALL VPN bundles more than 50 VPN options and 100 servers in one subscription, letting users switch connections without buying another service.',
+      es: 'ALL VPN reúne más de 50 VPN y 100 servidores en una suscripción para cambiar de conexión sin comprar otro servicio.',
+      zh: 'ALL VPN 在一份订阅中提供 50 多种 VPN 和 100 多台服务器，可在无需购买新服务的情况下切换连接。',
+      ko: 'ALL VPN은 하나의 구독에 50개 이상의 VPN과 100개 이상의 서버를 제공해 새 서비스를 구매하지 않고 연결을 바꿀 수 있습니다.',
+    },
+    keywords: {
+      ru: 'ALL VPN обзор, ALL VPN Telegram, 50 VPN одна подписка, VPN 10 устройств, VPN навсегда',
+      en: 'ALL VPN review, ALL VPN Telegram, multi VPN subscription, VPN 10 devices, lifetime VPN',
+      es: 'ALL VPN análisis, VPN Telegram, varios VPN una suscripción, VPN 10 dispositivos',
+      zh: 'ALL VPN 评测, Telegram VPN, 多 VPN 订阅, 10 台设备 VPN',
+      ko: 'ALL VPN 리뷰, Telegram VPN, 다중 VPN 구독, 10대 기기 VPN',
+    },
+    points: {
+      ru: ['Более 50 VPN и 100 серверов.', 'Безлимитный трафик и до 10 устройств.', 'СБП, карта, Telegram Stars и CryptoBot.'],
+      en: ['50+ VPN options and 100+ servers.', 'Unlimited traffic and up to 10 devices.', 'SBP, bank card, Telegram Stars, and CryptoBot.'],
+      es: ['Más de 50 VPN y 100 servidores.', 'Tráfico ilimitado y hasta 10 dispositivos.', 'SBP, tarjeta, Telegram Stars y CryptoBot.'],
+      zh: ['50 多种 VPN 和 100 多台服务器。', '无限流量，最多 10 台设备。', '支持 SBP、银行卡、Telegram Stars 和 CryptoBot。'],
+      ko: ['50개 이상의 VPN과 100개 이상의 서버.', '무제한 트래픽과 최대 10대 기기.', 'SBP, 은행 카드, Telegram Stars 및 CryptoBot.'],
+    },
+    items: {
+      ru: ['Для подключения используется Happ или другое совместимое приложение.', 'Тариф «Премиум Навсегда» на момент проверки стоит 3990 ₽.', 'Цена и акции могут меняться, проверяйте сумму в боте.'],
+      en: ['Happ or another compatible client is required.', 'The Premium Lifetime plan cost 3,990 RUB when checked.', 'Prices and promotions can change, so check the bot.'],
+      es: ['Se necesita Happ u otro cliente compatible.', 'El plan Premium de por vida costaba 3990 RUB al comprobarlo.', 'Los precios y promociones pueden cambiar.'],
+      zh: ['需要 Happ 或其他兼容客户端。', '检查时永久高级套餐价格为 3990 卢布。', '价格和活动可能变化，请查看机器人。'],
+      ko: ['Happ 또는 다른 호환 앱이 필요합니다.', '확인 당시 프리미엄 평생 요금은 3,990루블이었습니다.', '가격과 프로모션은 바뀔 수 있으므로 봇을 확인하세요.'],
+    },
+  }),
+  createServicePage({
     id: 'ppl-vpn',
     route: '/proxy-vpn/ppl-vpn',
     name: 'PPL VPN',
@@ -1659,6 +1715,7 @@ const servicePages = [
 const sectionPages = sections.filter((section) => section.route !== '/');
 const indexablePages = [...sectionPages, ...servicePages];
 const vpnServiceRoutes = new Set([
+  '/proxy-vpn/all-vpn',
   '/proxy-vpn/ppl-vpn',
   '/proxy-vpn/prostovpn',
   '/proxy-vpn/giga-vpn',
