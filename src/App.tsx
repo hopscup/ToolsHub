@@ -91,6 +91,46 @@ type Localized<T = string> = Partial<Record<Language, T>> & { ru: T; en: T };
 type CategoryType = 'Proxy' | 'Antidetect' | 'Stores' | 'Cards' | 'Crypto' | 'SMS' | 'VPS' | 'Social' | 'Steam' | 'Guides';
 
 type SubCategory = 'Proxy' | 'VPN' | 'PCBasic' | 'PCAdvanced' | 'Mobile' | 'NoKYC' | 'WithKYC' | 'CardCrypto' | 'USDTQR' | 'Web' | 'Bot' | 'BoostSites' | 'Bux' | 'SteamFast' | 'SteamItems' | 'None';
+type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto';
+
+const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
+  'guide-mobile-ip': { topic: 'proxy', minutes: 4 },
+  'guide-gmail-forwarding': { topic: 'accounts', minutes: 5 },
+  'guide-account-farm': { topic: 'accounts', minutes: 14 },
+  'guide-otc-kyc': { topic: 'crypto', minutes: 8 },
+  'guide-uids-addresses': { topic: 'crypto', minutes: 6 },
+  'guide-antidetect-setup': { topic: 'antidetect', minutes: 12 },
+};
+
+const GUIDE_TOPIC_LABELS: Record<Exclude<GuideTopic, 'all'>, Localized> = {
+  proxy: { ru: 'IP и прокси', en: 'IP & proxies', es: 'IP y proxies', zh: 'IP 与代理', ko: 'IP 및 프록시' },
+  antidetect: { ru: 'Антидетект', en: 'Antidetect', es: 'Antidetect', zh: '反检测', ko: '안티디텍트' },
+  accounts: { ru: 'Аккаунты', en: 'Accounts', es: 'Cuentas', zh: '账号', ko: '계정' },
+  crypto: { ru: 'Крипта', en: 'Crypto', es: 'Cripto', zh: '加密货币', ko: '암호화폐' },
+};
+
+const GUIDE_TOPIC_STYLES: Record<Exclude<GuideTopic, 'all'>, { icon: string; label: string; glow: string }> = {
+  proxy: {
+    icon: 'border-[#BD7BFF]/30 bg-[#BD7BFF]/10 text-[#BD7BFF]',
+    label: 'text-[#BD7BFF]',
+    glow: 'group-hover:border-[#BD7BFF]/40 group-hover:shadow-[0_18px_55px_rgba(189,123,255,0.12)]',
+  },
+  antidetect: {
+    icon: 'border-cyan-400/25 bg-cyan-400/10 text-cyan-300',
+    label: 'text-cyan-300',
+    glow: 'group-hover:border-cyan-400/35 group-hover:shadow-[0_18px_55px_rgba(34,211,238,0.1)]',
+  },
+  accounts: {
+    icon: 'border-rose-400/25 bg-rose-400/10 text-rose-300',
+    label: 'text-rose-300',
+    glow: 'group-hover:border-rose-400/35 group-hover:shadow-[0_18px_55px_rgba(251,113,133,0.1)]',
+  },
+  crypto: {
+    icon: 'border-emerald-400/25 bg-emerald-400/10 text-emerald-300',
+    label: 'text-emerald-300',
+    glow: 'group-hover:border-emerald-400/35 group-hover:shadow-[0_18px_55px_rgba(52,211,153,0.1)]',
+  },
+};
 
 const SITE_URL = 'https://hopscup.tools';
 const PROXY_ANTIDETECT_VIDEO_URL = 'https://youtu.be/pBljqjuY2ls?si=Ft3UMgxjNUvaRT4d';
@@ -4937,6 +4977,7 @@ export default function App() {
   const [isCardsGuideOpen, setIsCardsGuideOpen] = useState(false);
   const [isSocialGuideOpen, setIsSocialGuideOpen] = useState(false);
   const [isSteamGuideOpen, setIsSteamGuideOpen] = useState(false);
+  const [guideTopicFilter, setGuideTopicFilter] = useState<GuideTopic>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsent>(() => getAnalyticsConsent());
   const [isAnalyticsSettingsOpen, setIsAnalyticsSettingsOpen] = useState(false);
@@ -5425,6 +5466,10 @@ export default function App() {
     const Icon = guideIcons[id] || FileText;
     return <Icon className={className} />;
   };
+
+  const visibleGuideOffers = guideTopicFilter === 'all'
+    ? filteredOffers
+    : filteredOffers.filter((offer) => GUIDE_CARD_META[offer.id]?.topic === guideTopicFilter);
 
   const t = {
     heroTitle: "Hopscup's Tools Hub",
@@ -6150,28 +6195,66 @@ export default function App() {
         <AnimatePresence mode="popLayout">
           {filteredOffers.length > 0 ? (
             activeCategory === 'Guides' ? (
-              <div className="max-w-4xl mx-auto w-full space-y-4">
-                {lang === 'ru' && (
+              <div className="mx-auto w-full max-w-5xl">
+                <div className="mb-5 flex gap-1 overflow-x-auto border-b border-white/[0.08] pb-px" aria-label={tx({ ru: 'Темы гайдов', en: 'Guide topics' })}>
+                  {([
+                    { id: 'all', label: t.all },
+                    { id: 'proxy', label: l(GUIDE_TOPIC_LABELS.proxy) },
+                    { id: 'antidetect', label: l(GUIDE_TOPIC_LABELS.antidetect) },
+                    { id: 'accounts', label: l(GUIDE_TOPIC_LABELS.accounts) },
+                    { id: 'crypto', label: l(GUIDE_TOPIC_LABELS.crypto) },
+                  ] as { id: GuideTopic; label: string }[]).map((topic) => (
+                    <button
+                      key={topic.id}
+                      type="button"
+                      onClick={() => setGuideTopicFilter(topic.id)}
+                      className={`relative shrink-0 px-4 py-3 text-[11px] font-black uppercase transition-colors ${
+                        guideTopicFilter === topic.id
+                          ? 'text-white after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:bg-brand-purple'
+                          : 'text-white/35 hover:text-white/70'
+                      }`}
+                    >
+                      {topic.label}
+                    </button>
+                  ))}
+                </div>
+
+                {lang === 'ru' && (guideTopicFilter === 'all' || guideTopicFilter === 'proxy') && (
                   <motion.a
                     href={PROXY_GUIDE_ARTICLE_ROUTE}
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
-                    className="group flex min-h-[88px] w-full items-center gap-5 rounded-[1.5rem] border border-brand-purple/25 bg-brand-purple/[0.08] px-5 py-5 shadow-[0_0_45px_rgba(129,28,254,0.1)] backdrop-blur-xl transition-all duration-300 hover:border-brand-purple/60 hover:bg-brand-purple/15 md:px-7"
+                    onClick={() => trackGuideOpen('proxy_services_article')}
+                    className="group relative mb-4 flex min-h-[156px] w-full items-center gap-5 overflow-hidden rounded-2xl border border-brand-purple/30 bg-brand-purple/[0.08] px-5 py-6 shadow-[0_18px_70px_rgba(129,28,254,0.12)] backdrop-blur-xl transition-all duration-300 hover:border-brand-purple/60 hover:bg-brand-purple/[0.12] md:px-7"
                   >
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-brand-purple/30 bg-brand-purple/10 transition-colors group-hover:bg-brand-purple md:h-16 md:w-16">
-                      <ShieldCheck className="h-6 w-6 text-brand-purple transition-colors group-hover:text-white md:h-7 md:w-7" />
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-brand-purple/35 bg-brand-purple/10 transition-colors group-hover:bg-brand-purple md:h-20 md:w-20">
+                      <ShieldCheck className="h-7 w-7 text-brand-purple transition-colors group-hover:text-white md:h-9 md:w-9" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="mb-1 text-[9px] font-black uppercase tracking-[0.2em] text-brand-purple">Большой гайд</p>
-                      <h3 className="font-display text-base font-bold leading-snug text-white md:text-xl">
+                      <div className="mb-2 flex items-center gap-3 text-[10px] font-black uppercase text-brand-purple">
+                        <span>Большой гайд</span>
+                        <span className="h-1 w-1 rounded-full bg-white/20" />
+                        <span className="flex items-center gap-1 text-white/35"><Clock className="h-3 w-3" /> 15 мин</span>
+                      </div>
+                      <h3 className="font-display text-xl font-bold leading-snug text-white md:text-2xl">
                         Лучшие прокси-сервисы для аккаунтов: что выбрать
                       </h3>
+                      <p className="mt-2 max-w-2xl text-sm font-medium leading-relaxed text-white/50">
+                        Разбираем IPv4, ISP, Residential и Mobile-прокси: чем отличаются и какой тип брать под свою задачу.
+                      </p>
                     </div>
-                    <ChevronRight className="h-5 w-5 shrink-0 text-white/25 transition-colors group-hover:text-brand-purple" />
+                    <div className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 text-white/35 transition-all group-hover:border-brand-purple/50 group-hover:text-brand-purple md:flex">
+                      <ChevronRight className="h-5 w-5" />
+                    </div>
                   </motion.a>
                 )}
-                {filteredOffers.map((offer, index) => (
+
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {visibleGuideOffers.map((offer, index) => {
+                  const meta = GUIDE_CARD_META[offer.id] || { topic: 'accounts' as const, minutes: 6 };
+                  const styles = GUIDE_TOPIC_STYLES[meta.topic];
+                  return (
                   <motion.a
                     layout
                     key={offer.id}
@@ -6193,19 +6276,33 @@ export default function App() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.98 }}
                     transition={{ duration: 0.4, delay: index * 0.06 }}
-                    className="group flex items-center gap-5 w-full min-h-[88px] rounded-[1.5rem] border border-white/10 bg-[#111111]/80 px-5 md:px-7 py-5 backdrop-blur-xl shadow-2xl hover:border-brand-purple/50 hover:bg-brand-purple/10 hover:shadow-[0_0_45px_rgba(129,28,254,0.18)] transition-all duration-300"
+                    className={`group flex min-h-[190px] flex-col rounded-2xl border border-white/[0.09] bg-[#111111]/80 p-5 text-left backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/[0.045] ${styles.glow}`}
                   >
-                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-brand-purple/10 border border-brand-purple/30 shrink-0 flex items-center justify-center group-hover:bg-brand-purple group-hover:border-brand-purple transition-all duration-300">
-                      {renderGuideIcon(offer.id, 'w-6 h-6 md:w-7 md:h-7 text-brand-purple group-hover:text-white transition-colors')}
+                    <div className="mb-4 flex w-full items-start justify-between gap-4">
+                      <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${styles.icon}`}>
+                        {renderGuideIcon(offer.id, 'h-5 w-5')}
+                      </div>
+                      <ChevronRight className="mt-1 h-5 w-5 shrink-0 text-white/20 transition-all group-hover:translate-x-0.5 group-hover:text-white/60" />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-white font-display font-bold text-base md:text-xl leading-snug group-hover:text-white transition-colors">
+                    <div className="flex min-w-0 flex-1 flex-col">
+                      <div className={`mb-2 text-[9px] font-black uppercase ${styles.label}`}>
+                        {l(GUIDE_TOPIC_LABELS[meta.topic])}
+                      </div>
+                      <h3 className="line-clamp-2 font-display text-lg font-bold leading-snug text-white">
                         {offerTitle(offer)}
                       </h3>
+                      <p className="mt-2 line-clamp-2 text-xs font-medium leading-relaxed text-white/45">
+                        {offerDescription(offer)}
+                      </p>
+                      <div className="mt-auto flex items-center gap-1.5 pt-4 text-[10px] font-bold text-white/30">
+                        <Clock className="h-3.5 w-3.5" />
+                        {meta.minutes} {tx({ ru: 'мин чтения', en: 'min read', es: 'min de lectura', zh: '分钟阅读', ko: '분 읽기' })}
+                      </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-white/25 group-hover:text-brand-purple shrink-0 transition-colors" />
                   </motion.a>
-                ))}
+                  );
+                })}
+                </div>
               </div>
             ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
