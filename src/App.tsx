@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useMemo, useEffect, useRef } from 'react';
-import { AnimatePresence, LazyMotion, domAnimation, m as motion } from 'motion/react';
+import { useState, useMemo, useEffect, useRef, type ReactNode } from 'react';
+import { AnimatePresence, LazyMotion, domAnimation, m as motion, useIsPresent } from 'motion/react';
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { ProxyGuideArticle } from './components/ProxyGuideArticle';
 import { MobileProxyComparisonArticle } from './components/MobileProxyComparisonArticle';
@@ -14,6 +14,7 @@ import { AccountFarmGuideArticle } from './components/AccountFarmGuideArticle';
 import { OtcKycGuideArticle } from './components/OtcKycGuideArticle';
 import { ExchangeUidsGuideArticle } from './components/ExchangeUidsGuideArticle';
 import { AntidetectSetupGuideArticle } from './components/AntidetectSetupGuideArticle';
+import { ForeignCardGuideArticle } from './components/ForeignCardGuideArticle';
 import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
@@ -25,6 +26,7 @@ import { smsPages } from './data/smsPages.js';
 import { socialPages } from './data/socialPages.js';
 import { steamPages } from './data/steamPages.js';
 import { vpsPages } from './data/vpsPages.js';
+import { pageHeadings } from './data/pageHeadings.js';
 import {
   getAnalyticsConsent,
   initializeAnalyticsFromConsent,
@@ -90,10 +92,11 @@ type Localized<T = string> = Partial<Record<Language, T>> & { ru: T; en: T };
 
 type CategoryType = 'Proxy' | 'Antidetect' | 'Stores' | 'Cards' | 'Crypto' | 'SMS' | 'VPS' | 'Social' | 'Steam' | 'Guides';
 
-type SubCategory = 'Proxy' | 'VPN' | 'PCBasic' | 'PCAdvanced' | 'Mobile' | 'NoKYC' | 'WithKYC' | 'CardCrypto' | 'USDTQR' | 'Web' | 'Bot' | 'BoostSites' | 'Bux' | 'SteamFast' | 'SteamItems' | 'None';
+type SubCategory = 'Proxy' | 'VPN' | 'PCBasic' | 'PCAdvanced' | 'Mobile' | 'NoKYC' | 'WithKYC' | 'CardCrypto' | 'USDTQR' | 'Web' | 'Bot' | 'AML' | 'BoostSites' | 'Bux' | 'SteamFast' | 'SteamItems' | 'None';
 type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto';
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
+  'guide-foreign-cards': { topic: 'crypto', minutes: 7 },
   'guide-mobile-ip': { topic: 'proxy', minutes: 4 },
   'guide-gmail-forwarding': { topic: 'accounts', minutes: 5 },
   'guide-account-farm': { topic: 'accounts', minutes: 14 },
@@ -304,6 +307,7 @@ interface Offer {
 }
 
 interface SeoLandingPage {
+  article?: { heading: string; paragraphs: string[]; links?: { label: string; href: string }[] }[];
   id: string;
   route: string;
   category: CategoryType;
@@ -334,8 +338,8 @@ const SERVICE_PAGE_SEO_BY_ID = Object.fromEntries(
     ...socialPages,
     ...steamPages,
     ...vpsPages,
-  ].map((page) => [page.id, { title: page.title, description: page.description }]),
-) as Record<string, { title: Localized; description: Localized }>;
+  ].map((page) => [page.id, { title: page.title, description: page.description, heading: page.heading }]),
+) as Record<string, { title: Localized; description: Localized; heading: Localized }>;
 
 // --- Data ---
 const CATEGORIES: { id: CategoryType; icon: any; title: Localized; subFilters?: SubCategory[]; guides?: { text: string | boolean; video: string } }[] = [
@@ -368,6 +372,7 @@ const CATEGORIES: { id: CategoryType; icon: any; title: Localized; subFilters?: 
     id: 'Crypto', 
     icon: Coins, 
     title: { ru: 'Купить/продать крипту', en: 'Buy/Sell Crypto', es: 'Comprar/vender cripto', zh: '买卖加密货币', ko: '암호화폐 매매' },
+    subFilters: ['AML'],
     guides: { text: '#', video: '#' }
   },
   { id: 'SMS', icon: MessageSquare, title: { ru: 'SMS Активаторы', en: 'SMS Activators', es: 'SMS Activadores', zh: '短信接码', ko: 'SMS 인증' } },
@@ -2002,6 +2007,16 @@ const OFFERS: Offer[] = [
   },
   // PROXY
   {
+    id: 'guide-foreign-cards',
+    category: 'Guides',
+    name: 'Зарубежная карта с пополнением рублями: что выбрать',
+    slug: GUIDE_PAGE_BY_ID['guide-foreign-cards'].slug,
+    editorial: GUIDE_PAGE_BY_ID['guide-foreign-cards'].editorial,
+    description: GUIDE_PAGE_BY_ID['guide-foreign-cards'].editorial.description,
+    url: '/guides/zarubezhnaya-karta-s-popolneniem-rublyami',
+    details: {},
+  },
+  {
     id: 'p1',
     category: 'Proxy',
     subCategory: 'Proxy',
@@ -3306,6 +3321,101 @@ const OFFERS: Offer[] = [
         zh: ['直接在 Telegram 中操作', '支持在线和线下模式', '适合补充和提取工作资金'],
         ko: ['Telegram에서 바로 이용', '온라인과 오프라인 방식 지원', '작업 예산 충전과 출금에 편리']
       }
+    }
+  },
+  {
+    id: 'hermes-exchange',
+    category: 'Crypto',
+    slug: CRYPTO_EXCHANGE_PAGE_BY_ID['hermes-exchange'].slug,
+    editorial: CRYPTO_EXCHANGE_PAGE_BY_ID['hermes-exchange'].editorial,
+    name: 'Hermes Exchange',
+    description: CRYPTO_EXCHANGE_PAGE_BY_ID['hermes-exchange'].editorial.description,
+    url: 'https://t.me/thehermesex',
+    logoUrl: '/hermes-exchange.png',
+    details: {
+      geo: {
+        ru: 'Онлайн и офлайн по согласованию с менеджером',
+        en: 'Online and offline by agreement with a manager',
+        es: 'Online y presencial según acuerdo con el gestor',
+        zh: '在线与线下服务，需与经理确认',
+        ko: '매니저와 협의한 온라인 및 오프라인 거래'
+      },
+      types: {
+        ru: 'Крипта ↔ наличный и безналичный фиат',
+        en: 'Crypto ↔ cash and bank fiat',
+        es: 'Cripto ↔ efectivo y dinero bancario',
+        zh: '加密货币 ↔ 现金和银行法币',
+        ko: '암호화폐 ↔ 현금 및 은행 법정화폐'
+      },
+      paymentMethods: {
+        ru: 'Криптовалюта, наличные и банковские направления по согласованию',
+        en: 'Crypto, cash, and bank directions by agreement',
+        es: 'Cripto, efectivo y direcciones bancarias según acuerdo',
+        zh: '加密货币、现金和银行方向，需协商',
+        ko: '협의에 따른 암호화폐, 현금 및 은행 방식'
+      },
+      supports: {
+        ru: ['Обмен крипты на наличные и обратно', 'Безналичный обмен и переводы по доступным направлениям', 'Согласование нестандартной заявки с менеджером', 'Вся сделка обсуждается в групповом Telegram-чате'],
+        en: ['Crypto-to-cash exchange and the reverse', 'Bank exchange and transfers for available directions', 'Custom requests discussed with a manager', 'The transaction is coordinated in a Telegram group chat'],
+        es: ['Cambio de cripto por efectivo y al revés', 'Cambio bancario y transferencias disponibles', 'Solicitudes especiales con un gestor', 'La operación se coordina en un chat grupal de Telegram'],
+        zh: ['加密货币与现金双向兑换', '支持方向的银行兑换和转账', '与经理协商非标准需求', '交易在 Telegram 群聊中协调'],
+        ko: ['암호화폐와 현금 간 양방향 환전', '지원 방향의 은행 환전 및 송금', '매니저와 맞춤 요청 협의', '거래는 Telegram 그룹 채팅에서 조율']
+      },
+      pros: {
+        ru: ['Общение с менеджером', 'Наличный и безналичный формат', 'Можно обсудить нестандартное направление'],
+        en: ['Manager-assisted service', 'Cash and bank formats', 'Custom directions can be discussed'],
+        es: ['Atención con gestor', 'Formato en efectivo y bancario', 'Se pueden comentar direcciones especiales'],
+        zh: ['经理协助', '现金与银行方式', '可讨论非标准方向'],
+        ko: ['매니저 지원', '현금 및 은행 방식', '맞춤 방향 협의 가능']
+      }
+    }
+  },
+  {
+    id: 'amlbot-check',
+    category: 'Crypto',
+    subCategory: 'AML',
+    name: 'AMLBot',
+    description: {
+      ru: 'Проверяет адрес или транзакцию и показывает общий риск и категории, которые на него влияют.',
+      en: 'Checks an address or transaction and shows the overall risk and contributing categories.'
+    },
+    url: 'https://t.me/cryptoaml_bot',
+    logoUrl: '/amlbot.png',
+    details: {
+      geo: { ru: 'Telegram-бот и веб-сервис', en: 'Telegram bot and web service' },
+      types: { ru: 'AML-проверка адресов и транзакций', en: 'AML checks for addresses and transactions' }
+    }
+  },
+  {
+    id: 'bitok-aml-check',
+    category: 'Crypto',
+    subCategory: 'AML',
+    name: 'BitOK',
+    description: {
+      ru: 'Проверяет кошельки и транзакции, показывает риск, связи и формирует отчёт по результату.',
+      en: 'Checks wallets and transactions, shows risk and connections, and produces a report.'
+    },
+    url: 'https://bitok.org/ru/aml-checks',
+    logoUrl: '/bitok.png',
+    details: {
+      geo: { ru: 'Веб-сервис и Telegram-бот', en: 'Web service and Telegram bot' },
+      types: { ru: 'AML-проверка адресов и транзакций', en: 'AML checks for addresses and transactions' }
+    }
+  },
+  {
+    id: 'getblock-aml-check',
+    category: 'Crypto',
+    subCategory: 'AML',
+    name: 'GetBlock',
+    description: {
+      ru: 'AML-сервис для проверки криптовалютного адреса или хеша транзакции с отчётом о рисках.',
+      en: 'AML service for checking a crypto address or transaction hash with a risk report.'
+    },
+    url: 'https://getblock.net/',
+    logoUrl: '/getblock.png',
+    details: {
+      geo: { ru: 'Веб-сервис и Telegram-бот', en: 'Web service and Telegram bot' },
+      types: { ru: 'AML-проверка адресов и транзакций', en: 'AML checks for addresses and transactions' }
     }
   },
   {
@@ -4956,6 +5066,12 @@ const LanguageToggle = ({ lang, onChange }: { lang: Language; onChange: (languag
   );
 };
 
+const OfferModalHeading = ({ children, className }: { children: ReactNode; className: string }) => {
+  // An exiting dialog remains mounted while the category H1 is restored.
+  const Heading = useIsPresent() ? 'h1' : 'p';
+  return <Heading id="offer-modal-title" className={className}>{children}</Heading>;
+};
+
 export default function App() {
   const initialCategory = getCategoryFromPath();
   const currentSeoLanding = getSeoLandingFromPath();
@@ -5425,7 +5541,8 @@ export default function App() {
       if (!hasQuery) {
         const matchesCategory = o.category === activeCategory;
         const matchesSub = subFilter === 'None' || o.subCategory === subFilter || o.subCategories?.includes(subFilter);
-        return matchesCategory && matchesSub;
+        const hideAmlToolsFromExchangeList = activeCategory === 'Crypto' && subFilter === 'None' && o.subCategory === 'AML';
+        return matchesCategory && matchesSub && !hideAmlToolsFromExchangeList;
       }
 
       const categoryData = CATEGORIES.find(c => c.id === o.category);
@@ -5442,9 +5559,13 @@ export default function App() {
 
     const proxyOrder = ['MobileProxy', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'ProxyShard', 'Proxys.io'];
     const cardOrder = ['Zarub', 'PGON', 'Vezdekarta', 'Pionex', 'Cashin Out'];
+    const cryptoOrder = ['Prosto Exchange', 'Keine Exchange', 'PGON', 'Hermes Exchange', 'AMLBot', 'BitOK', 'GetBlock'];
     return offers.sort((first, second) => {
       if (first.category === 'Cards' && second.category === 'Cards') {
         return cardOrder.indexOf(first.name) - cardOrder.indexOf(second.name);
+      }
+      if (first.category === 'Crypto' && second.category === 'Crypto') {
+        return cryptoOrder.indexOf(first.name) - cryptoOrder.indexOf(second.name);
       }
       if (first.category !== 'Proxy' || second.category !== 'Proxy') return 0;
       const firstIndex = proxyOrder.indexOf(first.name);
@@ -5585,6 +5706,7 @@ export default function App() {
       USDTQR: 'USDT QR',
       Web: tx({ ru: 'Сайты', en: 'Websites', es: 'Sitios web', zh: '网站', ko: '웹사이트' }),
       Bot: tx({ ru: 'Боты в Telegram', en: 'Telegram Bots', es: 'Bots de Telegram', zh: 'Telegram 机器人', ko: 'Telegram 봇' }),
+      AML: tx({ ru: 'AML проверка', en: 'AML check', es: 'Control AML', zh: 'AML 检查', ko: 'AML 검사' }),
       BoostSites: tx({ ru: 'Сайты накрутки', en: 'Boost Sites', es: 'Sitios de boost', zh: '增长网站', ko: '부스트 사이트' }),
       Bux: tx({ ru: 'Буксы', en: 'Task Exchanges', es: 'Bolsas de tareas', zh: '任务平台', ko: '태스크 거래소' }),
       SteamFast: tx({ ru: 'Быстро по логину', en: 'Fast by login', es: 'Rápido por login', zh: '登录名快速充值', ko: '로그인 빠른 충전' }),
@@ -5687,6 +5809,29 @@ export default function App() {
     setActiveCategory(cat);
     setSelectedOffer(null);
     setSubFilter(getDefaultSubFilter());
+    setSearchQuery('');
+    scrollToPageTop();
+  };
+
+  const handleSubFilterChange = (nextSubFilter: SubCategory) => {
+    if (activeCategory === 'Crypto') {
+      const amlLanding = SEO_LANDING_PAGES.find((page) => page.id === 'crypto-aml-checks');
+      const nextRoute = nextSubFilter === 'AML' && amlLanding
+        ? getLocalizedSeoLandingRoute(amlLanding, lang)
+        : getLocalizedRoute('Crypto', lang);
+
+      if (window.location.pathname !== nextRoute) {
+        window.history.replaceState(
+          { ...(window.history.state || {}), subFilter },
+          '',
+          window.location.href,
+        );
+        window.history.pushState({ subFilter: nextSubFilter }, '', nextRoute);
+      }
+    }
+
+    setSelectedOffer(null);
+    setSubFilter(nextSubFilter);
     setSearchQuery('');
     scrollToPageTop();
   };
@@ -5794,7 +5939,17 @@ export default function App() {
 
   const activeCategoryData = CATEGORIES.find(c => c.id === activeCategory);
   const currentSectionSeo = SECTION_SEO[activeCategory];
-  const currentCategorySeoLanding = SEO_LANDING_PAGES.find((page) => page.category === activeCategory);
+  const SectionHeading = selectedOffer ? 'h2' : 'h1';
+  const sectionHeading = currentSeoLanding?.heading
+    || pageHeadings[isHomeRoute ? '/' : CATEGORY_ROUTES[activeCategory]]
+    || currentSectionSeo.heading;
+  const selectedOfferHeading = selectedOffer
+    ? pageHeadings[stripLanguagePrefix(getLocalizedOfferRoute(selectedOffer, lang))]
+      || SERVICE_PAGE_SEO_BY_ID[selectedOffer.id]?.heading
+    : undefined;
+  const currentCategorySeoLanding = activeCategory === 'Crypto'
+    ? SEO_LANDING_PAGES.find((page) => page.id === 'crypto-exchange-guide')
+    : SEO_LANDING_PAGES.find((page) => page.category === activeCategory);
   const sectionDetailsLabel = l({
     ru: 'Подробнее о разделе',
     en: 'More about this section',
@@ -5868,6 +6023,10 @@ export default function App() {
 
   if (isAntidetectSetupGuideArticle) {
     return <AntidetectSetupGuideArticle />;
+  }
+
+  if (stripLanguagePrefix(window.location.pathname) === '/guides/zarubezhnaya-karta-s-popolneniem-rublyami') {
+    return <ForeignCardGuideArticle />;
   }
 
   return (
@@ -5948,9 +6107,9 @@ export default function App() {
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h1 id="hero-title" className="text-5xl md:text-8xl font-bold tracking-tighter mb-4 bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-transparent">
+          <p id="hero-title" className="text-5xl md:text-8xl font-bold tracking-tighter mb-4 bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-transparent">
             {t.heroTitle}
-          </h1>
+          </p>
           <p className="text-white/60 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed font-light">
             {t.heroSub}
           </p>
@@ -5980,8 +6139,7 @@ export default function App() {
                 <>
                   <button
                     onClick={() => {
-                      setSubFilter('None');
-                      scrollToPageTop();
+                      handleSubFilterChange('None');
                     }}
                     className={`px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border-2 ${
                       subFilter === 'None' 
@@ -5989,14 +6147,15 @@ export default function App() {
                         : 'bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:border-white/20'
                     }`}
                   >
-                    {t.all}
+                    {activeCategory === 'Crypto'
+                      ? tx({ ru: 'Обменники', en: 'Exchanges', es: 'Exchanges', zh: '兑换服务', ko: '환전소' })
+                      : t.all}
                   </button>
                   {activeCategoryData.subFilters.map(filter => (
                     <button
                       key={filter}
                       onClick={() => {
-                        setSubFilter(filter);
-                        scrollToPageTop();
+                        handleSubFilterChange(filter);
                       }}
                       className={`px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border-2 ${
                         subFilter === filter 
@@ -6004,6 +6163,7 @@ export default function App() {
                           : 'bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:border-white/20'
                       }`}
                     >
+                      {filter === 'AML' && <ShieldCheck className="mr-2 inline-block h-4 w-4" />}
                       {t.subFilters[filter] || filter}
                     </button>
                   ))}
@@ -6262,6 +6422,7 @@ export default function App() {
                     onClick={(event) => {
                       if (
                         offer.id === 'guide-mobile-ip'
+                        || offer.id === 'guide-foreign-cards'
                         || offer.id === 'guide-gmail-forwarding'
                         || offer.id === 'guide-account-farm'
                         || offer.id === 'guide-otc-kyc'
@@ -6305,6 +6466,20 @@ export default function App() {
                 </div>
               </div>
             ) : (
+            <div className="w-full">
+            {activeCategory === 'Crypto' && subFilter === 'AML' && (
+              <section className="mb-7 rounded-2xl border border-brand-purple/20 bg-brand-purple/[0.07] px-5 py-4 text-sm font-medium leading-relaxed text-white/60">
+                <p>
+                  {tx({
+                    ru: 'Вставляй только публичный адрес кошелька или хеш транзакции. Сид-фраза и приватный ключ для AML-проверки не нужны. Результаты сервисов могут отличаться, потому что у них разные базы и алгоритмы оценки.',
+                    en: 'Only paste a public wallet address or transaction hash. An AML check never needs your seed phrase or private key. Results may differ because services use different data and scoring models.',
+                    es: 'Introduce solo una dirección pública o el hash de la transacción. Una comprobación AML no necesita tu frase semilla ni clave privada. Los resultados pueden variar según la base y el modelo.',
+                    zh: '只需粘贴公开钱包地址或交易哈希。AML 检查不需要助记词或私钥。不同服务使用的数据和评分模型不同，结果可能有差异。',
+                    ko: '공개 지갑 주소나 거래 해시만 입력하세요. AML 검사에 시드 문구나 개인 키는 필요하지 않습니다. 서비스마다 데이터와 평가 방식이 달라 결과가 다를 수 있습니다.'
+                  })}
+                </p>
+              </section>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
               {filteredOffers.map((offer, index) => (
                 <motion.div
@@ -6357,16 +6532,20 @@ export default function App() {
                             </div>
                           ) : (
                             <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 overflow-hidden shrink-0 group-hover:border-brand-purple/50 transition-colors flex items-center justify-center">
-                              <img
-                                src={offer.logoUrl}
-                                alt={offer.name}
-                                loading="lazy"
-                                decoding="async"
-                                onError={(event) => {
-                                  event.currentTarget.src = '/logo.webp';
-                                }}
-                                className={offer.id === 'ant-donut' ? 'w-full h-full object-cover invert' : 'w-full h-full object-cover'}
-                              />
+                              {offer.subCategory === 'AML' && !offer.logoUrl ? (
+                                <ShieldCheck className="h-8 w-8 text-brand-purple" />
+                              ) : (
+                                <img
+                                  src={offer.logoUrl || '/logo.webp'}
+                                  alt={offer.name}
+                                  loading="lazy"
+                                  decoding="async"
+                                  onError={(event) => {
+                                    event.currentTarget.src = '/logo.webp';
+                                  }}
+                                  className={offer.id === 'ant-donut' ? 'w-full h-full object-cover invert' : 'w-full h-full object-cover'}
+                                />
+                              )}
                             </div>
                           )}
                           <div className="space-y-1">
@@ -6378,6 +6557,12 @@ export default function App() {
 
                         {offer.category !== 'Cards' && offer.category !== 'Stores' && offer.category !== 'Proxy' && offer.category !== 'Antidetect' && offer.category !== 'Crypto' && offer.category !== 'Social' && offer.category !== 'VPS' && offer.category !== 'Steam' && offer.category !== 'Guides' && (
                           <p className="text-white/60 text-base mb-6 leading-relaxed font-medium min-h-[3.5rem] group-hover:text-white transition-colors">
+                            {offerDescription(offer)}
+                          </p>
+                        )}
+
+                        {offer.subCategory === 'AML' && (
+                          <p className="mb-6 min-h-[3.5rem] text-base font-medium leading-relaxed text-white/60 transition-colors group-hover:text-white">
                             {offerDescription(offer)}
                           </p>
                         )}
@@ -6470,9 +6655,21 @@ export default function App() {
                             <InfoRow icon={Users} label={t.freeProfiles} value={l(offer.freeProfiles)} />
                             <InfoRow icon={CreditCard} label={t.tariffStart} value={l(offer.tariffStartPrice)} />
                             <InfoRow icon={Percent} label={t.rate} value={l(offer.details?.rate)} />
-                            <InfoRow icon={Globe} label={t.geo} value={l(offer.details?.geo)} />
+                            <InfoRow
+                              icon={offer.subCategory === 'AML' ? Monitor : Globe}
+                              label={offer.subCategory === 'AML'
+                                ? tx({ ru: 'Формат', en: 'Format', es: 'Formato', zh: '使用方式', ko: '이용 방식' })
+                                : t.geo}
+                              value={l(offer.details?.geo)}
+                            />
                             {offer.subCategory !== 'VPN' && (
-                              <InfoRow icon={Layers} label={t.types} value={l(offer.details?.types)} />
+                              <InfoRow
+                                icon={offer.subCategory === 'AML' ? ShieldCheck : Layers}
+                                label={offer.subCategory === 'AML'
+                                  ? tx({ ru: 'Что проверяет', en: 'Checks', es: 'Qué comprueba', zh: '检查内容', ko: '검사 항목' })
+                                  : t.types}
+                                value={l(offer.details?.types)}
+                              />
                             )}
                             <InfoRow icon={Monitor} label={t.platforms} value={offer.platforms?.join(', ')} />
                             <InfoRow icon={Coins} label={t.paymentMethods} value={l(offer.details?.paymentMethods)} />
@@ -6515,7 +6712,26 @@ export default function App() {
 
                   <div className="space-y-4 relative z-10 pt-1">
                     <div className="flex flex-col gap-3">
-                      {offer.slug ? (
+                      {offer.subCategory === 'AML' ? (
+                        <a
+                          href={offer.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => trackAnalyticsEvent('service_click', {
+                            service_id: offer.id,
+                            service_name: offer.name,
+                            category: offer.category,
+                            destination: offer.url.startsWith('https://t.me/') ? 'telegram' : 'website',
+                            language: lang,
+                            placement: 'catalog_card',
+                            link_url: offer.url,
+                          })}
+                          className="w-full flex items-center justify-center gap-3 py-5 bg-brand-purple hover:bg-white text-white hover:text-brand-purple border-2 border-brand-purple transition-all duration-300 rounded-[1.5rem] font-black text-sm uppercase tracking-[0.2em] shadow-[0_10px_30px_rgba(157,88,255,0.2)] hover:shadow-[0_15px_40px_rgba(157,88,255,0.4)]"
+                        >
+                          {t.openWebsite}
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      ) : offer.slug ? (
                         <a
                           href={getLocalizedOfferRoute(offer, lang)}
                           onClick={(event) => {
@@ -6539,6 +6755,7 @@ export default function App() {
                   </div>
                 </motion.div>
               ))}
+            </div>
             </div>
             )
           ) : (
@@ -6565,15 +6782,15 @@ export default function App() {
               <p className="text-[10px] uppercase tracking-[0.24em] text-brand-purple font-black mb-3">
                 {currentSeoLanding ? l(currentSeoLanding.eyebrow) : l(activeCategoryData?.title)}
               </p>
-              <h2 className="font-display text-2xl md:text-3xl font-black text-white tracking-tight mb-3">
+              <SectionHeading className="font-display text-2xl md:text-3xl font-black text-white tracking-tight mb-3">
                 {!currentSeoLanding && currentCategorySeoLanding ? (
                   <a href={getLocalizedSeoLandingRoute(currentCategorySeoLanding, lang)}>
-                    {l(currentSectionSeo.heading)}
+                    {l(sectionHeading)}
                   </a>
                 ) : (
-                  l(currentSectionSeo.heading)
+                  l(sectionHeading)
                 )}
-              </h2>
+              </SectionHeading>
               <p className="text-sm md:text-base text-white/60 leading-relaxed">
                 {l(currentSectionSeo.intro)}
               </p>
@@ -6592,6 +6809,15 @@ export default function App() {
         </div>
       </section>
 
+      {currentSeoLanding?.id === 'foreign-card-payments' && (
+        <div className="max-w-4xl mx-auto px-6 mt-8 relative z-10">
+          <a href="/guides/zarubezhnaya-karta-s-popolneniem-rublyami" className="inline-flex items-center gap-3 text-brand-purple hover:underline">
+            <FileText className="h-5 w-5" />
+            Читать гайд: зарубежная карта с пополнением рублями
+            <ChevronRight className="h-4 w-4" />
+          </a>
+        </div>
+      )}
       {currentSeoLanding && (
         <section className="max-w-4xl mx-auto px-6 mt-5 relative z-10">
           <details className="group">
@@ -8074,9 +8300,9 @@ export default function App() {
                   )}
                   <div className="flex flex-col justify-center">
                     <div className="flex items-center gap-3">
-                      <h2 id="offer-modal-title" className="font-display text-2xl font-bold tracking-tight md:text-3xl">
-                        {offerTitle(selectedOffer)}
-                      </h2>
+                      <OfferModalHeading className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+                        {selectedOfferHeading ? l(selectedOfferHeading) : offerTitle(selectedOffer)}
+                      </OfferModalHeading>
                     </div>
                   </div>
                 </div>
@@ -8459,6 +8685,14 @@ export default function App() {
                   >
                     {selectedOffer.category === 'Guides'
                       ? t.readGuide
+                      : selectedOffer.id === 'hermes-exchange'
+                        ? tx({
+                            ru: 'Открыть Hermes в Telegram',
+                            en: 'Open Hermes in Telegram',
+                            es: 'Abrir Hermes en Telegram',
+                            zh: '在 Telegram 打开 Hermes',
+                            ko: 'Telegram에서 Hermes 열기',
+                          })
                       : selectedOffer.url.startsWith('https://t.me/')
                         ? t.openTelegramBot
                         : tx({

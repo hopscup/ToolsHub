@@ -29,15 +29,107 @@
     <script id="structured-data" type="application/ld+json">[]</script>
     <style>
       .seo-fallback {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        margin: -1px;
-        padding: 0;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        white-space: nowrap;
-        border: 0;
+        box-sizing: border-box;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        color: #cccccc;
+        background: #050505;
+        font-family: Inter, system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.7;
+        overflow-wrap: anywhere;
+      }
+      .seo-fallback h1 {
+        margin: 0 0 20px;
+        color: #ffffff;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+      .seo-fallback h2 {
+        margin: 28px 0 12px;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+      .seo-fallback p {
+        margin: 12px 0;
+      }
+      .seo-fallback ul {
+        margin: 12px 0;
+        padding-left: 24px;
+        list-style: disc;
+      }
+      .seo-fallback li + li {
+        margin-top: 8px;
+      }
+      .seo-fallback a {
+        color: #BD7BFF;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .seo-fallback a:focus-visible {
+        outline: 2px solid #BD7BFF;
+        outline-offset: 4px;
+      }
+      .seo-fallback nav {
+        margin-top: 32px;
+        padding-top: 20px;
+        border-top: 1px solid #333333;
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      }
+      @media (max-width: 600px) {
+        .seo-fallback {
+          padding: 24px 20px;
+        }
+        .seo-fallback h1 {
+          font-size: 24px;
+        }
+      }
+      .seo-fallback[data-static-article] { max-width: none; padding: 0; }
+      .seo-fallback .fallback-topbar { border-bottom: 1px solid #202020; }
+      .seo-fallback .fallback-topbar > div {
+        box-sizing: border-box; max-width: 1152px; margin: 0 auto;
+        padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;
+      }
+      .seo-fallback .fallback-topbar img { display: block; border-radius: 12px; }
+      .seo-fallback .fallback-topbar a:last-child { font-size: 12px; font-weight: 700; }
+      .seo-fallback[data-static-article] .fallback-hero {
+        box-sizing: border-box; max-width: 1024px; margin: 0 auto;
+        padding: 56px 20px 48px; text-align: center;
+      }
+      .seo-fallback .fallback-hero .fallback-badge {
+        display: table; margin: 0 auto 20px; padding: 8px 16px;
+        border: 1px solid #6d458f; border-radius: 24px; color: #bd7bff;
+        font-size: 10px; font-weight: 900; line-height: 16px; text-transform: uppercase;
+        letter-spacing: 2.2px;
+      }
+      .seo-fallback[data-static-article] h1 {
+        max-width: 896px; margin: 0 auto; font-size: 36px; font-weight: 900;
+        line-height: 1.08; font-family: "Space Grotesk", sans-serif;
+      }
+      .seo-fallback[data-static-article] .fallback-hero > p:not(.fallback-badge):not(.fallback-updated) {
+        max-width: 768px; margin: 24px auto 0; font-weight: 500; line-height: 26px;
+      }
+      .seo-fallback .fallback-hero .fallback-updated { margin: 20px 0 0; font-size: 12px; line-height: 16px; }
+      .seo-fallback[data-static-article="guide-gmail-forwarding"] .fallback-hero > p:not(.fallback-badge):not(.fallback-updated) { max-width: 672px; }
+      .seo-fallback .fallback-body, .seo-fallback[data-static-article] > nav {
+        box-sizing: border-box; max-width: 1024px; margin: 0 auto; padding: 0 20px 32px;
+      }
+      .seo-fallback ol { padding-left: 24px; list-style: decimal; }
+      .seo-fallback dt { margin-top: 8px; font-weight: 700; }
+      .seo-fallback dd { margin: 0; }
+      .seo-fallback h3 { margin: 24px 0 12px; color: #fff; font-size: 20px; }
+      @media (min-width: 768px) {
+        .seo-fallback .fallback-topbar > div { padding-left: 32px; padding-right: 32px; }
+        .seo-fallback[data-static-article] .fallback-hero { padding: 80px 32px 64px; }
+        .seo-fallback[data-static-article] h1 { font-size: 60px; }
+        .seo-fallback[data-static-article] .fallback-hero > p:not(.fallback-badge):not(.fallback-updated) { font-size: 18px; line-height: 29.25px; }
+        .seo-fallback .fallback-body, .seo-fallback[data-static-article] > nav { padding-left: 32px; padding-right: 32px; }
       }
     </style>
     <link rel="icon" type="image/png" href="/logo.png" />

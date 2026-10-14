@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { trackAnalyticsEvent } from '../analytics';
 import { BackgroundParticles } from './BackgroundParticles';
 import { RelatedGuides } from './RelatedGuides';
+import { articleFallbackContent, mobileProxyProviders } from '../data/articleFallbackContent.js';
 
 type Provider = {
   id: string;
@@ -36,83 +37,7 @@ type Provider = {
   limitations: string[];
 };
 
-const providers: Provider[] = [
-  {
-    id: 'p6',
-    name: 'MobileProxy',
-    logo: '/mobileproxy.webp',
-    url: 'https://mobileproxy.rent/user.html?free&p=105422',
-    locations: '20+ стран',
-    network: 'Реальные SIM, 4G/LTE',
-    rotation: 'Кнопка, ссылка, API и таймер',
-    billing: 'По сроку, безлимитный трафик',
-    entryPrice: 'Зависит от страны и срока',
-    promoCode: 'hopscup',
-    promoDiscount: '−20%',
-    label: 'Мой основной вариант',
-    experience: 'Пользуюсь больше трёх лет',
-    summary: 'Беру MobileProxy, когда нужен именно мобильный источник адресов и быстрая смена IP. Подключение настраивается один раз, после чего новый адрес можно получать через кабинет или отдельную ссылку.',
-    strengths: [
-      'Безлимитный трафик: не приходится считать каждый гигабайт.',
-      'Удобная ручная и автоматическая смена IP.',
-      'Можно скопировать готовую строку в формате HTTP или SOCKS5.',
-    ],
-    limitations: [
-      'Цена заметно выше обычного IPv4.',
-      'Если тариф выдаёт один активный адрес, профили с разными IP придётся запускать по очереди.',
-    ],
-  },
-  {
-    id: 'p3',
-    name: 'ProxyWing',
-    logo: '/proxywing.webp',
-    url: 'https://dashboard.proxywing.com/billing/aff.php?aff=813',
-    locations: '17+ стран',
-    network: '4G и 5G',
-    rotation: 'Таймер, ссылка или кнопка',
-    billing: '1, 7, 15 или 30 дней',
-    entryPrice: 'От $4/день, от $55/месяц',
-    promoCode: 'hopscup',
-    promoDiscount: '−10%',
-    label: 'Гибкие короткие тарифы',
-    experience: 'Характеристики мобильных тарифов проверены по сайту сервиса',
-    summary: 'Подходит, когда мобильный прокси нужен на короткий тест или на конкретный проект. В одном кабинете есть и более дешёвые IPv4, ISP и Residential, поэтому тип можно менять без перехода к другому провайдеру.',
-    strengths: [
-      'Можно начать с тарифа на один день или неделю.',
-      'Безлимитный трафик и несколько способов ротации.',
-      'Поддерживаются HTTPS, SOCKS5, UDP и OpenVPN.',
-    ],
-    limitations: [
-      'Месячный мобильный тариф дороже обычных серверных и ISP-прокси.',
-      'Доступные операторы и итоговая цена зависят от страны.',
-    ],
-  },
-  {
-    id: 'p4',
-    name: 'Proxy-Seller',
-    logo: '/proxy-seller.webp',
-    url: 'https://proxy-seller.com/?partner=RIPC5NDAEYRZPZ',
-    locations: 'США, Европа, Азия и другие GEO',
-    network: '4G, LTE и 5G',
-    rotation: 'По ссылке или каждые 5/30 минут',
-    billing: 'Dedicated или Shared, от недели',
-    entryPrice: 'Рассчитывается в конфигураторе',
-    promoCode: 'hopscup',
-    promoDiscount: '−10%',
-    label: 'Выбор формата и оператора',
-    experience: 'Характеристики мобильных тарифов проверены по сайту сервиса',
-    summary: 'Сильная сторона Proxy-Seller — выбор. Можно подобрать выделенный или общий мобильный канал, страну, оператора, период и способ ротации. Это удобно, когда параметры важнее минимальной цены входа.',
-    strengths: [
-      'Есть dedicated и shared мобильные тарифы.',
-      'Можно выбрать оператора и период ротации.',
-      'Безлимитный трафик и поддержка SOCKS5/HTTPS.',
-    ],
-    limitations: [
-      'Shared подходит не для каждого рабочего профиля.',
-      'Итоговую стоимость приходится считать под конкретную страну и срок.',
-    ],
-  },
-];
+const providers: Provider[] = mobileProxyProviders;
 
 const comparisonRows = [
   ['Источник IP', 'Мобильный оператор', 'Домашний интернет-провайдер', 'Дата-центр'],
@@ -239,12 +164,8 @@ export const MobileProxyComparisonArticle = () => {
             <ShieldCheck className="h-4 w-4" />
             Личный опыт Hopscup
           </div>
-          <h1 className="mx-auto max-w-4xl font-display text-4xl font-black leading-[1.08] tracking-tight text-white md:text-6xl">
-            Лучшие мобильные прокси в 2026 году
-          </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">
-            Сравниваю MobileProxy, ProxyWing и Proxy-Seller: где удобнее менять IP, когда нужен безлимитный трафик и в каких задачах обычный IPv4 будет разумнее.
-          </p>
+          <h1 className="mx-auto max-w-4xl font-display text-4xl font-black leading-[1.08] tracking-tight text-white md:text-6xl">{articleFallbackContent.mobile.title}</h1>
+          <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{articleFallbackContent.mobile.intro}</p>
           <p className="mt-5 text-xs font-semibold text-white/30">Обновлено 31 августа 2026 года</p>
         </section>
 

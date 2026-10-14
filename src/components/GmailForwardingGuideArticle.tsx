@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
 import { RelatedGuides } from './RelatedGuides';
+import { articleFallbackContent } from '../data/articleFallbackContent.js';
 
 type ArticleTheme = 'dark' | 'light';
 
@@ -104,12 +105,8 @@ export const GmailForwardingGuideArticle = () => {
             <Mail className="h-4 w-4" />
             Практический гайд Hopscup
           </div>
-          <h1 className="mx-auto max-w-4xl font-display text-4xl font-black leading-[1.08] text-white md:text-6xl">
-            Переадресация писем из Gmail на другую почту
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-white/55 md:text-lg">
-            Пошаговая настройка форвардинга, чтобы собирать нужные письма в одном почтовом ящике.
-          </p>
+          <h1 className="mx-auto max-w-4xl font-display text-4xl font-black leading-[1.08] text-white md:text-6xl">{articleFallbackContent.gmail.title}</h1>
+          <p className="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{articleFallbackContent.gmail.intro}</p>
         </section>
 
         <div className="mx-auto grid max-w-6xl gap-8 px-5 md:px-8 lg:grid-cols-[220px_minmax(0,760px)] lg:justify-center">
@@ -135,9 +132,9 @@ export const GmailForwardingGuideArticle = () => {
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Важные моменты перед началом</h2>
               <div className="mt-6 grid gap-3">
                 {[
-                  { icon: Monitor, text: 'Настройка делается только на компьютере в браузере. В мобильном приложении Gmail это невозможно.' },
-                  { icon: ShieldCheck, text: 'Сначала нужно добавить и подтвердить адрес пересылки.' },
-                  { icon: Settings, text: 'Можно пересылать все письма или только некоторые через фильтры.' },
+                  { icon: Monitor, text: articleFallbackContent.gmail.before[0] },
+                  { icon: ShieldCheck, text: articleFallbackContent.gmail.before[1] },
+                  { icon: Settings, text: articleFallbackContent.gmail.before[2] },
                 ].map(({ icon: Icon, text }) => (
                   <div key={text} className="flex items-start gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand-purple/20 bg-brand-purple/10">
@@ -153,8 +150,8 @@ export const GmailForwardingGuideArticle = () => {
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Шаг 1</p>
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Добавление адреса пересылки</h2>
               <StepList>
-                <StepItem>Откройте Gmail на компьютере и войдите в аккаунт, из которого хотите пересылать письма.</StepItem>
-                <StepItem>В правом верхнем углу нажмите на значок шестерёнки, затем выберите «Все настройки».</StepItem>
+                <StepItem>{articleFallbackContent.gmail.sections[0].steps[0]}</StepItem>
+                <StepItem>{articleFallbackContent.gmail.sections[0].steps[1]}</StepItem>
               </StepList>
               <ArticleImage
                 src="/article/gmail-forwarding/open-settings.jpg"
@@ -163,7 +160,7 @@ export const GmailForwardingGuideArticle = () => {
               />
 
               <StepList>
-                <StepItem>Перейдите во вкладку «Пересылка и POP/IMAP» или просто «Пересылка».</StepItem>
+                <StepItem>{articleFallbackContent.gmail.sections[0].steps[2]}</StepItem>
               </StepList>
               <ArticleImage
                 src="/article/gmail-forwarding/forwarding-tab.jpg"
@@ -172,7 +169,7 @@ export const GmailForwardingGuideArticle = () => {
               />
 
               <StepList>
-                <StepItem>В разделе «Пересылка» нажмите кнопку «Добавить адрес пересылки».</StepItem>
+                <StepItem>{articleFallbackContent.gmail.sections[0].steps[3]}</StepItem>
               </StepList>
               <ArticleImage
                 src="/article/gmail-forwarding/add-address.jpg"
@@ -181,8 +178,8 @@ export const GmailForwardingGuideArticle = () => {
               />
 
               <StepList>
-                <StepItem>Введите email-адрес, на который хотите получать письма, и нажмите «Далее», затем «Продолжить».</StepItem>
-                <StepItem>Google отправит на этот адрес письмо с кодом подтверждения. Перейдите в другую почту, откройте письмо от Google и нажмите ссылку подтверждения или введите код вручную.</StepItem>
+                <StepItem>{articleFallbackContent.gmail.sections[0].steps[4]}</StepItem>
+                <StepItem>{articleFallbackContent.gmail.sections[0].steps[5]}</StepItem>
               </StepList>
             </section>
 
@@ -190,12 +187,10 @@ export const GmailForwardingGuideArticle = () => {
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Шаг 2</p>
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Включение переадресации</h2>
               <StepList>
-                <StepItem>Вернитесь в настройки Gmail: шестерёнка → «Все настройки» → «Пересылка и POP/IMAP».</StepItem>
-                <StepItem>В разделе «Пересылка» выберите «Пересылать копию входящих писем на», затем укажите добавленный адрес.</StepItem>
-                <StepItem>
-                  Выберите, что делать с оригиналом письма в Gmail: оставить копию во «Входящих», отметить как прочитанное, архивировать или удалить.
-                </StepItem>
-                <StepItem>Внизу страницы нажмите «Сохранить изменения».</StepItem>
+                <StepItem>{articleFallbackContent.gmail.sections[1].steps[0]}</StepItem>
+                <StepItem>{articleFallbackContent.gmail.sections[1].steps[1]}</StepItem>
+                <StepItem>{articleFallbackContent.gmail.sections[1].steps[2]}</StepItem>
+                <StepItem>{articleFallbackContent.gmail.sections[1].steps[3]}</StepItem>
               </StepList>
               <ArticleImage
                 src="/article/gmail-forwarding/enable-forwarding.jpg"
@@ -209,7 +204,7 @@ export const GmailForwardingGuideArticle = () => {
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Проверяем результат</h2>
               <GuideNote>Теперь все новые письма будут автоматически пересылаться на выбранный адрес.</GuideNote>
               <p className="text-sm font-medium leading-7 text-white/65 md:text-base">
-                Отправьте тестовое письмо на исходный Gmail и убедитесь, что оно появилось в конечном ящике. Если письма нет, проверьте папки «Спам» и «Промоакции».
+                {articleFallbackContent.gmail.result}
               </p>
               <GuideNote>
                 Не забывай подписываться на канал{' '}

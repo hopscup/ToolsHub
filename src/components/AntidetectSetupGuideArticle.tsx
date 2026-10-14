@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
 import { RelatedGuides } from './RelatedGuides';
+import { articleFallbackContent } from '../data/articleFallbackContent.js';
 
 type ArticleTheme = 'dark' | 'light';
 
@@ -119,12 +120,8 @@ export const AntidetectSetupGuideArticle = () => {
             <Fingerprint className="h-4 w-4" />
             Практический гайд Hopscup
           </div>
-          <h1 className="mx-auto max-w-4xl font-display text-4xl font-black leading-[1.08] text-white md:text-6xl">
-            Как настроить антидетект-браузер, чтобы не спалиться
-          </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">
-            Сначала разберём, что вообще нужно менять. Затем покажу готовые настройки на примере Dolphin Anty, AdsPower и ShardX.
-          </p>
+          <h1 className="mx-auto max-w-4xl font-display text-4xl font-black leading-[1.08] text-white md:text-6xl">{articleFallbackContent.antidetect.title}</h1>
+          <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{articleFallbackContent.antidetect.intro}</p>
         </section>
 
         <div className="mx-auto grid max-w-6xl gap-8 px-5 md:px-8 lg:grid-cols-[220px_minmax(0,760px)] lg:justify-center">
@@ -196,13 +193,13 @@ export const AntidetectSetupGuideArticle = () => {
                 Нормальный вариант для обычной работы с аккаунтами. В большинстве случаев стандартные настройки уже подходят.
               </BrowserHeading>
               <ol className="mt-7 space-y-4">
-                <StepItem>Откройте «Профили браузера» и нажмите «Создать профиль».</StepItem>
-                <StepItem>Выберите Windows и актуальное ядро Chromium. Новый отпечаток генерируем один раз при создании.</StepItem>
-                <StepItem>Добавьте прокси, дождитесь проверки соединения и посмотрите, правильно ли определились IP и страна.</StepItem>
-                <StepItem>Часовой пояс, язык и геолокацию оставьте на Auto.</StepItem>
-                <StepItem>Для WebRTC выберите «Подмена» или Altered. Real с прокси оставлять не надо.</StepItem>
-                <StepItem>Canvas, WebGL, Audio, Client Rects, процессор, память и экран без причины не трогаем.</StepItem>
-                <StepItem>Создайте профиль и дальше запускайте его с тем же сохранённым отпечатком.</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[0].steps[0]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[0].steps[1]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[0].steps[2]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[0].steps[3]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[0].steps[4]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[0].steps[5]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[0].steps[6]}</StepItem>
               </ol>
               <ArticleScreenshot
                 src="/article/antidetect-setup/dolphin-profile-settings-1.png"
@@ -224,13 +221,13 @@ export const AntidetectSetupGuideArticle = () => {
                 Здесь параметров больше, но это не значит, что каждый из них нужно обязательно менять.
               </BrowserHeading>
               <ol className="mt-7 space-y-4">
-                <StepItem>Нажмите New Profile. Для обычного профиля выбирайте SunBrowser, версию ядра Auto и нужную ОС.</StepItem>
-                <StepItem>В разделе Proxy выберите Custom, вставьте прокси и нажмите Check Proxy.</StepItem>
-                <StepItem>Timezone, Location и Language поставьте Based on IP.</StepItem>
-                <StepItem>Для WebRTC выберите «Прокси UDP». Если ваша прокси не поддерживает UDP, используйте «Подмену». Реальный IP оставлять не надо.</StepItem>
-                <StepItem>WebGPU оставьте Based on WebGL, остальные параметры отпечатка оставьте стандартными.</StepItem>
-                <StepItem>Не включайте Random fingerprint on startup для постоянного аккаунта: при следующем входе он не должен внезапно стать другим устройством.</StepItem>
-                <StepItem>Сохраните профиль, запустите его и проверьте IP и отпечаток.</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[1].steps[0]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[1].steps[1]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[1].steps[2]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[1].steps[3]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[1].steps[4]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[1].steps[5]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[1].steps[6]}</StepItem>
               </ol>
               <ArticleScreenshot
                 src="/article/antidetect-setup/adspower-profile-settings-1.png"
@@ -252,13 +249,13 @@ export const AntidetectSetupGuideArticle = () => {
                 Бесплатный вариант с локальными профилями. Точные параметры здесь тоже лучше доверить готовому шаблону.
               </BrowserHeading>
               <ol className="mt-7 space-y-4">
-                <StepItem>Нажмите Create Profile, задайте имя и выберите подходящий шаблон устройства.</StepItem>
-                <StepItem>Отключите генерацию нового случайного отпечатка при каждом запуске профиля.</StepItem>
-                <StepItem>Автоматическую настройку профиля оставьте включённой.</StepItem>
-                <StepItem>Timezone, Language и Geo оставьте Auto: значения подтянутся по IP подключённой прокси.</StepItem>
-                <StepItem>Для Canvas, WebGL и Audio используйте Auto noise. Вручную значения не собираем.</StepItem>
-                <StepItem>WebRTC оставьте Auto. Если есть выбор прокси, используйте SOCKS5 с поддержкой UDP.</StepItem>
-                <StepItem>Добавьте прокси, привяжите её к профилю, запустите браузер и переходите к проверке.</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[2].steps[0]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[2].steps[1]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[2].steps[2]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[2].steps[3]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[2].steps[4]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[2].steps[5]}</StepItem>
+                <StepItem>{articleFallbackContent.antidetect.sections[2].steps[6]}</StepItem>
               </ol>
               <ArticleScreenshot
                 src="/article/antidetect-setup/shardx-profile-settings.png"

@@ -1,3 +1,5 @@
+import { foreignCardArticle } from './foreignCardArticle.js';
+
 const guideTitle = (title) => ({
   ru: `${title.ru} | Hopscup Tools`,
   en: `${title.en} | Hopscup Tools`,
@@ -7,6 +9,22 @@ const guideTitle = (title) => ({
 });
 
 export const guidePages = [
+  {
+    id: 'guide-foreign-cards',
+    slug: 'zarubezhnaya-karta-s-popolneniem-rublyami',
+    article: foreignCardArticle,
+    name: { ru: 'Зарубежная карта с пополнением рублями: что выбрать', en: 'International cards funded with rubles' },
+    title: { ru: 'Зарубежная карта с пополнением рублями: PGON и ВездеКарта', en: 'International cards funded with rubles | Hopscup Tools' },
+    heading: { ru: 'Зарубежная карта с пополнением рублями: что выбрать', en: 'International cards funded with rubles' },
+    description: { ru: 'PGON, ВездеКарта и Zarub: пополнение через СБП или USDT, документы, курс и реальные расходы.', en: 'PGON, Vezdekarta and Zarub: funding, identification and costs.' },
+    keywords: { ru: 'зарубежная карта с пополнением рублями, виртуальная карта для зарубежных сервисов, PGON или ВездеКарта', en: 'international virtual card' },
+    editorial: {
+      description: { ru: 'Сравниваю PGON, ВездеКарту и Zarub: пополнение рублями или USDT, документы и итоговые комиссии.', en: 'Compare funding methods, identification and total costs.' },
+      bestFor: { ru: ['Выбор карты для подписок.', 'Пополнение через СБП или USDT.'], en: ['Choosing a card for subscriptions.'] },
+      considerations: { ru: ['Проверяйте итоговый курс и тариф перед операцией.'], en: ['Check current terms before funding.'] },
+      verdict: { ru: 'Выбирайте по способу пополнения и итоговой стоимости.', en: 'Compare funding and total costs.' },
+    },
+  },
   {
     id: 'guide-mobile-ip',
     slug: 'mobile-ip-airplane-mode',

@@ -40,6 +40,7 @@ const ARTICLE_THEME_KEY = 'hopscup-article-theme';
 
 const normalizeHref = (href: string | undefined, sourceAnchors: Record<string, string>) => {
   if (!href) return undefined;
+  if (href.startsWith('/') && !href.startsWith('//')) return href;
 
   const hashIndex = href.indexOf('#');
   if (hashIndex >= 0) {
@@ -70,7 +71,7 @@ const InlineContent = ({
       if (segment.em) node = <em>{node}</em>;
 
       if (safeHref) {
-        const isLocalAnchor = safeHref.startsWith('#');
+        const isLocalAnchor = safeHref.startsWith('#') || safeHref.startsWith('/');
         node = (
           <a
             href={safeHref}

@@ -5,6 +5,8 @@ import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { guidePages } from '../src/data/guidePages.js';
+import { pageHeadings } from '../src/data/pageHeadings.js';
+import { articleFallbackByRoute, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 import { legacyIndexedRoutes } from '../src/data/legacyIndexedRoutes.js';
 import { seoLandingPages } from '../src/data/seoLandingPages.js';
 import { smsPages } from '../src/data/smsPages.js';
@@ -46,13 +48,7 @@ const sections = [
       zh: 'Hopscup 精选目录：代理和 VPN、反检测浏览器、账号商店、虚拟卡、短信接码、VDS/VPS、加密货币兑换、Steam 充值和实用指南。',
       ko: 'Hopscup 큐레이션 디렉터리: 프록시와 VPN, 안티디텍트 브라우저, 계정 상점, 가상 카드, SMS 인증, VDS/VPS, 암호화폐 환전, Steam 충전, 실용 가이드.',
     },
-    heading: {
-      ru: 'Полезные сервисы для работы с аккаунтами и цифровыми задачами',
-      en: 'Useful services for accounts and digital workflows',
-      es: 'Servicios útiles para cuentas y tareas digitales',
-      zh: '账号和数字工作流实用服务',
-      ko: '계정과 디지털 작업을 위한 유용한 서비스',
-    },
+    heading: pageHeadings['/'],
     intro: {
       ru: 'На сайте собраны сервисы, которыми Hopscup пользуется для прокси, антидетектов, покупки аккаунтов, оплаты зарубежных сервисов, SMS-регистраций, серверов, крипты, Steam и реферальных задач.',
       en: 'This site collects services Hopscup uses for proxies, antidetect browsers, account purchases, international payments, SMS registrations, servers, crypto, Steam, and referral tasks.',
@@ -95,13 +91,7 @@ const sections = [
       zh: '精选代理和 VPN 服务：住宅、移动、ISP、IPv4/IPv6，支持银行卡和加密货币支付。',
       ko: '계정 작업과 자동화를 위한 residential, mobile, ISP, IPv4/IPv6 프록시 및 VPN 모음.',
     },
-    heading: {
-      ru: 'Прокси и VPN для рабочих задач',
-      en: 'Proxy and VPN services for work',
-      es: 'Proxies y VPN para trabajo',
-      zh: '工作任务用代理和 VPN',
-      ko: '작업용 프록시와 VPN',
-    },
+    heading: pageHeadings['/proxy-vpn'],
     intro: {
       ru: 'Раздел помогает подобрать прокси или VPN для аккаунтов, рекламных кабинетов, автоматизации, парсинга, ретродропов и повседневной работы с зарубежными сервисами.',
       en: 'This section helps choose proxy or VPN services for accounts, ad cabinets, automation, scraping, retro drops, and everyday work with international services.',
@@ -159,13 +149,7 @@ const sections = [
       zh: '反检测浏览器对比：免费配置文件、入门套餐、100 个配置文件价格以及基础/高级任务选择。',
       ko: '무료 프로필, 시작 요금제, 100개 프로필 가격, 기본/고급 작업용 안티디텍트 브라우저 비교.',
     },
-    heading: {
-      ru: 'Антидетект браузеры под разные уровни задач',
-      en: 'Antidetect browsers for different task levels',
-      es: 'Antidetects para distintos niveles de trabajo',
-      zh: '不同任务级别的反检测浏览器',
-      ko: '작업 난이도별 안티디텍트 브라우저',
-    },
+    heading: pageHeadings['/antidetect'],
     intro: {
       ru: 'Антидетект нужен, когда приходится вести несколько профилей и важно разделять отпечатки браузера, прокси, cookie и окружение аккаунтов.',
       en: 'Antidetect browsers help manage multiple profiles while separating browser fingerprints, proxies, cookies, and account environments.',
@@ -208,13 +192,7 @@ const sections = [
       zh: '用于购买账号、低价 ChatGPT Plus、Gemini Pro、Claude 订阅、Discord、Twitter、Google 和其他数字商品的网站与 Telegram 商店。',
       ko: '계정, 저렴한 ChatGPT Plus, Gemini Pro, Claude 구독, Discord, Twitter, Google 및 기타 디지털 상품 구매용 웹사이트와 Telegram 상점 모음.',
     },
-    heading: {
-      ru: 'Магазины аккаунтов, подписок и цифровых товаров',
-      en: 'Account, subscription, and digital goods stores',
-      es: 'Tiendas de cuentas, suscripciones y productos digitales',
-      zh: '账号、订阅和数字商品商店',
-      ko: '계정, 구독, 디지털 상품 상점',
-    },
+    heading: pageHeadings['/account-shop'],
     intro: {
       ru: 'Раздел для поиска аккаунтов, AI-подписок и цифровых товаров. Включает сайты вроде DarkStore/FunPay и Telegram-боты, где часто бывают дешевые подписки на ChatGPT, Gemini, Claude и другие сервисы.',
       en: 'This section covers accounts, AI subscriptions, and digital goods. It includes marketplaces like DarkStore/FunPay and Telegram bots with discounted ChatGPT, Gemini, Claude, and other subscriptions.',
@@ -257,13 +235,7 @@ const sections = [
       zh: '用于支付 ChatGPT、Gemini、Claude、App Store、Google Play、Airbnb、广告、订阅和其他海外服务的虚拟卡服务。',
       ko: 'ChatGPT, Gemini, Claude, App Store, Google Play, Airbnb, 광고, 구독 등 해외 서비스 결제를 위한 가상 카드 서비스.',
     },
-    heading: {
-      ru: 'Зарубежные карты для оплаты сервисов',
-      en: 'Foreign cards for service payments',
-      es: 'Tarjetas extranjeras para pagar servicios',
-      zh: '用于服务支付的海外卡',
-      ko: '서비스 결제를 위한 해외 카드',
-    },
+    heading: pageHeadings['/foreign-cards'],
     intro: {
       ru: 'Зарубежные карты помогают оплачивать сервисы, где российские карты не проходят: подписки на нейросети, магазины приложений, бронирования, рекламу и зарубежные платформы.',
       en: 'Foreign cards help pay for services where local cards may fail: AI subscriptions, app stores, bookings, ads, and international platforms.',
@@ -306,13 +278,7 @@ const sections = [
       zh: '用于买卖加密货币的兑换服务：线上兑换、线下方向、现金、银行卡、USDT 和常用网络。',
       ko: '온라인 환전, 오프라인 거래, 현금, 카드, USDT 및 주요 네트워크를 지원하는 암호화폐 교환 서비스.',
     },
-    heading: {
-      ru: 'Обмен крипты онлайн и офлайн',
-      en: 'Online and offline crypto exchange',
-      es: 'Cambio cripto online y offline',
-      zh: '线上与线下加密货币兑换',
-      ko: '온라인 및 오프라인 암호화폐 환전',
-    },
+    heading: pageHeadings['/crypto-exchange'],
     intro: {
       ru: 'Раздел для покупки, продажи и обмена криптовалюты через Telegram-боты, сайты и офлайн-направления. Перед сделкой важно сверять курс, сеть, лимиты и условия.',
       en: 'This section covers buying, selling, and exchanging crypto through Telegram bots, websites, and offline directions. Always check rates, networks, limits, and terms.',
@@ -334,7 +300,7 @@ const sections = [
       zh: ['兑换前检查汇率、手续费、网络和最低金额。', '第一次先用小额测试。', '大额交易前先确认交易方式和收款信息。'],
       ko: ['환전 전 환율, 수수료, 네트워크, 최소 금액을 확인하세요.', '첫 전송은 소액 테스트로 하세요.', '큰 금액은 거래 방식과 정보를 미리 확인하세요.'],
     },
-    items: ['Prosto Exchange', 'PGON', 'Keine Exchange'],
+    items: ['Prosto Exchange', 'Hermes Exchange', 'PGON', 'Keine Exchange'],
   },
   {
     id: 'sms',
@@ -355,13 +321,7 @@ const sections = [
       zh: '账号注册用短信接码和虚拟号码：地区、支付方式、加密货币、银行卡和本地充值方式。',
       ko: '계정 등록용 SMS 인증 및 가상 번호: 지역, 결제, 암호화폐, 카드, 현지 충전 방법.',
     },
-    heading: {
-      ru: 'SMS-активаторы для регистрации аккаунтов',
-      en: 'SMS activators for account registration',
-      es: 'Activadores SMS para registrar cuentas',
-      zh: '账号注册用 SMS 接码',
-      ko: '계정 등록용 SMS 인증',
-    },
+    heading: pageHeadings['/sms-activators'],
     intro: {
       ru: 'Виртуальные номера помогают получать SMS-коды для регистрации. Важно подбирать страну, сервис, процент доходимости и способ оплаты.',
       en: 'Virtual numbers help receive SMS codes for registrations. Pick country, target service, delivery rate, and payment method carefully.',
@@ -404,13 +364,7 @@ const sections = [
       zh: '用于机器人、脚本、采集、节点和远程工作的 VDS/VPS 主机：MaCloud、Xorek、VDSina、SpaceCore、AEZA。',
       ko: '봇, 스크립트, 스크래핑, 노드, 원격 작업용 VDS/VPS 호스팅: MaCloud, Xorek, VDSina, SpaceCore, AEZA.',
     },
-    heading: {
-      ru: 'VDS/VPS серверы для рабочих задач',
-      en: 'VDS/VPS servers for work tasks',
-      es: 'Servidores VDS/VPS para tareas de trabajo',
-      zh: '工作任务用 VDS/VPS 服务器',
-      ko: '작업용 VDS/VPS 서버',
-    },
+    heading: pageHeadings['/vps'],
     intro: {
       ru: 'Серверы пригодятся, когда бот, скрипт, парсер, нода или рабочая среда должны стабильно работать независимо от домашнего ПК.',
       en: 'Servers are useful when a bot, script, scraper, node, or work environment must run reliably without depending on a home PC.',
@@ -453,13 +407,7 @@ const sections = [
       zh: '用于推荐、注册、社交行为和 Telegram 任务的增长网站与任务平台，支持银行卡和加密货币支付。',
       ko: '추천인, 가입, 소셜 액션, Telegram 작업을 위한 부스트 사이트와 태스크 거래소. 카드 및 암호화폐 결제 지원.',
     },
-    heading: {
-      ru: 'Накрутка и буксы для рефералов',
-      en: 'Social boost and task exchanges for referrals',
-      es: 'Boost social y bolsas de tareas para referidos',
-      zh: '推荐和任务平台',
-      ko: '추천인용 소셜 부스트와 태스크 플랫폼',
-    },
+    heading: pageHeadings['/social-boost'],
     intro: {
       ru: 'Раздел для задач, где нужны регистрации, рефералы или простые действия от исполнителей: сайты накрутки дают скорость, буксы дают более ручной формат.',
       en: 'This section is for registrations, referrals, and simple user actions: boost sites provide speed, while task exchanges offer a more manual format.',
@@ -502,13 +450,7 @@ const sections = [
       zh: 'Steam 充值方式：通过登录名、CS/TF/Rust 物品、本地快速充值和物品充值。',
       ko: 'Steam 충전 방법: 로그인 충전, CS/TF/Rust 아이템 충전, 현지 빠른 충전, 아이템 충전.',
     },
-    heading: {
-      ru: 'Пополнение Steam быстро или через предметы',
-      en: 'Steam top-up by login or through items',
-      es: 'Recarga Steam por login o con ítems',
-      zh: '通过登录名或物品充值 Steam',
-      ko: '로그인 또는 아이템으로 Steam 충전',
-    },
+    heading: pageHeadings['/steam-topup'],
     intro: {
       ru: 'Можно пополнять Steam быстро по логину с комиссией или через предметы, если готов сверять цены и ждать продажи на маркете.',
       en: 'Steam can be topped up quickly by login with a fee or through items if you are ready to compare prices and wait for market sales.',
@@ -551,13 +493,7 @@ const sections = [
       zh: 'Hopscup 关于换 IP、Gmail 转发、账号农场、KYC/OTC 平台、UID 和交易所地址的指南。',
       ko: 'IP 변경, Gmail 포워딩, 계정 파밍, KYC/OTC 플랫폼, UID, 거래소 출금 주소에 대한 Hopscup 가이드.',
     },
-    heading: {
-      ru: 'Полезные гайды Hopscup',
-      en: 'Useful Hopscup guides',
-      es: 'Guías útiles de Hopscup',
-      zh: 'Hopscup 实用指南',
-      ko: 'Hopscup 유용한 가이드',
-    },
+    heading: pageHeadings['/guides'],
     intro: {
       ru: 'Здесь собраны отдельные материалы, которые помогают настроить базовую инфраструктуру: почты, IP, аккаунты, адреса и KYC/OTC-процессы.',
       en: 'This section collects practical materials for basic infrastructure: emails, IPs, accounts, addresses, and KYC/OTC processes.',
@@ -640,13 +576,7 @@ const servicePages = [
       zh: 'ProxyWing 评测：IPv4、ISP、Residential 和 Mobile 代理，覆盖 200 多个地区，支持 HTTP/SOCKS5，以及银行卡、SBP/Mir 或加密货币付款。',
       ko: 'ProxyWing 리뷰: IPv4, ISP, Residential, Mobile 프록시, 200개 이상의 지역, HTTP/SOCKS5, 카드, SBP/Mir 및 암호화폐 결제.',
     },
-    heading: {
-      ru: 'ProxyWing: IPv4, ISP, Residential и Mobile-прокси',
-      en: 'ProxyWing: IPv4, ISP, Residential, and Mobile proxies',
-      es: 'ProxyWing: proxies IPv4, ISP, Residential y Mobile',
-      zh: 'ProxyWing：IPv4、ISP、Residential 与 Mobile 代理',
-      ko: 'ProxyWing: IPv4, ISP, Residential 및 Mobile 프록시',
-    },
+    heading: pageHeadings['/proxy-vpn/proxywing'],
     intro: {
       ru: 'В ProxyWing есть обычные IPv4, ISP, Residential и Mobile-прокси. Я бы начинал с IPv4: их хватает для Gmail, Twitter, Discord, Telegram, антидетектов, парсинга и большинства обычных задач. Если конкретная площадка принимает их плохо, уже можно перейти на более дорогой тип и не менять сервис.',
       en: 'ProxyWing is convenient because regular IPv4, ISP, Residential, and Mobile proxies are available in one dashboard. IPv4 covers most everyday account, antidetect, automation, and scraping tasks. If a platform checks the IP source more strictly, you can switch types without changing providers.',
@@ -752,13 +682,7 @@ const servicePages = [
       zh: 'Proxyline 评测：价格实惠的 IPv4 与 IPv6 代理、覆盖 100 多个国家、付款方式以及服务器 IP 的适用场景。',
       ko: 'Proxyline 리뷰: 합리적인 IPv4 및 IPv6 프록시, 100개 이상의 국가, 결제 수단과 서버 IP 활용 사례.',
     },
-    heading: {
-      ru: 'Proxyline: недорогие IPv4 и IPv6 прокси',
-      en: 'Proxyline: affordable IPv4 and IPv6 proxies',
-      es: 'Proxyline: proxies IPv4 e IPv6 económicos',
-      zh: 'Proxyline：价格实惠的 IPv4 与 IPv6 代理',
-      ko: 'Proxyline: 합리적인 IPv4 및 IPv6 프록시',
-    },
+    heading: pageHeadings['/proxy-vpn/proxyline'],
     intro: {
       ru: 'Proxyline продаёт обычные серверные IPv4 и IPv6. Я бы смотрел его для парсинга, автоматизации, антидетектов и других задач, где не нужен мобильный или Residential-прокси.',
       en: 'Proxyline offers regular server IPv4 and IPv6 proxies. It is a straightforward option for scraping, automation, antidetect browsers, and account tasks that do not require a mobile or residential IP source.',
@@ -864,13 +788,7 @@ const servicePages = [
       zh: 'Proxy6 评测：IPv4、IPv6、Shared IPv4 和 MTProto 代理，覆盖 70 多个国家、付款方式及适用场景。',
       ko: 'Proxy6 리뷰: IPv4, IPv6, Shared IPv4, MTProto 프록시, 70개 이상의 국가, 결제 수단과 활용 사례.',
     },
-    heading: {
-      ru: 'Proxy6: IPv4, IPv6, Shared IPv4 и MTProto',
-      en: 'Proxy6: IPv4, IPv6, Shared IPv4, and MTProto',
-      es: 'Proxy6: IPv4, IPv6, Shared IPv4 y MTProto',
-      zh: 'Proxy6：IPv4、IPv6、Shared IPv4 与 MTProto',
-      ko: 'Proxy6: IPv4, IPv6, Shared IPv4 및 MTProto',
-    },
+    heading: pageHeadings['/proxy-vpn/proxy6'],
     intro: {
       ru: 'В Proxy6 есть отдельные IPv4, IPv6, Shared IPv4 и MTProto для Telegram. Сервис я бы смотрел, когда нужны недорогие серверные прокси или сразу много IP.',
       en: 'Proxy6 suits users who need affordable server proxies and several purchase formats. The service offers dedicated IPv4, IPv6, Shared IPv4, and MTProto for Telegram.',
@@ -976,13 +894,7 @@ const servicePages = [
       zh: 'MobileProxy 评测：支持更换 IP 的移动代理、覆盖 20 多个国家、付款方式以及需要移动网络 IP 的场景。',
       ko: 'MobileProxy 리뷰: IP 변경이 가능한 모바일 프록시, 20개 이상의 국가, 결제 수단과 모바일 IP가 필요한 활용 사례.',
     },
-    heading: {
-      ru: 'MobileProxy: мобильные прокси со сменой IP',
-      en: 'MobileProxy: mobile proxies with IP rotation',
-      es: 'MobileProxy: proxies móviles con cambio de IP',
-      zh: 'MobileProxy：支持更换 IP 的移动代理',
-      ko: 'MobileProxy: IP 변경이 가능한 모바일 프록시',
-    },
+    heading: pageHeadings['/proxy-vpn/mobileproxy'],
     intro: {
       ru: 'MobileProxy я пользуюсь больше трёх лет. Здесь можно взять мобильный прокси и менять IP много раз, что удобно для соцсетей, приложений и задач, где обычные серверные адреса режутся сильнее.',
       en: 'MobileProxy provides mobile addresses with IP rotation. This type is useful when a platform treats server proxies more strictly or the workflow requires a mobile carrier.',
@@ -1085,13 +997,7 @@ const servicePages = [
       zh: 'ProxyShard 评测：Residential、ISP、Mobile 和 Datacenter 代理，覆盖 100 多个国家、付款方式以及不同任务的 IP 类型选择。',
       ko: 'ProxyShard 리뷰: Residential, ISP, Mobile, Datacenter 프록시, 100개 이상의 국가, 결제 수단과 작업별 IP 유형 선택.',
     },
-    heading: {
-      ru: 'ProxyShard: разные типы прокси в одном сервисе',
-      en: 'ProxyShard: multiple proxy types in one service',
-      es: 'ProxyShard: varios tipos de proxy en un servicio',
-      zh: 'ProxyShard：一个服务中的多种代理类型',
-      ko: 'ProxyShard: 하나의 서비스에서 여러 프록시 유형',
-    },
+    heading: pageHeadings['/proxy-vpn/proxyshard'],
     intro: {
       ru: 'В ProxyShard есть Residential, Mobile, ISP и Datacenter-прокси. Я бы начал с более дешёвого Datacenter или ISP, а если конкретная площадка принимает его плохо, уже перешёл на Residential или Mobile.',
       en: 'ProxyShard combines Residential, Mobile, ISP, and Datacenter proxies. It is convenient when projects need different IP sources without changing providers.',
@@ -1140,13 +1046,7 @@ const servicePages = [
       zh: 'Proxy-Seller 评测：IPv4、IPv6、ISP、Residential、Mobile 和 Shared 代理，覆盖 220 多个国家，支持银行卡、加密货币和 PayPal。',
       ko: 'Proxy-Seller 리뷰: IPv4, IPv6, ISP, Residential, Mobile, Shared 프록시, 220개 이상의 국가와 카드, 암호화폐, PayPal 결제.',
     },
-    heading: {
-      ru: 'Proxy-Seller: большой выбор прокси и гео',
-      en: 'Proxy-Seller: a large proxy and location catalog',
-      es: 'Proxy-Seller: gran catálogo de proxies y GEO',
-      zh: 'Proxy-Seller：丰富的代理和地区目录',
-      ko: 'Proxy-Seller: 다양한 프록시와 지역',
-    },
+    heading: pageHeadings['/proxy-vpn/proxy-seller'],
     intro: {
       ru: 'Proxy-Seller один из самых качественных сервисов с прокси, которые я знаю. Особенно понравились их Residential. Большой выбор стран и типов здесь идёт приятным бонусом.',
       en: 'Proxy-Seller offers a large selection of countries and formats including IPv4, IPv6, ISP, Residential, Mobile, and Shared.',
@@ -1195,13 +1095,7 @@ const servicePages = [
       zh: 'Proxys.io 评测：IPv4、IPv6、Shared、Residential、Mobile 和 Dynamic 代理，覆盖 240 多个国家、付款方式及适用场景。',
       ko: 'Proxys.io 리뷰: IPv4, IPv6, Shared, Residential, Mobile, Dynamic 프록시, 240개 이상의 국가, 결제 수단과 활용 사례.',
     },
-    heading: {
-      ru: 'Proxys.io: универсальный каталог прокси',
-      en: 'Proxys.io: a versatile proxy catalog',
-      es: 'Proxys.io: catálogo universal de proxies',
-      zh: 'Proxys.io：综合代理目录',
-      ko: 'Proxys.io: 범용 프록시 카탈로그',
-    },
+    heading: pageHeadings['/proxy-vpn/proxys-io'],
     intro: {
       ru: 'Proxys.io могу рекомендовать и для обычных IPv4, и для Residential. Оба типа я здесь тестировал, всё работало хорошо. Для простых задач начал бы с IPv4.',
       en: 'Proxys.io combines IPv4, IPv6, Shared, Residential, Mobile, and Dynamic proxies for automation, accounts, and IP rotation.',
@@ -1250,13 +1144,7 @@ const servicePages = [
       zh: 'ALL VPN 评测：一份订阅包含 50 多种 VPN、100 多台服务器、无限流量、最多 10 台设备及 Telegram 付款。',
       ko: 'ALL VPN 리뷰: 하나의 구독으로 50개 이상의 VPN, 100개 이상의 서버, 무제한 트래픽, 최대 10대 기기와 Telegram 결제.',
     },
-    heading: {
-      ru: 'ALL VPN: несколько VPN в одной подписке',
-      en: 'ALL VPN: multiple VPN connections in one subscription',
-      es: 'ALL VPN: varias conexiones en una suscripción',
-      zh: 'ALL VPN：一份订阅包含多种 VPN',
-      ko: 'ALL VPN: 하나의 구독으로 여러 VPN 연결',
-    },
+    heading: pageHeadings['/proxy-vpn/all-vpn'],
     intro: {
       ru: 'ALL VPN собирает более 50 VPN и 100 серверов в одной подписке. Если один вариант перестал подключаться, можно переключиться на другой без поиска и покупки нового сервиса.',
       en: 'ALL VPN bundles more than 50 VPN options and 100 servers in one subscription, letting users switch connections without buying another service.',
@@ -1305,13 +1193,7 @@ const servicePages = [
       zh: 'PPL VPN 评测：支持 Windows、macOS、Android、iOS 和 Linux，覆盖 10 多个国家，提供 Telegram 机器人、网页面板和多种付款方式。',
       ko: 'PPL VPN 리뷰: Windows, macOS, Android, iOS, Linux, 10개 이상의 국가, Telegram 봇, 웹 대시보드와 결제 수단.',
     },
-    heading: {
-      ru: 'PPL VPN для повседневного использования',
-      en: 'PPL VPN for everyday use',
-      es: 'PPL VPN para uso diario',
-      zh: '适合日常使用的 PPL VPN',
-      ko: '일상 사용을 위한 PPL VPN',
-    },
+    heading: pageHeadings['/proxy-vpn/ppl-vpn'],
     intro: {
       ru: 'PPL VPN подойдёт для YouTube, зарубежных сайтов, приложений и обычного использования на каждый день. Удобно, что подпиской можно управлять и через Telegram, и через обычный сайт.',
       en: 'PPL VPN is made for foreign websites, apps, and video services, with management through Telegram or a web dashboard.',
@@ -1360,13 +1242,7 @@ const servicePages = [
       zh: 'ProstoVPN 评测：支持 Windows、macOS、Android、iOS、Linux 和 Smart TV，覆盖 10 多个国家，提供多种速度模式及银行卡或 SBP 付款。',
       ko: 'ProstoVPN 리뷰: Windows, macOS, Android, iOS, Linux, Smart TV, 10개 이상의 국가, 속도 모드와 카드 또는 SBP 결제.',
     },
-    heading: {
-      ru: 'ProstoVPN для нескольких устройств',
-      en: 'ProstoVPN for multiple devices',
-      es: 'ProstoVPN para varios dispositivos',
-      zh: '适合多设备的 ProstoVPN',
-      ko: '여러 기기용 ProstoVPN',
-    },
+    heading: pageHeadings['/proxy-vpn/prostovpn'],
     intro: {
       ru: 'ProstoVPN можно подключить к компьютеру, телефону, Linux и Smart TV. Я бы смотрел его, если VPN нужен сразу на нескольких устройствах и не хочется покупать отдельную подписку для каждого.',
       en: 'ProstoVPN supports major platforms and Smart TV, with modes for different networks and tasks.',
@@ -1415,13 +1291,7 @@ const servicePages = [
       zh: 'GIGA VPN 评测：提供三天免费试用，可通过 Telegram 使用 Incy 或 Happ 配置，支持 Windows、macOS、Android 和 iOS。',
       ko: 'GIGA VPN 리뷰: 3일 무료 이용, Telegram에서 Incy 또는 Happ를 통한 설정, Windows, macOS, Android 및 iOS 지원.',
     },
-    heading: {
-      ru: 'GIGA VPN через Telegram для компьютера и телефона',
-      en: 'GIGA VPN through Telegram for desktop and mobile',
-      es: 'GIGA VPN por Telegram para ordenador y móvil',
-      zh: '通过 Telegram 使用 GIGA VPN',
-      ko: 'Telegram을 통한 GIGA VPN',
-    },
+    heading: pageHeadings['/proxy-vpn/giga-vpn'],
     intro: {
       ru: 'GIGA VPN запускается через Telegram-бота и даёт три бесплатных дня на проверку. Для подключения используется клиент Incy или Happ, поэтому одна подписка подходит для Windows, macOS, Android и iOS.',
       en: 'GIGA VPN starts through a Telegram bot and includes three free trial days. It connects through Incy or Happ on Windows, macOS, Android, and iOS.',
@@ -1470,13 +1340,7 @@ const servicePages = [
       zh: 'Точка G VPN 评测：支持主流平台的配置、多个国家、通过机器人更换配置、Telegram 专用代理以及 SBP 或加密货币付款。',
       ko: 'Tochka G VPN 리뷰: 주요 플랫폼용 설정, 여러 국가, 봇을 통한 교체, 개인 Telegram 프록시와 SBP 또는 암호화폐 결제.',
     },
-    heading: {
-      ru: 'Точка G: VPN-конфиги и прокси для Telegram',
-      en: 'Tochka G: VPN configs and Telegram proxy',
-      es: 'Tochka G: configuraciones VPN y proxy de Telegram',
-      zh: 'Точка G：VPN 配置和 Telegram 代理',
-      ko: 'Tochka G: VPN 설정과 Telegram 프록시',
-    },
+    heading: pageHeadings['/proxy-vpn/tochka-g'],
     intro: {
       ru: 'Главный плюс Точки G в простоте: получил конфиг в Telegram и подключился. Если он перестал работать, можно быстро заменить его через бота или написать поддержке. Для Telegram отдельно дают персональный прокси.',
       en: 'Tochka G works through Telegram and focuses on config replacement and support, with a separate personal Telegram proxy.',
@@ -1525,13 +1389,7 @@ const servicePages = [
       zh: '提供按日和按月套餐，最多支持 15 台设备，支持暂停订阅、HAPP 自动服务器，以及用于白名单网络的独立加速器。',
       ko: '일일 및 월간 요금제, 최대 15대 기기, 구독 일시 정지, HAPP 자동 서버와 화이트리스트 네트워크용 별도 가속기를 제공하는 VPN입니다.',
     },
-    heading: {
-      ru: 'Giga Dollar VPN: тарифы по дням и до 15 устройств',
-      en: 'Giga Dollar VPN: daily plans and up to 15 devices',
-      es: 'Giga Dollar VPN: tarifas diarias y hasta 15 dispositivos',
-      zh: 'Giga Dollar VPN：按日套餐，最多 15 台设备',
-      ko: 'Giga Dollar VPN: 일일 요금제와 최대 15대 기기',
-    },
+    heading: pageHeadings['/proxy-vpn/giga-dollar-vpn'],
     intro: {
       ru: 'Giga Dollar VPN подойдет, если VPN нужен сразу на нескольких устройствах или всего на несколько дней. Отдельный плюс в Авто-сервере HAPP и Ускорителе для сетей с белыми списками.',
       en: 'Giga Dollar VPN is useful when you need VPN access on several devices or only for a few days. HAPP Auto Server and the allowlist-network Accelerator are the main extras.',
@@ -1674,7 +1532,7 @@ const servicePages = [
     logo: '/logo.png',
     title: { ru: 'Лучшие прокси-сервисы для аккаунтов: что выбрать в 2026 году | Hopscup Tools' },
     description: { ru: 'Сравнение семи прокси-сервисов: IPv4, ISP, Residential и Mobile для аккаунтов, антидетектов, рекламы, парсинга и автоматизации.' },
-    heading: { ru: 'Какие прокси выбрать в 2026 году' },
+    heading: pageHeadings['/proxy-vpn/luchshie-proksi'],
     intro: { ru: 'Практическое сравнение ProxyWing, Proxy-Seller, Proxyline, Proxy6, MobileProxy, ProxyShard и Proxys.io.' },
     keywords: { ru: 'лучшие прокси, прокси для аккаунтов, IPv4 прокси, мобильные прокси, прокси для антидетекта' },
     points: { ru: ['Выбор типа прокси под задачу.', 'Сравнение сервисов и тарифов.', 'Настройка и проверка IP.'] },
@@ -1689,13 +1547,14 @@ const servicePages = [
     logo: '/logo.png',
     title: { ru: 'Лучшие мобильные прокси 2026: сравнение сервисов | Hopscup Tools' },
     description: { ru: 'Сравнение MobileProxy, ProxyWing и Proxy-Seller: GEO, ротация IP, трафик, цены, ограничения и промокоды на мобильные прокси.' },
-    heading: { ru: 'Лучшие мобильные прокси в 2026 году' },
+    heading: pageHeadings['/proxy-vpn/luchshie-mobilnye-proksi'],
     intro: { ru: 'Практическое сравнение трёх сервисов и честный разбор ситуаций, когда мобильный IP оправдывает цену, а когда достаточно обычного IPv4.' },
     keywords: { ru: 'лучшие мобильные прокси, купить мобильные прокси, рейтинг мобильных прокси, мобильные прокси 4G 5G' },
     points: { ru: ['MobileProxy из личного опыта более трёх лет.', 'ProxyWing с короткими тарифами.', 'Proxy-Seller с выбором формата и оператора.'] },
     items: { ru: ['Модели оплаты и ротация IP.', 'Безлимитный трафик и одновременные подключения.', 'Когда мобильный прокси выгоднее IPv4.'] },
   }),
   ...guidePages.map((page) => createServicePage({
+    article: page.article,
     id: page.id,
     type: 'article',
     russianOnly: true,
@@ -1773,11 +1632,33 @@ const internalLinks = (language) =>
     .map((section) => `<a href="${localizedPath(section, language)}">${escapeHtml(getLanguage(section.heading, language))}</a>`)
     .join('\n        ');
 
+const renderArticleBody = (article, route) => {
+  const link = ({ href, label }) => `<a href="${escapeHtml(href)}">${escapeHtml(label)}</a>`;
+  const list = (items, tag = 'ul') => `<${tag}>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</${tag}>`;
+  const providers = route === '/proxy-vpn/luchshie-mobilnye-proksi'
+    ? `<section id="providers"><h2>Какой сервис выбрать</h2>${mobileProxyProviders.map((provider) => `
+        <section><h3>${escapeHtml(provider.name)}</h3><p>${escapeHtml(provider.summary)}</p>
+          <dl>${[['GEO', provider.locations], ['Смена IP', provider.rotation], ['Оплата', provider.billing], ['Цена входа', provider.entryPrice]].map(([name, value]) => `<dt>${escapeHtml(name)}</dt><dd>${escapeHtml(value)}</dd>`).join('')}</dl>
+          <h4>Сильные стороны</h4>${list(provider.strengths)}<h4>Что учитывать</h4>${list(provider.limitations)}
+          <p>${escapeHtml(provider.promoCode)} ${escapeHtml(provider.promoDiscount)}</p>
+          <a href="${escapeHtml(provider.url)}" rel="sponsored noopener noreferrer">Перейти</a>
+        </section>`).join('')}</section>`
+    : '';
+  return `${article.before ? `<section id="before"><h2>Важные моменты перед началом</h2>${list(article.before)}</section>` : ''}
+    ${providers}
+    ${article.sections.map((part) => `<section id="${escapeHtml(part.id)}"><h2>${escapeHtml(part.heading)}</h2>${list(part.steps, 'ol')}${part.links.map(link).join(' ')}</section>`).join('')}
+    ${article.result ? `<section id="result"><h2>Проверяем результат</h2><p>${escapeHtml(article.result)}</p></section>` : ''}
+    ${(article.links || []).map((item) => `<p>${link(item)}</p>`).join('')}`;
+};
+
 const renderStaticContent = (section, language) => {
-  const title = getLanguage(section.heading, language);
+  const article = articleFallbackByRoute[section.route];
+  const title = article?.title || getLanguage(section.heading, language);
   const intro = getLanguage(section.intro, language);
-  const heroTitle = section.heroHeading ? getLanguage(section.heroHeading, language) : title;
-  const heroIntro = section.heroIntro ? getLanguage(section.heroIntro, language) : intro;
+  const heroTitle = section.heroHeading && getLanguage(section.heroHeading, language) !== "Hopscup's Tools Hub"
+    ? getLanguage(section.heroHeading, language)
+    : title;
+  const heroIntro = article?.intro || (section.heroIntro ? getLanguage(section.heroIntro, language) : intro);
   const points = getLanguage(section.points, language);
   const items = Array.isArray(section.items) ? section.items : getLanguage(section.items, language);
   const labels = fallbackLabels[language.code] || fallbackLabels.en;
@@ -1790,14 +1671,18 @@ const renderStaticContent = (section, language) => {
   };
 
   return `
-      <article class="seo-fallback" aria-label="${escapeHtml(title)}">
-        <header>
+      <article class="seo-fallback"${article ? ` data-static-article="${escapeHtml(section.id)}"` : ''} aria-label="${escapeHtml(title)}">
+        ${article ? `<div class="fallback-topbar"><div><a href="/"><img src="/logo.webp" alt="Hopscup" width="40" height="40" /></a><a href="${escapeHtml(article.returnHref)}">${escapeHtml(article.returnLabel)}</a></div></div>` : ''}
+        <header class="fallback-hero">
+          ${article ? `<p class="fallback-badge">${escapeHtml(article.badge)}</p>` : ''}
           <h1>${escapeHtml(heroTitle)}</h1>
           <p>${escapeHtml(heroIntro)}</p>
+          ${article?.updated ? `<p class="fallback-updated">${escapeHtml(article.updated)}</p>` : ''}
         </header>
+        ${article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
         ${section.heroHeading ? `
         <section>
-          <h2>${escapeHtml(title)}</h2>
+          ${heroTitle !== title ? `<h2>${escapeHtml(title)}</h2>` : ''}
           <p>${escapeHtml(intro)}</p>
         </section>` : ''}
         <section>
@@ -1812,6 +1697,8 @@ const renderStaticContent = (section, language) => {
             ${items.map((item) => `<li>${renderItem(item)}</li>`).join('\n            ')}
           </ul>
         </section>
+          ${language.code === 'ru' && section.article ? section.article.map((part) => `<section><h2>${escapeHtml(part.heading)}</h2>${part.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}${(part.links || []).map((link) => `<a href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a>`).join(' ')}</section>`).join('') : ''}
+        `}
         <nav aria-label="${escapeHtml(labels.nav)}">
           ${internalLinks(language)}
         </nav>
@@ -1933,7 +1820,7 @@ const replaceHead = (html, section, language) => {
 };
 
 const replaceRootContent = (html, section, language) =>
-  html.replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root">${renderStaticContent(section, language)}\n    </div>`);
+  html.replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root">${renderStaticContent(section, section.russianOnly ? languages[0] : language)}\n    </div>`);
 
 const renderPage = (baseHtml, section, language) => replaceRootContent(replaceHead(stripSeoFallback(baseHtml), section, language), section, language);
 

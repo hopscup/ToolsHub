@@ -11,6 +11,7 @@ import { smsPages } from '../src/data/smsPages.js';
 import { socialPages } from '../src/data/socialPages.js';
 import { steamPages } from '../src/data/steamPages.js';
 import { vpsPages } from '../src/data/vpsPages.js';
+import { articleFallbackByRoute, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 
 const distDir = path.resolve('dist');
 const siteUrl = 'https://hopscup.tools';
@@ -73,6 +74,41 @@ const errors = [];
 const titles = new Set();
 const read = (file) => readFile(path.join(distDir, file), 'utf8');
 const matches = (html, expression) => [...html.matchAll(expression)];
+const escapeHtml = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+const checkArticleContent = (html, route, localizedRoute) => {
+  const article = articleFallbackByRoute[route];
+  if (!article) return;
+  const text = [article.title, article.intro, ...(article.before || []), ...(article.result ? [article.result] : []), ...article.sections.flatMap((part) => part.steps)];
+  const links = [...article.sections.flatMap((part) => part.links), ...(article.links || [])];
+  if (route === '/proxy-vpn/luchshie-mobilnye-proksi') {
+    for (const provider of mobileProxyProviders) {
+      text.push(provider.name, provider.summary, provider.locations, provider.rotation, provider.billing, provider.entryPrice, ...provider.strengths, ...provider.limitations);
+      links.push({ href: provider.url });
+    }
+  }
+  if (!html.includes(`<h1>${escapeHtml(article.title)}</h1>`)) errors.push(`Wrong article H1: ${localizedRoute}`);
+  for (const part of text) {
+    if (!html.includes(escapeHtml(part))) errors.push(`Missing approved article content: ${localizedRoute}: ${part}`);
+  }
+  for (const { href } of links) {
+    if (!html.includes(`href="${escapeHtml(href)}"`)) errors.push(`Missing article CTA: ${localizedRoute}: ${href}`);
+  }
+};
+
+const checkFallback = (html, route) => {
+  if (matches(html, /<article class="seo-fallback"/g).length !== 1) {
+    errors.push(`Expected one static fallback: ${route}`);
+  }
+  if (!/<div id="root">\s*<article class="seo-fallback"/.test(html)) {
+    errors.push(`Static fallback must be replaced inside React root: ${route}`);
+  }
+  const rules = matches(html, /\.seo-fallback[^{}]*\{([^{}]*)\}/g);
+  const hidingDeclaration = /(?:display\s*:\s*none|visibility\s*:\s*(?:hidden|collapse)|opacity\s*:\s*0(?:\D|$)|(?:max-)?(?:width|height)\s*:\s*[01]px|overflow(?:-[xy])?\s*:\s*hidden|clip(?:-path)?\s*:|position\s*:\s*(?:absolute|fixed)|text-indent\s*:\s*-)/i;
+  if (rules.length === 0 || rules.some((rule) => hidingDeclaration.test(rule[1]))) {
+    errors.push(`Static fallback has missing or hiding styles: ${route}`);
+  }
+};
 
 for (const language of languages) {
   for (const route of routes) {
@@ -88,6 +124,8 @@ for (const language of languages) {
     }
 
     const title = html.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim();
+    checkFallback(html, localizedRoute);
+    checkArticleContent(html, route, localizedRoute);
     const description = html.match(/<meta name="description" content="([^"]+)" \/>/)?.[1]?.trim();
     const canonical = html.match(/<link rel="canonical" href="([^"]+)" \/>/)?.[1];
     const robotsMeta = html.match(/<meta name="robots" content="([^"]+)" \/>/)?.[1];
@@ -136,6 +174,7 @@ for (const language of languages) {
 }
 
 const rootHtml = await read('index.html');
+checkFallback(rootHtml, '/');
 if (!rootHtml.includes(`<link rel="canonical" href="${siteUrl}" />`)) {
   errors.push('Root page must use a self-referencing canonical');
 }
