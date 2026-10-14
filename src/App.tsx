@@ -3379,7 +3379,7 @@ const OFFERS: Offer[] = [
       ru: 'Проверяет адрес или транзакцию и показывает общий риск и категории, которые на него влияют.',
       en: 'Checks an address or transaction and shows the overall risk and contributing categories.'
     },
-    url: 'https://t.me/cryptoaml_bot',
+    url: 'https://amlbot.com/',
     logoUrl: '/amlbot.png',
     details: {
       geo: { ru: 'Telegram-бот и веб-сервис', en: 'Telegram bot and web service' },
