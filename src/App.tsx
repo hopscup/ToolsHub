@@ -5938,7 +5938,9 @@ export default function App() {
   }, [selectedOffer, lang]);
 
   const activeCategoryData = CATEGORIES.find(c => c.id === activeCategory);
-  const currentSectionSeo = SECTION_SEO[activeCategory];
+  const currentSectionSeo = currentSeoLanding?.id === 'crypto-aml-checks'
+    ? currentSeoLanding
+    : SECTION_SEO[activeCategory];
   const SectionHeading = selectedOffer ? 'h2' : 'h1';
   const sectionHeading = currentSeoLanding?.heading
     || pageHeadings[isHomeRoute ? '/' : CATEGORY_ROUTES[activeCategory]]
