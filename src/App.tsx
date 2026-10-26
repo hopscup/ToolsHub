@@ -15,6 +15,7 @@ import { OtcKycGuideArticle } from './components/OtcKycGuideArticle';
 import { ExchangeUidsGuideArticle } from './components/ExchangeUidsGuideArticle';
 import { AntidetectSetupGuideArticle } from './components/AntidetectSetupGuideArticle';
 import { ForeignCardGuideArticle } from './components/ForeignCardGuideArticle';
+import { DiscordTokenGuideArticle } from './components/DiscordTokenGuideArticle';
 import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
@@ -92,10 +93,11 @@ type Localized<T = string> = Partial<Record<Language, T>> & { ru: T; en: T };
 
 type CategoryType = 'Proxy' | 'Antidetect' | 'Stores' | 'Cards' | 'Crypto' | 'SMS' | 'VPS' | 'Social' | 'Steam' | 'Guides';
 
-type SubCategory = 'Proxy' | 'VPN' | 'PCBasic' | 'PCAdvanced' | 'Mobile' | 'NoKYC' | 'WithKYC' | 'CardCrypto' | 'USDTQR' | 'Web' | 'Bot' | 'AML' | 'BoostSites' | 'Bux' | 'SteamFast' | 'SteamItems' | 'None';
+type SubCategory = 'Proxy' | 'VPN' | 'PCBasic' | 'PCAdvanced' | 'Mobile' | 'NoKYC' | 'WithKYC' | 'CardCrypto' | 'USDTQR' | 'Web' | 'Bot' | 'AML' | 'Wallet' | 'BoostSites' | 'Bux' | 'SteamFast' | 'SteamItems' | 'None';
 type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto';
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
+  'guide-discord-token': { topic: 'accounts', minutes: 6 },
   'guide-foreign-cards': { topic: 'crypto', minutes: 7 },
   'guide-mobile-ip': { topic: 'proxy', minutes: 4 },
   'guide-gmail-forwarding': { topic: 'accounts', minutes: 5 },
@@ -372,7 +374,7 @@ const CATEGORIES: { id: CategoryType; icon: any; title: Localized; subFilters?: 
     id: 'Crypto', 
     icon: Coins, 
     title: { ru: 'Купить/продать крипту', en: 'Buy/Sell Crypto', es: 'Comprar/vender cripto', zh: '买卖加密货币', ko: '암호화폐 매매' },
-    subFilters: ['AML'],
+    subFilters: ['AML', 'Wallet'],
     guides: { text: '#', video: '#' }
   },
   { id: 'SMS', icon: MessageSquare, title: { ru: 'SMS Активаторы', en: 'SMS Activators', es: 'SMS Activadores', zh: '短信接码', ko: 'SMS 인증' } },
@@ -447,6 +449,11 @@ const ACCOUNT_FARM_GUIDE_ARTICLE_ROUTE = '/guides/account-farm';
 const OTC_KYC_GUIDE_ARTICLE_ROUTE = '/guides/crypto-otc-kyc';
 const EXCHANGE_UIDS_GUIDE_ARTICLE_ROUTE = '/guides/exchange-uids-addresses';
 const ANTIDETECT_SETUP_GUIDE_ARTICLE_ROUTE = '/guides/kak-nastroit-antidetect-brauzer';
+const DISCORD_TOKEN_GUIDE_ARTICLE_ROUTE = '/guides/discord-vhod-po-tokenu';
+
+const isDiscordTokenGuideArticlePath = (
+  path = typeof window !== 'undefined' ? window.location.pathname : '/',
+) => stripLanguagePrefix(path) === DISCORD_TOKEN_GUIDE_ARTICLE_ROUTE;
 
 const isProxyGuideArticlePath = (
   path = typeof window !== 'undefined' ? window.location.pathname : '/',
@@ -2007,6 +2014,16 @@ const OFFERS: Offer[] = [
   },
   // PROXY
   {
+    id: 'guide-discord-token',
+    category: 'Guides',
+    name: 'Как войти в Discord по токену: расширение и F12',
+    slug: GUIDE_PAGE_BY_ID['guide-discord-token'].slug,
+    editorial: GUIDE_PAGE_BY_ID['guide-discord-token'].editorial,
+    description: GUIDE_PAGE_BY_ID['guide-discord-token'].editorial.description,
+    url: DISCORD_TOKEN_GUIDE_ARTICLE_ROUTE,
+    details: {},
+  },
+  {
     id: 'guide-foreign-cards',
     category: 'Guides',
     name: 'Зарубежная карта с пополнением рублями: что выбрать',
@@ -3416,6 +3433,102 @@ const OFFERS: Offer[] = [
     details: {
       geo: { ru: 'Веб-сервис и Telegram-бот', en: 'Web service and Telegram bot' },
       types: { ru: 'AML-проверка адресов и транзакций', en: 'AML checks for addresses and transactions' }
+    }
+  },
+  {
+    id: 'metamask-wallet',
+    category: 'Crypto',
+    subCategory: 'Wallet',
+    name: 'MetaMask',
+    description: {
+      ru: 'Мультичейн-кошелёк для браузера с поддержкой EVM-сетей и крупных не-EVM сетей.',
+      en: 'A multichain browser wallet supporting EVM networks and major non-EVM chains.'
+    },
+    url: 'https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=ru',
+    logoUrl: '/metamask.png',
+    details: {
+      geo: { ru: 'Ethereum, Solana, Bitcoin, Tron, Base, BNB Chain, Arbitrum, Polygon, Avalanche и другие', en: 'Ethereum, Solana, Bitcoin, Tron, Base, BNB Chain, Arbitrum, Polygon, Avalanche, and more' },
+      types: { ru: 'ETH, SOL, BTC, TRX, BNB, POL, AVAX и нативная монета выбранной сети', en: 'ETH, SOL, BTC, TRX, BNB, POL, AVAX, and the selected network native coin' }
+    }
+  },
+  {
+    id: 'rabby-wallet',
+    category: 'Crypto',
+    subCategory: 'Wallet',
+    name: 'Rabby Wallet',
+    description: {
+      ru: 'Кошелёк для Ethereum и EVM-сетей с автоматическим выбором сети и симуляцией транзакций.',
+      en: 'A wallet for Ethereum and EVM networks with automatic network selection and transaction simulation.'
+    },
+    url: 'https://chromewebstore.google.com/detail/rabby-wallet/acmacodkjbdgmoleebolmdjonilkdbch?hl=ru',
+    logoUrl: '/rabby-wallet.png',
+    details: {
+      geo: { ru: 'Ethereum и EVM-сети: Arbitrum, Base, BNB Chain, Polygon, Optimism, Avalanche и другие', en: 'Ethereum and EVM networks: Arbitrum, Base, BNB Chain, Polygon, Optimism, Avalanche, and more' },
+      types: { ru: 'ETH, BNB, POL, AVAX и нативная монета выбранной EVM-сети', en: 'ETH, BNB, POL, AVAX, and the selected EVM network native coin' }
+    }
+  },
+  {
+    id: 'phantom-wallet',
+    category: 'Crypto',
+    subCategory: 'Wallet',
+    name: 'Phantom',
+    description: {
+      ru: 'Мультичейн-кошелёк, который особенно популярен в экосистеме Solana.',
+      en: 'A multichain wallet especially popular in the Solana ecosystem.'
+    },
+    url: 'https://chromewebstore.google.com/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa?hl=ru',
+    logoUrl: '/phantom.png',
+    details: {
+      geo: { ru: 'Solana, Ethereum, Bitcoin, Base, Polygon, BNB Chain, HyperEVM и другие', en: 'Solana, Ethereum, Bitcoin, Base, Polygon, BNB Chain, HyperEVM, and more' },
+      types: { ru: 'SOL, ETH, BTC, BNB, POL и нативная монета выбранной сети', en: 'SOL, ETH, BTC, BNB, POL, and the selected network native coin' }
+    }
+  },
+  {
+    id: 'backpack-wallet',
+    category: 'Crypto',
+    subCategory: 'Wallet',
+    name: 'Backpack',
+    description: {
+      ru: 'Кошелёк для Solana и популярных EVM-сетей с поддержкой NFT и аппаратных кошельков.',
+      en: 'A wallet for Solana and popular EVM networks with NFT and hardware wallet support.'
+    },
+    url: 'https://chromewebstore.google.com/detail/backpack/aflkmfhebedbjioipglgcbcmnbpgliof?hl=ru',
+    logoUrl: '/backpack.png',
+    details: {
+      geo: { ru: 'Solana, Ethereum, Optimism, Arbitrum, Polygon, Base, Sonic и другие', en: 'Solana, Ethereum, Optimism, Arbitrum, Polygon, Base, Sonic, and more' },
+      types: { ru: 'SOL, ETH, POL, S и нативная монета выбранной сети', en: 'SOL, ETH, POL, S, and the selected network native coin' }
+    }
+  },
+  {
+    id: 'trust-wallet',
+    category: 'Crypto',
+    subCategory: 'Wallet',
+    name: 'Trust Wallet',
+    description: {
+      ru: 'Универсальный мультичейн-кошелёк с поддержкой более 100 блокчейн-сетей.',
+      en: 'A general-purpose multichain wallet supporting more than 100 blockchain networks.'
+    },
+    url: 'https://chromewebstore.google.com/detail/trust-wallet/egjidjbpglichdcondbcbdnbeeppgdph?hl=ru',
+    logoUrl: '/trust-wallet.png',
+    details: {
+      geo: { ru: '100+ сетей: Ethereum, Bitcoin, BNB Chain, Solana, Tron, Polygon, TON и другие', en: '100+ networks: Ethereum, Bitcoin, BNB Chain, Solana, Tron, Polygon, TON, and more' },
+      types: { ru: 'ETH, BTC, BNB, SOL, TRX, POL, TON и нативная монета выбранной сети', en: 'ETH, BTC, BNB, SOL, TRX, POL, TON, and the selected network native coin' }
+    }
+  },
+  {
+    id: 'tronlink-wallet',
+    category: 'Crypto',
+    subCategory: 'Wallet',
+    name: 'TronLink',
+    description: {
+      ru: 'Кошелёк с глубокой поддержкой TRON и дополнительной поддержкой нескольких EVM-сетей.',
+      en: 'A wallet with deep TRON support and additional support for several EVM networks.'
+    },
+    url: 'https://chromewebstore.google.com/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec?hl=ru',
+    logoUrl: '/tronlink.png',
+    details: {
+      geo: { ru: 'TRON, Ethereum, BNB Chain и BTTC', en: 'TRON, Ethereum, BNB Chain, and BTTC' },
+      types: { ru: 'TRX для TRON; ETH, BNB и BTT для поддерживаемых EVM-сетей', en: 'TRX for TRON; ETH, BNB, and BTT for supported EVM networks' }
     }
   },
   {
@@ -5541,8 +5654,10 @@ export default function App() {
       if (!hasQuery) {
         const matchesCategory = o.category === activeCategory;
         const matchesSub = subFilter === 'None' || o.subCategory === subFilter || o.subCategories?.includes(subFilter);
-        const hideAmlToolsFromExchangeList = activeCategory === 'Crypto' && subFilter === 'None' && o.subCategory === 'AML';
-        return matchesCategory && matchesSub && !hideAmlToolsFromExchangeList;
+        const hideCryptoToolsFromExchangeList = activeCategory === 'Crypto'
+          && subFilter === 'None'
+          && (o.subCategory === 'AML' || o.subCategory === 'Wallet');
+        return matchesCategory && matchesSub && !hideCryptoToolsFromExchangeList;
       }
 
       const categoryData = CATEGORIES.find(c => c.id === o.category);
@@ -5559,7 +5674,7 @@ export default function App() {
 
     const proxyOrder = ['MobileProxy', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'ProxyShard', 'Proxys.io'];
     const cardOrder = ['Zarub', 'PGON', 'Vezdekarta', 'Pionex', 'Cashin Out'];
-    const cryptoOrder = ['Prosto Exchange', 'Keine Exchange', 'PGON', 'Hermes Exchange', 'AMLBot', 'BitOK', 'GetBlock'];
+    const cryptoOrder = ['Prosto Exchange', 'Keine Exchange', 'PGON', 'Hermes Exchange', 'AMLBot', 'BitOK', 'GetBlock', 'MetaMask', 'Rabby Wallet', 'Phantom', 'Backpack', 'Trust Wallet', 'TronLink'];
     return offers.sort((first, second) => {
       if (first.category === 'Cards' && second.category === 'Cards') {
         return cardOrder.indexOf(first.name) - cardOrder.indexOf(second.name);
@@ -5577,6 +5692,7 @@ export default function App() {
 
   const renderGuideIcon = (id: string, className: string) => {
     const guideIcons: Record<string, any> = {
+      'guide-discord-token': MessageSquare,
       'guide-mobile-ip': Smartphone,
       'guide-gmail-forwarding': Mail,
       'guide-account-farm': Users,
@@ -5707,6 +5823,7 @@ export default function App() {
       Web: tx({ ru: 'Сайты', en: 'Websites', es: 'Sitios web', zh: '网站', ko: '웹사이트' }),
       Bot: tx({ ru: 'Боты в Telegram', en: 'Telegram Bots', es: 'Bots de Telegram', zh: 'Telegram 机器人', ko: 'Telegram 봇' }),
       AML: tx({ ru: 'AML проверка', en: 'AML check', es: 'Control AML', zh: 'AML 检查', ko: 'AML 검사' }),
+      Wallet: tx({ ru: 'Кошельки', en: 'Wallets', es: 'Carteras', zh: '钱包', ko: '지갑' }),
       BoostSites: tx({ ru: 'Сайты накрутки', en: 'Boost Sites', es: 'Sitios de boost', zh: '增长网站', ko: '부스트 사이트' }),
       Bux: tx({ ru: 'Буксы', en: 'Task Exchanges', es: 'Bolsas de tareas', zh: '任务平台', ko: '태스크 거래소' }),
       SteamFast: tx({ ru: 'Быстро по логину', en: 'Fast by login', es: 'Rápido por login', zh: '登录名快速充值', ko: '로그인 빠른 충전' }),
@@ -5815,9 +5932,14 @@ export default function App() {
 
   const handleSubFilterChange = (nextSubFilter: SubCategory) => {
     if (activeCategory === 'Crypto') {
-      const amlLanding = SEO_LANDING_PAGES.find((page) => page.id === 'crypto-aml-checks');
-      const nextRoute = nextSubFilter === 'AML' && amlLanding
-        ? getLocalizedSeoLandingRoute(amlLanding, lang)
+      const landingId = nextSubFilter === 'AML'
+        ? 'crypto-aml-checks'
+        : nextSubFilter === 'Wallet'
+          ? 'crypto-wallets'
+          : null;
+      const landing = landingId ? SEO_LANDING_PAGES.find((page) => page.id === landingId) : undefined;
+      const nextRoute = landing
+        ? getLocalizedSeoLandingRoute(landing, lang)
         : getLocalizedRoute('Crypto', lang);
 
       if (window.location.pathname !== nextRoute) {
@@ -5910,6 +6032,7 @@ export default function App() {
       || isOtcKycGuideArticlePath()
       || isExchangeUidsGuideArticlePath()
       || isAntidetectSetupGuideArticlePath()
+      || isDiscordTokenGuideArticlePath()
     ) {
       document.body.style.removeProperty('overflow');
       document.body.style.setProperty('overflow-y', 'auto');
@@ -5938,7 +6061,7 @@ export default function App() {
   }, [selectedOffer, lang]);
 
   const activeCategoryData = CATEGORIES.find(c => c.id === activeCategory);
-  const currentSectionSeo = currentSeoLanding?.id === 'crypto-aml-checks'
+  const currentSectionSeo = currentSeoLanding && ['crypto-aml-checks', 'crypto-wallets'].includes(currentSeoLanding.id)
     ? currentSeoLanding
     : SECTION_SEO[activeCategory];
   const SectionHeading = selectedOffer ? 'h2' : 'h1';
@@ -6025,6 +6148,10 @@ export default function App() {
 
   if (isAntidetectSetupGuideArticle) {
     return <AntidetectSetupGuideArticle />;
+  }
+
+  if (isDiscordTokenGuideArticlePath()) {
+    return <DiscordTokenGuideArticle />;
   }
 
   if (stripLanguagePrefix(window.location.pathname) === '/guides/zarubezhnaya-karta-s-popolneniem-rublyami') {
@@ -6424,6 +6551,7 @@ export default function App() {
                     onClick={(event) => {
                       if (
                         offer.id === 'guide-mobile-ip'
+                        || offer.id === 'guide-discord-token'
                         || offer.id === 'guide-foreign-cards'
                         || offer.id === 'guide-gmail-forwarding'
                         || offer.id === 'guide-account-farm'
@@ -6563,7 +6691,7 @@ export default function App() {
                           </p>
                         )}
 
-                        {offer.subCategory === 'AML' && (
+                        {(offer.subCategory === 'AML' || offer.subCategory === 'Wallet') && (
                           <p className="mb-6 min-h-[3.5rem] text-base font-medium leading-relaxed text-white/60 transition-colors group-hover:text-white">
                             {offerDescription(offer)}
                           </p>
@@ -6658,18 +6786,22 @@ export default function App() {
                             <InfoRow icon={CreditCard} label={t.tariffStart} value={l(offer.tariffStartPrice)} />
                             <InfoRow icon={Percent} label={t.rate} value={l(offer.details?.rate)} />
                             <InfoRow
-                              icon={offer.subCategory === 'AML' ? Monitor : Globe}
+                              icon={offer.subCategory === 'AML' ? Monitor : offer.subCategory === 'Wallet' ? Layers : Globe}
                               label={offer.subCategory === 'AML'
                                 ? tx({ ru: 'Формат', en: 'Format', es: 'Formato', zh: '使用方式', ko: '이용 방식' })
-                                : t.geo}
+                                : offer.subCategory === 'Wallet'
+                                  ? tx({ ru: 'Сети', en: 'Networks', es: 'Redes', zh: '网络', ko: '네트워크' })
+                                  : t.geo}
                               value={l(offer.details?.geo)}
                             />
                             {offer.subCategory !== 'VPN' && (
                               <InfoRow
-                                icon={offer.subCategory === 'AML' ? ShieldCheck : Layers}
+                                icon={offer.subCategory === 'AML' ? ShieldCheck : offer.subCategory === 'Wallet' ? Coins : Layers}
                                 label={offer.subCategory === 'AML'
                                   ? tx({ ru: 'Что проверяет', en: 'Checks', es: 'Qué comprueba', zh: '检查内容', ko: '검사 항목' })
-                                  : t.types}
+                                  : offer.subCategory === 'Wallet'
+                                    ? tx({ ru: 'Монета для Gas', en: 'Gas coin', es: 'Moneda para gas', zh: 'Gas 代币', ko: '가스 코인' })
+                                    : t.types}
                                 value={l(offer.details?.types)}
                               />
                             )}
@@ -6714,7 +6846,7 @@ export default function App() {
 
                   <div className="space-y-4 relative z-10 pt-1">
                     <div className="flex flex-col gap-3">
-                      {offer.subCategory === 'AML' ? (
+                      {offer.subCategory === 'AML' || offer.subCategory === 'Wallet' ? (
                         <a
                           href={offer.url}
                           target="_blank"
@@ -6730,7 +6862,9 @@ export default function App() {
                           })}
                           className="w-full flex items-center justify-center gap-3 py-5 bg-brand-purple hover:bg-white text-white hover:text-brand-purple border-2 border-brand-purple transition-all duration-300 rounded-[1.5rem] font-black text-sm uppercase tracking-[0.2em] shadow-[0_10px_30px_rgba(157,88,255,0.2)] hover:shadow-[0_15px_40px_rgba(157,88,255,0.4)]"
                         >
-                          {t.openWebsite}
+                          {offer.subCategory === 'Wallet'
+                            ? tx({ ru: 'Открыть', en: 'Open', es: 'Abrir', zh: '打开', ko: '열기' })
+                            : t.openWebsite}
                           <ExternalLink className="h-4 w-4" />
                         </a>
                       ) : offer.slug ? (

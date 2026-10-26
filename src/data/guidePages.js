@@ -1,4 +1,5 @@
 import { foreignCardArticle } from './foreignCardArticle.js';
+import { discordTokenArticle, discordTokenStaticArticle } from './discordTokenArticle.js';
 
 const guideTitle = (title) => ({
   ru: `${title.ru} | Hopscup Tools`,
@@ -9,6 +10,22 @@ const guideTitle = (title) => ({
 });
 
 export const guidePages = [
+  {
+    id: 'guide-discord-token',
+    slug: 'discord-vhod-po-tokenu',
+    article: discordTokenStaticArticle,
+    name: { ru: 'Как войти в Discord по токену: расширение и F12', en: 'Discord token login: extension and F12' },
+    title: { ru: `${discordTokenArticle.title} | Hopscup Tools`, en: 'Discord token login: extension and F12 | Hopscup Tools' },
+    heading: { ru: discordTokenArticle.title, en: 'Discord token login: extension and F12' },
+    description: { ru: discordTokenArticle.description, en: 'Discord Token Login and a fallback using browser developer tools, with screenshots and troubleshooting.' },
+    keywords: { ru: 'как войти в дискорд по токену, вход в Discord по токену, Discord Token Login, авторизация Discord через F12, token Local Storage', en: 'Discord token login, Discord Token Login extension, Discord F12 Local Storage' },
+    editorial: {
+      description: { ru: 'Два способа входа в Discord по токену: через расширение и F12. Скриншоты, формат строки и разбор ошибок.', en: 'Two Discord token login methods with screenshots and troubleshooting.' },
+      bestFor: { ru: ['Вход через Discord Token Login.', 'Запасной способ через F12 и Local Storage.'], en: ['Discord Token Login.', 'F12 and Local Storage fallback.'] },
+      considerations: { ru: ['Вставляйте только токен, без почты и пароля.', 'В Local Storage выбирайте https://discord.com.', 'Не публикуйте данные доступа.'], en: ['Copy only the token.', 'Select https://discord.com in Local Storage.', 'Keep account credentials private.'] },
+      verdict: { ru: 'Начните с расширения. Если оно не срабатывает, проверьте формат токена и попробуйте способ через Application в F12.', en: 'Start with the extension, then check the token format and try Application in developer tools.' },
+    },
+  },
   {
     id: 'guide-foreign-cards',
     slug: 'zarubezhnaya-karta-s-popolneniem-rublyami',

@@ -231,7 +231,7 @@ export const ImportedGuideArticle = ({
                 </p>
               );
             })}
-            <RelatedGuides items={related} />
+            {related.length > 0 && <RelatedGuides items={related} />}
           </article>
         </div>
       </main>
