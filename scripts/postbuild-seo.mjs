@@ -1823,7 +1823,8 @@ const replaceHead = (html, section, language) => {
 };
 
 const replaceRootContent = (html, section, language) =>
-  html.replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root">${renderStaticContent(section, section.russianOnly ? languages[0] : language)}\n    </div>`);
+  // Keep the no-JavaScript page readable without flashing it before React mounts.
+  html.replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root"><noscript>${renderStaticContent(section, section.russianOnly ? languages[0] : language)}\n    </noscript></div>`);
 
 const renderPage = (baseHtml, section, language) => replaceRootContent(replaceHead(stripSeoFallback(baseHtml), section, language), section, language);
 

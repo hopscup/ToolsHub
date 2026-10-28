@@ -101,8 +101,8 @@ const checkFallback = (html, route) => {
   if (matches(html, /<article class="seo-fallback"/g).length !== 1) {
     errors.push(`Expected one static fallback: ${route}`);
   }
-  if (!/<div id="root">\s*<article class="seo-fallback"/.test(html)) {
-    errors.push(`Static fallback must be replaced inside React root: ${route}`);
+  if (!/<div id="root">\s*<noscript>\s*<article class="seo-fallback"[\s\S]*?<\/article>\s*<\/noscript>\s*<\/div>/.test(html)) {
+    errors.push(`Static fallback must be a no-JavaScript page inside React root: ${route}`);
   }
   const rules = matches(html, /\.seo-fallback[^{}]*\{([^{}]*)\}/g);
   const hidingDeclaration = /(?:display\s*:\s*none|visibility\s*:\s*(?:hidden|collapse)|opacity\s*:\s*0(?:\D|$)|(?:max-)?(?:width|height)\s*:\s*[01]px|overflow(?:-[xy])?\s*:\s*hidden|clip(?:-path)?\s*:|position\s*:\s*(?:absolute|fixed)|text-indent\s*:\s*-)/i;
