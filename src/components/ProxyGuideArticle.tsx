@@ -1,3 +1,4 @@
+import { getExternalLinkRel } from '../lib/externalLinks.js';
 import {
   ArrowLeft,
   ArrowRight,
@@ -94,7 +95,7 @@ const providers: Provider[] = [
     types: 'IPv4, ISP, Residential, Mobile',
     choice: 'Баланс цены и качества',
     note: 'Универсальный сервис с основными типами прокси. Удобно, если для разных проектов нужны и обычные IPv4, и более трастовые варианты.',
-    promoCode: 'hoscup',
+    promoCode: 'hopscup',
   },
   {
     id: 'p7',
@@ -149,7 +150,7 @@ const OutboundButton = ({ provider }: { provider: Provider }) => (
   <a
     href={provider.url}
     target="_blank"
-    rel="sponsored noopener noreferrer"
+    rel={getExternalLinkRel(provider.url)}
     onClick={() => trackAnalyticsEvent('service_click', {
       service_name: provider.name,
       service_id: provider.id,
@@ -295,7 +296,7 @@ export const ProxyGuideArticle = () => {
                         <a
                           href={provider.url}
                           target="_blank"
-                          rel="sponsored noopener noreferrer"
+                          rel={getExternalLinkRel(provider.url)}
                           onClick={() => trackAnalyticsEvent('service_click', {
                             service_name: provider.name,
                             service_id: provider.id,

@@ -5,6 +5,8 @@ import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { guidePages } from '../src/data/guidePages.js';
+import { guideCatalog } from '../src/data/guideCatalog.js';
+import { getExternalLinkRel } from '../src/lib/externalLinks.js';
 import { pageHeadings } from '../src/data/pageHeadings.js';
 import { articleFallbackByRoute, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 import { legacyIndexedRoutes } from '../src/data/legacyIndexedRoutes.js';
@@ -196,11 +198,11 @@ const sections = [
     },
     heading: pageHeadings['/account-shop'],
     intro: {
-      ru: 'Раздел для поиска аккаунтов, AI-подписок и цифровых товаров. Включает сайты вроде DarkStore/FunPay и Telegram-боты, где часто бывают дешевые подписки на ChatGPT, Gemini, Claude и другие сервисы.',
-      en: 'This section covers accounts, AI subscriptions, and digital goods. It includes marketplaces like DarkStore/FunPay and Telegram bots with discounted ChatGPT, Gemini, Claude, and other subscriptions.',
-      es: 'Esta sección reúne cuentas, suscripciones IA y productos digitales. Incluye marketplaces como DarkStore/FunPay y bots de Telegram con suscripciones baratas de ChatGPT, Gemini, Claude y otros servicios.',
-      zh: '本节涵盖账号、AI 订阅和数字商品，包括 DarkStore/FunPay 等市场，以及常见低价 ChatGPT、Gemini、Claude 订阅的 Telegram 机器人。',
-      ko: '이 섹션은 계정, AI 구독, 디지털 상품을 다룹니다. DarkStore/FunPay 같은 마켓과 ChatGPT, Gemini, Claude 등을 저렴하게 파는 Telegram 봇이 포함됩니다.',
+      ru: 'Раздел для поиска аккаунтов, AI-подписок и цифровых товаров. Включает сайты вроде DarkShopping/FunPay и Telegram-боты, где часто бывают дешевые подписки на ChatGPT, Gemini, Claude и другие сервисы.',
+      en: 'This section covers accounts, AI subscriptions, and digital goods. It includes marketplaces like DarkShopping/FunPay and Telegram bots with discounted ChatGPT, Gemini, Claude, and other subscriptions.',
+      es: 'Esta sección reúne cuentas, suscripciones IA y productos digitales. Incluye marketplaces como DarkShopping/FunPay y bots de Telegram con suscripciones baratas de ChatGPT, Gemini, Claude y otros servicios.',
+      zh: '本节涵盖账号、AI 订阅和数字商品，包括 DarkShopping/FunPay 等市场，以及常见低价 ChatGPT、Gemini、Claude 订阅的 Telegram 机器人。',
+      ko: '이 섹션은 계정, AI 구독, 디지털 상품을 다룹니다. DarkShopping/FunPay 같은 마켓과 ChatGPT, Gemini, Claude 등을 저렴하게 파는 Telegram 봇이 포함됩니다.',
     },
     keywords: {
       ru: 'дешевые подписки на нейросети, chatgpt plus дешево, купить chatgpt plus, gemini pro дешево, купить claude, магазины аккаунтов, боты с подписками',
@@ -210,13 +212,13 @@ const sections = [
       ko: '저렴한 AI 구독, ChatGPT Plus, Gemini Pro, Claude, 계정 상점, Telegram 구독 봇',
     },
     points: {
-      ru: ['Для большинства задач удобно начинать с DarkStore и FunPay.', 'В Telegram-магазинах часто бывают дешевые подписки на AI-сервисы.', 'Перед покупкой всегда проверяй отзывы, условия замены и описание товара.'],
-      en: ['DarkStore and FunPay are convenient starting points for many tasks.', 'Telegram shops often have discounted AI subscriptions.', 'Always check reviews, replacement rules, and product descriptions before buying.'],
-      es: ['DarkStore y FunPay son buenos puntos de partida.', 'Los bots de Telegram suelen tener suscripciones IA con descuento.', 'Revisa reseñas, garantía y descripción antes de comprar.'],
-      zh: ['DarkStore 和 FunPay 是很多任务的良好起点。', 'Telegram 商店常有折扣 AI 订阅。', '购买前务必检查评价、替换规则和商品描述。'],
-      ko: ['DarkStore와 FunPay는 많은 작업의 좋은 시작점입니다.', 'Telegram 상점에는 할인된 AI 구독이 자주 있습니다.', '구매 전 리뷰, 교체 규칙, 상품 설명을 확인하세요.'],
+      ru: ['Для большинства задач удобно начинать с DarkShopping и FunPay.', 'В Telegram-магазинах часто бывают дешевые подписки на AI-сервисы.', 'Перед покупкой всегда проверяй отзывы, условия замены и описание товара.'],
+      en: ['DarkShopping and FunPay are convenient starting points for many tasks.', 'Telegram shops often have discounted AI subscriptions.', 'Always check reviews, replacement rules, and product descriptions before buying.'],
+      es: ['DarkShopping y FunPay son buenos puntos de partida.', 'Los bots de Telegram suelen tener suscripciones IA con descuento.', 'Revisa reseñas, garantía y descripción antes de comprar.'],
+      zh: ['DarkShopping 和 FunPay 是很多任务的良好起点。', 'Telegram 商店常有折扣 AI 订阅。', '购买前务必检查评价、替换规则和商品描述。'],
+      ko: ['DarkShopping와 FunPay는 많은 작업의 좋은 시작점입니다.', 'Telegram 상점에는 할인된 AI 구독이 자주 있습니다.', '구매 전 리뷰, 교체 규칙, 상품 설명을 확인하세요.'],
     },
-    items: ['DarkStore', 'ACCSMarket', 'GGSel', 'FunPay', 'Plati Market', 'LZT Market', 'Лачуга скамера', 'TheGod Shop', 'Crassus Market', 'Apel0sin', 'apel0sin | market 2.0', 'Petrovich'],
+    items: ['DarkShopping', 'ACCSMarket', 'GGSel', 'FunPay', 'Plati Market', 'LZT Market', 'Лачуга скамера', 'TheGod Shop', 'Crassus Market', 'Apel0sin', 'apel0sin | market 2.0', 'Petrovich'],
   },
   {
     id: 'cards',
@@ -517,8 +519,8 @@ const sections = [
       zh: ['可以从换 IP 和 Gmail 转发指南开始。', '账号农场指南涵盖邮箱、代理和反检测。', '加密货币指南帮助处理 UID、地址和验证。'],
       ko: ['IP 변경과 Gmail 포워딩 가이드부터 시작할 수 있습니다.', '계정 팜 가이드는 이메일, 프록시, 안티디텍트를 다룹니다.', '암호화폐 가이드는 UID, 주소, 인증에 도움이 됩니다.'],
     },
-    items: ['Смена IP мобильным интернетом', 'Gmail forwarding', 'Ферма аккаунтов', 'OTC и KYC сервисы', 'UID и адреса для бирж', 'Вход в Discord по токену'],
-    serviceLinks: { 'Вход в Discord по токену': '/guides/discord-vhod-po-tokenu' },
+    items: guideCatalog.map((guide) => guide.title.ru),
+    serviceLinks: Object.fromEntries(guideCatalog.map((guide) => [guide.title.ru, guide.route])),
   },
 ];
 
@@ -1632,8 +1634,13 @@ const internalLinks = (language) =>
     .map((section) => `<a href="${localizedPath(section, language)}">${escapeHtml(getLanguage(section.heading, language))}</a>`)
     .join('\n        ');
 
+const renderLink = ({ href, label }) => {
+  const rel = getExternalLinkRel(href);
+  return `<a href="${escapeHtml(href)}"${rel ? ` rel="${rel}"` : ''}>${escapeHtml(label)}</a>`;
+};
+
 const renderArticleBody = (article, route) => {
-  const link = ({ href, label }) => `<a href="${escapeHtml(href)}">${escapeHtml(label)}</a>`;
+  const link = renderLink;
   const list = (items, tag = 'ul') => `<${tag}>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</${tag}>`;
   const providers = route === '/proxy-vpn/luchshie-mobilnye-proksi'
     ? `<section id="providers"><h2>Какой сервис выбрать</h2>${mobileProxyProviders.map((provider) => `
@@ -1641,7 +1648,7 @@ const renderArticleBody = (article, route) => {
           <dl>${[['GEO', provider.locations], ['Смена IP', provider.rotation], ['Оплата', provider.billing], ['Цена входа', provider.entryPrice]].map(([name, value]) => `<dt>${escapeHtml(name)}</dt><dd>${escapeHtml(value)}</dd>`).join('')}</dl>
           <h4>Сильные стороны</h4>${list(provider.strengths)}<h4>Что учитывать</h4>${list(provider.limitations)}
           <p>${escapeHtml(provider.promoCode)} ${escapeHtml(provider.promoDiscount)}</p>
-          <a href="${escapeHtml(provider.url)}" rel="sponsored noopener noreferrer">Перейти</a>
+          ${renderLink({ href: provider.url, label: 'Перейти' })}
         </section>`).join('')}</section>`
     : '';
   return `${article.before ? `<section id="before"><h2>Важные моменты перед началом</h2>${list(article.before)}</section>` : ''}
@@ -1670,6 +1677,9 @@ const renderStaticContent = (section, language) => {
     if (!serviceRoute) return escapeHtml(item);
     return `<a href="${language.prefix}${serviceRoute}">${escapeHtml(item)}</a>`;
   };
+  const guideItems = section.id === 'guides'
+    ? guideCatalog.map((guide) => `<li>${renderLink({ href: `${language.prefix}${guide.route}`, label: getLanguage(guide.title, language) })}<p>${escapeHtml(getLanguage(guide.description, language))}</p></li>`).join('\n            ')
+    : undefined;
 
   return `
       <article class="seo-fallback"${article ? ` data-static-article="${escapeHtml(section.id)}"` : ''} aria-label="${escapeHtml(title)}">
@@ -1681,7 +1691,7 @@ const renderStaticContent = (section, language) => {
           ${article?.updated ? `<p class="fallback-updated">${escapeHtml(article.updated)}</p>` : ''}
         </header>
         ${vpn ? `<section aria-label="${language.code === 'ru' ? 'Цена и бесплатный период' : 'Pricing and free trial'}"><dl><dt>${language.code === 'ru' ? 'Бесплатно' : 'Free trial'}</dt><dd>${escapeHtml(getLanguage(vpn.free, language))}</dd><dt>${language.code === 'ru' ? 'Цена' : 'Price'}</dt><dd>${escapeHtml(getLanguage(vpn.price, language))}</dd></dl></section>` : ''}
-        ${section.cta ? `<p><a href="${escapeHtml(section.cta.href)}" target="_blank" rel="sponsored noopener noreferrer">${escapeHtml(getLanguage(section.cta.label, language))}</a></p>` : ''}
+        ${section.cta ? `<p><a href="${escapeHtml(section.cta.href)}" target="_blank" rel="${getExternalLinkRel(section.cta.href) || 'noopener noreferrer'}">${escapeHtml(getLanguage(section.cta.label, language))}</a></p>` : ''}
         ${article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
         ${section.heroHeading ? `
         <section>
@@ -1697,10 +1707,10 @@ const renderStaticContent = (section, language) => {
         <section>
           <h2>${escapeHtml(itemsHeading)}</h2>
           <ul>
-            ${items.map((item) => `<li>${renderItem(item)}</li>`).join('\n            ')}
+            ${guideItems ?? items.map((item) => `<li>${renderItem(item)}</li>`).join('\n            ')}
           </ul>
         </section>
-          ${language.code === 'ru' && section.article ? section.article.map((part) => `<section><h2>${escapeHtml(part.heading)}</h2>${part.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}${(part.links || []).map((link) => `<a href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a>`).join(' ')}</section>`).join('') : ''}
+          ${language.code === 'ru' && section.article ? section.article.map((part) => `<section><h2>${escapeHtml(part.heading)}</h2>${part.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}${(part.links || []).map(renderLink).join(' ')}</section>`).join('') : ''}
         `}
         <nav aria-label="${escapeHtml(labels.nav)}">
           ${internalLinks(language)}

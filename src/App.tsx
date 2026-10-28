@@ -21,6 +21,8 @@ import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
 import { foreignCardPages } from './data/foreignCardPages.js';
 import { guidePages } from './data/guidePages.js';
+import { guideCatalogById } from './data/guideCatalog.js';
+import { getExternalLinkRel } from './lib/externalLinks.js';
 import { legacyIndexedRoutes } from './data/legacyIndexedRoutes.js';
 import { seoLandingPages } from './data/seoLandingPages.js';
 import { smsPages } from './data/smsPages.js';
@@ -490,7 +492,9 @@ const isAntidetectSetupGuideArticlePath = (
 ) => stripLanguagePrefix(path) === ANTIDETECT_SETUP_GUIDE_ARTICLE_ROUTE;
 
 const getLocalizedOfferRoute = (offer: Offer, language: Language) =>
-  `${getLocalizedRoute(offer.category, language)}/${offer.slug}`;
+  guideCatalogById[offer.id]
+    ? `${LANGUAGE_PREFIXES[language]}${guideCatalogById[offer.id].route}`
+    : `${getLocalizedRoute(offer.category, language)}/${offer.slug}`;
 
 const getSeoLandingFromPath = (
   path = typeof window !== 'undefined' ? window.location.pathname : '/',
@@ -747,8 +751,8 @@ const SECTION_SEO: Record<CategoryType, {
       en: 'This section lists marketplaces for accounts, AI subscriptions, and digital goods with a focus on convenience, reviews, payment methods, and clear purchase rules.',
     },
     points: {
-      ru: ['Для большинства задач удобно начинать с DarkStore и FunPay.', 'В Telegram-магазинах часто бывают дешевые подписки на AI-сервисы.', 'Перед покупкой всегда проверяй отзывы, условия замены и описание товара.'],
-      en: ['DarkStore and FunPay are convenient starting points for many tasks.', 'Telegram shops often have discounted AI subscriptions.', 'Always check reviews, replacement rules, and product descriptions before buying.'],
+      ru: ['Для большинства задач удобно начинать с DarkShopping и FunPay.', 'В Telegram-магазинах часто бывают дешевые подписки на AI-сервисы.', 'Перед покупкой всегда проверяй отзывы, условия замены и описание товара.'],
+      en: ['DarkShopping and FunPay are convenient starting points for many tasks.', 'Telegram shops often have discounted AI subscriptions.', 'Always check reviews, replacement rules, and product descriptions before buying.'],
     },
   },
   Cards: {
@@ -1873,7 +1877,7 @@ const OFFERS: Offer[] = [
   {
     id: 'guide-mobile-ip',
     category: 'Guides',
-    name: 'Смена айпи мобильным интернетом и режимом "самолета". Android и iPhone',
+    name: guideCatalogById['guide-mobile-ip'].title.ru,
     slug: GUIDE_PAGE_BY_ID['guide-mobile-ip'].slug,
     editorial: GUIDE_PAGE_BY_ID['guide-mobile-ip'].editorial,
     description: GUIDE_PAGE_BY_ID['guide-mobile-ip'].editorial.description,
@@ -1898,7 +1902,7 @@ const OFFERS: Offer[] = [
   {
     id: 'guide-gmail-forwarding',
     category: 'Guides',
-    name: 'Пошаговый гайд по настройке переадресации писем из Gmail на другую почту',
+    name: guideCatalogById['guide-gmail-forwarding'].title.ru,
     slug: GUIDE_PAGE_BY_ID['guide-gmail-forwarding'].slug,
     editorial: GUIDE_PAGE_BY_ID['guide-gmail-forwarding'].editorial,
     description: GUIDE_PAGE_BY_ID['guide-gmail-forwarding'].editorial.description,
@@ -1923,7 +1927,7 @@ const OFFERS: Offer[] = [
   {
     id: 'guide-account-farm',
     category: 'Guides',
-    name: 'Ферма аккаунтов. Где брать аккаунты Discord, Twitter, Google. Прокси, накрутка, антидетекты?',
+    name: guideCatalogById['guide-account-farm'].title.ru,
     slug: GUIDE_PAGE_BY_ID['guide-account-farm'].slug,
     editorial: GUIDE_PAGE_BY_ID['guide-account-farm'].editorial,
     description: GUIDE_PAGE_BY_ID['guide-account-farm'].editorial.description,
@@ -1948,7 +1952,7 @@ const OFFERS: Offer[] = [
   {
     id: 'guide-otc-kyc',
     category: 'Guides',
-    name: 'OTC площадки и KYC сервисы в крипте. Где брать верификации и продавать WL?',
+    name: guideCatalogById['guide-otc-kyc'].title.ru,
     slug: GUIDE_PAGE_BY_ID['guide-otc-kyc'].slug,
     editorial: GUIDE_PAGE_BY_ID['guide-otc-kyc'].editorial,
     description: GUIDE_PAGE_BY_ID['guide-otc-kyc'].editorial.description,
@@ -1967,7 +1971,7 @@ const OFFERS: Offer[] = [
   {
     id: 'guide-uids-addresses',
     category: 'Guides',
-    name: 'Много UID и адресов для вывода на криптобиржи',
+    name: guideCatalogById['guide-uids-addresses'].title.ru,
     slug: GUIDE_PAGE_BY_ID['guide-uids-addresses'].slug,
     editorial: GUIDE_PAGE_BY_ID['guide-uids-addresses'].editorial,
     description: GUIDE_PAGE_BY_ID['guide-uids-addresses'].editorial.description,
@@ -1992,7 +1996,7 @@ const OFFERS: Offer[] = [
   {
     id: 'guide-antidetect-setup',
     category: 'Guides',
-    name: 'Как настроить антидетект-браузер: Dolphin, AdsPower и ShardX',
+    name: guideCatalogById['guide-antidetect-setup'].title.ru,
     slug: GUIDE_PAGE_BY_ID['guide-antidetect-setup'].slug,
     editorial: GUIDE_PAGE_BY_ID['guide-antidetect-setup'].editorial,
     description: GUIDE_PAGE_BY_ID['guide-antidetect-setup'].editorial.description,
@@ -2012,7 +2016,7 @@ const OFFERS: Offer[] = [
   {
     id: 'guide-discord-token',
     category: 'Guides',
-    name: 'Как войти в Discord по токену: расширение и F12',
+    name: guideCatalogById['guide-discord-token'].title.ru,
     slug: GUIDE_PAGE_BY_ID['guide-discord-token'].slug,
     editorial: GUIDE_PAGE_BY_ID['guide-discord-token'].editorial,
     description: GUIDE_PAGE_BY_ID['guide-discord-token'].editorial.description,
@@ -2022,7 +2026,7 @@ const OFFERS: Offer[] = [
   {
     id: 'guide-foreign-cards',
     category: 'Guides',
-    name: 'Зарубежная карта с пополнением рублями: что выбрать',
+    name: guideCatalogById['guide-foreign-cards'].title.ru,
     slug: GUIDE_PAGE_BY_ID['guide-foreign-cards'].slug,
     editorial: GUIDE_PAGE_BY_ID['guide-foreign-cards'].editorial,
     description: GUIDE_PAGE_BY_ID['guide-foreign-cards'].editorial.description,
@@ -2041,7 +2045,7 @@ const OFFERS: Offer[] = [
     },
     url: 'https://proxyshard.com?ref=hopscup',
     logoUrl: '/proxyshard.webp',
-    promoCode: 'hoscup',
+    promoCode: 'hopscup',
     isBestChoice: true,
     details: {
       geo: { ru: '100+ стран', en: '100+ countries', es: 'Más de 100 países', zh: '100 多个国家', ko: '100개 이상의 국가' },
@@ -3033,7 +3037,7 @@ const OFFERS: Offer[] = [
     subCategory: 'Web',
     slug: ACCOUNT_SHOP_PAGE_BY_ID['st-dark'].slug,
     editorial: ACCOUNT_SHOP_PAGE_BY_ID['st-dark'].editorial,
-    name: 'DarkStore',
+    name: 'DarkShopping',
     description: ACCOUNT_SHOP_PAGE_BY_ID['st-dark'].editorial.description,
     url: 'https://dark.shopping/category/view/gmail?p=95083',
     logoUrl: '/darkstore.webp',
@@ -4613,42 +4617,6 @@ const getOfferFromPath = (
   ) || null;
 };
 
-const OFFER_TITLE_TRANSLATIONS: Partial<Record<string, Partial<Record<Language, string>>>> = {
-  'guide-mobile-ip': {
-    en: 'Changing IP with mobile internet and airplane mode on Android and iPhone',
-    es: 'Cambiar la IP con internet móvil y modo avión en Android y iPhone',
-    zh: '通过移动网络和飞行模式更换 Android 与 iPhone 的 IP',
-    ko: 'Android와 iPhone에서 모바일 인터넷과 비행기 모드로 IP 변경하기',
-  },
-  'guide-gmail-forwarding': {
-    en: 'Step-by-step guide to forwarding Gmail emails to another inbox',
-    es: 'Guía paso a paso para reenviar correos de Gmail a otro buzón',
-    zh: '将 Gmail 邮件转发到另一个邮箱的分步指南',
-    ko: 'Gmail 메일을 다른 메일함으로 전달하는 단계별 가이드',
-  },
-  'guide-account-farm': {
-    en: 'Account farm: Discord, Twitter, Google accounts, proxies, boosting, antidetects',
-    es: 'Granja de cuentas: Discord, Twitter, Google, proxies, boosting y antidetects',
-    zh: '账号农场：Discord、Twitter、Google 账号、代理、增长与反检测',
-    ko: '계정 팜: Discord, Twitter, Google 계정, 프록시, 부스트, 안티디텍트',
-  },
-  'guide-otc-kyc': {
-    en: 'OTC platforms and KYC services in crypto',
-    es: 'Plataformas OTC y servicios KYC en cripto',
-    zh: '加密领域的 OTC 平台与 KYC 服务',
-    ko: '암호화폐 OTC 플랫폼과 KYC 서비스',
-  },
-  'guide-uids-addresses': {
-    en: 'UIDs and withdrawal addresses for crypto exchanges',
-    es: 'UID y direcciones de retiro para exchanges cripto',
-    zh: '加密交易所 UID 与提现地址',
-    ko: '암호화폐 거래소용 UID와 출금 주소',
-  },
-  'guide-antidetect-setup': {
-    en: 'How to configure an antidetect browser: Dolphin, AdsPower, and ShardX',
-  },
-};
-
 const OFFER_DESCRIPTION_TRANSLATIONS: Partial<Record<string, Partial<Record<Language, string>>>> = {
   'guide-mobile-ip': {
     es: 'Guía básica para cambiar rápido la IP móvil usando internet móvil y modo avión. Útil cuando trabajas con cuentas y necesitas renovar la IP sin servicios extra.',
@@ -5223,8 +5191,10 @@ export default function App() {
   const l = <T,>(value?: Localized<T>) => getLocalizedValue(value, lang);
   const lList = <T,>(value?: Localized<T[]>) => getLocalizedValue(value, lang) || [];
   const tx = <T,>(value: Partial<Record<Language, T>> & { en: T }) => value[lang] ?? value.en;
-  const offerTitle = (offer: Offer) => OFFER_TITLE_TRANSLATIONS[offer.id]?.[lang] || offer.name;
+  const offerTitle = (offer: Offer) => guideCatalogById[offer.id]?.title[lang] || guideCatalogById[offer.id]?.title.ru || offer.name;
   const offerDescription = (offer: Offer) => {
+    const guideDescription = guideCatalogById[offer.id]?.description[lang];
+    if (guideDescription) return guideDescription;
     const ownDescription = offer.description[lang];
     if ((offer.category === 'Stores' || offer.category === 'Antidetect' || offer.category === 'Cards' || offer.category === 'Crypto' || offer.category === 'Guides') && offer.editorial && ownDescription) {
       return ownDescription;
@@ -5763,7 +5733,7 @@ export default function App() {
     purchaseRules: tx({ ru: 'Правила покупки', en: 'Purchase Rules', es: 'Reglas de compra', zh: '购买规则', ko: '구매 규칙' }),
     safetyGuarantees: tx({ ru: 'Безопасность и гарантии', en: 'Safety and Guarantees', es: 'Seguridad y garantías', zh: '安全与担保', ko: '안전과 보증' }),
     aiSubscriptions: tx({ ru: 'ИИ подписки', en: 'AI subscriptions', es: 'Suscripciones de IA', zh: 'AI 订阅', ko: 'AI 구독' }),
-    darkStoreAccounts: tx({ ru: 'Аккаунты DarkStore', en: 'DarkStore accounts', es: 'Cuentas DarkStore', zh: 'DarkStore 账号', ko: 'DarkStore 계정' }),
+    darkStoreAccounts: tx({ ru: 'Аккаунты DarkShopping', en: 'DarkShopping accounts', es: 'Cuentas DarkShopping', zh: 'DarkShopping 账号', ko: 'DarkShopping 계정' }),
     shortVersion: tx({ ru: 'Коротко', en: 'Short version', es: 'Resumen', zh: '简短说明', ko: '요약' }),
     boostSites: tx({ ru: 'Сайты накрутки', en: 'Boost sites', es: 'Sitios de boost', zh: '增长网站', ko: '부스트 사이트' }),
     taskExchanges: tx({ ru: 'Буксы', en: 'Task exchanges', es: 'Bolsas de tareas', zh: '任务平台', ko: '태스크 거래소' }),
@@ -6513,7 +6483,7 @@ export default function App() {
 
                 {lang === 'ru' && (guideTopicFilter === 'all' || guideTopicFilter === 'proxy') && (
                   <motion.a
-                    href={PROXY_GUIDE_ARTICLE_ROUTE}
+                    href={guideCatalogById['guide-best-proxies'].route}
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
@@ -6530,10 +6500,10 @@ export default function App() {
                         <span className="flex items-center gap-1 text-white/35"><Clock className="h-3 w-3" /> 15 мин</span>
                       </div>
                       <h3 className="font-display text-xl font-bold leading-snug text-white md:text-2xl">
-                        Лучшие прокси-сервисы для аккаунтов: что выбрать
+                        {guideCatalogById['guide-best-proxies'].title.ru}
                       </h3>
                       <p className="mt-2 max-w-2xl text-sm font-medium leading-relaxed text-white/50">
-                        Разбираем IPv4, ISP, Residential и Mobile-прокси: чем отличаются и какой тип брать под свою задачу.
+                        {guideCatalogById['guide-best-proxies'].description.ru}
                       </p>
                     </div>
                     <div className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 text-white/35 transition-all group-hover:border-brand-purple/50 group-hover:text-brand-purple md:flex">
@@ -6859,7 +6829,7 @@ export default function App() {
                         <a
                           href={offer.url}
                           target="_blank"
-                          rel="noopener noreferrer"
+                          rel={getExternalLinkRel(offer.url)}
                           onClick={() => trackAnalyticsEvent('service_click', {
                             service_id: offer.id,
                             service_name: offer.name,
@@ -7844,27 +7814,27 @@ export default function App() {
                       {tx({
                         ru: (
                         <>
-                          В основном я пользуюсь <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkStore</a> и <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a> - вместе они закрывают примерно 95% моих потребностей. <span className="text-white font-bold">DarkStore</span> чаще беру для рабочих аккаунтов, почт, соцсетей и расходников. По DarkStore и покупке аккаунтов вроде Discord/Twitter есть отдельный <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">видео-гайд</a>. <span className="text-white font-bold">FunPay</span> удобен для подписок, ключей, игровых товаров, услуг и разных цифровых продуктов. Если нужно сравнить цены или найти редкую позицию, можно дополнительно смотреть <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> и <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
+                          В основном я пользуюсь <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a> и <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a> - вместе они закрывают примерно 95% моих потребностей. <span className="text-white font-bold">DarkShopping</span> чаще беру для рабочих аккаунтов, почт, соцсетей и расходников. По DarkShopping и покупке аккаунтов вроде Discord/Twitter есть отдельный <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">видео-гайд</a>. <span className="text-white font-bold">FunPay</span> удобен для подписок, ключей, игровых товаров, услуг и разных цифровых продуктов. Если нужно сравнить цены или найти редкую позицию, можно дополнительно смотреть <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> и <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
                         </>
                         ),
                         en: (
                         <>
-                          I mainly use <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkStore</a> and <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>; together they cover roughly 95% of my needs. <span className="text-white font-bold">DarkStore</span> is mostly for work accounts, emails, social accounts, and consumables. There is a separate <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">video guide</a> for DarkStore and buying Discord/Twitter-style accounts. <span className="text-white font-bold">FunPay</span> is useful for subscriptions, keys, gaming goods, services, and other digital products. For price comparison or rare items, also check <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a>, and <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
+                          I mainly use <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a> and <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>; together they cover roughly 95% of my needs. <span className="text-white font-bold">DarkShopping</span> is mostly for work accounts, emails, social accounts, and consumables. There is a separate <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">video guide</a> for DarkShopping and buying Discord/Twitter-style accounts. <span className="text-white font-bold">FunPay</span> is useful for subscriptions, keys, gaming goods, services, and other digital products. For price comparison or rare items, also check <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a>, and <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
                         </>
                         ),
                         es: (
                         <>
-                          Yo uso sobre todo <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkStore</a> y <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>; juntos cubren cerca del 95% de mis necesidades. <span className="text-white font-bold">DarkStore</span> lo uso más para cuentas de trabajo, correos, redes sociales y consumibles. Hay una <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">videoguía</a> aparte sobre DarkStore y cuentas tipo Discord/Twitter. <span className="text-white font-bold">FunPay</span> es cómodo para suscripciones, claves, productos de juegos, servicios y otros productos digitales. Para comparar precios o buscar algo raro, mira también <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> y <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
+                          Yo uso sobre todo <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a> y <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>; juntos cubren cerca del 95% de mis necesidades. <span className="text-white font-bold">DarkShopping</span> lo uso más para cuentas de trabajo, correos, redes sociales y consumibles. Hay una <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">videoguía</a> aparte sobre DarkShopping y cuentas tipo Discord/Twitter. <span className="text-white font-bold">FunPay</span> es cómodo para suscripciones, claves, productos de juegos, servicios y otros productos digitales. Para comparar precios o buscar algo raro, mira también <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> y <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
                         </>
                         ),
                         zh: (
                         <>
-                          我主要使用 <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkStore</a> 和 <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>，它们合起来能覆盖我约 95% 的需求。<span className="text-white font-bold">DarkStore</span> 更适合工作账号、邮箱、社媒账号和消耗品。关于 DarkStore 和 Discord/Twitter 类账号购买有单独的 <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">视频指南</a>。<span className="text-white font-bold">FunPay</span> 适合订阅、密钥、游戏商品、服务和其他数字产品。想比价或找稀有商品，也可以看 <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>、<a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> 和 <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>。
+                          我主要使用 <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a> 和 <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>，它们合起来能覆盖我约 95% 的需求。<span className="text-white font-bold">DarkShopping</span> 更适合工作账号、邮箱、社媒账号和消耗品。关于 DarkShopping 和 Discord/Twitter 类账号购买有单独的 <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">视频指南</a>。<span className="text-white font-bold">FunPay</span> 适合订阅、密钥、游戏商品、服务和其他数字产品。想比价或找稀有商品，也可以看 <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>、<a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> 和 <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>。
                         </>
                         ),
                         ko: (
                         <>
-                          저는 주로 <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkStore</a>와 <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>를 사용합니다. 둘이 제 필요의 약 95%를 해결합니다. <span className="text-white font-bold">DarkStore</span>는 작업용 계정, 이메일, 소셜 계정, 소모품에 자주 씁니다. DarkStore와 Discord/Twitter 계정 구매는 별도 <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">비디오 가이드</a>가 있습니다. <span className="text-white font-bold">FunPay</span>는 구독, 키, 게임 상품, 서비스, 디지털 제품에 편합니다. 가격 비교나 희귀 상품은 <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a>, <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>도 확인하세요.
+                          저는 주로 <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a>와 <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>를 사용합니다. 둘이 제 필요의 약 95%를 해결합니다. <span className="text-white font-bold">DarkShopping</span>는 작업용 계정, 이메일, 소셜 계정, 소모품에 자주 씁니다. DarkShopping와 Discord/Twitter 계정 구매는 별도 <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">비디오 가이드</a>가 있습니다. <span className="text-white font-bold">FunPay</span>는 구독, 키, 게임 상품, 서비스, 디지털 제품에 편합니다. 가격 비교나 희귀 상품은 <a href="https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a>, <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>도 확인하세요.
                         </>
                         )
                       })}
@@ -7880,27 +7850,27 @@ export default function App() {
                       {tx({
                         ru: (
                         <>
-                          Telegram-боты - это удобные мини-магазины, где чаще всего продаются дешёвые аккаунты и подписки на популярные нейросети и сервисы: Gemini, GPT, Claude, CapCut, Canva и похожие продукты. Про покупку дешёвых ИИ-подписок есть отдельный <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">видео-гайд</a>. Такие боты удобно проверять, когда нужна подписка “здесь и сейчас” или хочется найти цену ниже официальной. Из вариантов можно смотреть <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Лачугу скамера</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a> и <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
+                          Telegram-боты - это удобные мини-магазины, где чаще всего продаются дешёвые аккаунты и подписки на популярные нейросети и сервисы: Gemini, GPT, Claude, CapCut, Canva и похожие продукты. Про покупку дешёвых ИИ-подписок есть отдельный <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">видео-гайд</a>. Такие боты удобно проверять, когда нужна подписка “здесь и сейчас” или хочется найти цену ниже официальной. Из вариантов можно смотреть <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Лачугу скамера</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a> и <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
                         </>
                         ),
                         en: (
                         <>
-                          Telegram bots are convenient mini-shops that usually sell low-cost accounts and subscriptions for popular AI tools and services: Gemini, GPT, Claude, CapCut, Canva, and similar products. There is a separate <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">video guide</a> about buying cheap AI subscriptions. They are useful when you need a subscription right now or want a lower-than-official price. Options include <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a>, and <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
+                          Telegram bots are convenient mini-shops that usually sell low-cost accounts and subscriptions for popular AI tools and services: Gemini, GPT, Claude, CapCut, Canva, and similar products. There is a separate <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">video guide</a> about buying cheap AI subscriptions. They are useful when you need a subscription right now or want a lower-than-official price. Options include <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a>, and <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
                         </>
                         ),
                         es: (
                         <>
-                          Los bots de Telegram son mini-tiendas cómodas donde suelen vender cuentas y suscripciones baratas para herramientas de IA y servicios populares: Gemini, GPT, Claude, CapCut, Canva y similares. Hay una <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">videoguía</a> aparte sobre suscripciones de IA baratas. Son útiles cuando necesitas una suscripción aquí y ahora o un precio por debajo del oficial. Opciones: <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a> y <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
+                          Los bots de Telegram son mini-tiendas cómodas donde suelen vender cuentas y suscripciones baratas para herramientas de IA y servicios populares: Gemini, GPT, Claude, CapCut, Canva y similares. Hay una <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">videoguía</a> aparte sobre suscripciones de IA baratas. Son útiles cuando necesitas una suscripción aquí y ahora o un precio por debajo del oficial. Opciones: <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a> y <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
                         </>
                         ),
                         zh: (
                         <>
-                          Telegram 机器人是方便的小商店，通常售卖热门 AI 工具和服务的低价账号或订阅：Gemini、GPT、Claude、CapCut、Canva 等。关于购买便宜 AI 订阅有单独的 <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">视频指南</a>。当你需要立刻开通订阅，或想找低于官方价格的方案时很方便。可以看 <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>、<a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>、<a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>、<a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>、<a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a> 和 <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>。
+                          Telegram 机器人是方便的小商店，通常售卖热门 AI 工具和服务的低价账号或订阅：Gemini、GPT、Claude、CapCut、Canva 等。关于购买便宜 AI 订阅有单独的 <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">视频指南</a>。当你需要立刻开通订阅，或想找低于官方价格的方案时很方便。可以看 <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>、<a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>、<a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>、<a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>、<a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a> 和 <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>。
                         </>
                         ),
                         ko: (
                         <>
-                          Telegram 봇은 Gemini, GPT, Claude, CapCut, Canva 같은 인기 AI 도구와 서비스의 저렴한 계정 및 구독을 파는 미니 상점입니다. 저렴한 AI 구독 구매는 별도 <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">비디오 가이드</a>가 있습니다. 지금 바로 구독이 필요하거나 공식가보다 낮은 가격을 찾을 때 유용합니다. <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a>, <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>를 볼 수 있습니다.
+                          Telegram 봇은 Gemini, GPT, Claude, CapCut, Canva 같은 인기 AI 도구와 서비스의 저렴한 계정 및 구독을 파는 미니 상점입니다. 저렴한 AI 구독 구매는 별도 <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">비디오 가이드</a>가 있습니다. 지금 바로 구독이 필요하거나 공식가보다 낮은 가격을 찾을 때 유용합니다. <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Lachuga</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a>, <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>를 볼 수 있습니다.
                         </>
                         )
                       })}
@@ -8187,27 +8157,27 @@ export default function App() {
                       {tx({
                         ru: (
                         <>
-                          Для пополнения в плюс удобнее смотреть <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>, <a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>, <a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a> и <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>. Я чаще использую LIS-SKINS, потому что там сразу видно разницу цены со Steam. TF2Lavka полезна, когда нужны Rust/TF2 предметы без долгого ожидания перед продажей, но конкретный предмет всё равно нужно проверять.
+                          Для пополнения в плюс удобнее смотреть <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>, <a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>, <a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a> и <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>. Я чаще использую LIS-SKINS, потому что там сразу видно разницу цены со Steam. TF2Lavka полезна, когда нужны Rust/TF2 предметы без долгого ожидания перед продажей, но конкретный предмет всё равно нужно проверять.
                         </>
                         ),
                         en: (
                         <>
-                          For profitable top-ups, check <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>, <a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>, <a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a>, and <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>. I usually use LIS-SKINS because it shows the price difference versus Steam. TF2Lavka is useful when you need Rust/TF2 items without a long wait before selling, but each item still needs checking.
+                          For profitable top-ups, check <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>, <a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>, <a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a>, and <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>. I usually use LIS-SKINS because it shows the price difference versus Steam. TF2Lavka is useful when you need Rust/TF2 items without a long wait before selling, but each item still needs checking.
                         </>
                         ),
                         es: (
                         <>
-                          Para recargar con beneficio, mira <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>, <a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>, <a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a> y <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>. Yo suelo usar LIS-SKINS porque muestra enseguida la diferencia de precio frente a Steam. TF2Lavka sirve para ítems de Rust/TF2 sin larga espera antes de vender, pero cada ítem hay que revisarlo.
+                          Para recargar con beneficio, mira <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>, <a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>, <a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a> y <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>. Yo suelo usar LIS-SKINS porque muestra enseguida la diferencia de precio frente a Steam. TF2Lavka sirve para ítems de Rust/TF2 sin larga espera antes de vender, pero cada ítem hay que revisarlo.
                         </>
                         ),
                         zh: (
                         <>
-                          想用物品充值并获得更高余额，可以看 <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>、<a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>、<a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a> 和 <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>。我更常用 LIS-SKINS，因为它直接显示和 Steam 的价格差。TF2Lavka 适合需要 Rust/TF2 物品且不想等很久再出售的情况，但具体物品仍要检查。
+                          想用物品充值并获得更高余额，可以看 <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>、<a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>、<a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a> 和 <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>。我更常用 LIS-SKINS，因为它直接显示和 Steam 的价格差。TF2Lavka 适合需要 Rust/TF2 物品且不想等很久再出售的情况，但具体物品仍要检查。
                         </>
                         ),
                         ko: (
                         <>
-                          이득 충전은 <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>, <a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>, <a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a>, <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>를 확인하세요. 저는 Steam과의 가격 차이를 바로 볼 수 있어 LIS-SKINS를 자주 씁니다. TF2Lavka는 Rust/TF2 아이템을 오래 기다리지 않고 팔고 싶을 때 유용하지만, 각 아이템은 확인해야 합니다.
+                          이득 충전은 <a href="https://lis-skins.com/?rf=3576023" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">LIS-SKINS</a>, <a href="https://cs.money/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">CS.MONEY</a>, <a href="https://aim.market/p/6da48855-6e2a-4d1f-9ecc-fa767d6235bd" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AIM.market</a>, <a href="https://tf2lavka.ru/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">TF2Lavka</a>를 확인하세요. 저는 Steam과의 가격 차이를 바로 볼 수 있어 LIS-SKINS를 자주 씁니다. TF2Lavka는 Rust/TF2 아이템을 오래 기다리지 않고 팔고 싶을 때 유용하지만, 각 아이템은 확인해야 합니다.
                         </>
                         )
                       })}
@@ -8328,27 +8298,27 @@ export default function App() {
                       {tx({
                         ru: (
                         <>
-                          В основном я использую <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a>, потому что карта выпускается без KYC, пополняется через СБП или USDT и нормально проходит в большинстве нужных мне сервисов. Отдельный плюс: иногда проходит не только зарубежка, но и российские мерчанты, например OZON.
+                          В основном я использую <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a>, потому что карта выпускается без KYC, пополняется через СБП или USDT и нормально проходит в большинстве нужных мне сервисов. Отдельный плюс: иногда проходит не только зарубежка, но и российские мерчанты, например OZON.
                         </>
                         ),
                         en: (
                         <>
-                          I mainly use <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a> because it is issued without KYC, can be topped up via SBP or USDT, and works with most services I need. A separate plus: it can also work with some Russian merchants, for example OZON.
+                          I mainly use <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a> because it is issued without KYC, can be topped up via SBP or USDT, and works with most services I need. A separate plus: it can also work with some Russian merchants, for example OZON.
                         </>
                         ),
                         es: (
                         <>
-                          Uso principalmente <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a> porque se emite sin KYC, se recarga por SBP o USDT y funciona en la mayoría de servicios que necesito. Otro plus: a veces también pasa en comercios rusos, por ejemplo OZON.
+                          Uso principalmente <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a> porque se emite sin KYC, se recarga por SBP o USDT y funciona en la mayoría de servicios que necesito. Otro plus: a veces también pasa en comercios rusos, por ejemplo OZON.
                         </>
                         ),
                         zh: (
                         <>
-                          我主要使用 <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a>，因为它无需 KYC 即可开卡，可通过 SBP 或 USDT 充值，并且能在我需要的大多数服务中正常使用。额外优点：有时不只海外服务可用，俄罗斯商户如 OZON 也能通过。
+                          我主要使用 <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a>，因为它无需 KYC 即可开卡，可通过 SBP 或 USDT 充值，并且能在我需要的大多数服务中正常使用。额外优点：有时不只海外服务可用，俄罗斯商户如 OZON 也能通过。
                         </>
                         ),
                         ko: (
                         <>
-                          저는 주로 <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a>를 사용합니다. KYC 없이 발급되고 SBP 또는 USDT로 충전 가능하며 필요한 대부분 서비스에서 잘 작동하기 때문입니다. 추가 장점은 OZON 같은 일부 러시아 가맹점에서도 통과할 때가 있다는 점입니다.
+                          저는 주로 <a href="https://t.me/zarub_robot?start=ref_PqBrBs" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Zarub</a>를 사용합니다. KYC 없이 발급되고 SBP 또는 USDT로 충전 가능하며 필요한 대부분 서비스에서 잘 작동하기 때문입니다. 추가 장점은 OZON 같은 일부 러시아 가맹점에서도 통과할 때가 있다는 점입니다.
                         </>
                         )
                       })}
@@ -8820,7 +8790,7 @@ export default function App() {
                   <a
                     href={selectedOffer.url}
                     target="_blank"
-                    rel="sponsored noopener noreferrer"
+                    rel={getExternalLinkRel(selectedOffer.url)}
                     onClick={() => trackAnalyticsEvent('service_click', {
                       service_id: selectedOffer.id,
                       service_name: selectedOffer.name,
@@ -8859,7 +8829,7 @@ export default function App() {
                     <a
                       href={selectedOffer.webUrl}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel={getExternalLinkRel(selectedOffer.webUrl)}
                       onClick={() => trackAnalyticsEvent('service_click', {
                         service_id: selectedOffer.id,
                         service_name: selectedOffer.name,

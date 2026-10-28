@@ -5,6 +5,8 @@ import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { guidePages } from '../src/data/guidePages.js';
+import { guideCatalog } from '../src/data/guideCatalog.js';
+import { isAffiliateUrl } from '../src/lib/externalLinks.js';
 import { legacyIndexedRoutes } from '../src/data/legacyIndexedRoutes.js';
 import { seoLandingPages } from '../src/data/seoLandingPages.js';
 import { smsPages } from '../src/data/smsPages.js';
@@ -111,6 +113,32 @@ const checkFallback = (html, route) => {
   }
 };
 
+const checkLinkPolicy = (html, route) => {
+  for (const [anchor, href] of matches(html, /<a\b[^>]*\bhref="([^"]+)"[^>]*>/g)) {
+    const rel = new Set((anchor.match(/\brel="([^"]*)"/)?.[1] || '').split(/\s+/));
+    const affiliate = isAffiliateUrl(href.replaceAll('&amp;', '&'));
+    if (affiliate && !['sponsored', 'noopener', 'noreferrer'].every((value) => rel.has(value))) {
+      errors.push(`Partner link missing rel tokens: ${route}: ${href}`);
+    }
+    if (!affiliate && rel.has('sponsored')) errors.push(`Non-partner link marked sponsored: ${route}: ${href}`);
+  }
+};
+
+const checkGuideCatalog = (html, language) => {
+  const fallback = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
+  const hrefs = new Set(matches(fallback, /<a\b[^>]*\bhref="([^"]+)"/g).map((match) => match[1]));
+  if (guideCatalog.length < 10) errors.push('Guide catalogue must contain at least 10 guides');
+  for (const guide of guideCatalog) {
+    const href = `${language.prefix}${guide.route}`;
+    if (!hrefs.has(href)) errors.push(`Missing guide catalogue link: ${href}`);
+    for (const text of [guide.title, guide.description]) {
+      if (!fallback.includes(escapeHtml(text[language.prefix.slice(1) || 'ru'] || text.en || text.ru))) {
+        errors.push(`Missing shared guide title or description: ${href}`);
+      }
+    }
+  }
+};
+
 for (const language of languages) {
   for (const route of routes) {
     const localizedRoute = `${language.prefix}${route}`;
@@ -127,6 +155,11 @@ for (const language of languages) {
     const title = html.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim();
     checkFallback(html, localizedRoute);
     checkArticleContent(html, route, localizedRoute);
+    checkLinkPolicy(html, localizedRoute);
+    if (route === '/guides') checkGuideCatalog(html, language);
+    if (['/account-shop', '/account-shop/darkstore'].includes(route) && /DarkStore/.test(html)) {
+      errors.push(`Outdated visible DarkStore brand: ${localizedRoute}`);
+    }
     const description = html.match(/<meta name="description" content="([^"]+)" \/>/)?.[1]?.trim();
     const canonical = html.match(/<link rel="canonical" href="([^"]+)" \/>/)?.[1];
     const robotsMeta = html.match(/<meta name="robots" content="([^"]+)" \/>/)?.[1];

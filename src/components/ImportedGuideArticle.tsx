@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
 import { RelatedGuides } from './RelatedGuides';
 import type { RelatedGuide } from './RelatedGuides';
+import { getExternalLinkRel } from '../lib/externalLinks.js';
 
 type ArticleTheme = 'dark' | 'light';
 
@@ -75,7 +76,7 @@ const InlineContent = ({
         node = (
           <a
             href={safeHref}
-            {...(!isLocalAnchor ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            {...(!isLocalAnchor ? { target: '_blank', rel: getExternalLinkRel(safeHref) } : {})}
             className="font-bold text-brand-purple underline decoration-brand-purple/35 underline-offset-4 transition-colors hover:text-white"
           >
             {node}

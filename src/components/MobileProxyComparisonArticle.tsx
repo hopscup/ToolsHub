@@ -1,3 +1,4 @@
+import { getExternalLinkRel } from '../lib/externalLinks.js';
 import {
   ArrowLeft,
   ArrowRight,
@@ -227,7 +228,7 @@ export const MobileProxyComparisonArticle = () => {
                     {providers.map((provider) => (
                       <tr key={provider.id} className="transition-colors hover:bg-white/[0.025]">
                         <td className="px-4 py-4 font-bold text-white">
-                          <a href={provider.url} target="_blank" rel="sponsored noopener noreferrer" onClick={() => trackProviderClick(provider, 'article_table')} className="inline-flex items-center gap-1.5 hover:text-brand-purple">
+                          <a href={provider.url} target="_blank" rel={getExternalLinkRel(provider.url)} onClick={() => trackProviderClick(provider, 'article_table')} className="inline-flex items-center gap-1.5 hover:text-brand-purple">
                             {provider.name}<ExternalLink className="h-3 w-3 opacity-50" />
                           </a>
                         </td>
@@ -303,7 +304,7 @@ export const MobileProxyComparisonArticle = () => {
                             {copiedProvider === provider.id ? 'Скопировано' : provider.promoCode}
                             <span className="text-brand-purple">{provider.promoDiscount}</span>
                           </button>
-                          <a href={provider.url} target="_blank" rel="sponsored noopener noreferrer" onClick={() => trackProviderClick(provider, 'article_provider')} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-purple px-5 py-3 text-xs font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-brand-purple">
+                          <a href={provider.url} target="_blank" rel={getExternalLinkRel(provider.url)} onClick={() => trackProviderClick(provider, 'article_provider')} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-purple px-5 py-3 text-xs font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-brand-purple">
                             Перейти <ExternalLink className="h-4 w-4" />
                           </a>
                         </div>
