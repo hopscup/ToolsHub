@@ -53,6 +53,7 @@ const serviceRoutes = [
   '/proxy-vpn/giga-vpn',
   '/proxy-vpn/tochka-g',
   '/proxy-vpn/giga-dollar-vpn',
+  '/proxy-vpn/imp-vpn',
   ...accountShopPages.map((page) => `/account-shop/${page.slug}`),
   ...antidetectPages.map((page) => `/antidetect/${page.slug}`),
   ...foreignCardPages.map((page) => `/foreign-cards/${page.slug}`),

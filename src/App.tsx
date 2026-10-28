@@ -28,6 +28,7 @@ import { socialPages } from './data/socialPages.js';
 import { steamPages } from './data/steamPages.js';
 import { vpsPages } from './data/vpsPages.js';
 import { pageHeadings } from './data/pageHeadings.js';
+import { allVpnPros, allVpnSummary, impVpnPage, vpnTerms } from './data/vpnDetails.js';
 import {
   getAnalyticsConsent,
   initializeAnalyticsFromConsent,
@@ -340,6 +341,7 @@ const SERVICE_PAGE_SEO_BY_ID = Object.fromEntries(
     ...socialPages,
     ...steamPages,
     ...vpsPages,
+    impVpnPage,
   ].map((page) => [page.id, { title: page.title, description: page.description, heading: page.heading }]),
 ) as Record<string, { title: Localized; description: Localized; heading: Localized }>;
 
@@ -1304,23 +1306,17 @@ const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']
       zh: 'ALL VPN 评测：订阅、服务器与设备 | Hopscup Tools',
       ko: 'ALL VPN 리뷰: 구독, 서버 및 기기 | Hopscup Tools',
     },
-    description: {
-      ru: 'Обзор ALL VPN: более 50 VPN и 100 серверов в одной подписке, безлимитный трафик, до 10 устройств и оплата через Telegram.',
-      en: 'ALL VPN review covering 50+ VPN options, 100+ servers, unlimited traffic, up to 10 devices, and Telegram payments.',
-      es: 'Análisis de ALL VPN: más de 50 VPN, 100 servidores, tráfico ilimitado, hasta 10 dispositivos y pagos por Telegram.',
-      zh: 'ALL VPN 评测：一份订阅包含 50 多种 VPN、100 多台服务器、无限流量、最多 10 台设备及 Telegram 付款。',
-      ko: 'ALL VPN 리뷰: 하나의 구독으로 50개 이상의 VPN, 100개 이상의 서버, 무제한 트래픽, 최대 10대 기기와 Telegram 결제.',
-    },
+    description: allVpnSummary,
     bestFor: {
       ru: [
         'Тем, кто не хочет покупать новый VPN каждый раз, когда старый перестаёт подключаться.',
         'Одна подписка сразу для телефона, компьютера и устройств близких.',
         'YouTube, Telegram, зарубежные сайты и обычное использование на каждый день.',
       ],
-      en: ['Switching to another connection when one VPN stops working.', 'Using one subscription on up to 10 devices.', 'Everyday access to websites, apps, and video services.'],
-      es: ['Cambiar de conexión cuando un VPN deja de funcionar.', 'Usar una suscripción en hasta 10 dispositivos.', 'Acceso diario a sitios, aplicaciones y vídeo.'],
-      zh: ['某个 VPN 失效时切换到其他连接。', '一份订阅最多用于 10 台设备。', '日常访问网站、应用和视频服务。'],
-      ko: ['한 VPN이 작동하지 않을 때 다른 연결로 전환.', '하나의 구독을 최대 10대 기기에서 사용.', '웹사이트, 앱과 영상 서비스의 일상적 이용.'],
+      en: ['Switching to another connection when one VPN stops working.', 'Using one subscription on up to 50 devices depending on the plan.', 'Everyday access to websites, apps, and video services.'],
+      es: ['Cambiar de conexión cuando un VPN deja de funcionar.', 'Usar una suscripción en hasta 50 dispositivos según el plan.', 'Acceso diario a sitios, aplicaciones y vídeo.'],
+      zh: ['某个 VPN 失效时切换到其他连接。', '按套餐，一份订阅最多用于 50 台设备。', '日常访问网站、应用和视频服务。'],
+      ko: ['한 VPN이 작동하지 않을 때 다른 연결로 전환.', '요금제에 따라 최대 50대 기기에서 하나의 구독 사용.', '웹사이트, 앱과 영상 서비스의 일상적 이용.'],
     },
     considerations: {
       ru: [
@@ -2490,25 +2486,16 @@ const OFFERS: Offer[] = [
     subCategory: 'VPN',
     slug: 'all-vpn',
     name: 'ALL VPN',
-    description: {
-      ru: 'Более 50 VPN и 100 серверов в одной подписке. Если один вариант перестал работать, можно переключиться на другой без покупки нового сервиса. Безлимитный трафик и до 10 устройств.',
-      en: 'More than 50 VPN options and 100 servers in one subscription. Switch to another connection without buying a new service when one stops working. Unlimited traffic and up to 10 devices.'
-    },
+    description: allVpnSummary,
     url: 'https://t.me/allvpn?start=refBCRyVZUr',
     logoUrl: '/all-vpn.png',
     isBestChoice: true,
     platforms: ['Windows', 'macOS', 'Android', 'iOS'],
     details: {
-      geo: { ru: '100+ серверов', en: '100+ servers', es: 'Más de 100 servidores', zh: '100 多台服务器', ko: '100개 이상의 서버' },
+      geo: vpnTerms['all-vpn'].geo,
       types: { ru: '50+ VPN в одной подписке', en: '50+ VPN options in one plan', es: 'Más de 50 VPN en un plan', zh: '一份套餐包含 50 多种 VPN', ko: '한 요금제에 50개 이상의 VPN' },
       paymentMethods: { ru: 'СБП, карта, Telegram Stars, CryptoBot', en: 'SBP, bank card, Telegram Stars, CryptoBot', es: 'SBP, tarjeta, Telegram Stars, CryptoBot', zh: 'SBP、银行卡、Telegram Stars、CryptoBot', ko: 'SBP, 은행 카드, Telegram Stars, CryptoBot' },
-      pros: {
-        ru: ['Безлимитный трафик', 'До 10 устройств', 'Можно переключаться между разными VPN'],
-        en: ['Unlimited traffic', 'Up to 10 devices', 'Switch between different VPN connections'],
-        es: ['Tráfico ilimitado', 'Hasta 10 dispositivos', 'Cambio entre distintas conexiones VPN'],
-        zh: ['无限流量', '最多 10 台设备', '可在不同 VPN 连接之间切换'],
-        ko: ['무제한 트래픽', '최대 10대 기기', '여러 VPN 연결 간 전환']
-      }
+      pros: allVpnPros,
     },
     editorial: ADDITIONAL_PROXY_EDITORIALS['all-vpn'],
   },
@@ -2528,7 +2515,7 @@ const OFFERS: Offer[] = [
     isBestChoice: true,
     platforms: ['Windows', 'macOS', 'Android', 'iOS', 'Linux'],
     details: {
-      geo: { ru: 'Более 10 стран', en: '10+ countries', es: 'Más de 10 países', zh: '10 多个国家', ko: '10개 이상의 국가' },
+      geo: vpnTerms['ppl-vpn'].geo,
       paymentMethods: { ru: 'Банковские карты, СБП, Криптовалюта', en: 'Bank cards, SBP, Crypto', es: 'Tarjetas bancarias, SBP, cripto', zh: '银行卡、SBP、加密货币', ko: '은행 카드, SBP, 암호화폐' }
     },
     editorial: ADDITIONAL_PROXY_EDITORIALS['ppl-vpn'],
@@ -2547,7 +2534,7 @@ const OFFERS: Offer[] = [
     logoUrl: '/prostovpn.webp',
     platforms: ['Windows', 'macOS', 'Android', 'iOS', 'Linux', 'Smart TV'],
     details: {
-      geo: { ru: 'Более 10 стран', en: '10+ countries', es: 'Más de 10 países', zh: '10 多个国家', ko: '10개 이상의 국가' },
+      geo: vpnTerms.prostovpn.geo,
       paymentMethods: { ru: 'Банковские карты, СБП', en: 'Bank cards, SBP', es: 'Tarjetas bancarias, SBP', zh: '银行卡、SBP', ko: '은행 카드, SBP' }
     },
     editorial: ADDITIONAL_PROXY_EDITORIALS.prostovpn,
@@ -2566,7 +2553,7 @@ const OFFERS: Offer[] = [
     logoUrl: '/giga-vpn.png',
     platforms: ['Windows', 'macOS', 'Android', 'iOS'],
     details: {
-      geo: { ru: 'Более 10 стран', en: '10+ countries', es: 'Más de 10 países', zh: '10 多个国家', ko: '10개 이상의 국가' },
+      geo: vpnTerms['giga-vpn'].geo,
       types: { ru: 'VPN через Incy или Happ', en: 'VPN through Incy or Happ', es: 'VPN mediante Incy o Happ', zh: '通过 Incy 或 Happ 使用 VPN', ko: 'Incy 또는 Happ를 통한 VPN' },
       paymentMethods: { ru: 'СБП (QR), карта РФ, криптовалюта, Telegram Stars', en: 'SBP (QR), Russian bank card, crypto, Telegram Stars', es: 'SBP (QR), tarjeta bancaria rusa, cripto, Telegram Stars', zh: 'SBP（二维码）、俄罗斯银行卡、加密货币、Telegram Stars', ko: 'SBP(QR), 러시아 은행 카드, 암호화폐, Telegram Stars' },
       pros: {
@@ -2605,7 +2592,7 @@ const OFFERS: Offer[] = [
     logoUrl: '/tochka-g.webp',
     platforms: ['Windows', 'macOS', 'Android', 'iOS', 'Linux'],
     details: {
-      geo: { ru: 'Более 10 стран', en: '10+ countries', es: 'Más de 10 países', zh: '10 多个国家', ko: '10개 이상의 국가' },
+      geo: vpnTerms['tochka-g'].geo,
       types: { ru: 'VPN-конфиги, персональный прокси для Telegram', en: 'VPN configs, personal Telegram proxy', es: 'Configuraciones VPN, proxy personal para Telegram', zh: 'VPN 配置、Telegram 专用代理', ko: 'VPN 설정, 개인 Telegram 프록시' },
       paymentMethods: { ru: 'СБП или крипта', en: 'SBP or crypto', es: 'SBP o cripto', zh: 'SBP 或加密货币', ko: 'SBP 또는 암호화폐' },
       pros: {
@@ -2662,13 +2649,7 @@ const OFFERS: Offer[] = [
     logoUrl: '/giga-dollar-vpn.webp',
     platforms: ['Windows', 'macOS', 'Linux', 'Android', 'iOS', 'Android TV', 'tvOS'],
     details: {
-      geo: {
-        ru: 'Более 6 стран',
-        en: '6+ countries',
-        es: 'Más de 6 países',
-        zh: '6 个以上国家',
-        ko: '6개 이상의 국가',
-      },
+      geo: vpnTerms['giga-dollar-vpn'].geo,
       types: {
         ru: 'VPN, Авто-сервер HAPP, Ускоритель для белых списков',
         en: 'VPN, HAPP Auto Server, allowlist-network Accelerator',
@@ -2699,6 +2680,25 @@ const OFFERS: Offer[] = [
       },
     },
     editorial: ADDITIONAL_PROXY_EDITORIALS['giga-dollar-vpn'],
+  },
+  {
+    id: impVpnPage.id,
+    category: 'Proxy',
+    subCategory: 'VPN',
+    slug: impVpnPage.slug,
+    name: impVpnPage.name,
+    description: impVpnPage.description,
+    url: impVpnPage.url,
+    logoUrl: impVpnPage.logo,
+    details: {
+      geo: impVpnPage.geo,
+      paymentMethods: impVpnPage.paymentMethods,
+      pros: {
+        ru: ['3 дня бесплатно', 'До 5 устройств', 'Безлимитный обычный трафик', 'Автоматический выбор сервера'],
+        en: ['3 free days', 'Up to 5 devices', 'Unlimited regular traffic', 'Automatic server selection'],
+      },
+    },
+    editorial: impVpnPage.editorial,
   },
   // ANTIDETECT
   {
@@ -5782,6 +5782,8 @@ export default function App() {
     platforms: tx({ ru: 'Платформы', en: 'Platforms', es: 'Plataformas', zh: '平台', ko: '플랫폼' }),
     freeProfiles: tx({ ru: 'Бесплатные профили', en: 'Free Profiles', es: 'Perfiles gratis', zh: '免费配置文件', ko: '무료 프로필' }),
     tariffStart: tx({ ru: 'Стартовый тариф', en: 'Starter Plan', es: 'Plan inicial', zh: '入门套餐', ko: '시작 요금제' }),
+    vpnFree: tx({ ru: 'Бесплатно', en: 'Free trial', es: 'Gratis', zh: '免费试用', ko: '무료 체험' }),
+    vpnPrice: tx({ ru: 'Цена', en: 'Price', es: 'Precio', zh: '价格', ko: '요금' }),
     profiles100: tx({ ru: '100 профилей', en: '100 Profiles', es: '100 perfiles', zh: '100 个配置文件', ko: '프로필 100개' }),
     control: tx({ ru: 'Управление', en: 'Control', es: 'Control', zh: '操作设备', ko: '제어 기기' }),
     format: tx({ ru: 'Формат', en: 'Format', es: 'Formato', zh: '形式', ko: '형식' }),
@@ -6088,6 +6090,7 @@ export default function App() {
       && selectedOffer.mobileDetails
       && (subFilter === 'Mobile' || selectedOffer.subCategory === 'Mobile'),
   );
+  const selectedVpnTerms = selectedOffer?.subCategory === 'VPN' ? vpnTerms[selectedOffer.slug] : undefined;
 
   const isProxyGuideArticle = isProxyGuideArticlePath();
   const isMobileProxyComparisonArticle = isMobileProxyComparisonArticlePath();
@@ -6782,6 +6785,12 @@ export default function App() {
                           </>
                         ) : (
                           <>
+                            {offer.subCategory === 'VPN' && vpnTerms[offer.slug] && (
+                              <>
+                                <InfoRow icon={Clock} label={t.vpnFree} value={l(vpnTerms[offer.slug].free)} />
+                                <InfoRow icon={CreditCard} label={t.vpnPrice} value={l(vpnTerms[offer.slug].price)} />
+                              </>
+                            )}
                             <InfoRow icon={Users} label={t.freeProfiles} value={l(offer.freeProfiles)} />
                             <InfoRow icon={CreditCard} label={t.tariffStart} value={l(offer.tariffStartPrice)} />
                             <InfoRow icon={Percent} label={t.rate} value={l(offer.details?.rate)} />
@@ -8611,6 +8620,12 @@ export default function App() {
                             <p className="text-white font-bold text-lg">{l(selectedOffer.mobileDetails.control)}</p>
                           </div>
                         </div>
+                      )}
+                      {selectedVpnTerms && (
+                        <>
+                          <InfoRow icon={Clock} label={t.vpnFree} value={l(selectedVpnTerms.free)} />
+                          <InfoRow icon={CreditCard} label={t.vpnPrice} value={l(selectedVpnTerms.price)} />
+                        </>
                       )}
                       {isSelectedOfferMobileAntidetect && selectedOffer.mobileDetails && (
                         <div className="flex items-center gap-4">
