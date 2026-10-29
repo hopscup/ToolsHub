@@ -16,12 +16,14 @@ import { ExchangeUidsGuideArticle } from './components/ExchangeUidsGuideArticle'
 import { AntidetectSetupGuideArticle } from './components/AntidetectSetupGuideArticle';
 import { ForeignCardGuideArticle } from './components/ForeignCardGuideArticle';
 import { DiscordTokenGuideArticle } from './components/DiscordTokenGuideArticle';
+import { RecommendedBadge } from './components/RecommendedBadge';
 import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
 import { foreignCardPages } from './data/foreignCardPages.js';
 import { guidePages } from './data/guidePages.js';
 import { guideCatalogById } from './data/guideCatalog.js';
+import { recommendedOfferIds } from './data/recommendedOffers.js';
 import { getExternalLinkRel } from './lib/externalLinks.js';
 import { legacyIndexedRoutes } from './data/legacyIndexedRoutes.js';
 import { seoLandingPages } from './data/seoLandingPages.js';
@@ -98,6 +100,8 @@ type CategoryType = 'Proxy' | 'Antidetect' | 'Stores' | 'Cards' | 'Crypto' | 'SM
 
 type SubCategory = 'Proxy' | 'VPN' | 'PCBasic' | 'PCAdvanced' | 'Mobile' | 'NoKYC' | 'WithKYC' | 'CardCrypto' | 'USDTQR' | 'Web' | 'Bot' | 'AML' | 'Wallet' | 'BoostSites' | 'Bux' | 'SteamFast' | 'SteamItems' | 'None';
 type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto';
+
+const RECOMMENDED_OFFER_IDS = new Set(Object.values(recommendedOfferIds).flat());
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
   'guide-discord-token': { topic: 'accounts', minutes: 6 },
@@ -5192,6 +5196,7 @@ export default function App() {
   const lList = <T,>(value?: Localized<T[]>) => getLocalizedValue(value, lang) || [];
   const tx = <T,>(value: Partial<Record<Language, T>> & { en: T }) => value[lang] ?? value.en;
   const offerTitle = (offer: Offer) => guideCatalogById[offer.id]?.title[lang] || guideCatalogById[offer.id]?.title.ru || offer.name;
+  const isRecommended = (offer: Offer) => isActiveLanguage(lang) && RECOMMENDED_OFFER_IDS.has(offer.id);
   const offerDescription = (offer: Offer) => {
     const guideDescription = guideCatalogById[offer.id]?.description[lang];
     if (guideDescription) return guideDescription;
@@ -6594,6 +6599,7 @@ export default function App() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="bg-[#111111]/80 backdrop-blur-xl p-7 rounded-[1.5rem] group flex flex-col justify-between gap-8 relative overflow-hidden h-full border border-white/5 shadow-2xl hover:border-brand-purple/30 hover:shadow-[0_0_60px_rgba(129,28,254,0.15)] transition-all duration-500 hover:-translate-y-1"
                 >
+                  {isRecommended(offer) && <RecommendedBadge language={lang === 'ru' ? 'ru' : 'en'} />}
                   <div className="relative z-10">
                     {offer.category === 'Stores' || offer.category === 'SMS' || offer.category === 'Cards' ? (
                       // --- Special Layout (Reference Image Style) ---
