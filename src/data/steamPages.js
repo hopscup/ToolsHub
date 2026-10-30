@@ -1,3 +1,5 @@
+import { antarcticSteamPage } from './antarcticWallet.js';
+
 const steamTitle = (name) => ({
   ru: `${name}: пополнение Steam и обзор сервиса | Hopscup Tools`,
   en: `${name}: Steam top-up service review | Hopscup Tools`,
@@ -7,6 +9,7 @@ const steamTitle = (name) => ({
 });
 
 export const steamPages = [
+  antarcticSteamPage,
   {
     id: 'steam-lis-skins',
     slug: 'lis-skins',

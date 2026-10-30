@@ -36,6 +36,7 @@ export const isAffiliateUrl = (href) => {
     }
     if (fromReferralHosts.has(host) && url.searchParams.get('from')) return true;
     if (host === 'socpublic.com' && url.searchParams.get('i')) return true;
+    if (host === 't.me' && /^ref/i.test(url.searchParams.get('startapp') || '')) return true;
     if (host === 't.me' && url.searchParams.get('start')) {
       const start = url.searchParams.get('start');
       if (/ref/i.test(start) || telegramReferralBots.has(url.pathname.slice(1).toLowerCase())) return true;

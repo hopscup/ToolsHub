@@ -21,9 +21,12 @@ import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
 import { foreignCardPages } from './data/foreignCardPages.js';
+import { antarcticWallet, antarcticCardStats, antarcticExchangeDetails, antarcticSteamDetails, cryptoQrLanding } from './data/antarcticWallet.js';
+import { qr2pay, qr2payCardStats, qr2payExchangeDetails } from './data/qr2pay.js';
+import { appendLocalizedItems, pgonQrNotes, prostoQrNotes, qrCardLabels, qrPaymentDetailsById } from './data/cryptoQrDetails.js';
 import { guidePages } from './data/guidePages.js';
 import { guideCatalogById } from './data/guideCatalog.js';
-import { recommendedOfferIds } from './data/recommendedOffers.js';
+import { recommendedOfferIds, recommendedOfferLabels } from './data/recommendedOffers.js';
 import { getExternalLinkRel } from './lib/externalLinks.js';
 import { legacyIndexedRoutes } from './data/legacyIndexedRoutes.js';
 import { seoLandingPages } from './data/seoLandingPages.js';
@@ -82,6 +85,10 @@ import {
   Lock,
   Shield,
   ShieldCheck,
+  QrCode,
+  ArrowLeftRight,
+  Wallet,
+  Gauge,
   Cloud,
   Database,
   Code,
@@ -278,6 +285,12 @@ interface Offer {
     format: Localized;
     trial?: Localized;
   };
+  qrDetails?: {
+    countries: Localized;
+    fee: Localized;
+    kyc: Localized;
+    limit: Localized;
+  };
   priceInfo?: {
     main?: Localized;
     secondary?: Localized;
@@ -382,7 +395,7 @@ const CATEGORIES: { id: CategoryType; icon: any; title: Localized; subFilters?: 
     id: 'Crypto', 
     icon: Coins, 
     title: { ru: 'Купить/продать крипту', en: 'Buy/Sell Crypto', es: 'Comprar/vender cripto', zh: '买卖加密货币', ko: '암호화폐 매매' },
-    subFilters: ['AML', 'Wallet'],
+    subFilters: ['USDTQR', 'AML', 'Wallet'],
     guides: { text: '#', video: '#' }
   },
   { id: 'SMS', icon: MessageSquare, title: { ru: 'SMS Активаторы', en: 'SMS Activators', es: 'SMS Activadores', zh: '短信接码', ko: 'SMS 인증' } },
@@ -1877,6 +1890,64 @@ const GUIDE_PAGE_BY_ID = Object.fromEntries(
 }>;
 
 const OFFERS: Offer[] = [
+  {
+    id: 'qr2pay-card',
+    category: 'Cards',
+    subCategory: 'NoKYC',
+    name: qr2pay.name,
+    slug: FOREIGN_CARD_PAGE_BY_ID['qr2pay-card'].slug,
+    editorial: FOREIGN_CARD_PAGE_BY_ID['qr2pay-card'].editorial,
+    description: FOREIGN_CARD_PAGE_BY_ID['qr2pay-card'].editorial.description,
+    url: qr2pay.url,
+    logoUrl: qr2pay.logo,
+    cardStats: qr2payCardStats,
+    details: {
+      pros: FOREIGN_CARD_PAGE_BY_ID['qr2pay-card'].editorial.bestFor,
+      nuances: FOREIGN_CARD_PAGE_BY_ID['qr2pay-card'].editorial.considerations,
+    },
+  },
+  {
+    id: 'qr2pay-exchange',
+    category: 'Crypto',
+    qrDetails: qrPaymentDetailsById['qr2pay-exchange'],
+    subCategories: ['USDTQR'],
+    name: qr2pay.name,
+    slug: CRYPTO_EXCHANGE_PAGE_BY_ID['qr2pay-exchange'].slug,
+    editorial: CRYPTO_EXCHANGE_PAGE_BY_ID['qr2pay-exchange'].editorial,
+    description: CRYPTO_EXCHANGE_PAGE_BY_ID['qr2pay-exchange'].editorial.description,
+    url: qr2pay.url,
+    logoUrl: qr2pay.logo,
+    details: qr2payExchangeDetails,
+  },
+  {
+    id: 'antarctic-card',
+    category: 'Cards',
+    subCategory: 'WithKYC',
+    name: antarcticWallet.name,
+    slug: FOREIGN_CARD_PAGE_BY_ID['antarctic-card'].slug,
+    editorial: FOREIGN_CARD_PAGE_BY_ID['antarctic-card'].editorial,
+    description: FOREIGN_CARD_PAGE_BY_ID['antarctic-card'].editorial.description,
+    url: antarcticWallet.url,
+    logoUrl: antarcticWallet.logo,
+    cardStats: antarcticCardStats,
+    details: {
+      pros: FOREIGN_CARD_PAGE_BY_ID['antarctic-card'].editorial.bestFor,
+      nuances: FOREIGN_CARD_PAGE_BY_ID['antarctic-card'].editorial.considerations,
+    },
+  },
+  {
+    id: 'antarctic-exchange',
+    category: 'Crypto',
+    qrDetails: qrPaymentDetailsById['antarctic-exchange'],
+    subCategories: ['USDTQR'],
+    name: antarcticWallet.name,
+    slug: CRYPTO_EXCHANGE_PAGE_BY_ID['antarctic-exchange'].slug,
+    editorial: CRYPTO_EXCHANGE_PAGE_BY_ID['antarctic-exchange'].editorial,
+    description: CRYPTO_EXCHANGE_PAGE_BY_ID['antarctic-exchange'].editorial.description,
+    url: antarcticWallet.url,
+    logoUrl: antarcticWallet.logo,
+    details: antarcticExchangeDetails,
+  },
   // GUIDES
   {
     id: 'guide-mobile-ip',
@@ -3271,6 +3342,8 @@ const OFFERS: Offer[] = [
   {
     id: 'prosto-exchange',
     category: 'Crypto',
+    qrDetails: qrPaymentDetailsById['prosto-exchange'],
+    subCategories: ['USDTQR'],
     slug: CRYPTO_EXCHANGE_PAGE_BY_ID['prosto-exchange'].slug,
     editorial: CRYPTO_EXCHANGE_PAGE_BY_ID['prosto-exchange'].editorial,
     name: 'Prosto Exchange',
@@ -3307,7 +3380,7 @@ const OFFERS: Offer[] = [
         zh: ['购买 USDT 和其他加密货币', '出售加密货币到银行卡或 SBP', '币币兑换', '通过经理进行线下兑换'],
         ko: ['USDT 및 기타 암호화폐 구매', '카드 또는 SBP로 암호화폐 판매', '암호화폐 간 교환', '매니저를 통한 오프라인 환전']
       },
-      nuances: {
+      nuances: appendLocalizedItems({
         ru: [
           'Перед обменом всегда проверяй актуальный курс и минимальную сумму в боте.',
           'Для крупных сумм лучше заранее согласовать формат с менеджером.',
@@ -3338,7 +3411,7 @@ const OFFERS: Offer[] = [
           '암호화폐 전송 전에 네트워크, 지갑 주소와 금액을 다시 확인하세요.',
           '첫 환전은 소액으로 테스트하세요.'
         ]
-      },
+      }, prostoQrNotes),
       pros: {
         ru: ['Работает прямо в Telegram', 'Есть онлайн и офлайн формат', 'Удобно для пополнения и вывода рабочих бюджетов'],
         en: ['Works directly in Telegram', 'Online and offline formats', 'Convenient for topping up and cashing out work budgets'],
@@ -3359,11 +3432,11 @@ const OFFERS: Offer[] = [
     logoUrl: '/hermes-exchange.png',
     details: {
       geo: {
-        ru: 'Онлайн и офлайн по согласованию с менеджером',
-        en: 'Online and offline by agreement with a manager',
-        es: 'Online y presencial según acuerdo con el gestor',
-        zh: '在线与线下服务，需与经理确认',
-        ko: '매니저와 협의한 온라인 및 오프라인 거래'
+        ru: 'Россия онлайн и офлайн',
+        en: 'Russia, online and offline',
+        es: 'Russia, online and offline',
+        zh: 'Russia, online and offline',
+        ko: 'Russia, online and offline'
       },
       types: {
         ru: 'Крипта ↔ наличный и безналичный фиат',
@@ -3542,6 +3615,8 @@ const OFFERS: Offer[] = [
   {
     id: 'pgon-exchange',
     category: 'Crypto',
+    qrDetails: qrPaymentDetailsById['pgon-exchange'],
+    subCategories: ['USDTQR'],
     slug: CRYPTO_EXCHANGE_PAGE_BY_ID['pgon-exchange'].slug,
     editorial: CRYPTO_EXCHANGE_PAGE_BY_ID['pgon-exchange'].editorial,
     name: 'PGON',
@@ -3577,7 +3652,7 @@ const OFFERS: Offer[] = [
         zh: ['银行卡提现：5%，最低 3500 卢布', 'SBP 提现：6.5%，最低 1500 卢布', '法人发起的 OST 付款', '加密货币兑换与提现'],
         ko: ['카드 출금: 5%, 3,500루블부터', 'SBP 출금: 6.5%, 1,500루블부터', '법인의 OST 지급', '암호화폐 교환 및 출금']
       },
-      nuances: {
+      nuances: appendLocalizedItems({
         ru: [
           'По тарифам канала, из эквивалента 100 000 ₽ после комиссии останется около 95 000 ₽ на карту или 93 500 ₽ по СБП.',
           'Одна сделка — до 300 000 ₽.',
@@ -3590,7 +3665,7 @@ const OFFERS: Offer[] = [
         es: ['Con las tarifas publicadas, de 100 000 RUB quedan unos 95 000 RUB en tarjeta o 93 500 RUB por SBP.', 'Una operación está limitada a 300 000 RUB.', 'Comprueba el total y la tasa antes de confirmar.', 'OST es más seguro que un P2P desconocido, pero no evita posibles controles bancarios.', 'Guarda recibos y pruebas del origen de fondos.', 'Usa una cantidad pequeña para el primer retiro.'],
         zh: ['按公布费率，等值 100000 卢布提现到银行卡约剩 95000 卢布，通过 SBP 约剩 93500 卢布。', '单笔交易限额为 300000 卢布。', '确认前检查最终金额和汇率。', 'OST 比陌生 P2P 对手方更安全，但不能保证银行不会审查。', '保留交易凭证和资金来源证明。', '首次提现建议使用小额测试。'],
         ko: ['공개 수수료 기준 100,000루블 상당액은 카드로 약 95,000루블, SBP로 약 93,500루블이 남습니다.', '한 건의 거래 한도는 300,000루블입니다.', '확인 전 최종 금액과 환율을 확인하세요.', 'OST는 모르는 P2P 상대보다 안전하지만 은행 검사가 없다고 보장하지 않습니다.', '영수증과 자금 출처 자료를 보관하세요.', '첫 출금은 소액으로 테스트하세요.']
-      },
+      }, pgonQrNotes),
       pros: {
         ru: ['Выплата приходит от юридического лица', 'Нет сделки со случайным P2P-покупателем', 'Сумма и комиссия показываются до подтверждения'],
         en: ['Payout from a legal entity', 'No deal with an unknown P2P buyer', 'Amount and fee shown before confirmation'],
@@ -3973,6 +4048,18 @@ const OFFERS: Offer[] = [
         ko: 'Mir/SBP, 카드, 암호화폐'
       }
     }
+  },
+  {
+    id: 'steam-antarctic',
+    category: 'Steam',
+    subCategory: 'SteamFast',
+    name: antarcticWallet.name,
+    slug: STEAM_PAGE_BY_ID['steam-antarctic'].slug,
+    editorial: STEAM_PAGE_BY_ID['steam-antarctic'].editorial,
+    description: STEAM_PAGE_BY_ID['steam-antarctic'].editorial.description,
+    url: antarcticWallet.url,
+    logoUrl: antarcticWallet.logo,
+    details: antarcticSteamDetails,
   },
   // CARDS
   {
@@ -5648,13 +5735,16 @@ export default function App() {
     });
 
     const proxyOrder = ['MobileProxy', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'ProxyShard', 'Proxys.io'];
-    const cardOrder = ['Zarub', 'PGON', 'Vezdekarta', 'Pionex', 'Cashin Out'];
-    const cryptoOrder = ['Prosto Exchange', 'Keine Exchange', 'PGON', 'Hermes Exchange', 'AMLBot', 'BitOK', 'GetBlock', 'MetaMask', 'Rabby Wallet', 'Phantom', 'Backpack', 'Trust Wallet', 'TronLink'];
+    const cardOrder = ['Zarub', 'PGON', 'Antarctic Wallet', 'QR2Pay', 'Vezdekarta', 'Pionex', 'Cashin Out'];
+    const cryptoOrder = ['Prosto Exchange', 'Keine Exchange', 'PGON', 'Antarctic Wallet', 'QR2Pay', 'Hermes Exchange', 'AMLBot', 'BitOK', 'GetBlock', 'MetaMask', 'Rabby Wallet', 'Phantom', 'Backpack', 'Trust Wallet', 'TronLink'];
     return offers.sort((first, second) => {
       if (first.category === 'Cards' && second.category === 'Cards') {
         return cardOrder.indexOf(first.name) - cardOrder.indexOf(second.name);
       }
       if (first.category === 'Crypto' && second.category === 'Crypto') {
+        if (subFilter === 'USDTQR') {
+          return cryptoQrLanding.items.indexOf(first.name) - cryptoQrLanding.items.indexOf(second.name);
+        }
         return cryptoOrder.indexOf(first.name) - cryptoOrder.indexOf(second.name);
       }
       if (first.category !== 'Proxy' || second.category !== 'Proxy') return 0;
@@ -5796,7 +5886,7 @@ export default function App() {
       NoKYC: tx({ ru: 'Без KYC', en: 'No KYC', es: 'Sin KYC', zh: '无 KYC', ko: 'KYC 없음' }),
       WithKYC: tx({ ru: 'С KYC', en: 'With KYC', es: 'Con KYC', zh: '有 KYC', ko: 'KYC 있음' }),
       CardCrypto: tx({ ru: 'Карты/Крипта', en: 'Cards/Crypto', es: 'Tarjetas/Cripto', zh: '银行卡/加密货币', ko: '카드/암호화폐' }),
-      USDTQR: 'USDT QR',
+      USDTQR: tx({ ru: 'QR СБП', en: 'SBP QR', es: 'SBP QR', zh: 'SBP QR', ko: 'SBP QR' }),
       Web: tx({ ru: 'Сайты', en: 'Websites', es: 'Sitios web', zh: '网站', ko: '웹사이트' }),
       Bot: tx({ ru: 'Боты в Telegram', en: 'Telegram Bots', es: 'Bots de Telegram', zh: 'Telegram 机器人', ko: 'Telegram 봇' }),
       AML: tx({ ru: 'AML проверка', en: 'AML check', es: 'Control AML', zh: 'AML 检查', ko: 'AML 검사' }),
@@ -5909,7 +5999,9 @@ export default function App() {
 
   const handleSubFilterChange = (nextSubFilter: SubCategory) => {
     if (activeCategory === 'Crypto') {
-      const landingId = nextSubFilter === 'AML'
+      const landingId = nextSubFilter === 'USDTQR'
+        ? 'crypto-sbp-qr'
+        : nextSubFilter === 'AML'
         ? 'crypto-aml-checks'
         : nextSubFilter === 'Wallet'
           ? 'crypto-wallets'
@@ -6038,7 +6130,7 @@ export default function App() {
   }, [selectedOffer, lang]);
 
   const activeCategoryData = CATEGORIES.find(c => c.id === activeCategory);
-  const currentSectionSeo = currentSeoLanding && ['crypto-aml-checks', 'crypto-wallets'].includes(currentSeoLanding.id)
+  const currentSectionSeo = currentSeoLanding && ['crypto-sbp-qr', 'crypto-aml-checks', 'crypto-wallets'].includes(currentSeoLanding.id)
     ? currentSeoLanding
     : SECTION_SEO[activeCategory];
   const SectionHeading = selectedOffer ? 'h2' : 'h1';
@@ -6066,6 +6158,10 @@ export default function App() {
       && (subFilter === 'Mobile' || selectedOffer.subCategory === 'Mobile'),
   );
   const selectedVpnTerms = selectedOffer?.subCategory === 'VPN' ? vpnTerms[selectedOffer.slug] : undefined;
+  const selectedEditorialNotes = lList(selectedOffer?.editorial?.considerations).filter(item =>
+    !['prosto-exchange', 'antarctic-exchange', 'qr2pay-exchange', 'qr2pay-card'].includes(selectedOffer?.id || '')
+      || !lList(selectedOffer?.details?.nuances).includes(item),
+  );
 
   const isProxyGuideArticle = isProxyGuideArticlePath();
   const isMobileProxyComparisonArticle = isMobileProxyComparisonArticlePath();
@@ -6254,6 +6350,7 @@ export default function App() {
                         : 'bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:border-white/20'
                     }`}
                   >
+                    {activeCategory === 'Crypto' && <ArrowLeftRight className="mr-2 inline-block h-4 w-4" />}
                     {activeCategory === 'Crypto'
                       ? tx({ ru: 'Обменники', en: 'Exchanges', es: 'Exchanges', zh: '兑换服务', ko: '환전소' })
                       : t.all}
@@ -6271,6 +6368,8 @@ export default function App() {
                       }`}
                     >
                       {filter === 'AML' && <ShieldCheck className="mr-2 inline-block h-4 w-4" />}
+                      {filter === 'USDTQR' && <QrCode className="mr-2 inline-block h-4 w-4" />}
+                      {filter === 'Wallet' && <Wallet className="mr-2 inline-block h-4 w-4" />}
                       {t.subFilters[filter] || filter}
                     </button>
                   ))}
@@ -6588,7 +6687,7 @@ export default function App() {
                 </p>
               </section>
             )}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full${activeCategory === 'Crypto' && subFilter === 'USDTQR' ? ' auto-rows-fr' : ''}`}>
               {filteredOffers.map((offer, index) => (
                 <motion.div
                   layout
@@ -6599,7 +6698,7 @@ export default function App() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="bg-[#111111]/80 backdrop-blur-xl p-7 rounded-[1.5rem] group flex flex-col justify-between gap-8 relative overflow-hidden h-full border border-white/5 shadow-2xl hover:border-brand-purple/30 hover:shadow-[0_0_60px_rgba(129,28,254,0.15)] transition-all duration-500 hover:-translate-y-1"
                 >
-                  {isRecommended(offer) && <RecommendedBadge language={lang === 'ru' ? 'ru' : 'en'} />}
+                  {isRecommended(offer) && <RecommendedBadge language={lang === 'ru' ? 'ru' : 'en'} label={recommendedOfferLabels[offer.id]?.[lang === 'ru' ? 'ru' : 'en']} />}
                   <div className="relative z-10">
                     {offer.category === 'Stores' || offer.category === 'SMS' || offer.category === 'Cards' ? (
                       // --- Special Layout (Reference Image Style) ---
@@ -6751,9 +6850,16 @@ export default function App() {
                       </div>
                     )}
 
-                    {(offer.details || offer.platforms?.length || offer.mobileDetails) && offer.category !== 'Stores' && offer.category !== 'SMS' && offer.category !== 'Cards' && (
+                    {(offer.details || offer.qrDetails || offer.platforms?.length || offer.mobileDetails) && offer.category !== 'Stores' && offer.category !== 'SMS' && offer.category !== 'Cards' && (
                       <div className={`flex flex-col gap-4 ${offer.promoCode ? 'mb-3' : 'mb-8'}`}>
-                        {offer.category === 'Antidetect' && (subFilter === 'Mobile' || offer.subCategory === 'Mobile') && offer.mobileDetails ? (
+                        {activeCategory === 'Crypto' && subFilter === 'USDTQR' && offer.qrDetails ? (
+                          <>
+                            <InfoRow icon={Globe} label={l(qrCardLabels.countries)} value={l(offer.qrDetails.countries)} />
+                            <InfoRow icon={Percent} label={l(qrCardLabels.fee)} value={l(offer.qrDetails.fee)} />
+                            <InfoRow icon={ShieldCheck} label={l(qrCardLabels.kyc)} value={l(offer.qrDetails.kyc)} />
+                            <InfoRow icon={Gauge} label={l(qrCardLabels.limit)} value={l(offer.qrDetails.limit)} />
+                          </>
+                        ) : offer.category === 'Antidetect' && (subFilter === 'Mobile' || offer.subCategory === 'Mobile') && offer.mobileDetails ? (
                           <>
                             <InfoRow icon={Smartphone} label={t.control} value={l(offer.mobileDetails.control)} />
                             <InfoRow icon={Layers} label={t.format} value={l(offer.mobileDetails.format)} />
@@ -8752,13 +8858,13 @@ export default function App() {
                         </ul>
                       </section>
 
-                      {selectedOffer.id !== 'pgon-exchange' && <section className="space-y-4">
+                      {selectedOffer.id !== 'pgon-exchange' && selectedEditorialNotes.length > 0 && <section className="space-y-4">
                         <h3 className="flex items-center gap-2 text-[11px] uppercase font-black text-brand-orange tracking-[0.2em]">
                           <Info className="w-4 h-4" />
                           {t.nuances}
                         </h3>
                         <ul className="space-y-3">
-                          {lList(selectedOffer.editorial.considerations).map((item, index) => (
+                          {selectedEditorialNotes.map((item, index) => (
                             <li key={index} className="flex gap-3 text-sm leading-relaxed text-white/55">
                               <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange" />
                               {item}
@@ -8779,7 +8885,7 @@ export default function App() {
                         </a>
                       )}
 
-                      <section className="rounded-2xl border border-brand-purple/20 bg-brand-purple/[0.07] p-5">
+                      {l(selectedOffer.editorial.verdict) && <section className="rounded-2xl border border-brand-purple/20 bg-brand-purple/[0.07] p-5">
                         <h3 className="mb-3 flex items-center gap-2 text-[11px] uppercase font-black text-brand-purple tracking-[0.2em]">
                           <Star className="w-4 h-4" />
                           {t.editorialVerdict}
@@ -8787,7 +8893,7 @@ export default function App() {
                         <p className="text-sm font-medium leading-relaxed text-white/75">
                           {l(selectedOffer.editorial.verdict)}
                         </p>
-                      </section>
+                      </section>}
                     </div>
                   )}
                 </div>

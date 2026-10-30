@@ -261,7 +261,11 @@ const sections = [
       zh: ['无 KYC 启动更快，但可能有限制。', '有 KYC 通常额度更高、更稳定。', '开卡前检查手续费、充值方式和服务支持。'],
       ko: ['No-KYC 옵션은 시작이 빠르지만 제한이 있을 수 있습니다.', 'KYC 옵션은 한도와 안정성이 더 높은 경우가 많습니다.', '발급 전 수수료, 충전 방법, 지원 서비스를 확인하세요.'],
     },
-    items: ['Zarub', 'Vezdekarta', 'Cashinout'],
+    items: ['Zarub', 'PGON', 'Antarctic Wallet', 'QR2Pay', 'Vezdekarta', 'Cashinout'],
+    serviceLinks: {
+      'Antarctic Wallet': '/foreign-cards/antarctic-wallet',
+      QR2Pay: '/foreign-cards/qr2pay',
+    },
   },
   {
     id: 'crypto',
@@ -304,7 +308,11 @@ const sections = [
       zh: ['兑换前检查汇率、手续费、网络和最低金额。', '第一次先用小额测试。', '大额交易前先确认交易方式和收款信息。'],
       ko: ['환전 전 환율, 수수료, 네트워크, 최소 금액을 확인하세요.', '첫 전송은 소액 테스트로 하세요.', '큰 금액은 거래 방식과 정보를 미리 확인하세요.'],
     },
-    items: ['Prosto Exchange', 'Hermes Exchange', 'PGON', 'Keine Exchange'],
+    items: ['Prosto Exchange', 'Hermes Exchange', 'PGON', 'Antarctic Wallet', 'QR2Pay', 'Keine Exchange'],
+    serviceLinks: {
+      'Antarctic Wallet': '/crypto-exchange/antarctic-wallet',
+      QR2Pay: '/crypto-exchange/qr2pay',
+    },
   },
   {
     id: 'sms',
@@ -476,7 +484,8 @@ const sections = [
       zh: ['登录名充值更简单更快，但通常有手续费。', '物品充值可能更划算，但必须检查流动性和 Steam 价格。', '本地银行充值也可能可用，但会有手续费。'],
       ko: ['로그인 충전은 쉽고 빠르지만 보통 수수료가 있습니다.', '아이템 충전은 이득일 수 있지만 유동성과 Steam 가격을 확인해야 합니다.', '현지 은행 충전도 수수료와 함께 가능할 수 있습니다.'],
     },
-    items: ['LIS-SKINS', 'TF2Lavka', 'AIM.market', 'CS.MONEY', 'GGSel', 'Playerok'],
+    items: ['LIS-SKINS', 'TF2Lavka', 'AIM.market', 'CS.MONEY', 'GGSel', 'Playerok', 'Antarctic Wallet'],
+    serviceLinks: { 'Antarctic Wallet': '/steam-topup/antarctic-wallet' },
   },
   {
     id: 'guides',
@@ -1458,6 +1467,7 @@ const servicePages = [
     keywords: page.keywords,
     points: page.editorial.bestFor,
     items: page.editorial.considerations,
+    ...(page.url ? { cta: { href: page.url, label: { ru: 'Открыть', en: 'Open' } } } : {}),
   })),
   ...cryptoExchangePages.map((page) => createServicePage({
     id: page.id,
@@ -1471,6 +1481,7 @@ const servicePages = [
     keywords: page.keywords,
     points: page.editorial.bestFor,
     items: page.editorial.considerations,
+    ...(page.url ? { cta: { href: page.url, label: { ru: 'Открыть', en: 'Open' } } } : {}),
   })),
   ...smsPages.map((page) => createServicePage({
     id: page.id,
@@ -1523,6 +1534,7 @@ const servicePages = [
     keywords: page.keywords,
     points: page.editorial.bestFor,
     items: page.editorial.considerations,
+    ...(page.url ? { cta: { href: page.url, label: { ru: 'Открыть', en: 'Open' } } } : {}),
   })),
   createServicePage({
     id: 'guide-best-proxies',

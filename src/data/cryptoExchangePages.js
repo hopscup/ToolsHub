@@ -1,3 +1,7 @@
+import { antarcticExchangePage } from './antarcticWallet.js';
+import { qr2payExchangePage } from './qr2pay.js';
+import { appendLocalizedItems, pgonQrNotes, prostoQrNotes } from './cryptoQrDetails.js';
+
 const exchangeTitle = (name) => ({
   ru: `${name}: покупка, продажа и обмен криптовалюты | Hopscup Tools`,
   en: `${name} review: buy, sell, and exchange crypto | Hopscup Tools`,
@@ -7,6 +11,8 @@ const exchangeTitle = (name) => ({
 });
 
 export const cryptoExchangePages = [
+  antarcticExchangePage,
+  qr2payExchangePage,
   {
     id: 'prosto-exchange',
     slug: 'prosto-exchange',
@@ -49,13 +55,13 @@ export const cryptoExchangePages = [
         zh: ['用卢布购买 USDT，或通过银行卡和 SBP 出售加密货币。', '俄罗斯、欧洲、亚洲及其他地区的现金交易和转账。', '发票付款、SEPA、Alipay、WeChat 以及需要经理协助的任务。'],
         ko: ['루블로 USDT 구매 및 카드나 SBP로 암호화폐 판매.', '러시아, 유럽, 아시아와 기타 지역의 현금 거래 및 송금.', '인보이스 결제, SEPA, Alipay, WeChat과 매니저 조율이 필요한 작업.'],
       },
-      considerations: {
+      considerations: appendLocalizedItems({
         ru: ['Курс, минимальная сумма и доступное направление зависят от конкретной заявки.', 'Перед отправкой крипты еще раз проверьте сеть, адрес и сумму.', 'Для наличных и крупных переводов заранее согласуйте город, время и способ фиксации курса.'],
         en: ['The rate, minimum amount, and available direction depend on the request.', 'Check the network, address, and amount again before sending crypto.', 'For cash and larger transfers, confirm the city, time, and rate-fixing method first.'],
         es: ['La tasa, el importe mínimo y la dirección disponible dependen de cada solicitud.', 'Comprueba de nuevo la red, la dirección y el importe antes de enviar cripto.', 'Para efectivo y transferencias grandes, acuerda antes ciudad, hora y fijación de la tasa.'],
         zh: ['汇率、最低金额和可用方向取决于具体申请。', '发送加密货币前再次检查网络、地址和金额。', '现金和大额转账应提前确认城市、时间和汇率锁定方式。'],
         ko: ['환율, 최소 금액과 이용 가능한 방향은 신청마다 다릅니다.', '암호화폐 전송 전에 네트워크, 주소와 금액을 다시 확인하세요.', '현금 및 큰 송금은 도시, 시간과 환율 고정 방식을 미리 확인하세요.'],
-      },
+      }, prostoQrNotes),
       verdict: {
         ru: 'Prosto Exchange подойдет, если нужно купить или продать USDT, получить наличные, сделать перевод за рубеж или оплатить инвойс. Задачу можно сразу описать менеджеру в Telegram и согласовать подходящий способ.',
         en: 'Prosto Exchange is useful for buying or selling USDT, receiving cash, making an international transfer, or paying an invoice. You can describe the task to a Telegram manager and agree on a suitable method.',
@@ -165,13 +171,13 @@ export const cryptoExchangePages = [
         zh: ['提现到俄罗斯银行卡：手续费 5%，最低 3500 卢布。', '通过 SBP 提现：手续费 6.5%，最低 1500 卢布。', '适合不想接收陌生个人 P2P 转账的用户。'],
         ko: ['러시아 카드 출금: 수수료 5%, 최소 3,500루블.', 'SBP 출금: 수수료 6.5%, 최소 1,500루블.', '모르는 개인의 P2P 송금을 피하고 싶은 사용자.'],
       },
-      considerations: {
+      considerations: appendLocalizedItems({
         ru: ['По тарифам канала, из эквивалента 100 000 ₽ после комиссии останется около 95 000 ₽ на карту или 93 500 ₽ по СБП.', 'PGON заявляет биржевой курс, но перед выводом всё равно сравни итоговую сумму: фактический курс и условия могут измениться.', 'ОСТ-выплата снижает риск, связанный с переводом от случайного физлица, но не гарантирует отсутствие проверки по 115-ФЗ или отклонения операции по 161-ФЗ.', 'Сохраняй подтверждение происхождения крипты и чеки операции, особенно при регулярных или крупных выводах.'],
         en: ['At the published fees, a RUB 100,000 equivalent leaves about RUB 95,000 to a card or RUB 93,500 via SBP.', 'PGON states that it uses an exchange rate, but always compare the final amount because the effective rate and terms can change.', 'An OST payout reduces the risk associated with transfers from unknown individuals but cannot guarantee the absence of AML or anti-fraud checks.', 'Keep proof of the source of funds and transaction receipts, especially for regular or larger withdrawals.'],
         es: ['Con las tarifas publicadas, de 100 000 RUB quedan unos 95 000 RUB en tarjeta o 93 500 RUB por SBP.', 'PGON declara un tipo bursátil, pero compara siempre el total final porque el tipo efectivo y las condiciones pueden cambiar.', 'Un pago OST reduce el riesgo de recibir dinero de un desconocido, pero no garantiza que no haya controles AML o antifraude.', 'Conserva pruebas del origen de los fondos y recibos, sobre todo para retiros frecuentes o grandes.'],
         zh: ['按公布费率，等值 100000 卢布提现到银行卡约剩 95000 卢布，通过 SBP 约剩 93500 卢布。', 'PGON 声称采用交易所汇率，但仍应比较确认前的最终金额，因为实际汇率和条件可能变化。', 'OST 付款可降低陌生个人转账带来的风险，但不能保证不会触发反洗钱或反欺诈检查。', '请保留资金来源证明和交易凭证，尤其是定期或大额提现。'],
         ko: ['공개 수수료 기준 100,000루블 상당액은 카드로 약 95,000루블, SBP로 약 93,500루블이 남습니다.', 'PGON은 거래소 환율을 사용한다고 밝히지만 실제 환율과 조건은 바뀔 수 있으므로 확인 전 최종 금액을 비교하세요.', 'OST 지급은 모르는 개인 송금 위험을 낮추지만 AML 또는 사기 방지 검사가 없다고 보장하지 않습니다.', '정기 또는 고액 출금 시 자금 출처 자료와 거래 영수증을 보관하세요.'],
-      },
+      }, pgonQrNotes),
       verdict: {
         ru: 'PGON выглядит удобной альтернативой P2P для вывода небольших и средних сумм: отправитель — юридическое лицо, условия видны заранее. Цена удобства заметная: 5% на карту или 6,5% по СБП, поэтому перед подтверждением обязательно сравни итог с обменниками.',
         en: 'PGON is a convenient P2P alternative for small and medium withdrawals: the sender is a legal entity and the terms are shown in advance. Convenience costs 5% to a card or 6.5% via SBP, so compare the final amount with exchange services first.',

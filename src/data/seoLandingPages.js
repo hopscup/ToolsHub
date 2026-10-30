@@ -1,4 +1,7 @@
+import { cryptoQrLanding } from './antarcticWallet.js';
+
 export const seoLandingPages = [
+  cryptoQrLanding,
   {
     id: 'proxy-for-accounts',
     route: '/proxy-vpn/dlya-akkauntov',

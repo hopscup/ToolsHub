@@ -2,11 +2,11 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { AnimatePresence, m as motion } from 'motion/react';
 import { Star } from 'lucide-react';
 
-export const RecommendedBadge = ({ language }: { language: 'ru' | 'en' }) => {
+export const RecommendedBadge = ({ language, label: customLabel }: { language: 'ru' | 'en'; label?: string }) => {
   const [mode, setMode] = useState<'hover' | 'click' | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const popoverId = useId();
-  const label = language === 'ru' ? 'Выбираю чаще всего' : 'My go-to';
+  const label = customLabel || (language === 'ru' ? 'Выбираю чаще всего' : 'My go-to');
 
   useEffect(() => {
     if (!mode) return;

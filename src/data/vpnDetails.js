@@ -2,37 +2,37 @@
 export const vpnTerms = {
   'all-vpn': {
     free: { ru: '3 часа', en: '3 hours' },
-    price: { ru: '199 ₽/мес', en: '199 RUB/mo' },
+    price: { ru: 'от 199 ₽/мес', en: 'from 199 RUB/mo' },
     geo: { ru: '20+', en: '20+' },
   },
   'ppl-vpn': {
     free: { ru: '3 дня', en: '3 days' },
-    price: { ru: '124 ₽/мес', en: '124 RUB/mo' },
+    price: { ru: 'от 124 ₽/мес', en: 'from 124 RUB/mo' },
     geo: { ru: '10+', en: '10+' },
   },
   prostovpn: {
     free: { ru: '3 дня', en: '3 days' },
-    price: { ru: '249 ₽/мес', en: '249 RUB/mo' },
+    price: { ru: 'от 249 ₽/мес', en: 'from 249 RUB/mo' },
     geo: { ru: '10+', en: '10+' },
   },
   'giga-vpn': {
     free: { ru: '3 дня', en: '3 days' },
-    price: { ru: '149,92 ₽/мес', en: '149.92 RUB/mo' },
+    price: { ru: 'от 149,92 ₽/мес', en: 'from 149.92 RUB/mo' },
     geo: { ru: '10+', en: '10+' },
   },
   'tochka-g': {
     free: { ru: '2 дня', en: '2 days' },
-    price: { ru: '179 ₽/мес', en: '179 RUB/mo' },
+    price: { ru: 'от 179 ₽/мес', en: 'from 179 RUB/mo' },
     geo: { ru: '10+', en: '10+' },
   },
   'giga-dollar-vpn': {
     free: { ru: '3 дня', en: '3 days' },
-    price: { ru: '90 ₽/мес', en: '90 RUB/mo' },
+    price: { ru: 'от 90 ₽/мес', en: 'from 90 RUB/mo' },
     geo: { ru: '6+', en: '6+' },
   },
   'imp-vpn': {
     free: { ru: '3 дня', en: '3 days' },
-    price: { ru: '158 ₽/мес', en: '158 RUB/mo' },
+    price: { ru: 'от 158 ₽/мес', en: 'from 158 RUB/mo' },
     geo: { ru: '10+', en: '10+' },
   },
 };

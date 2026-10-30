@@ -25,6 +25,9 @@ test('referral query parameters and existing path referrals are sponsored', () =
     'https://okx.com/join/8471428',
     'https://t.me/allvpn?start=refBCRyVZUr',
     'https://t.me/pgon?start=ref_1ob10bl6',
+    'https://t.me/antarctic_wallet_bot/app?startapp=ref_d5c6b79c1d',
+    'https://t.me/QR2Pay_bot?start=dobr9kcoo_ref_HgOnjPB',
+    'https://t.me/example_bot/app?startapp=REF_example',
     'https://t.me/iMP_VPN_bot?start=460705268',
     'https://t.me/VPNPPLBot?start=dXNlcl9pZD00NDMwODM',
   ]) {
@@ -44,6 +47,8 @@ test('ordinary external resources are not sponsored', () => {
     'https://t.me/hopscupcrpt',
     'https://t.me/thehermesex',
     'https://t.me/example_bot?start=help',
+    'https://t.me/example_bot/app?startapp=help',
+    'https://t.me/example_bot/app?startapp=',
     'https://funpay.com/',
     'https://example.com/?from=article',
   ]) {

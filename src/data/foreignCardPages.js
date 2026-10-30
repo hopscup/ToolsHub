@@ -1,3 +1,6 @@
+import { antarcticCardPage } from './antarcticWallet.js';
+import { qr2payCardPage } from './qr2pay.js';
+
 const cardTitle = (name) => ({
   ru: `${name}: зарубежная карта, комиссии и оплата сервисов | Hopscup Tools`,
   en: `${name} review: foreign card, fees, and online payments | Hopscup Tools`,
@@ -7,6 +10,8 @@ const cardTitle = (name) => ({
 });
 
 export const foreignCardPages = [
+  antarcticCardPage,
+  qr2payCardPage,
   {
     id: 'zarub',
     slug: 'zarub',
