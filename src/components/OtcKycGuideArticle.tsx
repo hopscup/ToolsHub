@@ -28,10 +28,6 @@ export const OtcKycGuideArticle = () => (
     eyebrow="Гайд Hopscup по крипте"
     headingIds={HEADING_IDS}
     sourceAnchors={SOURCE_ANCHORS}
-    related={[
-      { href: '/guides/exchange-uids-addresses', label: 'Биржи', title: 'Субаккаунты, UID и адреса Bitget и OKX', description: 'Как получить отдельные UID и депозитные адреса.' },
-      { href: '/crypto-exchange', label: 'Обмен', title: 'Криптообменники', description: 'Сервисы для обмена и вывода криптовалюты.' },
-      { href: '/foreign-cards', label: 'Оплата', title: 'Зарубежные карты', description: 'Карты и сервисы для оплаты зарубежных площадок.' },
-    ]}
+    related={[]}
   />
 );
