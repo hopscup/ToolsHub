@@ -1,5 +1,6 @@
 import { foreignCardArticle } from './foreignCardArticle.js';
 import { discordTokenArticle, discordTokenStaticArticle } from './discordTokenArticle.js';
+import { claudeGuideArticle, claudeGuideHeadingIds } from './claudeGuideArticle.js';
 
 const guideTitle = (title) => ({
   ru: `${title.ru} | Hopscup Tools`,
@@ -10,6 +11,24 @@ const guideTitle = (title) => ({
 });
 
 export const guidePages = [
+  {
+    id: claudeGuideArticle.id,
+    slug: claudeGuideArticle.slug,
+    articleBlocks: claudeGuideArticle.blocks,
+    cover: claudeGuideArticle.cover,
+    articleHeadingIds: claudeGuideHeadingIds,
+    name: { ru: claudeGuideArticle.title, en: 'Using Claude from Russia: accounts, payment and bans' },
+    title: { ru: claudeGuideArticle.seoTitle, en: 'Using Claude from Russia: registration, payment and bans | Hopscup Tools' },
+    heading: { ru: claudeGuideArticle.title, en: 'Using Claude from Russia: accounts, payment and bans' },
+    description: { ru: claudeGuideArticle.description, en: 'Personal experience with Claude registration, SMS verification, subscriptions and account restrictions, with community theories clearly separated from facts.' },
+    keywords: { ru: 'Claude из России, Claude банит аккаунты, как оплатить Claude, регистрация Claude, Claude Pro CDK', en: 'Claude Russia, Claude account bans, Claude subscription, Claude registration' },
+    editorial: {
+      description: { ru: claudeGuideArticle.previewDescription, en: 'Personal experience with Claude accounts, payment and restrictions.' },
+      bestFor: { ru: ['Регистрация и номер для СМС.', 'Оплата картой или CDK на свой аккаунт.', 'Разбор личного опыта и гипотез комьюнити.'], en: ['Registration and SMS.', 'Payment and subscription codes.', 'Personal experience and community theories.'] },
+      considerations: { ru: ['Гипотеза о рейтинге доверия не подтверждена Anthropic.', 'Описанный опыт не гарантирует отсутствие блокировки.'], en: ['The trust-score hypothesis is not confirmed by Anthropic.', 'Personal experience does not guarantee an account will not be restricted.'] },
+      verdict: { ru: 'Личный опыт с регистрацией, оплатой и банами Claude.', en: 'Personal experience with Claude registration, payments and restrictions.' },
+    },
+  },
   {
     id: 'guide-discord-token',
     slug: 'discord-vhod-po-tokenu',

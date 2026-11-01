@@ -427,6 +427,57 @@
     },
     {
       "content": [
+        { "strong": true, "text": "KYC" },
+        { "text": " боты в Telegram" }
+      ],
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        [
+          { "href": "https://t.me/asati_KYC_bot?start=ref_467483565", "strong": true, "text": "ASATI KYC" },
+          { "text": " (Claude✅)" }
+        ],
+        [
+          { "href": "https://t.me/CherryKYCC_bot?start=ref_467483565", "strong": true, "text": "Cherry KYC" },
+          { "text": " (Claude✅)" }
+        ],
+        [
+          { "href": "https://t.me/SecretKyc_bot?start=ref_467483565", "strong": true, "text": "Secret Max" },
+          { "text": " (Claude✅)" }
+        ],
+        [
+          { "href": "https://t.me/KYCBLOCKBOT?start=ref_467483565", "strong": true, "text": "KYC Block" },
+          { "text": " (Claude✅)" }
+        ],
+        [
+          { "href": "https://t.me/ProKYCbot?start=ref_467483565", "strong": true, "text": "PRO KYC" },
+          { "text": " (Claude✅)" }
+        ],
+        [
+          { "href": "https://t.me/LachugaSkamera_Bot?start=ref_467483565", "strong": true, "text": "Лачуга" },
+          { "text": " (Claude✅)" }
+        ]
+      ],
+      "ordered": false,
+      "type": "list"
+    },
+    {
+      "content": [
+        { "text": "Зачастую товаров много, пользуйтесь поиском в боте, например Claude." }
+      ],
+      "type": "paragraph"
+    },
+    {
+      "alt": "Поиск Claude в Telegram-боте и результаты поиска услуг",
+      "caption": "",
+      "src": "/article/crypto-otc-kyc/claude-bot-search.webp",
+      "width": 1022,
+      "height": 629,
+      "type": "image"
+    },
+    {
+      "content": [
         {
           "strong": true,
           "text": "OTC"
@@ -470,16 +521,6 @@
     {
       "content": [
         {
-          "href": "https://t.me/terncrypto_otc",
-          "strong": true,
-          "text": "TERN Crypto OTC"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
           "href": "https://t.me/doubletop_otc",
           "strong": true,
           "text": "DoubleTop OTC"
@@ -496,79 +537,6 @@
         }
       ],
       "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://t.me/chornyy_rynok",
-          "strong": true,
-          "text": "Чёрный рынок"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://t.me/mediasocialmarket",
-          "strong": true,
-          "text": "Media Social Market"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "strong": true,
-          "text": "KYC"
-        },
-        {
-          "text": " боты в Telegram"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "items": [
-        [
-          {
-            "href": "https://t.me/asati_KYC_bot?start=ref_467483565",
-            "strong": true,
-            "text": "ASATI KYC"
-          }
-        ],
-        [
-          {
-            "href": "https://t.me/CherryKYCC_bot?start=ref_467483565",
-            "strong": true,
-            "text": "Cherry KYC"
-          }
-        ],
-        [
-          {
-            "href": "https://t.me/SecretKyc_bot?start=ref_467483565",
-            "strong": true,
-            "text": "Secret Max"
-          }
-        ],
-        [
-          {
-            "href": "https://t.me/KYCBLOCKBOT?start=ref_467483565",
-            "strong": true,
-            "text": "KYC Block"
-          }
-        ],
-        [
-          {
-            "href": "https://t.me/ProKYCbot?start=ref_467483565",
-            "strong": true,
-            "text": "PRO KYC"
-          }
-        ]
-      ],
-      "ordered": false,
-      "type": "list"
     },
     {
       "level": 2,
@@ -616,6 +584,16 @@
           "href": "https://www.youtube.com/@hopscup",
           "strong": true,
           "text": "Youtube"
+        }
+      ],
+      "type": "paragraph"
+    },
+    {
+      "content": [
+        {
+          "href": "/",
+          "strong": true,
+          "text": "Мой сайт с полезными сервисами"
         }
       ],
       "type": "paragraph"

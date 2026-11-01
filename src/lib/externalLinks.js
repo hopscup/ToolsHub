@@ -11,6 +11,7 @@ const affiliatePaths = {
   'browser.vision': /^\/r\/[^/]+/,
   'dolphin-anty.net': /^\/a\/[^/]+/,
   'gologin.com': /^\/join\/[^/]+/,
+  'gglead.org': /^\/go\d+\/?$/,
   'incogniton.com': /^\/aff\/[^/]+/,
   'okx.com': /^\/join\/[^/]+/,
   'px6.net': /^\/c\/\d+/,

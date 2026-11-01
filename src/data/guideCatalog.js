@@ -66,6 +66,7 @@ export const guideCatalog = [
     route: `/guides/${page.slug}`,
     title: cardTitles[page.id] || { ru: page.name.ru },
     description: page.editorial.description,
+    cover: page.cover,
   })),
 ];
 

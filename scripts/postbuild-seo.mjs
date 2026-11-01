@@ -1568,6 +1568,9 @@ const servicePages = [
   }),
   ...guidePages.map((page) => createServicePage({
     article: page.article,
+    articleBlocks: page.articleBlocks,
+    cover: page.cover,
+    articleHeadingIds: page.articleHeadingIds,
     id: page.id,
     type: 'article',
     russianOnly: true,
@@ -1651,6 +1654,29 @@ const renderLink = ({ href, label }) => {
   return `<a href="${escapeHtml(href)}"${rel ? ` rel="${rel}"` : ''}>${escapeHtml(label)}</a>`;
 };
 
+const renderGuideBlocks = (blocks, headingIds = {}) => {
+  const inline = (segments) => segments.map((segment) => {
+    let text = segment.href ? renderLink({ href: segment.href, label: segment.text }) : escapeHtml(segment.text);
+    if (segment.strong) text = `<strong>${text}</strong>`;
+    if (segment.em) text = `<em>${text}</em>`;
+    return text;
+  }).join('');
+  return blocks.map((block) => {
+    if (block.type === 'heading') {
+      const tag = block.level === 3 ? 'h3' : 'h2';
+      const id = headingIds[block.text];
+      return `<${tag}${id ? ` id="${escapeHtml(id)}"` : ''}>${escapeHtml(block.text)}</${tag}>`;
+    }
+    if (block.type === 'list') {
+      const tag = block.ordered ? 'ol' : 'ul';
+      return `<${tag}>${block.items.map(item => `<li>${inline(item)}</li>`).join('')}</${tag}>`;
+    }
+    if (block.type === 'callout') return `<aside><p>${escapeHtml(block.text)}</p></aside>`;
+    if (block.type === 'image') return `<figure><a href="${escapeHtml(block.src)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(block.src)}" alt="${escapeHtml(block.alt)}"${block.width ? ` width="${block.width}" height="${block.height}"` : ''} loading="lazy" /></a>${block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : ''}</figure>`;
+    return `<p>${inline(block.content)}</p>`;
+  }).join('\n');
+};
+
 const renderArticleBody = (article, route) => {
   const link = renderLink;
   const list = (items, tag = 'ul') => `<${tag}>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</${tag}>`;
@@ -1700,11 +1726,12 @@ const renderStaticContent = (section, language) => {
           ${article ? `<p class="fallback-badge">${escapeHtml(article.badge)}</p>` : ''}
           <h1>${escapeHtml(heroTitle)}</h1>
           <p>${escapeHtml(heroIntro)}</p>
+          ${section.cover ? `<a href="${escapeHtml(section.cover.src)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(section.cover.src)}" alt="${escapeHtml(section.cover.alt)}" width="${section.cover.width}" height="${section.cover.height}" /></a>` : ''}
           ${article?.updated ? `<p class="fallback-updated">${escapeHtml(article.updated)}</p>` : ''}
         </header>
         ${vpn ? `<section aria-label="${language.code === 'ru' ? 'Цена и бесплатный период' : 'Pricing and free trial'}"><dl><dt>${language.code === 'ru' ? 'Бесплатно' : 'Free trial'}</dt><dd>${escapeHtml(getLanguage(vpn.free, language))}</dd><dt>${language.code === 'ru' ? 'Цена' : 'Price'}</dt><dd>${escapeHtml(getLanguage(vpn.price, language))}</dd></dl></section>` : ''}
         ${section.cta ? `<p><a href="${escapeHtml(section.cta.href)}" target="_blank" rel="${getExternalLinkRel(section.cta.href) || 'noopener noreferrer'}">${escapeHtml(getLanguage(section.cta.label, language))}</a></p>` : ''}
-        ${article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
+        ${section.articleBlocks ? `<div class="fallback-body">${renderGuideBlocks(section.articleBlocks, section.articleHeadingIds)}</div>` : article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
         ${section.heroHeading ? `
         <section>
           ${heroTitle !== title ? `<h2>${escapeHtml(title)}</h2>` : ''}

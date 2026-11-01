@@ -8,7 +8,7 @@ test('referral query parameters and existing path referrals are sponsored', () =
     'https://dark.shopping/category/view/gmail?p=95083',
     'https://proxy-seller.com/?partner=RIPC5NDAEYRZPZ',
     'https://dashboard.proxywing.com/billing/aff.php?aff=813',
-    'https://ggsel.net/catalog/grand-theft-auto-vi?ai=1422112',
+    'https://gglead.org/go20580',
     'https://proxy6.net/?r=103460',
     'https://proxys.io/?refid=54507',
     'https://lis-skins.com/?rf=3576023',
@@ -50,6 +50,7 @@ test('ordinary external resources are not sponsored', () => {
     'https://t.me/example_bot/app?startapp=help',
     'https://t.me/example_bot/app?startapp=',
     'https://funpay.com/',
+    'https://gglead.org/',
     'https://example.com/?from=article',
   ]) {
     assert.equal(isAffiliateUrl(href), false, href);

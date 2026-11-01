@@ -19,11 +19,12 @@ type ArticleBlock =
   | { type: 'heading'; level: number; text: string }
   | { type: 'callout'; level: number; text: string }
   | { type: 'list'; ordered: boolean; items: InlineSegment[][] }
-  | { type: 'image'; src: string; alt: string; caption: string };
+  | { type: 'image'; src: string; alt: string; caption: string; width?: number; height?: number };
 
 export type ArticleData = {
   title: string;
   sourceUrl: string;
+  cover?: { src: string; alt: string; width: number; height: number };
   blocks: ArticleBlock[];
 };
 
@@ -89,10 +90,10 @@ const InlineContent = ({
   </>
 );
 
-const ImportedImage = ({ src, alt, caption, index }: { key?: string; src: string; alt: string; caption: string; index: number }) => {
+const ImportedImage = ({ src, alt, caption, index, width, height }: { key?: string; src: string; alt: string; caption: string; index: number; width?: number; height?: number }) => {
   const usefulAlt = alt || `Скриншот ${index + 1} из статьи`;
   return (
-    <figure className="my-8">
+    <figure className="mx-auto my-8" style={width ? { maxWidth: width } : undefined}>
       <a
         href={src}
         target="_blank"
@@ -100,7 +101,7 @@ const ImportedImage = ({ src, alt, caption, index }: { key?: string; src: string
         aria-label={`Открыть изображение: ${usefulAlt}`}
         className="block overflow-hidden rounded-2xl border border-white/10 bg-white transition-colors hover:border-brand-purple/45"
       >
-        <img src={src} alt={usefulAlt} loading="lazy" decoding="async" className="block h-auto w-full" />
+        <img src={src} alt={usefulAlt} width={width} height={height} loading="lazy" decoding="async" className="block h-auto w-full" />
       </a>
       {caption && <figcaption className="mt-3 text-xs font-semibold leading-5 text-white/40">{caption}</figcaption>}
     </figure>
@@ -178,6 +179,11 @@ export const ImportedGuideArticle = ({
           </div>
           <h1 className="mx-auto max-w-5xl font-display text-3xl font-black leading-[1.1] text-white md:text-5xl">{title}</h1>
           <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{description}</p>
+          {data.cover && (
+            <a href={data.cover.src} target="_blank" rel="noopener noreferrer" className="mx-auto mt-8 block max-w-3xl overflow-hidden rounded-2xl border border-white/10">
+              <img src={data.cover.src} alt={data.cover.alt} width={data.cover.width} height={data.cover.height} fetchPriority="high" decoding="async" className="block h-auto w-full" />
+            </a>
+          )}
         </section>
 
         <div className="mx-auto grid max-w-6xl gap-8 px-5 md:px-8 lg:grid-cols-[220px_minmax(0,760px)] lg:justify-center">
@@ -201,6 +207,8 @@ export const ImportedGuideArticle = ({
                     src={block.src}
                     alt={block.alt}
                     caption={block.caption}
+                    width={block.width}
+                    height={block.height}
                     index={currentImageIndex}
                   />
                 );
