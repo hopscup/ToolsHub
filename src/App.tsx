@@ -5788,9 +5788,15 @@ export default function App() {
     return <Icon className={className} />;
   };
 
+  const hasFeaturedProxyGuide = lang === 'ru';
+  const guideTopicCounts = filteredOffers.filter(offer => offer.category === 'Guides').reduce((counts, offer) => {
+    counts.all += 1;
+    counts[GUIDE_CARD_META[offer.id]?.topic || 'accounts'] += 1;
+    return counts;
+  }, { all: hasFeaturedProxyGuide ? 1 : 0, proxy: hasFeaturedProxyGuide ? 1 : 0, antidetect: 0, accounts: 0, crypto: 0 });
   const visibleGuideOffers = guideTopicFilter === 'all'
     ? filteredOffers
-    : filteredOffers.filter((offer) => GUIDE_CARD_META[offer.id]?.topic === guideTopicFilter);
+    : filteredOffers.filter((offer) => (GUIDE_CARD_META[offer.id]?.topic || 'accounts') === guideTopicFilter);
   const leadingGuideOffers = visibleGuideOffers.some(offer => offer.id === 'guide-mobile-ip')
     ? visibleGuideOffers.slice(0, 2)
     : [];
@@ -6646,7 +6652,7 @@ export default function App() {
           {filteredOffers.length > 0 ? (
             activeCategory === 'Guides' ? (
               <div className="mx-auto w-full max-w-5xl">
-                <div className="mb-5 flex gap-1 overflow-x-auto border-b border-white/[0.08] pb-px" aria-label={tx({ ru: 'Темы гайдов', en: 'Guide topics' })}>
+                <div className="mb-5 flex flex-wrap gap-2" aria-label={tx({ ru: 'Темы гайдов', en: 'Guide topics' })}>
                   {([
                     { id: 'all', label: t.all },
                     { id: 'proxy', label: l(GUIDE_TOPIC_LABELS.proxy) },
@@ -6657,14 +6663,18 @@ export default function App() {
                     <button
                       key={topic.id}
                       type="button"
+                      aria-pressed={guideTopicFilter === topic.id}
                       onClick={() => setGuideTopicFilter(topic.id)}
-                      className={`relative shrink-0 px-4 py-3 text-[11px] font-black uppercase transition-colors ${
+                      className={`inline-flex min-h-10 shrink-0 items-center gap-2 rounded-lg border px-3 py-2 text-[11px] font-black uppercase transition-colors md:px-4 ${
                         guideTopicFilter === topic.id
-                          ? 'text-white after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:bg-brand-purple'
-                          : 'text-white/35 hover:text-white/70'
+                          ? 'border-brand-purple/45 bg-brand-purple/15 text-brand-purple'
+                          : 'border-white/10 bg-white/[0.025] text-white/45 hover:border-white/25 hover:text-white/80'
                       }`}
                     >
                       {topic.label}
+                      <span className={`inline-flex h-5 min-w-5 items-center justify-center rounded px-1 text-[10px] tabular-nums ${guideTopicFilter === topic.id ? 'bg-brand-purple/15 text-brand-purple' : 'bg-white/[0.06] text-white/50'}`}>
+                        {guideTopicCounts[topic.id]}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -6675,7 +6685,7 @@ export default function App() {
                   </div>
                 )}
 
-                {lang === 'ru' && (guideTopicFilter === 'all' || guideTopicFilter === 'proxy') && (
+                {hasFeaturedProxyGuide && (guideTopicFilter === 'all' || guideTopicFilter === 'proxy') && (
                   <motion.a
                     href={guideCatalogById['guide-best-proxies'].route}
                     initial={{ opacity: 0, y: 16 }}
