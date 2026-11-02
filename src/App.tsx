@@ -5530,7 +5530,7 @@ export default function App() {
       'meta[name="robots"]',
       'name',
       'robots',
-      untranslatedArticle || (retiredLanguage && !preservedLegacyPage)
+      guideArticle?.indexable === false || untranslatedArticle || (retiredLanguage && !preservedLegacyPage)
         ? 'noindex, follow'
         : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large',
     );

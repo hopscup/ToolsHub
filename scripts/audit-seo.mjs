@@ -5,7 +5,7 @@ import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { guidePages } from '../src/data/guidePages.js';
-import { guideCatalog } from '../src/data/guideCatalog.js';
+import { guideCatalog, indexableGuideCatalog } from '../src/data/guideCatalog.js';
 import { isAffiliateUrl } from '../src/lib/externalLinks.js';
 import { legacyIndexedRoutes } from '../src/data/legacyIndexedRoutes.js';
 import { seoLandingPages } from '../src/data/seoLandingPages.js';
@@ -72,6 +72,7 @@ const articleRoutes = new Set([
   '/proxy-vpn/luchshie-mobilnye-proksi',
   ...guidePages.map((page) => `/guides/${page.slug}`),
 ]);
+const noIndexRoutes = new Set(guidePages.filter(page => page.indexable === false).map(page => `/guides/${page.slug}`));
 
 const errors = [];
 const titles = new Set();
@@ -127,9 +128,13 @@ const checkLinkPolicy = (html, route) => {
 const checkGuideCatalog = (html, language) => {
   const fallback = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
   const hrefs = new Set(matches(fallback, /<a\b[^>]*\bhref="([^"]+)"/g).map((match) => match[1]));
-  if (guideCatalog.length < 10) errors.push('Guide catalogue must contain at least 10 guides');
+  if (indexableGuideCatalog.length < 10) errors.push('Static guide catalogue must contain at least 10 indexable guides');
   for (const guide of guideCatalog) {
     const href = `${language.prefix}${guide.route}`;
+    if (guide.indexable === false) {
+      if (hrefs.has(href)) errors.push(`Noindex guide must not appear in static catalogue: ${href}`);
+      continue;
+    }
     if (!hrefs.has(href)) errors.push(`Missing guide catalogue link: ${href}`);
     for (const text of [guide.title, guide.description]) {
       if (!fallback.includes(escapeHtml(text[language.prefix.slice(1) || 'ru'] || text.en || text.ru))) {
@@ -173,7 +178,7 @@ for (const language of languages) {
     const russianOnlyArticle = articleRoutes.has(route);
     const untranslatedArticle = russianOnlyArticle && language.hrefLang !== 'ru';
     const preservedLegacyPage = legacyIndexedRouteSet.has(localizedRoute);
-    const indexablePage = (language.indexable || preservedLegacyPage) && !untranslatedArticle;
+    const indexablePage = (language.indexable || preservedLegacyPage) && !untranslatedArticle && !noIndexRoutes.has(route);
     if (title && indexablePage && titles.has(title)) errors.push(`Duplicate title: ${title}`);
     if (title && indexablePage) titles.add(title);
     if (!description || description.length < minimumDescriptionLength) errors.push(`Weak description: ${localizedRoute}`);
@@ -189,7 +194,7 @@ for (const language of languages) {
     if (html.match(/<html lang="([^"]+)"/)?.[1] !== expectedLang) errors.push(`Wrong lang: ${localizedRoute}`);
     const expectedAlternates = russianOnlyArticle ? 2 : indexLanguages.length + 1;
     if (alternates.length !== expectedAlternates) errors.push(`Wrong hreflang count: ${localizedRoute}`);
-    if (!indexablePage && robotsMeta !== 'noindex, follow') errors.push(`Retired or untranslated page is indexable: ${localizedRoute}`);
+    if (!indexablePage && robotsMeta !== 'noindex, follow') errors.push(`Page expected to be noindex: ${localizedRoute}`);
     if (indexablePage && !robotsMeta?.startsWith('index, follow')) errors.push(`Indexable page has wrong robots meta: ${localizedRoute}`);
     if (h1Count !== 1) errors.push(`Expected one H1: ${localizedRoute}`);
     if (internalLinkCount < categoryRoutes.length) errors.push(`Missing crawlable navigation: ${localizedRoute}`);
@@ -225,13 +230,20 @@ const moneySitemap = await read('sitemap-money.xml');
 const coreSitemap = await read('sitemap-core.xml');
 const serviceSitemap = await read('sitemap-services.xml');
 const combinedSitemaps = `${moneySitemap}\n${coreSitemap}\n${serviceSitemap}`;
-const expectedSitemapUrls = indexLanguages.length * (routes.length + 1) - (indexLanguages.length - 1) * articleRoutes.size;
+const indexedArticleCount = [...articleRoutes].filter(route => !noIndexRoutes.has(route)).length;
+const indexableRouteCount = routes.filter(route => !noIndexRoutes.has(route)).length + 1;
+const expectedSitemapUrls = indexLanguages.length * indexableRouteCount - (indexLanguages.length - 1) * indexedArticleCount;
 if (matches(combinedSitemaps, /<loc>/g).length !== expectedSitemapUrls) {
   errors.push('Sitemap has an unexpected number of canonical URLs');
 }
-const expectedSitemapAlternates = (expectedSitemapUrls - articleRoutes.size) * (indexLanguages.length + 1) + articleRoutes.size * 2;
+const expectedSitemapAlternates = (expectedSitemapUrls - indexedArticleCount) * (indexLanguages.length + 1) + indexedArticleCount * 2;
 if (matches(combinedSitemaps, /<xhtml:link /g).length !== expectedSitemapAlternates) {
   errors.push('Sitemap has an unexpected number of language alternates');
+}
+for (const route of noIndexRoutes) {
+  for (const language of languages) {
+    if (combinedSitemaps.includes(`${siteUrl}${language.prefix}${route}`)) errors.push(`Noindex route must not be in sitemap: ${language.prefix}${route}`);
+  }
 }
 
 const robots = await read('robots.txt');

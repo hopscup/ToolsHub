@@ -5,7 +5,7 @@ import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { guidePages } from '../src/data/guidePages.js';
-import { guideCatalog } from '../src/data/guideCatalog.js';
+import { indexableGuideCatalog } from '../src/data/guideCatalog.js';
 import { getExternalLinkRel } from '../src/lib/externalLinks.js';
 import { proxyGuideMeta, proxyGuideBlocks, proxyProviders, proxyTypes, proxyCopy, proxyChecklist } from '../src/data/proxyGuideContent.js';
 import { mobileIpGuideBlocks, mobileIpChecklist, mobileIpProvider } from '../src/data/mobileIpGuideContent.js';
@@ -531,8 +531,8 @@ const sections = [
       zh: ['可以从换 IP 和 Gmail 转发指南开始。', '账号农场指南涵盖邮箱、代理和反检测。', '加密货币指南帮助处理 UID、地址和验证。'],
       ko: ['IP 변경과 Gmail 포워딩 가이드부터 시작할 수 있습니다.', '계정 팜 가이드는 이메일, 프록시, 안티디텍트를 다룹니다.', '암호화폐 가이드는 UID, 주소, 인증에 도움이 됩니다.'],
     },
-    items: guideCatalog.map((guide) => guide.title.ru),
-    serviceLinks: Object.fromEntries(guideCatalog.map((guide) => [guide.title.ru, guide.route])),
+    items: indexableGuideCatalog.map((guide) => guide.title.ru),
+    serviceLinks: Object.fromEntries(indexableGuideCatalog.map((guide) => [guide.title.ru, guide.route])),
   },
 ];
 
@@ -1577,6 +1577,7 @@ const servicePages = [
     articleBlocks: page.articleBlocks,
     cover: page.cover,
     articleHeadingIds: page.articleHeadingIds,
+    indexable: page.indexable,
     datePublished: page.datePublished,
     dateModified: page.dateModified,
     id: page.id,
@@ -1679,7 +1680,7 @@ const renderGuideBlocks = (blocks, headingIds = {}) => {
       const tag = block.ordered ? 'ol' : 'ul';
       return `<${tag}>${block.items.map(item => `<li>${inline(item)}</li>`).join('')}</${tag}>`;
     }
-    if (block.type === 'callout') return `<aside><p>${escapeHtml(block.text)}</p></aside>`;
+    if (block.type === 'callout') return `<aside><p>${escapeHtml(block.text)}</p>${block.items ? `<ul>${block.items.map(item => `<li>${inline(item)}</li>`).join('')}</ul>` : ''}${block.footer ? `<p>${escapeHtml(block.footer)}</p>` : ''}</aside>`;
     if (block.type === 'image') return `<figure><a href="${escapeHtml(block.src)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(block.src)}" alt="${escapeHtml(block.alt)}"${block.width ? ` width="${block.width}" height="${block.height}"` : ''} loading="lazy" /></a>${block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : ''}</figure>`;
     return `<p>${inline(block.content)}</p>`;
   }).join('\n');
@@ -1750,7 +1751,7 @@ const renderStaticContent = (section, language) => {
     return `<a href="${language.prefix}${serviceRoute}">${escapeHtml(item)}</a>`;
   };
   const guideItems = section.id === 'guides'
-    ? guideCatalog.map((guide) => `<li>${renderLink({ href: `${language.prefix}${guide.route}`, label: getLanguage(guide.title, language) })}<p>${escapeHtml(getLanguage(guide.description, language))}</p></li>`).join('\n            ')
+    ? indexableGuideCatalog.map((guide) => `<li>${renderLink({ href: `${language.prefix}${guide.route}`, label: getLanguage(guide.title, language) })}<p>${escapeHtml(getLanguage(guide.description, language))}</p></li>`).join('\n            ')
     : undefined;
 
   return `
@@ -1789,7 +1790,7 @@ const renderStaticContent = (section, language) => {
         ${section.id !== 'guide-mobile-ip' ? `<nav aria-label="${escapeHtml(labels.nav)}">
           ${internalLinks(language)}
         </nav>` : ''}
-        ${section.type === 'article' ? renderArticleSocialFooter(['guide-best-proxies', 'guide-mobile-ip'].includes(section.id)) : ''}
+        ${section.type === 'article' ? renderArticleSocialFooter(['guide-best-proxies', 'guide-mobile-ip', 'guide-otc-kyc'].includes(section.id)) : ''}
       </article>`;
 };
 
@@ -1895,7 +1896,7 @@ const replaceHead = (html, section, language) => {
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`)
     .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${description}" />`)
     .replace(/<meta name="keywords" content=".*?" \/>/, `<meta name="keywords" content="${keywords}" />`)
-    .replace(/<meta name="robots" content=".*?" \/>/, `<meta name="robots" content="${(section.russianOnly && language.code !== 'ru') || (!isIndexLanguage(language) && !isPreservedLegacyPage(section, language)) ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large'}" />`)
+    .replace(/<meta name="robots" content=".*?" \/>/, `<meta name="robots" content="${section.indexable === false || (section.russianOnly && language.code !== 'ru') || (!isIndexLanguage(language) && !isPreservedLegacyPage(section, language)) ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large'}" />`)
     .replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="${url}" />`)
     .replace(/\n\s*<link rel="alternate" hreflang=".*?" href=".*?" \/>/g, '')
     .replace(/<link rel="canonical" href=".*?" \/>/, (canonical) => `${canonical}\n    ${alternateLinks(section)}`)
@@ -1933,7 +1934,7 @@ const renderSitemap = (pages) => {
     ].join('\n');
 
   const urls = indexLanguages.flatMap((language) =>
-    pages.filter((section) => !section.russianOnly || language.code === 'ru').map((section) => `  <url>
+    pages.filter((section) => section.indexable !== false && (!section.russianOnly || language.code === 'ru')).map((section) => `  <url>
     <loc>${escapeHtml(absoluteUrl(section, language))}</loc>
 ${sitemapAlternates(section)}
     <changefreq>${section.changefreq}</changefreq>

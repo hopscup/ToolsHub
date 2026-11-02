@@ -2,6 +2,7 @@ import { foreignCardArticle } from './foreignCardArticle.js';
 import { discordTokenArticle, discordTokenStaticArticle } from './discordTokenArticle.js';
 import { claudeGuideArticle, claudeGuideHeadingIds } from './claudeGuideArticle.js';
 import { mobileIpGuideMeta } from './mobileIpGuideContent.js';
+import otcKycArticle from './otcKycArticle.json' with { type: 'json' };
 
 const guideTitle = (title) => ({
   ru: `${title.ru} | Hopscup Tools`,
@@ -276,6 +277,11 @@ export const guidePages = [
   {
     id: 'guide-otc-kyc',
     slug: 'crypto-otc-kyc',
+    indexable: false,
+    cover: otcKycArticle.cover,
+    articleBlocks: otcKycArticle.blocks,
+    articleHeadingIds: otcKycArticle.headingIds,
+    intro: { ru: 'Как устроены OTC-сделки, где искать площадки и сервисы, какие риски учитывать при работе с верификациями и WL.' },
     name: {
       ru: 'OTC-площадки и KYC-сервисы в крипте',
       en: 'OTC platforms and KYC services in crypto',
@@ -298,7 +304,7 @@ export const guidePages = [
       ko: '암호화폐 프로젝트 참여자를 위한 OTC 플랫폼, KYC 서비스, 인증 및 WL 판매 가이드.',
     },
     heading: {
-      ru: 'Где искать OTC-площадки и KYC-сервисы',
+      ru: 'OTC-площадки и KYC-сервисы в крипте',
       en: 'Where to find OTC platforms and KYC services',
       es: 'Dónde buscar plataformas OTC y servicios KYC',
       zh: '在哪里寻找 OTC 平台和 KYC 服务',

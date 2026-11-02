@@ -70,7 +70,9 @@ export const guideCatalog = [
     title: cardTitles[page.id] || { ru: page.name.ru },
     description: page.editorial.description,
     cover: page.cover,
+    indexable: page.indexable,
   })),
 ].sort((first, second) => Number(second.id === 'guide-mobile-ip') - Number(first.id === 'guide-mobile-ip'));
 
 export const guideCatalogById = Object.fromEntries(guideCatalog.map((guide) => [guide.id, guide]));
+export const indexableGuideCatalog = guideCatalog.filter(guide => guide.indexable !== false);

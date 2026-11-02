@@ -19,8 +19,8 @@ type InlineSegment = {
 
 type ArticleBlock =
   | { type: 'paragraph'; content: InlineSegment[] }
-  | { type: 'heading'; level: number; text: string }
-  | { type: 'callout'; level: number; text: string }
+  | { type: 'heading'; level: number; text: string; compact?: boolean }
+  | { type: 'callout'; level: number; text: string; items?: InlineSegment[][]; footer?: string }
   | { type: 'list'; ordered: boolean; items: InlineSegment[][] }
   | { type: 'image'; src: string; alt: string; caption: string; width?: number; height?: number };
 
@@ -39,6 +39,7 @@ type ImportedGuideArticleProps = {
   headingIds: Record<string, string>;
   sourceAnchors: Record<string, string>;
   related: RelatedGuide[];
+  footerVariant?: 'default' | 'compact';
 };
 
 const ARTICLE_THEME_KEY = 'hopscup-article-theme';
@@ -116,6 +117,7 @@ export const ImportedGuideArticle = ({
   headingIds,
   sourceAnchors,
   related,
+  footerVariant = 'default',
 }: ImportedGuideArticleProps) => {
   const [theme, setTheme] = useState<ArticleTheme>(() => {
     if (typeof window === 'undefined') return 'dark';
@@ -216,13 +218,19 @@ export const ImportedGuideArticle = ({
 
               if (block.type === 'heading') {
                 const id = headingIds[block.text];
-                const sharedClass = `${blockIndex > 0 ? 'mt-12 border-t border-white/[0.08] pt-10' : ''} scroll-mt-28 font-display font-black text-white`;
+                const sharedClass = `${block.compact ? 'mt-7' : blockIndex > 0 ? 'mt-12 border-t border-white/[0.08] pt-10' : ''} scroll-mt-28 font-display font-black text-white`;
                 if (block.level === 2) return <h2 key={`heading-${blockIndex}`} id={id} className={`${sharedClass} text-2xl md:text-3xl`}>{block.text}</h2>;
-                return <h3 key={`heading-${blockIndex}`} id={id} className={`${sharedClass} text-xl md:text-2xl`}>{block.text}</h3>;
+                return <h3 key={`heading-${blockIndex}`} id={id} className={`${sharedClass} ${block.compact ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`}>{block.text}</h3>;
               }
 
               if (block.type === 'callout') {
-                return <div key={`callout-${blockIndex}`} className="my-7 rounded-r-2xl border-l-2 border-brand-purple bg-brand-purple/[0.08] px-5 py-4 text-sm font-bold leading-7 text-white/70 md:text-base">{block.text}</div>;
+                return <div key={`callout-${blockIndex}`} className="my-7 rounded-r-2xl border-l-2 border-brand-purple bg-brand-purple/[0.08] px-5 py-4 text-sm font-bold leading-7 text-white/70 md:text-base">
+                  <p>{block.text}</p>
+                  {block.items && <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-brand-purple">
+                    {block.items.map((item, itemIndex) => <li key={itemIndex}><InlineContent content={item} sourceAnchors={sourceAnchors} /></li>)}
+                  </ul>}
+                  {block.footer && <p className="mt-4">{block.footer}</p>}
+                </div>;
               }
 
               if (block.type === 'list') {
@@ -241,7 +249,7 @@ export const ImportedGuideArticle = ({
               );
             })}
             {related.length > 0 && <RelatedGuides items={related} />}
-            <ArticleSocialFooter />
+            <ArticleSocialFooter variant={footerVariant} />
           </article>
         </div>
       </main>

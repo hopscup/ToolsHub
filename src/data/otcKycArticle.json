@@ -1,83 +1,27 @@
 {
   "title": "OTC площадки и KYC сервисы в крипте. Где брать верификации и продавать WL? - Teletype",
   "sourceUrl": "https://teletype.media/@hopscupcrpt/gM3FcGi4Wn1",
+  "cover": {
+    "src": "/article/crypto-otc-kyc/cover.webp",
+    "previewSrc": "/article/crypto-otc-kyc/cover-preview.webp",
+    "alt": "OTC и KYC: обложка статьи о площадках и верификациях",
+    "width": 1280,
+    "height": 720
+  },
+  "headingIds": {
+    "OTC площадки и KYC сервисы": "otc-ploschadki-i-kyc-servisy",
+    "Как проходит сделка": "kak-prohodit-sdelka",
+    "KYC сервисы еще проще": "kyc-servisy-esche-prosche",
+    "Подводные камни": "podvodnye-kamni",
+    "Скам через гаранта": "skam-cherez-garanta",
+    "Бан аккаунтов": "ban-akkauntov",
+    "Рес. аккаунтов": "res-akkauntov",
+    "Ссылки на KYC и OTC": "ssylki-na-kyc-i-otc",
+    "KYC боты в Telegram": "kyc-boty",
+    "OTC": "otc-spisok",
+    "Вывод": "vyvod"
+  },
   "blocks": [
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/crypto-otc-kyc/image-01.jpeg",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Бывает так, что резко необходимо сделать много верификаций, как это было с POH у Linea, когда резко потребовалось много акков OKX для верифа. А друзей под это дело не всегда много. "
-        },
-        {
-          "strong": true,
-          "text": "На помощь приходят OTC площадки и KYC сервисы."
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "❗"
-        },
-        {
-          "em": true,
-          "text": "Статья не является рекомендацией и призывом к действию, написана с целью ознакомления и показать, что такое есть. DYOR"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "level": 2,
-      "text": "Оглавление",
-      "type": "heading"
-    },
-    {
-      "items": [
-        [
-          {
-            "href": "/@hopscupcrpt/gM3FcGi4Wn1#UTzQ",
-            "strong": true,
-            "text": "Что такое OTC площадки и KYC сервисы"
-          }
-        ],
-        [
-          {
-            "href": "/@hopscupcrpt/gM3FcGi4Wn1#hGdu",
-            "strong": true,
-            "text": "Как проходит сделка"
-          }
-        ],
-        [
-          {
-            "href": "/@hopscupcrpt/gM3FcGi4Wn1#oSwi",
-            "strong": true,
-            "text": "Подводные камни"
-          }
-        ],
-        [
-          {
-            "href": "/@hopscupcrpt/gM3FcGi4Wn1#nDPT",
-            "strong": true,
-            "text": "Ссылки на KYC и OTC"
-          }
-        ],
-        [
-          {
-            "href": "/@hopscupcrpt/gM3FcGi4Wn1#hPmh",
-            "strong": true,
-            "text": "Краткий вывод"
-          }
-        ]
-      ],
-      "ordered": true,
-      "type": "list"
-    },
     {
       "level": 2,
       "text": "OTC площадки и KYC сервисы",
@@ -90,7 +34,7 @@
           "text": "🔹OTC (over-the-counter, внебиржевая торговля)"
         },
         {
-          "text": " – это торговля в обход классических бирж, без посредников. Продавец и покупатель сами договариваются о курсе актива, сумме сделки и о других деталях, в сделке участвует гарант. "
+          "text": " - это торговля в обход классических бирж, без посредников. Продавец и покупатель сами договариваются о курсе актива, сумме сделки и о других деталях, в сделке участвует гарант. "
         }
       ],
       "type": "paragraph"
@@ -146,7 +90,13 @@
     },
     {
       "level": 2,
-      "text": "На данных штуках можно найти почти все, что нужно. Верификации бирж Binance, Bybit, Coinbase, Mexc и тд. Аккаунты Дискорд и Твиттер. Также  можно продавать самому.",
+      "text": "На данных штуках можно найти почти все, что нужно:",
+      "items": [
+        [{ "text": "Верификации для бирж Binance, Bybit, Coinbase, Mexc и тд." }],
+        [{ "text": "Верифы для аккаунтов Дискорд и Твиттер." }],
+        [{ "text": "Аккаунты и тд." }]
+      ],
+      "footer": "Также можно продавать самому почти что угодно в рамках дозволенного.",
       "type": "callout"
     },
     {
@@ -163,25 +113,21 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
+      "alt": "Объявления о покупке и продаже в Telegram-группе Crypto Taverna OTC",
       "caption": "",
       "src": "/article/crypto-otc-kyc/image-02.png",
       "type": "image"
     },
     {
-      "content": [
-        {
-          "text": "WTS - вонт ту сейл - хочу продать"
-        }
+      "items": [
+        [{ "strong": true, "text": "WTS" }, { "text": " - вонт ту сейл - хочу продать" }],
+        [{ "strong": true, "text": "WTB" }, { "text": " - вонт ту бай - хочу купить" }]
       ],
-      "type": "paragraph"
+      "ordered": false,
+      "type": "list"
     },
     {
-      "content": [
-        {
-          "text": "WTB - вонт ту бай - хочу купить"
-        }
-      ],
+      "content": [{ "text": "Нужную услугу ищем через поисковую лупу по ключевому названию нужного сервиса." }],
       "type": "paragraph"
     },
     {
@@ -193,7 +139,7 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
+      "alt": "Информация о группе Crypto Taverna OTC и ссылки на правила",
       "caption": "",
       "src": "/article/crypto-otc-kyc/image-03.png",
       "type": "image"
@@ -212,7 +158,7 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
+      "alt": "Таблица комиссий за сделки в OTC-группе",
       "caption": "",
       "src": "/article/crypto-otc-kyc/image-04.png",
       "type": "image"
@@ -226,7 +172,7 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
+      "alt": "Пример объявления продавца в OTC-группе",
       "caption": "",
       "src": "/article/crypto-otc-kyc/image-05.png",
       "type": "image"
@@ -240,7 +186,7 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
+      "alt": "Контакты гарантов в описании Telegram-группы Crypto Taverna OTC",
       "caption": "",
       "src": "/article/crypto-otc-kyc/image-06.png",
       "type": "image"
@@ -267,7 +213,7 @@
       "type": "heading"
     },
     {
-      "alt": "",
+      "alt": "Главное меню Telegram-бота Trust Verify",
       "caption": "",
       "src": "/article/crypto-otc-kyc/image-07.png",
       "type": "image"
@@ -281,7 +227,7 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
+      "alt": "Выбор уровня верификации в Telegram-боте",
       "caption": "",
       "src": "/article/crypto-otc-kyc/image-08.png",
       "type": "image"
@@ -295,7 +241,7 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
+      "alt": "Выбор между созданием нового аккаунта и верификацией существующего",
       "caption": "",
       "src": "/article/crypto-otc-kyc/image-09.png",
       "type": "image"
@@ -309,13 +255,13 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
+      "alt": "Выбор количества аккаунтов в Telegram-боте",
       "caption": "",
       "src": "/article/crypto-otc-kyc/image-10.png",
       "type": "image"
     },
     {
-      "alt": "",
+      "alt": "Подтверждение заказа в Telegram-боте",
       "caption": "",
       "src": "/article/crypto-otc-kyc/image-11.png",
       "type": "image"
@@ -326,99 +272,46 @@
       "type": "heading"
     },
     {
-      "content": [
-        {
-          "strong": true,
-          "text": "❗ "
-        },
-        {
-          "strong": true,
-          "text": "Скам через гаранта"
-        }
-      ],
-      "type": "paragraph"
+      "level": 3,
+      "text": "Скам через гаранта",
+      "compact": true,
+      "type": "heading"
     },
     {
-      "content": [
-        {
-          "text": "Вам могут пытаться впарить другого гаранта, менять один символ в нике и создавать такой аккаунт"
-        }
+      "items": [
+        [{ "text": "Вам могут пытаться впарить другого гаранта, менять один символ в нике и создавать такой аккаунт" }],
+        [{ "text": "Например, настоящий гарант " }, { "strong": true, "text": "sergois22" }, { "text": ", а вам создают фейк аккаунт " }, { "strong": true, "text": "sergols22" }],
+        [{ "text": "Просто всегда сверяйте никнейм из шапки OTC каналов с тем, которого вам дают для сделки" }],
+        [{ "text": "И в целом будьте аккуратны, в теории вы можете поработать с человеком пару раз через гаранта, а дальше захотите без. НЕ факт, что в этот раз человек вас не кинет" }],
+        [{ "text": "Старайтесь сразу не брать много, всегда проверяйте на суммы, которые готовы потерять." }]
       ],
-      "type": "paragraph"
+      "ordered": false,
+      "type": "list"
     },
     {
-      "content": [
-        {
-          "text": "Например, настоящий гарант sergois22, а вам создают фейк аккаунт sergols22"
-        }
-      ],
-      "type": "paragraph"
+      "level": 3,
+      "text": "Бан аккаунтов",
+      "compact": true,
+      "type": "heading"
     },
     {
-      "content": [
-        {
-          "text": "Просто всегда сверяйте никнейм из шапки OTC каналов с тем, которого вам дают для сделки"
-        }
+      "items": [
+        [{ "text": "Помните, что с биржами не всё так просто, купили вы 10 аккаунтов, начали проработку, а биржа просит пройти повторный вериф из-за подозрений, обычно продаются дропы, которых потом уже не найдешь." }],
+        [{ "text": "Поэтому в некоторых сервисах есть за доп. плату услуга повторной верификации." }]
       ],
-      "type": "paragraph"
+      "ordered": false,
+      "type": "list"
     },
     {
-      "content": [
-        {
-          "text": "И в целом будьте аккуратны, в теории вы можете поработать с человеком пару раз через гаранта, а дальше захотите без. НЕ факт, что в этот раз человек вас не кинет"
-        }
-      ],
-      "type": "paragraph"
+      "level": 3,
+      "text": "Рес. аккаунтов",
+      "compact": true,
+      "type": "heading"
     },
     {
-      "content": [
-        {
-          "text": "Старайтесь сразу не брать много, всегда проверяйте на суммы, которые готовы потерять."
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "strong": true,
-          "text": "❗ Бан аккаунтов"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Помните, что с биржами не всё так просто, купили вы 10 аккаунтов, начали проработку, а биржа просит пройти повторный вериф из-за подозрений, обычно продаются дропы, которых потом уже не найдешь."
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Поэтому в некоторых сервисах есть за доп. плату услуга повторной верификации."
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "strong": true,
-          "text": "❗ Рес. аккаунтов"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Иногда(крайне редко) дроп, если знал, где он регистрируется может попробовать восстановить по своим документам аккаунт и соответственно не рекомендую на левых акках хранить большие средства."
-        }
-      ],
-      "type": "paragraph"
+      "items": [[{ "text": "Иногда(крайне редко) дроп, если знал, где он регистрируется может попробовать восстановить по своим документам аккаунт и соответственно не рекомендую на левых акках хранить большие средства." }]],
+      "ordered": false,
+      "type": "list"
     },
     {
       "level": 2,
@@ -426,11 +319,10 @@
       "type": "heading"
     },
     {
-      "content": [
-        { "strong": true, "text": "KYC" },
-        { "text": " боты в Telegram" }
-      ],
-      "type": "paragraph"
+      "level": 3,
+      "text": "KYC боты в Telegram",
+      "compact": true,
+      "type": "heading"
     },
     {
       "items": [
@@ -477,66 +369,21 @@
       "type": "image"
     },
     {
-      "content": [
-        {
-          "strong": true,
-          "text": "OTC"
-        }
-      ],
-      "type": "paragraph"
+      "level": 3,
+      "text": "OTC",
+      "compact": true,
+      "type": "heading"
     },
     {
-      "content": [
-        {
-          "href": "https://t.me/tvrn_otc",
-          "strong": true,
-          "text": "Taverna OTC"
-        },
-        {
-          "text": " "
-        }
+      "items": [
+        [{ "href": "https://t.me/tvrn_otc", "strong": true, "text": "Taverna OTC" }],
+        [{ "href": "https://t.me/TavernaMerchant", "strong": true, "text": "Taverna Merchant" }],
+        [{ "href": "https://t.me/tvrn_p2p", "strong": true, "text": "Taverna P2P" }],
+        [{ "href": "https://t.me/doubletop_otc", "strong": true, "text": "DoubleTop OTC" }],
+        [{ "href": "https://t.me/MarketICOBOG", "strong": true, "text": "Market ICO BOG" }]
       ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://t.me/TavernaMerchant",
-          "strong": true,
-          "text": "Taverna Merchant"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://t.me/tvrn_p2p",
-          "strong": true,
-          "text": "Taverna P2P"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://t.me/doubletop_otc",
-          "strong": true,
-          "text": "DoubleTop OTC"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://t.me/MarketICOBOG",
-          "strong": true,
-          "text": "Market ICO BOG"
-        }
-      ],
-      "type": "paragraph"
+      "ordered": false,
+      "type": "list"
     },
     {
       "level": 2,
@@ -546,7 +393,7 @@
     {
       "content": [
         {
-          "text": "Если вам нужны какие то популярные услуги(биржи вериф очень частая услуга), то лучше обращаться напрямую к KYC сервисам. Если менее популярная услуга или вам нужно что-то продать, то на OTC."
+          "text": "Если вам нужны какие то популярные услуги (биржи вериф очень частая услуга), то лучше обращаться напрямую к KYC сервисам, это даст экономию времени, но у них цена всегда дороже."
         }
       ],
       "type": "paragraph"
@@ -554,55 +401,14 @@
     {
       "content": [
         {
-          "text": "Еще раз говорю, будьте осторожны, даже с кем я работал, может теперь он скамит :) Проверяйте на небольшие суммы. Работайте по частям. Будьте внимательны."
+          "text": "Зачастую OTC дешевле в разы, но нужно найти подрядчика, есть скам, также нужен гарант и предельная внимательность."
         }
       ],
       "type": "paragraph"
     },
     {
-      "content": [
-        {
-          "strong": true,
-          "text": "Больше полезного тут:"
-        }
-      ],
+      "content": [{ "text": "Проверяйте на небольшие суммы. Работайте по частям. Будьте на чеку)" }],
       "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://t.me/hopscupcrpt",
-          "strong": true,
-          "text": "Telegram"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://www.youtube.com/@hopscup",
-          "strong": true,
-          "text": "Youtube"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "/",
-          "strong": true,
-          "text": "Мой сайт с полезными сервисами"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/crypto-otc-kyc/image-12.png",
-      "type": "image"
     }
   ]
 }
