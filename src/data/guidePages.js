@@ -1,6 +1,7 @@
 import { foreignCardArticle } from './foreignCardArticle.js';
 import { discordTokenArticle, discordTokenStaticArticle } from './discordTokenArticle.js';
 import { claudeGuideArticle, claudeGuideHeadingIds } from './claudeGuideArticle.js';
+import { mobileIpGuideMeta } from './mobileIpGuideContent.js';
 
 const guideTitle = (title) => ({
   ru: `${title.ru} | Hopscup Tools`,
@@ -64,29 +65,33 @@ export const guidePages = [
   {
     id: 'guide-mobile-ip',
     slug: 'mobile-ip-airplane-mode',
+    cover: mobileIpGuideMeta.cover,
+    datePublished: mobileIpGuideMeta.datePublished,
+    dateModified: mobileIpGuideMeta.dateModified,
+    intro: { ru: mobileIpGuideMeta.subtitle },
     name: {
-      ru: 'Смена IP мобильным интернетом и режимом самолёта',
+      ru: mobileIpGuideMeta.heading,
       en: 'Changing IP with mobile internet and airplane mode',
       es: 'Cambiar la IP con internet móvil y modo avión',
       zh: '通过移动网络和飞行模式更换 IP',
       ko: '모바일 인터넷과 비행기 모드로 IP 변경',
     },
-    title: guideTitle({
-      ru: 'Смена IP мобильным интернетом и режимом самолёта',
-      en: 'Changing IP with mobile internet and airplane mode',
-      es: 'Cambiar la IP con internet móvil y modo avión',
-      zh: '通过移动网络和飞行模式更换 IP',
-      ko: '모바일 인터넷과 비행기 모드로 IP 변경',
-    }),
+    title: {
+      ru: mobileIpGuideMeta.title,
+      en: 'Changing IP with mobile internet and airplane mode | Hopscup Tools',
+      es: 'Cambiar la IP con internet móvil y modo avión | Hopscup Tools',
+      zh: '通过移动网络和飞行模式更换 IP | Hopscup Tools',
+      ko: '모바일 인터넷과 비행기 모드로 IP 변경 | Hopscup Tools',
+    },
     description: {
-      ru: 'Пошаговый гайд по смене мобильного IP через режим самолёта на Android и iPhone без покупки отдельного прокси.',
+      ru: mobileIpGuideMeta.description,
       en: 'A step-by-step guide to changing a mobile IP with airplane mode on Android and iPhone without buying a separate proxy.',
       es: 'Guía paso a paso para cambiar la IP móvil con el modo avión en Android y iPhone sin comprar un proxy aparte.',
       zh: '分步讲解如何在 Android 和 iPhone 上通过飞行模式更换移动 IP，无需单独购买代理。',
       ko: '별도 프록시를 구매하지 않고 Android와 iPhone에서 비행기 모드로 모바일 IP를 변경하는 단계별 가이드.',
     },
     heading: {
-      ru: 'Как сменить мобильный IP через режим самолёта',
+      ru: mobileIpGuideMeta.heading,
       en: 'How to change a mobile IP with airplane mode',
       es: 'Cómo cambiar la IP móvil con el modo avión',
       zh: '如何通过飞行模式更换移动 IP',
@@ -101,7 +106,7 @@ export const guidePages = [
     },
     editorial: {
       description: {
-        ru: 'Простой способ получить новый мобильный IP без покупки прокси. Включаешь режим самолёта, ждёшь несколько секунд, выключаешь его и проверяешь адрес. Подходит, когда аккаунтов немного и не нужен отдельный постоянный IP для каждого профиля.',
+        ru: mobileIpGuideMeta.description,
         en: 'A simple way to get a new mobile IP without buying a proxy. Enable airplane mode, wait a few seconds, disable it, and check the address. It works when you have only a few accounts and do not need a dedicated static IP for each profile.',
         es: 'Una forma simple de conseguir una nueva IP móvil sin comprar proxy. Activa el modo avión, espera unos segundos, desactívalo y comprueba la dirección. Sirve cuando hay pocas cuentas y no necesitas una IP fija para cada perfil.',
         zh: '无需购买代理即可获取新移动 IP 的简单方法。开启飞行模式，等待几秒后关闭，再检查地址。适合账号不多且不需要为每个配置文件配置固定 IP 的情况。',

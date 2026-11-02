@@ -1,27 +1,60 @@
 import {
   ArrowLeft,
+  Check,
+  Copy,
   ExternalLink,
   Info,
   Monitor,
   Moon,
-  Plane,
   Smartphone,
   Sun,
   Usb,
-  Wifi,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
-import { RelatedGuides } from './RelatedGuides';
+import { ArticleChecklist } from './ArticleChecklist';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
 import { ArticleImageLink } from './ArticleImageLink';
+import { getExternalLinkRel } from '../lib/externalLinks.js';
+import { trackAnalyticsEvent } from '../analytics';
+import { proxyProviders } from '../data/proxyGuideContent.js';
+import { mobileIpGuideMeta, mobileIpGuideBlocks, mobileIpGuideToc, mobileIpChecklist, mobileIpProvider } from '../data/mobileIpGuideContent.js';
 
 type ArticleTheme = 'dark' | 'light';
 
 const ARTICLE_THEME_KEY = 'hopscup-article-theme';
 
-const ArticleImage = ({ src, alt, caption, compact = false }: { src: string; alt: string; caption: string; compact?: boolean }) => (
+type Segment = { text: string; href?: string };
+type MobileIpBlock =
+  | { type: 'heading'; id: string; text: string; level: number }
+  | { type: 'paragraph'; content: Segment[] }
+  | { type: 'image'; src: string; alt: string; caption: string; compact: boolean }
+  | { type: 'quote'; text: string; warning?: boolean }
+  | { type: 'info'; heading: string; text: string }
+  | { type: 'step'; icon: string; heading: string; text: string }
+  | { type: 'links'; links: { label: string; href: string }[]; primary?: boolean }
+  | { type: 'list'; items: Segment[][] }
+  | { type: 'mobile-cta' | 'checklist' };
+const articleBlocks = mobileIpGuideBlocks as MobileIpBlock[];
+
+const trackService = (href: string, placement: string) => {
+  const provider = proxyProviders.find(provider => provider.url === href);
+  if (!provider) return;
+  trackAnalyticsEvent('service_click', {
+    service_name: provider.name, service_id: provider.id, category: 'Proxy',
+    destination: 'website', link_url: href, placement, language: 'ru',
+    promo_code: provider.promoCode, promo_discount: provider.promoDiscount,
+  });
+};
+
+const InlineContent = ({ content }: { content: Segment[] }) => <>{content.map((part, index) => part.href
+  ? <a key={index} href={part.href} {...(part.href.startsWith('https://') ? {
+    target: '_blank', rel: getExternalLinkRel(part.href), onClick: () => trackService(part.href!, 'article_cta'),
+  } : {})} className="font-bold text-brand-purple underline underline-offset-4">{part.text}</a>
+  : <span key={index}>{part.text}</span>)}</>;
+
+const ArticleImage = ({ src, alt, caption, compact = false }: { key?: number; src: string; alt: string; caption: string; compact?: boolean }) => (
   <figure className={`my-8 ${compact ? 'mx-auto max-w-md' : ''}`}>
     <ArticleImageLink
       src={src} alt={alt} caption={caption}
@@ -33,13 +66,36 @@ const ArticleImage = ({ src, alt, caption, compact = false }: { src: string; alt
   </figure>
 );
 
-const GuideQuote = ({ children, warning = false }: { children: ReactNode; warning?: boolean }) => (
+const GuideQuote = ({ children, warning = false }: { key?: number; children: ReactNode; warning?: boolean }) => (
   <blockquote className={`my-6 rounded-r-2xl border-l-2 px-5 py-4 text-sm font-semibold leading-7 md:text-base ${warning ? 'border-brand-orange bg-brand-orange/[0.06] text-white/65' : 'border-brand-purple bg-brand-purple/[0.07] text-white/65'}`}>
     {children}
   </blockquote>
 );
 
 export const MobileIpGuideArticle = () => {
+  const [copied, setCopied] = useState(false);
+  const copyPromo = async () => {
+    try {
+      await navigator.clipboard.writeText(mobileIpProvider.promoCode);
+    } catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = mobileIpProvider.promoCode;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    }
+    setCopied(true);
+    trackAnalyticsEvent('promo_copy', {
+      service_name: mobileIpProvider.name, service_id: mobileIpProvider.id, category: 'Proxy',
+      placement: 'article_cta', language: 'ru', promo_code: mobileIpProvider.promoCode,
+      promo_discount: mobileIpProvider.promoDiscount,
+    });
+    window.setTimeout(() => setCopied(false), 1800);
+  };
   const [theme, setTheme] = useState<ArticleTheme>(() => {
     if (typeof window === 'undefined') return 'dark';
     return window.localStorage.getItem(ARTICLE_THEME_KEY) === 'light' ? 'light' : 'dark';
@@ -95,25 +151,24 @@ export const MobileIpGuideArticle = () => {
             Практический гайд Hopscup
           </div>
           <h1 className="mx-auto max-w-4xl font-display text-4xl font-black leading-[1.08] text-white md:text-6xl">
-            Смена айпи мобильным интернетом и режимом самолёта
+            {mobileIpGuideMeta.heading}
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-white/55 md:text-lg">
-            Работает на Android и iPhone, по Wi-Fi и через USB-подключение к компьютеру.
+            {mobileIpGuideMeta.subtitle}
           </p>
+          <ArticleImageLink src={mobileIpGuideMeta.cover.src} alt={mobileIpGuideMeta.cover.alt}
+            className="mx-auto mt-8 block max-w-3xl overflow-hidden rounded-2xl border border-white/10">
+            <img src={mobileIpGuideMeta.cover.src} alt={mobileIpGuideMeta.cover.alt} width={mobileIpGuideMeta.cover.width} height={mobileIpGuideMeta.cover.height}
+              fetchPriority="high" decoding="async" className="block h-auto w-full" />
+          </ArticleImageLink>
         </section>
 
         <div className="mx-auto grid max-w-6xl gap-8 px-5 md:px-8 lg:grid-cols-[220px_minmax(0,760px)] lg:justify-center">
           <aside className="hidden lg:block">
             <nav className="article-toc sticky top-24 rounded-2xl border border-white/[0.08] bg-[#111111]/80 p-4 backdrop-blur-xl" aria-label="Содержание статьи">
               <p className="px-2 pb-3 text-[10px] font-black uppercase tracking-[0.2em] text-white/25">Содержание</p>
-              {[
-                ['#phone', 'Смена IP на телефоне'],
-                ['#check', 'Проверка IP'],
-                ['#computer', 'Подключение к ПК'],
-                ['#android', 'Android и USB'],
-                ['#iphone', 'iPhone и iTunes'],
-              ].map(([href, label]) => (
-                <a key={href} href={href} className="block rounded-lg px-2 py-2 text-xs font-semibold text-white/45 transition-colors hover:bg-white/5 hover:text-brand-purple">
+              {mobileIpGuideToc.map(({ id, label }) => (
+                <a key={id} href={`#${id}`} className="block rounded-lg px-2 py-2 text-xs font-semibold text-white/45 transition-colors hover:bg-white/5 hover:text-brand-purple">
                   {label}
                 </a>
               ))}
@@ -121,163 +176,61 @@ export const MobileIpGuideArticle = () => {
           </aside>
 
           <article className="article-card min-w-0 rounded-[1.5rem] border border-white/[0.08] bg-[#0d0d0d]/90 px-5 py-7 shadow-2xl backdrop-blur-xl md:px-9 md:py-10">
-            <section id="phone" className="scroll-mt-28">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Телефон и мобильный интернет</p>
-              <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Смена IP режимом самолёта</h2>
-              <p className="mt-4 text-sm font-medium leading-7 text-white/65 md:text-base">
-                Работает как по проводу, на случай если ПК не поддерживает Wi-Fi, так и в режиме раздачи интернета с вашего телефона.
-              </p>
-
-              <GuideQuote>
-                На мой взгляд, это самый оптимальный и дешёвый вариант смены айпи. Работает и на iPhone, и на Android.
-              </GuideQuote>
-
-              <div className="my-6 flex items-start gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
-                <Info className="mt-0.5 h-5 w-5 shrink-0 text-brand-purple" />
-                <p className="text-sm font-bold leading-6 text-white/65">
-                  Нужен только телефон и мобильный интернет. Важно, чтобы тариф поддерживал раздачу модема. Обычно достаточно 5-10 ГБ трафика.
-                </p>
-              </div>
-
-              <GuideQuote>Каждый раз, когда мы включаем режим самолёта, IP-адрес меняется.</GuideQuote>
-
-              <div className="mt-7 flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand-purple/20 bg-brand-purple/10">
-                  <Plane className="h-5 w-5 text-brand-purple" />
+            {articleBlocks.map((block, index) => {
+              if (block.type === 'heading') {
+                const Heading = block.level === 3 ? 'h3' : 'h2';
+                return <Heading key={index} id={block.id}
+                  className={['scroll-mt-28 font-display font-black text-white',
+                    block.level === 3 ? 'mt-7 text-xl' : 'text-2xl md:text-3xl',
+                    block.level === 2 && index > 0 ? 'mt-12 border-t border-white/[0.08] pt-10' : '',
+                  ].join(' ')}>{block.text}</Heading>;
+              }
+              if (block.type === 'paragraph') return <p key={index} className="mt-4 text-sm font-medium leading-7 text-white/65 md:text-base"><InlineContent content={block.content} /></p>;
+              if (block.type === 'image') return <ArticleImage key={index} {...block} />;
+              if (block.type === 'quote') return <GuideQuote key={index} warning={block.warning}>{block.text}</GuideQuote>;
+              if (block.type === 'info') return (
+                <div key={index} className="my-6 flex items-start gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
+                  <Info aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-brand-purple" />
+                  <div><h3 className="text-sm font-bold text-white">{block.heading}</h3><p className="mt-2 text-sm font-bold leading-6 text-white/65">{block.text}</p></div>
                 </div>
-                <div>
-                  <h3 className="font-display text-lg font-bold text-white">Включаем самолёт на 3-10 секунд</h3>
-                  <p className="mt-2 text-sm font-medium leading-6 text-white/55">Затем выключаем режим самолёта и ждём восстановления мобильной сети.</p>
-                </div>
-              </div>
-
-              <ArticleImage
-                src="/article/mobile-ip/airplane-mode.jpg"
-                alt="Кнопка режима полета в панели Android"
-                caption="Включаем режим полёта на несколько секунд."
-                compact
-              />
-            </section>
-
-            <section id="check" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">После переподключения</p>
-              <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Проверяем новый IP</h2>
-              <p className="mt-4 text-sm font-medium leading-7 text-white/65 md:text-base">
-                Выключаем режим самолёта, после чего айпи должен смениться. Проверить адрес можно на одном из сервисов ниже.
-              </p>
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                <a href="https://2ip.io/" target="_blank" rel="noopener noreferrer" className="flex min-h-14 items-center justify-between rounded-xl border border-white/10 bg-white/[0.035] px-4 text-sm font-bold text-white/65 transition-colors hover:border-brand-purple/40 hover:text-white">
-                  2ip.io <ExternalLink className="h-4 w-4" />
+              );
+              if (block.type === 'step') {
+                const Icon = block.icon === 'usb' ? Usb : Monitor;
+                return <div key={index} className="mt-7 flex items-start gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand-purple/20 bg-brand-purple/10">
+                    <Icon aria-hidden="true" className="h-5 w-5 text-brand-purple" />
+                  </div>
+                  <div><h3 className="font-display text-lg font-bold text-white">{block.heading}</h3><p className="mt-2 text-sm font-medium leading-6 text-white/55">{block.text}</p></div>
+                </div>;
+              }
+              if (block.type === 'links') return <div key={index} className={block.primary ? 'mt-6' : 'mt-6 grid gap-3 sm:grid-cols-2'}>
+                {block.links.map(link => <a key={link.href} href={link.href} target="_blank" rel={getExternalLinkRel(link.href)}
+                  className={block.primary
+                    ? 'inline-flex min-h-12 items-center gap-2 rounded-xl bg-brand-purple px-5 py-3 text-sm font-black text-white transition-colors hover:bg-white hover:text-brand-purple'
+                    : 'flex min-h-14 items-center justify-between rounded-xl border border-white/10 bg-white/[0.035] px-4 text-sm font-bold text-white/65 transition-colors hover:border-brand-purple/40 hover:text-white'}>
+                  {link.label}<ExternalLink aria-hidden="true" className="h-4 w-4 shrink-0" />
+                </a>)}
+              </div>;
+              if (block.type === 'list') return <ul key={index} className="mt-6 list-disc space-y-3 pl-6 text-sm font-medium leading-7 text-white/65 marker:text-brand-purple md:text-base">
+                {block.items.map((item, itemIndex) => <li key={itemIndex}><InlineContent content={item} /></li>)}
+              </ul>;
+              if (block.type === 'mobile-cta') return <div key={index} className="mt-6 flex flex-wrap items-center gap-3">
+                <a href={mobileIpProvider.url} target="_blank" rel={getExternalLinkRel(mobileIpProvider.url)}
+                  onClick={() => trackService(mobileIpProvider.url, 'article_cta')}
+                  className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-brand-purple px-5 py-3 text-sm font-black text-white transition-colors hover:bg-white hover:text-brand-purple">
+                  Перейти в MobileProxy<ExternalLink aria-hidden="true" className="h-4 w-4" />
                 </a>
-                <a href="https://whoer.net/" target="_blank" rel="noopener noreferrer" className="flex min-h-14 items-center justify-between rounded-xl border border-white/10 bg-white/[0.035] px-4 text-sm font-bold text-white/65 transition-colors hover:border-brand-purple/40 hover:text-white">
-                  Whoer <ExternalLink className="h-4 w-4" />
-                </a>
-              </div>
-              <GuideQuote>
-                Если вы беспокоитесь, что в рамках одного аккаунта будет постоянно разный айпи, в этом нет ничего страшного. Мобильный интернет и так несколько раз в день меняет адрес.
-              </GuideQuote>
-            </section>
-
-            <section id="computer" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Если работаете не только с телефона</p>
-              <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Смена айпи на ПК или ноутбуке</h2>
-              <p className="mt-4 text-sm font-medium leading-7 text-white/65 md:text-base">
-                Взяв USB-провод и подключив телефон к ПК, мы можем создать модем под рукой с постоянной сменой айпи по желанию.
-              </p>
-              <div className="mt-7 flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand-purple/20 bg-brand-purple/10">
-                  <Usb className="h-5 w-5 text-brand-purple" />
-                </div>
-                <div>
-                  <h3 className="font-display text-lg font-bold text-white">Берём USB</h3>
-                  <p className="mt-2 text-sm font-medium leading-6 text-white/55">Подключаем кабель к телефону и компьютеру.</p>
-                </div>
-              </div>
-              <ArticleImage
-                src="/article/mobile-ip/usb-cable.jpg"
-                alt="USB-кабель для подключения телефона к компьютеру"
-                caption="Подойдёт обычный кабель для передачи данных."
-                compact
-              />
-            </section>
-
-            <section id="android" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
-              <div className="flex items-center gap-3">
-                <Wifi className="h-5 w-5 text-brand-purple" />
-                <h2 className="font-display text-2xl font-black text-white md:text-3xl">Подключение Android к ПК</h2>
-              </div>
-              <p className="mt-4 text-sm font-medium leading-7 text-white/65 md:text-base">
-                Заходим в телефон. На Xiaomi это пункт «Точка доступа Wi-Fi», затем включаем USB-модем.
-              </p>
-              <ArticleImage
-                src="/article/mobile-ip/android-usb-modem.png"
-                alt="Включение USB-модема в настройках точки доступа Xiaomi"
-                caption="На Xiaomi открываем «Точка доступа Wi-Fi» и включаем USB-модем."
-                compact
-              />
-
-              <div className="mt-7 flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand-purple/20 bg-brand-purple/10">
-                  <Monitor className="h-5 w-5 text-brand-purple" />
-                </div>
-                <div>
-                  <h3 className="font-display text-lg font-bold text-white">Подтверждаем сеть на ПК</h3>
-                  <p className="mt-2 text-sm font-medium leading-6 text-white/55">Когда Windows покажет окно новой сети, нажимаем «Да».</p>
-                </div>
-              </div>
-              <ArticleImage
-                src="/article/mobile-ip/windows-network-confirmation.png"
-                alt="Окно обнаружения новой сети в Windows с кнопкой Да"
-                caption="Когда Windows обнаружит новую сеть, разрешаем другим устройствам находить компьютер."
-                compact
-              />
-
-              <GuideQuote>
-                И всё отлично работает. Меняем айпи режимом самолёта на телефоне, и на ПК он через 10-15 секунд тоже меняется.
-              </GuideQuote>
-              <GuideQuote warning>
-                Главное, следите, чтобы компьютер случайно не переключился обратно на ваш Wi-Fi-роутер. Такое бывает.
-              </GuideQuote>
-              <GuideQuote>
-                Не забывайте проверять через{' '}
-                <a href="https://2ip.io/" target="_blank" rel="noopener noreferrer" className="font-bold text-brand-purple underline underline-offset-4">2ip.io</a>
-                {' '}или{' '}
-                <a href="https://whoer.net/" target="_blank" rel="noopener noreferrer" className="font-bold text-brand-purple underline underline-offset-4">Whoer</a>,
-                {' '}действительно ли айпи меняется. Эта функция работает не на каждом тарифе и не в каждой стране.
-              </GuideQuote>
-              <ArticleImage
-                src="/article/mobile-ip/new-ip-check-2ip.png"
-                alt="Проверка нового IP-адреса на сайте 2ip.io после переподключения"
-                caption="После переподключения открываем 2ip.io и убеждаемся, что IP-адрес изменился."
-                compact
-              />
-            </section>
-
-            <section id="iphone" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">iPhone и компьютер</p>
-              <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Подключение через iTunes</h2>
-              <p className="mt-4 text-sm font-medium leading-7 text-white/65 md:text-base">
-                Для iPhone тоже можно сделать раздачу по проводу, но на ПК понадобится iTunes. У меня не было подходящего кабеля для проверки, поэтому ниже оставляю пример с YouTube. Видео не моё.
-              </p>
-              <a href="https://youtu.be/CX72O91G5ek?si=U9cGjY0-PVULsYrG" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-xl bg-brand-purple px-5 py-3 text-sm font-black text-white transition-colors hover:bg-white hover:text-brand-purple">
-                Смотреть пример на YouTube <ExternalLink className="h-4 w-4" />
-              </a>
-
-              <GuideQuote>
-                Не забывай подписываться на канал <a href="https://t.me/hopscupcrpt" target="_blank" rel="noopener noreferrer" className="text-brand-purple underline underline-offset-4">Hopscup Crew</a>.
-              </GuideQuote>
-              <ArticleImage
-                src="/article/mobile-ip/iphone-itunes-video.jpg"
-                alt="Hopscup Crypto"
-                caption="Канал Hopscup Crew с новыми гайдами и рабочими материалами."
-              />
-            </section>
-            <RelatedGuides items={[
-              { href: '/proxy-vpn/luchshie-proksi', label: 'Прокси', title: 'Какие прокси выбрать', description: 'Когда мобильного интернета уже мало и нужен отдельный IP на профиль.' },
-              { href: '/guides/account-farm', label: 'Аккаунты', title: 'Ферма аккаунтов', description: 'Полная схема с аккаунтами, номерами, прокси и антидетектами.' },
-              { href: '/antidetect', label: 'Антидетекты', title: 'Мобильные и ПК-антидетекты', description: 'Сервисы для управления профилями с телефона и компьютера.' },
-            ]} />
-            <ArticleSocialFooter />
+                <button type="button" onClick={() => void copyPromo()} aria-label="Скопировать промокод MobileProxy"
+                  className="inline-flex min-h-11 items-center gap-3 rounded-xl border border-brand-purple/30 bg-brand-purple/10 px-4 py-3 text-sm font-bold text-brand-purple transition-colors hover:bg-brand-purple/20">
+                  {copied ? <Check aria-hidden="true" className="h-4 w-4" /> : <Copy aria-hidden="true" className="h-4 w-4" />}
+                  <span>{mobileIpProvider.promoCode}</span><span>{mobileIpProvider.promoDiscount}</span>
+                  <span className="sr-only" aria-live="polite">{copied ? 'Скопировано' : ''}</span>
+                </button>
+              </div>;
+              if (block.type === 'checklist') return <ArticleChecklist key={index} {...mobileIpChecklist} onExternalClick={href => trackService(href, 'article_summary')} />;
+              return null;
+            })}
+            <ArticleSocialFooter variant="compact" />
           </article>
         </div>
       </main>

@@ -5620,7 +5620,8 @@ export default function App() {
           '@context': 'https://schema.org',
           '@type': 'Article',
           headline: title,
-          ...(proxyGuideArticle ? { datePublished: proxyGuideMeta.datePublished, dateModified: proxyGuideMeta.dateModified } : {}),
+          ...(proxyGuideArticle ? { datePublished: proxyGuideMeta.datePublished, dateModified: proxyGuideMeta.dateModified }
+            : guideArticle?.datePublished ? { datePublished: guideArticle.datePublished, dateModified: guideArticle.dateModified } : {}),
           description,
           url: canonicalUrl,
           inLanguage: russianOnlyArticle ? 'ru-RU' : currentLanguageOption?.inLanguage || 'en',
@@ -5753,6 +5754,9 @@ export default function App() {
     const cardOrder = ['Zarub', 'PGON', 'Antarctic Wallet', 'QR2Pay', 'Vezdekarta', 'Pionex', 'Cashin Out'];
     const cryptoOrder = ['Prosto Exchange', 'Keine Exchange', 'PGON', 'Antarctic Wallet', 'QR2Pay', 'Hermes Exchange', 'AMLBot', 'BitOK', 'GetBlock', 'MetaMask', 'Rabby Wallet', 'Phantom', 'Backpack', 'Trust Wallet', 'TronLink'];
     return offers.sort((first, second) => {
+      if (first.category === 'Guides' && second.category === 'Guides') {
+        return Number(second.id === 'guide-mobile-ip') - Number(first.id === 'guide-mobile-ip');
+      }
       if (first.category === 'Cards' && second.category === 'Cards') {
         return cardOrder.indexOf(first.name) - cardOrder.indexOf(second.name);
       }
@@ -5787,6 +5791,9 @@ export default function App() {
   const visibleGuideOffers = guideTopicFilter === 'all'
     ? filteredOffers
     : filteredOffers.filter((offer) => GUIDE_CARD_META[offer.id]?.topic === guideTopicFilter);
+  const leadingGuideOffers = visibleGuideOffers.some(offer => offer.id === 'guide-mobile-ip')
+    ? visibleGuideOffers.slice(0, 2)
+    : [];
 
   const t = {
     heroTitle: "Hopscup's Tools Hub",
@@ -6250,6 +6257,65 @@ export default function App() {
     return <ForeignCardGuideArticle />;
   }
 
+  const renderGuideCards = (offers: Offer[]) => offers.map((offer, index) => {
+    const meta = GUIDE_CARD_META[offer.id] || { topic: 'accounts' as const, minutes: 6 };
+    const styles = GUIDE_TOPIC_STYLES[meta.topic];
+    const guide = guideCatalogById[offer.id];
+    const cover = guide && 'cover' in guide ? guide.cover : undefined;
+    return (
+    <motion.a
+      layout
+      key={offer.id}
+      href={getLocalizedOfferRoute(offer, lang)}
+      onClick={(event) => {
+        if (
+          offer.id === 'guide-mobile-ip'
+          || offer.id === 'guide-claude-russia'
+          || offer.id === 'guide-discord-token'
+          || offer.id === 'guide-foreign-cards'
+          || offer.id === 'guide-gmail-forwarding'
+          || offer.id === 'guide-account-farm'
+          || offer.id === 'guide-otc-kyc'
+          || offer.id === 'guide-uids-addresses'
+          || offer.id === 'guide-antidetect-setup'
+        ) return;
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        handleOfferOpen(offer);
+      }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.98 }}
+      transition={{ duration: 0.4, delay: index * 0.06 }}
+      className={`group flex min-h-[190px] flex-col rounded-2xl border border-white/[0.09] bg-[#111111]/80 p-5 text-left backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/[0.045] ${styles.glow}`}
+    >
+      {cover ? (
+        <img src={cover.previewSrc || cover.src} alt={cover.alt} width={cover.width} height={cover.height} loading="lazy" decoding="async" className="mb-4 block aspect-[1672/941] h-auto w-full rounded-lg object-contain" />
+      ) : <div className="mb-4 flex w-full items-start justify-between gap-4">
+        <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${styles.icon}`}>
+          {renderGuideIcon(offer.id, 'h-5 w-5')}
+        </div>
+        <ChevronRight className="mt-1 h-5 w-5 shrink-0 text-white/20 transition-all group-hover:translate-x-0.5 group-hover:text-white/60" />
+      </div>}
+      <div className="flex min-w-0 flex-1 flex-col">
+        <div className={`mb-2 text-[9px] font-black uppercase ${styles.label}`}>
+          {l(GUIDE_TOPIC_LABELS[meta.topic])}
+        </div>
+        <h3 className="line-clamp-2 font-display text-lg font-bold leading-snug text-white">
+          {offerTitle(offer)}
+        </h3>
+        <p className="mt-2 line-clamp-2 text-xs font-medium leading-relaxed text-white/45">
+          {offerDescription(offer)}
+        </p>
+        <div className="mt-auto flex items-center gap-1.5 pt-4 text-[10px] font-bold text-white/30">
+          <Clock className="h-3.5 w-3.5" />
+          {meta.minutes} {tx({ ru: 'мин чтения', en: 'min read', es: 'min de lectura', zh: '分钟阅读', ko: '분 읽기' })}
+        </div>
+      </div>
+    </motion.a>
+    );
+  });
+
   return (
     <LazyMotion features={domAnimation} strict>
     <div className="min-h-screen pb-20 selection:bg-brand-purple selection:text-white relative">
@@ -6603,6 +6669,12 @@ export default function App() {
                   ))}
                 </div>
 
+                {leadingGuideOffers.length > 0 && (
+                  <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {renderGuideCards(leadingGuideOffers)}
+                  </div>
+                )}
+
                 {lang === 'ru' && (guideTopicFilter === 'all' || guideTopicFilter === 'proxy') && (
                   <motion.a
                     href={guideCatalogById['guide-best-proxies'].route}
@@ -6634,64 +6706,7 @@ export default function App() {
                 )}
 
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {visibleGuideOffers.map((offer, index) => {
-                  const meta = GUIDE_CARD_META[offer.id] || { topic: 'accounts' as const, minutes: 6 };
-                  const styles = GUIDE_TOPIC_STYLES[meta.topic];
-                  const guide = guideCatalogById[offer.id];
-                  const cover = guide && 'cover' in guide ? guide.cover : undefined;
-                  return (
-                  <motion.a
-                    layout
-                    key={offer.id}
-                    href={getLocalizedOfferRoute(offer, lang)}
-                    onClick={(event) => {
-                      if (
-                        offer.id === 'guide-mobile-ip'
-                        || offer.id === 'guide-claude-russia'
-                        || offer.id === 'guide-discord-token'
-                        || offer.id === 'guide-foreign-cards'
-                        || offer.id === 'guide-gmail-forwarding'
-                        || offer.id === 'guide-account-farm'
-                        || offer.id === 'guide-otc-kyc'
-                        || offer.id === 'guide-uids-addresses'
-                        || offer.id === 'guide-antidetect-setup'
-                      ) return;
-                      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                      event.preventDefault();
-                      handleOfferOpen(offer);
-                    }}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.4, delay: index * 0.06 }}
-                    className={`group flex min-h-[190px] flex-col rounded-2xl border border-white/[0.09] bg-[#111111]/80 p-5 text-left backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/[0.045] ${styles.glow}`}
-                  >
-                    {cover ? (
-                      <img src={cover.previewSrc || cover.src} alt={cover.alt} width={cover.width} height={cover.height} loading="lazy" decoding="async" className="mb-4 block aspect-[1672/941] h-auto w-full rounded-lg object-contain" />
-                    ) : <div className="mb-4 flex w-full items-start justify-between gap-4">
-                      <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${styles.icon}`}>
-                        {renderGuideIcon(offer.id, 'h-5 w-5')}
-                      </div>
-                      <ChevronRight className="mt-1 h-5 w-5 shrink-0 text-white/20 transition-all group-hover:translate-x-0.5 group-hover:text-white/60" />
-                    </div>}
-                    <div className="flex min-w-0 flex-1 flex-col">
-                      <div className={`mb-2 text-[9px] font-black uppercase ${styles.label}`}>
-                        {l(GUIDE_TOPIC_LABELS[meta.topic])}
-                      </div>
-                      <h3 className="line-clamp-2 font-display text-lg font-bold leading-snug text-white">
-                        {offerTitle(offer)}
-                      </h3>
-                      <p className="mt-2 line-clamp-2 text-xs font-medium leading-relaxed text-white/45">
-                        {offerDescription(offer)}
-                      </p>
-                      <div className="mt-auto flex items-center gap-1.5 pt-4 text-[10px] font-bold text-white/30">
-                        <Clock className="h-3.5 w-3.5" />
-                        {meta.minutes} {tx({ ru: 'мин чтения', en: 'min read', es: 'min de lectura', zh: '分钟阅读', ko: '분 읽기' })}
-                      </div>
-                    </div>
-                  </motion.a>
-                  );
-                })}
+                {renderGuideCards(visibleGuideOffers.filter(offer => !leadingGuideOffers.some(leading => leading.id === offer.id)))}
                 </div>
               </div>
             ) : (

@@ -1,11 +1,12 @@
 import { guidePages } from './guidePages.js';
 import { articleFallbackByRoute } from './articleFallbackContent.js';
 import { proxyGuideMeta } from './proxyGuideContent.js';
+import { mobileIpGuideMeta } from './mobileIpGuideContent.js';
 
 // Existing React card titles, shared with the no-JavaScript catalogue.
 const cardTitles = {
   'guide-mobile-ip': {
-    ru: 'Смена айпи мобильным интернетом и режимом "самолета". Android и iPhone',
+    ru: mobileIpGuideMeta.heading,
     en: 'Changing IP with mobile internet and airplane mode on Android and iPhone',
     es: 'Cambiar la IP con internet móvil y modo avión en Android y iPhone',
     zh: '通过移动网络和飞行模式更换 Android 与 iPhone 的 IP',
@@ -70,6 +71,6 @@ export const guideCatalog = [
     description: page.editorial.description,
     cover: page.cover,
   })),
-];
+].sort((first, second) => Number(second.id === 'guide-mobile-ip') - Number(first.id === 'guide-mobile-ip'));
 
 export const guideCatalogById = Object.fromEntries(guideCatalog.map((guide) => [guide.id, guide]));

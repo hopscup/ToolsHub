@@ -8,6 +8,7 @@ import { guidePages } from '../src/data/guidePages.js';
 import { guideCatalog } from '../src/data/guideCatalog.js';
 import { getExternalLinkRel } from '../src/lib/externalLinks.js';
 import { proxyGuideMeta, proxyGuideBlocks, proxyProviders, proxyTypes, proxyCopy, proxyChecklist } from '../src/data/proxyGuideContent.js';
+import { mobileIpGuideBlocks, mobileIpChecklist, mobileIpProvider } from '../src/data/mobileIpGuideContent.js';
 import { articleSocialLinks, articleSocialBanner, articleSocialCompact, withoutArticleSocialFooter } from '../src/data/articleSocialFooter.js';
 import { pageHeadings } from '../src/data/pageHeadings.js';
 import { articleFallbackByRoute, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
@@ -1576,6 +1577,8 @@ const servicePages = [
     articleBlocks: page.articleBlocks,
     cover: page.cover,
     articleHeadingIds: page.articleHeadingIds,
+    datePublished: page.datePublished,
+    dateModified: page.dateModified,
     id: page.id,
     type: 'article',
     russianOnly: true,
@@ -1585,7 +1588,7 @@ const servicePages = [
     title: page.title,
     description: page.description,
     heading: page.heading,
-    intro: page.editorial.description,
+    intro: page.intro || page.editorial.description,
     keywords: page.keywords,
     points: page.editorial.bestFor,
     items: page.editorial.considerations,
@@ -1682,12 +1685,23 @@ const renderGuideBlocks = (blocks, headingIds = {}) => {
   }).join('\n');
 };
 
+const renderChecklist = (checklist) => `<section id="start" data-article-checklist><h2>Коротко: что делать</h2>${renderGuideBlocks([{ type: 'list', ordered: true, items: checklist.items }])}<div data-checklist-sources><h3>${escapeHtml(checklist.sourcesHeading || 'Где брать:')}</h3>${checklist.sources.map(source => `<p>${source.label ? `${escapeHtml(source.label)}: ` : ''}${source.links.map(link => renderLink({ href: link.href, label: link.text })).join(' · ')}</p>`).join('')}<p><small>${checklist.note.map(part => part.strong ? `<strong>${escapeHtml(part.text)}</strong>` : escapeHtml(part.text)).join('')}</small></p><p>${renderLink(checklist.action)}</p></div></section>`;
+
+const renderMobileIpGuideBody = () => mobileIpGuideBlocks.map(block => {
+  if (block.type === 'checklist') return renderChecklist(mobileIpChecklist);
+  if (block.type === 'quote') return `<blockquote${block.warning ? ' data-warning="true"' : ''}><p>${escapeHtml(block.text)}</p></blockquote>`;
+  if (block.type === 'info' || block.type === 'step') return `<section><h3>${escapeHtml(block.heading)}</h3><p>${escapeHtml(block.text)}</p></section>`;
+  if (block.type === 'links') return `<p>${block.links.map(renderLink).join(' · ')}</p>`;
+  if (block.type === 'mobile-cta') return `<p>${renderLink({ href: mobileIpProvider.url, label: 'Перейти в MobileProxy' })} <code>${escapeHtml(mobileIpProvider.promoCode)}</code> ${escapeHtml(mobileIpProvider.promoDiscount)}</p>`;
+  return renderGuideBlocks([block], block.type === 'heading' ? { [block.text]: block.id } : {});
+}).join('\n');
+
 const renderProxyGuideBody = () => proxyGuideBlocks.map(block => {
   const linkedName = provider => renderLink({ href: provider.url, label: provider.name });
   if (block.type === 'provider-table') return `<div style="overflow-x:auto"><table><thead><tr><th>Сервис</th><th>Типы</th><th>Когда смотреть</th></tr></thead><tbody>${proxyProviders.map(provider => `<tr><td>${linkedName(provider)}</td><td>${escapeHtml(provider.types)}</td><td>${escapeHtml(provider.choice)}</td></tr>`).join('')}</tbody></table></div>`;
   if (block.type === 'providers') return proxyProviders.map(provider => `<section><h3>${escapeHtml(provider.name)}</h3><p>${escapeHtml(provider.choice)}</p><p>${escapeHtml(provider.note)}</p><p>${escapeHtml(provider.types)}</p>${provider.promoCode ? `<p>Промокод: <code>${escapeHtml(provider.promoCode)}</code>${provider.promoDiscount ? ` ${escapeHtml(provider.promoDiscount)}` : ''}</p>` : ''}<p>${renderLink({ href: provider.url, label: 'Перейти' })}</p></section>`).join('');
   if (block.type === 'proxy-types') return proxyTypes.map(type => `<section><h3>${escapeHtml(type.name)}</h3><p>${escapeHtml(type.price)}</p><p>${type.href ? `${escapeHtml(type.text.split(type.linkText)[0])}${renderLink({ href: type.href, label: type.linkText })}${escapeHtml(type.text.split(type.linkText)[1])}` : escapeHtml(type.text)}</p></section>`).join('');
-  if (block.type === 'checklist') return `<section id="start" data-article-checklist><h2>Коротко: что делать</h2>${renderGuideBlocks([{ type: 'list', ordered: true, items: proxyChecklist.items }])}<div data-checklist-sources><h3>Где брать:</h3>${proxyChecklist.sources.map(source => `<p>${escapeHtml(source.label)}: ${source.links.map(link => renderLink({ href: link.href, label: link.text })).join(' · ')}</p>`).join('')}<p><small>${proxyChecklist.note.map(part => part.strong ? `<strong>${escapeHtml(part.text)}</strong>` : escapeHtml(part.text)).join('')}</small></p><p>${renderLink(proxyChecklist.action)}</p></div></section>`;
+  if (block.type === 'checklist') return renderChecklist(proxyChecklist);
   return renderGuideBlocks([block], block.type === 'heading' ? { [block.text]: block.id } : {});
 }).join('\n');
 
@@ -1741,6 +1755,7 @@ const renderStaticContent = (section, language) => {
 
   return `
       <article class="seo-fallback"${article ? ` data-static-article="${escapeHtml(section.id)}"` : ''} aria-label="${escapeHtml(title)}">
+        ${section.id === 'guide-mobile-ip' ? `<nav aria-label="${escapeHtml(labels.nav)}">${internalLinks(language)}</nav>` : ''}
         ${article ? `<div class="fallback-topbar"><div><a href="/"><img src="/logo.webp" alt="Hopscup" width="40" height="40" /></a><a href="${escapeHtml(article.returnHref)}">${escapeHtml(article.returnLabel)}</a></div></div>` : ''}
         <header class="fallback-hero">
           ${article ? `<p class="fallback-badge">${escapeHtml(article.badge)}</p>` : ''}
@@ -1751,7 +1766,7 @@ const renderStaticContent = (section, language) => {
         </header>
         ${vpn ? `<section aria-label="${language.code === 'ru' ? 'Цена и бесплатный период' : 'Pricing and free trial'}"><dl><dt>${language.code === 'ru' ? 'Бесплатно' : 'Free trial'}</dt><dd>${escapeHtml(getLanguage(vpn.free, language))}</dd><dt>${language.code === 'ru' ? 'Цена' : 'Price'}</dt><dd>${escapeHtml(getLanguage(vpn.price, language))}</dd></dl></section>` : ''}
         ${section.cta ? `<p><a href="${escapeHtml(section.cta.href)}" target="_blank" rel="${getExternalLinkRel(section.cta.href) || 'noopener noreferrer'}">${escapeHtml(getLanguage(section.cta.label, language))}</a></p>` : ''}
-        ${section.id === 'guide-best-proxies' ? `<div class="fallback-body">${renderProxyGuideBody()}</div>` : section.articleBlocks ? `<div class="fallback-body">${renderGuideBlocks(section.articleBlocks, section.articleHeadingIds)}</div>` : article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
+        ${section.id === 'guide-best-proxies' ? `<div class="fallback-body">${renderProxyGuideBody()}</div>` : section.id === 'guide-mobile-ip' ? `<div class="fallback-body">${renderMobileIpGuideBody()}</div>` : section.articleBlocks ? `<div class="fallback-body">${renderGuideBlocks(section.articleBlocks, section.articleHeadingIds)}</div>` : article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
         ${section.heroHeading ? `
         <section>
           ${heroTitle !== title ? `<h2>${escapeHtml(title)}</h2>` : ''}
@@ -1771,10 +1786,10 @@ const renderStaticContent = (section, language) => {
         </section>
           ${language.code === 'ru' && section.article ? section.article.map((part) => `<section><h2>${escapeHtml(part.heading)}</h2>${part.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}${(part.links || []).map(renderLink).join(' ')}</section>`).join('') : ''}
         `}
-        <nav aria-label="${escapeHtml(labels.nav)}">
+        ${section.id !== 'guide-mobile-ip' ? `<nav aria-label="${escapeHtml(labels.nav)}">
           ${internalLinks(language)}
-        </nav>
-        ${section.type === 'article' ? renderArticleSocialFooter(section.id === 'guide-best-proxies') : ''}
+        </nav>` : ''}
+        ${section.type === 'article' ? renderArticleSocialFooter(['guide-best-proxies', 'guide-mobile-ip'].includes(section.id)) : ''}
       </article>`;
 };
 

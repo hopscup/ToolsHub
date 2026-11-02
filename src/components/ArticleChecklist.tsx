@@ -3,9 +3,11 @@ import { getExternalLinkRel } from '../lib/externalLinks.js';
 
 type Segment = { text: string; href?: string; strong?: boolean };
 
-export const ArticleChecklist = ({ items, sources, action, note, onExternalClick }: {
+export const ArticleChecklist = ({ items, sources, sourcesHeading = 'Где брать:', action, note, onExternalClick }: {
+  key?: number;
   items: Segment[][];
   sources: { label: string; links: { text: string; href: string }[] }[];
+  sourcesHeading?: string;
   action: { href: string; label: string };
   note: Segment[];
   onExternalClick?: (href: string) => void;
@@ -26,11 +28,11 @@ export const ArticleChecklist = ({ items, sources, action, note, onExternalClick
       ))}
     </ol>
     <div data-checklist-sources className="mt-6 border-t border-white/[0.07] pt-5">
-      <h3 className="text-sm font-bold text-white/80">Где брать:</h3>
+      <h3 className="text-sm font-bold text-white/80">{sourcesHeading}</h3>
       <div className="mt-3 space-y-2 text-sm font-medium leading-6 text-white/65">
         {sources.map(source => (
           <p key={source.label}>
-            <span>{source.label}: </span>
+            {source.label && <span>{source.label}: </span>}
             {source.links.map((link, index) => (
               <span key={link.href}>
                 {index > 0 && ' · '}
