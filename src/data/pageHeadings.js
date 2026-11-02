@@ -1,3 +1,5 @@
+import { proxyGuideMeta } from './proxyGuideContent.js';
+
 export const pageHeadings = {
   "/": {
     "ru": "Полезные сервисы для работы с аккаунтами и цифровыми задачами",
@@ -168,7 +170,7 @@ export const pageHeadings = {
     "ko": "Giga Dollar VPN: 일일 요금제와 최대 15대 기기"
   },
   "/proxy-vpn/luchshie-proksi": {
-    "ru": "Какие прокси выбрать в 2026 году"
+    "ru": proxyGuideMeta.heading
   },
   "/proxy-vpn/luchshie-mobilnye-proksi": {
     "ru": "Лучшие мобильные прокси в 2026 году"

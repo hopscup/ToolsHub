@@ -13,6 +13,8 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
 import { RelatedGuides } from './RelatedGuides';
+import { ArticleSocialFooter } from './ArticleSocialFooter';
+import { ArticleImageLink } from './ArticleImageLink';
 import { articleFallbackContent } from '../data/articleFallbackContent.js';
 
 type ArticleTheme = 'dark' | 'light';
@@ -52,15 +54,12 @@ const BrowserHeading = ({ logo, name, children }: { logo: string; name: string; 
 
 const ArticleScreenshot = ({ src, alt, caption }: { src: string; alt: string; caption: string }) => (
   <figure className="my-8 min-w-0">
-    <a
-      href={src}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`Открыть изображение: ${alt}`}
+    <ArticleImageLink
+      src={src} alt={alt} caption={caption}
       className="block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] transition-colors hover:border-brand-purple/40"
     >
       <img src={src} alt={alt} loading="lazy" decoding="async" className="block h-auto w-full" />
-    </a>
+    </ArticleImageLink>
     <figcaption className="mt-3 text-xs font-semibold leading-5 text-white/40">{caption}</figcaption>
   </figure>
 );
@@ -339,6 +338,7 @@ export const AntidetectSetupGuideArticle = () => {
               { href: '/proxy-vpn/luchshie-proksi', label: 'Прокси', title: 'Какие прокси выбрать', description: 'IPv4, ISP, Residential и Mobile без путаницы в названиях.' },
               { href: '/guides/mobile-ip-airplane-mode', label: 'Бесплатный IP', title: 'Смена IP мобильным интернетом', description: 'Как использовать телефон вместо отдельной мобильной прокси.' },
             ]} />
+            <ArticleSocialFooter />
           </article>
         </div>
       </main>

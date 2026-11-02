@@ -7,6 +7,8 @@ import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { guidePages } from '../src/data/guidePages.js';
 import { guideCatalog } from '../src/data/guideCatalog.js';
 import { getExternalLinkRel } from '../src/lib/externalLinks.js';
+import { proxyGuideMeta, proxyGuideBlocks, proxyProviders, proxyTypes, proxyCopy, proxyChecklist } from '../src/data/proxyGuideContent.js';
+import { articleSocialLinks, articleSocialBanner, articleSocialCompact, withoutArticleSocialFooter } from '../src/data/articleSocialFooter.js';
 import { pageHeadings } from '../src/data/pageHeadings.js';
 import { articleFallbackByRoute, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 import { legacyIndexedRoutes } from '../src/data/legacyIndexedRoutes.js';
@@ -1538,15 +1540,18 @@ const servicePages = [
   })),
   createServicePage({
     id: 'guide-best-proxies',
+    cover: proxyGuideMeta.cover,
     type: 'article',
     russianOnly: true,
     route: '/proxy-vpn/luchshie-proksi',
     name: 'Лучшие прокси-сервисы',
     logo: '/logo.png',
-    title: { ru: 'Лучшие прокси-сервисы для аккаунтов: что выбрать в 2026 году | Hopscup Tools' },
-    description: { ru: 'Сравнение семи прокси-сервисов: IPv4, ISP, Residential и Mobile для аккаунтов, антидетектов, рекламы, парсинга и автоматизации.' },
+    title: { ru: proxyGuideMeta.title },
+    description: { ru: proxyGuideMeta.description },
+    datePublished: proxyGuideMeta.datePublished,
+    dateModified: proxyGuideMeta.dateModified,
     heading: pageHeadings['/proxy-vpn/luchshie-proksi'],
-    intro: { ru: 'Практическое сравнение ProxyWing, Proxy-Seller, Proxyline, Proxy6, MobileProxy, ProxyShard и Proxys.io.' },
+    intro: { ru: proxyCopy.intro },
     keywords: { ru: 'лучшие прокси, прокси для аккаунтов, IPv4 прокси, мобильные прокси, прокси для антидетекта' },
     points: { ru: ['Выбор типа прокси под задачу.', 'Сравнение сервисов и тарифов.', 'Настройка и проверка IP.'] },
     items: { ru: ['IPv4, ISP, Residential и Mobile.', 'SOCKS5 и HTTP.', 'Fraud Score и практические ограничения.'] },
@@ -1661,7 +1666,7 @@ const renderGuideBlocks = (blocks, headingIds = {}) => {
     if (segment.em) text = `<em>${text}</em>`;
     return text;
   }).join('');
-  return blocks.map((block) => {
+  return withoutArticleSocialFooter(blocks).map((block) => {
     if (block.type === 'heading') {
       const tag = block.level === 3 ? 'h3' : 'h2';
       const id = headingIds[block.text];
@@ -1675,6 +1680,21 @@ const renderGuideBlocks = (blocks, headingIds = {}) => {
     if (block.type === 'image') return `<figure><a href="${escapeHtml(block.src)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(block.src)}" alt="${escapeHtml(block.alt)}"${block.width ? ` width="${block.width}" height="${block.height}"` : ''} loading="lazy" /></a>${block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : ''}</figure>`;
     return `<p>${inline(block.content)}</p>`;
   }).join('\n');
+};
+
+const renderProxyGuideBody = () => proxyGuideBlocks.map(block => {
+  const linkedName = provider => renderLink({ href: provider.url, label: provider.name });
+  if (block.type === 'provider-table') return `<div style="overflow-x:auto"><table><thead><tr><th>Сервис</th><th>Типы</th><th>Когда смотреть</th></tr></thead><tbody>${proxyProviders.map(provider => `<tr><td>${linkedName(provider)}</td><td>${escapeHtml(provider.types)}</td><td>${escapeHtml(provider.choice)}</td></tr>`).join('')}</tbody></table></div>`;
+  if (block.type === 'providers') return proxyProviders.map(provider => `<section><h3>${escapeHtml(provider.name)}</h3><p>${escapeHtml(provider.choice)}</p><p>${escapeHtml(provider.note)}</p><p>${escapeHtml(provider.types)}</p>${provider.promoCode ? `<p>Промокод: <code>${escapeHtml(provider.promoCode)}</code>${provider.promoDiscount ? ` ${escapeHtml(provider.promoDiscount)}` : ''}</p>` : ''}<p>${renderLink({ href: provider.url, label: 'Перейти' })}</p></section>`).join('');
+  if (block.type === 'proxy-types') return proxyTypes.map(type => `<section><h3>${escapeHtml(type.name)}</h3><p>${escapeHtml(type.price)}</p><p>${type.href ? `${escapeHtml(type.text.split(type.linkText)[0])}${renderLink({ href: type.href, label: type.linkText })}${escapeHtml(type.text.split(type.linkText)[1])}` : escapeHtml(type.text)}</p></section>`).join('');
+  if (block.type === 'checklist') return `<section id="start" data-article-checklist><h2>Коротко: что делать</h2>${renderGuideBlocks([{ type: 'list', ordered: true, items: proxyChecklist.items }])}<div data-checklist-sources><h3>Где брать:</h3>${proxyChecklist.sources.map(source => `<p>${escapeHtml(source.label)}: ${source.links.map(link => renderLink({ href: link.href, label: link.text })).join(' · ')}</p>`).join('')}<p><small>${proxyChecklist.note.map(part => part.strong ? `<strong>${escapeHtml(part.text)}</strong>` : escapeHtml(part.text)).join('')}</small></p><p>${renderLink(proxyChecklist.action)}</p></div></section>`;
+  return renderGuideBlocks([block], block.type === 'heading' ? { [block.text]: block.id } : {});
+}).join('\n');
+
+const renderArticleSocialFooter = (compact = false) => {
+  const banner = `<a data-article-footer-banner href="${escapeHtml(articleSocialBanner.href)}" target="_blank" rel="noopener noreferrer" class="block overflow-hidden rounded-lg"><img src="${escapeHtml(articleSocialBanner.src)}" alt="${escapeHtml(articleSocialBanner.alt)}" width="${articleSocialBanner.width}" height="${articleSocialBanner.height}" loading="lazy"${compact ? ' class="block aspect-video max-h-[170px] w-full object-cover"' : ''} /></a>`;
+  if (compact) return `<footer data-article-social-footer data-article-footer-variant="compact" class="mt-8 grid gap-4 rounded-lg border border-white/10 p-4 lg:grid-cols-[240px_minmax(0,1fr)] lg:items-center">${banner}<div><p>${escapeHtml(articleSocialCompact.eyebrow)}</p><h2>${escapeHtml(articleSocialCompact.title)}</h2><p>${escapeHtml(articleSocialCompact.description)}</p><nav aria-label="Ссылки Hopscup" class="mt-3 grid gap-2 lg:grid-cols-3">${articleSocialCompact.links.map(link => `<a href="${escapeHtml(link.href)}"${getExternalLinkRel(link.href) ? ` target="_blank" rel="${getExternalLinkRel(link.href)}"` : ' title="hopscup.tools"'} class="block rounded-lg border border-white/10 px-2 py-2 text-center">${escapeHtml(link.label)}</a>`).join('')}</nav></div></footer>`;
+  return `<footer data-article-social-footer>${banner}<p><strong>Больше полезного тут:</strong></p><nav aria-label="Ссылки Hopscup">${articleSocialLinks.map(link => `<p>${renderLink(link)}</p>`).join('')}</nav></footer>`;
 };
 
 const renderArticleBody = (article, route) => {
@@ -1731,7 +1751,7 @@ const renderStaticContent = (section, language) => {
         </header>
         ${vpn ? `<section aria-label="${language.code === 'ru' ? 'Цена и бесплатный период' : 'Pricing and free trial'}"><dl><dt>${language.code === 'ru' ? 'Бесплатно' : 'Free trial'}</dt><dd>${escapeHtml(getLanguage(vpn.free, language))}</dd><dt>${language.code === 'ru' ? 'Цена' : 'Price'}</dt><dd>${escapeHtml(getLanguage(vpn.price, language))}</dd></dl></section>` : ''}
         ${section.cta ? `<p><a href="${escapeHtml(section.cta.href)}" target="_blank" rel="${getExternalLinkRel(section.cta.href) || 'noopener noreferrer'}">${escapeHtml(getLanguage(section.cta.label, language))}</a></p>` : ''}
-        ${section.articleBlocks ? `<div class="fallback-body">${renderGuideBlocks(section.articleBlocks, section.articleHeadingIds)}</div>` : article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
+        ${section.id === 'guide-best-proxies' ? `<div class="fallback-body">${renderProxyGuideBody()}</div>` : section.articleBlocks ? `<div class="fallback-body">${renderGuideBlocks(section.articleBlocks, section.articleHeadingIds)}</div>` : article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
         ${section.heroHeading ? `
         <section>
           ${heroTitle !== title ? `<h2>${escapeHtml(title)}</h2>` : ''}
@@ -1754,6 +1774,7 @@ const renderStaticContent = (section, language) => {
         <nav aria-label="${escapeHtml(labels.nav)}">
           ${internalLinks(language)}
         </nav>
+        ${section.type === 'article' ? renderArticleSocialFooter(section.id === 'guide-best-proxies') : ''}
       </article>`;
 };
 
@@ -1808,6 +1829,8 @@ const articleSchema = (section, language) => ({
   url: canonicalUrl(section, language),
   inLanguage: section.russianOnly ? 'ru-RU' : language.htmlLang,
   author: { '@type': 'Person', name: 'Hopscup' },
+  ...(section.cover ? { image: `${siteUrl}${section.cover.src}` } : {}),
+  ...(section.datePublished ? { datePublished: section.datePublished, dateModified: section.dateModified } : {}),
   publisher: {
     '@type': 'Organization',
     name: 'Hopscup',
@@ -1866,6 +1889,13 @@ const replaceHead = (html, section, language) => {
     .replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="${url}" />`)
     .replace(/<meta property="og:type" content=".*?" \/>/, `<meta property="og:type" content="${section.type === 'article' ? 'article' : 'website'}" />`)
     .replace(/<meta property="og:locale" content=".*?" \/>/, `<meta property="og:locale" content="${contentLanguage.ogLocale}" />`)
+    .replace(/<meta property="og:image" content=".*?" \/>/, `<meta property="og:image" content="${siteUrl}${escapeHtml(section.cover?.src || '/logo.png')}" />`)
+    .replace(/<meta property="og:image:width" content=".*?" \/>/, `<meta property="og:image:width" content="${section.cover?.width || 400}" />`)
+    .replace(/<meta property="og:image:height" content=".*?" \/>/, `<meta property="og:image:height" content="${section.cover?.height || 400}" />`)
+    .replace(/<meta property="og:image:alt" content=".*?" \/>/, `<meta property="og:image:alt" content="${escapeHtml(section.cover?.alt || "Hopscup's Tools Hub")}" />`)
+    .replace(/<meta name="twitter:card" content=".*?" \/>/, `<meta name="twitter:card" content="${section.cover ? 'summary_large_image' : 'summary'}" />`)
+    .replace(/<meta name="twitter:image" content=".*?" \/>/, `<meta name="twitter:image" content="${siteUrl}${escapeHtml(section.cover?.src || '/logo.png')}" />`)
+    .replace(/<meta name="twitter:image:alt" content=".*?" \/>/, `<meta name="twitter:image:alt" content="${escapeHtml(section.cover?.alt || "Hopscup's Tools Hub")}" />`)
     .replace(/<meta name="twitter:title" content=".*?" \/>/, `<meta name="twitter:title" content="${title}" />`)
     .replace(/<meta name="twitter:description" content=".*?" \/>/, `<meta name="twitter:description" content="${description}" />`)
     .replace(/<script id="structured-data" type="application\/ld\+json">[\s\S]*?<\/script>/, `<script id="structured-data" type="application/ld+json">${escapeJson(structuredData)}</script>`);

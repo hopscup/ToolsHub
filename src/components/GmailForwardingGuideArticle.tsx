@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
 import { RelatedGuides } from './RelatedGuides';
+import { ArticleSocialFooter } from './ArticleSocialFooter';
+import { ArticleImageLink } from './ArticleImageLink';
 import { articleFallbackContent } from '../data/articleFallbackContent.js';
 
 type ArticleTheme = 'dark' | 'light';
@@ -20,15 +22,12 @@ const ARTICLE_THEME_KEY = 'hopscup-article-theme';
 
 const ArticleImage = ({ src, alt, caption }: { src: string; alt: string; caption: string }) => (
   <figure className="my-8">
-    <a
-      href={src}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`Открыть изображение: ${alt}`}
+    <ArticleImageLink
+      src={src} alt={alt} caption={caption}
       className="block overflow-hidden rounded-2xl border border-white/10 bg-white transition-colors hover:border-brand-purple/40"
     >
       <img src={src} alt={alt} loading="lazy" decoding="async" className="block h-auto w-full" />
-    </a>
+    </ArticleImageLink>
     <figcaption className="mt-3 text-xs font-semibold leading-5 text-white/40">{caption}</figcaption>
   </figure>
 );
@@ -223,6 +222,7 @@ export const GmailForwardingGuideArticle = () => {
               { href: '/account-shop', label: 'Аккаунты', title: 'Магазины аккаунтов', description: 'Сравнение площадок для покупки готовых аккаунтов.' },
               { href: '/sms-activators', label: 'Номера', title: 'SMS-активаторы', description: 'Виртуальные номера для регистрации и подтверждения аккаунтов.' },
             ]} />
+            <ArticleSocialFooter />
           </article>
         </div>
       </main>

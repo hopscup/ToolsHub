@@ -147,6 +147,26 @@ body:has(.proxy-guide-article) {
   touch-action: auto !important;
 }
 
+@media (min-width: 1024px) {
+  .proxy-guide-article {
+    overflow: clip;
+  }
+
+  body:has(.proxy-guide-article) {
+    overflow: visible !important;
+  }
+
+  .proxy-guide-article .article-toc {
+    max-height: calc(100dvh - 7rem);
+    overflow-y: auto;
+  }
+}
+
+html:has(dialog[data-article-image-viewer][open]),
+body:has(dialog[data-article-image-viewer][open]) {
+  overflow: hidden !important;
+}
+
 .proxy-guide-article .article-particles,
 .proxy-guide-article .mesh-gradient {
   pointer-events: none;

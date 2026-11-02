@@ -4,6 +4,9 @@ import { BackgroundParticles } from './BackgroundParticles';
 import { RelatedGuides } from './RelatedGuides';
 import type { RelatedGuide } from './RelatedGuides';
 import { getExternalLinkRel } from '../lib/externalLinks.js';
+import { ArticleSocialFooter } from './ArticleSocialFooter';
+import { ArticleImageLink } from './ArticleImageLink';
+import { withoutArticleSocialFooter } from '../data/articleSocialFooter.js';
 
 type ArticleTheme = 'dark' | 'light';
 
@@ -94,15 +97,12 @@ const ImportedImage = ({ src, alt, caption, index, width, height }: { key?: stri
   const usefulAlt = alt || `Скриншот ${index + 1} из статьи`;
   return (
     <figure className="mx-auto my-8" style={width ? { maxWidth: width } : undefined}>
-      <a
-        href={src}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Открыть изображение: ${usefulAlt}`}
+      <ArticleImageLink
+        src={src} alt={usefulAlt} caption={caption}
         className="block overflow-hidden rounded-2xl border border-white/10 bg-white transition-colors hover:border-brand-purple/45"
       >
         <img src={src} alt={usefulAlt} width={width} height={height} loading="lazy" decoding="async" className="block h-auto w-full" />
-      </a>
+      </ArticleImageLink>
       {caption && <figcaption className="mt-3 text-xs font-semibold leading-5 text-white/40">{caption}</figcaption>}
     </figure>
   );
@@ -180,9 +180,9 @@ export const ImportedGuideArticle = ({
           <h1 className="mx-auto max-w-5xl font-display text-3xl font-black leading-[1.1] text-white md:text-5xl">{title}</h1>
           <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{description}</p>
           {data.cover && (
-            <a href={data.cover.src} target="_blank" rel="noopener noreferrer" className="mx-auto mt-8 block max-w-3xl overflow-hidden rounded-2xl border border-white/10">
+            <ArticleImageLink src={data.cover.src} alt={data.cover.alt} className="mx-auto mt-8 block max-w-3xl overflow-hidden rounded-2xl border border-white/10">
               <img src={data.cover.src} alt={data.cover.alt} width={data.cover.width} height={data.cover.height} fetchPriority="high" decoding="async" className="block h-auto w-full" />
-            </a>
+            </ArticleImageLink>
           )}
         </section>
 
@@ -197,7 +197,7 @@ export const ImportedGuideArticle = ({
           </aside>
 
           <article className="article-card min-w-0 rounded-[1.5rem] border border-white/[0.08] bg-[#0d0d0d]/90 px-5 py-7 shadow-2xl backdrop-blur-xl md:px-9 md:py-10">
-            {data.blocks.map((block, blockIndex) => {
+            {withoutArticleSocialFooter(data.blocks).map((block: ArticleBlock, blockIndex: number) => {
               if (block.type === 'image') {
                 const currentImageIndex = imageIndex;
                 imageIndex += 1;
@@ -241,6 +241,7 @@ export const ImportedGuideArticle = ({
               );
             })}
             {related.length > 0 && <RelatedGuides items={related} />}
+            <ArticleSocialFooter />
           </article>
         </div>
       </main>

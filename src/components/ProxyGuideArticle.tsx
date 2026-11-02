@@ -3,12 +3,11 @@ import {
   ArrowLeft,
   ArrowRight,
   Check,
+  Copy,
   ExternalLink,
-  Globe,
   Info,
   Layers,
   Moon,
-  Search,
   ShieldCheck,
   Smartphone,
   Sun,
@@ -16,7 +15,10 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
-import { RelatedGuides } from './RelatedGuides';
+import { ArticleSocialFooter } from './ArticleSocialFooter';
+import { ArticleChecklist } from './ArticleChecklist';
+import { ArticleImageLink } from './ArticleImageLink';
+import { proxyProviders, proxyTypes, proxyCopy, proxyGuideMeta, proxyComparison, proxyCatalogueCta, proxyChecklist, proxySetupContent } from '../data/proxyGuideContent.js';
 import { trackAnalyticsEvent } from '../analytics';
 
 type Provider = {
@@ -31,117 +33,17 @@ type Provider = {
   promoDiscount?: string;
 };
 
-const providers: Provider[] = [
-  {
-    id: 'p3',
-    name: 'ProxyWing',
-    logo: '/proxywing.webp',
-    url: 'https://dashboard.proxywing.com/billing/aff.php?aff=813',
-    types: 'IPv4, ISP, Residential, Mobile',
-    choice: 'Универсальный вариант',
-    note: 'Я бы начинал с их IPv4. Если площадка принимает их плохо, в том же сервисе можно перейти на ISP, Residential или Mobile.',
-    promoCode: 'hopscup',
-    promoDiscount: '−10%',
-  },
-  {
-    id: 'p4',
-    name: 'Proxy-Seller',
-    logo: '/proxy-seller.webp',
-    url: 'https://proxy-seller.com/?partner=RIPC5NDAEYRZPZ',
-    types: 'IPv4, IPv6, ISP, Residential, Mobile',
-    choice: 'Качество и большой выбор',
-    note: 'Один из сервисов, куда я смотрю, когда важно качество. Особенно нравится выбор Residential и большое количество стран.',
-    promoCode: 'hopscup',
-    promoDiscount: '−10%',
-  },
-  {
-    id: 'p2',
-    name: 'Proxyline',
-    logo: '/proxyline.webp',
-    url: 'https://proxyline.net?line=152448',
-    types: 'IPv4, IPv6',
-    choice: 'Недорогие IPv4',
-    note: 'Проверенный вариант для аккаунтов, парсинга и автоматизации, если под задачу хватает обычного отдельного IPv4.',
-    promoCode: 'hopscup',
-    promoDiscount: '−10%',
-  },
-  {
-    id: 'p5',
-    name: 'Proxy6',
-    logo: '/proxy6.webp',
-    url: 'https://px6.net/c/103460',
-    types: 'IPv4, IPv6, Shared IPv4, MTProto',
-    choice: 'Много IP без переплаты',
-    note: 'Подходит для повседневных задач и автоматизации. Shared для серьезной работы я бы не брал, лучше отдельный IPv4.',
-    promoCode: 'hopscup',
-    promoDiscount: '−5%',
-  },
-  {
-    id: 'p6',
-    name: 'MobileProxy',
-    logo: '/mobileproxy.webp',
-    url: 'https://mobileproxy.rent/user.html?free&p=105422',
-    types: 'Mobile',
-    choice: 'Мобильные прокси',
-    note: 'Пользуюсь больше трех лет. Трафик безлимитный, IP меняется по кнопке, но несколько профилей с разными IP придется отрабатывать по очереди.',
-    promoCode: 'hopscup',
-    promoDiscount: '−20%',
-  },
-  {
-    id: 'p1',
-    name: 'ProxyShard',
-    logo: '/proxyshard.webp',
-    url: 'https://proxyshard.com?ref=hopscup',
-    types: 'IPv4, ISP, Residential, Mobile',
-    choice: 'Баланс цены и качества',
-    note: 'Универсальный сервис с основными типами прокси. Удобно, если для разных проектов нужны и обычные IPv4, и более трастовые варианты.',
-    promoCode: 'hopscup',
-  },
-  {
-    id: 'p7',
-    name: 'Proxys.io',
-    logo: '/proxys-io.webp',
-    url: 'https://proxys.io/?refid=54507',
-    types: 'IPv4, IPv6, Residential, Mobile, Dynamic',
-    choice: 'Большой выбор форматов',
-    note: 'Я тестировал здесь обычные IPv4 и Residential, оба варианта работали хорошо. Есть динамические прокси и много способов оплаты.',
-  },
-];
+const providers: Provider[] = proxyProviders;
 
-const proxyTypes = [
-  {
-    name: 'IPv4',
-    price: 'Самый доступный вариант',
-    text: 'Мой базовый выбор для Gmail, Twitter, Discord, Telegram, Яндекса, нейронок, антидетектов, парсинга и автоматизации. Не нужно сразу переплачивать за более дорогой тип.',
-  },
-  {
-    name: 'ISP',
-    price: 'Дороже обычных IPv4',
-    text: 'Смотрю в их сторону для рекламных кабинетов, браузерных нод, мультиакков бирж и других задач, где обычные серверные IP уже принимаются хуже.',
-  },
-  {
-    name: 'Residential',
-    price: 'Обычно оплата за трафик',
-    text: 'Выглядят как домашний интернет. Удобно, когда нужен высокий траст, а профиль не держится открытым постоянно и не расходует много гигабайт.',
-  },
-  {
-    name: 'Mobile',
-    price: 'Самый дорогой тип',
-    text: 'Мобильный источник IP и частая смена адресов. Хороший вариант для капризных площадок, но профили чаще приходится запускать по очереди.',
-  },
-];
 
-const ArticleScreenshot = ({ src, alt, caption, className = '' }: { src: string; alt: string; caption: string; className?: string }) => (
+const ArticleScreenshot = ({ src, alt, caption, width, height, className = '' }: { src: string; alt: string; caption: string; width?: number; height?: number; className?: string }) => (
   <figure className={`my-8 min-w-0 ${className}`}>
-    <a
-      href={src}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`Открыть изображение: ${alt}`}
+    <ArticleImageLink
+      src={src} alt={alt} caption={caption}
       className="block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] transition-colors hover:border-brand-purple/40"
     >
-      <img src={src} alt={alt} loading="lazy" decoding="async" className="block h-auto w-full" />
-    </a>
+      <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" className="block h-auto w-full" />
+    </ArticleImageLink>
     <figcaption className="mt-3 text-xs font-semibold leading-5 text-white/40">{caption}</figcaption>
   </figure>
 );
@@ -174,6 +76,30 @@ type ArticleTheme = 'dark' | 'light';
 const ARTICLE_THEME_KEY = 'hopscup-article-theme';
 
 export const ProxyGuideArticle = () => {
+  const [copiedProvider, setCopiedProvider] = useState<string | null>(null);
+  const copyPromo = async (provider: Provider, placement = 'article_card') => {
+    if (!provider.promoCode) return;
+    try {
+      await navigator.clipboard.writeText(provider.promoCode);
+    } catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = provider.promoCode;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    }
+    setCopiedProvider(provider.id);
+    trackAnalyticsEvent('promo_copy', {
+      service_name: provider.name, service_id: provider.id, category: 'Proxy',
+      placement, language: 'ru', promo_code: provider.promoCode,
+      promo_discount: provider.promoDiscount,
+    });
+    window.setTimeout(() => setCopiedProvider(current => current === provider.id ? null : current), 1800);
+  };
   const [theme, setTheme] = useState<ArticleTheme>(() => {
     if (typeof window === 'undefined') return 'dark';
     return window.localStorage.getItem(ARTICLE_THEME_KEY) === 'light' ? 'light' : 'dark';
@@ -229,10 +155,10 @@ export const ProxyGuideArticle = () => {
           Личный опыт Hopscup
         </div>
         <h1 className="mx-auto max-w-4xl font-display text-4xl font-black leading-[1.08] tracking-tight text-white md:text-6xl">
-          Лучшие прокси-сервисы для аккаунтов
+          {proxyGuideMeta.heading}
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-white/55 md:text-lg">
-          Семь сервисов, которыми я пользуюсь сам. Разбираемся, когда хватит обычного IPv4, а когда есть смысл брать ISP, Residential или Mobile.
+          {proxyCopy.intro}
         </p>
         <div className="mx-auto mt-8 flex max-w-2xl flex-wrap justify-center gap-3 text-xs font-bold text-white/45">
           <span className="rounded-lg border border-white/10 bg-white/[0.035] px-3 py-2">IPv4</span>
@@ -240,6 +166,9 @@ export const ProxyGuideArticle = () => {
           <span className="rounded-lg border border-white/10 bg-white/[0.035] px-3 py-2">Residential</span>
           <span className="rounded-lg border border-white/10 bg-white/[0.035] px-3 py-2">Mobile</span>
         </div>
+        <ArticleImageLink src={proxyGuideMeta.cover.src} alt={proxyGuideMeta.cover.alt} className="mx-auto mt-8 block max-w-3xl overflow-hidden rounded-2xl border border-white/10">
+          <img src={proxyGuideMeta.cover.src} alt={proxyGuideMeta.cover.alt} width={proxyGuideMeta.cover.width} height={proxyGuideMeta.cover.height} fetchPriority="high" decoding="async" className="block h-auto w-full" />
+        </ArticleImageLink>
       </section>
 
       <div className="mx-auto grid max-w-6xl gap-8 px-5 md:px-8 lg:grid-cols-[220px_minmax(0,760px)] lg:justify-center">
@@ -251,8 +180,9 @@ export const ProxyGuideArticle = () => {
               ['#types', 'Типы прокси'],
               ['#services', 'Сервисы'],
               ['#setup', 'Как подключить'],
+              ['#cost', 'Что выгоднее'],
               ['#check', 'Как проверить IP'],
-              ['#faq', 'Вопросы'],
+              ['#start', 'Коротко: что делать'],
             ].map(([href, label]) => (
               <a key={href} href={href} className="block rounded-lg px-2 py-2 text-xs font-semibold text-white/45 transition-colors hover:bg-white/5 hover:text-brand-purple">
                 {label}
@@ -264,18 +194,10 @@ export const ProxyGuideArticle = () => {
         <article className="article-card min-w-0 rounded-[1.5rem] border border-white/[0.08] bg-[#0d0d0d]/90 px-5 py-7 shadow-2xl backdrop-blur-xl md:px-9 md:py-10">
           <section id="korotko" className="scroll-mt-28">
             <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Если совсем коротко</p>
-            <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Сначала попробуйте обычный IPv4</h2>
+            <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">{proxyCopy.shortHeading}</h2>
             <p className="mt-4 text-sm font-medium leading-7 text-white/65 md:text-base">
-              Для большинства обычных задач я начинаю с IPv4. Gmail, Twitter, Discord, Telegram, Яндекс, нейронки, антидетекты, парсинг и автоматизация обычно не требуют самого дорогого источника IP. Если конкретная площадка начинает принимать такие адреса хуже, тогда уже смотрю ISP, Residential или Mobile.
+              {proxyCopy.short}
             </p>
-            <div className="mt-6 rounded-2xl border border-brand-purple/20 bg-brand-purple/[0.07] p-5">
-              <div className="flex items-start gap-3">
-                <Info className="mt-0.5 h-5 w-5 shrink-0 text-brand-purple" />
-                <p className="text-sm font-semibold leading-6 text-white/65">
-                  Количество аккаунтов само по себе не определяет тип прокси. Можно работать и с сотнями IPv4, если площадка их нормально принимает и у вас есть понятная схема распределения IP.
-                </p>
-              </div>
-            </div>
           </section>
 
           <section className="mt-12 border-t border-white/[0.08] pt-10">
@@ -336,18 +258,20 @@ export const ProxyGuideArticle = () => {
                     </div>
                     <span className="text-[10px] font-black uppercase tracking-wider text-white/30">{type.price}</span>
                   </div>
-                  <p className="mt-4 text-sm font-medium leading-6 text-white/55">{type.text}</p>
+                  <p className="mt-4 text-sm font-medium leading-6 text-white/55">
+                    {type.href ? <>{type.text.split(type.linkText)[0]}<a href={type.href} className="font-bold text-brand-purple underline underline-offset-4">{type.linkText}</a>{type.text.split(type.linkText)[1]}</> : type.text}
+                  </p>
                 </div>
               ))}
             </div>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
                 <h3 className="flex items-center gap-2 text-sm font-bold text-white"><Layers className="h-4 w-4 text-brand-purple" /> SOCKS5 или HTTP</h3>
-                <p className="mt-3 text-sm leading-6 text-white/50">Если не знаете, что выбрать для антидетекта или рабочего профиля, начинайте с SOCKS5. Это более универсальный вариант.</p>
+                <p className="mt-3 text-sm leading-6 text-white/50">{proxyCopy.socks}</p>
               </div>
               <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
                 <h3 className="flex items-center gap-2 text-sm font-bold text-white"><Zap className="h-4 w-4 text-brand-purple" /> Что насчет IPv6</h3>
-                <p className="mt-3 text-sm leading-6 text-white/50">Они дешевые, но некоторые сайты и программы до сих пор работают с ними нестабильно. Если не уверены, берите IPv4.</p>
+                <p className="mt-3 text-sm leading-6 text-white/50">{proxyCopy.ipv6}</p>
               </div>
             </div>
           </section>
@@ -356,7 +280,7 @@ export const ProxyGuideArticle = () => {
             <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Мои варианты</p>
             <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Семь сервисов, которыми я пользуюсь</h2>
             <p className="mt-4 text-sm font-medium leading-7 text-white/55">
-              Здесь нет искусственного первого места. У каждого сервиса своя сильная сторона, поэтому я выбираю их под конкретную задачу.
+              {proxyCopy.services}
             </p>
             <div className="mt-7 space-y-4">
               {providers.map((provider, index) => (
@@ -372,6 +296,15 @@ export const ProxyGuideArticle = () => {
                         <span className="rounded-lg border border-brand-purple/20 bg-brand-purple/[0.08] px-3 py-2 text-[10px] font-black uppercase tracking-wider text-brand-purple">{provider.choice}</span>
                       </div>
                       <p className="mt-4 text-sm font-medium leading-6 text-white/57">{provider.note}</p>
+                      {provider.promoCode && (
+                        <button type="button" onClick={() => void copyPromo(provider)} aria-label={`Скопировать промокод ${provider.name}`}
+                          className="mt-4 inline-flex min-h-11 max-w-full items-center gap-3 rounded-xl border border-brand-purple/30 bg-brand-purple/10 px-4 py-3 text-sm font-bold text-brand-purple transition-colors hover:bg-brand-purple/20">
+                          {copiedProvider === provider.id ? <Check className="h-4 w-4 shrink-0" /> : <Copy className="h-4 w-4 shrink-0" />}
+                          <span>{provider.promoCode}</span>
+                          {provider.promoDiscount && <span>{provider.promoDiscount}</span>}
+                          <span className="sr-only" aria-live="polite">{copiedProvider === provider.id ? 'Скопировано' : ''}</span>
+                        </button>
+                      )}
                       <div className="mt-5 flex flex-col gap-4 border-t border-white/[0.07] pt-5 sm:flex-row sm:items-center sm:justify-between">
                         <span className="text-xs font-semibold text-white/35">{provider.types}</span>
                         <OutboundButton provider={provider} />
@@ -400,26 +333,40 @@ export const ProxyGuideArticle = () => {
               alt="Калькулятор стоимости выделенных IPv4 в Proxyline"
               caption="Proxyline: расчет 50 выделенных IPv4 на 30 дней."
             />
+            <p className="mt-4 text-sm font-medium leading-7 text-white/60">
+              {proxyCatalogueCta.map((part, index) => part.href
+                ? <a key={index} href={part.href} className="font-bold text-brand-purple underline underline-offset-4">{part.text}</a>
+                : <span key={index}>{part.text}</span>)}
+            </p>
           </section>
 
           <section id="setup" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
             <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">После покупки</p>
             <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Как подключить прокси</h2>
             <p className="mt-4 text-sm font-medium leading-7 text-white/60">
-              Обычно сервис выдает IP, порт, логин и пароль. В антидетекте выбираете SOCKS5, вставляете данные в нужные поля и запускаете проверку. Если проверка прошла, сохраняете профиль и работаете.
+              {proxySetupContent.map((part, index) => part.href
+                ? <a key={index} href={part.href} className="font-bold text-brand-purple underline underline-offset-4">{part.text}</a>
+                : <span key={index}>{part.text}</span>)}
             </p>
             <ArticleScreenshot
-              src="/article/proxy/proxy6-issued-proxy.png"
-              alt="Выдача купленного IPv4 в кабинете Proxy6"
-              caption="Так выглядит выдача купленного IPv4 в Proxy6. Реальные данные скрыты."
+              src="/article/proxy/proxyshard-issued-proxy.webp"
+              width={574}
+              height={220}
+              alt="Выдача купленного IPv4 в кабинете ProxyShard"
+              caption="ProxyShard: формат IP:порт:логин:пароль. Чувствительные значения частично скрыты."
             />
+            <p className="text-sm font-medium leading-7 text-white/60">
+              {proxyCopy.example}
+            </p>
             <ArticleScreenshot
-              src="/article/proxy/adspower-socks5-test.png"
+              src="/article/proxy/adspower-socks5-test-cropped.webp"
+              width={710}
+              height={402}
               alt="Настройка SOCKS5 и успешная проверка соединения в AdsPower"
               caption="SOCKS5 добавлен в AdsPower, проверка соединения пройдена."
             />
             <p className="text-sm font-medium leading-7 text-white/60">
-              С мобильными прокси логика отличается. Обычно вы подключаете прокси один раз, а новый IP получаете кнопкой в кабинете сервиса. После смены адреса обновляете или перезапускаете профиль.
+              {proxyCopy.mobileSetup}
             </p>
             <a href="/proxy-vpn/luchshie-mobilnye-proksi" className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-brand-purple transition-colors hover:text-white">
               Сравнить мобильные прокси <ArrowRight className="h-4 w-4" />
@@ -440,17 +387,47 @@ export const ProxyGuideArticle = () => {
             </div>
           </section>
 
+          <section id="cost" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
+            <h2 className="font-display text-2xl font-black text-white md:text-3xl">{proxyComparison.heading}</h2>
+            <ArticleScreenshot {...proxyComparison.image} />
+            {proxyComparison.paragraphs.map((content, index) => (
+              <p key={index} className="mt-4 text-sm font-medium leading-7 text-white/65 md:text-base">
+                {content.map((part, partIndex) => {
+                  if (part.promoCode) return (
+                    <button key={partIndex} type="button" onClick={() => void copyPromo(proxyComparison.provider, 'article_compare')}
+                      aria-label="Скопировать промокод MobileProxy (сравнение)"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-brand-purple/30 bg-brand-purple/10 px-2 py-1 align-middle font-bold text-brand-purple transition-colors hover:bg-brand-purple/20">
+                      {copiedProvider === proxyComparison.provider.id ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                      {part.text}
+                    </button>
+                  );
+                  if (part.href) {
+                    const external = part.href.startsWith('https://');
+                    return <a key={partIndex} href={part.href}
+                      {...(external ? { target: '_blank', rel: getExternalLinkRel(part.href), onClick: () => trackAnalyticsEvent('service_click', {
+                        service_name: proxyComparison.provider.name, service_id: proxyComparison.provider.id,
+                        category: 'Proxy', destination: 'website', link_url: part.href, placement: 'article_compare',
+                        language: 'ru', promo_code: proxyComparison.provider.promoCode, promo_discount: proxyComparison.provider.promoDiscount,
+                      }) } : {})}
+                      className="font-bold text-brand-purple underline underline-offset-4">{part.text}</a>;
+                  }
+                  return part.strong ? <strong key={partIndex} className="font-bold text-white">{part.text}</strong> : <span key={partIndex}>{part.text}</span>;
+                })}
+              </p>
+            ))}
+          </section>
+
           <section id="check" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
-            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Не обязательный ритуал для каждого IPv4</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Если сомневаетесь в адресе</p>
             <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Как проверить IP</h2>
             <p className="mt-4 text-sm font-medium leading-7 text-white/60">
-              После покупки IP можно проверить через IPQualityScore или Scamalytics. Fraud Score до 10-20 обычно выглядит нормально, 20-30 еще терпимо для базовых задач, а высокий показатель уже повод проверить другой адрес или попросить замену.
+              {proxyCopy.check}
             </p>
             <div className="mt-5 rounded-2xl border border-brand-orange/20 bg-brand-orange/[0.06] p-5">
               <div className="flex items-start gap-3">
                 <Info className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange" />
                 <p className="text-sm font-semibold leading-6 text-white/60">
-                  IPv4 часто определяются как VPN или proxy просто потому, что они серверные. Это не делает их плохими. Обычные IPv4 я проверяю редко, если они нормально работают на нужной площадке.
+                  {proxyCopy.checkNote}
                 </p>
               </div>
             </div>
@@ -483,7 +460,7 @@ export const ProxyGuideArticle = () => {
               <Smartphone className="h-6 w-6 text-brand-purple" />
               <h2 className="mt-4 font-display text-xl font-black text-white md:text-2xl">Когда можно вообще обойтись без прокси</h2>
               <p className="mt-4 text-sm font-medium leading-7 text-white/60">
-                Если аккаунтов мало, иногда хватает обычной мобильной симки. Включаете режим самолета, выключаете его и получаете новый мобильный IP. Главное следить за гео и не пытаться одновременно держать много профилей на разных адресах.
+                {proxyCopy.phone}
               </p>
               <a href="/guides/mobile-ip-airplane-mode" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand-purple transition-colors hover:text-white">
                 Гайд по смене IP с телефона <ArrowRight className="h-4 w-4" />
@@ -491,44 +468,16 @@ export const ProxyGuideArticle = () => {
             </div>
           </section>
 
-          <section id="faq" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
-            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Коротко по частым вопросам</p>
-            <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Вопросы перед покупкой</h2>
-            <div className="mt-6 space-y-3">
-              {[
-                ['Один профиль, один IP?', 'Для постоянных рабочих профилей это самая понятная схема. Но конкретная схема зависит от площадки и того, как вы используете аккаунты.'],
-                ['Нужны ли сразу Residential или Mobile?', 'Нет. Начинайте с IPv4, если нет конкретной причины брать более дорогой источник IP.'],
-                ['Можно ли брать shared-прокси?', 'Для серьезной работы я не советую. Один адрес могли продать нескольким людям, а его история вам неизвестна.'],
-                ['Что выбрать: SOCKS5 или HTTP?', 'Если не уверены, выбирайте SOCKS5. Для антидетектов и рабочих профилей это более универсальный вариант.'],
-                ['Какой сервис самый лучший?', 'Единственного победителя нет. Для недорогих IPv4 я смотрю Proxyline, Proxy6 и ProxyWing, для качества и большого выбора Proxy-Seller, для мобильных прокси MobileProxy.'],
-              ].map(([question, answer]) => (
-                <details key={question} className="group rounded-xl border border-white/[0.08] bg-white/[0.025]">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-bold text-white/75 [&::-webkit-details-marker]:hidden">
-                    {question}
-                    <Check className="h-4 w-4 shrink-0 text-brand-purple/60 transition-transform group-open:rotate-[-45deg]" />
-                  </summary>
-                  <p className="border-t border-white/[0.07] px-5 py-4 text-sm font-medium leading-6 text-white/50">{answer}</p>
-                </details>
-              ))}
-            </div>
-          </section>
-
-          <section className="mt-12 rounded-2xl border border-white/[0.09] bg-white/[0.035] p-6 text-center md:p-8">
-            <Globe className="mx-auto h-6 w-6 text-brand-purple" />
-            <h2 className="mt-4 font-display text-2xl font-black text-white">Не знаете, с чего начать?</h2>
-            <p className="mx-auto mt-3 max-w-lg text-sm font-medium leading-6 text-white/50">
-              Для обычных задач начните с IPv4 в ProxyWing, Proxyline или Proxy6. Если нужен более высокий траст, смотрите Proxy-Seller или MobileProxy под конкретную задачу.
-            </p>
-            <a href="/proxy-vpn" className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-brand-purple px-6 py-3 text-xs font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-brand-purple">
-              Сравнить все сервисы <Search className="h-4 w-4" />
-            </a>
-          </section>
-          <RelatedGuides items={[
-            { href: '/proxy-vpn/luchshie-mobilnye-proksi', label: 'Mobile', title: 'Лучшие мобильные прокси', description: 'Сравнение MobileProxy, ProxyWing и Proxy-Seller без переплаты за ненужный тип.' },
-            { href: '/antidetect', label: 'Антидетекты', title: 'Выбрать антидетект-браузер', description: 'Сравнение базовых, усиленных и мобильных решений.' },
-            { href: '/guides/account-farm', label: 'Аккаунты', title: 'Как собрать ферму аккаунтов', description: 'Аккаунты, номера, прокси, антидетекты и сервисы активности.' },
-            { href: '/guides/mobile-ip-airplane-mode', label: 'Мобильный IP', title: 'Смена IP режимом самолета', description: 'Вариант для небольшого числа профилей без покупки отдельного прокси.' },
-          ]} />
+          <ArticleChecklist {...proxyChecklist} onExternalClick={href => {
+            const provider = proxyProviders.find(provider => provider.url === href);
+            if (!provider) return;
+            trackAnalyticsEvent('service_click', {
+              service_name: provider.name, service_id: provider.id,
+              category: 'Proxy', destination: 'website', link_url: href, placement: 'article_summary',
+              language: 'ru', promo_code: provider.promoCode, promo_discount: provider.promoDiscount,
+            });
+          }} />
+          <ArticleSocialFooter variant="compact" />
         </article>
       </div>
     </main>

@@ -14,6 +14,8 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
 import { RelatedGuides } from './RelatedGuides';
+import { ArticleSocialFooter } from './ArticleSocialFooter';
+import { ArticleImageLink } from './ArticleImageLink';
 
 type ArticleTheme = 'dark' | 'light';
 
@@ -21,15 +23,12 @@ const ARTICLE_THEME_KEY = 'hopscup-article-theme';
 
 const ArticleImage = ({ src, alt, caption, compact = false }: { src: string; alt: string; caption: string; compact?: boolean }) => (
   <figure className={`my-8 ${compact ? 'mx-auto max-w-md' : ''}`}>
-    <a
-      href={src}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`Открыть изображение: ${alt}`}
+    <ArticleImageLink
+      src={src} alt={alt} caption={caption}
       className="block overflow-hidden rounded-2xl border border-white/10 bg-white transition-colors hover:border-brand-purple/40"
     >
       <img src={src} alt={alt} loading="lazy" decoding="async" className="block h-auto w-full" />
-    </a>
+    </ArticleImageLink>
     <figcaption className="mt-3 text-xs font-semibold leading-5 text-white/40">{caption}</figcaption>
   </figure>
 );
@@ -278,6 +277,7 @@ export const MobileIpGuideArticle = () => {
               { href: '/guides/account-farm', label: 'Аккаунты', title: 'Ферма аккаунтов', description: 'Полная схема с аккаунтами, номерами, прокси и антидетектами.' },
               { href: '/antidetect', label: 'Антидетекты', title: 'Мобильные и ПК-антидетекты', description: 'Сервисы для управления профилями с телефона и компьютера.' },
             ]} />
+            <ArticleSocialFooter />
           </article>
         </div>
       </main>

@@ -1,5 +1,6 @@
 import { guidePages } from './guidePages.js';
 import { articleFallbackByRoute } from './articleFallbackContent.js';
+import { proxyGuideMeta } from './proxyGuideContent.js';
 
 // Existing React card titles, shared with the no-JavaScript catalogue.
 const cardTitles = {
@@ -47,6 +48,7 @@ const cardTitles = {
 export const proxyGuideCatalogEntries = [
   {
     id: 'guide-best-proxies',
+    cover: proxyGuideMeta.cover,
     route: '/proxy-vpn/luchshie-proksi',
     title: { ru: 'Лучшие прокси-сервисы для аккаунтов: что выбрать' },
     description: { ru: 'Разбираем IPv4, ISP, Residential и Mobile-прокси: чем отличаются и какой тип брать под свою задачу.' },

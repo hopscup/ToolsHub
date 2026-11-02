@@ -18,6 +18,7 @@ import { ForeignCardGuideArticle } from './components/ForeignCardGuideArticle';
 import { DiscordTokenGuideArticle } from './components/DiscordTokenGuideArticle';
 import { ClaudeGuideArticle } from './components/ClaudeGuideArticle';
 import { claudeGuideArticle } from './data/claudeGuideArticle.js';
+import { proxyGuideMeta } from './data/proxyGuideContent.js';
 import { RecommendedBadge } from './components/RecommendedBadge';
 import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
@@ -5487,7 +5488,7 @@ export default function App() {
     const canonicalUrl = `${SITE_URL}${canonicalPath}`;
     const runtimeSeo = seoLanding || isHomeRoute ? undefined : RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
     const title = proxyGuideArticle
-      ? 'Лучшие прокси-сервисы для аккаунтов: что выбрать в 2026 году | Hopscup Tools'
+      ? proxyGuideMeta.title
       : mobileProxyComparisonArticle
         ? 'Лучшие мобильные прокси 2026: сравнение сервисов | Hopscup Tools'
       : guideArticle
@@ -5499,7 +5500,7 @@ export default function App() {
         || getLocalizedValue(sectionSeo.title, lang)
         || sectionSeo.title.en;
     const description = proxyGuideArticle
-      ? 'Сравнение семи прокси-сервисов, которыми пользуется Hopscup. IPv4, ISP, Residential и Mobile для аккаунтов, антидетектов, рекламы, парсинга и автоматизации.'
+      ? proxyGuideMeta.description
       : mobileProxyComparisonArticle
         ? 'Сравнение MobileProxy, ProxyWing и Proxy-Seller: GEO, ротация IP, трафик, цены, ограничения и промокоды на мобильные прокси.'
       : guideArticle
@@ -5538,15 +5539,16 @@ export default function App() {
     setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
     setMeta('meta[property="og:type"]', 'property', 'og:type', proxyArticle || guideArticle ? 'article' : 'website');
     setMeta('meta[property="og:locale"]', 'property', 'og:locale', russianOnlyArticle ? 'ru_RU' : currentLanguageOption?.ogLocale || 'en_US');
-    setMeta('meta[property="og:image"]', 'property', 'og:image', `${SITE_URL}/logo.png`);
-    setMeta('meta[property="og:image:width"]', 'property', 'og:image:width', '400');
-    setMeta('meta[property="og:image:height"]', 'property', 'og:image:height', '400');
-    setMeta('meta[property="og:image:alt"]', 'property', 'og:image:alt', "Hopscup's Tools Hub");
-    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary');
+    const articleCover = proxyGuideArticle ? proxyGuideMeta.cover : guideArticle?.cover;
+    setMeta('meta[property="og:image"]', 'property', 'og:image', `${SITE_URL}${articleCover?.src || '/logo.png'}`);
+    setMeta('meta[property="og:image:width"]', 'property', 'og:image:width', String(articleCover?.width || 400));
+    setMeta('meta[property="og:image:height"]', 'property', 'og:image:height', String(articleCover?.height || 400));
+    setMeta('meta[property="og:image:alt"]', 'property', 'og:image:alt', articleCover?.alt || "Hopscup's Tools Hub");
+    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', articleCover ? 'summary_large_image' : 'summary');
     setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
     setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
-    setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', `${SITE_URL}/logo.png`);
-    setMeta('meta[name="twitter:image:alt"]', 'name', 'twitter:image:alt', "Hopscup's Tools Hub");
+    setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', `${SITE_URL}${articleCover?.src || '/logo.png'}`);
+    setMeta('meta[name="twitter:image:alt"]', 'name', 'twitter:image:alt', articleCover?.alt || "Hopscup's Tools Hub");
 
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {
@@ -5618,6 +5620,7 @@ export default function App() {
           '@context': 'https://schema.org',
           '@type': 'Article',
           headline: title,
+          ...(proxyGuideArticle ? { datePublished: proxyGuideMeta.datePublished, dateModified: proxyGuideMeta.dateModified } : {}),
           description,
           url: canonicalUrl,
           inLanguage: russianOnlyArticle ? 'ru-RU' : currentLanguageOption?.inLanguage || 'en',
@@ -6607,11 +6610,10 @@ export default function App() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
                     onClick={() => trackGuideOpen('proxy_services_article')}
-                    className="group relative mb-4 flex min-h-[156px] w-full items-center gap-5 overflow-hidden rounded-2xl border border-brand-purple/30 bg-brand-purple/[0.08] px-5 py-6 shadow-[0_18px_70px_rgba(129,28,254,0.12)] backdrop-blur-xl transition-all duration-300 hover:border-brand-purple/60 hover:bg-brand-purple/[0.12] md:px-7"
+                    className="group relative mb-4 flex min-h-[156px] w-full flex-col items-start gap-5 overflow-hidden rounded-2xl border border-brand-purple/30 bg-brand-purple/[0.08] px-5 py-6 shadow-[0_18px_70px_rgba(129,28,254,0.12)] backdrop-blur-xl transition-all duration-300 hover:border-brand-purple/60 hover:bg-brand-purple/[0.12] md:flex-row md:items-center md:px-7"
                   >
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-brand-purple/35 bg-brand-purple/10 transition-colors group-hover:bg-brand-purple md:h-20 md:w-20">
-                      <ShieldCheck className="h-7 w-7 text-brand-purple transition-colors group-hover:text-white md:h-9 md:w-9" />
-                    </div>
+                    <img src={proxyGuideMeta.cover.previewSrc} alt={proxyGuideMeta.cover.alt} width={proxyGuideMeta.cover.width} height={proxyGuideMeta.cover.height}
+                      loading="lazy" decoding="async" className="block h-auto w-full shrink-0 rounded-lg object-contain md:w-60" />
                     <div className="min-w-0 flex-1">
                       <div className="mb-2 flex items-center gap-3 text-[10px] font-black uppercase text-brand-purple">
                         <span>Большой гайд</span>
