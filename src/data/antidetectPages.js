@@ -1085,4 +1085,13 @@ export const antidetectPages = [
       },
     },
   },
-];
+].map(page => {
+  if (![basicConsiderations, advancedConsiderations].includes(page.editorial.considerations)) return page;
+  return { ...page, editorial: { ...page.editorial,
+    considerations: { ru: [], en: [], es: [], zh: [], ko: [] },
+    setupGuide: {
+      href: '/guides/kak-nastroit-antidetect-brauzer',
+      label: { ru: 'Как настроить профиль без утечек, разобрал в гайде', en: 'I covered profile setup without leaks in the guide' },
+    },
+  } };
+});

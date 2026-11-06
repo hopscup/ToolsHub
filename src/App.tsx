@@ -31,7 +31,8 @@ import { guidePages } from './data/guidePages.js';
 import { guideCatalogById } from './data/guideCatalog.js';
 import { recommendedOfferIds, recommendedOfferLabels } from './data/recommendedOffers.js';
 import { getExternalLinkRel } from './lib/externalLinks.js';
-import { legacyIndexedRoutes } from './data/legacyIndexedRoutes.js';
+import { compactSeoTitle, sectionSeoTitles, getServiceAlternatives, serviceGuideRoutes, serviceGuideLabels } from './data/servicePresentation.js';
+import { siteDateModified } from './data/buildDate.js';
 import { seoLandingPages } from './data/seoLandingPages.js';
 import { smsPages } from './data/smsPages.js';
 import { socialPages } from './data/socialPages.js';
@@ -318,6 +319,9 @@ interface Offer {
     minTopup?: string;
     paymentMethods?: Localized;
     rate?: Localized;
+    price?: Localized;
+    freeTrial?: Localized;
+    ipRotation?: Localized;
     supports?: Localized<string[]>;
     nuances?: Localized<string[]>;
     pros?: Localized<string[]>;
@@ -330,6 +334,7 @@ interface Offer {
     bestFor: Localized<string[]>;
     considerations: Localized<string[]>;
     verdict: Localized;
+    setupGuide?: { href: string; label: Localized };
   };
 }
 
@@ -441,7 +446,6 @@ const LANGUAGE_OPTIONS: { value: Language; label: string; name: string; inLangua
 
 const ACTIVE_LANGUAGE_OPTIONS = LANGUAGE_OPTIONS.filter(({ value }) => value === 'ru' || value === 'en');
 const isActiveLanguage = (language: Language) => language === 'ru' || language === 'en';
-const LEGACY_INDEXED_ROUTES = new Set(legacyIndexedRoutes);
 
 const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/';
 
@@ -2129,8 +2133,8 @@ const OFFERS: Offer[] = [
     slug: 'proxyshard',
     name: 'ProxyShard',
     description: { 
-      ru: 'Современный сервис с IPv4, ISP, Residential и Mobile-прокси. Хороший баланс между стоимостью, скоростью и стабильностью работы.',
-      en: 'Modern service with IPv4, ISP, Residential, and Mobile proxies. A good balance of price, speed, and stability.'
+      ru: 'Сервис от команды бесплатного антидетекта ShardX. SOCKS5 с UDP на всех типах прокси. Пополнение от 5$, оплата криптой или зарубежной картой.',
+      en: 'From the team behind the free ShardX antidetect browser. SOCKS5 with UDP on every proxy type. Top up from $5 with crypto or a foreign card.'
     },
     url: 'https://proxyshard.com?ref=hopscup',
     logoUrl: '/proxyshard.webp',
@@ -2247,8 +2251,8 @@ const OFFERS: Offer[] = [
     slug: 'proxywing',
     name: 'ProxyWing',
     description: {
-      ru: 'В ProxyWing есть обычные IPv4, ISP, Residential и Mobile-прокси. Я бы начинал с IPv4: их хватает для Gmail, Twitter, Discord, Telegram, антидетектов, парсинга и большинства обычных задач. Если конкретная площадка принимает их плохо, уже можно перейти на более дорогой тип и не менять сервис.',
-      en: 'ProxyWing is convenient because regular IPv4, ISP, Residential, and Mobile proxies are available in one dashboard. IPv4 covers most everyday account, antidetect, automation, and scraping tasks. If a platform checks the IP source more strictly, you can switch to ISP, Residential, or Mobile without changing providers.'
+      ru: 'С начала 2025 сижу на их ISP. Начинать советую с IPv4, а если площадка принимает их плохо, в том же кабинете есть ISP, Residential и Mobile. Оплата картой РФ.',
+      en: 'I have used their ISP proxies since early 2025. Start with IPv4; if a platform has trouble with it, ISP, Residential and Mobile are in the same dashboard. Russian cards accepted.'
     },
     url: 'https://dashboard.proxywing.com/billing/aff.php?aff=813',
     logoUrl: '/proxywing.webp',
@@ -2344,8 +2348,8 @@ const OFFERS: Offer[] = [
     slug: 'proxy-seller',
     name: 'Proxy-Seller',
     description: {
-      ru: 'Один из самых крупных сервисов с огромным выбором стран и типов прокси. Практически всегда можно подобрать подходящий вариант под любую задачу.',
-      en: 'One of the largest services with a huge selection of countries and proxy types. You can usually find a suitable option for almost any task.'
+      ru: 'Больше 220 стран и все основные типы, от IPv4 до Mobile. Беру, когда нужен большой выбор гео или Residential.',
+      en: 'Over 220 countries and all major types, from IPv4 to Mobile. I use it when I need more locations or Residential proxies.'
     },
     url: 'https://proxy-seller.com/?partner=RIPC5NDAEYRZPZ',
     logoUrl: '/proxy-seller.webp',
@@ -2463,14 +2467,17 @@ const OFFERS: Offer[] = [
     slug: 'mobileproxy',
     name: 'MobileProxy',
     description: {
-      ru: 'Сервис мобильных прокси с возможностью смены IP. Отличный выбор для задач, где важен максимально высокий уровень доверия со стороны площадок.',
-      en: 'Mobile proxy service with IP rotation. A great choice for tasks where the highest possible platform trust is important.'
+      ru: 'Пользуюсь больше трёх лет. Трафик безлимитный, IP меняется по кнопке раз в 10 секунд, гео можно выбрать вплоть до города. Есть бесплатный тест на 3 часа.',
+      en: 'I have used it for over three years. Unlimited traffic, IP changes by button every 10 seconds, and locations down to the city. Free 3-hour test.'
     },
     url: 'https://mobileproxy.rent/user.html?free&p=105422',
     logoUrl: '/mobileproxy.webp',
     promoCode: 'hopscup',
     promoDiscount: { ru: '−20%', en: '−20%', es: '−20%', zh: '−20%', ko: '−20%' },
     details: {
+      price: { ru: 'от 30-50$ в месяц, безлимит', en: 'from $30-50/month, unlimited traffic' },
+      freeTrial: { ru: '3 часа', en: '3 hours' },
+      ipRotation: { ru: 'по кнопке раз в 10 секунд, гео раз в 10 минут', en: 'IP change by button every 10 seconds, location change every 10 minutes' },
       geo: { ru: '20+ стран', en: '20+ countries', es: 'Más de 20 países', zh: '20 多个国家', ko: '20개 이상의 국가' },
       types: { ru: 'Mobile', en: 'Mobile', es: 'Mobile', zh: 'Mobile', ko: 'Mobile' },
       paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto', es: 'Visa/Mastercard, SBP/Mir, cripto', zh: 'Visa/Mastercard、SBP/Mir、加密货币', ko: 'Visa/Mastercard, SBP/Mir, 암호화폐' }
@@ -5469,8 +5476,7 @@ export default function App() {
     const russianOnlyArticle = proxyArticle || Boolean(guideArticle);
     const untranslatedArticle = russianOnlyArticle && lang !== 'ru';
     const retiredLanguage = !isActiveLanguage(lang);
-    const preservedLegacyPage = retiredLanguage && LEGACY_INDEXED_ROUTES.has(normalizePath(window.location.pathname));
-    const canonicalLanguage: Language = retiredLanguage && !preservedLegacyPage ? 'en' : lang;
+    const canonicalLanguage: Language = retiredLanguage ? 'en' : lang;
     const seoLanding = selectedOffer ? undefined : getSeoLandingFromPath();
     const sectionSeo = seoLanding || SECTION_SEO[activeCategory];
     const offerSeo = selectedOffer?.slug ? selectedOffer.editorial : undefined;
@@ -5490,7 +5496,7 @@ export default function App() {
           : getLocalizedRoute(activeCategory, canonicalLanguage);
     const canonicalUrl = `${SITE_URL}${canonicalPath}`;
     const runtimeSeo = seoLanding || isHomeRoute ? undefined : RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
-    const title = proxyGuideArticle
+    const rawTitle = proxyGuideArticle
       ? proxyGuideMeta.title
       : mobileProxyComparisonArticle
         ? 'Лучшие мобильные прокси 2026: сравнение сервисов | Hopscup Tools'
@@ -5502,6 +5508,9 @@ export default function App() {
         || runtimeSeo?.title
         || getLocalizedValue(sectionSeo.title, lang)
         || sectionSeo.title.en;
+    const currentRoute = stripLanguagePrefix(window.location.pathname);
+    const sectionTitle = !selectedOffer && !seoLanding && isActiveLanguage(lang) ? sectionSeoTitles[currentRoute] : undefined;
+    const title = compactSeoTitle(sectionTitle ? l(sectionTitle) + ' | Hopscup' : rawTitle, currentRoute, lang);
     const description = proxyGuideArticle
       ? proxyGuideMeta.description
       : mobileProxyComparisonArticle
@@ -5533,7 +5542,7 @@ export default function App() {
       'meta[name="robots"]',
       'name',
       'robots',
-      guideArticle?.indexable === false || untranslatedArticle || (retiredLanguage && !preservedLegacyPage)
+      guideArticle?.indexable === false || untranslatedArticle || retiredLanguage
         ? 'noindex, follow'
         : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large',
     );
@@ -5645,6 +5654,7 @@ export default function App() {
       ? {
           '@context': 'https://schema.org',
           '@type': 'WebPage',
+          dateModified: siteDateModified,
           name: title,
           description,
           url: canonicalUrl,
@@ -5665,6 +5675,7 @@ export default function App() {
       : {
           '@context': 'https://schema.org',
           '@type': 'CollectionPage',
+          dateModified: siteDateModified,
           name: title,
           description,
           url: canonicalUrl,
@@ -6193,6 +6204,7 @@ export default function App() {
     !['prosto-exchange', 'antarctic-exchange', 'qr2pay-exchange', 'qr2pay-card'].includes(selectedOffer?.id || '')
       || !lList(selectedOffer?.details?.nuances).includes(item),
   );
+  const selectedAlternatives = selectedOffer && selectedOffer.category !== 'Guides' ? getServiceAlternatives(selectedOffer, OFFERS) as Offer[] : [];
 
   const isProxyGuideArticle = isProxyGuideArticlePath();
   const isMobileProxyComparisonArticle = isMobileProxyComparisonArticlePath();
@@ -8750,7 +8762,7 @@ export default function App() {
                     </div>
                   )}
 
-                  {(selectedOffer.mobileDetails || selectedOffer.freeProfiles || selectedOffer.tariffStartPrice || selectedOffer.profiles100Price || selectedOffer.details?.rate || selectedOffer.details?.geo || selectedOffer.details?.types || selectedOffer.platforms?.length || selectedOffer.details?.paymentMethods) && (
+                  {(selectedOffer.mobileDetails || selectedOffer.freeProfiles || selectedOffer.tariffStartPrice || selectedOffer.profiles100Price || selectedOffer.details?.price || selectedOffer.details?.freeTrial || selectedOffer.details?.ipRotation || selectedOffer.details?.rate || selectedOffer.details?.geo || selectedOffer.details?.types || selectedOffer.platforms?.length || selectedOffer.details?.paymentMethods) && (
                     <div
                       className={
                         selectedOffer.category === 'Proxy'
@@ -8836,6 +8848,19 @@ export default function App() {
                           </div>
                         </div>
                       )}
+                      {[
+                        { key: 'price', Icon: CreditCard, label: lang === 'ru' ? 'Цена' : 'Price', value: l(selectedOffer.details?.price) },
+                        { key: 'freeTrial', Icon: Clock, label: lang === 'ru' ? 'Бесплатный тест' : 'Free test', value: l(selectedOffer.details?.freeTrial) },
+                        { key: 'ipRotation', Icon: ArrowLeftRight, label: lang === 'ru' ? 'Смена IP' : 'IP rotation', value: l(selectedOffer.details?.ipRotation) },
+                      ].filter(row => row.value).map(({ key, Icon, label, value }) => (
+                        <div key={key} className="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.03] p-4">
+                          <div className="rounded-lg bg-brand-purple/10 p-2 text-brand-purple"><Icon className="h-4 w-4" /></div>
+                          <div className="min-w-0">
+                            <h4 className="mb-1 text-[9px] font-black uppercase tracking-widest text-white/30">{label}</h4>
+                            <p className="text-lg font-bold text-white">{value}</p>
+                          </div>
+                        </div>
+                      ))}
                       {selectedOffer.details?.rate && (
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center shrink-0">
@@ -8939,6 +8964,10 @@ export default function App() {
                         </ul>
                       </section>}
 
+                      {selectedOffer.editorial.setupGuide && <p className="text-sm leading-relaxed text-white/70">
+                        <a href={`${LANGUAGE_PREFIXES[lang]}${selectedOffer.editorial.setupGuide.href}`} className="text-brand-purple hover:underline">{l(selectedOffer.editorial.setupGuide.label)}</a>
+                      </p>}
+
                       {selectedOffer.id === 'ant-shardx' && (
                         <a
                           href={PROXY_ANTIDETECT_VIDEO_URL}
@@ -8962,6 +8991,24 @@ export default function App() {
                       </section>}
                     </div>
                   )}
+                  {selectedAlternatives.length > 0 && <section data-service-alternatives className="min-w-0 space-y-4">
+                    <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-brand-purple">{lang === 'ru' ? 'Альтернативы' : 'Alternatives'}</h3>
+                    <div className="grid min-w-0 grid-cols-1 gap-3">
+                      {selectedAlternatives.map(offer => <a key={offer.id} href={getLocalizedOfferRoute(offer, lang)} onClick={event => {
+                        if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+                          event.preventDefault();
+                          handleOfferOpen(offer);
+                          event.currentTarget.closest('.overflow-y-auto')?.scrollTo({ top: 0 });
+                        }
+                      }} className="min-w-0 rounded-lg border border-white/[0.07] bg-white/[0.03] px-4 py-3">
+                        <span className="block text-sm font-bold text-white">{offerTitle(offer)}</span>
+                        <span className="mt-1 block truncate text-xs text-white/55">{offerDescription(offer)}</span>
+                      </a>)}
+                    </div>
+                    <a className="inline-block text-sm font-bold text-brand-purple hover:underline" href={`${LANGUAGE_PREFIXES[lang]}${serviceGuideRoutes[selectedOffer.category] || '/guides'}`}>
+                      {l(serviceGuideLabels[selectedOffer.category]) || (lang === 'ru' ? 'Полезные гайды' : 'Useful guides')}
+                    </a>
+                  </section>}
                 </div>
 
                 <div className="flex shrink-0 flex-col gap-3 border-t border-white/10 bg-bg-dark/95 p-4 md:px-8 md:py-5">

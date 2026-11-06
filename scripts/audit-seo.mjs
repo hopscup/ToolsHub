@@ -8,6 +8,10 @@ import { guidePages } from '../src/data/guidePages.js';
 import { guideCatalog, indexableGuideCatalog } from '../src/data/guideCatalog.js';
 import { isAffiliateUrl } from '../src/lib/externalLinks.js';
 import { legacyIndexedRoutes } from '../src/data/legacyIndexedRoutes.js';
+import { loadOffers } from './load-offers.mjs';
+import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, plainSeoText } from '../src/data/servicePresentation.js';
+import { siteDateModified } from '../src/data/buildDate.js';
+import { isServiceMetaDescription } from '../src/data/servicePresentation.js';
 import { seoLandingPages } from '../src/data/seoLandingPages.js';
 import { smsPages } from '../src/data/smsPages.js';
 import { socialPages } from '../src/data/socialPages.js';
@@ -25,7 +29,8 @@ const languages = [
   { prefix: '/ko', htmlLang: 'ko-KR', hrefLang: 'ko-KR', indexable: false },
 ];
 const indexLanguages = languages.filter(({ indexable }) => indexable);
-const legacyIndexedRouteSet = new Set(legacyIndexedRoutes);
+const { OFFERS } = await loadOffers();
+const offerByRoute = new Map(OFFERS.filter(offer => offer.slug && offer.category !== 'Guides').map(offer => [`${serviceCategoryRoutes[offer.category]}/${offer.slug}`, offer]));
 const categoryRoutes = [
   '/proxy-vpn',
   '/antidetect',
@@ -78,7 +83,50 @@ const errors = [];
 const titles = new Set();
 const read = (file) => readFile(path.join(distDir, file), 'utf8');
 const matches = (html, expression) => [...html.matchAll(expression)];
-const escapeHtml = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const escapeHtml = (value) => plainSeoText(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+const checkServiceContent = (html, offer, language, route) => {
+  const code = language.hrefLang;
+  const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
+  const metaDescription = html.match(/<meta name="description" content="([^"]*)"/)?.[1];
+  const isMeta = text => isServiceMetaDescription(escapeHtml(text), metaDescription);
+  for (const fact of getServiceFacts(offer, code)) {
+    if (!content.includes(`<dd>${escapeHtml(fact.value)}</dd>`)) errors.push(`Missing service fact ${fact.key}: ${route}`);
+  }
+  const texts = [localizedServiceValue(offer.description, code), localizedServiceValue(offer.details?.descriptionDetailed, code), localizedServiceValue(offer.details?.targetAudience, code), localizedServiceValue(offer.editorial?.description, code), localizedServiceValue(offer.editorial?.verdict, code), ...(offer.promoCode ? [localizedServiceValue(offer.promoDiscount, code)] : []), ...getServiceTextGroups(offer, code).flatMap(group => group.items)].filter(Boolean);
+  for (const text of texts.filter(text => !isMeta(text))) if (!content.includes(escapeHtml(text))) errors.push(`Missing service text: ${route}: ${text}`);
+  for (const [, paragraph] of matches(content, /<p\b[^>]*>([\s\S]*?)<\/p>/g)) {
+    if (isServiceMetaDescription(paragraph.replace(/<[^>]*>/g, ''), metaDescription)) errors.push(`Service paragraph duplicates meta description: ${route}`);
+  }
+  if (offer.promoCode && !content.includes(`<code>${escapeHtml(offer.promoCode)}</code>`)) errors.push(`Missing service promo: ${route}`);
+  if (!content.includes(`href="${escapeHtml(offer.url)}"`)) errors.push(`Missing service CTA: ${route}`);
+  const alternatives = getServiceAlternatives(offer, OFFERS);
+  if (alternatives.length !== 3) errors.push(`Expected three alternatives for ${route}`);
+  for (const item of alternatives) if (!content.includes(`href="${language.prefix}${serviceCategoryRoutes[item.category]}/${item.slug}"`)) errors.push(`Missing alternative ${item.id}: ${route}`);
+  if (html.includes('data-landing-links')) errors.push(`Service page has redundant landing navigation: ${route}`);
+};
+
+const checkSectionSummaries = (html, language, route) => {
+  const landing = seoLandingPages.find(page => page.route === route);
+  const category = landing?.category || Object.keys(serviceCategoryRoutes).find(key => serviceCategoryRoutes[key] === route);
+  if (!category || category === 'Guides') return;
+  const offers = OFFERS.filter(offer => offer.category === category && (!landing?.subFilter || landing.subFilter === 'None' || offer.subCategory === landing.subFilter || offer.subCategories?.includes(landing.subFilter)));
+  const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
+  const summaries = matches(content, /<section data-service-summary="([^"]+)">([\s\S]*?)<\/section>/g);
+  if (summaries.length !== offers.length) errors.push(`Wrong service summary count: ${route}`);
+  for (const [, id, summary] of summaries) {
+    const offer = offers.find(item => item.id === id);
+    if (!offer) { errors.push(`Unexpected service summary: ${route}: ${id}`); continue; }
+    if (/data-service-(?:content|alternatives|group|cta)|href="https?:\/\//.test(summary)) errors.push(`Section summary contains full or external service content: ${route}: ${id}`);
+    const facts = summary.match(/<p data-summary-facts>([\s\S]*?)<\/p>/)?.[1] || '';
+    if (matches(facts, /<span>/g).length > 3) errors.push(`Too many service summary facts: ${route}: ${id}`);
+    if (!summary.includes(escapeHtml(localizedServiceValue(offer.description, language.hrefLang)))) errors.push(`Missing short service description: ${route}: ${id}`);
+    if (offer.slug) {
+      const href = `${language.prefix}${serviceCategoryRoutes[category]}/${offer.slug}`;
+      if (matches(summary, /<a\b/g).length !== 2 || !summary.includes(`<h2><a href="${href}">`)) errors.push(`Wrong internal service summary links: ${route}: ${id}`);
+    }
+  }
+};
 
 const checkArticleContent = (html, route, localizedRoute) => {
   const article = articleFallbackByRoute[route];
@@ -161,6 +209,8 @@ for (const language of languages) {
     checkFallback(html, localizedRoute);
     checkArticleContent(html, route, localizedRoute);
     checkLinkPolicy(html, localizedRoute);
+    if (language.indexable && offerByRoute.has(route)) checkServiceContent(html, offerByRoute.get(route), language, localizedRoute);
+    if (language.indexable) checkSectionSummaries(html, language, route);
     if (route === '/guides') checkGuideCatalog(html, language);
     if (['/account-shop', '/account-shop/darkstore'].includes(route) && /DarkStore/.test(html)) {
       errors.push(`Outdated visible DarkStore brand: ${localizedRoute}`);
@@ -175,20 +225,14 @@ for (const language of languages) {
     const minimumDescriptionLength = language.hrefLang.startsWith('zh') ? 20 : 50;
 
     if (!title) errors.push(`Missing title: ${localizedRoute}`);
+    if (language.indexable && /^\/(proxy-vpn|antidetect)(?:\/|$)/.test(route) && title?.length > 60) errors.push(`Proxy/antidetect title exceeds 60 characters: ${localizedRoute}`);
     const russianOnlyArticle = articleRoutes.has(route);
     const untranslatedArticle = russianOnlyArticle && language.hrefLang !== 'ru';
-    const preservedLegacyPage = legacyIndexedRouteSet.has(localizedRoute);
-    const indexablePage = (language.indexable || preservedLegacyPage) && !untranslatedArticle && !noIndexRoutes.has(route);
+    const indexablePage = language.indexable && !untranslatedArticle && !noIndexRoutes.has(route);
     if (title && indexablePage && titles.has(title)) errors.push(`Duplicate title: ${title}`);
     if (title && indexablePage) titles.add(title);
     if (!description || description.length < minimumDescriptionLength) errors.push(`Weak description: ${localizedRoute}`);
-    const expectedCanonical = russianOnlyArticle
-      ? `${siteUrl}${route}`
-      : language.indexable
-        ? `${siteUrl}${localizedRoute}`
-        : preservedLegacyPage
-          ? `${siteUrl}${localizedRoute}`
-        : `${siteUrl}/en${route}`;
+    const expectedCanonical = russianOnlyArticle ? `${siteUrl}${route}` : !language.indexable ? `${siteUrl}/en${route}` : `${siteUrl}${localizedRoute}`;
     if (canonical !== expectedCanonical) errors.push(`Wrong canonical: ${localizedRoute}`);
     const expectedLang = russianOnlyArticle ? languages[0].htmlLang : language.htmlLang;
     if (html.match(/<html lang="([^"]+)"/)?.[1] !== expectedLang) errors.push(`Wrong lang: ${localizedRoute}`);
@@ -197,7 +241,7 @@ for (const language of languages) {
     if (!indexablePage && robotsMeta !== 'noindex, follow') errors.push(`Page expected to be noindex: ${localizedRoute}`);
     if (indexablePage && !robotsMeta?.startsWith('index, follow')) errors.push(`Indexable page has wrong robots meta: ${localizedRoute}`);
     if (h1Count !== 1) errors.push(`Expected one H1: ${localizedRoute}`);
-    if (internalLinkCount < categoryRoutes.length) errors.push(`Missing crawlable navigation: ${localizedRoute}`);
+    if (internalLinkCount < 10) errors.push(`Missing crawlable navigation: ${localizedRoute}`);
 
     try {
       const structuredData = JSON.parse(structuredDataText || 'null');
@@ -206,6 +250,7 @@ for (const language of languages) {
       for (const requiredType of ['WebSite', 'Organization', pageType]) {
         if (!types.includes(requiredType)) errors.push(`Missing ${requiredType} schema: ${localizedRoute}`);
       }
+      if (pageType !== 'Article' && structuredData.find(item => item['@type'] === pageType)?.dateModified !== siteDateModified) errors.push(`Missing build dateModified: ${localizedRoute}`);
     } catch {
       errors.push(`Invalid JSON-LD: ${localizedRoute}`);
     }
@@ -244,6 +289,16 @@ for (const route of noIndexRoutes) {
   for (const language of languages) {
     if (combinedSitemaps.includes(`${siteUrl}${language.prefix}${route}`)) errors.push(`Noindex route must not be in sitemap: ${language.prefix}${route}`);
   }
+}
+for (const route of legacyIndexedRoutes) {
+  const html = await read(route.slice(1) + '/index.html');
+  const prefix = route.split('/')[1];
+  const enRoute = route.replace(`/${prefix}`, '/en');
+  const baseRoute = route.replace(`/${prefix}`, '');
+  const expectedCanonical = articleRoutes.has(baseRoute) ? baseRoute : enRoute;
+  if (!html.includes('<meta name="robots" content="noindex, follow" />')) errors.push(`Legacy page must be noindex: ${route}`);
+  if (!html.includes(`<link rel="canonical" href="${siteUrl}${expectedCanonical}" />`)) errors.push(`Wrong legacy canonical target: ${route}`);
+  if (combinedSitemaps.includes(`<loc>${siteUrl}${route}</loc>`)) errors.push(`Legacy URL must not be in sitemap: ${route}`);
 }
 
 const robots = await read('robots.txt');

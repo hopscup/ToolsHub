@@ -12,7 +12,10 @@ import { mobileIpGuideBlocks, mobileIpChecklist, mobileIpProvider } from '../src
 import { articleSocialLinks, articleSocialBanner, articleSocialCompact, withoutArticleSocialFooter } from '../src/data/articleSocialFooter.js';
 import { pageHeadings } from '../src/data/pageHeadings.js';
 import { articleFallbackByRoute, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
-import { legacyIndexedRoutes } from '../src/data/legacyIndexedRoutes.js';
+import { loadOffers } from './load-offers.mjs';
+import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, serviceGuideRoutes, serviceGuideLabels, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
+import { siteDateModified } from '../src/data/buildDate.js';
+import { getServiceParagraphs, getServiceSummaryFacts, isServiceMetaDescription } from '../src/data/servicePresentation.js';
 import { seoLandingPages } from '../src/data/seoLandingPages.js';
 import { smsPages } from '../src/data/smsPages.js';
 import { socialPages } from '../src/data/socialPages.js';
@@ -32,7 +35,8 @@ const languages = [
 ];
 const indexLanguages = languages.filter(({ code }) => code === 'ru' || code === 'en');
 const isIndexLanguage = (language) => indexLanguages.some(({ code }) => code === language.code);
-const legacyIndexedRouteSet = new Set(legacyIndexedRoutes);
+const { OFFERS, OFFER_DESCRIPTION_TRANSLATIONS } = await loadOffers();
+const offersByRoute = new Map(OFFERS.filter(offer => offer.slug && offer.category !== 'Guides').map(offer => [`${serviceCategoryRoutes[offer.category]}/${offer.slug}`, offer]));
 
 const sections = [
   {
@@ -1598,6 +1602,11 @@ const servicePages = [
 
 const sectionPages = sections.filter((section) => section.route !== '/');
 const indexablePages = [...sectionPages, ...servicePages];
+for (const page of indexablePages) {
+  const title = sectionSeoTitles[page.route];
+  if (title) page.title = { ...page.title, ru: title.ru + ' | Hopscup', en: title.en + ' | Hopscup' };
+  page.title = Object.fromEntries(Object.entries(page.title).map(([lang, value]) => [lang, compactSeoTitle(value, page.route, lang)]));
+}
 const vpnServiceRoutes = new Set([
   '/proxy-vpn/all-vpn',
   '/proxy-vpn/ppl-vpn',
@@ -1627,24 +1636,19 @@ const getLanguage = (value, language) => value[language.code] || value.en || val
 const localizedPath = (section, language) =>
   section.route === '/' ? language.prefix || '/' : `${language.prefix}${section.route}`;
 const absoluteUrl = (section, language) => `${siteUrl}${localizedPath(section, language) === '/' ? '' : localizedPath(section, language)}`;
-const isPreservedLegacyPage = (section, language) => legacyIndexedRouteSet.has(localizedPath(section, language));
 const canonicalUrl = (section, language) => {
-  const canonicalLanguage = section.russianOnly
-    ? languages[0]
-    : isIndexLanguage(language) || isPreservedLegacyPage(section, language)
-      ? language
-      : indexLanguages.find(({ code }) => code === 'en');
+  const canonicalLanguage = section.russianOnly ? languages[0] : !isIndexLanguage(language) ? languages[1] : language;
   return absoluteUrl(section, canonicalLanguage);
 };
 
 const escapeHtml = (value) =>
-  String(value)
+  plainSeoText(value)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 
-const escapeJson = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
+const escapeJson = (value) => JSON.stringify(value, (_, item) => typeof item === 'string' ? plainSeoText(item) : item).replace(/</g, '\\u003c');
 
 const alternateLinks = (section) =>
   [
@@ -1654,9 +1658,11 @@ const alternateLinks = (section) =>
   ].join('\n    ');
 
 const internalLinks = (language) =>
-  sectionPages
-    .map((section) => `<a href="${localizedPath(section, language)}">${escapeHtml(getLanguage(section.heading, language))}</a>`)
+  Object.entries(serviceCategoryRoutes)
+    .map(([category, route]) => `<a href="${language.prefix}${route}">${escapeHtml(serviceCategoryNames[category][language.code === 'ru' ? 0 : 1])}</a>`)
     .join('\n        ');
+
+const renderLandingLinks = language => `<nav data-landing-links aria-label="${language.code === 'ru' ? 'Подборки сервисов' : 'Service collections'}">${seoLandingPages.map(page => renderLink({ href: `${language.prefix}${page.route}`, label: getLanguage(page.heading, language) })).join(' ')}</nav>`;
 
 const renderLink = ({ href, label }) => {
   const rel = getExternalLinkRel(href);
@@ -1731,7 +1737,56 @@ const renderArticleBody = (article, route) => {
     ${(article.links || []).map((item) => `<p>${link(item)}</p>`).join('')}`;
 };
 
+const getOfferDescription = (offer, language) => localizedServiceValue(
+  language.code === 'ru' || language.code === 'en' ? offer.description : OFFER_DESCRIPTION_TRANSLATIONS[offer.id] || offer.description,
+  language.code,
+);
+
+const renderServiceContent = (offer, language, metaDescription) => {
+  const ru = language.code === 'ru';
+  const value = data => localizedServiceValue(data, language.code);
+  const heading = text => `<h2>${escapeHtml(text)}</h2>`;
+  const facts = getServiceFacts(offer, language.code);
+  const vpn = offer.subCategory === 'VPN' ? vpnTerms[offer.slug] : undefined;
+  if (vpn) facts.push({ label: ru ? 'Бесплатно' : 'Free trial', value: value(vpn.free) }, { label: ru ? 'Цена' : 'Price', value: value(vpn.price) });
+  const paragraphs = getServiceParagraphs(offer, language.code, metaDescription);
+  const groups = getServiceTextGroups(offer, language.code);
+  const alternatives = getServiceAlternatives(offer, OFFERS);
+  const guide = serviceGuideRoutes[offer.category] || '/guides';
+  return `<div data-service-content="${escapeHtml(offer.id)}">
+    ${paragraphs.map(text => `<p>${escapeHtml(text)}</p>`).join('')}
+    ${facts.length ? `<section data-service-facts>${heading(ru ? 'Условия и характеристики' : 'Terms and features')}<dl>${facts.map(fact => `<dt>${escapeHtml(fact.label)}</dt><dd>${escapeHtml(fact.value)}</dd>`).join('')}</dl></section>` : ''}
+    ${offer.promoCode ? `<section data-service-promo>${heading(ru ? 'Промокод и скидка' : 'Promo code and discount')}<p><code>${escapeHtml(offer.promoCode)}</code>${offer.promoDiscount ? ` ${escapeHtml(value(offer.promoDiscount))}` : ''}</p></section>` : ''}
+    ${groups.map(group => `<section data-service-group="${group.key}">${heading(group.heading)}<ul>${group.items.map(text => `<li>${escapeHtml(text)}</li>`).join('')}</ul></section>`).join('')}
+    ${offer.editorial?.setupGuide ? `<p data-setup-guide>${renderLink({ href: `${language.prefix}${offer.editorial.setupGuide.href}`, label: value(offer.editorial.setupGuide.label) })}</p>` : ''}
+    ${offer.details?.targetAudience && !isServiceMetaDescription(value(offer.details.targetAudience), metaDescription) ? `<section>${heading(ru ? 'Для кого' : 'Who it is for')}<p>${escapeHtml(value(offer.details.targetAudience))}</p></section>` : ''}
+    ${value(offer.editorial?.verdict) && !isServiceMetaDescription(value(offer.editorial.verdict), metaDescription) ? `<section>${heading(ru ? 'Если коротко' : 'In short')}<p>${escapeHtml(value(offer.editorial.verdict))}</p></section>` : ''}
+    <p data-service-cta>${renderLink({ href: offer.url, label: ru ? 'Перейти на сайт сервиса' : 'Visit the service' })}</p>
+    ${offer.webUrl ? `<p>${renderLink({ href: offer.webUrl, label: ru ? 'Сайт сервиса' : 'Service website' })}</p>` : ''}
+    <section data-service-alternatives>${heading(ru ? 'Альтернативы' : 'Alternatives')}<ul>${alternatives.map(item => `<li>${renderLink({ href: `${language.prefix}${serviceCategoryRoutes[item.category]}/${item.slug}`, label: item.name })}<p>${escapeHtml(getOfferDescription(item, language))}</p></li>`).join('')}</ul>
+      <p>${renderLink({ href: `${language.prefix}${guide}`, label: value(serviceGuideLabels[offer.category]) || (ru ? 'Полезные гайды' : 'Useful guides') })}</p>
+    </section>
+  </div>`;
+};
+
+const renderSectionOffers = (section, language) => {
+  const category = section.category || Object.keys(serviceCategoryRoutes).find(key => serviceCategoryRoutes[key] === section.route);
+  if (!category || category === 'Guides') return '';
+  const offers = OFFERS.filter(offer => offer.category === category && (!section.subFilter || section.subFilter === 'None' || offer.subCategory === section.subFilter || offer.subCategories?.includes(section.subFilter)));
+  return offers.map(offer => {
+    const route = offer.slug ? `${language.prefix}${serviceCategoryRoutes[category]}/${offer.slug}` : undefined;
+    const facts = getServiceSummaryFacts(offer, language.code, { vpnPrice: offer.subCategory === 'VPN' ? localizedServiceValue(vpnTerms[offer.slug]?.price, language.code) : undefined, qr: section.subFilter === 'USDTQR' });
+    return `<section data-service-summary="${escapeHtml(offer.id)}"><h2>${route ? renderLink({ href: route, label: offer.name }) : escapeHtml(offer.name)}</h2>
+      <p>${escapeHtml(getOfferDescription(offer, language))}</p>
+      ${facts.length ? `<p data-summary-facts>${facts.map(fact => `<span>${escapeHtml(fact.label)}: ${escapeHtml(fact.value)}</span>`).join(' · ')}</p>` : ''}
+      ${offer.promoCode ? `<p>${language.code === 'ru' ? 'Промокод' : 'Promo code'}: <code>${escapeHtml(offer.promoCode)}</code>${offer.promoDiscount ? ` ${escapeHtml(localizedServiceValue(offer.promoDiscount, language.code))}` : ''}</p>` : ''}
+      ${route ? `<p>${renderLink({ href: route, label: language.code === 'ru' ? 'Подробнее о сервисе' : 'More about the service' })}</p>` : ''}
+    </section>`;
+  }).join('\n');
+};
+
 const renderStaticContent = (section, language) => {
+  const offer = offersByRoute.get(section.route);
   const article = articleFallbackByRoute[section.route];
   const vpn = section.route.startsWith('/proxy-vpn/') ? vpnTerms[section.route.slice('/proxy-vpn/'.length)] : undefined;
   const title = article?.title || getLanguage(section.heading, language);
@@ -1739,7 +1794,7 @@ const renderStaticContent = (section, language) => {
   const heroTitle = section.heroHeading && getLanguage(section.heroHeading, language) !== "Hopscup's Tools Hub"
     ? getLanguage(section.heroHeading, language)
     : title;
-  const heroIntro = article?.intro || (section.heroIntro ? getLanguage(section.heroIntro, language) : intro);
+  const heroIntro = offer ? getOfferDescription(offer, language) : article?.intro || (section.heroIntro ? getLanguage(section.heroIntro, language) : intro);
   const points = getLanguage(section.points, language);
   const items = Array.isArray(section.items) ? section.items : getLanguage(section.items, language);
   const labels = fallbackLabels[language.code] || fallbackLabels.en;
@@ -1753,6 +1808,7 @@ const renderStaticContent = (section, language) => {
   const guideItems = section.id === 'guides'
     ? indexableGuideCatalog.map((guide) => `<li>${renderLink({ href: `${language.prefix}${guide.route}`, label: getLanguage(guide.title, language) })}<p>${escapeHtml(getLanguage(guide.description, language))}</p></li>`).join('\n            ')
     : undefined;
+  const sectionOffers = section.type !== 'service' && section.type !== 'article' ? renderSectionOffers(section, language) : '';
 
   return `
       <article class="seo-fallback"${article ? ` data-static-article="${escapeHtml(section.id)}"` : ''} aria-label="${escapeHtml(title)}">
@@ -1761,13 +1817,13 @@ const renderStaticContent = (section, language) => {
         <header class="fallback-hero">
           ${article ? `<p class="fallback-badge">${escapeHtml(article.badge)}</p>` : ''}
           <h1>${escapeHtml(heroTitle)}</h1>
-          <p>${escapeHtml(heroIntro)}</p>
+          ${offer && isServiceMetaDescription(heroIntro, getLanguage(section.description, language)) ? '' : `<p>${escapeHtml(heroIntro)}</p>`}
           ${section.cover ? `<a href="${escapeHtml(section.cover.src)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(section.cover.src)}" alt="${escapeHtml(section.cover.alt)}" width="${section.cover.width}" height="${section.cover.height}" /></a>` : ''}
           ${article?.updated ? `<p class="fallback-updated">${escapeHtml(article.updated)}</p>` : ''}
         </header>
-        ${vpn ? `<section aria-label="${language.code === 'ru' ? 'Цена и бесплатный период' : 'Pricing and free trial'}"><dl><dt>${language.code === 'ru' ? 'Бесплатно' : 'Free trial'}</dt><dd>${escapeHtml(getLanguage(vpn.free, language))}</dd><dt>${language.code === 'ru' ? 'Цена' : 'Price'}</dt><dd>${escapeHtml(getLanguage(vpn.price, language))}</dd></dl></section>` : ''}
-        ${section.cta ? `<p><a href="${escapeHtml(section.cta.href)}" target="_blank" rel="${getExternalLinkRel(section.cta.href) || 'noopener noreferrer'}">${escapeHtml(getLanguage(section.cta.label, language))}</a></p>` : ''}
-        ${section.id === 'guide-best-proxies' ? `<div class="fallback-body">${renderProxyGuideBody()}</div>` : section.id === 'guide-mobile-ip' ? `<div class="fallback-body">${renderMobileIpGuideBody()}</div>` : section.articleBlocks ? `<div class="fallback-body">${renderGuideBlocks(section.articleBlocks, section.articleHeadingIds)}</div>` : article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
+        ${!offer && vpn ? `<section aria-label="${language.code === 'ru' ? 'Цена и бесплатный период' : 'Pricing and free trial'}"><dl><dt>${language.code === 'ru' ? 'Бесплатно' : 'Free trial'}</dt><dd>${escapeHtml(getLanguage(vpn.free, language))}</dd><dt>${language.code === 'ru' ? 'Цена' : 'Price'}</dt><dd>${escapeHtml(getLanguage(vpn.price, language))}</dd></dl></section>` : ''}
+        ${!offer && section.cta ? `<p><a href="${escapeHtml(section.cta.href)}" target="_blank" rel="${getExternalLinkRel(section.cta.href) || 'noopener noreferrer'}">${escapeHtml(getLanguage(section.cta.label, language))}</a></p>` : ''}
+        ${offer ? renderServiceContent(offer, language, getLanguage(section.description, language)) : section.id === 'guide-best-proxies' ? `<div class="fallback-body">${renderProxyGuideBody()}</div>` : section.id === 'guide-mobile-ip' ? `<div class="fallback-body">${renderMobileIpGuideBody()}</div>` : section.articleBlocks ? `<div class="fallback-body">${renderGuideBlocks(section.articleBlocks, section.articleHeadingIds)}</div>` : article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
         ${section.heroHeading ? `
         <section>
           ${heroTitle !== title ? `<h2>${escapeHtml(title)}</h2>` : ''}
@@ -1779,17 +1835,18 @@ const renderStaticContent = (section, language) => {
             ${points.map((point) => `<li>${escapeHtml(point)}</li>`).join('\n            ')}
           </ul>
         </section>
-        <section>
+        ${sectionOffers || `<section>
           <h2>${escapeHtml(itemsHeading)}</h2>
           <ul>
             ${guideItems ?? items.map((item) => `<li>${renderItem(item)}</li>`).join('\n            ')}
           </ul>
-        </section>
+        </section>`}
           ${language.code === 'ru' && section.article ? section.article.map((part) => `<section><h2>${escapeHtml(part.heading)}</h2>${part.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}${(part.links || []).map(renderLink).join(' ')}</section>`).join('') : ''}
         `}
         ${section.id !== 'guide-mobile-ip' ? `<nav aria-label="${escapeHtml(labels.nav)}">
           ${internalLinks(language)}
         </nav>` : ''}
+        ${section.type !== 'service' && section.type !== 'article' ? renderLandingLinks(language) : ''}
         ${section.type === 'article' ? renderArticleSocialFooter(['guide-best-proxies', 'guide-mobile-ip', 'guide-otc-kyc'].includes(section.id)) : ''}
       </article>`;
 };
@@ -1797,6 +1854,7 @@ const renderStaticContent = (section, language) => {
 const collectionSchema = (section, language) => ({
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
+  dateModified: siteDateModified,
   name: getLanguage(section.title, language),
   description: getLanguage(section.description, language),
   url: absoluteUrl(section, language),
@@ -1819,6 +1877,7 @@ const collectionSchema = (section, language) => ({
 const serviceSchema = (section, language) => ({
   '@context': 'https://schema.org',
   '@type': 'WebPage',
+  dateModified: siteDateModified,
   name: getLanguage(section.title, language),
   description: getLanguage(section.description, language),
   url: absoluteUrl(section, language),
@@ -1896,7 +1955,7 @@ const replaceHead = (html, section, language) => {
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`)
     .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${description}" />`)
     .replace(/<meta name="keywords" content=".*?" \/>/, `<meta name="keywords" content="${keywords}" />`)
-    .replace(/<meta name="robots" content=".*?" \/>/, `<meta name="robots" content="${section.indexable === false || (section.russianOnly && language.code !== 'ru') || (!isIndexLanguage(language) && !isPreservedLegacyPage(section, language)) ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large'}" />`)
+    .replace(/<meta name="robots" content=".*?" \/>/, `<meta name="robots" content="${section.indexable === false || (section.russianOnly && language.code !== 'ru') || !isIndexLanguage(language) ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large'}" />`)
     .replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="${url}" />`)
     .replace(/\n\s*<link rel="alternate" hreflang=".*?" href=".*?" \/>/g, '')
     .replace(/<link rel="canonical" href=".*?" \/>/, (canonical) => `${canonical}\n    ${alternateLinks(section)}`)

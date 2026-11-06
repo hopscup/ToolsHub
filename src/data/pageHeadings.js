@@ -9,15 +9,15 @@ export const pageHeadings = {
     "ko": "계정과 디지털 작업을 위한 유용한 서비스"
   },
   "/proxy-vpn": {
-    "ru": "Прокси и VPN для рабочих задач",
-    "en": "Proxy and VPN services for work",
+    "ru": "Прокси для аккаунтов и антидетекта: где купить в 2026",
+    "en": "Proxies for accounts and antidetect browsers in 2026",
     "es": "Proxies y VPN para trabajo",
     "zh": "工作任务用代理和 VPN",
     "ko": "작업용 프록시와 VPN"
   },
   "/antidetect": {
-    "ru": "Антидетект браузеры под разные уровни задач",
-    "en": "Antidetect browsers for different task levels",
+    "ru": "Антидетект-браузеры: бесплатные и платные, сравнение",
+    "en": "Antidetect browsers: free and paid options compared",
     "es": "Antidetects para distintos niveles de trabajo",
     "zh": "不同任务级别的反检测浏览器",
     "ko": "작업 난이도별 안티디텍트 브라우저"
