@@ -273,6 +273,7 @@ interface Offer {
   webUrl?: string;
   logoUrl?: string;
   promoCode?: string;
+  previousIssuance?: Localized;
   promoDiscount?: Localized;
   badge?: Localized;
   isPopular?: boolean;
@@ -4086,8 +4087,10 @@ const OFFERS: Offer[] = [
     url: 'https://t.me/zarub_robot?start=ref_PqBrBs',
     logoUrl: '/zarub.webp',
     isBestChoice: true,
+    promoCode: 'HOPS',
+    previousIssuance: { ru: '19$', en: '$19', es: '19 $', zh: '19 美元', ko: '19달러' },
     cardStats: {
-      issuance: { ru: '19$', en: '$19', es: '19 $', zh: '19 美元', ko: '19달러' },
+      issuance: { ru: '14$', en: '$14', es: '14 $', zh: '14 美元', ko: '14달러' },
       maintenance: { ru: '0 $/мес', en: '$0/mo', es: '0 $/mes', zh: '0 美元/月', ko: '월 0달러' },
       paySystems: { ru: 'Да', en: 'Yes', es: 'Sí', zh: '支持', ko: '지원' },
       verification: { ru: 'Нет', en: 'No', es: 'No', zh: '否', ko: '아니요' },
@@ -4106,7 +4109,7 @@ const OFFERS: Offer[] = [
       },
       nuances: {
         ru: [
-          'Выпуск карты: 19$ единоразово',
+          'Выпуск карты: 14$ с промокодом HOPS, 19$ без промокода',
           'Обслуживание: 0$',
           'Комиссия за операцию: 0.35$',
           'Комиссия за пополнение: 1.5%',
@@ -4116,7 +4119,7 @@ const OFFERS: Offer[] = [
           'Выпуск занимает от нескольких минут до 24 часов'
         ],
         en: [
-          'Issuance: $19 one-time',
+          'Issuance: $14 with code HOPS, $19 without it',
           'Maintenance: $0',
           'Transaction fee: $0.35',
           'Top-up fee: 1.5%',
@@ -4126,7 +4129,7 @@ const OFFERS: Offer[] = [
           'Issuance takes from a few minutes to 24 hours'
         ],
         es: [
-          'Emisión: 19 $ una sola vez',
+          'Emisión: 14 $ con el código HOPS, 19 $ sin código',
           'Mantenimiento: 0 $',
           'Comisión por operación: 0,35 $',
           'Comisión de recarga: 1,5%',
@@ -4136,7 +4139,7 @@ const OFFERS: Offer[] = [
           'La emisión tarda desde unos minutos hasta 24 horas'
         ],
         zh: [
-          '开卡费：一次性 19 美元',
+          '开卡费：使用优惠码 HOPS 为 14 美元，原价 19 美元',
           '维护费：0 美元',
           '交易手续费：0.35 美元',
           '充值手续费：1.5%',
@@ -4146,7 +4149,7 @@ const OFFERS: Offer[] = [
           '开卡时间：几分钟至 24 小时'
         ],
         ko: [
-          '발급비: 1회 19달러',
+          '발급비: HOPS 코드 적용 시 14달러, 미적용 시 19달러',
           '유지비: 0달러',
           '결제 수수료: 0.35달러',
           '충전 수수료: 1.5%',
@@ -6845,12 +6848,28 @@ export default function App() {
 
                     {offer.cardStats && (
                       <div className="flex flex-col gap-4 mb-8 py-6 border-y border-white/10">
-                        <div className="flex justify-between items-center px-1">
+                        <div className="flex justify-between items-center gap-2 px-1">
                           <div className="flex items-center gap-3">
                             <div className="w-1.5 h-1.5 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
                             <span className="text-[12px] text-white/30 uppercase font-black tracking-[0.2em]">{t.issuance}</span>
                           </div>
-                          <span className="text-base text-brand-purple font-black">{l(offer.cardStats.issuance)}</span>
+                          {offer.previousIssuance && offer.promoCode ? (
+                            <div className="flex flex-wrap items-center justify-end gap-x-2 gap-y-1" data-issuance-promo>
+                              <del className="whitespace-nowrap text-xs font-bold text-white/50">{l(offer.previousIssuance)}</del>
+                              <span className="whitespace-nowrap text-base font-black text-brand-purple">{l(offer.cardStats.issuance)}</span>
+                              <button
+                                type="button"
+                                onClick={() => copyToClipboard(offer.promoCode, `card-${offer.id}`)}
+                                title={`${t.promo}: ${offer.promoCode}`}
+                                aria-label={`${copiedPromoId === `card-${offer.id}` ? t.copied : t.promo} ${offer.promoCode}`}
+                                aria-live="polite"
+                                className="inline-flex min-h-7 shrink-0 items-center gap-1 rounded-md border border-brand-purple/30 bg-brand-purple/10 px-2 font-mono text-xs font-bold text-brand-purple hover:bg-brand-purple/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/60"
+                              >
+                                {offer.promoCode}
+                                {copiedPromoId === `card-${offer.id}` ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                              </button>
+                            </div>
+                          ) : <span className="text-base text-brand-purple font-black">{l(offer.cardStats.issuance)}</span>}
                         </div>
                         <div className="flex justify-between items-center px-1">
                           <div className="flex items-center gap-3">
@@ -6949,7 +6968,7 @@ export default function App() {
                         )}
                       </div>
                     )}
-                    {offer.promoCode && (
+                    {offer.promoCode && !offer.previousIssuance && (
                       <button
                         onClick={() => copyToClipboard(offer.promoCode || '', `card-${offer.id}`)}
                         aria-label={`${copiedPromoId === `card-${offer.id}` ? t.copied : t.promo} ${offer.promoCode}`}
