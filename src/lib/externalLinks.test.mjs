@@ -30,6 +30,7 @@ test('referral query parameters and existing path referrals are sponsored', () =
     'https://t.me/example_bot/app?startapp=REF_example',
     'https://t.me/iMP_VPN_bot?start=460705268',
     'https://t.me/VPNPPLBot?start=dXNlcl9pZD00NDMwODM',
+    'https://t.me/KYCBLOCKBOT?start=HOPSCUP',
   ]) {
     assert.equal(isAffiliateUrl(href), true, href);
     assert.equal(getExternalLinkRel(href), 'sponsored noopener noreferrer', href);

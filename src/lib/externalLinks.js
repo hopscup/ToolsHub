@@ -22,7 +22,7 @@ const affiliatePaths = {
 const fromReferralHosts = new Set(['billing.spacecore.pro', 'morelogin.com', 'xorek.cloud']);
 const telegramReferralBots = new Set([
   'cashinout_bot', 'gigadollarvpn_bot', 'vpnpplbot', 'crassus_market_bot',
-  'imp_vpn_bot', 'prostoexbot', 'prostovpnrubot', 'ptrv4_bot', 'tochka_gi_bot',
+  'imp_vpn_bot', 'kycblockbot', 'prostoexbot', 'prostovpnrubot', 'ptrv4_bot', 'tochka_gi_bot',
 ]);
 const nonAffiliateHosts = new Set(['chromewebstore.google.com', 'github.com', 'amlbot.com']);
 
