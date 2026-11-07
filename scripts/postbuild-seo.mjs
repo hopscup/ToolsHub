@@ -9,9 +9,9 @@ import { indexableGuideCatalog } from '../src/data/guideCatalog.js';
 import { getExternalLinkRel } from '../src/lib/externalLinks.js';
 import { proxyGuideMeta, proxyGuideBlocks, proxyProviders, proxyTypes, proxyCopy, proxyChecklist } from '../src/data/proxyGuideContent.js';
 import { mobileIpGuideBlocks, mobileIpChecklist, mobileIpProvider } from '../src/data/mobileIpGuideContent.js';
-import { articleSocialLinks, articleSocialBanner, articleSocialCompact, withoutArticleSocialFooter } from '../src/data/articleSocialFooter.js';
+import { articleSocialLinks, articleSocialBanner, withoutArticleSocialFooter } from '../src/data/articleSocialFooter.js';
 import { pageHeadings } from '../src/data/pageHeadings.js';
-import { articleFallbackByRoute, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
+import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobileProxyMeta, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 import { loadOffers } from './load-offers.mjs';
 import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, serviceGuideRoutes, serviceGuideLabels, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
@@ -1568,8 +1568,11 @@ const servicePages = [
     route: '/proxy-vpn/luchshie-mobilnye-proksi',
     name: 'Лучшие мобильные прокси',
     logo: '/logo.png',
-    title: { ru: 'Лучшие мобильные прокси 2026: сравнение сервисов | Hopscup Tools' },
-    description: { ru: 'Сравнение MobileProxy, ProxyWing и Proxy-Seller: GEO, ротация IP, трафик, цены, ограничения и промокоды на мобильные прокси.' },
+    title: { ru: mobileProxyMeta.title },
+    description: { ru: mobileProxyMeta.description },
+    datePublished: mobileProxyMeta.datePublished,
+    dateModified: mobileProxyMeta.dateModified,
+    cover: mobileProxyMeta.cover,
     heading: pageHeadings['/proxy-vpn/luchshie-mobilnye-proksi'],
     intro: { ru: 'Практическое сравнение трёх сервисов и честный разбор ситуаций, когда мобильный IP оправдывает цену, а когда достаточно обычного IPv4.' },
     keywords: { ru: 'лучшие мобильные прокси, купить мобильные прокси, рейтинг мобильных прокси, мобильные прокси 4G 5G' },
@@ -1692,7 +1695,10 @@ const renderGuideBlocks = (blocks, headingIds = {}) => {
   }).join('\n');
 };
 
-const renderChecklist = (checklist) => `<section id="start" data-article-checklist><h2>Коротко: что делать</h2>${renderGuideBlocks([{ type: 'list', ordered: true, items: checklist.items }])}<div data-checklist-sources><h3>${escapeHtml(checklist.sourcesHeading || 'Где брать:')}</h3>${checklist.sources.map(source => `<p>${source.label ? `${escapeHtml(source.label)}: ` : ''}${source.links.map(link => renderLink({ href: link.href, label: link.text })).join(' · ')}</p>`).join('')}<p><small>${checklist.note.map(part => part.strong ? `<strong>${escapeHtml(part.text)}</strong>` : escapeHtml(part.text)).join('')}</small></p><p>${renderLink(checklist.action)}</p></div></section>`;
+const renderChecklist = (checklist) => `<section id="start" data-article-checklist><h2>${escapeHtml(checklist.heading || 'Коротко: что делать')}</h2>
+    ${renderGuideBlocks([{ type: 'list', ordered: true, items: checklist.items }])}
+    <div data-checklist-sources>${checklist.sources.length ? `<h3>${escapeHtml(checklist.sourcesHeading || 'Где брать:')}</h3>${checklist.sources.map(source => `<p>${source.label ? `${escapeHtml(source.label)}: ` : ''}${source.links.map(link => renderLink({ href: link.href, label: link.text })).join(' · ')}</p>`).join('')}` : ''}
+    <p><small>${checklist.note.map(part => part.strong ? `<strong>${escapeHtml(part.text)}</strong>` : escapeHtml(part.text)).join('')}</small></p><p>${renderLink(checklist.action)}</p></div></section>`;
 
 const renderMobileIpGuideBody = () => mobileIpGuideBlocks.map(block => {
   if (block.type === 'checklist') return renderChecklist(mobileIpChecklist);
@@ -1713,25 +1719,47 @@ const renderProxyGuideBody = () => proxyGuideBlocks.map(block => {
 }).join('\n');
 
 const renderArticleSocialFooter = (compact = false) => {
-  const banner = `<a data-article-footer-banner href="${escapeHtml(articleSocialBanner.href)}" target="_blank" rel="noopener noreferrer" class="block overflow-hidden rounded-lg"><img src="${escapeHtml(articleSocialBanner.src)}" alt="${escapeHtml(articleSocialBanner.alt)}" width="${articleSocialBanner.width}" height="${articleSocialBanner.height}" loading="lazy"${compact ? ' class="block aspect-video max-h-[170px] w-full object-cover"' : ''} /></a>`;
-  if (compact) return `<footer data-article-social-footer data-article-footer-variant="compact" class="mt-8 grid gap-4 rounded-lg border border-white/10 p-4 lg:grid-cols-[240px_minmax(0,1fr)] lg:items-center">${banner}<div><p>${escapeHtml(articleSocialCompact.eyebrow)}</p><h2>${escapeHtml(articleSocialCompact.title)}</h2><p>${escapeHtml(articleSocialCompact.description)}</p><nav aria-label="Ссылки Hopscup" class="mt-3 grid gap-2 lg:grid-cols-3">${articleSocialCompact.links.map(link => `<a href="${escapeHtml(link.href)}"${getExternalLinkRel(link.href) ? ` target="_blank" rel="${getExternalLinkRel(link.href)}"` : ' title="hopscup.tools"'} class="block rounded-lg border border-white/10 px-2 py-2 text-center">${escapeHtml(link.label)}</a>`).join('')}</nav></div></footer>`;
-  return `<footer data-article-social-footer>${banner}<p><strong>Больше полезного тут:</strong></p><nav aria-label="Ссылки Hopscup">${articleSocialLinks.map(link => `<p>${renderLink(link)}</p>`).join('')}</nav></footer>`;
+  const banner = `<a data-article-footer-banner href="${escapeHtml(articleSocialBanner.href)}" target="_blank" rel="noopener noreferrer" class="mt-6 block overflow-hidden rounded-2xl border border-white/10"><img src="${escapeHtml(articleSocialBanner.src)}" alt="${escapeHtml(articleSocialBanner.alt)}" width="${articleSocialBanner.width}" height="${articleSocialBanner.height}" loading="lazy" class="block h-auto w-full" /></a>`;
+  const buttons = articleSocialLinks.map(link => `<a href="${escapeHtml(link.href)}"${getExternalLinkRel(link.href) ? ` target="_blank" rel="${getExternalLinkRel(link.href)}"` : ''} class="flex min-h-11 min-w-0 items-center justify-center rounded-xl border border-white/10 px-3 py-3 text-center text-sm font-bold leading-6${link.platform === 'site' ? '' : ' whitespace-nowrap'}">${escapeHtml(link.label)}</a>`).join('');
+  return `<footer data-article-social-footer data-article-footer-variant="${compact ? 'compact' : 'default'}" class="mt-10 border-t border-white/10 pt-7"><p><strong>Больше полезного тут:</strong></p><nav aria-label="Ссылки Hopscup" class="mt-4 grid auto-rows-fr grid-cols-1 items-stretch gap-3 md:grid-cols-3">${buttons}</nav>${banner}</footer>`;
+};
+
+const renderMobileProxyBody = () => {
+  const table = (columns, rows) => `<div style="overflow-x:auto"><table><thead><tr>${columns.map(column => `<th scope="col">${escapeHtml(column)}</th>`).join('')}</tr></thead><tbody>${rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  const list = (items, ordered = false) => renderGuideBlocks([{ type: 'list', ordered, items: items.map(text => [{ text }]) }]);
+  const providerRows = mobileProxyProviders.map(provider => [
+    renderLink({ href: provider.url, label: provider.name }),
+    ...[provider.locations, provider.rotation, provider.billing, provider.entryPrice].map(escapeHtml),
+  ]);
+  return `
+    <section id="korotko"><p>Если совсем коротко</p><h2>${escapeHtml(mobileProxyCopy.shortHeading)}</h2><p>${escapeHtml(mobileProxyCopy.short)}</p><aside><p>${escapeHtml(mobileProxyCopy.shortNote)}</p></aside></section>
+    <section id="comparison"><p>Цены и условия</p><h2>Три сервиса в одной таблице</h2><p>${escapeHtml(mobileProxyCopy.comparison)}</p>
+      ${table(mobileProxyCopy.providerColumns, providerRows)}<p><small>${escapeHtml(mobileProxyCopy.comparisonNote)}</small></p></section>
+    <section><h2>Как я сравнивал варианты</h2><p>${escapeHtml(mobileProxyCopy.methodology)}</p></section>
+    <section id="providers"><p>Мой выбор</p><h2>Какой сервис выбрать</h2>
+      ${mobileProxyProviders.map((provider, index) => `<section><p>${index + 1} из ${mobileProxyProviders.length}</p><h3>${escapeHtml(provider.name)}</h3>
+        <p>${escapeHtml(provider.label)}</p><p>${escapeHtml(provider.experience)}</p><p>${escapeHtml(provider.summary)}</p>
+        <h4>Сильные стороны</h4>${list(provider.strengths)}<h4>Что учитывать</h4>${list(provider.limitations)}
+        <p><code>${escapeHtml(provider.promoCode)}</code> ${escapeHtml(provider.promoDiscount)}</p><p>${renderLink({ href: provider.url, label: 'Перейти' })}</p></section>`).join('')}
+      ${renderGuideBlocks(mobileProxyCopy.screenshots.map(screenshot => ({ type: 'image', ...screenshot })))}
+      <p>Больше про тарифы и оплату в ${renderLink(mobileProxyCopy.providerLink)}.</p></section>
+    <section id="economy"><p>Сколько выйдет</p><h2>Когда мобильный прокси выгоден</h2>${renderGuideBlocks([{ type: 'paragraph', content: mobileProxyCopy.economy }])}
+      <h3>Мобильный тариф имеет смысл</h3>${list(mobileProxyCopy.mobileReasons)}
+      <h3>Лучше остаться на IPv4</h3>${list(mobileProxyCopy.ipv4Reasons)}</section>
+    <section id="geo"><h2>Какое гео брать</h2><p>${escapeHtml(mobileProxyCopy.geo)}</p></section>
+    <section><h2>Mobile, Residential или IPv4</h2>${table(mobileProxyCopy.typeColumns, mobileProxyCopy.typeRows.map(row => row.map(escapeHtml)))}</section>
+    <section id="choice"><p>Перед оплатой</p><h2>Что проверить в тарифе</h2><ol>${mobileProxyCopy.tariffChecks.map(([title, text]) => `<li><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p></li>`).join('')}</ol></section>
+    <section id="setup"><p>После покупки</p><h2>Как подключить и сменить IP</h2>${list(mobileProxyCopy.setupSteps, true)}
+      <aside><p>${escapeHtml(mobileProxyCopy.setupWarning)}</p></aside>
+      <p>Для пары аккаунтов вместо покупки можно попробовать ${renderLink(mobileProxyCopy.airplaneLink)}.</p></section>
+    ${renderChecklist(mobileProxyChecklist)}`;
 };
 
 const renderArticleBody = (article, route) => {
+  if (route === '/proxy-vpn/luchshie-mobilnye-proksi') return renderMobileProxyBody();
   const link = renderLink;
   const list = (items, tag = 'ul') => `<${tag}>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</${tag}>`;
-  const providers = route === '/proxy-vpn/luchshie-mobilnye-proksi'
-    ? `<section id="providers"><h2>Какой сервис выбрать</h2>${mobileProxyProviders.map((provider) => `
-        <section><h3>${escapeHtml(provider.name)}</h3><p>${escapeHtml(provider.summary)}</p>
-          <dl>${[['GEO', provider.locations], ['Смена IP', provider.rotation], ['Оплата', provider.billing], ['Цена входа', provider.entryPrice]].map(([name, value]) => `<dt>${escapeHtml(name)}</dt><dd>${escapeHtml(value)}</dd>`).join('')}</dl>
-          <h4>Сильные стороны</h4>${list(provider.strengths)}<h4>Что учитывать</h4>${list(provider.limitations)}
-          <p>${escapeHtml(provider.promoCode)} ${escapeHtml(provider.promoDiscount)}</p>
-          ${renderLink({ href: provider.url, label: 'Перейти' })}
-        </section>`).join('')}</section>`
-    : '';
   return `${article.before ? `<section id="before"><h2>Важные моменты перед началом</h2>${list(article.before)}</section>` : ''}
-    ${providers}
     ${article.sections.map((part) => `<section id="${escapeHtml(part.id)}"><h2>${escapeHtml(part.heading)}</h2>${list(part.steps, 'ol')}${part.links.map(link).join(' ')}</section>`).join('')}
     ${article.result ? `<section id="result"><h2>Проверяем результат</h2><p>${escapeHtml(article.result)}</p></section>` : ''}
     ${(article.links || []).map((item) => `<p>${link(item)}</p>`).join('')}`;

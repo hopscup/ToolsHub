@@ -1,5 +1,5 @@
 import { guidePages } from './guidePages.js';
-import { articleFallbackByRoute } from './articleFallbackContent.js';
+import { articleFallbackByRoute, mobileProxyMeta } from './articleFallbackContent.js';
 import { proxyGuideMeta } from './proxyGuideContent.js';
 import { mobileIpGuideMeta } from './mobileIpGuideContent.js';
 
@@ -56,6 +56,7 @@ export const proxyGuideCatalogEntries = [
   },
   {
     id: 'guide-best-mobile-proxies',
+    cover: mobileProxyMeta.cover,
     route: '/proxy-vpn/luchshie-mobilnye-proksi',
     title: { ru: articleFallbackByRoute['/proxy-vpn/luchshie-mobilnye-proksi'].title },
     description: { ru: articleFallbackByRoute['/proxy-vpn/luchshie-mobilnye-proksi'].intro },

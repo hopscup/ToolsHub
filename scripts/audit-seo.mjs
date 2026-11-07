@@ -11,13 +11,15 @@ import { legacyIndexedRoutes } from '../src/data/legacyIndexedRoutes.js';
 import { loadOffers } from './load-offers.mjs';
 import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, plainSeoText } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
+import { proxyGuideMeta } from '../src/data/proxyGuideContent.js';
+import { mobileIpGuideMeta } from '../src/data/mobileIpGuideContent.js';
 import { isServiceMetaDescription } from '../src/data/servicePresentation.js';
 import { seoLandingPages } from '../src/data/seoLandingPages.js';
 import { smsPages } from '../src/data/smsPages.js';
 import { socialPages } from '../src/data/socialPages.js';
 import { steamPages } from '../src/data/steamPages.js';
 import { vpsPages } from '../src/data/vpsPages.js';
-import { articleFallbackByRoute, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
+import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobileProxyMeta, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 
 const distDir = path.resolve('dist');
 const siteUrl = 'https://hopscup.tools';
@@ -134,6 +136,20 @@ const checkArticleContent = (html, route, localizedRoute) => {
   const text = [article.title, article.intro, ...(article.before || []), ...(article.result ? [article.result] : []), ...article.sections.flatMap((part) => part.steps)];
   const links = [...article.sections.flatMap((part) => part.links), ...(article.links || [])];
   if (route === '/proxy-vpn/luchshie-mobilnye-proksi') {
+    text.push(article.updated, mobileProxyCopy.shortHeading, mobileProxyCopy.short, mobileProxyCopy.shortNote, mobileProxyCopy.comparison, mobileProxyCopy.comparisonNote, mobileProxyCopy.methodology, mobileProxyCopy.geo, mobileProxyCopy.setupWarning,
+      ...mobileProxyCopy.economy.map(part => part.text.trim()), ...mobileProxyCopy.mobileReasons, ...mobileProxyCopy.ipv4Reasons,
+      ...mobileProxyCopy.providerColumns, ...mobileProxyCopy.typeColumns, ...mobileProxyCopy.typeRows.flat(), ...mobileProxyCopy.tariffChecks.flat(), ...mobileProxyCopy.setupSteps,
+      mobileProxyChecklist.heading, ...mobileProxyChecklist.items.flat().map(part => part.text));
+    links.push(mobileProxyCopy.providerLink, mobileProxyCopy.airplaneLink, mobileProxyChecklist.action, ...mobileProxyCopy.economy.filter(part => part.href));
+    const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
+    for (const screenshot of [mobileProxyMeta.cover, ...mobileProxyCopy.screenshots]) {
+      if (!content.includes(`src="${screenshot.src}"`) || !content.includes(`alt="${escapeHtml(screenshot.alt)}"`)) errors.push(`Missing article image: ${localizedRoute}: ${screenshot.src}`);
+      if (screenshot.caption) text.push(screenshot.caption);
+    }
+    if (content.includes('Частые вопросы') || /FAQPage|id="faq"|data-related-guides/.test(html)) errors.push(`Removed article blocks returned: ${localizedRoute}`);
+    if (!html.includes(`<title>${escapeHtml(mobileProxyMeta.title)}</title>`) || !html.includes(`<meta name="description" content="${escapeHtml(mobileProxyMeta.description)}"`)) errors.push(`Wrong mobile comparison metadata: ${localizedRoute}`);
+    const schema = JSON.parse(html.match(/<script[^>]*id="structured-data"[^>]*>([\s\S]*?)<\/script>/)?.[1] || '[]').find(item => item['@type'] === 'Article');
+    if (schema?.datePublished !== mobileProxyMeta.datePublished || schema?.dateModified !== mobileProxyMeta.dateModified) errors.push(`Wrong mobile comparison dates: ${localizedRoute}`);
     for (const provider of mobileProxyProviders) {
       text.push(provider.name, provider.summary, provider.locations, provider.rotation, provider.billing, provider.entryPrice, ...provider.strengths, ...provider.limitations);
       links.push({ href: provider.url });
@@ -146,6 +162,15 @@ const checkArticleContent = (html, route, localizedRoute) => {
   for (const { href } of links) {
     if (!html.includes(`href="${escapeHtml(href)}"`)) errors.push(`Missing article CTA: ${localizedRoute}: ${href}`);
   }
+};
+
+const checkArticleFooter = (html, route) => {
+  const footer = html.match(/<footer\b[^>]*data-article-social-footer[^>]*>([\s\S]*?)<\/footer>/)?.[1] || '';
+  const nav = footer.match(/<nav\b[^>]*>([\s\S]*?)<\/nav>/)?.[1] || '';
+  if (!footer.includes('Больше полезного тут:') || footer.indexOf('</nav>') > footer.indexOf('data-article-footer-banner') || !footer.includes('data-article-footer-banner')) errors.push(`Wrong article footer order: ${route}`);
+  const footerLinks = matches(nav, /<a\b[^>]*href="([^"]+)"/g).map(match => match[1]);
+  if (footerLinks.join('|') !== 'https://t.me/hopscupcrpt|https://www.youtube.com/@hopscup|/') errors.push(`Wrong article footer links: ${route}`);
+  if (!nav.includes('Мой сайт с полезными сервисами hopscup.tools')) errors.push(`Wrong article site button: ${route}`);
 };
 
 const checkFallback = (html, route) => {
@@ -208,6 +233,7 @@ for (const language of languages) {
     const title = html.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim();
     checkFallback(html, localizedRoute);
     checkArticleContent(html, route, localizedRoute);
+    if (articleRoutes.has(route)) checkArticleFooter(html, localizedRoute);
     checkLinkPolicy(html, localizedRoute);
     if (language.indexable && offerByRoute.has(route)) checkServiceContent(html, offerByRoute.get(route), language, localizedRoute);
     if (language.indexable) checkSectionSummaries(html, language, route);
@@ -251,6 +277,8 @@ for (const language of languages) {
         if (!types.includes(requiredType)) errors.push(`Missing ${requiredType} schema: ${localizedRoute}`);
       }
       if (pageType !== 'Article' && structuredData.find(item => item['@type'] === pageType)?.dateModified !== siteDateModified) errors.push(`Missing build dateModified: ${localizedRoute}`);
+      const articleMeta = ({ '/proxy-vpn/luchshie-proksi': proxyGuideMeta, '/proxy-vpn/luchshie-mobilnye-proksi': mobileProxyMeta, '/guides/mobile-ip-airplane-mode': mobileIpGuideMeta })[route];
+      if (articleMeta && structuredData.find(item => item['@type'] === 'Article')?.dateModified !== articleMeta.dateModified) errors.push(`Wrong fixed article dateModified: ${localizedRoute}`);
     } catch {
       errors.push(`Invalid JSON-LD: ${localizedRoute}`);
     }

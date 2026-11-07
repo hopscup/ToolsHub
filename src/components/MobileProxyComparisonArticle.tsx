@@ -1,11 +1,9 @@
 import { getExternalLinkRel } from '../lib/externalLinks.js';
 import {
   ArrowLeft,
-  ArrowRight,
   Check,
   Copy,
   ExternalLink,
-  Globe,
   Info,
   Moon,
   ShieldCheck,
@@ -16,10 +14,10 @@ import {
 import { useEffect, useState } from 'react';
 import { trackAnalyticsEvent } from '../analytics';
 import { BackgroundParticles } from './BackgroundParticles';
-import { RelatedGuides } from './RelatedGuides';
+import { ArticleChecklist } from './ArticleChecklist';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
 import { ArticleImageLink } from './ArticleImageLink';
-import { articleFallbackContent, mobileProxyProviders } from '../data/articleFallbackContent.js';
+import { articleFallbackContent, mobileProxyChecklist, mobileProxyCopy as copy, mobileProxyMeta, mobileProxyProviders } from '../data/articleFallbackContent.js';
 
 type Provider = {
   id: string;
@@ -42,20 +40,11 @@ type Provider = {
 
 const providers: Provider[] = mobileProxyProviders;
 
-const comparisonRows = [
-  ['Источник IP', 'Мобильный оператор', 'Домашний интернет-провайдер', 'Дата-центр'],
-  ['Доверие площадок', 'Обычно самое высокое', 'Высокое', 'Зависит от площадки'],
-  ['Смена адреса', 'По кнопке, таймеру или API', 'Ротация или sticky-сессия', 'Чаще статичный IP'],
-  ['Скорость', 'Зависит от сети и оператора', 'Средняя или высокая', 'Обычно самая высокая'],
-  ['Цена', 'Самая высокая', 'Оплата за трафик или пул', 'Самая доступная'],
-  ['Когда брать', 'Строгие площадки и мобильный GEO', 'Парсинг, GEO и сложные сайты', 'Большинство обычных задач'],
-];
-
 type ArticleTheme = 'dark' | 'light';
 
 const ARTICLE_THEME_KEY = 'hopscup-article-theme';
 
-const ArticleScreenshot = ({ src, alt, caption }: { src: string; alt: string; caption: string }) => (
+const ArticleScreenshot = ({ src, alt, caption }: { key?: string; src: string; alt: string; caption: string }) => (
   <figure className="my-8 min-w-0">
     <ArticleImageLink
       src={src} alt={alt} caption={caption}
@@ -166,7 +155,10 @@ export const MobileProxyComparisonArticle = () => {
           </div>
           <h1 className="mx-auto max-w-4xl font-display text-4xl font-black leading-[1.08] tracking-tight text-white md:text-6xl">{articleFallbackContent.mobile.title}</h1>
           <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{articleFallbackContent.mobile.intro}</p>
-          <p className="mt-5 text-xs font-semibold text-white/30">Обновлено 31 августа 2026 года</p>
+          <ArticleImageLink src={mobileProxyMeta.cover.src} alt={mobileProxyMeta.cover.alt} className="mx-auto mt-8 block max-w-3xl overflow-hidden rounded-2xl border border-white/10">
+            <img {...mobileProxyMeta.cover} fetchPriority="high" decoding="async" className="block h-auto w-full" />
+          </ArticleImageLink>
+          <p className="mt-5 text-xs font-semibold text-white/30">{articleFallbackContent.mobile.updated}</p>
         </section>
 
         <div className="mx-auto grid max-w-6xl gap-8 px-5 md:px-8 lg:grid-cols-[220px_minmax(0,760px)] lg:justify-center">
@@ -178,9 +170,10 @@ export const MobileProxyComparisonArticle = () => {
                 ['#comparison', 'Сравнение'],
                 ['#providers', 'Три сервиса'],
                 ['#economy', 'Когда выгодно'],
+                ['#geo', 'Какое гео брать'],
                 ['#choice', 'Как выбрать'],
                 ['#setup', 'Настройка'],
-                ['#faq', 'Вопросы'],
+                ['#start', 'Коротко: что брать'],
               ].map(([href, label]) => (
                 <a key={href} href={href} className="block rounded-lg px-2 py-2 text-xs font-semibold text-white/45 transition-colors hover:bg-white/5 hover:text-brand-purple">
                   {label}
@@ -192,35 +185,31 @@ export const MobileProxyComparisonArticle = () => {
           <article className="article-card min-w-0 rounded-[1.5rem] border border-white/[0.08] bg-[#0d0d0d]/90 px-5 py-7 shadow-2xl backdrop-blur-xl md:px-9 md:py-10">
             <section id="korotko" className="scroll-mt-28">
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Если совсем коротко</p>
-              <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Не покупайте Mobile просто «на всякий случай»</h2>
+              <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">{copy.shortHeading}</h2>
               <p className="mt-4 text-sm font-medium leading-7 text-white/65 md:text-base">
-                Для Gmail, Telegram, Discord, обычных аккаунтов, парсинга и автоматизации я сначала пробую отдельный IPv4. Мобильный прокси беру, когда площадка строго относится к серверным адресам, нужен IP мобильного оператора или приходится часто менять адрес.
+                {copy.short}
               </p>
               <div className="mt-6 rounded-2xl border border-brand-purple/20 bg-brand-purple/[0.07] p-5">
                 <div className="flex items-start gap-3">
                   <Smartphone className="mt-0.5 h-5 w-5 shrink-0 text-brand-purple" />
                   <p className="text-sm font-semibold leading-6 text-white/65">
-                    Мой основной вариант - MobileProxy. Пользуюсь сервисом больше трёх лет. Но это рекомендация именно для задач, где мобильный IP оправдывает цену, а не универсальный ответ для любого пользователя.
+                    {copy.shortNote}
                   </p>
                 </div>
               </div>
             </section>
 
             <section id="comparison" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Сравнение без рекламной арифметики</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Цены и условия</p>
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Три сервиса в одной таблице</h2>
               <p className="mt-4 text-sm font-medium leading-7 text-white/55">
-                Цены у мобильных прокси зависят от страны, оператора и срока. Поэтому важнее сравнивать не только цифру на витрине, но и модель оплаты, ротацию и ограничения тарифа.
+                {copy.comparison}
               </p>
               <div className="mt-6 overflow-x-auto rounded-2xl border border-white/[0.08]">
                 <table className="w-full min-w-[760px] border-collapse text-left">
                   <thead className="bg-white/[0.05] text-[10px] font-black uppercase tracking-wider text-white/35">
                     <tr>
-                      <th className="px-4 py-4">Сервис</th>
-                      <th className="px-4 py-4">GEO</th>
-                      <th className="px-4 py-4">Смена IP</th>
-                      <th className="px-4 py-4">Оплата</th>
-                      <th className="px-4 py-4">Цена входа</th>
+                      {copy.providerColumns.map(column => <th key={column} className="px-4 py-4">{column}</th>)}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/[0.07] text-xs font-semibold text-white/60">
@@ -240,27 +229,16 @@ export const MobileProxyComparisonArticle = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="mt-3 text-xs font-medium leading-5 text-white/35">Условия проверены 31 августа 2026 года. Перед оплатой перепроверьте выбранную страну в кабинете сервиса.</p>
+              <p className="mt-3 text-xs font-medium leading-5 text-white/35">{copy.comparisonNote}</p>
             </section>
 
             <section className="mt-12 border-t border-white/[0.08] pt-10">
               <h2 className="font-display text-2xl font-black text-white md:text-3xl">Как я сравнивал варианты</h2>
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl border border-brand-purple/20 bg-brand-purple/[0.06] p-5">
-                  <p className="text-[10px] font-black uppercase tracking-[0.18em] text-brand-purple">Личный опыт</p>
-                  <h3 className="mt-2 font-display text-lg font-black text-white">MobileProxy</h3>
-                  <p className="mt-3 text-sm font-medium leading-6 text-white/55">Пользуюсь больше трёх лет, поэтому могу говорить о кабинете, смене IP и реальном рабочем сценарии.</p>
-                </div>
-                <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
-                  <p className="text-[10px] font-black uppercase tracking-[0.18em] text-white/30">Проверка условий</p>
-                  <h3 className="mt-2 font-display text-lg font-black text-white">ProxyWing и Proxy-Seller</h3>
-                  <p className="mt-3 text-sm font-medium leading-6 text-white/55">Сверил мобильные тарифы, GEO, протоколы и ротацию по официальным страницам. Не называю их лично протестированными.</p>
-                </div>
-              </div>
+              <p className="mt-4 text-sm font-medium leading-7 text-white/60">{copy.methodology}</p>
             </section>
 
             <section id="providers" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Без искусственного пьедестала</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Мой выбор</p>
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Какой сервис выбрать</h2>
               <div className="mt-7 space-y-5">
                 {providers.map((provider, index) => (
@@ -313,34 +291,35 @@ export const MobileProxyComparisonArticle = () => {
                 ))}
               </div>
 
-              <ArticleScreenshot src="/article/proxy/mobileproxy-copy-formats.png" alt="Форматы копирования мобильных прокси в MobileProxy" caption="MobileProxy: готовую строку можно скопировать в формате HTTP или SOCKS5." />
-              <ArticleScreenshot src="/article/proxy/mobileproxy-change-ip.png" alt="Смена мобильного IP в кабинете MobileProxy" caption="Новый IP получается по отдельной ссылке из кабинета." />
+              {copy.screenshots.map(screenshot => <ArticleScreenshot key={screenshot.src} {...screenshot} />)}
+              <p className="mt-4 text-sm font-medium leading-7 text-white/60">Больше про тарифы и оплату в <a href={copy.providerLink.href} className="font-bold text-brand-purple hover:underline">{copy.providerLink.label}</a>.</p>
             </section>
 
             <section id="economy" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Считаем задачу, а не красивый тариф</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Сколько выйдет</p>
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Когда мобильный прокси выгоден</h2>
               <p className="mt-4 text-sm font-medium leading-7 text-white/60">
-                Один мобильный тариф может дать большой пул адресов через ротацию. Это выгодно, если профили можно обрабатывать по очереди. Но такой тариф не заменяет десятки одновременных уникальных подключений, если каждый профиль должен постоянно оставаться на своём IP.
+                {copy.economy.map((part, index) => part.href ? <a key={index} href={part.href} className="font-bold text-brand-purple hover:underline">{part.text}</a> : part.text)}
               </p>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl border border-brand-purple/20 bg-brand-purple/[0.06] p-5">
                   <h3 className="flex items-center gap-2 text-sm font-bold text-white"><Zap className="h-4 w-4 text-brand-purple" /> Мобильный тариф имеет смысл</h3>
                   <ul className="mt-4 space-y-3 text-sm font-medium leading-6 text-white/55">
-                    <li>Площадка принимает серверные IP заметно хуже.</li>
-                    <li>Нужна частая смена адреса без покупки пачки IPv4.</li>
-                    <li>Профили запускаются последовательно.</li>
+                    {copy.mobileReasons.map(item => <li key={item}>{item}</li>)}
                   </ul>
                 </div>
                 <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
                   <h3 className="flex items-center gap-2 text-sm font-bold text-white"><Info className="h-4 w-4 text-brand-orange" /> Лучше остаться на IPv4</h3>
                   <ul className="mt-4 space-y-3 text-sm font-medium leading-6 text-white/55">
-                    <li>Площадка нормально работает с серверными адресами.</li>
-                    <li>Каждому профилю нужен постоянный отдельный IP.</li>
-                    <li>Главные требования - скорость и низкая цена.</li>
+                    {copy.ipv4Reasons.map(item => <li key={item}>{item}</li>)}
                   </ul>
                 </div>
               </div>
+            </section>
+
+            <section id="geo" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
+              <h2 className="font-display text-2xl font-black text-white md:text-3xl">Какое гео брать</h2>
+              <p className="mt-4 text-sm font-medium leading-7 text-white/60">{copy.geo}</p>
             </section>
 
             <section className="mt-12 border-t border-white/[0.08] pt-10">
@@ -348,10 +327,10 @@ export const MobileProxyComparisonArticle = () => {
               <div className="mt-6 overflow-x-auto rounded-2xl border border-white/[0.08]">
                 <table className="w-full min-w-[720px] border-collapse text-left">
                   <thead className="bg-white/[0.05] text-[10px] font-black uppercase tracking-wider text-white/35">
-                    <tr><th className="px-4 py-4">Критерий</th><th className="px-4 py-4">Mobile</th><th className="px-4 py-4">Residential</th><th className="px-4 py-4">IPv4</th></tr>
+                    <tr>{copy.typeColumns.map(column => <th key={column} className="px-4 py-4">{column}</th>)}</tr>
                   </thead>
                   <tbody className="divide-y divide-white/[0.07] text-xs font-semibold text-white/60">
-                    {comparisonRows.map((row) => <tr key={row[0]}>{row.map((cell, index) => <td key={cell} className={`px-4 py-4 ${index === 0 ? 'font-bold text-white' : ''}`}>{cell}</td>)}</tr>)}
+                    {copy.typeRows.map((row) => <tr key={row[0]}>{row.map((cell, index) => <td key={cell} className={`px-4 py-4 ${index === 0 ? 'font-bold text-white' : ''}`}>{cell}</td>)}</tr>)}
                   </tbody>
                 </table>
               </div>
@@ -361,14 +340,7 @@ export const MobileProxyComparisonArticle = () => {
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Перед оплатой</p>
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Что проверить в тарифе</h2>
               <div className="mt-6 space-y-3">
-                {[
-                  ['GEO и оператор', 'Страна должна совпадать с задачей. Выбор конкретного оператора нужен не всегда, но важен для локальных проверок.'],
-                  ['Ротация', 'Уточните, меняется ли IP по кнопке, ссылке, таймеру или API и можно ли удерживать одну сессию.'],
-                  ['Трафик', 'Безлимит удобен для постоянной работы. Оплата за гигабайты может быть выгоднее при редких запросах.'],
-                  ['Одновременные подключения', 'Большой пул IP не означает, что тариф даст много разных адресов одновременно.'],
-                  ['Протокол и авторизация', 'Для антидетекта чаще всего достаточно SOCKS5 и пары логин/пароль.'],
-                  ['Тест', 'Не покупайте большой срок до проверки на своей реальной площадке и рабочем сценарии.'],
-                ].map(([title, text], index) => (
+                {copy.tariffChecks.map(([title, text], index) => (
                   <div key={title} className="flex gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-purple/12 text-xs font-black text-brand-purple">{index + 1}</span>
                     <div><h3 className="text-sm font-bold text-white">{title}</h3><p className="mt-2 text-sm font-medium leading-6 text-white/50">{text}</p></div>
@@ -381,56 +353,18 @@ export const MobileProxyComparisonArticle = () => {
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">После покупки</p>
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Как подключить и сменить IP</h2>
               <ol className="mt-6 space-y-3">
-                {[
-                  'Скопируйте хост, порт, логин и пароль или готовую строку подключения.',
-                  'В антидетекте выберите HTTP либо SOCKS5 и вставьте данные в соответствующие поля.',
-                  'Проверьте соединение и убедитесь, что страна IP совпадает с выбранной.',
-                  'Для нового адреса используйте ссылку смены IP, кнопку в кабинете или API.',
-                  'После ротации обновите страницу или перезапустите профиль и ещё раз проверьте адрес.',
-                ].map((item, index) => <li key={item} className="flex gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 text-sm font-medium leading-6 text-white/55"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-brand-purple/12 text-xs font-black text-brand-purple">{index + 1}</span>{item}</li>)}
+                {copy.setupSteps.map((item, index) => <li key={item} className="flex gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 text-sm font-medium leading-6 text-white/55"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-brand-purple/12 text-xs font-black text-brand-purple">{index + 1}</span>{item}</li>)}
               </ol>
               <div className="mt-6 rounded-2xl border border-brand-orange/20 bg-brand-orange/[0.06] p-5">
-                <div className="flex items-start gap-3"><Info className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange" /><p className="text-sm font-semibold leading-6 text-white/60">Не меняйте IP посреди важной авторизации, оплаты или заполнения формы. Сначала завершите действие, затем ротируйте адрес.</p></div>
+                <div className="flex items-start gap-3"><Info className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange" /><p className="text-sm font-semibold leading-6 text-white/60">{copy.setupWarning}</p></div>
               </div>
+              <p className="mt-4 text-sm font-medium leading-7 text-white/60">Для пары аккаунтов вместо покупки можно попробовать <a href={copy.airplaneLink.href} className="font-bold text-brand-purple hover:underline">{copy.airplaneLink.label}</a>.</p>
             </section>
 
-            <section id="faq" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Короткие ответы</p>
-              <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Частые вопросы</h2>
-              <div className="mt-6 space-y-3">
-                {[
-                  ['Чем мобильный прокси отличается от VPN?', 'Прокси можно назначить отдельному профилю или программе. VPN обычно направляет через туннель трафик всего устройства или выбранных приложений.'],
-                  ['4G хуже 5G?', 'Не обязательно. Для аккаунтов и обычной работы стабильный 4G часто важнее пиковой скорости 5G.'],
-                  ['Один мобильный прокси даёт много IP?', 'Обычно да, за счёт ротации пула оператора. Но количество одновременных уникальных адресов зависит от конкретного тарифа.'],
-                  ['Можно ли использовать мобильный прокси постоянно?', 'Можно, если тариф и скорость подходят. Для долгой стабильной сессии проверьте возможность удерживать IP без автоматической ротации.'],
-                  ['Какой сервис выбрать первым?', 'Для мобильного IP я начинаю с MobileProxy. Для короткого тарифа смотрю ProxyWing, а для гибкого выбора оператора и формата - Proxy-Seller.'],
-                  ['Нужен ли мобильный прокси каждому аккаунту?', 'Нет. Если площадка нормально принимает отдельный IPv4, мобильный тариф только увеличит расходы.'],
-                ].map(([question, answer]) => (
-                  <details key={question} className="group rounded-xl border border-white/[0.08] bg-white/[0.025]">
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-bold text-white/75 [&::-webkit-details-marker]:hidden">{question}<Check className="h-4 w-4 shrink-0 text-brand-purple/60 transition-transform group-open:rotate-[-45deg]" /></summary>
-                    <p className="border-t border-white/[0.07] px-5 py-4 text-sm font-medium leading-6 text-white/50">{answer}</p>
-                  </details>
-                ))}
-              </div>
-            </section>
-
-            <section className="mt-12 rounded-2xl border border-brand-purple/25 bg-brand-purple/[0.08] p-6 md:p-8">
-              <Globe className="h-6 w-6 text-brand-purple" />
-              <h2 className="mt-4 font-display text-2xl font-black text-white">Мой итоговый выбор</h2>
-              <div className="mt-5 space-y-3 text-sm font-medium leading-6 text-white/60">
-                <p><strong className="text-white">MobileProxy</strong> - основной вариант из моего опыта, когда нужен мобильный IP и удобная ротация.</p>
-                <p><strong className="text-white">ProxyWing</strong> - когда хочется взять короткий тариф и проверить задачу без оплаты месяца.</p>
-                <p><strong className="text-white">Proxy-Seller</strong> - когда нужен выбор dedicated/shared, оператора и интервала ротации.</p>
-              </div>
-              <a href="/proxy-vpn/mobileproxy" className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-brand-purple px-6 py-3 text-xs font-black uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-brand-purple">Подробный обзор MobileProxy <ArrowRight className="h-4 w-4" /></a>
-            </section>
-
-            <RelatedGuides items={[
-              { href: '/proxy-vpn/luchshie-proksi', label: 'Все типы', title: 'Какие прокси выбрать для аккаунтов', description: 'IPv4, ISP, Residential и Mobile: когда за какой тип стоит платить.' },
-              { href: '/antidetect', label: 'Антидетекты', title: 'Выбрать антидетект-браузер', description: 'Сервисы для отдельных профилей, отпечатков и работы с прокси.' },
-              { href: '/guides/mobile-ip-airplane-mode', label: 'Бесплатный вариант', title: 'Смена IP режимом самолёта', description: 'Когда аккаунтов немного и можно обойтись мобильным интернетом телефона.' },
-              { href: '/proxy-vpn', label: 'Каталог', title: 'Все прокси и VPN', description: 'Сравнение сервисов, типов, способов оплаты и промокодов.' },
-            ]} />
+            <ArticleChecklist {...mobileProxyChecklist} onExternalClick={href => {
+              const provider = providers.find(item => item.url === href);
+              if (provider) trackProviderClick(provider, 'article_summary');
+            }} />
             <ArticleSocialFooter />
           </article>
         </div>

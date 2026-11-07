@@ -19,6 +19,7 @@ import { DiscordTokenGuideArticle } from './components/DiscordTokenGuideArticle'
 import { ClaudeGuideArticle } from './components/ClaudeGuideArticle';
 import { claudeGuideArticle } from './data/claudeGuideArticle.js';
 import { proxyGuideMeta } from './data/proxyGuideContent.js';
+import { mobileProxyMeta } from './data/articleFallbackContent.js';
 import { RecommendedBadge } from './components/RecommendedBadge';
 import { accountShopPages } from './data/accountShopPages.js';
 import { antidetectPages } from './data/antidetectPages.js';
@@ -5499,7 +5500,7 @@ export default function App() {
     const rawTitle = proxyGuideArticle
       ? proxyGuideMeta.title
       : mobileProxyComparisonArticle
-        ? 'Лучшие мобильные прокси 2026: сравнение сервисов | Hopscup Tools'
+        ? mobileProxyMeta.title
       : guideArticle
         ? getLocalizedValue(guideArticle.title, 'ru') || guideArticle.title.en
       : isHomeRoute
@@ -5514,7 +5515,7 @@ export default function App() {
     const description = proxyGuideArticle
       ? proxyGuideMeta.description
       : mobileProxyComparisonArticle
-        ? 'Сравнение MobileProxy, ProxyWing и Proxy-Seller: GEO, ротация IP, трафик, цены, ограничения и промокоды на мобильные прокси.'
+        ? mobileProxyMeta.description
       : guideArticle
         ? getLocalizedValue(guideArticle.description, 'ru') || guideArticle.description.en
       : isHomeRoute
@@ -5551,7 +5552,7 @@ export default function App() {
     setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
     setMeta('meta[property="og:type"]', 'property', 'og:type', proxyArticle || guideArticle ? 'article' : 'website');
     setMeta('meta[property="og:locale"]', 'property', 'og:locale', russianOnlyArticle ? 'ru_RU' : currentLanguageOption?.ogLocale || 'en_US');
-    const articleCover = proxyGuideArticle ? proxyGuideMeta.cover : guideArticle?.cover;
+    const articleCover = proxyGuideArticle ? proxyGuideMeta.cover : mobileProxyComparisonArticle ? mobileProxyMeta.cover : guideArticle?.cover;
     setMeta('meta[property="og:image"]', 'property', 'og:image', `${SITE_URL}${articleCover?.src || '/logo.png'}`);
     setMeta('meta[property="og:image:width"]', 'property', 'og:image:width', String(articleCover?.width || 400));
     setMeta('meta[property="og:image:height"]', 'property', 'og:image:height', String(articleCover?.height || 400));
@@ -5633,6 +5634,7 @@ export default function App() {
           '@type': 'Article',
           headline: title,
           ...(proxyGuideArticle ? { datePublished: proxyGuideMeta.datePublished, dateModified: proxyGuideMeta.dateModified }
+            : mobileProxyComparisonArticle ? { datePublished: mobileProxyMeta.datePublished, dateModified: mobileProxyMeta.dateModified, image: `${SITE_URL}${mobileProxyMeta.cover.src}` }
             : guideArticle?.datePublished ? { datePublished: guideArticle.datePublished, dateModified: guideArticle.dateModified } : {}),
           description,
           url: canonicalUrl,

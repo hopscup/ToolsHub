@@ -3,17 +3,18 @@ import { getExternalLinkRel } from '../lib/externalLinks.js';
 
 type Segment = { text: string; href?: string; strong?: boolean };
 
-export const ArticleChecklist = ({ items, sources, sourcesHeading = 'Где брать:', action, note, onExternalClick }: {
+export const ArticleChecklist = ({ items, sources, heading = 'Коротко: что делать', sourcesHeading = 'Где брать:', action, note, onExternalClick }: {
   key?: number;
   items: Segment[][];
   sources: { label: string; links: { text: string; href: string }[] }[];
   sourcesHeading?: string;
+  heading?: string;
   action: { href: string; label: string };
   note: Segment[];
   onExternalClick?: (href: string) => void;
 }) => (
   <section id="start" data-article-checklist className="mt-10 scroll-mt-28 rounded-lg border border-white/[0.09] bg-white/[0.025] p-5 md:p-6">
-    <h2 className="font-display text-2xl font-black text-white">Коротко: что делать</h2>
+    <h2 className="font-display text-2xl font-black text-white">{heading}</h2>
     <ol className="mt-5 list-decimal space-y-4 pl-5 marker:font-bold marker:text-white/80">
       {items.map((item, index) => (
         <li key={index} className="pl-1 text-sm font-medium leading-6 text-white/65">
@@ -28,7 +29,7 @@ export const ArticleChecklist = ({ items, sources, sourcesHeading = 'Где бр
       ))}
     </ol>
     <div data-checklist-sources className="mt-6 border-t border-white/[0.07] pt-5">
-      <h3 className="text-sm font-bold text-white/80">{sourcesHeading}</h3>
+      {sources.length > 0 && <><h3 className="text-sm font-bold text-white/80">{sourcesHeading}</h3>
       <div className="mt-3 space-y-2 text-sm font-medium leading-6 text-white/65">
         {sources.map(source => (
           <p key={source.label}>
@@ -42,7 +43,7 @@ export const ArticleChecklist = ({ items, sources, sourcesHeading = 'Где бр
             ))}
           </p>
         ))}
-      </div>
+      </div></>}
       <p className="mt-3 text-xs font-medium leading-5 text-white/40">{note.map((part, index) => part.strong
         ? <strong key={index} className="font-bold text-brand-purple">{part.text}</strong>
         : <span key={index}>{part.text}</span>)}</p>

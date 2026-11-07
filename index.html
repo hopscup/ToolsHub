@@ -124,12 +124,22 @@
       .seo-fallback dt { margin-top: 8px; font-weight: 700; }
       .seo-fallback dd { margin: 0; }
       .seo-fallback h3 { margin: 24px 0 12px; color: #fff; font-size: 20px; }
+      .seo-fallback [data-article-social-footer] {
+        box-sizing: border-box; max-width: 1024px; margin: 40px auto 0; padding: 28px 20px 32px;
+      }
+      .seo-fallback [data-article-social-footer] > p { margin: 0; }
+      .seo-fallback [data-article-social-footer] > nav {
+        margin-top: 16px; padding: 0; border: 0; grid-template-columns: minmax(0, 1fr); grid-auto-rows: 1fr;
+      }
+      .seo-fallback [data-article-footer-banner] img { display: block; width: 100%; height: auto; }
       @media (min-width: 768px) {
         .seo-fallback .fallback-topbar > div { padding-left: 32px; padding-right: 32px; }
         .seo-fallback[data-static-article] .fallback-hero { padding: 80px 32px 64px; }
         .seo-fallback[data-static-article] h1 { font-size: 60px; }
         .seo-fallback[data-static-article] .fallback-hero > p:not(.fallback-badge):not(.fallback-updated) { font-size: 18px; line-height: 29.25px; }
         .seo-fallback .fallback-body, .seo-fallback[data-static-article] > nav { padding-left: 32px; padding-right: 32px; }
+        .seo-fallback [data-article-social-footer] { padding-left: 32px; padding-right: 32px; }
+        .seo-fallback [data-article-social-footer] > nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       }
     </style>
     <link rel="icon" type="image/png" href="/logo.png" />
