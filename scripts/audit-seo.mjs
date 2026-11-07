@@ -170,7 +170,7 @@ const checkArticleFooter = (html, route) => {
   if (!footer.includes('Больше полезного тут:') || footer.indexOf('</nav>') > footer.indexOf('data-article-footer-banner') || !footer.includes('data-article-footer-banner')) errors.push(`Wrong article footer order: ${route}`);
   const footerLinks = matches(nav, /<a\b[^>]*href="([^"]+)"/g).map(match => match[1]);
   if (footerLinks.join('|') !== 'https://t.me/hopscupcrpt|https://www.youtube.com/@hopscup|/') errors.push(`Wrong article footer links: ${route}`);
-  if (!nav.includes('Мой сайт с полезными сервисами hopscup.tools')) errors.push(`Wrong article site button: ${route}`);
+  if (!nav.includes('>hopscup.tools</a>')) errors.push(`Wrong article site button: ${route}`);
 };
 
 const checkFallback = (html, route) => {

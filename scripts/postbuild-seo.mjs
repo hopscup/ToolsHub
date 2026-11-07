@@ -1720,7 +1720,7 @@ const renderProxyGuideBody = () => proxyGuideBlocks.map(block => {
 
 const renderArticleSocialFooter = (compact = false) => {
   const banner = `<a data-article-footer-banner href="${escapeHtml(articleSocialBanner.href)}" target="_blank" rel="noopener noreferrer" class="mt-6 block overflow-hidden rounded-2xl border border-white/10"><img src="${escapeHtml(articleSocialBanner.src)}" alt="${escapeHtml(articleSocialBanner.alt)}" width="${articleSocialBanner.width}" height="${articleSocialBanner.height}" loading="lazy" class="block h-auto w-full" /></a>`;
-  const buttons = articleSocialLinks.map(link => `<a href="${escapeHtml(link.href)}"${getExternalLinkRel(link.href) ? ` target="_blank" rel="${getExternalLinkRel(link.href)}"` : ''} class="flex min-h-11 min-w-0 items-center justify-center rounded-xl border border-white/10 px-3 py-3 text-center text-sm font-bold leading-6${link.platform === 'site' ? '' : ' whitespace-nowrap'}">${escapeHtml(link.label)}</a>`).join('');
+  const buttons = articleSocialLinks.map(link => `<a href="${escapeHtml(link.href)}"${getExternalLinkRel(link.href) ? ` target="_blank" rel="${getExternalLinkRel(link.href)}"` : ''} class="flex h-12 min-w-0 items-center justify-center whitespace-nowrap rounded-xl border border-white/10 px-3 text-center text-sm font-bold leading-6">${escapeHtml(link.label)}</a>`).join('');
   return `<footer data-article-social-footer data-article-footer-variant="${compact ? 'compact' : 'default'}" class="mt-10 border-t border-white/10 pt-7"><p><strong>Больше полезного тут:</strong></p><nav aria-label="Ссылки Hopscup" class="mt-4 grid auto-rows-fr grid-cols-1 items-stretch gap-3 md:grid-cols-3">${buttons}</nav>${banner}</footer>`;
 };
 

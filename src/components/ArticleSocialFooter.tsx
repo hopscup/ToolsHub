@@ -15,9 +15,9 @@ export const ArticleSocialFooter = ({ variant = 'default' }: { variant?: 'defaul
           <a key={link.href} href={link.href}
             onClick={() => trackAnalyticsEvent('social_click', { platform: link.platform, placement: 'article_footer' })}
             {...(link.href.startsWith('https://') ? { target: '_blank', rel: getExternalLinkRel(link.href) } : {})}
-            className="flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.035] px-3 py-3 text-center text-sm font-bold leading-6 text-brand-purple transition-colors hover:border-brand-purple/40 hover:text-white">
+            className="flex h-12 min-w-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.035] px-3 text-center text-sm font-bold leading-6 text-brand-purple transition-colors hover:border-brand-purple/40 hover:text-white">
             <Icon aria-hidden="true" className="h-4 w-4 shrink-0" />
-            <span className={link.platform === 'site' ? 'min-w-0' : 'whitespace-nowrap'}>{link.label}</span>
+            <span className="whitespace-nowrap">{link.label}</span>
           </a>
         );
       })}

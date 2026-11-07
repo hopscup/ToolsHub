@@ -22,3 +22,10 @@ test('mobile comparison footnote distinguishes the checked provider prices', asy
   const { mobileProxyCopy } = await import('../src/data/articleFallbackContent.js');
   assert.equal(mobileProxyCopy.comparisonNote, 'Цены ProxyWing и Proxy-Seller сверены в августе 2026 года. Перед оплатой перепроверьте выбранную страну в кабинете сервиса.');
 });
+
+test('article footer uses the short site label and keeps its internal link', async () => {
+  const { articleSocialLinks } = await import('../src/data/articleSocialFooter.js');
+  const site = articleSocialLinks.find(link => link.platform === 'site');
+  assert.equal(site.label, 'hopscup.tools');
+  assert.equal(site.href, '/');
+});

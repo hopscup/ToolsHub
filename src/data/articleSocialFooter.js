@@ -1,7 +1,7 @@
 export const articleSocialLinks = [
   { label: 'Telegram', href: 'https://t.me/hopscupcrpt', icon: 'telegram', platform: 'telegram' },
   { label: 'YouTube', href: 'https://www.youtube.com/@hopscup', icon: 'youtube', platform: 'youtube' },
-  { label: 'Мой сайт с полезными сервисами hopscup.tools', href: '/', icon: 'website', platform: 'site' },
+  { label: 'hopscup.tools', href: '/', icon: 'website', platform: 'site' },
 ];
 
 export const articleSocialBanner = {
