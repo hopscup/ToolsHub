@@ -20,6 +20,7 @@ import { socialPages } from '../src/data/socialPages.js';
 import { steamPages } from '../src/data/steamPages.js';
 import { vpsPages } from '../src/data/vpsPages.js';
 import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobileProxyMeta, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
+import { claudeRecoveryArticle } from '../src/data/claudeRecoveryArticle.js';
 
 const distDir = path.resolve('dist');
 const siteUrl = 'https://hopscup.tools';
@@ -131,6 +132,18 @@ const checkSectionSummaries = (html, language, route) => {
 };
 
 const checkArticleContent = (html, route, localizedRoute) => {
+  if (route === `/guides/${claudeRecoveryArticle.slug}`) {
+    const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
+    const segments = (parts) => parts.map(part => part.text);
+    const text = [claudeRecoveryArticle.title, claudeRecoveryArticle.intro, ...claudeRecoveryArticle.blocks.flatMap(block => {
+      if (block.type === 'paragraph') return segments(block.content);
+      if (block.type === 'list') return block.items.flatMap(segments);
+      if (block.type === 'table') return [...block.headers, ...block.rows.flat()].flatMap(segments);
+      return [block.text];
+    })];
+    for (const part of text) if (!content.includes(escapeHtml(part))) errors.push(`Missing recovery article text: ${localizedRoute}: ${part}`);
+    if (matches(content, /<pre\b/g).length !== 8 || !content.includes('<table')) errors.push(`Missing recovery article prompts or table: ${localizedRoute}`);
+  }
   const article = articleFallbackByRoute[route];
   if (!article) return;
   const text = [article.title, article.intro, ...(article.before || []), ...(article.result ? [article.result] : []), ...article.sections.flatMap((part) => part.steps)];

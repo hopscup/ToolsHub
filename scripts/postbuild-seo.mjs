@@ -1675,11 +1675,14 @@ const renderLink = ({ href, label }) => {
 const renderGuideBlocks = (blocks, headingIds = {}) => {
   const inline = (segments) => segments.map((segment) => {
     let text = segment.href ? renderLink({ href: segment.href, label: segment.text }) : escapeHtml(segment.text);
+    if (segment.code) text = `<code>${text}</code>`;
     if (segment.strong) text = `<strong>${text}</strong>`;
     if (segment.em) text = `<em>${text}</em>`;
     return text;
   }).join('');
   return withoutArticleSocialFooter(blocks).map((block) => {
+    if (block.type === 'code') return `<div data-article-code><p><strong>${escapeHtml(block.label)}</strong></p><pre class="whitespace-pre-wrap break-words rounded-lg border border-white/10 p-4 text-sm [overflow-wrap:anywhere]"><code>${escapeHtml(block.text)}</code></pre></div>`;
+    if (block.type === 'table') return `<div style="overflow-x:auto"><table class="w-full border-collapse text-left text-sm leading-6"><thead><tr>${block.headers.map(cell => `<th scope="col" class="border-b border-white/10 px-4 py-3">${inline(cell)}</th>`).join('')}</tr></thead><tbody>${block.rows.map(row => `<tr>${row.map(cell => `<td class="border-b border-white/10 px-4 py-3 align-top">${inline(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
     if (block.type === 'heading') {
       const tag = block.level === 3 ? 'h3' : 'h2';
       const id = headingIds[block.text];

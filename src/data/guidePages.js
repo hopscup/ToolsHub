@@ -2,6 +2,7 @@ import { foreignCardArticle } from './foreignCardArticle.js';
 import { discordTokenArticle, discordTokenStaticArticle } from './discordTokenArticle.js';
 import { claudeGuideArticle, claudeGuideHeadingIds } from './claudeGuideArticle.js';
 import { mobileIpGuideMeta } from './mobileIpGuideContent.js';
+import { claudeRecoveryArticle } from './claudeRecoveryArticle.js';
 import otcKycArticle from './otcKycArticle.json' with { type: 'json' };
 
 const guideTitle = (title) => ({
@@ -13,6 +14,27 @@ const guideTitle = (title) => ({
 });
 
 export const guidePages = [
+  {
+    id: claudeRecoveryArticle.id,
+    slug: claudeRecoveryArticle.slug,
+    articleBlocks: claudeRecoveryArticle.blocks,
+    articleHeadingIds: claudeRecoveryArticle.headingIds,
+    cover: claudeRecoveryArticle.cover,
+    datePublished: claudeRecoveryArticle.datePublished,
+    dateModified: claudeRecoveryArticle.dateModified,
+    name: { ru: claudeRecoveryArticle.title, en: 'Claude account blocked: recover and back up your data' },
+    title: { ru: claudeRecoveryArticle.seoTitle, en: 'Claude account blocked: recover and back up data | Hopscup' },
+    heading: { ru: claudeRecoveryArticle.title, en: 'Claude account blocked: recover and back up your data' },
+    intro: { ru: claudeRecoveryArticle.intro, en: claudeRecoveryArticle.intro },
+    description: { ru: claudeRecoveryArticle.description, en: 'Recover available Claude data through export or local files, and back up chats, code and video projects with ready-to-copy prompts.' },
+    keywords: { ru: 'забанили Claude, Claude заблокирован, экспорт данных Claude, сохранить переписки Claude, бэкап Claude Code', en: 'Claude account blocked, Claude data export, Claude backup' },
+    editorial: {
+      description: { ru: 'Два способа вытащить данные Claude и готовые промпты для бэкапа чатов, кода и видеопроектов.', en: 'Two ways to recover Claude data and prompts for backing up chats, code and video projects.' },
+      bestFor: { ru: ['Экспорт переписок и поиск локальных данных.', 'Резервные копии чатов, кода и видеопроектов.'], en: ['Chat exports and local data.', 'Backups for chats, code and video projects.'] },
+      considerations: { ru: ['Гарантии, что вы заберёте всё один в один, нет.'], en: ['Not all account data may be recoverable.'] },
+      verdict: { ru: 'Готовые промпты для сохранения данных и продолжения работы.', en: 'Ready-to-copy prompts for backing up data and continuing work.' },
+    },
+  },
   {
     id: claudeGuideArticle.id,
     slug: claudeGuideArticle.slug,

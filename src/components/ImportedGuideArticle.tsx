@@ -1,4 +1,4 @@
-import { ArrowLeft, BookOpen, Moon, Sun } from 'lucide-react';
+import { ArrowLeft, BookOpen, Check, Copy, Moon, Sun } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
 import { RelatedGuides } from './RelatedGuides';
@@ -15,6 +15,7 @@ type InlineSegment = {
   href?: string;
   strong?: boolean;
   em?: boolean;
+  code?: boolean;
 };
 
 type ArticleBlock =
@@ -22,6 +23,8 @@ type ArticleBlock =
   | { type: 'heading'; level: number; text: string; compact?: boolean }
   | { type: 'callout'; level: number; text: string; items?: InlineSegment[][]; footer?: string }
   | { type: 'list'; ordered: boolean; items: InlineSegment[][] }
+  | { type: 'code'; label: string; text: string }
+  | { type: 'table'; headers: InlineSegment[][]; rows: InlineSegment[][][] }
   | { type: 'image'; src: string; alt: string; caption: string; width?: number; height?: number };
 
 export type ArticleData = {
@@ -73,6 +76,7 @@ const InlineContent = ({
       const safeHref = normalizeHref(segment.href, sourceAnchors);
       let node = <>{segment.text}</>;
 
+      if (segment.code) node = <code className="rounded border border-white/10 bg-white/[0.04] px-1.5 py-0.5 font-mono text-[0.9em] [overflow-wrap:anywhere]">{node}</code>;
       if (segment.strong) node = <strong>{node}</strong>;
       if (segment.em) node = <em>{node}</em>;
 
@@ -107,6 +111,34 @@ const ImportedImage = ({ src, alt, caption, index, width, height }: { key?: stri
       {caption && <figcaption className="mt-3 text-xs font-semibold leading-5 text-white/40">{caption}</figcaption>}
     </figure>
   );
+};
+
+const ImportedCode = ({ label, text }: { key?: string; label: string; text: string }) => {
+  const [status, setStatus] = useState('idle');
+  useEffect(() => {
+    if (status === 'idle') return;
+    const timer = window.setTimeout(() => setStatus('idle'), 2000);
+    return () => window.clearTimeout(timer);
+  }, [status]);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setStatus('copied');
+    } catch {
+      setStatus('error');
+    }
+  };
+  return <div data-article-code className="my-6 overflow-hidden rounded-lg border border-white/10 bg-white/[0.025]">
+    <div className="flex items-center justify-between gap-3 border-b border-white/[0.07] px-4 py-2">
+      <p className="text-xs font-bold text-white/45">{label}</p>
+      <button type="button" onClick={copy} aria-label={`Скопировать: ${label}`} title="Скопировать"
+        className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 text-brand-purple transition-colors hover:border-brand-purple/40 hover:bg-white/[0.04]">
+        {status === 'copied' ? <Check aria-hidden="true" className="h-4 w-4" /> : <Copy aria-hidden="true" className="h-4 w-4" />}
+      </button>
+      <span role="status" className="sr-only">{status === 'copied' ? 'Скопировано' : status === 'error' ? 'Не удалось скопировать. Выделите текст вручную.' : ''}</span>
+    </div>
+    <pre className="m-0 whitespace-pre-wrap break-words p-4 font-mono text-[13px] leading-6 text-white/75 [overflow-wrap:anywhere]"><code>{text}</code></pre>
+  </div>;
 };
 
 export const ImportedGuideArticle = ({
@@ -200,6 +232,13 @@ export const ImportedGuideArticle = ({
 
           <article className="article-card min-w-0 rounded-[1.5rem] border border-white/[0.08] bg-[#0d0d0d]/90 px-5 py-7 shadow-2xl backdrop-blur-xl md:px-9 md:py-10">
             {withoutArticleSocialFooter(data.blocks).map((block: ArticleBlock, blockIndex: number) => {
+              if (block.type === 'code') return <ImportedCode key={`code-${blockIndex}`} label={block.label} text={block.text} />;
+              if (block.type === 'table') return <div key={`table-${blockIndex}`} className="my-7 overflow-x-auto rounded-lg border border-white/10">
+                <table className="w-full border-collapse text-left text-sm leading-6 text-white/65">
+                  <thead className="bg-white/[0.04] text-white/85"><tr>{block.headers.map((cell, index) => <th key={index} scope="col" className="border-b border-white/10 px-4 py-3 font-bold"><InlineContent content={cell} sourceAnchors={sourceAnchors} /></th>)}</tr></thead>
+                  <tbody>{block.rows.map((row, index) => <tr key={index} className="border-b border-white/[0.07] last:border-0">{row.map((cell, cellIndex) => <td key={cellIndex} className="px-4 py-3 align-top"><InlineContent content={cell} sourceAnchors={sourceAnchors} /></td>)}</tr>)}</tbody>
+                </table>
+              </div>;
               if (block.type === 'image') {
                 const currentImageIndex = imageIndex;
                 imageIndex += 1;

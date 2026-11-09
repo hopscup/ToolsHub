@@ -17,7 +17,9 @@ import { AntidetectSetupGuideArticle } from './components/AntidetectSetupGuideAr
 import { ForeignCardGuideArticle } from './components/ForeignCardGuideArticle';
 import { DiscordTokenGuideArticle } from './components/DiscordTokenGuideArticle';
 import { ClaudeGuideArticle } from './components/ClaudeGuideArticle';
+import { ClaudeRecoveryGuideArticle } from './components/ClaudeRecoveryGuideArticle';
 import { claudeGuideArticle } from './data/claudeGuideArticle.js';
+import { claudeRecoveryArticle } from './data/claudeRecoveryArticle.js';
 import { proxyGuideMeta } from './data/proxyGuideContent.js';
 import { mobileProxyMeta } from './data/articleFallbackContent.js';
 import { RecommendedBadge } from './components/RecommendedBadge';
@@ -116,6 +118,7 @@ type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto';
 const RECOMMENDED_OFFER_IDS = new Set(Object.values(recommendedOfferIds).flat());
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
+  'guide-claude-recovery': { topic: 'accounts', minutes: 6 },
   'guide-claude-russia': { topic: 'accounts', minutes: 10 },
   'guide-discord-token': { topic: 'accounts', minutes: 6 },
   'guide-foreign-cards': { topic: 'crypto', minutes: 7 },
@@ -1959,6 +1962,15 @@ const OFFERS: Offer[] = [
     details: antarcticExchangeDetails,
   },
   // GUIDES
+  {
+    id: claudeRecoveryArticle.id,
+    category: 'Guides',
+    name: guideCatalogById[claudeRecoveryArticle.id].title.ru,
+    slug: GUIDE_PAGE_BY_ID[claudeRecoveryArticle.id].slug,
+    editorial: GUIDE_PAGE_BY_ID[claudeRecoveryArticle.id].editorial,
+    description: GUIDE_PAGE_BY_ID[claudeRecoveryArticle.id].editorial.description,
+    url: claudeRecoveryArticle.sourceUrl,
+  },
   {
     id: claudeGuideArticle.id,
     category: 'Guides',
@@ -6275,6 +6287,9 @@ export default function App() {
   if (stripLanguagePrefix(window.location.pathname) === `/guides/${claudeGuideArticle.slug}`) {
     return <ClaudeGuideArticle />;
   }
+  if (stripLanguagePrefix(window.location.pathname) === `/guides/${claudeRecoveryArticle.slug}`) {
+    return <ClaudeRecoveryGuideArticle />;
+  }
 
   if (stripLanguagePrefix(window.location.pathname) === '/guides/zarubezhnaya-karta-s-popolneniem-rublyami') {
     return <ForeignCardGuideArticle />;
@@ -6293,6 +6308,7 @@ export default function App() {
       onClick={(event) => {
         if (
           offer.id === 'guide-mobile-ip'
+          || offer.id === 'guide-claude-recovery'
           || offer.id === 'guide-claude-russia'
           || offer.id === 'guide-discord-token'
           || offer.id === 'guide-foreign-cards'
