@@ -391,6 +391,7 @@ export const guidePages = [
   {
     id: 'guide-uids-addresses',
     slug: 'exchange-uids-addresses',
+    cover: guideRefreshMeta['guide-uids-addresses'].cover,
     datePublished: guideRefreshMeta['guide-uids-addresses'].datePublished,
     dateModified: guideRefreshMeta['guide-uids-addresses'].dateModified,
     intro: { ru: guideRefreshMeta['guide-uids-addresses'].intro },

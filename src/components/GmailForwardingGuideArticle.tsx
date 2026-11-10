@@ -14,7 +14,7 @@ import { BackgroundParticles } from './BackgroundParticles';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
 import { ArticleImageLink } from './ArticleImageLink';
 import { articleFallbackContent } from '../data/articleFallbackContent.js';
-import { createGuideRefreshContent, gmailResultNote, gmailScreenshots } from '../data/guideRefreshContent.js';
+import { createGuideRefreshContent, gmailResultNote, gmailScreenshots, guideRefreshCovers } from '../data/guideRefreshContent.js';
 import { getExternalLinkRel } from '../lib/externalLinks.js';
 import { trackArticleService } from '../lib/articleServiceTracking';
 import type { ArticleServiceOffer } from '../lib/articleServiceTracking';
@@ -68,6 +68,7 @@ export const GmailForwardingGuideArticle = ({ offers }: { offers: ArticleService
   }, [theme]);
 
   const isLight = theme === 'light';
+  const cover = guideRefreshCovers['guide-gmail-forwarding'];
   const closing = createGuideRefreshContent(offers)['guide-gmail-forwarding'].closing as { text: string; href?: string }[];
 
   return (
@@ -110,6 +111,9 @@ export const GmailForwardingGuideArticle = ({ offers }: { offers: ArticleService
           </div>
           <h1 className="mx-auto max-w-4xl font-display text-4xl font-black leading-[1.08] text-white md:text-6xl">{articleFallbackContent.gmail.title}</h1>
           <p className="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{articleFallbackContent.gmail.intro}</p>
+          <ArticleImageLink src={cover.src} alt={cover.alt} className="mx-auto mt-8 block max-w-3xl overflow-hidden rounded-2xl border border-white/10">
+            <img src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} fetchPriority="high" decoding="async" className="block h-auto w-full" />
+          </ArticleImageLink>
         </section>
 
         <div className="mx-auto grid max-w-6xl gap-8 px-5 md:px-8 lg:grid-cols-[220px_minmax(0,760px)] lg:justify-center">

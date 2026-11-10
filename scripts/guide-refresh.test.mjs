@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createHash } from 'node:crypto';
-import { access } from 'node:fs/promises';
+import { access, readFile, stat } from 'node:fs/promises';
 import { articleFallbackContent } from '../src/data/articleFallbackContent.js';
 import { foreignCardArticle } from '../src/data/foreignCardArticle.js';
 import { discordTokenArticle } from '../src/data/discordTokenArticle.js';
-import { createGuideRefreshContent, guideRefreshMeta, exchangeRegistrationServices } from '../src/data/guideRefreshContent.js';
+import { createGuideRefreshContent, guideRefreshCovers, guideRefreshMeta, exchangeRegistrationServices } from '../src/data/guideRefreshContent.js';
 import { guidePages } from '../src/data/guidePages.js';
 import { guideCatalogById } from '../src/data/guideCatalog.js';
 import { loadOffers } from './load-offers.mjs';
@@ -70,4 +70,21 @@ test('account farm catalogue cover is separate from the original article cover a
   assert.ok(mobile);
   assert.equal(mobile.category, 'Guides');
   assert.equal(guideCatalogById[mobile.id].route, '/proxy-vpn/luchshie-mobilnye-proksi');
+});
+
+test('four supplied covers use lightweight WebP variants shared by catalogue and article', async () => {
+  for (const [id, cover] of Object.entries(guideRefreshCovers)) {
+    assert.equal(guidePages.find(page => page.id === id).cover, cover);
+    assert.equal(guideCatalogById[id].cover, cover);
+    assert.equal(content[id].cover, cover);
+    assert.equal(cover.width, 1280);
+    assert.ok(cover.alt);
+    for (const [src, budget] of [[cover.src, 150_000], [cover.previewSrc, 60_000]]) {
+      const file = 'public' + src;
+      assert.ok((await stat(file)).size < budget);
+      const bytes = await readFile(file);
+      assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
+      assert.equal(bytes.subarray(8, 12).toString(), 'WEBP');
+    }
+  }
 });

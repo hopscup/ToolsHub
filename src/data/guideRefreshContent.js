@@ -3,11 +3,18 @@ import { discordTokenArticle } from './discordTokenArticle.js';
 import { foreignCardArticle } from './foreignCardArticle.js';
 import exchangeUidsArticle from './exchangeUidsArticle.json' with { type: 'json' };
 
+export const guideRefreshCovers = {
+  'guide-gmail-forwarding': { src: '/article/gmail-forwarding/cover.webp', previewSrc: '/article/gmail-forwarding/cover-preview.webp', alt: 'Пересылка писем Gmail: все почты в одной', width: 1280, height: 720 },
+  'guide-discord-token': { src: '/article/discord-token/cover.webp', previewSrc: '/article/discord-token/cover-preview.webp', alt: 'Вход в Discord по токену через расширение и F12', width: 1280, height: 721 },
+  'guide-foreign-cards': { src: '/article/foreign-cards/cover.webp', previewSrc: '/article/foreign-cards/cover-preview.webp', alt: 'Зарубежная карта из России с пополнением рублями', width: 1280, height: 720 },
+  'guide-uids-addresses': { src: '/article/exchange-uids-addresses/cover.webp', previewSrc: '/article/exchange-uids-addresses/cover-preview.webp', alt: 'Много UID на OKX: субаккаунты и адреса', width: 1280, height: 721 },
+};
+
 export const guideRefreshMeta = {
-  'guide-gmail-forwarding': { datePublished: '2026-08-30T01:39:58+03:00', dateModified: '2026-11-10' },
-  'guide-discord-token': { datePublished: '2026-10-26T17:38:30+03:00', dateModified: '2026-11-10', title: 'Как войти в Discord по токену: расширение и F12 | Hopscup' },
-  'guide-foreign-cards': { datePublished: '2026-10-14T16:08:38+03:00', dateModified: '2026-11-10' },
-  'guide-uids-addresses': { datePublished: exchangeUidsArticle.datePublished, dateModified: exchangeUidsArticle.dateModified, title: exchangeUidsArticle.seoTitle, heading: exchangeUidsArticle.title, intro: exchangeUidsArticle.intro },
+  'guide-gmail-forwarding': { cover: guideRefreshCovers['guide-gmail-forwarding'], datePublished: '2026-08-30T01:39:58+03:00', dateModified: '2026-11-10' },
+  'guide-discord-token': { cover: guideRefreshCovers['guide-discord-token'], datePublished: '2026-10-26T17:38:30+03:00', dateModified: '2026-11-10', title: 'Как войти в Discord по токену: расширение и F12 | Hopscup' },
+  'guide-foreign-cards': { cover: guideRefreshCovers['guide-foreign-cards'], datePublished: '2026-10-14T16:08:38+03:00', dateModified: '2026-11-10' },
+  'guide-uids-addresses': { cover: guideRefreshCovers['guide-uids-addresses'], datePublished: exchangeUidsArticle.datePublished, dateModified: exchangeUidsArticle.dateModified, title: exchangeUidsArticle.seoTitle, heading: exchangeUidsArticle.title, intro: exchangeUidsArticle.intro },
 };
 
 export const gmailScreenshots = [
@@ -72,10 +79,10 @@ export const createGuideRefreshContent = offers => {
     paragraph([link('Все карты с условиями и комиссиями у меня на сайте', '/foreign-cards')]),
   );
   return {
-    'guide-gmail-forwarding': { title: gmail.title, intro: gmail.intro, sourceUrl: '', blocks: gmailBlocks, headingIds: { 'Важные моменты перед началом': 'before', [gmail.sections[0].heading]: 'add-address', [gmail.sections[1].heading]: 'enable', 'Проверяем результат': 'result' }, closing: gmailClosing },
-    'guide-discord-token': { ...discordTokenArticle, blocks: [...discordTokenArticle.blocks, paragraph(discordClosing)], headingIds: discordHeadingIds },
-    'guide-foreign-cards': { title: 'Зарубежная карта с пополнением рублями: что выбрать', intro: 'PGON, ВездеКарта и Zarub: пополнение через СБП или USDT, документы, курс и реальные расходы.', sourceUrl: 'https://telegra.ph/51526126126216216-09-11', blocks: cardBlocks, headingIds: cardsHeadingIds },
-    'guide-uids-addresses': { ...exchangeUidsArticle, headingIds: { OKX: 'okx', Bitget: 'bitget' } },
+    'guide-gmail-forwarding': { cover: guideRefreshCovers['guide-gmail-forwarding'], title: gmail.title, intro: gmail.intro, sourceUrl: '', blocks: gmailBlocks, headingIds: { 'Важные моменты перед началом': 'before', [gmail.sections[0].heading]: 'add-address', [gmail.sections[1].heading]: 'enable', 'Проверяем результат': 'result' }, closing: gmailClosing },
+    'guide-discord-token': { ...discordTokenArticle, cover: guideRefreshCovers['guide-discord-token'], blocks: [...discordTokenArticle.blocks, paragraph(discordClosing)], headingIds: discordHeadingIds },
+    'guide-foreign-cards': { cover: guideRefreshCovers['guide-foreign-cards'], title: 'Зарубежная карта с пополнением рублями: что выбрать', intro: 'PGON, ВездеКарта и Zarub: пополнение через СБП или USDT, документы, курс и реальные расходы.', sourceUrl: 'https://telegra.ph/51526126126216216-09-11', blocks: cardBlocks, headingIds: cardsHeadingIds },
+    'guide-uids-addresses': { ...exchangeUidsArticle, cover: guideRefreshCovers['guide-uids-addresses'], headingIds: { OKX: 'okx', Bitget: 'bitget' } },
   };
 };
 
