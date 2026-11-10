@@ -9,6 +9,7 @@ import { indexableGuideCatalog } from '../src/data/guideCatalog.js';
 import { getExternalLinkRel } from '../src/lib/externalLinks.js';
 import { proxyGuideMeta, proxyGuideBlocks, proxyProviders, proxyTypes, proxyCopy, proxyChecklist } from '../src/data/proxyGuideContent.js';
 import { mobileIpGuideBlocks, mobileIpChecklist, mobileIpProvider } from '../src/data/mobileIpGuideContent.js';
+import { antidetectSetupCopy, antidetectSetupAdditions, antidetectVideoUrl, getAntidetectGuideServices, resolveAntidetectGuideSegments, createAntidetectGuideChecklist } from '../src/data/antidetectSetupContent.js';
 import { articleSocialLinks, articleSocialBanner, withoutArticleSocialFooter } from '../src/data/articleSocialFooter.js';
 import { pageHeadings } from '../src/data/pageHeadings.js';
 import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobileProxyMeta, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
@@ -1758,8 +1759,37 @@ const renderMobileProxyBody = () => {
     ${renderChecklist(mobileProxyChecklist)}`;
 };
 
+const renderAntidetectSetupBody = article => {
+  const copy = antidetectSetupCopy;
+  const additions = antidetectSetupAdditions;
+  const services = getAntidetectGuideServices(OFFERS);
+  const paragraph = parts => renderGuideBlocks([{ type: 'paragraph', content: parts }]);
+  const list = (items, ordered = false) => renderGuideBlocks([{ type: 'list', ordered, items: items.map(item => typeof item === 'string' ? [{ text: item }] : item) }]);
+  const note = text => `<aside><p>${escapeHtml(text)}</p></aside>`;
+  return `
+    <section id="how-it-works"><p>Сначала база</p><h2>Антидетект и прокси делают разную работу</h2>
+      ${paragraph(copy.foundation)}${copy.roles.map(role => `<div><h3>${escapeHtml(role.title)}</h3><p>${escapeHtml(role.text)}</p></div>`).join('')}${note(copy.mainRule)}</section>
+    <section id="where-proxy"><h2>Где взять прокси</h2>${paragraph(resolveAntidetectGuideSegments(additions.proxy, services))}${paragraph(additions.airplane)}${paragraph([additions.proxyMore])}</section>
+    <section id="common-settings"><h2>Но что стоит перепроверить</h2><dl>${copy.settings.map(row => `<dt>${escapeHtml(row.name)}</dt><dd>${escapeHtml(row.value)}</dd>`).join('')}</dl></section>
+    <section id="free-antidetect"><h2>Какой антидетект взять бесплатно</h2>${paragraph(resolveAntidetectGuideSegments(additions.free, services, true))}${paragraph([additions.freeMore])}</section>
+    ${article.sections.map((browser, index) => {
+      const screenshots = index === 2 ? [copy.screenshots[4]] : copy.screenshots.slice(index * 2, index * 2 + 2);
+      return `<section id="${browser.id}"><h2>${escapeHtml(browser.heading)}</h2><p>${escapeHtml(copy.browserIntros[index])}</p>${list(browser.steps, true)}
+        ${renderGuideBlocks(screenshots.map(image => ({ type: 'image', ...image })))}
+        <p>${renderLink(browser.links[0])}</p>${index === 2 ? `<p>${renderLink({ href: antidetectVideoUrl, label: 'Смотреть видеогайд' })}</p>` : ''}</section>`;
+    }).join('')}
+    <section id="connect-proxy"><h2>Подключаем прокси</h2><p>${escapeHtml(additions.connection)}</p></section>
+    <section id="check"><p>Финальная проверка</p><h2>Что смотреть в чекерах</h2>
+      ${copy.checkers.map(checker => `<div><h3>${renderLink({ href: checker.href, label: checker.title })}</h3><p>${escapeHtml(checker.text)}</p></div>`).join('')}
+      ${list(copy.checks)}${note(copy.warning)}</section>
+    <section id="mistakes"><p>Не делайте так</p><h2>Частые ошибки при настройке</h2>${list(copy.mistakes)}${note(copy.closing)}
+      <p>${renderLink({ href: antidetectVideoUrl, label: 'Большой видеогайд по прокси и антидетектам' })}</p></section>
+    ${renderChecklist(createAntidetectGuideChecklist(OFFERS))}`;
+};
+
 const renderArticleBody = (article, route) => {
   if (route === '/proxy-vpn/luchshie-mobilnye-proksi') return renderMobileProxyBody();
+  if (route === '/guides/kak-nastroit-antidetect-brauzer') return renderAntidetectSetupBody(article);
   const link = renderLink;
   const list = (items, tag = 'ul') => `<${tag}>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</${tag}>`;
   return `${article.before ? `<section id="before"><h2>Важные моменты перед началом</h2>${list(article.before)}</section>` : ''}

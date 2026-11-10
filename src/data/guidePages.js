@@ -3,6 +3,7 @@ import { discordTokenArticle, discordTokenStaticArticle } from './discordTokenAr
 import { claudeGuideArticle, claudeGuideHeadingIds } from './claudeGuideArticle.js';
 import { mobileIpGuideMeta } from './mobileIpGuideContent.js';
 import { claudeRecoveryArticle } from './claudeRecoveryArticle.js';
+import { antidetectSetupMeta } from './antidetectSetupContent.js';
 import otcKycArticle from './otcKycArticle.json' with { type: 'json' };
 
 const guideTitle = (title) => ({
@@ -442,14 +443,20 @@ export const guidePages = [
   {
     id: 'guide-antidetect-setup',
     slug: 'kak-nastroit-antidetect-brauzer',
+    datePublished: antidetectSetupMeta.datePublished,
+    dateModified: antidetectSetupMeta.dateModified,
+    cover: antidetectSetupMeta.cover,
     name: {
       ru: 'Как настроить антидетект-браузер',
       en: 'How to configure an antidetect browser',
     },
-    title: guideTitle({
-      ru: 'Как настроить антидетект-браузер: Dolphin, AdsPower и ShardX',
-      en: 'How to configure an antidetect browser: Dolphin, AdsPower, and ShardX',
-    }),
+    title: {
+      ...guideTitle({
+        ru: 'Как настроить антидетект-браузер: Dolphin, AdsPower и ShardX',
+        en: 'How to configure an antidetect browser: Dolphin, AdsPower, and ShardX',
+      }),
+      ru: 'Как настроить антидетект: Dolphin, AdsPower, ShardX | Hopscup',
+    },
     description: {
       ru: 'Практическая настройка антидетект-браузера на примере Dolphin Anty, AdsPower и ShardX: прокси, WebRTC, часовой пояс, язык, геолокация и проверка отпечатка.',
       en: 'A practical antidetect browser setup guide using Dolphin Anty, AdsPower, and ShardX: proxies, WebRTC, timezone, language, geolocation, and fingerprint checks.',

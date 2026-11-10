@@ -12,15 +12,17 @@ import {
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
-import { RelatedGuides } from './RelatedGuides';
+import { ArticleChecklist } from './ArticleChecklist';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
 import { ArticleImageLink } from './ArticleImageLink';
 import { articleFallbackContent } from '../data/articleFallbackContent.js';
+import { antidetectSetupMeta, antidetectSetupCopy as copy, antidetectSetupAdditions as additions, antidetectVideoUrl as VIDEO_GUIDE_URL, getAntidetectGuideServices, resolveAntidetectGuideSegments, createAntidetectGuideChecklist } from '../data/antidetectSetupContent.js';
+import { getExternalLinkRel } from '../lib/externalLinks.js';
+import { trackAnalyticsEvent } from '../analytics';
 
 type ArticleTheme = 'dark' | 'light';
 
 const ARTICLE_THEME_KEY = 'hopscup-article-theme';
-const VIDEO_GUIDE_URL = 'https://youtu.be/pBljqjuY2ls?si=Ft3UMgxjNUvaRT4d';
 
 const GuideNote = ({ children, warning = false }: { children: ReactNode; warning?: boolean }) => (
   <div className={`my-6 rounded-r-2xl border-l-2 px-5 py-4 text-sm font-semibold leading-7 md:text-base ${warning ? 'border-brand-orange bg-brand-orange/[0.06] text-white/65' : 'border-brand-purple bg-brand-purple/[0.07] text-white/65'}`}>
@@ -28,14 +30,14 @@ const GuideNote = ({ children, warning = false }: { children: ReactNode; warning
   </div>
 );
 
-const StepItem = ({ children }: { children: ReactNode }) => (
+const StepItem = ({ children }: { key?: string; children: ReactNode }) => (
   <li className="flex items-start gap-3 text-sm font-medium leading-7 text-white/65 md:text-base">
     <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-brand-purple" />
     <span>{children}</span>
   </li>
 );
 
-const SettingRow = ({ name, value }: { name: string; value: ReactNode }) => (
+const SettingRow = ({ name, value }: { key?: string; name: string; value: ReactNode }) => (
   <div className="grid gap-2 border-b border-white/[0.07] py-4 last:border-b-0 sm:grid-cols-[160px_1fr] sm:gap-6">
     <dt className="text-xs font-black uppercase text-white/35">{name}</dt>
     <dd className="text-sm font-semibold leading-6 text-white/70">{value}</dd>
@@ -64,7 +66,9 @@ const ArticleScreenshot = ({ src, alt, caption }: { src: string; alt: string; ca
   </figure>
 );
 
-export const AntidetectSetupGuideArticle = () => {
+type GuideOffer = { id: string; name: string; url: string; category: string; slug?: string };
+
+export const AntidetectSetupGuideArticle = ({ offers }: { offers: GuideOffer[] }) => {
   const [theme, setTheme] = useState<ArticleTheme>(() => {
     if (typeof window === 'undefined') return 'dark';
     return window.localStorage.getItem(ARTICLE_THEME_KEY) === 'light' ? 'light' : 'dark';
@@ -80,9 +84,23 @@ export const AntidetectSetupGuideArticle = () => {
   }, [theme]);
 
   const isLight = theme === 'light';
+  const services = getAntidetectGuideServices(offers);
+  const checklist = createAntidetectGuideChecklist(offers);
+  const trackService = (href: string, placement: string) => {
+    const offer = offers.find(offer => offer.url === href);
+    if (!offer || href.startsWith('/')) return;
+    trackAnalyticsEvent('service_click', { service_id: offer.id, service_name: offer.name, category: offer.category, destination: 'website', link_url: href, placement, language: 'ru' });
+  };
+  const inline = (parts: { text: string; href?: string; strong?: boolean }[], placement?: string) => parts.map((part, index) => {
+    const text = part.strong ? <strong className="font-black text-white/80">{part.text}</strong> : part.text;
+    return part.href ? <a key={index} href={part.href}
+      {...(part.href.startsWith('https://') ? { target: '_blank', rel: getExternalLinkRel(part.href), onClick: () => placement && trackService(part.href, placement) } : {})}
+      className="font-bold text-brand-purple transition-colors hover:text-white hover:underline">{text}</a> : <span key={index}>{text}</span>;
+  });
 
   return (
     <div
+      data-antidetect-setup
       data-article-theme={theme}
       className="proxy-guide-article relative min-h-screen overflow-x-hidden bg-bg-dark text-white selection:bg-brand-purple selection:text-white"
     >
@@ -121,6 +139,9 @@ export const AntidetectSetupGuideArticle = () => {
           </div>
           <h1 className="mx-auto max-w-4xl font-display text-4xl font-black leading-[1.08] text-white md:text-6xl">{articleFallbackContent.antidetect.title}</h1>
           <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{articleFallbackContent.antidetect.intro}</p>
+          <ArticleImageLink src={antidetectSetupMeta.cover.src} alt={antidetectSetupMeta.cover.alt} className="mx-auto mt-8 block max-w-3xl overflow-hidden rounded-2xl border border-white/10">
+            <img src={antidetectSetupMeta.cover.src} alt={antidetectSetupMeta.cover.alt} width={antidetectSetupMeta.cover.width} height={antidetectSetupMeta.cover.height} fetchPriority="high" decoding="async" className="block h-auto w-full" />
+          </ArticleImageLink>
         </section>
 
         <div className="mx-auto grid max-w-6xl gap-8 px-5 md:px-8 lg:grid-cols-[220px_minmax(0,760px)] lg:justify-center">
@@ -129,12 +150,16 @@ export const AntidetectSetupGuideArticle = () => {
               <p className="px-2 pb-3 text-[10px] font-black uppercase tracking-[0.2em] text-white/25">Содержание</p>
               {[
                 ['#how-it-works', 'Что меняет антидетект'],
+                ['#where-proxy', 'Где взять прокси'],
                 ['#common-settings', 'Что перепроверить'],
+                ['#free-antidetect', 'Бесплатные антидетекты'],
                 ['#dolphin', 'Dolphin Anty'],
                 ['#adspower', 'AdsPower'],
                 ['#shardx', 'ShardX'],
+                ['#connect-proxy', 'Подключаем прокси'],
                 ['#check', 'Проверка профиля'],
                 ['#mistakes', 'Частые ошибки'],
+                ['#start', 'Коротко: что делать'],
               ].map(([href, label]) => (
                 <a key={href} href={href} className="block rounded-lg px-2 py-2 text-xs font-semibold text-white/45 transition-colors hover:bg-white/5 hover:text-brand-purple">
                   {label}
@@ -148,16 +173,13 @@ export const AntidetectSetupGuideArticle = () => {
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Сначала база</p>
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Антидетект и прокси делают разную работу</h2>
               <p className="mt-5 text-sm font-medium leading-7 text-white/65 md:text-base">
-                Антидетект создаёт отдельный браузерный профиль: свои cookies, историю, локальное хранилище и отпечаток устройства. Но сам по себе он не меняет ваш IP. Для этого нужна прокси или{' '}
-                <a href="/guides/mobile-ip-airplane-mode" className="font-bold text-brand-purple transition-colors hover:text-white hover:underline">
-                  мобильный интернет + режим самолёта
-                </a>.
+                {inline(copy.foundation)}
               </p>
 
               <div className="mt-7 grid gap-4 sm:grid-cols-2">
                 {[
-                  { icon: Fingerprint, title: 'Антидетект', text: 'Подменяет и разделяет данные браузера и устройства.' },
-                  { icon: Network, title: 'Прокси', text: 'Меняет IP и сетевое местоположение профиля.' },
+                  { icon: Fingerprint, ...copy.roles[0] },
+                  { icon: Network, ...copy.roles[1] },
                 ].map(({ icon: Icon, title, text }) => (
                   <div key={title} className="rounded-lg border border-white/[0.08] bg-white/[0.025] p-5">
                     <Icon className="h-5 w-5 text-brand-purple" />
@@ -168,28 +190,33 @@ export const AntidetectSetupGuideArticle = () => {
               </div>
 
               <GuideNote>
-                Главное правило: один профиль должен выглядеть как одно и то же нормальное устройство, похожее на реального пользователя при каждом запуске. Обычно все базовые настройки антика уже сделаны грамотно.
+                {copy.mainRule}
               </GuideNote>
+            </section>
+
+            <section id="where-proxy" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
+              <h2 className="font-display text-2xl font-black text-white md:text-3xl">Где взять прокси</h2>
+              <p className="mt-5 text-sm font-medium leading-7 text-white/65 md:text-base">{inline(resolveAntidetectGuideSegments(additions.proxy, services), 'article_cta')}</p>
+              <p className="mt-5 text-sm font-medium leading-7 text-white/65 md:text-base">{inline(additions.airplane)}</p>
+              <p className="mt-5 text-sm font-medium leading-7 text-white/65 md:text-base">{inline([additions.proxyMore])}</p>
             </section>
 
             <section id="common-settings" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
               <h2 className="font-display text-2xl font-black text-white md:text-3xl">Но что стоит перепроверить</h2>
               <dl className="mt-6">
-                <SettingRow name="IP и прокси" value="Для профиля должен использоваться нужный IP. Если аккаунты не должны быть связаны между собой, не сажайте их на одну и ту же постоянную прокси." />
-                <SettingRow name="ОС и User-Agent" value="ОС стараемся ставить на основе вашего реального устройства. То есть если у вас ПК на Windows, ставим ОС нового профиля Windows, а не macOS или Linux." />
-                <SettingRow name="Часовой пояс" value="Ставим Auto или на основании вашего IP. Время профиля должно соответствовать стране и городу прокси." />
-                <SettingRow name="Геолокация" value="Ставим Auto или на основании вашего IP." />
-                <SettingRow name="Язык" value="Ставим Auto или на основании вашего IP. Русский язык с IP Казахстана или Узбекистана выглядит нормально, но случайная мешанина языков уже такое себе." />
-                <SettingRow name="WebRTC" value="Не оставляйте Real. Используйте подмену, шум, режим на основе прокси или Auto." />
-                <SettingRow name="Canvas и WebGL" value="Оставляйте автоматический стабильный отпечаток или штатный noise. Не меняйте видеокарту, Canvas и железо отдельными случайными значениями." />
-                <SettingRow name="Do Not Track" value="Обычно Off. У большинства обычных пользователей этот параметр не включён." />
-                <SettingRow name="Экран и железо" value="Ставим Auto. Разрешение, процессор, память и видеокарта должны сочетаться с выбранным устройством." />
+                {copy.settings.map(row => <SettingRow key={row.name} {...row} />)}
               </dl>
+            </section>
+
+            <section id="free-antidetect" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
+              <h2 className="font-display text-2xl font-black text-white md:text-3xl">Какой антидетект взять бесплатно</h2>
+              <p className="mt-5 text-sm font-medium leading-7 text-white/65 md:text-base">{inline(resolveAntidetectGuideSegments(additions.free, services, true))}</p>
+              <p className="mt-5 text-sm font-medium leading-7 text-white/65 md:text-base">{inline([additions.freeMore])}</p>
             </section>
 
             <section id="dolphin" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
               <BrowserHeading logo="/dolphin.webp" name="Dolphin Anty">
-                Нормальный вариант для обычной работы с аккаунтами. В большинстве случаев стандартные настройки уже подходят.
+                {copy.browserIntros[0]}
               </BrowserHeading>
               <ol className="mt-7 space-y-4">
                 <StepItem>{articleFallbackContent.antidetect.sections[0].steps[0]}</StepItem>
@@ -200,16 +227,8 @@ export const AntidetectSetupGuideArticle = () => {
                 <StepItem>{articleFallbackContent.antidetect.sections[0].steps[5]}</StepItem>
                 <StepItem>{articleFallbackContent.antidetect.sections[0].steps[6]}</StepItem>
               </ol>
-              <ArticleScreenshot
-                src="/article/antidetect-setup/dolphin-profile-settings-1.png"
-                alt="Настройки профиля Dolphin Anty: Windows, User-Agent, WebRTC, Canvas и WebGL"
-                caption="Dolphin Anty: ОС, User-Agent, WebRTC и основные параметры отпечатка."
-              />
-              <ArticleScreenshot
-                src="/article/antidetect-setup/dolphin-profile-settings-2.png"
-                alt="Настройки профиля Dolphin Anty: часовой пояс, язык, геолокация, процессор, память и шрифты"
-                caption="Dolphin Anty: часовой пояс, язык, геолокация и параметры устройства."
-              />
+              <ArticleScreenshot {...copy.screenshots[0]} />
+              <ArticleScreenshot {...copy.screenshots[1]} />
               <a href="/antidetect/dolphin-anty" className="mt-6 inline-flex items-center gap-2 text-sm font-black text-brand-purple hover:text-white">
                 Открыть страницу Dolphin Anty <ExternalLink className="h-4 w-4" />
               </a>
@@ -217,7 +236,7 @@ export const AntidetectSetupGuideArticle = () => {
 
             <section id="adspower" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
               <BrowserHeading logo="/adspower.webp" name="AdsPower">
-                Здесь параметров больше, но это не значит, что каждый из них нужно обязательно менять.
+                {copy.browserIntros[1]}
               </BrowserHeading>
               <ol className="mt-7 space-y-4">
                 <StepItem>{articleFallbackContent.antidetect.sections[1].steps[0]}</StepItem>
@@ -228,16 +247,8 @@ export const AntidetectSetupGuideArticle = () => {
                 <StepItem>{articleFallbackContent.antidetect.sections[1].steps[5]}</StepItem>
                 <StepItem>{articleFallbackContent.antidetect.sections[1].steps[6]}</StepItem>
               </ol>
-              <ArticleScreenshot
-                src="/article/antidetect-setup/adspower-profile-settings-1.png"
-                alt="Настройки профиля AdsPower: SunBrowser, Windows и User-Agent"
-                caption="AdsPower: выбор браузера, операционной системы и User-Agent."
-              />
-              <ArticleScreenshot
-                src="/article/antidetect-setup/adspower-profile-settings-2.png"
-                alt="Настройки профиля AdsPower: WebRTC через прокси UDP, часовой пояс, геолокация, язык и экран"
-                caption="AdsPower: WebRTC через прокси UDP и остальные параметры на основе IP."
-              />
+              <ArticleScreenshot {...copy.screenshots[2]} />
+              <ArticleScreenshot {...copy.screenshots[3]} />
               <a href="/antidetect/adspower" className="mt-6 inline-flex items-center gap-2 text-sm font-black text-brand-purple hover:text-white">
                 Открыть страницу AdsPower <ExternalLink className="h-4 w-4" />
               </a>
@@ -245,7 +256,7 @@ export const AntidetectSetupGuideArticle = () => {
 
             <section id="shardx" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
               <BrowserHeading logo="/proxyshard.webp" name="ShardX">
-                Бесплатный вариант с локальными профилями. Точные параметры здесь тоже лучше доверить готовому шаблону.
+                {copy.browserIntros[2]}
               </BrowserHeading>
               <ol className="mt-7 space-y-4">
                 <StepItem>{articleFallbackContent.antidetect.sections[2].steps[0]}</StepItem>
@@ -256,11 +267,7 @@ export const AntidetectSetupGuideArticle = () => {
                 <StepItem>{articleFallbackContent.antidetect.sections[2].steps[5]}</StepItem>
                 <StepItem>{articleFallbackContent.antidetect.sections[2].steps[6]}</StepItem>
               </ol>
-              <ArticleScreenshot
-                src="/article/antidetect-setup/shardx-profile-settings.png"
-                alt="Настройки профиля ShardX: Windows, прокси, часовой пояс, язык, WebRTC, геолокация и Noise"
-                caption="Пример настроек профиля ShardX"
-              />
+              <ArticleScreenshot {...copy.screenshots[4]} />
               <div className="mt-6 flex flex-wrap gap-3">
                 <a href="/antidetect/shardx" className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-brand-purple/35 bg-brand-purple/10 px-4 py-2 text-xs font-black text-brand-purple transition-colors hover:bg-brand-purple hover:text-white">
                   Страница ShardX <ExternalLink className="h-4 w-4" />
@@ -271,15 +278,16 @@ export const AntidetectSetupGuideArticle = () => {
               </div>
             </section>
 
+            <section id="connect-proxy" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
+              <h2 className="font-display text-2xl font-black text-white md:text-3xl">Подключаем прокси</h2>
+              <p className="mt-5 text-sm font-medium leading-7 text-white/65 md:text-base">{additions.connection}</p>
+            </section>
+
             <section id="check" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Финальная проверка</p>
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Что смотреть в чекерах</h2>
               <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                {[
-                  { href: 'https://pixelscan.net/', title: 'Pixelscan', text: 'Общая проверка IP и отпечатка' },
-                  { href: 'https://browserleaks.com/', title: 'BrowserLeaks', text: 'WebRTC, Canvas, WebGL и DNS' },
-                  { href: 'https://2ip.io/', title: '2ip.io', text: 'IP, страна и провайдер' },
-                ].map(({ href, title, text }) => (
+                {copy.checkers.map(({ href, title, text }) => (
                   <a key={title} href={href} target="_blank" rel="noopener noreferrer" className="group relative rounded-lg border border-white/[0.08] bg-white/[0.025] p-4 pr-12 transition-colors hover:border-brand-purple/40 hover:bg-brand-purple/[0.06]">
                     <Globe2 className="h-5 w-5 text-brand-purple" />
                     <h3 className="mt-3 text-sm font-black text-white">{title}</h3>
@@ -291,17 +299,10 @@ export const AntidetectSetupGuideArticle = () => {
                 ))}
               </div>
               <ul className="mt-7 space-y-4">
-                <StepItem>Сайт видит IP вашей прокси, а не настоящий IP компьютера.</StepItem>
-                <StepItem>
-                  Если у вас датацентровая прокси (IPv4) и чекер пишет <strong className="font-black text-white/80">Proxy/VPN detected</strong>, это нормально. Он распознал IP дата-центра по провайдеру и диапазону адресов, а не нашёл утечку вашего настоящего IP. Для большинства обычных задач такие прокси подходят. Но в сервисах с сильным антифродом (букмекеры, биржи и т. д.) лучше использовать только ISP, Residential или Mobile IP.
-                </StepItem>
-                <StepItem>Страна, часовой пояс, геолокация и язык совпадают под ваше гео.</StepItem>
-                <StepItem>WebRTC не показывает ваш реальный адрес.</StepItem>
-                <StepItem>WebGL Vendor и Renderer выглядят как обычная Intel, AMD или NVIDIA, а не случайный набор.</StepItem>
-                <StepItem>После повторного запуска этот же профиль сохраняет тот же отпечаток и cookies.</StepItem>
+                {copy.checks.map((parts, index) => <StepItem key={String(index)}>{inline(parts)}</StepItem>)}
               </ul>
               <GuideNote warning>
-                Зелёный чекер не даёт гарантию, что аккаунт никогда не заблокируют. Площадки смотрят ещё на качество IP, историю аккаунта и ваши действия.
+                {copy.warning}
               </GuideNote>
             </section>
 
@@ -309,14 +310,7 @@ export const AntidetectSetupGuideArticle = () => {
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-orange">Не делайте так</p>
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Частые ошибки при настройке</h2>
               <div className="mt-6 space-y-3">
-                {[
-                  'Менять Canvas, WebGL, процессор, память и экран отдельными случайными значениями.',
-                  'Генерировать новый отпечаток при каждом запуске постоянного профиля.',
-                  'Ставить прокси США, часовой пояс Москвы и геолокацию другой страны.',
-                  'Оставлять WebRTC в режиме Real после подключения прокси.',
-                  'Постоянно менять страну прокси у аккаунта без реальной необходимости.',
-                  'Сразу создавать сотню профилей, не проверив один готовый профиль.',
-                ].map((item) => (
+                {copy.mistakes.map((item) => (
                   <div key={item} className="flex items-start gap-3 border-b border-white/[0.07] py-3 text-sm font-medium leading-6 text-white/60 last:border-b-0">
                     <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
                     <p>{item}</p>
@@ -325,7 +319,7 @@ export const AntidetectSetupGuideArticle = () => {
               </div>
 
               <GuideNote>
-                Если совсем коротко: создаём профиль, перепроверяем параметры (но обычно я даже не чекаю), добавляем отдельный IP, например с помощью прокси. Если что, у меня есть видео на 15 минут с объяснением всех нюансов.
+                {copy.closing}
               </GuideNote>
 
               <a href={VIDEO_GUIDE_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-brand-purple px-5 py-3 text-sm font-black text-white transition-colors hover:bg-white hover:text-brand-purple">
@@ -333,11 +327,7 @@ export const AntidetectSetupGuideArticle = () => {
               </a>
             </section>
 
-            <RelatedGuides items={[
-              { href: '/antidetect/kakoy-vybrat', label: 'Сравнение', title: 'Какой антидетект выбрать', description: 'Бесплатные профили, тарифы и варианты под разные задачи.' },
-              { href: '/proxy-vpn/luchshie-proksi', label: 'Прокси', title: 'Какие прокси выбрать', description: 'IPv4, ISP, Residential и Mobile без путаницы в названиях.' },
-              { href: '/guides/mobile-ip-airplane-mode', label: 'Бесплатный IP', title: 'Смена IP мобильным интернетом', description: 'Как использовать телефон вместо отдельной мобильной прокси.' },
-            ]} />
+            <ArticleChecklist {...checklist} onExternalClick={href => trackService(href, 'article_summary')} />
             <ArticleSocialFooter />
           </article>
         </div>

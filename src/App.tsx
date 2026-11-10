@@ -6278,7 +6278,7 @@ export default function App() {
   }
 
   if (isAntidetectSetupGuideArticle) {
-    return <AntidetectSetupGuideArticle />;
+    return <AntidetectSetupGuideArticle offers={OFFERS} />;
   }
 
   if (isDiscordTokenGuideArticlePath()) {

@@ -231,10 +231,6 @@ export const articleFallbackContent = {
         "label": "Большой видеогайд по прокси и антидетектам"
       },
       {
-        "href": "/antidetect/kakoy-vybrat",
-        "label": "Какой антидетект выбрать"
-      },
-      {
         "href": "/proxy-vpn/luchshie-proksi",
         "label": "Какие прокси выбрать"
       }

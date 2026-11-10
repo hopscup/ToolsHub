@@ -21,6 +21,7 @@ import { steamPages } from '../src/data/steamPages.js';
 import { vpsPages } from '../src/data/vpsPages.js';
 import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobileProxyMeta, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 import { claudeRecoveryArticle } from '../src/data/claudeRecoveryArticle.js';
+import { antidetectSetupMeta, antidetectSetupCopy, antidetectSetupAdditions, getAntidetectGuideServices, resolveAntidetectGuideSegments, createAntidetectGuideChecklist } from '../src/data/antidetectSetupContent.js';
 
 const distDir = path.resolve('dist');
 const siteUrl = 'https://hopscup.tools';
@@ -132,6 +133,25 @@ const checkSectionSummaries = (html, language, route) => {
 };
 
 const checkArticleContent = (html, route, localizedRoute) => {
+  if (route === '/guides/kak-nastroit-antidetect-brauzer') {
+    const copy = antidetectSetupCopy;
+    const additions = antidetectSetupAdditions;
+    const services = getAntidetectGuideServices(OFFERS);
+    const checklist = createAntidetectGuideChecklist(OFFERS);
+    const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
+    const parts = [copy.mainRule, ...copy.foundation.map(part => part.text.trim()), ...copy.roles.flatMap(role => [role.title, role.text]), ...copy.settings.flatMap(row => [row.name, row.value]), ...copy.browserIntros,
+      ...copy.checkers.flatMap(checker => [checker.title, checker.text]), ...copy.checks.flatMap(row => row.map(part => part.text.trim())), copy.warning, ...copy.mistakes, copy.closing,
+      ...additions.free.map(part => part.text.trim()), ...additions.proxy.map(part => part.text.trim()), ...additions.airplane.map(part => part.text.trim()), additions.freeMore.text, additions.proxyMore.text, additions.connection,
+      ...checklist.items.flat().map(part => part.text), checklist.action.label];
+    for (const part of parts) if (!content.includes(escapeHtml(part))) errors.push(`Missing complete antidetect article text: ${localizedRoute}: ${part}`);
+    for (const image of [antidetectSetupMeta.cover, ...copy.screenshots]) {
+      if (!content.includes(`src="${image.src}"`) || !content.includes(`alt="${escapeHtml(image.alt)}"`) || image.caption && !content.includes(escapeHtml(image.caption))) errors.push(`Missing antidetect article image: ${localizedRoute}: ${image.src}`);
+    }
+    for (const link of [...resolveAntidetectGuideSegments(additions.free, services, true), ...resolveAntidetectGuideSegments(additions.proxy, services), ...checklist.sources.flatMap(source => source.links)].filter(part => part.href)) {
+      if (!content.includes(`href="${escapeHtml(link.href)}"`)) errors.push(`Missing antidetect article link: ${localizedRoute}: ${link.href}`);
+    }
+    if (content.includes('Похожие статьи') || content.includes('id="faq"') || html.includes('"@type":"FAQPage"')) errors.push(`Removed article block returned: ${localizedRoute}`);
+  }
   if (route === `/guides/${claudeRecoveryArticle.slug}`) {
     const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
     const segments = (parts) => parts.map(part => part.text);
@@ -290,7 +310,7 @@ for (const language of languages) {
         if (!types.includes(requiredType)) errors.push(`Missing ${requiredType} schema: ${localizedRoute}`);
       }
       if (pageType !== 'Article' && structuredData.find(item => item['@type'] === pageType)?.dateModified !== siteDateModified) errors.push(`Missing build dateModified: ${localizedRoute}`);
-      const articleMeta = ({ '/proxy-vpn/luchshie-proksi': proxyGuideMeta, '/proxy-vpn/luchshie-mobilnye-proksi': mobileProxyMeta, '/guides/mobile-ip-airplane-mode': mobileIpGuideMeta })[route];
+      const articleMeta = ({ '/proxy-vpn/luchshie-proksi': proxyGuideMeta, '/proxy-vpn/luchshie-mobilnye-proksi': mobileProxyMeta, '/guides/mobile-ip-airplane-mode': mobileIpGuideMeta, '/guides/kak-nastroit-antidetect-brauzer': antidetectSetupMeta })[route];
       if (articleMeta && structuredData.find(item => item['@type'] === 'Article')?.dateModified !== articleMeta.dateModified) errors.push(`Wrong fixed article dateModified: ${localizedRoute}`);
     } catch {
       errors.push(`Invalid JSON-LD: ${localizedRoute}`);

@@ -217,6 +217,10 @@ body:has(dialog[data-article-image-viewer][open]) {
   color: #625c68 !important;
 }
 
+.proxy-guide-article[data-antidetect-setup][data-article-theme="light"] [data-article-checklist] li::marker {
+  color: #625c68;
+}
+
 .proxy-guide-article[data-article-theme="light"] [class*="border-white/"] {
   border-color: rgba(39, 32, 45, 0.11) !important;
 }
