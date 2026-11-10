@@ -41,6 +41,8 @@ export const guidePages = [
   {
     id: claudeGuideArticle.id,
     slug: claudeGuideArticle.slug,
+    datePublished: claudeGuideArticle.datePublished,
+    dateModified: claudeGuideArticle.dateModified,
     articleBlocks: claudeGuideArticle.blocks,
     cover: claudeGuideArticle.cover,
     articleHeadingIds: claudeGuideHeadingIds,

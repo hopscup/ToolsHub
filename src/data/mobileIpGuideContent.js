@@ -5,7 +5,7 @@ export const mobileIpGuideMeta = {
     src: '/article/mobile-ip/cover.webp', previewSrc: '/article/mobile-ip/cover-preview.webp',
     alt: 'Как сменить IP с телефона через режим самолёта', width: 1280, height: 720,
   },
-  title: 'Как сменить IP через режим самолёта на Android, iPhone и ПК | Hopscup Tools',
+  title: 'Как сменить IP через режим самолёта | Hopscup',
   heading: 'Как сменить IP через режим самолёта на телефоне и ПК',
   description: 'Самый дешёвый способ сменить IP: режим самолёта на телефоне. Пошагово для Android, iPhone и ПК через USB или Wi-Fi, ограничения и что делать, если IP не меняется.',
   subtitle: 'Самый дешёвый способ сменить айпи: включить и выключить режим самолёта. Работает на Android и iPhone, а через USB или раздачу Wi-Fi и на компьютере. Ни прокси, ни подписок, только ваша симка с мобильным интернетом.',

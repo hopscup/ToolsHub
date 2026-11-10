@@ -21,6 +21,7 @@ import { steamPages } from '../src/data/steamPages.js';
 import { vpsPages } from '../src/data/vpsPages.js';
 import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobileProxyMeta, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 import { claudeRecoveryArticle } from '../src/data/claudeRecoveryArticle.js';
+import { claudeGuideArticle } from '../src/data/claudeGuideArticle.js';
 import { accountFarmArticle, createAccountFarmContent } from '../src/data/accountFarmContent.js';
 import { createGuideRefreshContent, guideRefreshMeta } from '../src/data/guideRefreshContent.js';
 import { antidetectSetupMeta, antidetectSetupCopy, antidetectSetupAdditions, getAntidetectGuideServices, resolveAntidetectGuideSegments, createAntidetectGuideChecklist } from '../src/data/antidetectSetupContent.js';
@@ -345,8 +346,9 @@ for (const language of languages) {
         if (!types.includes(requiredType)) errors.push(`Missing ${requiredType} schema: ${localizedRoute}`);
       }
       if (pageType !== 'Article' && structuredData.find(item => item['@type'] === pageType)?.dateModified !== siteDateModified) errors.push(`Missing build dateModified: ${localizedRoute}`);
-      const articleMeta = ({ '/proxy-vpn/luchshie-proksi': proxyGuideMeta, '/proxy-vpn/luchshie-mobilnye-proksi': mobileProxyMeta, '/guides/mobile-ip-airplane-mode': mobileIpGuideMeta, '/guides/kak-nastroit-antidetect-brauzer': antidetectSetupMeta, '/guides/account-farm': accountFarmArticle })[route];
+      const articleMeta = ({ '/proxy-vpn/luchshie-proksi': proxyGuideMeta, '/proxy-vpn/luchshie-mobilnye-proksi': mobileProxyMeta, '/guides/mobile-ip-airplane-mode': mobileIpGuideMeta, '/guides/kak-nastroit-antidetect-brauzer': antidetectSetupMeta, '/guides/account-farm': accountFarmArticle, '/guides/claude-iz-rossii-bez-bana': claudeGuideArticle })[route];
       if (articleMeta && structuredData.find(item => item['@type'] === 'Article')?.dateModified !== articleMeta.dateModified) errors.push(`Wrong fixed article dateModified: ${localizedRoute}`);
+      if (route === '/guides/claude-iz-rossii-bez-bana' && structuredData.find(item => item['@type'] === 'Article')?.datePublished !== claudeGuideArticle.datePublished) errors.push(`Wrong Claude article datePublished: ${localizedRoute}`);
     } catch {
       errors.push(`Invalid JSON-LD: ${localizedRoute}`);
     }
