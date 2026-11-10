@@ -1,10 +1,12 @@
 import { ArrowLeft, BookOpen, Check, Copy, Moon, Sun } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
+import type { ComponentProps } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
 import { RelatedGuides } from './RelatedGuides';
 import type { RelatedGuide } from './RelatedGuides';
 import { getExternalLinkRel } from '../lib/externalLinks.js';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
+import { ArticleChecklist } from './ArticleChecklist';
 import { ArticleImageLink } from './ArticleImageLink';
 import { withoutArticleSocialFooter } from '../data/articleSocialFooter.js';
 
@@ -43,6 +45,8 @@ type ImportedGuideArticleProps = {
   sourceAnchors: Record<string, string>;
   related: RelatedGuide[];
   footerVariant?: 'default' | 'compact';
+  checklist?: ComponentProps<typeof ArticleChecklist>;
+  onServiceClick?: (href: string, placement: 'article_cta' | 'article_summary') => void;
 };
 
 const ARTICLE_THEME_KEY = 'hopscup-article-theme';
@@ -150,6 +154,8 @@ export const ImportedGuideArticle = ({
   sourceAnchors,
   related,
   footerVariant = 'default',
+  checklist,
+  onServiceClick,
 }: ImportedGuideArticleProps) => {
   const [theme, setTheme] = useState<ArticleTheme>(() => {
     if (typeof window === 'undefined') return 'dark';
@@ -165,19 +171,21 @@ export const ImportedGuideArticle = ({
   }, [theme]);
 
   const toc = useMemo(
-    () => data.blocks
+    () => [...data.blocks
       .filter((block): block is Extract<ArticleBlock, { type: 'heading' }> => block.type === 'heading' && block.level === 2)
       .filter((block) => block.text !== 'Оглавление')
       .map((block) => ({ id: headingIds[block.text], label: block.text }))
       .filter((item) => Boolean(item.id)),
-    [data.blocks, headingIds],
+      ...(checklist ? [{ id: 'start', label: checklist.heading || 'Коротко: что делать' }] : []),
+    ],
+    [data.blocks, headingIds, checklist],
   );
 
   const isLight = theme === 'light';
   let imageIndex = 0;
 
   return (
-    <div data-article-theme={theme} className="proxy-guide-article relative min-h-screen overflow-x-hidden bg-bg-dark text-white selection:bg-brand-purple selection:text-white">
+    <div data-article-theme={theme} data-imported-checklist={checklist ? true : undefined} className="proxy-guide-article relative min-h-screen overflow-x-hidden bg-bg-dark text-white selection:bg-brand-purple selection:text-white">
       <div className="article-particles"><BackgroundParticles /></div>
       <div className="mesh-gradient" />
 
@@ -230,7 +238,12 @@ export const ImportedGuideArticle = ({
             </nav>
           </aside>
 
-          <article className="article-card min-w-0 rounded-[1.5rem] border border-white/[0.08] bg-[#0d0d0d]/90 px-5 py-7 shadow-2xl backdrop-blur-xl md:px-9 md:py-10">
+          <article className="article-card min-w-0 rounded-[1.5rem] border border-white/[0.08] bg-[#0d0d0d]/90 px-5 py-7 shadow-2xl backdrop-blur-xl md:px-9 md:py-10"
+            onClick={onServiceClick ? event => {
+              const link = (event.target as Element).closest('a[href]');
+              if (link) onServiceClick(link.getAttribute('href') || '', link.closest('[data-article-checklist]') ? 'article_summary' : 'article_cta');
+            } : undefined}
+          >
             {withoutArticleSocialFooter(data.blocks).map((block: ArticleBlock, blockIndex: number) => {
               if (block.type === 'code') return <ImportedCode key={`code-${blockIndex}`} label={block.label} text={block.text} />;
               if (block.type === 'table') return <div key={`table-${blockIndex}`} className="my-7 overflow-x-auto rounded-lg border border-white/10">
@@ -287,6 +300,7 @@ export const ImportedGuideArticle = ({
                 </p>
               );
             })}
+            {checklist && <ArticleChecklist {...checklist} />}
             {related.length > 0 && <RelatedGuides items={related} />}
             <ArticleSocialFooter variant={footerVariant} />
           </article>

@@ -14,6 +14,7 @@ import { articleSocialLinks, articleSocialBanner, withoutArticleSocialFooter } f
 import { pageHeadings } from '../src/data/pageHeadings.js';
 import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobileProxyMeta, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 import { loadOffers } from './load-offers.mjs';
+import { createAccountFarmContent } from '../src/data/accountFarmContent.js';
 import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, serviceGuideRoutes, serviceGuideLabels, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
 import { getServiceParagraphs, getServiceSummaryFacts, isServiceMetaDescription } from '../src/data/servicePresentation.js';
@@ -37,6 +38,7 @@ const languages = [
 const indexLanguages = languages.filter(({ code }) => code === 'ru' || code === 'en');
 const isIndexLanguage = (language) => indexLanguages.some(({ code }) => code === language.code);
 const { OFFERS, OFFER_DESCRIPTION_TRANSLATIONS } = await loadOffers();
+const accountFarmContent = createAccountFarmContent(OFFERS);
 const offersByRoute = new Map(OFFERS.filter(offer => offer.slug && offer.category !== 'Guides').map(offer => [`${serviceCategoryRoutes[offer.category]}/${offer.slug}`, offer]));
 
 const sections = [
@@ -1582,7 +1584,8 @@ const servicePages = [
   }),
   ...guidePages.map((page) => createServicePage({
     article: page.article,
-    articleBlocks: page.articleBlocks,
+    articleBlocks: page.id === 'guide-account-farm' ? accountFarmContent.article.blocks : page.articleBlocks,
+    articleChecklist: page.id === 'guide-account-farm' ? accountFarmContent.checklist : undefined,
     cover: page.cover,
     articleHeadingIds: page.articleHeadingIds,
     indexable: page.indexable,
@@ -1884,7 +1887,7 @@ const renderStaticContent = (section, language) => {
         </header>
         ${!offer && vpn ? `<section aria-label="${language.code === 'ru' ? 'Цена и бесплатный период' : 'Pricing and free trial'}"><dl><dt>${language.code === 'ru' ? 'Бесплатно' : 'Free trial'}</dt><dd>${escapeHtml(getLanguage(vpn.free, language))}</dd><dt>${language.code === 'ru' ? 'Цена' : 'Price'}</dt><dd>${escapeHtml(getLanguage(vpn.price, language))}</dd></dl></section>` : ''}
         ${!offer && section.cta ? `<p><a href="${escapeHtml(section.cta.href)}" target="_blank" rel="${getExternalLinkRel(section.cta.href) || 'noopener noreferrer'}">${escapeHtml(getLanguage(section.cta.label, language))}</a></p>` : ''}
-        ${offer ? renderServiceContent(offer, language, getLanguage(section.description, language)) : section.id === 'guide-best-proxies' ? `<div class="fallback-body">${renderProxyGuideBody()}</div>` : section.id === 'guide-mobile-ip' ? `<div class="fallback-body">${renderMobileIpGuideBody()}</div>` : section.articleBlocks ? `<div class="fallback-body">${renderGuideBlocks(section.articleBlocks, section.articleHeadingIds)}</div>` : article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
+        ${offer ? renderServiceContent(offer, language, getLanguage(section.description, language)) : section.id === 'guide-best-proxies' ? `<div class="fallback-body">${renderProxyGuideBody()}</div>` : section.id === 'guide-mobile-ip' ? `<div class="fallback-body">${renderMobileIpGuideBody()}</div>` : section.articleBlocks ? `<div class="fallback-body">${renderGuideBlocks(section.articleBlocks, section.articleHeadingIds)}${section.articleChecklist ? renderChecklist(section.articleChecklist) : ''}</div>` : article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
         ${section.heroHeading ? `
         <section>
           ${heroTitle !== title ? `<h2>${escapeHtml(title)}</h2>` : ''}

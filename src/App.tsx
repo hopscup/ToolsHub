@@ -6266,7 +6266,7 @@ export default function App() {
   }
 
   if (isAccountFarmGuideArticle) {
-    return <AccountFarmGuideArticle />;
+    return <AccountFarmGuideArticle offers={OFFERS} />;
   }
 
   if (isOtcKycGuideArticle) {

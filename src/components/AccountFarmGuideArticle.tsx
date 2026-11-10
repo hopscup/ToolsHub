@@ -1,43 +1,27 @@
-import accountFarmArticle from '../data/accountFarmArticle.json';
+import { createAccountFarmContent } from '../data/accountFarmContent.js';
+import { trackAnalyticsEvent } from '../analytics';
 import { ImportedGuideArticle } from './ImportedGuideArticle';
 import type { ArticleData } from './ImportedGuideArticle';
 
-const HEADING_IDS = {
-  'Навигация': 'navigation',
-  'Где покупать соц. акки': 'gde-pokupat-soc-akki',
-  'Twitter': 'twitter',
-  'Discord': 'discord',
-  'Gmail': 'gmail',
-  'СМС активаторы / виртуальные номера': 'sms-aktivatory-virtualnye-nomera',
-  'Где накручивать активности': 'gde-nakruchivat-aktivnosti',
-  'Прокси/модем': 'proksi-modem',
-  'Антики': 'antiki',
-};
+type GuideOffer = { id: string; name: string; url: string; category: string; slug?: string };
 
-const SOURCE_ANCHORS = {
-  '#kj0f': HEADING_IDS['Где покупать соц. акки'],
-  '#bPWB': HEADING_IDS.Twitter,
-  '#X9kD': HEADING_IDS.Discord,
-  '#NSGW': HEADING_IDS.Gmail,
-  '#AjTu': HEADING_IDS['СМС активаторы / виртуальные номера'],
-  '#8C3h': HEADING_IDS['Где накручивать активности'],
-  '#DVDz': HEADING_IDS['Прокси/модем'],
-  '#tw7f': HEADING_IDS.Антики,
+export const AccountFarmGuideArticle = ({ offers }: { offers: GuideOffer[] }) => {
+  const { article, checklist } = createAccountFarmContent(offers);
+  return (
+    <ImportedGuideArticle
+      data={article as ArticleData}
+      title={article.title}
+      description={article.intro}
+      eyebrow="Большой гайд Hopscup"
+      headingIds={article.headingIds}
+      sourceAnchors={{}}
+      related={[]}
+      checklist={checklist}
+      onServiceClick={(href, placement) => {
+        const offer = offers.find(item => item.url === href);
+        if (!offer || !href.startsWith('https://')) return;
+        trackAnalyticsEvent('service_click', { service_id: offer.id, service_name: offer.name, category: offer.category, destination: 'website', link_url: href, placement, language: 'ru' });
+      }}
+    />
+  );
 };
-
-export const AccountFarmGuideArticle = () => (
-  <ImportedGuideArticle
-    data={accountFarmArticle as ArticleData}
-    title="Ферма аккаунтов: Discord, Twitter и Google"
-    description="Где брать аккаунты, почты и виртуальные номера, как выбирать прокси, антидетекты и сервисы для активности."
-    eyebrow="Большой гайд Hopscup"
-    headingIds={HEADING_IDS}
-    sourceAnchors={SOURCE_ANCHORS}
-    related={[
-      { href: '/proxy-vpn/luchshie-proksi', label: 'Прокси', title: 'Какие прокси выбрать для аккаунтов', description: 'Сравнение типов прокси и семи сервисов на практических сценариях.' },
-      { href: '/antidetect', label: 'Антидетекты', title: 'Браузеры для управления профилями', description: 'ПК, усиленные и мобильные решения в одной подборке.' },
-      { href: '/guides/mobile-ip-airplane-mode', label: 'Мобильный IP', title: 'Смена IP режимом самолета', description: 'Раздача мобильного интернета на компьютер через USB.' },
-      { href: '/guides/gmail-forwarding', label: 'Почта', title: 'Переадресация писем из Gmail', description: 'Настройка автоматической пересылки на другой ящик.' },
-    ]}
-  />
-);

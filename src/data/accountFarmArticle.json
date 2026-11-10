@@ -1,1233 +1,840 @@
 {
-  "title": "Ферма аккаунтов. Где брать аккаунты Discord, Twitter, Google. Прокси, накрутка, антидетекты? - Teletype",
+  "title": "Ферма аккаунтов: где купить Twitter, Discord и Gmail, какие прокси и антидетект взять",
+  "seoTitle": "Ферма аккаунтов: где купить Twitter, Discord, Gmail | Hopscup",
+  "description": "Как собрать ферму аккаунтов в 2026: где купить Twitter, Discord и Gmail, что сделать после покупки, какие прокси, SMS-номера и антидетект взять. Личный опыт.",
+  "intro": "Разбираю, как собрать ферму аккаунтов: где покупать Twitter, Discord и Gmail, что с ними сделать сразу после покупки, где брать номера, прокси и антидетект. Сам держу небольшую ферму, на DOGS было больше 50 аккаунтов.",
   "sourceUrl": "https://teletype.media/@hopscupcrpt/GIuM0McUUie",
+  "datePublished": "2026-08-30T01:39:58+03:00",
+  "dateModified": "2026-11-10",
+  "cover": {
+    "src": "/article/account-farm/image-01.jpeg",
+    "previewSrc": "/article/account-farm/image-01.jpeg",
+    "alt": "Ферма аккаунтов: аккаунты, прокси и номера для работы",
+    "width": 1920,
+    "height": 1080
+  },
+  "headingIds": {
+    "Где покупать аккаунты": "gde-pokupat-soc-akki",
+    "Что сделать сразу после покупки": "after-purchase",
+    "Twitter": "twitter",
+    "Discord": "discord",
+    "Gmail": "gmail",
+    "SMS-активаторы": "sms-aktivatory-virtualnye-nomera",
+    "Накрутка": "gde-nakruchivat-aktivnosti",
+    "Прокси": "proksi-modem",
+    "Антидетект": "antiki"
+  },
   "blocks": [
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "В данной статье покажу и расскажу, где и какие аккаунты покупать, какие прокси лучше брать, где забирать виртуальные номера и накрутку лайков с подписчиками. А также где все это хранить."
+          "text": "Есть ещё видео на YouTube, если удобнее смотреть",
+          "href": "https://youtu.be/DkJjFX7oRUc?si=lk0xS3FPWUOxACfk"
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-01.jpeg",
-      "type": "image"
-    },
-    {
-      "level": 3,
-      "text": "Навигация",
-      "type": "heading"
-    },
-    {
-      "content": [
-        {
-          "href": "/@hopscupcrpt/GIuM0McUUie#kj0f",
-          "strong": true,
-          "text": "- Где купить соц. аккаунты"
-        },
-        {
-          "strong": true,
-          "text": " "
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "/@hopscupcrpt/GIuM0McUUie#bPWB",
-          "strong": true,
-          "text": "- Twitter"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "/@hopscupcrpt/GIuM0McUUie#X9kD",
-          "strong": true,
-          "text": "- Discord"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "/@hopscupcrpt/GIuM0McUUie#NSGW",
-          "strong": true,
-          "text": "- Gmail"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "/@hopscupcrpt/GIuM0McUUie#AjTu",
-          "strong": true,
-          "text": "- СМС активаторы / виртуальные номера"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "/@hopscupcrpt/GIuM0McUUie#8C3h",
-          "strong": true,
-          "text": "- Сервисы накрутки лайков, подписчиков и рефералов в тг ботов"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "/@hopscupcrpt/GIuM0McUUie#DVDz",
-          "strong": true,
-          "text": "- Прокси/модем"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "/@hopscupcrpt/GIuM0McUUie#tw7f",
-          "strong": true,
-          "text": "- Антидетект браузеры"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "📌Еще есть "
-        },
-        {
-          "href": "https://youtu.be/DkJjFX7oRUc?si=lk0xS3FPWUOxACfk",
-          "strong": true,
-          "text": "ВИДЕО НА ЮТУБ"
-        },
-        {
-          "text": " для вашего удобства"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
+      "type": "heading",
       "level": 2,
-      "text": "Где покупать соц. акки",
-      "type": "heading"
+      "text": "Где покупать аккаунты"
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Есть 3 основных сервиса, цены, ассортимент и качество товара примерно одинаковые."
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "1) "
+          "text": "Аккаунты я давно беру на "
         },
         {
-          "href": "https://dark.shopping/?p=95083",
-          "strong": true,
-          "text": "Darkshopping"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "2) "
+          "text": "DarkShopping",
+          "serviceId": "st-dark"
         },
         {
-          "href": "https://accsmarket.com/9vV7VOzI",
-          "strong": true,
-          "text": "AccsMarket"
+          "text": ". Если он не нравится, есть "
+        },
+        {
+          "text": "AccsMarket",
+          "serviceId": "st1"
+        },
+        {
+          "text": " и "
+        },
+        {
+          "text": "FunPay",
+          "serviceId": "st-funpay"
+        },
+        {
+          "text": ". Цены и качество примерно одинаковые. Оплатить можно криптой или любой картой, даже российской."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Единственный сейчас большой минус всех этих сайтов, что пополнение через карты от 500-1000р, так как нормальную платежку Qiwi сейчас убили"
+          "text": "При выборе смотрю на отзывы и количество покупок. Огромную пачку сразу не берите: лучше по 3-5-10 штук и у разных продавцов. Бывало, что у всей пачки одинаковые год и месяц регистрации, и антифрод-боты на серверах за это кикали."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Но удобно, что можно оплачивать через крипту, правда в TRC 20 комса 1$ примерно"
+          "text": "Аккаунты дешевле 15-20 ₽ брать можно, но банят их чаще, и возраст у них обычно меньше."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Дальше в гайде я буду всё показывать на примере Darkshopping, так как мне просто больше нравится."
+          "text": "Регистрируемся и пополняем баланс по плюсику рядом с балансом."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "content": [
-        {
-          "text": "Заходим на сайт, регистрируемся и пополняем нажав на плюсик около баланса"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-02.png",
-      "type": "image"
+      "alt": "Главная страница магазина DarkShopping и кнопка пополнения баланса",
+      "caption": "Пополнение баланса в DarkShopping."
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Я выбрал крипту, но есть и пополнение с карты"
+          "text": "Выбираем крипту или карту."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-03.png",
-      "type": "image"
+      "alt": "Выбор способа пополнения баланса: криптовалюта или карта",
+      "caption": "Доступные способы оплаты."
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Копируете адрес и точную сумму"
+          "text": "Копируем адрес и точную сумму."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-04.png",
-      "type": "image"
+      "alt": "Адрес и сумма для пополнения баланса криптовалютой",
+      "caption": "Адрес и точная сумма из формы оплаты."
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Если что-то не так пойдет, на сайте всегда работает поддержка"
+          "text": "Если что-то пошло не так, на сайте работает поддержка."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-05.png",
-      "type": "image"
+      "alt": "Кнопка поддержки на странице магазина аккаунтов",
+      "caption": "Обращение в поддержку магазина."
     },
     {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Все магазины аккаунтов у меня на сайте в разделе "
+        },
+        {
+          "text": "Аккаунт Shop",
+          "href": "/account-shop"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    {
+      "type": "heading",
       "level": 2,
-      "text": "Twitter",
-      "type": "heading"
+      "text": "Что сделать сразу после покупки"
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Переходим в категории"
+          "text": "В первый же день меняем пароль на почте и в самом аккаунте, а лучше перевязываем свою почту, только на домене .com. Ключ 2FA перепривязываем в свой Google Authenticator. Иначе бывает, что данные утекают или продавец недобросовестный, и аккаунт ресают обратно."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-06.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Нам нужны желательно аккаунты от двух лет, крипто-проекты могут на это смотреть."
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Выбриаем такие настройки. В дате регистрации выбираем до 2022 года"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-07.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Я беру подороже, но в  целом можно покупать другие аккаунты за 30-50 рублей. Если под временные абузы, то и за 10-20 рублей"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-08.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Купил аккаунт и жму скачать"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-09.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Вот в таком формате мы получаем файл"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-10.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Как теперь войти, если у вас уже есть аккаунт в бразуере то лучше воспользоваться атидетектом(о них позже)"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Можно войти по логину и паролю, в этом нет ничего сложного, но я покажу как это сделать по токену."
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Не забываем про ВПН, я пользуюсь сразу "
-        },
-        {
-          "href": "https://chromewebstore.google.com/category/extensions?hl=ru",
-          "text": "расширением"
-        },
-        {
-          "text": " в браузере"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Качаем расширение "
-        },
-        {
-          "href": "https://chromewebstore.google.com/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg",
-          "text": "EditCookie"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-11.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Переходим на страницу "
-        },
-        {
-          "href": "https://x.com/?lang=ru",
-          "text": "Твиттера"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Берем наш токен из скаченного файла(он в конце обычно пишется)"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-12.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Пишем auth_token и ставим галочки как у меня"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-13.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "И жмем перезагрузить страницу или F5"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Все вошли в аккаунт, повторюсь это можно было бы сделать и через пароль"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-14.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Дальше через сутки смените пароль у твиттера и у почты, которая привязана к Твиттеру. А лучше вообще свою почту привязать, только домен .com, за ru бан"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "level": 2,
-      "text": "Discord",
-      "type": "heading"
-    },
-    {
-      "content": [
-        {
-          "text": "Дискорду желательно чтобы было тоже от пары месяцев"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-15.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Я выбираю опять подороже"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-16.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Опять получаем файл как и с Твиттером, там есть все нужные данные"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Переходим на сайт "
-        },
-        {
-          "href": "https://discord.com/",
-          "text": "https://discord.com/"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "И можем авторизоваться или по логину паролю или через токен, он тоже пишется всегда в конце файла"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Выбираем инструменты разработчика"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-17.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Далее просто выбираем application, приложение Дискорда и внизу пишем token, а далее в кавычках \"\" вбиваем наш токен"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-18.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "А далее жмем открыть Дискорд"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-19.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Все мы вошли в наш аккаунт"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-20.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Также рекомендую через сутки поменять пароль почту на .com"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-21.png",
-      "type": "image"
+      "alt": "Настройки аккаунта Discord: почта, пароль и двухфакторная аутентификация",
+      "caption": "Почта, пароль и 2FA в настройках Discord."
     },
     {
+      "type": "heading",
       "level": 2,
-      "text": "Gmail",
-      "type": "heading"
+      "text": "Twitter"
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "С Гмайлами всё еще проще, тут нужно всего пару дней \"отлеги\", переходим на сайт."
+          "text": "Для крипты беру аккаунты старше двух лет: проекты могут на это смотреть. Обычно они стоят 30-50 ₽, под временные задачи хватит и за 10-20 ₽."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Переходим в категории."
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "src": "/article/account-farm/image-06.png",
+      "alt": "Категории магазина с разделом аккаунтов Twitter",
+      "caption": "Выбираем категорию Twitter."
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "В фильтре выбираем дату регистрации аккаунта."
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "src": "/article/account-farm/image-07.png",
+      "alt": "Фильтр аккаунтов Twitter по дате регистрации",
+      "caption": "Фильтр по дате регистрации."
+    },
+    {
+      "type": "image",
+      "src": "/article/account-farm/image-08.png",
+      "alt": "Описание выбранного аккаунта Twitter перед покупкой",
+      "caption": "Карточка аккаунта перед покупкой."
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Купил аккаунт и жму скачать."
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "src": "/article/account-farm/image-09.png",
+      "alt": "Страница завершённой покупки с кнопкой скачивания данных аккаунта",
+      "caption": "Скачиваем файл после покупки."
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Вот в таком формате мы получаем файл."
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "src": "/article/account-farm/image-10.png",
+      "alt": "Пример текстового файла с данными купленного аккаунта Twitter",
+      "caption": "Формат файла с данными аккаунта."
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Входить лучше сразу в профиле антидетекта, по логину и паролю из файла."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Discord"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Discord любит аккаунты хотя бы от полугода, а лучше от года. Для теста я брал аккаунт за 35 ₽, и ему оказалось больше года. В некоторых гео Discord уже просит подтверждать возраст, такие аккаунты тоже продают."
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "src": "/article/account-farm/image-15.png",
+      "alt": "Категории магазина с разделом аккаунтов Discord",
+      "caption": "Категория Discord в магазине."
+    },
+    {
+      "type": "image",
+      "src": "/article/account-farm/image-16.png",
+      "alt": "Список аккаунтов Discord с характеристиками и ценами",
+      "caption": "Выбор аккаунта Discord."
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Войти можно по логину и паролю или по токену. Код 2FA генерируете из ключа в файле через Google Authenticator или сайт "
+        },
+        {
+          "text": "2fa.live",
+          "href": "https://2fa.live/"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Как войти в Discord по токену, разобрал отдельно",
+          "href": "/guides/discord-vhod-po-tokenu"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "level": 1,
+      "text": "Не вступайте больше чем в 2-3 сервера в день: у меня такие аккаунты со временем улетали в бан навсегда. Первое время просто общайтесь в чатах, можно даже на своём сервере самому с собой."
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Номер в аккаунте можно не отвязывать: некоторые серверы без него вообще не пускают. В России Discord заблокирован, без прокси не зайти."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Gmail"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "С Gmail всё ещё проще, нужно всего пару дней отлёжки."
+        }
+      ]
+    },
+    {
+      "type": "image",
       "src": "/article/account-farm/image-22.png",
-      "type": "image"
+      "alt": "Категория Google в магазине аккаунтов",
+      "caption": "Переходим в раздел Google."
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Выбираем тут Gmail и жмем поиск"
+          "text": "Выбираем тут Gmail и жмем поиск."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-23.png",
-      "type": "image"
+      "alt": "Поиск аккаунтов Gmail в категории Google",
+      "caption": "Ищем Gmail в каталоге."
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Я возьму снова подороже, а так можете экспериментировать и брать дешевле"
+          "text": "Я возьму снова подороже, а так можете экспериментировать и брать дешевле."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-24.png",
-      "type": "image"
+      "alt": "Результаты поиска аккаунтов Gmail с ценами и характеристиками",
+      "caption": "Варианты аккаунтов Gmail."
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Показывать процесс регистрации я не буду, если возникнут сложности, "
-        },
-        {
-          "href": "https://t.me/hopscupcrpt",
-          "text": "пишите в группу"
+          "text": "Если нужно подтвердить номер, нужен SMS-активатор."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "content": [
-        {
-          "text": "Единственное, что нам может понадобиться еще это подтвердить номер телефона для этого нам нужны сайты СМС активаторы"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
+      "type": "heading",
       "level": 2,
-      "text": "СМС активаторы / виртуальные номера",
-      "type": "heading"
+      "text": "SMS-активаторы"
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Вот список сайтов, которые предоставляют такую возможность, некоторые не работают с РУ, поэтому заход на сайт только через VPN"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "🔗 Смс активаторы на тест:"
+          "text": "Номера беру в "
         },
         {
-          "text": "\n"
+          "text": "SMS-Fast",
+          "serviceId": "sms-fast"
         },
         {
-          "strong": true,
-          "text": "• "
+          "text": " и "
         },
         {
-          "href": "https://smsfast.pro/?ref=1100157",
-          "strong": true,
-          "text": "SMS Fast"
+          "text": "HeroSMS",
+          "serviceId": "sms-hero"
         },
         {
-          "strong": true,
-          "text": "\n• "
+          "text": ". Пополняете баланс, ищете нужный сервис и сортируете страны по проценту доходимости. Номер берите той же страны, что и прокси. Не пришёл код за пару минут: отменяете номер, деньги возвращаются."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Все SMS-активаторы у меня на сайте",
+          "href": "/sms-activators"
         },
         {
-          "href": "https://hero-sms.com/?ref=687296",
-          "strong": true,
-          "text": "HeroSMS"
-        },
-        {
-          "strong": true,
-          "text": " \n• "
-        },
-        {
-          "href": "https://365sms.vip/?ref=37269",
-          "strong": true,
-          "text": "365SMS "
+          "text": "."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "content": [
-        {
-          "text": "Суть проста, пополняете сайт, выбираете страну, нужный сервис. Можно пользоваться поиском через CTRL+F."
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Если код не приходит за +-2 минуты, жмём отмена и берем другой номер(деньги вернут в течение пары минут, если вы не успели получить СМС)."
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Я покажу на примере Vak-sms так как он мне больше всего импонирует."
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Пополняем сайт и выбираем оператора и страну и нужный сервис"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Для поиска по сервисам можно использовать Ctrl+F"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-25.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Если код не приходит в течение 1-2 минут, просто жмем отмена, деньги вернут в течение 5 минут"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-26.png",
-      "type": "image"
-    },
-    {
+      "type": "heading",
       "level": 2,
-      "text": "Где накручивать активности",
-      "type": "heading"
+      "text": "Накрутка"
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "1) Вот несколько хороших сервисов для лайков и подписчиков:"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://wiq.ru/?ref=3972303",
-          "strong": true,
-          "text": "Первый"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://wiq.ru/?ref=3972303",
-          "strong": true,
-          "text": "Второй"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://partner.soc-proof.su/",
-          "strong": true,
-          "text": "Третий"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Принцип у них у всех прост, пополняем и выбираем нужную нам услугу и количество"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-27.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "strong": true,
-          "text": "2) Еще пара сервисов, где можно накрутить рефералов в тг ботов (Hamster, Blum и другие). Но стоимость одного реферала может быть и 15 и 80р, смотрите внимательно. 1 реф в Догс обходился в ~20р"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://t.me/hypesmm17_bot",
-          "strong": true,
-          "text": "Первый"
+          "text": "Лайки, подписчиков и рефералов в Telegram-ботах накручиваю через сервисы из "
         },
         {
-          "href": "https://t.me/hypesmm17_bot",
-          "text": " "
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
+          "text": "раздела Накрутка",
+          "href": "/social-boost"
+        },
         {
-          "href": "https://partner.soc-proof.su/",
-          "strong": true,
-          "text": "Второй"
+          "text": ". Цена реферала бывает и 15, и 80 ₽, смотрите внимательно."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "content": [
-        {
-          "href": "https://boost-gram.online/ref1860138",
-          "strong": true,
-          "text": "Третий"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://soxyliker.ru/",
-          "strong": true,
-          "text": "Четвертый"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://twiboost.com/ref2287193",
-          "strong": true,
-          "text": "Пятый"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
+      "type": "heading",
       "level": 2,
-      "text": "Прокси/модем",
-      "type": "heading"
+      "text": "Прокси"
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Если айпи вашей страны не блокируется в Твиттере и Дискорде, то можно регать аккаунты через раздачу интернета за счет вашей симки по модему(по проводу или воздуху). Подробнее писал в статье про "
+          "text": "Если айпи вашей страны не блокируется на площадке, регать можно через "
         },
         {
-          "href": "https://teletype.media/@hopscupcrpt/NI_Ki2APfk7",
-          "text": "ферму телеграм"
+          "text": "режим самолёта",
+          "href": "/guides/mobile-ip-airplane-mode"
+        },
+        {
+          "text": " на телефоне, это почти бесплатно. Минус: профили только по очереди."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Это не совсем удобный способ, так как сразу несколько профилей не открыть, но зато экономит средства на прокси ,ведь нормальные прокси стоят от 1-3$ за штуку, а нам нужны прокси на каждый аккаунт"
+          "text": "Иначе на каждый аккаунт нужна своя прокси. Обычные IPv4 стоят 1,5-2,5$ за штуку. Если аккаунтов больше 20-30 и вы сидите по очереди, дешевле мобильные: 30-50$ в месяц, и на них хоть 1000 аккаунтов."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "strong": true,
-          "text": "Вот список хороших сервисов:"
+          "text": "IPv4 и ISP беру у "
+        },
+        {
+          "text": "ProxyWing",
+          "serviceId": "p3"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "text": "Proxy-Seller",
+          "serviceId": "p4"
+        },
+        {
+          "text": " и "
+        },
+        {
+          "text": "ProxyShard",
+          "serviceId": "p1"
+        },
+        {
+          "text": ", мобильные у "
+        },
+        {
+          "text": "MobileProxy",
+          "serviceId": "p6"
+        },
+        {
+          "text": ". Промокод "
+        },
+        {
+          "text": "hopscup",
+          "strong": true
+        },
+        {
+          "text": " почти везде."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "href": "https://proxyline.net?ref=152448",
-          "strong": true,
-          "text": "Proxyline"
-        },
-        {
-          "text": " промокод на скидку 5% \""
-        },
-        {
-          "strong": true,
-          "text": "lhFhNOrKGtYxG0tiZpD"
-        },
-        {
-          "text": "\""
+          "text": "Прокси всегда состоят из айпи адреса, логина, пароля и порта. По портам лучше использовать SOCKS5, но и HTTP тоже норм. Всегда правильно их указывайте, иначе прокси не будет работать."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "href": "https://proxys.io/?refid=54507",
-          "strong": true,
-          "text": "Proxys "
-        },
-        {
-          "text": "\""
-        },
-        {
-          "strong": true,
-          "text": "HopsCup_ulru"
-        },
-        {
-          "text": "\""
-        },
-        {
-          "strong": true,
-          "text": " "
-        },
-        {
-          "text": "промо на 5% скидку"
+          "text": "На скрине порт HTTP это \"64640\". SOCKS5 это \"64641\"."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "content": [
-        {
-          "href": "https://proxy6.net/?r=103460",
-          "strong": true,
-          "text": "Proxy6"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://mobileproxy.space/?p=105422",
-          "strong": true,
-          "text": "Mobile Proxy"
-        },
-        {
-          "text": " И еще есть мобильные прокси, они как ваш модем через телефон, там неограниченное количество айпи адресов, стоят 20-25$ на месяц, если у вас больше 20 аккаунтов, то выгоднее иметь их. "
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Прокси всегда состоят из айпи адреса, логина, пароля и порта. По портам лучше использовать SOCKS5, но и HTTP тоже норм. Всегда правильно их указывайте, иначе прокси не будет работать. "
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "На скрине порт HTTP это \"64640\". SOCKS5 это \"64641\""
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-28.png",
-      "type": "image"
+      "alt": "Строка прокси с адресом, логином и портами HTTP и SOCKS5",
+      "caption": "Формат прокси и отдельные порты HTTP и SOCKS5."
     },
     {
+      "type": "paragraph",
       "content": [
         {
           "text": "Обычно мы берем эту прокси и вставляем в один из профилей антидетект браузера. Тем самым имеем уникальное устройство и айпи адрес. И при этом сидим на своем же ПК."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Какие прокси выбрать, разобрал отдельно",
+          "href": "/proxy-vpn/luchshie-proksi"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    {
+      "type": "heading",
       "level": 2,
-      "text": "Антики",
-      "type": "heading"
+      "text": "Антидетект"
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Антидетект подменяет ваше железо и поможет вставить прокси"
+          "text": "Антидетект подменяет отпечаток устройства, а прокси вставляется в профиль. Для 2-5 аккаунтов платить не нужно: "
+        },
+        {
+          "text": "AdsPower",
+          "serviceId": "ant-adspower",
+          "internal": true
+        },
+        {
+          "text": " даёт 2 бесплатных профиля, "
+        },
+        {
+          "text": "Dolphin",
+          "serviceId": "ant-dolphin",
+          "internal": true
+        },
+        {
+          "text": " 5, "
+        },
+        {
+          "text": "GoLogin",
+          "serviceId": "ant-gologin",
+          "internal": true
+        },
+        {
+          "text": " 3, а "
+        },
+        {
+          "text": "ShardX",
+          "serviceId": "ant-shardx",
+          "internal": true
+        },
+        {
+          "text": " и "
+        },
+        {
+          "text": "Donut Browser",
+          "serviceId": "ant-donut",
+          "internal": true
+        },
+        {
+          "text": " бесплатные без лимита профилей."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Самые лучшие бесплатные антидетект браузеры это"
+          "text": "Просто регистрируетесь на сайтах, подтверждаете почту и скачиваете браузер."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "content": [
-        {
-          "href": "https://incogniton.com/",
-          "strong": true,
-          "text": "Incogniton 10 бесплатных профилей"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://dolphin-anty.com/ru/",
-          "strong": true,
-          "text": "Dolphin 10 бесплатных профилей"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Используем, если у вас до 20 аккаунтов"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Дальше либо можно замультиачить, Incogniton и каждый акк будет давать +10 профилей или же купить"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://www.adspower.com/ru/",
-          "strong": true,
-          "text": "Платный антик ADS"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "text": "Просто регистрируетесь на сайтах, подтверждаете почту и скачиваете браузер"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-29.png",
-      "type": "image"
+      "alt": "Значки браузеров Dolphin Anty и Incogniton",
+      "caption": "Dolphin Anty и Incogniton.",
+      "width": 166,
+      "height": 98
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "strong": true,
-          "text": "Я буду показывать на примере Incogniton"
+          "text": "Я буду показывать на примере Incogniton."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Нажимаем создать профиль"
+          "text": "Нажимаем создать профиль."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-30.png",
-      "type": "image"
+      "alt": "Кнопка создания нового профиля в Incogniton",
+      "caption": "Создаём профиль в Incogniton."
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Вписываем любое название для вашего удобства"
+          "text": "Вписываем любое название для вашего удобства."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-31.png",
-      "type": "image"
+      "alt": "Поле названия нового профиля Incogniton",
+      "caption": "Название профиля."
     },
     {
+      "type": "paragraph",
       "content": [
         {
           "text": "Следующая вкладка \"прокси\", заходим в неё, "
         },
         {
-          "strong": true,
-          "text": "если вы НЕ будете раздавать на ПК"
+          "text": "если вы НЕ будете раздавать на ПК",
+          "strong": true
         },
         {
           "text": " мобильный интернет и вставляем тут прокси."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-32.png",
-      "type": "image"
+      "alt": "Вкладка подключения прокси в настройках профиля Incogniton",
+      "caption": "Подключение прокси к профилю."
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Тут выбираем ваш настоящий размер экрана, выставляем адекватное количество ядер и оперативной памяти"
+          "text": "Тут выбираем ваш настоящий размер экрана, выставляем адекватное количество ядер и оперативной памяти."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-33.png",
-      "type": "image"
+      "alt": "Настройки экрана, процессора и памяти профиля Incogniton",
+      "caption": "Параметры устройства в профиле."
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Далее жмём создать профиль"
+          "text": "Далее жмём создать профиль."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-34.png",
-      "type": "image"
+      "alt": "Кнопка сохранения нового профиля Incogniton",
+      "caption": "Сохраняем новый профиль."
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Всё профиль создан, жмём открыть"
+          "text": "Всё профиль создан, жмём открыть."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
-      "alt": "",
-      "caption": "",
+      "type": "image",
       "src": "/article/account-farm/image-35.png",
-      "type": "image"
+      "alt": "Созданный профиль в списке Incogniton и кнопка запуска",
+      "caption": "Открываем созданный профиль."
     },
     {
+      "type": "paragraph",
       "content": [
         {
           "text": "Всё, теперь у вас уникальное устройство, если у вас есть прокси для каждого профиля, то можно сразу открывать несколько. Если раздаете интернет, у них тогда будет одинаковый айпи, так не нужно делать, в данном случае каждый профиль по очереди."
         }
-      ],
-      "type": "paragraph"
+      ]
     },
     {
+      "type": "paragraph",
       "content": [
         {
-          "strong": true,
-          "text": "Больше полезного тут:"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
+          "text": "Как настроить профиль без утечек, разобрал в гайде",
+          "href": "/guides/kak-nastroit-antidetect-brauzer"
+        },
         {
-          "href": "https://t.me/hopscupcrpt",
-          "strong": true,
-          "text": "Telegram"
+          "text": "."
         }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "href": "https://www.youtube.com/@hopscup",
-          "strong": true,
-          "text": "Youtube"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/account-farm/image-36.png",
-      "type": "image"
+      ]
     }
-  ]
+  ],
+  "checklist": {
+    "items": [
+      [
+        {
+          "text": "Аккаунты берите по 3-10 штук у разных продавцов и смотрите отзывы."
+        }
+      ],
+      [
+        {
+          "text": "В первый день меняйте пароли, почту и 2FA."
+        }
+      ],
+      [
+        {
+          "text": "Каждому аккаунту свой профиль антидетекта и свой IP."
+        }
+      ],
+      [
+        {
+          "text": "В Discord не больше 2-3 новых серверов в день."
+        }
+      ],
+      [
+        {
+          "text": "Номер берите той же страны, что и прокси."
+        }
+      ]
+    ],
+    "sources": [
+      {
+        "label": "Аккаунты",
+        "links": [
+          {
+            "text": "DarkShopping",
+            "serviceId": "st-dark"
+          },
+          {
+            "text": "AccsMarket",
+            "serviceId": "st1"
+          },
+          {
+            "text": "FunPay",
+            "serviceId": "st-funpay"
+          }
+        ]
+      },
+      {
+        "label": "Прокси",
+        "links": [
+          {
+            "text": "ProxyWing",
+            "serviceId": "p3"
+          },
+          {
+            "text": "Proxy-Seller",
+            "serviceId": "p4"
+          },
+          {
+            "text": "MobileProxy",
+            "serviceId": "p6"
+          }
+        ]
+      },
+      {
+        "label": "Антидетекты",
+        "links": [
+          {
+            "text": "AdsPower",
+            "serviceId": "ant-adspower"
+          },
+          {
+            "text": "Dolphin",
+            "serviceId": "ant-dolphin"
+          },
+          {
+            "text": "ShardX",
+            "serviceId": "ant-shardx",
+            "internal": true
+          }
+        ]
+      }
+    ],
+    "note": [
+      {
+        "text": "Промокод "
+      },
+      {
+        "text": "hopscup",
+        "strong": true
+      },
+      {
+        "text": " почти везде."
+      }
+    ],
+    "action": {
+      "href": "/account-shop",
+      "label": "Все магазины аккаунтов"
+    }
+  }
 }

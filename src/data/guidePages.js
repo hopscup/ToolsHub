@@ -4,6 +4,7 @@ import { claudeGuideArticle, claudeGuideHeadingIds } from './claudeGuideArticle.
 import { mobileIpGuideMeta } from './mobileIpGuideContent.js';
 import { claudeRecoveryArticle } from './claudeRecoveryArticle.js';
 import { antidetectSetupMeta } from './antidetectSetupContent.js';
+import { accountFarmArticle } from './accountFarmContent.js';
 import otcKycArticle from './otcKycArticle.json' with { type: 'json' };
 
 const guideTitle = (title) => ({
@@ -231,6 +232,12 @@ export const guidePages = [
   {
     id: 'guide-account-farm',
     slug: 'account-farm',
+    articleBlocks: accountFarmArticle.blocks,
+    articleHeadingIds: accountFarmArticle.headingIds,
+    cover: accountFarmArticle.cover,
+    datePublished: accountFarmArticle.datePublished,
+    dateModified: accountFarmArticle.dateModified,
+    intro: { ru: accountFarmArticle.intro },
     name: {
       ru: 'Ферма аккаунтов: почты, прокси, антидетекты и накрутка',
       en: 'Account farm: emails, proxies, antidetects, and boosting',
@@ -238,22 +245,25 @@ export const guidePages = [
       zh: '账号农场：邮箱、代理、反检测与增长',
       ko: '계정 팜: 이메일, 프록시, 안티디텍트, 부스트',
     },
-    title: guideTitle({
-      ru: 'Ферма аккаунтов: почты, прокси, антидетекты и накрутка',
-      en: 'Account farm: emails, proxies, antidetects, and boosting',
-      es: 'Granja de cuentas: correos, proxies, antidetects y boosting',
-      zh: '账号农场：邮箱、代理、反检测与增长',
-      ko: '계정 팜: 이메일, 프록시, 안티디텍트, 부스트',
-    }),
+    title: {
+      ...guideTitle({
+        ru: 'Ферма аккаунтов: почты, прокси, антидетекты и накрутка',
+        en: 'Account farm: emails, proxies, antidetects, and boosting',
+        es: 'Granja de cuentas: correos, proxies, antidetects y boosting',
+        zh: '账号农场：邮箱、代理、反检测与增长',
+        ko: '계정 팜: 이메일, 프록시, 안티디텍트, 부스트',
+      }),
+      ru: accountFarmArticle.seoTitle,
+    },
     description: {
-      ru: 'Большой гайд по инфраструктуре для аккаунтов Discord, Twitter и Google: где брать аккаунты, какие нужны прокси и антидетекты.',
+      ru: accountFarmArticle.description,
       en: 'A complete guide to infrastructure for Discord, Twitter, and Google accounts, including account sources, proxies, and antidetect browsers.',
       es: 'Guía amplia sobre infraestructura para cuentas Discord, Twitter y Google: cuentas, proxies y navegadores antidetect.',
       zh: 'Discord、Twitter 和 Google 账号基础设施完整指南：账号来源、代理和反检测浏览器。',
       ko: 'Discord, Twitter, Google 계정 인프라 종합 가이드: 계정 확보, 프록시, 안티디텍트 브라우저.',
     },
     heading: {
-      ru: 'Как собрать инфраструктуру для фермы аккаунтов',
+      ru: accountFarmArticle.title,
       en: 'How to build account farm infrastructure',
       es: 'Cómo montar infraestructura para una granja de cuentas',
       zh: '如何搭建账号农场基础设施',

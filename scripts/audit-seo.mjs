@@ -21,6 +21,7 @@ import { steamPages } from '../src/data/steamPages.js';
 import { vpsPages } from '../src/data/vpsPages.js';
 import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobileProxyMeta, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 import { claudeRecoveryArticle } from '../src/data/claudeRecoveryArticle.js';
+import { accountFarmArticle, createAccountFarmContent } from '../src/data/accountFarmContent.js';
 import { antidetectSetupMeta, antidetectSetupCopy, antidetectSetupAdditions, getAntidetectGuideServices, resolveAntidetectGuideSegments, createAntidetectGuideChecklist } from '../src/data/antidetectSetupContent.js';
 
 const distDir = path.resolve('dist');
@@ -133,6 +134,22 @@ const checkSectionSummaries = (html, language, route) => {
 };
 
 const checkArticleContent = (html, route, localizedRoute) => {
+  if (route === '/guides/account-farm') {
+    const { article, checklist } = createAccountFarmContent(OFFERS);
+    const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
+    const parts = [article.title, article.intro, ...article.blocks.flatMap(block => block.type === 'paragraph' ? block.content.map(part => part.text.trim()) : block.type === 'image' ? [block.caption] : [block.text]), ...checklist.items.flat().map(part => part.text), checklist.action.label];
+    for (const part of parts) if (!content.includes(escapeHtml(part))) errors.push(`Missing complete account farm text: ${localizedRoute}: ${part}`);
+    for (const image of [article.cover, ...article.blocks.filter(block => block.type === 'image')]) {
+      if (!content.includes(`src="${image.src}"`) || !content.includes(`alt="${escapeHtml(image.alt)}"`)) errors.push(`Missing account farm image: ${localizedRoute}: ${image.src}`);
+    }
+    for (const link of [...article.blocks.filter(block => block.type === 'paragraph').flatMap(block => block.content), ...checklist.sources.flatMap(source => source.links)].filter(part => part.href)) {
+      if (!content.includes(`href="${escapeHtml(link.href)}"`)) errors.push(`Missing account farm link: ${localizedRoute}: ${link.href}`);
+    }
+    if (/EditThisCookie|EditCookie|auth_token|Vak-sms|Навигация|Похожие статьи|FAQPage|image-(?:11|12|13|14|17|18|19|20|25|26|27|36)\./.test(content)) errors.push(`Obsolete account farm content returned: ${localizedRoute}`);
+    if (!html.includes(`<title>${escapeHtml(article.seoTitle)}</title>`) || !html.includes(`<h1>${escapeHtml(article.title)}</h1>`) || !html.includes(`<meta name="description" content="${escapeHtml(article.description)}"`)) errors.push(`Wrong account farm metadata: ${localizedRoute}`);
+    const schema = JSON.parse(html.match(/<script[^>]*id="structured-data"[^>]*>([\s\S]*?)<\/script>/)?.[1] || '[]').find(item => item['@type'] === 'Article');
+    if (schema?.datePublished !== article.datePublished || schema?.dateModified !== article.dateModified) errors.push(`Wrong account farm dates: ${localizedRoute}`);
+  }
   if (route === '/guides/kak-nastroit-antidetect-brauzer') {
     const copy = antidetectSetupCopy;
     const additions = antidetectSetupAdditions;
@@ -310,7 +327,7 @@ for (const language of languages) {
         if (!types.includes(requiredType)) errors.push(`Missing ${requiredType} schema: ${localizedRoute}`);
       }
       if (pageType !== 'Article' && structuredData.find(item => item['@type'] === pageType)?.dateModified !== siteDateModified) errors.push(`Missing build dateModified: ${localizedRoute}`);
-      const articleMeta = ({ '/proxy-vpn/luchshie-proksi': proxyGuideMeta, '/proxy-vpn/luchshie-mobilnye-proksi': mobileProxyMeta, '/guides/mobile-ip-airplane-mode': mobileIpGuideMeta, '/guides/kak-nastroit-antidetect-brauzer': antidetectSetupMeta })[route];
+      const articleMeta = ({ '/proxy-vpn/luchshie-proksi': proxyGuideMeta, '/proxy-vpn/luchshie-mobilnye-proksi': mobileProxyMeta, '/guides/mobile-ip-airplane-mode': mobileIpGuideMeta, '/guides/kak-nastroit-antidetect-brauzer': antidetectSetupMeta, '/guides/account-farm': accountFarmArticle })[route];
       if (articleMeta && structuredData.find(item => item['@type'] === 'Article')?.dateModified !== articleMeta.dateModified) errors.push(`Wrong fixed article dateModified: ${localizedRoute}`);
     } catch {
       errors.push(`Invalid JSON-LD: ${localizedRoute}`);

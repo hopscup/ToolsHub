@@ -217,7 +217,8 @@ body:has(dialog[data-article-image-viewer][open]) {
   color: #625c68 !important;
 }
 
-.proxy-guide-article[data-antidetect-setup][data-article-theme="light"] [data-article-checklist] li::marker {
+.proxy-guide-article[data-antidetect-setup][data-article-theme="light"] [data-article-checklist] li::marker,
+.proxy-guide-article[data-imported-checklist][data-article-theme="light"] [data-article-checklist] li::marker {
   color: #625c68;
 }
 
