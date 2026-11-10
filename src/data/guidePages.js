@@ -5,6 +5,7 @@ import { mobileIpGuideMeta } from './mobileIpGuideContent.js';
 import { claudeRecoveryArticle } from './claudeRecoveryArticle.js';
 import { antidetectSetupMeta } from './antidetectSetupContent.js';
 import { accountFarmArticle } from './accountFarmContent.js';
+import { guideRefreshMeta } from './guideRefreshContent.js';
 import otcKycArticle from './otcKycArticle.json' with { type: 'json' };
 
 const guideTitle = (title) => ({
@@ -58,9 +59,11 @@ export const guidePages = [
   {
     id: 'guide-discord-token',
     slug: 'discord-vhod-po-tokenu',
+    ...guideRefreshMeta['guide-discord-token'],
+    intro: { ru: discordTokenArticle.description },
     article: discordTokenStaticArticle,
     name: { ru: 'Как войти в Discord по токену: расширение и F12', en: 'Discord token login: extension and F12' },
-    title: { ru: `${discordTokenArticle.title} | Hopscup Tools`, en: 'Discord token login: extension and F12 | Hopscup Tools' },
+    title: { ru: guideRefreshMeta['guide-discord-token'].title, en: 'Discord token login: extension and F12 | Hopscup Tools' },
     heading: { ru: discordTokenArticle.title, en: 'Discord token login: extension and F12' },
     description: { ru: discordTokenArticle.description, en: 'Discord Token Login and a fallback using browser developer tools, with screenshots and troubleshooting.' },
     keywords: { ru: 'как войти в дискорд по токену, вход в Discord по токену, Discord Token Login, авторизация Discord через F12, token Local Storage', en: 'Discord token login, Discord Token Login extension, Discord F12 Local Storage' },
@@ -74,6 +77,8 @@ export const guidePages = [
   {
     id: 'guide-foreign-cards',
     slug: 'zarubezhnaya-karta-s-popolneniem-rublyami',
+    ...guideRefreshMeta['guide-foreign-cards'],
+    intro: { ru: 'PGON, ВездеКарта и Zarub: пополнение через СБП или USDT, документы, курс и реальные расходы.' },
     article: foreignCardArticle,
     name: { ru: 'Зарубежная карта с пополнением рублями: что выбрать', en: 'International cards funded with rubles' },
     title: { ru: 'Зарубежная карта с пополнением рублями: PGON и ВездеКарта', en: 'International cards funded with rubles | Hopscup Tools' },
@@ -163,6 +168,7 @@ export const guidePages = [
   {
     id: 'guide-gmail-forwarding',
     slug: 'gmail-forwarding',
+    ...guideRefreshMeta['guide-gmail-forwarding'],
     name: {
       ru: 'Переадресация писем из Gmail на другую почту',
       en: 'Forwarding Gmail emails to another inbox',
@@ -235,6 +241,7 @@ export const guidePages = [
     articleBlocks: accountFarmArticle.blocks,
     articleHeadingIds: accountFarmArticle.headingIds,
     cover: accountFarmArticle.cover,
+    catalogCover: accountFarmArticle.catalogCover,
     datePublished: accountFarmArticle.datePublished,
     dateModified: accountFarmArticle.dateModified,
     intro: { ru: accountFarmArticle.intro },
@@ -384,6 +391,9 @@ export const guidePages = [
   {
     id: 'guide-uids-addresses',
     slug: 'exchange-uids-addresses',
+    datePublished: guideRefreshMeta['guide-uids-addresses'].datePublished,
+    dateModified: guideRefreshMeta['guide-uids-addresses'].dateModified,
+    intro: { ru: guideRefreshMeta['guide-uids-addresses'].intro },
     name: {
       ru: 'Много UID и адресов на Bitget и OKX',
       en: 'Multiple UIDs and addresses on Bitget and OKX',
@@ -391,13 +401,13 @@ export const guidePages = [
       zh: 'Bitget 和 OKX 的多个 UID 与地址',
       ko: 'Bitget 및 OKX의 여러 UID와 주소',
     },
-    title: guideTitle({
+    title: { ...guideTitle({
       ru: 'Как создать много UID и адресов на Bitget и OKX',
       en: 'How to create multiple UIDs and addresses on Bitget and OKX',
       es: 'Cómo crear varios UID y direcciones en Bitget y OKX',
       zh: '如何在 Bitget 和 OKX 创建多个 UID 与地址',
       ko: 'Bitget 및 OKX에서 여러 UID와 주소를 만드는 방법',
-    }),
+    }), ru: guideRefreshMeta['guide-uids-addresses'].title },
     description: {
       ru: 'Пошаговый гайд по субаккаунтам Bitget и OKX: отдельные UID, депозитные адреса, автоперевод активов и переключение между аккаунтами.',
       en: 'A step-by-step guide to Bitget and OKX subaccounts: separate UIDs, deposit addresses, automatic asset transfers, and account switching.',
@@ -406,7 +416,7 @@ export const guidePages = [
       ko: 'Bitget 및 OKX 서브계정 단계별 가이드: 별도 UID, 입금 주소, 자동 자산 이체 및 계정 전환.',
     },
     heading: {
-      ru: 'Субаккаунты, UID и адреса Bitget и OKX',
+      ru: guideRefreshMeta['guide-uids-addresses'].heading,
       en: 'Bitget and OKX subaccounts, UIDs, and addresses',
       es: 'Subcuentas, UID y direcciones de Bitget y OKX',
       zh: 'Bitget 与 OKX 子账户、UID 和地址',

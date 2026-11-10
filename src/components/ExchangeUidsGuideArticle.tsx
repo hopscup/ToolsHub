@@ -1,24 +1,19 @@
-import exchangeUidsArticle from '../data/exchangeUidsArticle.json';
+import { createGuideRefreshContent, exchangeRegistrationServices } from '../data/guideRefreshContent.js';
 import { ImportedGuideArticle } from './ImportedGuideArticle';
 import type { ArticleData } from './ImportedGuideArticle';
+import { trackArticleService } from '../lib/articleServiceTracking';
+import type { ArticleServiceOffer } from '../lib/articleServiceTracking';
 
-const HEADING_IDS = {
-  Bitget: 'bitget',
-  OKX: 'okx',
-};
-
-export const ExchangeUidsGuideArticle = () => (
-  <ImportedGuideArticle
-    data={exchangeUidsArticle as ArticleData}
-    title="Как создать много UID и адресов на Bitget и OKX"
-    description="Как создать субаккаунты с отдельными UID и депозитными адресами на Bitget и OKX."
+export const ExchangeUidsGuideArticle = ({ offers }: { offers: ArticleServiceOffer[] }) => {
+  const article = createGuideRefreshContent(offers)['guide-uids-addresses'];
+  return <ImportedGuideArticle
+    data={article as ArticleData}
+    title={article.title}
+    description={article.intro}
     eyebrow="Практический гайд Hopscup"
-    headingIds={HEADING_IDS}
+    headingIds={article.headingIds}
     sourceAnchors={{}}
-    related={[
-      { href: '/guides/crypto-otc-kyc', label: 'Крипта', title: 'OTC-площадки и KYC-сервисы', description: 'Как устроены сделки, верификации и работа с WL.' },
-      { href: '/crypto-exchange', label: 'Обмен', title: 'Криптообменники', description: 'Подборка сервисов для покупки, обмена и вывода криптовалюты.' },
-      { href: '/guides/gmail-forwarding', label: 'Почта', title: 'Переадресация писем из Gmail', description: 'Как собрать уведомления нескольких аккаунтов в одном ящике.' },
-    ]}
-  />
-);
+    related={[]}
+    onServiceClick={(href, placement) => trackArticleService([...offers, ...exchangeRegistrationServices], href, placement)}
+  />;
+};

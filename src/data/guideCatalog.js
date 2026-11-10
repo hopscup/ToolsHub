@@ -70,7 +70,7 @@ export const guideCatalog = [
     route: `/guides/${page.slug}`,
     title: cardTitles[page.id] || { ru: page.name.ru },
     description: page.editorial.description,
-    cover: page.cover,
+    cover: page.catalogCover || page.cover,
     indexable: page.indexable,
   })),
 ].sort((first, second) => Number(second.id === 'guide-mobile-ip') - Number(first.id === 'guide-mobile-ip'));

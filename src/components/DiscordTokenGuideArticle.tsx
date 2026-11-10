@@ -1,24 +1,19 @@
-import { discordTokenArticle } from '../data/discordTokenArticle.js';
+import { createGuideRefreshContent } from '../data/guideRefreshContent.js';
 import { ImportedGuideArticle } from './ImportedGuideArticle';
 import type { ArticleData } from './ImportedGuideArticle';
+import { trackArticleService } from '../lib/articleServiceTracking';
+import type { ArticleServiceOffer } from '../lib/articleServiceTracking';
 
-const headingIds = {
-  'Что такое токен Discord и где он в файле': 'token',
-  'Как сменить токен Discord': 'reset-token',
-  'Как войти через Discord Token Login': 'extension',
-  'Вход по токену через F12, если расширение не работает': 'f12',
-  'Почему не получается войти по токену': 'troubleshooting',
-  'Как достать токен из своего аккаунта Discord': 'network',
-};
-
-export const DiscordTokenGuideArticle = () => (
-  <ImportedGuideArticle
-    data={discordTokenArticle as ArticleData}
-    title={discordTokenArticle.title}
-    description={discordTokenArticle.description}
+export const DiscordTokenGuideArticle = ({ offers }: { offers: ArticleServiceOffer[] }) => {
+  const article = createGuideRefreshContent(offers)['guide-discord-token'];
+  return <ImportedGuideArticle
+    data={article as ArticleData}
+    title={article.title}
+    description={article.description}
     eyebrow="Discord"
-    headingIds={headingIds}
+    headingIds={article.headingIds}
     sourceAnchors={{}}
     related={[]}
-  />
-);
+    onServiceClick={(href, placement) => trackArticleService(offers, href, placement)}
+  />;
+};

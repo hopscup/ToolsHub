@@ -118,6 +118,7 @@ type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto';
 const RECOMMENDED_OFFER_IDS = new Set(Object.values(recommendedOfferIds).flat());
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
+  'guide-best-mobile-proxies': { topic: 'proxy', minutes: 8 },
   'guide-claude-recovery': { topic: 'accounts', minutes: 6 },
   'guide-claude-russia': { topic: 'accounts', minutes: 10 },
   'guide-discord-token': { topic: 'accounts', minutes: 6 },
@@ -1962,6 +1963,14 @@ const OFFERS: Offer[] = [
     details: antarcticExchangeDetails,
   },
   // GUIDES
+  {
+    id: 'guide-best-mobile-proxies',
+    category: 'Guides',
+    name: guideCatalogById['guide-best-mobile-proxies'].title.ru,
+    slug: 'luchshie-mobilnye-proksi',
+    description: { ru: guideCatalogById['guide-best-mobile-proxies'].description.ru, en: guideCatalogById['guide-best-mobile-proxies'].description.ru },
+    url: guideCatalogById['guide-best-mobile-proxies'].route,
+  },
   {
     id: claudeRecoveryArticle.id,
     category: 'Guides',
@@ -6262,7 +6271,7 @@ export default function App() {
   }
 
   if (isGmailForwardingGuideArticle) {
-    return <GmailForwardingGuideArticle />;
+    return <GmailForwardingGuideArticle offers={OFFERS} />;
   }
 
   if (isAccountFarmGuideArticle) {
@@ -6274,7 +6283,7 @@ export default function App() {
   }
 
   if (isExchangeUidsGuideArticle) {
-    return <ExchangeUidsGuideArticle />;
+    return <ExchangeUidsGuideArticle offers={OFFERS} />;
   }
 
   if (isAntidetectSetupGuideArticle) {
@@ -6282,7 +6291,7 @@ export default function App() {
   }
 
   if (isDiscordTokenGuideArticlePath()) {
-    return <DiscordTokenGuideArticle />;
+    return <DiscordTokenGuideArticle offers={OFFERS} />;
   }
   if (stripLanguagePrefix(window.location.pathname) === `/guides/${claudeGuideArticle.slug}`) {
     return <ClaudeGuideArticle />;
@@ -6292,7 +6301,7 @@ export default function App() {
   }
 
   if (stripLanguagePrefix(window.location.pathname) === '/guides/zarubezhnaya-karta-s-popolneniem-rublyami') {
-    return <ForeignCardGuideArticle />;
+    return <ForeignCardGuideArticle offers={OFFERS} />;
   }
 
   const renderGuideCards = (offers: Offer[]) => offers.map((offer, index) => {
@@ -6307,7 +6316,8 @@ export default function App() {
       href={getLocalizedOfferRoute(offer, lang)}
       onClick={(event) => {
         if (
-          offer.id === 'guide-mobile-ip'
+          offer.id === 'guide-best-mobile-proxies'
+          || offer.id === 'guide-mobile-ip'
           || offer.id === 'guide-claude-recovery'
           || offer.id === 'guide-claude-russia'
           || offer.id === 'guide-discord-token'

@@ -11,10 +11,13 @@ import {
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
-import { RelatedGuides } from './RelatedGuides';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
 import { ArticleImageLink } from './ArticleImageLink';
 import { articleFallbackContent } from '../data/articleFallbackContent.js';
+import { createGuideRefreshContent, gmailResultNote, gmailScreenshots } from '../data/guideRefreshContent.js';
+import { getExternalLinkRel } from '../lib/externalLinks.js';
+import { trackArticleService } from '../lib/articleServiceTracking';
+import type { ArticleServiceOffer } from '../lib/articleServiceTracking';
 
 type ArticleTheme = 'dark' | 'light';
 
@@ -49,7 +52,7 @@ const StepItem = ({ children }: { children: ReactNode }) => (
   </li>
 );
 
-export const GmailForwardingGuideArticle = () => {
+export const GmailForwardingGuideArticle = ({ offers }: { offers: ArticleServiceOffer[] }) => {
   const [theme, setTheme] = useState<ArticleTheme>(() => {
     if (typeof window === 'undefined') return 'dark';
     return window.localStorage.getItem(ARTICLE_THEME_KEY) === 'light' ? 'light' : 'dark';
@@ -65,6 +68,7 @@ export const GmailForwardingGuideArticle = () => {
   }, [theme]);
 
   const isLight = theme === 'light';
+  const closing = createGuideRefreshContent(offers)['guide-gmail-forwarding'].closing as { text: string; href?: string }[];
 
   return (
     <div
@@ -153,27 +157,21 @@ export const GmailForwardingGuideArticle = () => {
                 <StepItem>{articleFallbackContent.gmail.sections[0].steps[1]}</StepItem>
               </StepList>
               <ArticleImage
-                src="/article/gmail-forwarding/open-settings.jpg"
-                alt="Переход из Gmail в раздел всех настроек"
-                caption="Нажимаем на шестерёнку и открываем все настройки Gmail."
+                {...gmailScreenshots[0]}
               />
 
               <StepList>
                 <StepItem>{articleFallbackContent.gmail.sections[0].steps[2]}</StepItem>
               </StepList>
               <ArticleImage
-                src="/article/gmail-forwarding/forwarding-tab.jpg"
-                alt="Вкладка Пересылка и POP IMAP в настройках Gmail"
-                caption="Открываем вкладку «Пересылка и POP/IMAP»."
+                {...gmailScreenshots[1]}
               />
 
               <StepList>
                 <StepItem>{articleFallbackContent.gmail.sections[0].steps[3]}</StepItem>
               </StepList>
               <ArticleImage
-                src="/article/gmail-forwarding/add-address.jpg"
-                alt="Добавление нового адреса пересылки в Gmail"
-                caption="Добавляем адрес, на который Gmail будет пересылать письма."
+                {...gmailScreenshots[2]}
               />
 
               <StepList>
@@ -192,36 +190,23 @@ export const GmailForwardingGuideArticle = () => {
                 <StepItem>{articleFallbackContent.gmail.sections[1].steps[3]}</StepItem>
               </StepList>
               <ArticleImage
-                src="/article/gmail-forwarding/enable-forwarding.jpg"
-                alt="Включённая переадресация и выбор действия с оригиналом письма"
-                caption="Включаем пересылку, выбираем действие с оригиналом и сохраняем изменения."
+                {...gmailScreenshots[3]}
               />
             </section>
 
             <section id="result" className="mt-12 scroll-mt-28 border-t border-white/[0.08] pt-10">
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-purple">Готово</p>
               <h2 className="mt-3 font-display text-2xl font-black text-white md:text-3xl">Проверяем результат</h2>
-              <GuideNote>Теперь все новые письма будут автоматически пересылаться на выбранный адрес.</GuideNote>
+              <GuideNote>{gmailResultNote}</GuideNote>
               <p className="text-sm font-medium leading-7 text-white/65 md:text-base">
                 {articleFallbackContent.gmail.result}
               </p>
-              <GuideNote>
-                Не забывай подписываться на канал{' '}
-                <a href="https://t.me/hopscupcrpt" target="_blank" rel="noopener noreferrer" className="text-brand-purple underline underline-offset-4">
-                  Hopscup Crew
-                </a>.
-              </GuideNote>
-              <ArticleImage
-                src="/article/gmail-forwarding/hopscup-crypto.jpg"
-                alt="Hopscup Crypto"
-                caption="Новые гайды и рабочие материалы в Hopscup Crew."
-              />
             </section>
-            <RelatedGuides items={[
-              { href: '/guides/account-farm', label: 'Аккаунты', title: 'Ферма аккаунтов', description: 'Где брать почты, аккаунты, номера, прокси и антидетекты.' },
-              { href: '/account-shop', label: 'Аккаунты', title: 'Магазины аккаунтов', description: 'Сравнение площадок для покупки готовых аккаунтов.' },
-              { href: '/sms-activators', label: 'Номера', title: 'SMS-активаторы', description: 'Виртуальные номера для регистрации и подтверждения аккаунтов.' },
-            ]} />
+            <p data-guide-service-cta className="mt-8 text-sm font-medium leading-7 text-white/65 md:text-base">
+              {closing.map((part, index) => part.href ? <a key={index} href={part.href}
+                {...(part.href.startsWith('https://') ? { target: '_blank', rel: getExternalLinkRel(part.href), onClick: () => trackArticleService(offers, part.href, 'article_cta') } : {})}
+                className="font-bold text-brand-purple underline underline-offset-4">{part.text}</a> : <span key={index}>{part.text}</span>)}
+            </p>
             <ArticleSocialFooter />
           </article>
         </div>

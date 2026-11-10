@@ -22,6 +22,7 @@ import { vpsPages } from '../src/data/vpsPages.js';
 import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobileProxyMeta, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 import { claudeRecoveryArticle } from '../src/data/claudeRecoveryArticle.js';
 import { accountFarmArticle, createAccountFarmContent } from '../src/data/accountFarmContent.js';
+import { createGuideRefreshContent, guideRefreshMeta } from '../src/data/guideRefreshContent.js';
 import { antidetectSetupMeta, antidetectSetupCopy, antidetectSetupAdditions, getAntidetectGuideServices, resolveAntidetectGuideSegments, createAntidetectGuideChecklist } from '../src/data/antidetectSetupContent.js';
 
 const distDir = path.resolve('dist');
@@ -134,6 +135,23 @@ const checkSectionSummaries = (html, language, route) => {
 };
 
 const checkArticleContent = (html, route, localizedRoute) => {
+  const refreshedPage = guidePages.find(page => `/guides/${page.slug}` === route && guideRefreshMeta[page.id]);
+  if (refreshedPage) {
+    const article = createGuideRefreshContent(OFFERS)[refreshedPage.id];
+    const meta = guideRefreshMeta[refreshedPage.id];
+    const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
+    for (const block of article.blocks) {
+      const parts = block.type === 'paragraph' ? block.content : block.type === 'list' ? block.items.flat() : [];
+      const texts = block.type === 'image' ? [block.caption] : block.text ? [block.text] : parts.map(part => part.text.trim());
+      for (const text of texts) if (!content.includes(escapeHtml(text))) errors.push(`Missing refreshed guide text: ${localizedRoute}: ${text}`);
+      for (const part of parts.filter(part => part.href)) if (!content.includes(`href="${escapeHtml(part.href)}"`)) errors.push(`Missing refreshed guide link: ${localizedRoute}: ${part.href}`);
+      if (block.type === 'image' && (!content.includes(`src="${block.src}"`) || !content.includes(`alt="${escapeHtml(block.alt)}"`))) errors.push(`Missing refreshed guide screenshot: ${localizedRoute}: ${block.src}`);
+    }
+    if (!content.includes(`<h1>${escapeHtml(article.title)}</h1>`)) errors.push(`Wrong refreshed guide H1: ${localizedRoute}`);
+    if (/FAQPage|Похожие статьи|data-related-guides/.test(html)) errors.push(`Unrequested guide blocks: ${localizedRoute}`);
+    const schema = JSON.parse(html.match(/<script[^>]*id="structured-data"[^>]*>([\s\S]*?)<\/script>/)?.[1] || '[]').find(item => item['@type'] === 'Article');
+    if (schema?.datePublished !== meta.datePublished || schema?.dateModified !== meta.dateModified) errors.push(`Wrong fixed refreshed guide dates: ${localizedRoute}`);
+  }
   if (route === '/guides/account-farm') {
     const { article, checklist } = createAccountFarmContent(OFFERS);
     const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';

@@ -23,7 +23,7 @@ type InlineSegment = {
 type ArticleBlock =
   | { type: 'paragraph'; content: InlineSegment[] }
   | { type: 'heading'; level: number; text: string; compact?: boolean }
-  | { type: 'callout'; level: number; text: string; items?: InlineSegment[][]; footer?: string }
+  | { type: 'callout'; level: number; text: string; items?: InlineSegment[][]; footer?: string; warning?: boolean }
   | { type: 'list'; ordered: boolean; items: InlineSegment[][] }
   | { type: 'code'; label: string; text: string }
   | { type: 'table'; headers: InlineSegment[][]; rows: InlineSegment[][][] }
@@ -276,7 +276,7 @@ export const ImportedGuideArticle = ({
               }
 
               if (block.type === 'callout') {
-                return <div key={`callout-${blockIndex}`} className="my-7 rounded-r-2xl border-l-2 border-brand-purple bg-brand-purple/[0.08] px-5 py-4 text-sm font-bold leading-7 text-white/70 md:text-base">
+                return <div key={`callout-${blockIndex}`} data-warning={block.warning || undefined} className={`my-7 rounded-r-2xl border-l-2 px-5 py-4 text-sm font-bold leading-7 text-white/70 md:text-base ${block.warning ? 'border-orange-400 bg-orange-400/[0.08]' : 'border-brand-purple bg-brand-purple/[0.08]'}`}>
                   <p>{block.text}</p>
                   {block.items && <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-brand-purple">
                     {block.items.map((item, itemIndex) => <li key={itemIndex}><InlineContent content={item} sourceAnchors={sourceAnchors} /></li>)}

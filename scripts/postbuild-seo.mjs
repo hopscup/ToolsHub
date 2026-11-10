@@ -15,6 +15,7 @@ import { pageHeadings } from '../src/data/pageHeadings.js';
 import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobileProxyMeta, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 import { loadOffers } from './load-offers.mjs';
 import { createAccountFarmContent } from '../src/data/accountFarmContent.js';
+import { createGuideRefreshContent } from '../src/data/guideRefreshContent.js';
 import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, serviceGuideRoutes, serviceGuideLabels, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
 import { getServiceParagraphs, getServiceSummaryFacts, isServiceMetaDescription } from '../src/data/servicePresentation.js';
@@ -39,6 +40,7 @@ const indexLanguages = languages.filter(({ code }) => code === 'ru' || code === 
 const isIndexLanguage = (language) => indexLanguages.some(({ code }) => code === language.code);
 const { OFFERS, OFFER_DESCRIPTION_TRANSLATIONS } = await loadOffers();
 const accountFarmContent = createAccountFarmContent(OFFERS);
+const refreshedGuideContent = createGuideRefreshContent(OFFERS);
 const offersByRoute = new Map(OFFERS.filter(offer => offer.slug && offer.category !== 'Guides').map(offer => [`${serviceCategoryRoutes[offer.category]}/${offer.slug}`, offer]));
 
 const sections = [
@@ -1584,10 +1586,10 @@ const servicePages = [
   }),
   ...guidePages.map((page) => createServicePage({
     article: page.article,
-    articleBlocks: page.id === 'guide-account-farm' ? accountFarmContent.article.blocks : page.articleBlocks,
+    articleBlocks: refreshedGuideContent[page.id]?.blocks || (page.id === 'guide-account-farm' ? accountFarmContent.article.blocks : page.articleBlocks),
     articleChecklist: page.id === 'guide-account-farm' ? accountFarmContent.checklist : undefined,
     cover: page.cover,
-    articleHeadingIds: page.articleHeadingIds,
+    articleHeadingIds: refreshedGuideContent[page.id]?.headingIds || page.articleHeadingIds,
     indexable: page.indexable,
     datePublished: page.datePublished,
     dateModified: page.dateModified,
@@ -1696,7 +1698,7 @@ const renderGuideBlocks = (blocks, headingIds = {}) => {
       const tag = block.ordered ? 'ol' : 'ul';
       return `<${tag}>${block.items.map(item => `<li>${inline(item)}</li>`).join('')}</${tag}>`;
     }
-    if (block.type === 'callout') return `<aside><p>${escapeHtml(block.text)}</p>${block.items ? `<ul>${block.items.map(item => `<li>${inline(item)}</li>`).join('')}</ul>` : ''}${block.footer ? `<p>${escapeHtml(block.footer)}</p>` : ''}</aside>`;
+    if (block.type === 'callout') return `<aside${block.warning ? ' data-warning="true" class="border-l-2 border-orange-400 bg-orange-400/[0.08] px-5 py-4"' : ''}><p>${escapeHtml(block.text)}</p>${block.items ? `<ul>${block.items.map(item => `<li>${inline(item)}</li>`).join('')}</ul>` : ''}${block.footer ? `<p>${escapeHtml(block.footer)}</p>` : ''}</aside>`;
     if (block.type === 'image') return `<figure><a href="${escapeHtml(block.src)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(block.src)}" alt="${escapeHtml(block.alt)}"${block.width ? ` width="${block.width}" height="${block.height}"` : ''} loading="lazy" /></a>${block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : ''}</figure>`;
     return `<p>${inline(block.content)}</p>`;
   }).join('\n');

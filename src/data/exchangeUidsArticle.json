@@ -1,41 +1,117 @@
 {
   "blocks": [
     {
+      "level": 2,
+      "text": "OKX",
+      "type": "heading"
+    },
+    {
+      "type": "paragraph",
       "content": [
         {
-          "text": "В данной статье я разберу как сделать много UID для Bitget и OKX, в итоге на данный момент можно вывести 31 аккаунт на один документ"
+          "text": "Регаемся "
+        },
+        {
+          "text": "на OKX",
+          "href": "https://okx.com/join/8471428"
+        },
+        {
+          "text": ", если ещё нет аккаунта, и сразу переходим к субаккаунтам."
+        }
+      ]
+    },
+    {
+      "alt": "Меню профиля OKX с разделом субаккаунтов",
+      "caption": "Открываем раздел субаккаунтов OKX.",
+      "src": "/article/exchange-uids-addresses/image-10.png",
+      "type": "image"
+    },
+    {
+      "content": [
+        {
+          "text": "Можно сделать 10 субов = 10 UID и 200 адресов вывода"
         }
       ],
       "type": "paragraph"
     },
     {
-      "items": [
-        [
-          {
-            "strong": true,
-            "text": "Bitget"
-          },
-          {
-            "text": " - 20 субов + 1 мейн"
-          }
-        ],
-        [
-          {
-            "strong": true,
-            "text": "OKX"
-          },
-          {
-            "text": " - 10 субов + 1 мейн"
-          }
-        ]
+      "alt": "Список субаккаунтов OKX и кнопка создания",
+      "caption": "Создание нового субаккаунта OKX.",
+      "src": "/article/exchange-uids-addresses/image-11.png",
+      "type": "image"
+    },
+    {
+      "alt": "Форма создания субаккаунта OKX: имя, тип и пароль",
+      "caption": "Параметры нового субаккаунта OKX.",
+      "src": "/article/exchange-uids-addresses/image-12.png",
+      "type": "image"
+    },
+    {
+      "content": [
+        {
+          "text": "Обязательно галочкой разрешаем внесение депозитов на этот акк и нажимаем \"Подтвердить\""
+        }
       ],
-      "ordered": false,
-      "type": "list"
+      "type": "paragraph"
+    },
+    {
+      "alt": "Разрешение внесения депозитов и кнопка подтверждения в OKX",
+      "caption": "Разрешаем внесение депозитов на субаккаунт.",
+      "src": "/article/exchange-uids-addresses/image-13.png",
+      "type": "image"
+    },
+    {
+      "content": [
+        {
+          "text": "Вводим код с почты для подтверждения и все первый акк готов, можно еще 9 сделать"
+        }
+      ],
+      "type": "paragraph"
+    },
+    {
+      "alt": "Подтверждение создания субаккаунта OKX кодом из почты",
+      "caption": "Вводим код подтверждения.",
+      "src": "/article/exchange-uids-addresses/image-14.png",
+      "type": "image"
+    },
+    {
+      "content": [
+        {
+          "text": "По кнопке \"сменить\" можно перемещаться между аккаунтами"
+        }
+      ],
+      "type": "paragraph"
+    },
+    {
+      "alt": "Кнопки переключения субаккаунтов в списке OKX",
+      "caption": "Переключаемся между субаккаунтами OKX.",
+      "src": "/article/exchange-uids-addresses/image-15.png",
+      "type": "image"
+    },
+    {
+      "content": [
+        {
+          "text": "Перевод между аккаунтами осуществляется в ручную"
+        }
+      ],
+      "type": "paragraph"
+    },
+    {
+      "alt": "Форма ручного перевода активов между аккаунтами OKX",
+      "caption": "Перевод между основным аккаунтом и субаккаунтом OKX.",
+      "src": "/article/exchange-uids-addresses/image-16.png",
+      "type": "image"
     },
     {
       "level": 2,
       "text": "Bitget",
       "type": "heading"
+    },
+    {
+      "type": "callout",
+      "level": 1,
+      "warning": true,
+      "text": "С 21 октября 2026 года Bitget не работает с пользователями из России, Беларуси и Казахстана. Если вы оттуда, этот способ вам не подойдёт."
     },
     {
       "content": [
@@ -62,8 +138,8 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
-      "caption": "",
+      "alt": "Профиль Bitget и UID основного аккаунта",
+      "caption": "UID основного аккаунта Bitget.",
       "src": "/article/exchange-uids-addresses/image-01.png",
       "type": "image"
     },
@@ -76,8 +152,8 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
-      "caption": "",
+      "alt": "Список депозитных адресов в форме пополнения Bitget",
+      "caption": "Дополнительные адреса для депозита Bitget.",
       "src": "/article/exchange-uids-addresses/image-02.png",
       "type": "image"
     },
@@ -90,8 +166,8 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
-      "caption": "",
+      "alt": "Меню Bitget с пунктом управления субаккаунтами",
+      "caption": "Переходим к субаккаунтам Bitget.",
       "src": "/article/exchange-uids-addresses/image-03.png",
       "type": "image"
     },
@@ -104,8 +180,8 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
-      "caption": "",
+      "alt": "Страница субаккаунтов Bitget и кнопка создания",
+      "caption": "Создаём субаккаунт Bitget.",
       "src": "/article/exchange-uids-addresses/image-04.png",
       "type": "image"
     },
@@ -118,8 +194,8 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
-      "caption": "",
+      "alt": "Выбор виртуального субаккаунта в Bitget",
+      "caption": "Тип субаккаунта: виртуальный.",
       "src": "/article/exchange-uids-addresses/image-05.png",
       "type": "image"
     },
@@ -132,8 +208,8 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
-      "caption": "",
+      "alt": "Список субаккаунтов Bitget с отдельными UID",
+      "caption": "UID в списке субаккаунтов Bitget.",
       "src": "/article/exchange-uids-addresses/image-06.png",
       "type": "image"
     },
@@ -146,8 +222,8 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
-      "caption": "",
+      "alt": "Настройка автоматического перевода активов для субаккаунтов Bitget",
+      "caption": "Автоперевод активов на основной аккаунт.",
       "src": "/article/exchange-uids-addresses/image-07.png",
       "type": "image"
     },
@@ -160,8 +236,8 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
-      "caption": "",
+      "alt": "Меню переключения между аккаунтами Bitget",
+      "caption": "Переключение аккаунтов в Bitget.",
       "src": "/article/exchange-uids-addresses/image-08.png",
       "type": "image"
     },
@@ -174,150 +250,32 @@
       "type": "paragraph"
     },
     {
-      "alt": "",
-      "caption": "",
+      "alt": "Форма перевода активов между аккаунтами Bitget",
+      "caption": "Ручной перевод между аккаунтами Bitget.",
       "src": "/article/exchange-uids-addresses/image-09.png",
       "type": "image"
     },
     {
       "content": [
         {
-          "text": "На этом по Битгет все, перейдем к ОКХ"
+          "text": "На этом по Битгет всё."
         }
       ],
       "type": "paragraph"
     },
     {
-      "level": 2,
-      "text": "OKX",
-      "type": "heading"
-    },
-    {
+      "type": "paragraph",
       "content": [
         {
-          "text": "Также "
-        },
-        {
-          "href": "https://okx.com/join/8471428",
-          "text": "регаемся"
-        },
-        {
-          "text": " и принцип тот же, как в Битгет, поэтому сразу перейду к субам"
+          "text": "На этом всё. Для мультиаккаунтов из России сейчас остаётся OKX."
         }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/exchange-uids-addresses/image-10.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Можно сделать 10 субов = 10 UID и 200 адресов вывода"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/exchange-uids-addresses/image-11.png",
-      "type": "image"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/exchange-uids-addresses/image-12.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Обязательно галочкой разрешаем внесение депозитов на этот акк и нажимаем \"Подтвердить\""
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/exchange-uids-addresses/image-13.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Вводим код с почты для подтверждения и все первый акк готов, можно еще 9 сделать"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/exchange-uids-addresses/image-14.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "По кнопке \"сменить\" можно перемещаться между аккаунтами"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/exchange-uids-addresses/image-15.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "Перевод между аккаунтами осуществляется в ручную"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/exchange-uids-addresses/image-16.png",
-      "type": "image"
-    },
-    {
-      "content": [
-        {
-          "text": "На этом все, ОКХ и Битгет самые лучшие биржи для мультиаккера"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "content": [
-        {
-          "strong": true,
-          "text": "📌Больше полезного в моем канале "
-        },
-        {
-          "href": "https://t.me/hopscupcrpt",
-          "strong": true,
-          "text": "Telegram"
-        }
-      ],
-      "type": "paragraph"
-    },
-    {
-      "alt": "",
-      "caption": "",
-      "src": "/article/exchange-uids-addresses/image-17.jpeg",
-      "type": "image"
+      ]
     }
   ],
   "sourceUrl": "https://teletype.media/@hopscupcrpt/iic_Q3_E19h",
-  "title": "Много UID и адресов для вывода на криптобиржи - Teletype"
+  "title": "Субаккаунты, UID и адреса на OKX и Bitget",
+  "seoTitle": "Много UID и адресов на OKX: субаккаунты | Hopscup",
+  "intro": "Разбираю, как сделать много UID и адресов для вывода на одной бирже. На OKX можно создать 10 субаккаунтов плюс основной: это 11 UID и до 200 адресов для депозита.",
+  "datePublished": "2026-08-30T01:39:58+03:00",
+  "dateModified": "2026-11-10"
 }
