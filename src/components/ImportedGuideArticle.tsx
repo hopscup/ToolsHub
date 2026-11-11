@@ -34,8 +34,9 @@ type ArticleBlock =
 export type ArticleData = {
   title: string;
   sourceUrl: string;
-  introParagraphs?: string[];
+  introParagraphs?: (string | InlineSegment[])[];
   video?: { id: string; url: string; caption: string };
+  videoPoster?: { src: string; alt: string; width: number; height: number };
   cover?: { src: string; alt: string; width: number; height: number };
   blocks: ArticleBlock[];
 };
@@ -225,8 +226,8 @@ export const ImportedGuideArticle = ({
           </div>
           <h1 className="mx-auto max-w-5xl font-display text-3xl font-black leading-[1.1] text-white md:text-5xl">{title}</h1>
           <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{description}</p>
-          {data.introParagraphs?.map(paragraph => <p key={paragraph} className="mx-auto mt-5 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{paragraph}</p>)}
-          {data.video ? <ArticleVideo video={data.video} poster={data.cover} /> : data.cover && (
+          {data.introParagraphs?.map((paragraph, index) => <p key={index} className="mx-auto mt-5 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{typeof paragraph === 'string' ? paragraph : <InlineContent content={paragraph} sourceAnchors={sourceAnchors} />}</p>)}
+          {data.video ? <ArticleVideo video={data.video} poster={data.videoPoster || data.cover} /> : data.cover && (
             <ArticleImageLink src={data.cover.src} alt={data.cover.alt} className="mx-auto mt-8 block max-w-3xl overflow-hidden rounded-2xl border border-white/10">
               <img src={data.cover.src} alt={data.cover.alt} width={data.cover.width} height={data.cover.height} fetchPriority="high" decoding="async" className="block h-auto w-full" />
             </ArticleImageLink>

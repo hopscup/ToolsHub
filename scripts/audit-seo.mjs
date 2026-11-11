@@ -24,6 +24,7 @@ import { claudeRecoveryArticle } from '../src/data/claudeRecoveryArticle.js';
 import { claudeGuideArticle } from '../src/data/claudeGuideArticle.js';
 import { accountFarmArticle, createAccountFarmContent } from '../src/data/accountFarmContent.js';
 import { antidetectOverviewArticles, createAntidetectOverviewContent } from '../src/data/antidetectOverviewContent.js';
+import { virtualNumberArticle, createVirtualNumberContent } from '../src/data/virtualNumberContent.js';
 import { createGuideRefreshContent, guideRefreshMeta } from '../src/data/guideRefreshContent.js';
 import { antidetectSetupMeta, antidetectSetupCopy, antidetectSetupAdditions, getAntidetectGuideServices, resolveAntidetectGuideSegments, createAntidetectGuideChecklist } from '../src/data/antidetectSetupContent.js';
 
@@ -137,6 +138,29 @@ const checkSectionSummaries = (html, language, route) => {
 };
 
 const checkArticleContent = (html, route, localizedRoute) => {
+  if (route === `/guides/${virtualNumberArticle.slug}`) {
+    const { article, checklist } = createVirtualNumberContent(OFFERS);
+    const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
+    const visit = value => {
+      if (Array.isArray(value)) return value.forEach(visit);
+      if (!value || typeof value !== 'object') return;
+      if (value.text?.trim() && !content.includes(escapeHtml(value.text.trim()))) errors.push(`Missing virtual number guide text: ${localizedRoute}: ${value.text}`);
+      if (value.href && !content.includes(`href="${escapeHtml(value.href)}"`)) errors.push(`Missing virtual number guide link: ${localizedRoute}: ${value.href}`);
+      Object.values(value).forEach(visit);
+    };
+    visit([article.blocks, article.introParagraphs, checklist.items, checklist.sources, checklist.note]);
+    for (const text of [article.intro, article.video.caption, checklist.action.label]) {
+      if (!content.includes(escapeHtml(text))) errors.push(`Incomplete virtual number guide: ${localizedRoute}: ${text}`);
+    }
+    if (!content.includes(`<h1>${escapeHtml(article.title)}</h1>`) || !content.includes('data-article-checklist') || !content.includes(`href="${article.video.url}"`)) errors.push(`Missing virtual number guide structure: ${localizedRoute}`);
+    if (/FAQPage|Похожие статьи|data-related-guides|[—–]/.test(content)) errors.push(`Unrequested virtual number guide content: ${localizedRoute}`);
+    const schema = JSON.parse(html.match(/<script[^>]*id="structured-data"[^>]*>([\s\S]*?)<\/script>/)?.[1] || '[]').find(item => item['@type'] === 'Article');
+    if (schema?.datePublished !== article.datePublished || schema?.dateModified !== article.dateModified) errors.push(`Wrong fixed virtual number guide dates: ${localizedRoute}`);
+  }
+  if (route === '/sms-activators/virtualnye-nomera') {
+    const prefix = localizedRoute.slice(0, -route.length);
+    if (!html.includes(`href="${prefix}/guides/${virtualNumberArticle.slug}"`)) errors.push(`Missing virtual number guide landing link: ${localizedRoute}`);
+  }
   const overview = antidetectOverviewArticles.find(article => `/guides/${article.slug}` === route);
   if (overview) {
     const { article, checklist } = createAntidetectOverviewContent(overview, OFFERS);

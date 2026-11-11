@@ -12,6 +12,8 @@ import { MobileIpGuideArticle } from './components/MobileIpGuideArticle';
 import { GmailForwardingGuideArticle } from './components/GmailForwardingGuideArticle';
 import { AccountFarmGuideArticle } from './components/AccountFarmGuideArticle';
 import { AntidetectOverviewGuideArticle } from './components/AntidetectOverviewGuideArticle';
+import { VirtualNumberGuideArticle } from './components/VirtualNumberGuideArticle';
+import { virtualNumberArticle } from './data/virtualNumberContent.js';
 import { antidetectOverviewArticles } from './data/antidetectOverviewContent.js';
 import { OtcKycGuideArticle } from './components/OtcKycGuideArticle';
 import { ExchangeUidsGuideArticle } from './components/ExchangeUidsGuideArticle';
@@ -120,6 +122,7 @@ type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto';
 const RECOMMENDED_OFFER_IDS = new Set(Object.values(recommendedOfferIds).flat());
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
+  'guide-virtual-number': { topic: 'accounts', minutes: 5 },
   'guide-free-antidetect': { topic: 'antidetect', minutes: 8 },
   'guide-shardx-review': { topic: 'antidetect', minutes: 8 },
   'guide-best-mobile-proxies': { topic: 'proxy', minutes: 8 },
@@ -348,6 +351,7 @@ interface Offer {
 }
 
 interface SeoLandingPage {
+  guideLink?: { href: string; label: Localized };
   article?: { heading: string; paragraphs: string[]; links?: { label: string; href: string }[] }[];
   id: string;
   route: string;
@@ -1967,6 +1971,15 @@ const OFFERS: Offer[] = [
     details: antarcticExchangeDetails,
   },
   // GUIDES
+  {
+    id: virtualNumberArticle.id,
+    category: 'Guides',
+    name: guideCatalogById[virtualNumberArticle.id].title.ru,
+    slug: virtualNumberArticle.slug,
+    editorial: GUIDE_PAGE_BY_ID[virtualNumberArticle.id].editorial,
+    description: GUIDE_PAGE_BY_ID[virtualNumberArticle.id].editorial.description,
+    url: `/guides/${virtualNumberArticle.slug}`,
+  },
   ...antidetectOverviewArticles.map(article => ({
     id: article.id,
     category: 'Guides' as const,
@@ -6181,6 +6194,7 @@ export default function App() {
       || isAntidetectSetupGuideArticlePath()
       || isDiscordTokenGuideArticlePath()
       || antidetectOverviewArticles.some(article => stripLanguagePrefix(window.location.pathname) === `/guides/${article.slug}`)
+      || stripLanguagePrefix(window.location.pathname) === `/guides/${virtualNumberArticle.slug}`
     ) {
       document.body.style.removeProperty('overflow');
       document.body.style.setProperty('overflow-y', 'auto');
@@ -6314,6 +6328,9 @@ export default function App() {
     return <ClaudeRecoveryGuideArticle />;
   }
   const antidetectOverviewArticle = antidetectOverviewArticles.find(article => stripLanguagePrefix(window.location.pathname) === `/guides/${article.slug}`);
+  if (stripLanguagePrefix(window.location.pathname) === `/guides/${virtualNumberArticle.slug}`) {
+    return <VirtualNumberGuideArticle offers={OFFERS} />;
+  }
   if (antidetectOverviewArticle) {
     return <AntidetectOverviewGuideArticle id={antidetectOverviewArticle.id} offers={OFFERS} />;
   }
@@ -6335,6 +6352,7 @@ export default function App() {
       onClick={(event) => {
         if (
           offer.id === 'guide-best-mobile-proxies'
+          || offer.id === virtualNumberArticle.id
           || antidetectOverviewArticles.some(article => article.id === offer.id)
           || offer.id === 'guide-mobile-ip'
           || offer.id === 'guide-claude-recovery'
@@ -7146,6 +7164,9 @@ export default function App() {
               <p className="text-sm md:text-base text-white/60 leading-relaxed">
                 {l(currentSectionSeo.intro)}
               </p>
+              {currentSeoLanding?.guideLink && <p className="mt-4 text-sm leading-relaxed">
+                <a href={`${LANGUAGE_PREFIXES[lang]}${currentSeoLanding.guideLink.href}`} className="text-brand-purple underline underline-offset-4 hover:text-white">{l(currentSeoLanding.guideLink.label)}</a>
+              </p>}
             </div>
             <div className="grid gap-3 w-full lg:max-w-md">
               {lList(currentSectionSeo.points).map((point) => (

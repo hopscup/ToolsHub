@@ -7,6 +7,7 @@ import { antidetectSetupMeta } from './antidetectSetupContent.js';
 import { accountFarmArticle } from './accountFarmContent.js';
 import { guideRefreshMeta } from './guideRefreshContent.js';
 import { antidetectOverviewArticles } from './antidetectOverviewContent.js';
+import { virtualNumberArticle } from './virtualNumberContent.js';
 import otcKycArticle from './otcKycArticle.json' with { type: 'json' };
 
 const guideTitle = (title) => ({
@@ -18,6 +19,31 @@ const guideTitle = (title) => ({
 });
 
 export const guidePages = [
+  {
+    id: virtualNumberArticle.id,
+    indexable: true,
+    slug: virtualNumberArticle.slug,
+    articleBlocks: virtualNumberArticle.blocks,
+    articleHeadingIds: virtualNumberArticle.headingIds,
+    articleIntroParagraphs: virtualNumberArticle.introParagraphs,
+    articleVideo: virtualNumberArticle.video,
+    articleVideoPoster: virtualNumberArticle.videoPoster,
+    catalogCover: virtualNumberArticle.catalogCover,
+    datePublished: virtualNumberArticle.datePublished,
+    dateModified: virtualNumberArticle.dateModified,
+    name: { ru: virtualNumberArticle.title, en: virtualNumberArticle.title },
+    title: { ru: virtualNumberArticle.seoTitle, en: virtualNumberArticle.seoTitle },
+    heading: { ru: virtualNumberArticle.title, en: virtualNumberArticle.title },
+    intro: { ru: virtualNumberArticle.intro, en: virtualNumberArticle.intro },
+    description: { ru: virtualNumberArticle.description, en: virtualNumberArticle.description },
+    keywords: { ru: virtualNumberArticle.title, en: virtualNumberArticle.title },
+    editorial: {
+      description: { ru: virtualNumberArticle.description, en: virtualNumberArticle.description },
+      bestFor: { ru: [], en: [] },
+      considerations: { ru: [], en: [] },
+      verdict: { ru: '', en: '' },
+    },
+  },
   ...antidetectOverviewArticles.map(article => ({
     id: article.id,
     indexable: true,

@@ -431,6 +431,13 @@ export const seoLandingPages = [
   {
     id: 'virtual-numbers',
     route: '/sms-activators/virtualnye-nomera',
+    guideLink: {
+      href: '/guides/virtualnyj-nomer-dlya-registracii',
+      label: {
+        ru: 'Как купить номер и не потерять деньги, разобрал по шагам в гайде',
+        en: 'I explain how to buy a number without losing money step by step in the guide',
+      },
+    },
     category: 'SMS',
     subFilter: 'None',
     eyebrow: {

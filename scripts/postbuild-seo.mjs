@@ -16,6 +16,7 @@ import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobilePr
 import { loadOffers } from './load-offers.mjs';
 import { createAccountFarmContent } from '../src/data/accountFarmContent.js';
 import { antidetectOverviewArticles, createAntidetectOverviewContent } from '../src/data/antidetectOverviewContent.js';
+import { virtualNumberArticle, createVirtualNumberContent } from '../src/data/virtualNumberContent.js';
 import { createGuideRefreshContent } from '../src/data/guideRefreshContent.js';
 import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, serviceGuideRoutes, serviceGuideLabels, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
@@ -41,6 +42,7 @@ const indexLanguages = languages.filter(({ code }) => code === 'ru' || code === 
 const isIndexLanguage = (language) => indexLanguages.some(({ code }) => code === language.code);
 const { OFFERS, OFFER_DESCRIPTION_TRANSLATIONS } = await loadOffers();
 const accountFarmContent = createAccountFarmContent(OFFERS);
+const virtualNumberContent = createVirtualNumberContent(OFFERS);
 const antidetectOverviewContent = Object.fromEntries(antidetectOverviewArticles.map(article => [article.id, createAntidetectOverviewContent(article, OFFERS)]));
 const refreshedGuideContent = createGuideRefreshContent(OFFERS);
 const offersByRoute = new Map(OFFERS.filter(offer => offer.slug && offer.category !== 'Guides').map(offer => [`${serviceCategoryRoutes[offer.category]}/${offer.slug}`, offer]));
@@ -1588,10 +1590,11 @@ const servicePages = [
   }),
   ...guidePages.map((page) => createServicePage({
     article: page.article,
-    articleBlocks: antidetectOverviewContent[page.id]?.article.blocks || refreshedGuideContent[page.id]?.blocks || (page.id === 'guide-account-farm' ? accountFarmContent.article.blocks : page.articleBlocks),
-    articleChecklist: antidetectOverviewContent[page.id]?.checklist || (page.id === 'guide-account-farm' ? accountFarmContent.checklist : undefined),
-    articleIntroParagraphs: page.articleIntroParagraphs,
+    articleBlocks: page.id === virtualNumberArticle.id ? virtualNumberContent.article.blocks : antidetectOverviewContent[page.id]?.article.blocks || refreshedGuideContent[page.id]?.blocks || (page.id === 'guide-account-farm' ? accountFarmContent.article.blocks : page.articleBlocks),
+    articleChecklist: page.id === virtualNumberArticle.id ? virtualNumberContent.checklist : antidetectOverviewContent[page.id]?.checklist || (page.id === 'guide-account-farm' ? accountFarmContent.checklist : undefined),
+    articleIntroParagraphs: page.id === virtualNumberArticle.id ? virtualNumberContent.article.introParagraphs : page.articleIntroParagraphs,
     articleVideo: page.articleVideo,
+    articleVideoPoster: page.articleVideoPoster,
     cover: page.cover,
     articleHeadingIds: refreshedGuideContent[page.id]?.headingIds || page.articleHeadingIds,
     indexable: page.indexable,
@@ -1889,8 +1892,10 @@ const renderStaticContent = (section, language) => {
           ${article ? `<p class="fallback-badge">${escapeHtml(article.badge)}</p>` : ''}
           <h1>${escapeHtml(heroTitle)}</h1>
           ${offer && isServiceMetaDescription(heroIntro, getLanguage(section.description, language)) ? '' : `<p>${escapeHtml(heroIntro)}</p>`}
-          ${(section.articleIntroParagraphs || []).map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join('')}
+          ${(section.articleIntroParagraphs || []).map(paragraph => typeof paragraph === 'string' ? `<p>${escapeHtml(paragraph)}</p>` : renderGuideBlocks([{ type: 'paragraph', content: paragraph }])).join('')}
           ${section.articleVideo ? `<p>${renderLink({ href: section.articleVideo.url, label: section.articleVideo.caption })}</p>` : ''}
+          ${section.articleVideoPoster ? `<figure><a href="${escapeHtml(section.articleVideo.url)}" rel="noopener noreferrer"><img src="${section.articleVideoPoster.src}" alt="${escapeHtml(section.articleVideoPoster.alt)}" width="${section.articleVideoPoster.width}" height="${section.articleVideoPoster.height}" /></a></figure>` : ''}
+          ${section.guideLink ? `<p>${renderLink({ href: `${language.prefix}${section.guideLink.href}`, label: getLanguage(section.guideLink.label, language) })}</p>` : ''}
           ${section.cover ? `<a href="${escapeHtml(section.cover.src)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(section.cover.src)}" alt="${escapeHtml(section.cover.alt)}" width="${section.cover.width}" height="${section.cover.height}" /></a>` : ''}
           ${article?.updated ? `<p class="fallback-updated">${escapeHtml(article.updated)}</p>` : ''}
         </header>
