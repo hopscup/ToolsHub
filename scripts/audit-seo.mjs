@@ -25,6 +25,8 @@ import { claudeGuideArticle } from '../src/data/claudeGuideArticle.js';
 import { accountFarmArticle, createAccountFarmContent } from '../src/data/accountFarmContent.js';
 import { antidetectOverviewArticles, createAntidetectOverviewContent } from '../src/data/antidetectOverviewContent.js';
 import { virtualNumberArticle, createVirtualNumberContent } from '../src/data/virtualNumberContent.js';
+import { rfNumbersArticle, createRfNumbersContent } from '../src/data/rfNumbersContent.js';
+import { youtubeFarmArticle, createYoutubeFarmContent } from '../src/data/youtubeFarmContent.js';
 import { createGuideRefreshContent, guideRefreshMeta } from '../src/data/guideRefreshContent.js';
 import { antidetectSetupMeta, antidetectSetupCopy, antidetectSetupAdditions, getAntidetectGuideServices, resolveAntidetectGuideSegments, createAntidetectGuideChecklist } from '../src/data/antidetectSetupContent.js';
 
@@ -138,8 +140,11 @@ const checkSectionSummaries = (html, language, route) => {
 };
 
 const checkArticleContent = (html, route, localizedRoute) => {
-  if (route === `/guides/${virtualNumberArticle.slug}`) {
-    const { article, checklist } = createVirtualNumberContent(OFFERS);
+  const numberGuide = route === `/guides/${virtualNumberArticle.slug}` ? createVirtualNumberContent(OFFERS)
+    : route === `/guides/${rfNumbersArticle.slug}` ? createRfNumbersContent(OFFERS)
+    : route === `/guides/${youtubeFarmArticle.slug}` ? createYoutubeFarmContent(OFFERS) : undefined;
+  if (numberGuide) {
+    const { article, checklist } = numberGuide;
     const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
     const visit = value => {
       if (Array.isArray(value)) return value.forEach(visit);
@@ -149,7 +154,7 @@ const checkArticleContent = (html, route, localizedRoute) => {
       Object.values(value).forEach(visit);
     };
     visit([article.blocks, article.introParagraphs, checklist.items, checklist.sources, checklist.note]);
-    for (const text of [article.intro, article.video.caption, checklist.action.label]) {
+    for (const text of [article.intro, ...article.introParagraphs.filter(part => typeof part === 'string'), ...(article.introCallout ? [article.introCallout.text] : []), article.video.caption, checklist.action.label]) {
       if (!content.includes(escapeHtml(text))) errors.push(`Incomplete virtual number guide: ${localizedRoute}: ${text}`);
     }
     if (!content.includes(`<h1>${escapeHtml(article.title)}</h1>`) || !content.includes('data-article-checklist') || !content.includes(`href="${article.video.url}"`)) errors.push(`Missing virtual number guide structure: ${localizedRoute}`);

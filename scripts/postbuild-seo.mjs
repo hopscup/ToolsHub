@@ -17,6 +17,8 @@ import { loadOffers } from './load-offers.mjs';
 import { createAccountFarmContent } from '../src/data/accountFarmContent.js';
 import { antidetectOverviewArticles, createAntidetectOverviewContent } from '../src/data/antidetectOverviewContent.js';
 import { virtualNumberArticle, createVirtualNumberContent } from '../src/data/virtualNumberContent.js';
+import { rfNumbersArticle, createRfNumbersContent } from '../src/data/rfNumbersContent.js';
+import { youtubeFarmArticle, createYoutubeFarmContent } from '../src/data/youtubeFarmContent.js';
 import { createGuideRefreshContent } from '../src/data/guideRefreshContent.js';
 import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, serviceGuideRoutes, serviceGuideLabels, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
@@ -42,8 +44,12 @@ const indexLanguages = languages.filter(({ code }) => code === 'ru' || code === 
 const isIndexLanguage = (language) => indexLanguages.some(({ code }) => code === language.code);
 const { OFFERS, OFFER_DESCRIPTION_TRANSLATIONS } = await loadOffers();
 const accountFarmContent = createAccountFarmContent(OFFERS);
-const virtualNumberContent = createVirtualNumberContent(OFFERS);
-const antidetectOverviewContent = Object.fromEntries(antidetectOverviewArticles.map(article => [article.id, createAntidetectOverviewContent(article, OFFERS)]));
+const linkedGuideContent = {
+  ...Object.fromEntries(antidetectOverviewArticles.map(article => [article.id, createAntidetectOverviewContent(article, OFFERS)])),
+  [virtualNumberArticle.id]: createVirtualNumberContent(OFFERS),
+  [rfNumbersArticle.id]: createRfNumbersContent(OFFERS),
+  [youtubeFarmArticle.id]: createYoutubeFarmContent(OFFERS),
+};
 const refreshedGuideContent = createGuideRefreshContent(OFFERS);
 const offersByRoute = new Map(OFFERS.filter(offer => offer.slug && offer.category !== 'Guides').map(offer => [`${serviceCategoryRoutes[offer.category]}/${offer.slug}`, offer]));
 
@@ -1590,9 +1596,10 @@ const servicePages = [
   }),
   ...guidePages.map((page) => createServicePage({
     article: page.article,
-    articleBlocks: page.id === virtualNumberArticle.id ? virtualNumberContent.article.blocks : antidetectOverviewContent[page.id]?.article.blocks || refreshedGuideContent[page.id]?.blocks || (page.id === 'guide-account-farm' ? accountFarmContent.article.blocks : page.articleBlocks),
-    articleChecklist: page.id === virtualNumberArticle.id ? virtualNumberContent.checklist : antidetectOverviewContent[page.id]?.checklist || (page.id === 'guide-account-farm' ? accountFarmContent.checklist : undefined),
-    articleIntroParagraphs: page.id === virtualNumberArticle.id ? virtualNumberContent.article.introParagraphs : page.articleIntroParagraphs,
+    articleBlocks: linkedGuideContent[page.id]?.article.blocks || refreshedGuideContent[page.id]?.blocks || (page.id === 'guide-account-farm' ? accountFarmContent.article.blocks : page.articleBlocks),
+    articleChecklist: linkedGuideContent[page.id]?.checklist || (page.id === 'guide-account-farm' ? accountFarmContent.checklist : undefined),
+    articleIntroParagraphs: linkedGuideContent[page.id]?.article.introParagraphs || page.articleIntroParagraphs,
+    articleIntroCallout: page.articleIntroCallout,
     articleVideo: page.articleVideo,
     articleVideoPoster: page.articleVideoPoster,
     cover: page.cover,
@@ -1715,7 +1722,7 @@ const renderGuideBlocks = (blocks, headingIds = {}) => {
 const renderChecklist = (checklist) => `<section id="start" data-article-checklist><h2>${escapeHtml(checklist.heading || 'Коротко: что делать')}</h2>
     ${renderGuideBlocks([{ type: 'list', ordered: true, items: checklist.items }])}
     <div data-checklist-sources>${checklist.sources.length ? `<h3>${escapeHtml(checklist.sourcesHeading || 'Где брать:')}</h3>${checklist.sources.map(source => `<p>${source.label ? `${escapeHtml(source.label)}: ` : ''}${source.links.map(link => renderLink({ href: link.href, label: link.text })).join(' · ')}</p>`).join('')}` : ''}
-    <p><small>${checklist.note.map(part => part.strong ? `<strong>${escapeHtml(part.text)}</strong>` : escapeHtml(part.text)).join('')}</small></p><p>${renderLink(checklist.action)}</p></div></section>`;
+    ${checklist.note.length ? `<p><small>${checklist.note.map(part => part.strong ? `<strong>${escapeHtml(part.text)}</strong>` : escapeHtml(part.text)).join('')}</small></p>` : ''}<p>${renderLink(checklist.action)}</p></div></section>`;
 
 const renderMobileIpGuideBody = () => mobileIpGuideBlocks.map(block => {
   if (block.type === 'checklist') return renderChecklist(mobileIpChecklist);
@@ -1893,6 +1900,7 @@ const renderStaticContent = (section, language) => {
           <h1>${escapeHtml(heroTitle)}</h1>
           ${offer && isServiceMetaDescription(heroIntro, getLanguage(section.description, language)) ? '' : `<p>${escapeHtml(heroIntro)}</p>`}
           ${(section.articleIntroParagraphs || []).map(paragraph => typeof paragraph === 'string' ? `<p>${escapeHtml(paragraph)}</p>` : renderGuideBlocks([{ type: 'paragraph', content: paragraph }])).join('')}
+          ${section.articleIntroCallout ? renderGuideBlocks([{ type: 'callout', level: 2, ...section.articleIntroCallout }]) : ''}
           ${section.articleVideo ? `<p>${renderLink({ href: section.articleVideo.url, label: section.articleVideo.caption })}</p>` : ''}
           ${section.articleVideoPoster ? `<figure><a href="${escapeHtml(section.articleVideo.url)}" rel="noopener noreferrer"><img src="${section.articleVideoPoster.src}" alt="${escapeHtml(section.articleVideoPoster.alt)}" width="${section.articleVideoPoster.width}" height="${section.articleVideoPoster.height}" /></a></figure>` : ''}
           ${section.guideLink ? `<p>${renderLink({ href: `${language.prefix}${section.guideLink.href}`, label: getLanguage(section.guideLink.label, language) })}</p>` : ''}

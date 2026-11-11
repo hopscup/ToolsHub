@@ -14,6 +14,10 @@ import { AccountFarmGuideArticle } from './components/AccountFarmGuideArticle';
 import { AntidetectOverviewGuideArticle } from './components/AntidetectOverviewGuideArticle';
 import { VirtualNumberGuideArticle } from './components/VirtualNumberGuideArticle';
 import { virtualNumberArticle } from './data/virtualNumberContent.js';
+import { RfNumbersGuideArticle } from './components/RfNumbersGuideArticle';
+import { rfNumbersArticle } from './data/rfNumbersContent.js';
+import { YoutubeFarmGuideArticle } from './components/YoutubeFarmGuideArticle';
+import { youtubeFarmArticle } from './data/youtubeFarmContent.js';
 import { antidetectOverviewArticles } from './data/antidetectOverviewContent.js';
 import { OtcKycGuideArticle } from './components/OtcKycGuideArticle';
 import { ExchangeUidsGuideArticle } from './components/ExchangeUidsGuideArticle';
@@ -122,6 +126,8 @@ type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto';
 const RECOMMENDED_OFFER_IDS = new Set(Object.values(recommendedOfferIds).flat());
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
+  'guide-youtube-farm': { topic: 'accounts', minutes: 9 },
+  'guide-rf-numbers': { topic: 'accounts', minutes: 6 },
   'guide-virtual-number': { topic: 'accounts', minutes: 5 },
   'guide-free-antidetect': { topic: 'antidetect', minutes: 8 },
   'guide-shardx-review': { topic: 'antidetect', minutes: 8 },
@@ -1971,6 +1977,24 @@ const OFFERS: Offer[] = [
     details: antarcticExchangeDetails,
   },
   // GUIDES
+  {
+    id: youtubeFarmArticle.id,
+    category: 'Guides',
+    name: guideCatalogById[youtubeFarmArticle.id].title.ru,
+    slug: youtubeFarmArticle.slug,
+    editorial: GUIDE_PAGE_BY_ID[youtubeFarmArticle.id].editorial,
+    description: GUIDE_PAGE_BY_ID[youtubeFarmArticle.id].editorial.description,
+    url: `/guides/${youtubeFarmArticle.slug}`,
+  },
+  {
+    id: rfNumbersArticle.id,
+    category: 'Guides',
+    name: guideCatalogById[rfNumbersArticle.id].title.ru,
+    slug: rfNumbersArticle.slug,
+    editorial: GUIDE_PAGE_BY_ID[rfNumbersArticle.id].editorial,
+    description: GUIDE_PAGE_BY_ID[rfNumbersArticle.id].editorial.description,
+    url: `/guides/${rfNumbersArticle.slug}`,
+  },
   {
     id: virtualNumberArticle.id,
     category: 'Guides',
@@ -6195,6 +6219,8 @@ export default function App() {
       || isDiscordTokenGuideArticlePath()
       || antidetectOverviewArticles.some(article => stripLanguagePrefix(window.location.pathname) === `/guides/${article.slug}`)
       || stripLanguagePrefix(window.location.pathname) === `/guides/${virtualNumberArticle.slug}`
+      || stripLanguagePrefix(window.location.pathname) === `/guides/${rfNumbersArticle.slug}`
+      || stripLanguagePrefix(window.location.pathname) === `/guides/${youtubeFarmArticle.slug}`
     ) {
       document.body.style.removeProperty('overflow');
       document.body.style.setProperty('overflow-y', 'auto');
@@ -6331,6 +6357,12 @@ export default function App() {
   if (stripLanguagePrefix(window.location.pathname) === `/guides/${virtualNumberArticle.slug}`) {
     return <VirtualNumberGuideArticle offers={OFFERS} />;
   }
+  if (stripLanguagePrefix(window.location.pathname) === `/guides/${rfNumbersArticle.slug}`) {
+    return <RfNumbersGuideArticle offers={OFFERS} />;
+  }
+  if (stripLanguagePrefix(window.location.pathname) === `/guides/${youtubeFarmArticle.slug}`) {
+    return <YoutubeFarmGuideArticle offers={OFFERS} />;
+  }
   if (antidetectOverviewArticle) {
     return <AntidetectOverviewGuideArticle id={antidetectOverviewArticle.id} offers={OFFERS} />;
   }
@@ -6353,6 +6385,8 @@ export default function App() {
         if (
           offer.id === 'guide-best-mobile-proxies'
           || offer.id === virtualNumberArticle.id
+          || offer.id === rfNumbersArticle.id
+          || offer.id === youtubeFarmArticle.id
           || antidetectOverviewArticles.some(article => article.id === offer.id)
           || offer.id === 'guide-mobile-ip'
           || offer.id === 'guide-claude-recovery'

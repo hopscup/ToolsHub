@@ -35,6 +35,7 @@ export type ArticleData = {
   title: string;
   sourceUrl: string;
   introParagraphs?: (string | InlineSegment[])[];
+  introCallout?: { text: string; warning?: boolean };
   video?: { id: string; url: string; caption: string };
   videoPoster?: { src: string; alt: string; width: number; height: number };
   cover?: { src: string; alt: string; width: number; height: number };
@@ -227,6 +228,9 @@ export const ImportedGuideArticle = ({
           <h1 className="mx-auto max-w-5xl font-display text-3xl font-black leading-[1.1] text-white md:text-5xl">{title}</h1>
           <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{description}</p>
           {data.introParagraphs?.map((paragraph, index) => <p key={index} className="mx-auto mt-5 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{typeof paragraph === 'string' ? paragraph : <InlineContent content={paragraph} sourceAnchors={sourceAnchors} />}</p>)}
+          {data.introCallout && <aside data-warning={data.introCallout.warning || undefined} className={`mx-auto my-7 max-w-3xl rounded-r-lg border-l-2 px-5 py-4 text-left text-sm font-bold leading-7 text-white/70 md:text-base ${data.introCallout.warning ? 'border-orange-400 bg-orange-400/[0.08]' : 'border-brand-purple bg-brand-purple/[0.08]'}`}>
+            <p>{data.introCallout.text}</p>
+          </aside>}
           {data.video ? <ArticleVideo video={data.video} poster={data.videoPoster || data.cover} /> : data.cover && (
             <ArticleImageLink src={data.cover.src} alt={data.cover.alt} className="mx-auto mt-8 block max-w-3xl overflow-hidden rounded-2xl border border-white/10">
               <img src={data.cover.src} alt={data.cover.alt} width={data.cover.width} height={data.cover.height} fetchPriority="high" decoding="async" className="block h-auto w-full" />

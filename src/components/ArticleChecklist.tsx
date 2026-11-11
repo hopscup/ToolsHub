@@ -44,9 +44,9 @@ export const ArticleChecklist = ({ items, sources, heading = 'Коротко: ч
           </p>
         ))}
       </div></>}
-      <p className="mt-3 text-xs font-medium leading-5 text-white/40">{note.map((part, index) => part.strong
+      {note.length > 0 && <p className="mt-3 text-xs font-medium leading-5 text-white/40">{note.map((part, index) => part.strong
         ? <strong key={index} className="font-bold text-brand-purple">{part.text}</strong>
-        : <span key={index}>{part.text}</span>)}</p>
+        : <span key={index}>{part.text}</span>)}</p>}
       <a href={action.href} className="mt-3 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-purple px-5 py-3 text-xs font-black uppercase text-white transition-colors hover:bg-white hover:text-brand-purple">
         {action.label}<Search aria-hidden="true" className="h-4 w-4" />
       </a>

@@ -8,6 +8,8 @@ import { accountFarmArticle } from './accountFarmContent.js';
 import { guideRefreshMeta } from './guideRefreshContent.js';
 import { antidetectOverviewArticles } from './antidetectOverviewContent.js';
 import { virtualNumberArticle } from './virtualNumberContent.js';
+import { rfNumbersArticle } from './rfNumbersContent.js';
+import { youtubeFarmArticle } from './youtubeFarmContent.js';
 import otcKycArticle from './otcKycArticle.json' with { type: 'json' };
 
 const guideTitle = (title) => ({
@@ -19,31 +21,33 @@ const guideTitle = (title) => ({
 });
 
 export const guidePages = [
-  {
-    id: virtualNumberArticle.id,
+  ...[youtubeFarmArticle, rfNumbersArticle, virtualNumberArticle].map(article => ({
+    id: article.id,
     indexable: true,
-    slug: virtualNumberArticle.slug,
-    articleBlocks: virtualNumberArticle.blocks,
-    articleHeadingIds: virtualNumberArticle.headingIds,
-    articleIntroParagraphs: virtualNumberArticle.introParagraphs,
-    articleVideo: virtualNumberArticle.video,
-    articleVideoPoster: virtualNumberArticle.videoPoster,
-    catalogCover: virtualNumberArticle.catalogCover,
-    datePublished: virtualNumberArticle.datePublished,
-    dateModified: virtualNumberArticle.dateModified,
-    name: { ru: virtualNumberArticle.title, en: virtualNumberArticle.title },
-    title: { ru: virtualNumberArticle.seoTitle, en: virtualNumberArticle.seoTitle },
-    heading: { ru: virtualNumberArticle.title, en: virtualNumberArticle.title },
-    intro: { ru: virtualNumberArticle.intro, en: virtualNumberArticle.intro },
-    description: { ru: virtualNumberArticle.description, en: virtualNumberArticle.description },
-    keywords: { ru: virtualNumberArticle.title, en: virtualNumberArticle.title },
+    slug: article.slug,
+    articleBlocks: article.blocks,
+    articleHeadingIds: article.headingIds,
+    articleIntroParagraphs: article.introParagraphs,
+    articleIntroCallout: 'introCallout' in article ? article.introCallout : undefined,
+    articleVideo: article.video,
+    articleVideoPoster: article.videoPoster,
+    cover: undefined,
+    catalogCover: article.catalogCover,
+    datePublished: article.datePublished,
+    dateModified: article.dateModified,
+    name: { ru: article.title, en: article.title },
+    title: { ru: article.seoTitle, en: article.seoTitle },
+    heading: { ru: article.title, en: article.title },
+    intro: { ru: article.intro, en: article.intro },
+    description: { ru: article.description, en: article.description },
+    keywords: { ru: article.title, en: article.title },
     editorial: {
-      description: { ru: virtualNumberArticle.description, en: virtualNumberArticle.description },
+      description: { ru: article.description, en: article.description },
       bestFor: { ru: [], en: [] },
       considerations: { ru: [], en: [] },
       verdict: { ru: '', en: '' },
     },
-  },
+  })),
   ...antidetectOverviewArticles.map(article => ({
     id: article.id,
     indexable: true,
