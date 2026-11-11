@@ -23,6 +23,7 @@ import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobilePr
 import { claudeRecoveryArticle } from '../src/data/claudeRecoveryArticle.js';
 import { claudeGuideArticle } from '../src/data/claudeGuideArticle.js';
 import { accountFarmArticle, createAccountFarmContent } from '../src/data/accountFarmContent.js';
+import { antidetectOverviewArticles, createAntidetectOverviewContent } from '../src/data/antidetectOverviewContent.js';
 import { createGuideRefreshContent, guideRefreshMeta } from '../src/data/guideRefreshContent.js';
 import { antidetectSetupMeta, antidetectSetupCopy, antidetectSetupAdditions, getAntidetectGuideServices, resolveAntidetectGuideSegments, createAntidetectGuideChecklist } from '../src/data/antidetectSetupContent.js';
 
@@ -136,6 +137,27 @@ const checkSectionSummaries = (html, language, route) => {
 };
 
 const checkArticleContent = (html, route, localizedRoute) => {
+  const overview = antidetectOverviewArticles.find(article => `/guides/${article.slug}` === route);
+  if (overview) {
+    const { article, checklist } = createAntidetectOverviewContent(overview, OFFERS);
+    const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
+    const visit = value => {
+      if (Array.isArray(value)) return value.forEach(visit);
+      if (!value || typeof value !== 'object') return;
+      if (value.text?.trim() && !content.includes(escapeHtml(value.text.trim()))) errors.push(`Missing antidetect overview text: ${localizedRoute}: ${value.text}`);
+      if (value.href && !content.includes(`href="${escapeHtml(value.href)}"`)) errors.push(`Missing antidetect overview link: ${localizedRoute}: ${value.href}`);
+      Object.values(value).forEach(visit);
+    };
+    visit([article.blocks, checklist.items, checklist.sources, checklist.note]);
+    for (const text of [article.intro, ...article.introParagraphs, article.video.caption, checklist.action.label]) {
+      if (!content.includes(escapeHtml(text))) errors.push(`Incomplete antidetect overview: ${localizedRoute}: ${text}`);
+    }
+    if (!content.includes(`<h1>${escapeHtml(article.title)}</h1>`) || !content.includes('<table') || !content.includes('data-article-checklist') || !content.includes(`href="${article.video.url}"`) || !content.includes(`src="${article.cover.src}"`)) errors.push(`Missing antidetect overview structure: ${localizedRoute}`);
+    if (overview.id === 'guide-free-antidetect' && !content.includes('<blockquote>')) errors.push(`Missing MCP prompt quote: ${localizedRoute}`);
+    if (/FAQPage|Похожие статьи|data-related-guides|[—–]/.test(content) || html.includes('"@type":"FAQPage"')) errors.push(`Unrequested antidetect overview blocks or punctuation: ${localizedRoute}`);
+    const schema = JSON.parse(html.match(/<script[^>]*id="structured-data"[^>]*>([\s\S]*?)<\/script>/)?.[1] || '[]').find(item => item['@type'] === 'Article');
+    if (schema?.datePublished !== article.datePublished || schema?.dateModified !== article.dateModified) errors.push(`Wrong fixed antidetect overview dates: ${localizedRoute}`);
+  }
   const refreshedPage = guidePages.find(page => `/guides/${page.slug}` === route && guideRefreshMeta[page.id]);
   if (refreshedPage) {
     const article = createGuideRefreshContent(OFFERS)[refreshedPage.id];

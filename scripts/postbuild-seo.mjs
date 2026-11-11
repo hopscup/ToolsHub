@@ -15,6 +15,7 @@ import { pageHeadings } from '../src/data/pageHeadings.js';
 import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobileProxyMeta, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 import { loadOffers } from './load-offers.mjs';
 import { createAccountFarmContent } from '../src/data/accountFarmContent.js';
+import { antidetectOverviewArticles, createAntidetectOverviewContent } from '../src/data/antidetectOverviewContent.js';
 import { createGuideRefreshContent } from '../src/data/guideRefreshContent.js';
 import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, serviceGuideRoutes, serviceGuideLabels, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
@@ -40,6 +41,7 @@ const indexLanguages = languages.filter(({ code }) => code === 'ru' || code === 
 const isIndexLanguage = (language) => indexLanguages.some(({ code }) => code === language.code);
 const { OFFERS, OFFER_DESCRIPTION_TRANSLATIONS } = await loadOffers();
 const accountFarmContent = createAccountFarmContent(OFFERS);
+const antidetectOverviewContent = Object.fromEntries(antidetectOverviewArticles.map(article => [article.id, createAntidetectOverviewContent(article, OFFERS)]));
 const refreshedGuideContent = createGuideRefreshContent(OFFERS);
 const offersByRoute = new Map(OFFERS.filter(offer => offer.slug && offer.category !== 'Guides').map(offer => [`${serviceCategoryRoutes[offer.category]}/${offer.slug}`, offer]));
 
@@ -1586,8 +1588,10 @@ const servicePages = [
   }),
   ...guidePages.map((page) => createServicePage({
     article: page.article,
-    articleBlocks: refreshedGuideContent[page.id]?.blocks || (page.id === 'guide-account-farm' ? accountFarmContent.article.blocks : page.articleBlocks),
-    articleChecklist: page.id === 'guide-account-farm' ? accountFarmContent.checklist : undefined,
+    articleBlocks: antidetectOverviewContent[page.id]?.article.blocks || refreshedGuideContent[page.id]?.blocks || (page.id === 'guide-account-farm' ? accountFarmContent.article.blocks : page.articleBlocks),
+    articleChecklist: antidetectOverviewContent[page.id]?.checklist || (page.id === 'guide-account-farm' ? accountFarmContent.checklist : undefined),
+    articleIntroParagraphs: page.articleIntroParagraphs,
+    articleVideo: page.articleVideo,
     cover: page.cover,
     articleHeadingIds: refreshedGuideContent[page.id]?.headingIds || page.articleHeadingIds,
     indexable: page.indexable,
@@ -1687,12 +1691,13 @@ const renderGuideBlocks = (blocks, headingIds = {}) => {
     return text;
   }).join('');
   return withoutArticleSocialFooter(blocks).map((block) => {
+    if (block.type === 'quote') return `<blockquote>${inline(block.content)}</blockquote>`;
     if (block.type === 'code') return `<div data-article-code><p><strong>${escapeHtml(block.label)}</strong></p><pre class="whitespace-pre-wrap break-words rounded-lg border border-white/10 p-4 text-sm [overflow-wrap:anywhere]"><code>${escapeHtml(block.text)}</code></pre></div>`;
     if (block.type === 'table') return `<div style="overflow-x:auto"><table class="w-full border-collapse text-left text-sm leading-6"><thead><tr>${block.headers.map(cell => `<th scope="col" class="border-b border-white/10 px-4 py-3">${inline(cell)}</th>`).join('')}</tr></thead><tbody>${block.rows.map(row => `<tr>${row.map(cell => `<td class="border-b border-white/10 px-4 py-3 align-top">${inline(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
     if (block.type === 'heading') {
       const tag = block.level === 3 ? 'h3' : 'h2';
       const id = headingIds[block.text];
-      return `<${tag}${id ? ` id="${escapeHtml(id)}"` : ''}>${escapeHtml(block.text)}</${tag}>`;
+      return `<${tag}${id ? ` id="${escapeHtml(id)}"` : ''}>${block.href ? renderLink({ href: block.href, label: block.text }) : escapeHtml(block.text)}</${tag}>`;
     }
     if (block.type === 'list') {
       const tag = block.ordered ? 'ol' : 'ul';
@@ -1884,6 +1889,8 @@ const renderStaticContent = (section, language) => {
           ${article ? `<p class="fallback-badge">${escapeHtml(article.badge)}</p>` : ''}
           <h1>${escapeHtml(heroTitle)}</h1>
           ${offer && isServiceMetaDescription(heroIntro, getLanguage(section.description, language)) ? '' : `<p>${escapeHtml(heroIntro)}</p>`}
+          ${(section.articleIntroParagraphs || []).map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join('')}
+          ${section.articleVideo ? `<p>${renderLink({ href: section.articleVideo.url, label: section.articleVideo.caption })}</p>` : ''}
           ${section.cover ? `<a href="${escapeHtml(section.cover.src)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(section.cover.src)}" alt="${escapeHtml(section.cover.alt)}" width="${section.cover.width}" height="${section.cover.height}" /></a>` : ''}
           ${article?.updated ? `<p class="fallback-updated">${escapeHtml(article.updated)}</p>` : ''}
         </header>

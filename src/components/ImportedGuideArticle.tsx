@@ -8,6 +8,7 @@ import { getExternalLinkRel } from '../lib/externalLinks.js';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
 import { ArticleChecklist } from './ArticleChecklist';
 import { ArticleImageLink } from './ArticleImageLink';
+import { ArticleVideo } from './ArticleVideo';
 import { withoutArticleSocialFooter } from '../data/articleSocialFooter.js';
 
 type ArticleTheme = 'dark' | 'light';
@@ -22,7 +23,8 @@ type InlineSegment = {
 
 type ArticleBlock =
   | { type: 'paragraph'; content: InlineSegment[] }
-  | { type: 'heading'; level: number; text: string; compact?: boolean }
+  | { type: 'heading'; level: number; text: string; compact?: boolean; href?: string }
+  | { type: 'quote'; content: InlineSegment[] }
   | { type: 'callout'; level: number; text: string; items?: InlineSegment[][]; footer?: string; warning?: boolean }
   | { type: 'list'; ordered: boolean; items: InlineSegment[][] }
   | { type: 'code'; label: string; text: string }
@@ -32,6 +34,8 @@ type ArticleBlock =
 export type ArticleData = {
   title: string;
   sourceUrl: string;
+  introParagraphs?: string[];
+  video?: { id: string; url: string; caption: string };
   cover?: { src: string; alt: string; width: number; height: number };
   blocks: ArticleBlock[];
 };
@@ -221,7 +225,8 @@ export const ImportedGuideArticle = ({
           </div>
           <h1 className="mx-auto max-w-5xl font-display text-3xl font-black leading-[1.1] text-white md:text-5xl">{title}</h1>
           <p className="mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{description}</p>
-          {data.cover && (
+          {data.introParagraphs?.map(paragraph => <p key={paragraph} className="mx-auto mt-5 max-w-3xl text-base font-medium leading-relaxed text-white/55 md:text-lg">{paragraph}</p>)}
+          {data.video ? <ArticleVideo video={data.video} poster={data.cover} /> : data.cover && (
             <ArticleImageLink src={data.cover.src} alt={data.cover.alt} className="mx-auto mt-8 block max-w-3xl overflow-hidden rounded-2xl border border-white/10">
               <img src={data.cover.src} alt={data.cover.alt} width={data.cover.width} height={data.cover.height} fetchPriority="high" decoding="async" className="block h-auto w-full" />
             </ArticleImageLink>
@@ -245,6 +250,9 @@ export const ImportedGuideArticle = ({
             } : undefined}
           >
             {withoutArticleSocialFooter(data.blocks).map((block: ArticleBlock, blockIndex: number) => {
+              if (block.type === 'quote') return <blockquote key={`quote-${blockIndex}`} className="my-7 rounded-r-lg border-l-2 border-brand-purple bg-brand-purple/[0.06] px-5 py-4 text-sm font-medium leading-7 text-white/75 md:text-base">
+                <p><InlineContent content={block.content} sourceAnchors={sourceAnchors} /></p>
+              </blockquote>;
               if (block.type === 'code') return <ImportedCode key={`code-${blockIndex}`} label={block.label} text={block.text} />;
               if (block.type === 'table') return <div key={`table-${blockIndex}`} className="my-7 overflow-x-auto rounded-lg border border-white/10">
                 <table className="w-full border-collapse text-left text-sm leading-6 text-white/65">
@@ -270,9 +278,10 @@ export const ImportedGuideArticle = ({
 
               if (block.type === 'heading') {
                 const id = headingIds[block.text];
+                const heading = block.href ? <InlineContent content={[{ text: block.text, href: block.href }]} sourceAnchors={sourceAnchors} /> : block.text;
                 const sharedClass = `${block.compact ? 'mt-7' : blockIndex > 0 ? 'mt-12 border-t border-white/[0.08] pt-10' : ''} scroll-mt-28 font-display font-black text-white`;
-                if (block.level === 2) return <h2 key={`heading-${blockIndex}`} id={id} className={`${sharedClass} text-2xl md:text-3xl`}>{block.text}</h2>;
-                return <h3 key={`heading-${blockIndex}`} id={id} className={`${sharedClass} ${block.compact ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`}>{block.text}</h3>;
+                if (block.level === 2) return <h2 key={`heading-${blockIndex}`} id={id} className={`${sharedClass} text-2xl md:text-3xl`}>{heading}</h2>;
+                return <h3 key={`heading-${blockIndex}`} id={id} className={`${sharedClass} ${block.compact ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`}>{heading}</h3>;
               }
 
               if (block.type === 'callout') {

@@ -1055,6 +1055,13 @@ export const antidetectPages = [
       ko: 'ShardX 리뷰, 무료 안티디텍트, 무제한 프로필, ProxyShard 브라우저',
     },
     editorial: {
+      setupGuide: {
+        href: '/guides/shardx-obzor',
+        label: {
+          ru: 'Подробный обзор ShardX с настройкой и проверкой на утечки',
+          en: 'Detailed ShardX review with setup and leak checks',
+        },
+      },
       description: {
         ru: 'ShardX — бесплатный антидетект от команды ProxyShard. Он создаёт локальные профили с готовыми fingerprint-наборами, поддерживает HTTP и SOCKS5, а с UDP-прокси умеет проксировать WebRTC и QUIC без отключения этих функций.',
         en: 'ShardX is a free antidetect browser from the ProxyShard team. It stores profiles locally, includes prepared fingerprint sets, supports HTTP and SOCKS5, and can proxy WebRTC and QUIC through UDP-capable proxies.',

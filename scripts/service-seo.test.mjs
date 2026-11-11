@@ -36,9 +36,10 @@ test('service facts include all card fields, prices and mobile parameters', () =
 });
 
 test('only the eight duplicated antidetect note blocks become a setup-guide link', () => {
-  assert.deepEqual(antidetectPages.filter(page => page.editorial.setupGuide).map(page => page.id).sort(), ['ant-dolphin', 'ant-adspower', 'ant-incogniton', 'ant-afina', 'ant-gologin', 'ant-morelogin', 'ant-vision', 'ant-multilogin'].sort());
+  const hasSetupReplacement = page => page.editorial.setupGuide?.href === '/guides/kak-nastroit-antidetect-brauzer';
+  assert.deepEqual(antidetectPages.filter(hasSetupReplacement).map(page => page.id).sort(), ['ant-dolphin', 'ant-adspower', 'ant-incogniton', 'ant-afina', 'ant-gologin', 'ant-morelogin', 'ant-vision', 'ant-multilogin'].sort());
   for (const page of antidetectPages) {
-    if (page.editorial.setupGuide) assert.deepEqual(page.editorial.considerations.ru, []);
+    if (hasSetupReplacement(page)) assert.deepEqual(page.editorial.considerations.ru, []);
     else assert.ok(page.editorial.considerations.ru.length);
   }
   for (const offer of OFFERS) for (const language of ['ru', 'en']) {

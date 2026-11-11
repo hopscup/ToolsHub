@@ -11,6 +11,8 @@ import { MobileProxyComparisonArticle } from './components/MobileProxyComparison
 import { MobileIpGuideArticle } from './components/MobileIpGuideArticle';
 import { GmailForwardingGuideArticle } from './components/GmailForwardingGuideArticle';
 import { AccountFarmGuideArticle } from './components/AccountFarmGuideArticle';
+import { AntidetectOverviewGuideArticle } from './components/AntidetectOverviewGuideArticle';
+import { antidetectOverviewArticles } from './data/antidetectOverviewContent.js';
 import { OtcKycGuideArticle } from './components/OtcKycGuideArticle';
 import { ExchangeUidsGuideArticle } from './components/ExchangeUidsGuideArticle';
 import { AntidetectSetupGuideArticle } from './components/AntidetectSetupGuideArticle';
@@ -118,6 +120,8 @@ type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto';
 const RECOMMENDED_OFFER_IDS = new Set(Object.values(recommendedOfferIds).flat());
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
+  'guide-free-antidetect': { topic: 'antidetect', minutes: 8 },
+  'guide-shardx-review': { topic: 'antidetect', minutes: 8 },
   'guide-best-mobile-proxies': { topic: 'proxy', minutes: 8 },
   'guide-claude-recovery': { topic: 'accounts', minutes: 6 },
   'guide-claude-russia': { topic: 'accounts', minutes: 10 },
@@ -1963,6 +1967,15 @@ const OFFERS: Offer[] = [
     details: antarcticExchangeDetails,
   },
   // GUIDES
+  ...antidetectOverviewArticles.map(article => ({
+    id: article.id,
+    category: 'Guides' as const,
+    name: guideCatalogById[article.id].title.ru,
+    slug: article.slug,
+    editorial: GUIDE_PAGE_BY_ID[article.id].editorial,
+    description: GUIDE_PAGE_BY_ID[article.id].editorial.description,
+    url: `/guides/${article.slug}`,
+  })),
   {
     id: 'guide-best-mobile-proxies',
     category: 'Guides',
@@ -6167,6 +6180,7 @@ export default function App() {
       || isExchangeUidsGuideArticlePath()
       || isAntidetectSetupGuideArticlePath()
       || isDiscordTokenGuideArticlePath()
+      || antidetectOverviewArticles.some(article => stripLanguagePrefix(window.location.pathname) === `/guides/${article.slug}`)
     ) {
       document.body.style.removeProperty('overflow');
       document.body.style.setProperty('overflow-y', 'auto');
@@ -6299,6 +6313,10 @@ export default function App() {
   if (stripLanguagePrefix(window.location.pathname) === `/guides/${claudeRecoveryArticle.slug}`) {
     return <ClaudeRecoveryGuideArticle />;
   }
+  const antidetectOverviewArticle = antidetectOverviewArticles.find(article => stripLanguagePrefix(window.location.pathname) === `/guides/${article.slug}`);
+  if (antidetectOverviewArticle) {
+    return <AntidetectOverviewGuideArticle id={antidetectOverviewArticle.id} offers={OFFERS} />;
+  }
 
   if (stripLanguagePrefix(window.location.pathname) === '/guides/zarubezhnaya-karta-s-popolneniem-rublyami') {
     return <ForeignCardGuideArticle offers={OFFERS} />;
@@ -6317,6 +6335,7 @@ export default function App() {
       onClick={(event) => {
         if (
           offer.id === 'guide-best-mobile-proxies'
+          || antidetectOverviewArticles.some(article => article.id === offer.id)
           || offer.id === 'guide-mobile-ip'
           || offer.id === 'guide-claude-recovery'
           || offer.id === 'guide-claude-russia'
