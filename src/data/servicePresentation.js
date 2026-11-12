@@ -25,6 +25,15 @@ export const serviceGuideLabels = {
   Cards: { ru: 'Зарубежная карта с пополнением рублями', en: 'Foreign cards with RUB top-ups' },
 };
 
+const mobileGuideOfferIds = new Set(['ant-gologin-mobile', 'ant-octo-mobile', 'ant-vmos-cloud', 'ant-duoplus', 'ant-geelark', 'ant-morelogin-mobile']);
+export const getServiceGuide = offer => offer.category === 'Antidetect' && mobileGuideOfferIds.has(offer.id) ? {
+  href: '/guides/antidetekt-na-telefone',
+  label: { ru: 'Антидетект на телефоне: что выбрать', en: 'Antidetect on your phone: what to choose' },
+} : {
+  href: serviceGuideRoutes[offer.category] || '/guides',
+  label: serviceGuideLabels[offer.category] || { ru: 'Полезные гайды', en: 'Useful guides' },
+};
+
 export const plainSeoText = value => String(value).replace(/[—–]/g, '-');
 const shortServiceTitles = {
   '/proxy-vpn/luchshie-proksi': ['Какие прокси выбрать для аккаунтов в 2026', 'Which proxies to choose for accounts in 2026'],

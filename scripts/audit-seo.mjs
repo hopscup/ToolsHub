@@ -28,6 +28,7 @@ import { virtualNumberArticle, createVirtualNumberContent } from '../src/data/vi
 import { rfNumbersArticle, createRfNumbersContent } from '../src/data/rfNumbersContent.js';
 import { youtubeFarmArticle, createYoutubeFarmContent } from '../src/data/youtubeFarmContent.js';
 import { aiSubscriptionsArticle, createAiSubscriptionsContent } from '../src/data/aiSubscriptionsContent.js';
+import { mobileAntidetectArticle, createMobileAntidetectContent } from '../src/data/mobileAntidetectContent.js';
 import { createGuideRefreshContent, guideRefreshMeta } from '../src/data/guideRefreshContent.js';
 import { antidetectSetupMeta, antidetectSetupCopy, antidetectSetupAdditions, getAntidetectGuideServices, resolveAntidetectGuideSegments, createAntidetectGuideChecklist } from '../src/data/antidetectSetupContent.js';
 
@@ -144,7 +145,8 @@ const checkArticleContent = (html, route, localizedRoute) => {
   const numberGuide = route === `/guides/${virtualNumberArticle.slug}` ? createVirtualNumberContent(OFFERS)
     : route === `/guides/${rfNumbersArticle.slug}` ? createRfNumbersContent(OFFERS)
     : route === `/guides/${youtubeFarmArticle.slug}` ? createYoutubeFarmContent(OFFERS)
-    : route === `/guides/${aiSubscriptionsArticle.slug}` ? createAiSubscriptionsContent(OFFERS) : undefined;
+    : route === `/guides/${aiSubscriptionsArticle.slug}` ? createAiSubscriptionsContent(OFFERS)
+    : route === `/guides/${mobileAntidetectArticle.slug}` ? createMobileAntidetectContent(OFFERS) : undefined;
   if (numberGuide) {
     const { article, checklist } = numberGuide;
     const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';

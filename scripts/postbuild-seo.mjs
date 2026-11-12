@@ -20,8 +20,9 @@ import { virtualNumberArticle, createVirtualNumberContent } from '../src/data/vi
 import { rfNumbersArticle, createRfNumbersContent } from '../src/data/rfNumbersContent.js';
 import { youtubeFarmArticle, createYoutubeFarmContent } from '../src/data/youtubeFarmContent.js';
 import { aiSubscriptionsArticle, createAiSubscriptionsContent } from '../src/data/aiSubscriptionsContent.js';
+import { mobileAntidetectArticle, createMobileAntidetectContent } from '../src/data/mobileAntidetectContent.js';
 import { createGuideRefreshContent } from '../src/data/guideRefreshContent.js';
-import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, serviceGuideRoutes, serviceGuideLabels, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
+import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, getServiceGuide, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
 import { getServiceParagraphs, getServiceSummaryFacts, isServiceMetaDescription } from '../src/data/servicePresentation.js';
 import { seoLandingPages } from '../src/data/seoLandingPages.js';
@@ -51,6 +52,7 @@ const linkedGuideContent = {
   [rfNumbersArticle.id]: createRfNumbersContent(OFFERS),
   [youtubeFarmArticle.id]: createYoutubeFarmContent(OFFERS),
   [aiSubscriptionsArticle.id]: createAiSubscriptionsContent(OFFERS),
+  [mobileAntidetectArticle.id]: createMobileAntidetectContent(OFFERS),
 };
 const refreshedGuideContent = createGuideRefreshContent(OFFERS);
 const offersByRoute = new Map(OFFERS.filter(offer => offer.slug && offer.category !== 'Guides').map(offer => [`${serviceCategoryRoutes[offer.category]}/${offer.slug}`, offer]));
@@ -1835,7 +1837,7 @@ const renderServiceContent = (offer, language, metaDescription) => {
   const paragraphs = getServiceParagraphs(offer, language.code, metaDescription);
   const groups = getServiceTextGroups(offer, language.code);
   const alternatives = getServiceAlternatives(offer, OFFERS);
-  const guide = serviceGuideRoutes[offer.category] || '/guides';
+  const guide = getServiceGuide(offer);
   return `<div data-service-content="${escapeHtml(offer.id)}">
     ${paragraphs.map(text => `<p>${escapeHtml(text)}</p>`).join('')}
     ${facts.length ? `<section data-service-facts>${heading(ru ? 'Условия и характеристики' : 'Terms and features')}<dl>${facts.map(fact => `<dt>${escapeHtml(fact.label)}</dt><dd>${escapeHtml(fact.value)}</dd>`).join('')}</dl></section>` : ''}
@@ -1847,7 +1849,7 @@ const renderServiceContent = (offer, language, metaDescription) => {
     <p data-service-cta>${renderLink({ href: offer.url, label: ru ? 'Перейти на сайт сервиса' : 'Visit the service' })}</p>
     ${offer.webUrl ? `<p>${renderLink({ href: offer.webUrl, label: ru ? 'Сайт сервиса' : 'Service website' })}</p>` : ''}
     <section data-service-alternatives>${heading(ru ? 'Альтернативы' : 'Alternatives')}<ul>${alternatives.map(item => `<li>${renderLink({ href: `${language.prefix}${serviceCategoryRoutes[item.category]}/${item.slug}`, label: item.name })}<p>${escapeHtml(getOfferDescription(item, language))}</p></li>`).join('')}</ul>
-      <p>${renderLink({ href: `${language.prefix}${guide}`, label: value(serviceGuideLabels[offer.category]) || (ru ? 'Полезные гайды' : 'Useful guides') })}</p>
+      <p>${renderLink({ href: `${language.prefix}${guide.href}`, label: value(guide.label) })}</p>
     </section>
   </div>`;
 };

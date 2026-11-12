@@ -11,6 +11,7 @@ import { virtualNumberArticle } from './virtualNumberContent.js';
 import { rfNumbersArticle } from './rfNumbersContent.js';
 import { youtubeFarmArticle } from './youtubeFarmContent.js';
 import { aiSubscriptionsArticle } from './aiSubscriptionsContent.js';
+import { mobileAntidetectArticle } from './mobileAntidetectContent.js';
 import otcKycArticle from './otcKycArticle.json' with { type: 'json' };
 
 const guideTitle = (title) => ({
@@ -22,7 +23,7 @@ const guideTitle = (title) => ({
 });
 
 export const guidePages = [
-  ...[aiSubscriptionsArticle, youtubeFarmArticle, rfNumbersArticle, virtualNumberArticle].map(article => ({
+  ...[mobileAntidetectArticle, aiSubscriptionsArticle, youtubeFarmArticle, rfNumbersArticle, virtualNumberArticle].map(article => ({
     id: article.id,
     indexable: true,
     slug: article.slug,

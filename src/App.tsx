@@ -20,6 +20,8 @@ import { YoutubeFarmGuideArticle } from './components/YoutubeFarmGuideArticle';
 import { youtubeFarmArticle } from './data/youtubeFarmContent.js';
 import { AiSubscriptionsGuideArticle } from './components/AiSubscriptionsGuideArticle';
 import { aiSubscriptionsArticle } from './data/aiSubscriptionsContent.js';
+import { MobileAntidetectGuideArticle } from './components/MobileAntidetectGuideArticle';
+import { mobileAntidetectArticle } from './data/mobileAntidetectContent.js';
 import { antidetectOverviewArticles } from './data/antidetectOverviewContent.js';
 import { OtcKycGuideArticle } from './components/OtcKycGuideArticle';
 import { ExchangeUidsGuideArticle } from './components/ExchangeUidsGuideArticle';
@@ -44,7 +46,7 @@ import { guidePages } from './data/guidePages.js';
 import { guideCatalogById } from './data/guideCatalog.js';
 import { recommendedOfferIds, recommendedOfferLabels } from './data/recommendedOffers.js';
 import { getExternalLinkRel } from './lib/externalLinks.js';
-import { compactSeoTitle, sectionSeoTitles, getServiceAlternatives, serviceGuideRoutes, serviceGuideLabels } from './data/servicePresentation.js';
+import { compactSeoTitle, sectionSeoTitles, getServiceAlternatives, getServiceGuide } from './data/servicePresentation.js';
 import { siteDateModified } from './data/buildDate.js';
 import { seoLandingPages } from './data/seoLandingPages.js';
 import { smsPages } from './data/smsPages.js';
@@ -128,6 +130,7 @@ type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto';
 const RECOMMENDED_OFFER_IDS = new Set(Object.values(recommendedOfferIds).flat());
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
+  'guide-mobile-antidetect': { topic: 'antidetect', minutes: 9 },
   'guide-ai-subscriptions': { topic: 'accounts', minutes: 5 },
   'guide-youtube-farm': { topic: 'accounts', minutes: 9 },
   'guide-rf-numbers': { topic: 'accounts', minutes: 6 },
@@ -1980,6 +1983,15 @@ const OFFERS: Offer[] = [
     details: antarcticExchangeDetails,
   },
   // GUIDES
+  {
+    id: mobileAntidetectArticle.id,
+    category: 'Guides',
+    name: guideCatalogById[mobileAntidetectArticle.id].title.ru,
+    slug: mobileAntidetectArticle.slug,
+    editorial: GUIDE_PAGE_BY_ID[mobileAntidetectArticle.id].editorial,
+    description: GUIDE_PAGE_BY_ID[mobileAntidetectArticle.id].editorial.description,
+    url: `/guides/${mobileAntidetectArticle.slug}`,
+  },
   {
     id: aiSubscriptionsArticle.id,
     category: 'Guides',
@@ -6234,6 +6246,7 @@ export default function App() {
       || stripLanguagePrefix(window.location.pathname) === `/guides/${rfNumbersArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${youtubeFarmArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${aiSubscriptionsArticle.slug}`
+      || stripLanguagePrefix(window.location.pathname) === `/guides/${mobileAntidetectArticle.slug}`
     ) {
       document.body.style.removeProperty('overflow');
       document.body.style.setProperty('overflow-y', 'auto');
@@ -6379,6 +6392,9 @@ export default function App() {
   if (stripLanguagePrefix(window.location.pathname) === `/guides/${aiSubscriptionsArticle.slug}`) {
     return <AiSubscriptionsGuideArticle offers={OFFERS} />;
   }
+  if (stripLanguagePrefix(window.location.pathname) === `/guides/${mobileAntidetectArticle.slug}`) {
+    return <MobileAntidetectGuideArticle offers={OFFERS} />;
+  }
   if (antidetectOverviewArticle) {
     return <AntidetectOverviewGuideArticle id={antidetectOverviewArticle.id} offers={OFFERS} />;
   }
@@ -6404,6 +6420,7 @@ export default function App() {
           || offer.id === rfNumbersArticle.id
           || offer.id === youtubeFarmArticle.id
           || offer.id === aiSubscriptionsArticle.id
+          || offer.id === mobileAntidetectArticle.id
           || antidetectOverviewArticles.some(article => article.id === offer.id)
           || offer.id === 'guide-mobile-ip'
           || offer.id === 'guide-claude-recovery'
@@ -9124,8 +9141,8 @@ export default function App() {
                         <span className="mt-1 block truncate text-xs text-white/55">{offerDescription(offer)}</span>
                       </a>)}
                     </div>
-                    <a className="inline-block text-sm font-bold text-brand-purple hover:underline" href={`${LANGUAGE_PREFIXES[lang]}${serviceGuideRoutes[selectedOffer.category] || '/guides'}`}>
-                      {l(serviceGuideLabels[selectedOffer.category]) || (lang === 'ru' ? 'Полезные гайды' : 'Useful guides')}
+                    <a className="inline-block text-sm font-bold text-brand-purple hover:underline" href={`${LANGUAGE_PREFIXES[lang]}${getServiceGuide(selectedOffer).href}`}>
+                      {l(getServiceGuide(selectedOffer).label)}
                     </a>
                   </section>}
                 </div>
