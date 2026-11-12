@@ -10,6 +10,7 @@ import { antidetectOverviewArticles } from './antidetectOverviewContent.js';
 import { virtualNumberArticle } from './virtualNumberContent.js';
 import { rfNumbersArticle } from './rfNumbersContent.js';
 import { youtubeFarmArticle } from './youtubeFarmContent.js';
+import { aiSubscriptionsArticle } from './aiSubscriptionsContent.js';
 import otcKycArticle from './otcKycArticle.json' with { type: 'json' };
 
 const guideTitle = (title) => ({
@@ -21,7 +22,7 @@ const guideTitle = (title) => ({
 });
 
 export const guidePages = [
-  ...[youtubeFarmArticle, rfNumbersArticle, virtualNumberArticle].map(article => ({
+  ...[aiSubscriptionsArticle, youtubeFarmArticle, rfNumbersArticle, virtualNumberArticle].map(article => ({
     id: article.id,
     indexable: true,
     slug: article.slug,

@@ -222,6 +222,13 @@ export const seoLandingPages = [
   {
     id: 'ai-subscriptions',
     route: '/account-shop/podpiski-neyrosetey',
+    guideLink: {
+      href: '/guides/deshevye-podpiski-chatgpt-claude-gemini',
+      label: {
+        ru: 'Где дешевле всего и какие риски, разобрал по шагам в гайде',
+        en: 'I explain where subscriptions cost less and the risks step by step in the guide',
+      },
+    },
     category: 'Stores',
     subFilter: 'Bot',
     eyebrow: {

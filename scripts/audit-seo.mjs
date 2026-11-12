@@ -27,6 +27,7 @@ import { antidetectOverviewArticles, createAntidetectOverviewContent } from '../
 import { virtualNumberArticle, createVirtualNumberContent } from '../src/data/virtualNumberContent.js';
 import { rfNumbersArticle, createRfNumbersContent } from '../src/data/rfNumbersContent.js';
 import { youtubeFarmArticle, createYoutubeFarmContent } from '../src/data/youtubeFarmContent.js';
+import { aiSubscriptionsArticle, createAiSubscriptionsContent } from '../src/data/aiSubscriptionsContent.js';
 import { createGuideRefreshContent, guideRefreshMeta } from '../src/data/guideRefreshContent.js';
 import { antidetectSetupMeta, antidetectSetupCopy, antidetectSetupAdditions, getAntidetectGuideServices, resolveAntidetectGuideSegments, createAntidetectGuideChecklist } from '../src/data/antidetectSetupContent.js';
 
@@ -142,7 +143,8 @@ const checkSectionSummaries = (html, language, route) => {
 const checkArticleContent = (html, route, localizedRoute) => {
   const numberGuide = route === `/guides/${virtualNumberArticle.slug}` ? createVirtualNumberContent(OFFERS)
     : route === `/guides/${rfNumbersArticle.slug}` ? createRfNumbersContent(OFFERS)
-    : route === `/guides/${youtubeFarmArticle.slug}` ? createYoutubeFarmContent(OFFERS) : undefined;
+    : route === `/guides/${youtubeFarmArticle.slug}` ? createYoutubeFarmContent(OFFERS)
+    : route === `/guides/${aiSubscriptionsArticle.slug}` ? createAiSubscriptionsContent(OFFERS) : undefined;
   if (numberGuide) {
     const { article, checklist } = numberGuide;
     const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
@@ -165,6 +167,10 @@ const checkArticleContent = (html, route, localizedRoute) => {
   if (route === '/sms-activators/virtualnye-nomera') {
     const prefix = localizedRoute.slice(0, -route.length);
     if (!html.includes(`href="${prefix}/guides/${virtualNumberArticle.slug}"`)) errors.push(`Missing virtual number guide landing link: ${localizedRoute}`);
+  }
+  if (route === '/account-shop/podpiski-neyrosetey') {
+    const prefix = localizedRoute.slice(0, -route.length);
+    if (!html.includes(`href="${prefix}/guides/${aiSubscriptionsArticle.slug}"`)) errors.push(`Missing subscriptions guide landing link: ${localizedRoute}`);
   }
   const overview = antidetectOverviewArticles.find(article => `/guides/${article.slug}` === route);
   if (overview) {

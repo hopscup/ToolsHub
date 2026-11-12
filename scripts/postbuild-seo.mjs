@@ -19,6 +19,7 @@ import { antidetectOverviewArticles, createAntidetectOverviewContent } from '../
 import { virtualNumberArticle, createVirtualNumberContent } from '../src/data/virtualNumberContent.js';
 import { rfNumbersArticle, createRfNumbersContent } from '../src/data/rfNumbersContent.js';
 import { youtubeFarmArticle, createYoutubeFarmContent } from '../src/data/youtubeFarmContent.js';
+import { aiSubscriptionsArticle, createAiSubscriptionsContent } from '../src/data/aiSubscriptionsContent.js';
 import { createGuideRefreshContent } from '../src/data/guideRefreshContent.js';
 import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, serviceGuideRoutes, serviceGuideLabels, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
@@ -49,6 +50,7 @@ const linkedGuideContent = {
   [virtualNumberArticle.id]: createVirtualNumberContent(OFFERS),
   [rfNumbersArticle.id]: createRfNumbersContent(OFFERS),
   [youtubeFarmArticle.id]: createYoutubeFarmContent(OFFERS),
+  [aiSubscriptionsArticle.id]: createAiSubscriptionsContent(OFFERS),
 };
 const refreshedGuideContent = createGuideRefreshContent(OFFERS);
 const offersByRoute = new Map(OFFERS.filter(offer => offer.slug && offer.category !== 'Guides').map(offer => [`${serviceCategoryRoutes[offer.category]}/${offer.slug}`, offer]));

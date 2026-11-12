@@ -18,6 +18,8 @@ import { RfNumbersGuideArticle } from './components/RfNumbersGuideArticle';
 import { rfNumbersArticle } from './data/rfNumbersContent.js';
 import { YoutubeFarmGuideArticle } from './components/YoutubeFarmGuideArticle';
 import { youtubeFarmArticle } from './data/youtubeFarmContent.js';
+import { AiSubscriptionsGuideArticle } from './components/AiSubscriptionsGuideArticle';
+import { aiSubscriptionsArticle } from './data/aiSubscriptionsContent.js';
 import { antidetectOverviewArticles } from './data/antidetectOverviewContent.js';
 import { OtcKycGuideArticle } from './components/OtcKycGuideArticle';
 import { ExchangeUidsGuideArticle } from './components/ExchangeUidsGuideArticle';
@@ -126,6 +128,7 @@ type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto';
 const RECOMMENDED_OFFER_IDS = new Set(Object.values(recommendedOfferIds).flat());
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
+  'guide-ai-subscriptions': { topic: 'accounts', minutes: 5 },
   'guide-youtube-farm': { topic: 'accounts', minutes: 9 },
   'guide-rf-numbers': { topic: 'accounts', minutes: 6 },
   'guide-virtual-number': { topic: 'accounts', minutes: 5 },
@@ -1978,6 +1981,15 @@ const OFFERS: Offer[] = [
   },
   // GUIDES
   {
+    id: aiSubscriptionsArticle.id,
+    category: 'Guides',
+    name: guideCatalogById[aiSubscriptionsArticle.id].title.ru,
+    slug: aiSubscriptionsArticle.slug,
+    editorial: GUIDE_PAGE_BY_ID[aiSubscriptionsArticle.id].editorial,
+    description: GUIDE_PAGE_BY_ID[aiSubscriptionsArticle.id].editorial.description,
+    url: `/guides/${aiSubscriptionsArticle.slug}`,
+  },
+  {
     id: youtubeFarmArticle.id,
     category: 'Guides',
     name: guideCatalogById[youtubeFarmArticle.id].title.ru,
@@ -3265,7 +3277,7 @@ const OFFERS: Offer[] = [
     editorial: ACCOUNT_SHOP_PAGE_BY_ID['st-plati'].editorial,
     name: 'Plati Market',
     description: ACCOUNT_SHOP_PAGE_BY_ID['st-plati'].editorial.description,
-    url: 'https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112',
+    url: 'https://plati.market/?ai=1422112',
     logoUrl: '/plati.webp',
     details: {
       paymentMethods: { ru: 'Visa/Mastercard, Крипта, СБП/RU карты', en: 'Visa/Mastercard, Crypto, SBP/RU cards' }
@@ -6221,6 +6233,7 @@ export default function App() {
       || stripLanguagePrefix(window.location.pathname) === `/guides/${virtualNumberArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${rfNumbersArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${youtubeFarmArticle.slug}`
+      || stripLanguagePrefix(window.location.pathname) === `/guides/${aiSubscriptionsArticle.slug}`
     ) {
       document.body.style.removeProperty('overflow');
       document.body.style.setProperty('overflow-y', 'auto');
@@ -6363,6 +6376,9 @@ export default function App() {
   if (stripLanguagePrefix(window.location.pathname) === `/guides/${youtubeFarmArticle.slug}`) {
     return <YoutubeFarmGuideArticle offers={OFFERS} />;
   }
+  if (stripLanguagePrefix(window.location.pathname) === `/guides/${aiSubscriptionsArticle.slug}`) {
+    return <AiSubscriptionsGuideArticle offers={OFFERS} />;
+  }
   if (antidetectOverviewArticle) {
     return <AntidetectOverviewGuideArticle id={antidetectOverviewArticle.id} offers={OFFERS} />;
   }
@@ -6387,6 +6403,7 @@ export default function App() {
           || offer.id === virtualNumberArticle.id
           || offer.id === rfNumbersArticle.id
           || offer.id === youtubeFarmArticle.id
+          || offer.id === aiSubscriptionsArticle.id
           || antidetectOverviewArticles.some(article => article.id === offer.id)
           || offer.id === 'guide-mobile-ip'
           || offer.id === 'guide-claude-recovery'
@@ -8106,27 +8123,27 @@ export default function App() {
                       {tx({
                         ru: (
                         <>
-                          В основном я пользуюсь <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a> и <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a> - вместе они закрывают примерно 95% моих потребностей. <span className="text-white font-bold">DarkShopping</span> чаще беру для рабочих аккаунтов, почт, соцсетей и расходников. По DarkShopping и покупке аккаунтов вроде Discord/Twitter есть отдельный <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">видео-гайд</a>. <span className="text-white font-bold">FunPay</span> удобен для подписок, ключей, игровых товаров, услуг и разных цифровых продуктов. Если нужно сравнить цены или найти редкую позицию, можно дополнительно смотреть <a href="https://gglead.org/go20580" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> и <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
+                          В основном я пользуюсь <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a> и <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a> - вместе они закрывают примерно 95% моих потребностей. <span className="text-white font-bold">DarkShopping</span> чаще беру для рабочих аккаунтов, почт, соцсетей и расходников. По DarkShopping и покупке аккаунтов вроде Discord/Twitter есть отдельный <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">видео-гайд</a>. <span className="text-white font-bold">FunPay</span> удобен для подписок, ключей, игровых товаров, услуг и разных цифровых продуктов. Если нужно сравнить цены или найти редкую позицию, можно дополнительно смотреть <a href="https://gglead.org/go20580" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> и <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
                         </>
                         ),
                         en: (
                         <>
-                          I mainly use <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a> and <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>; together they cover roughly 95% of my needs. <span className="text-white font-bold">DarkShopping</span> is mostly for work accounts, emails, social accounts, and consumables. There is a separate <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">video guide</a> for DarkShopping and buying Discord/Twitter-style accounts. <span className="text-white font-bold">FunPay</span> is useful for subscriptions, keys, gaming goods, services, and other digital products. For price comparison or rare items, also check <a href="https://gglead.org/go20580" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a>, and <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
+                          I mainly use <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a> and <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>; together they cover roughly 95% of my needs. <span className="text-white font-bold">DarkShopping</span> is mostly for work accounts, emails, social accounts, and consumables. There is a separate <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">video guide</a> for DarkShopping and buying Discord/Twitter-style accounts. <span className="text-white font-bold">FunPay</span> is useful for subscriptions, keys, gaming goods, services, and other digital products. For price comparison or rare items, also check <a href="https://gglead.org/go20580" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a>, and <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
                         </>
                         ),
                         es: (
                         <>
-                          Yo uso sobre todo <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a> y <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>; juntos cubren cerca del 95% de mis necesidades. <span className="text-white font-bold">DarkShopping</span> lo uso más para cuentas de trabajo, correos, redes sociales y consumibles. Hay una <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">videoguía</a> aparte sobre DarkShopping y cuentas tipo Discord/Twitter. <span className="text-white font-bold">FunPay</span> es cómodo para suscripciones, claves, productos de juegos, servicios y otros productos digitales. Para comparar precios o buscar algo raro, mira también <a href="https://gglead.org/go20580" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> y <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
+                          Yo uso sobre todo <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a> y <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>; juntos cubren cerca del 95% de mis necesidades. <span className="text-white font-bold">DarkShopping</span> lo uso más para cuentas de trabajo, correos, redes sociales y consumibles. Hay una <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">videoguía</a> aparte sobre DarkShopping y cuentas tipo Discord/Twitter. <span className="text-white font-bold">FunPay</span> es cómodo para suscripciones, claves, productos de juegos, servicios y otros productos digitales. Para comparar precios o buscar algo raro, mira también <a href="https://gglead.org/go20580" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> y <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>.
                         </>
                         ),
                         zh: (
                         <>
-                          我主要使用 <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a> 和 <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>，它们合起来能覆盖我约 95% 的需求。<span className="text-white font-bold">DarkShopping</span> 更适合工作账号、邮箱、社媒账号和消耗品。关于 DarkShopping 和 Discord/Twitter 类账号购买有单独的 <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">视频指南</a>。<span className="text-white font-bold">FunPay</span> 适合订阅、密钥、游戏商品、服务和其他数字产品。想比价或找稀有商品，也可以看 <a href="https://gglead.org/go20580" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>、<a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> 和 <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>。
+                          我主要使用 <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a> 和 <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>，它们合起来能覆盖我约 95% 的需求。<span className="text-white font-bold">DarkShopping</span> 更适合工作账号、邮箱、社媒账号和消耗品。关于 DarkShopping 和 Discord/Twitter 类账号购买有单独的 <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">视频指南</a>。<span className="text-white font-bold">FunPay</span> 适合订阅、密钥、游戏商品、服务和其他数字产品。想比价或找稀有商品，也可以看 <a href="https://gglead.org/go20580" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>、<a href="https://plati.market/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a> 和 <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>。
                         </>
                         ),
                         ko: (
                         <>
-                          저는 주로 <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a>와 <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>를 사용합니다. 둘이 제 필요의 약 95%를 해결합니다. <span className="text-white font-bold">DarkShopping</span>는 작업용 계정, 이메일, 소셜 계정, 소모품에 자주 씁니다. DarkShopping와 Discord/Twitter 계정 구매는 별도 <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">비디오 가이드</a>가 있습니다. <span className="text-white font-bold">FunPay</span>는 구독, 키, 게임 상품, 서비스, 디지털 제품에 편합니다. 가격 비교나 희귀 상품은 <a href="https://gglead.org/go20580" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/games/grand-theft-auto-vi/2027/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a>, <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>도 확인하세요.
+                          저는 주로 <a href="https://dark.shopping/category/view/gmail?p=95083" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">DarkShopping</a>와 <a href="https://funpay.com/" target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">FunPay</a>를 사용합니다. 둘이 제 필요의 약 95%를 해결합니다. <span className="text-white font-bold">DarkShopping</span>는 작업용 계정, 이메일, 소셜 계정, 소모품에 자주 씁니다. DarkShopping와 Discord/Twitter 계정 구매는 별도 <a href={STORE_ACCOUNTS_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">비디오 가이드</a>가 있습니다. <span className="text-white font-bold">FunPay</span>는 구독, 키, 게임 상품, 서비스, 디지털 제품에 편합니다. 가격 비교나 희귀 상품은 <a href="https://gglead.org/go20580" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">GGsel</a>, <a href="https://plati.market/?ai=1422112" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Plati Market</a>, <a href="https://accsmarket.com/en/9vV7VOzI" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">AccsMarket</a>도 확인하세요.
                         </>
                         )
                       })}
