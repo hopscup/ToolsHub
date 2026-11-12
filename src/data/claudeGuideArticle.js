@@ -108,6 +108,7 @@ export const claudeGuideArticle = {
     paragraph('Оплатить из России можно зарубежной виртуальной картой. Самые простые варианты - ', link('PGON', services.pgon), ', если есть крипта, и ', link('Zarub', services.zarub), '.'),
     paragraph('Но учитывайте: виртуалки, по теории, рейтинг снижают, а после начала оплаты Claude сейчас массово кидает проверку документов - у меня было так. Я получил вериф на трёх аккаунтах подряд - давность регистрации была от полугода до 1 дня'),
     image('payment', 'Виртуальная карта Zarub для оплаты зарубежных сервисов', 466, 803),
+    paragraph(link('Где взять подписку дешевле, разобрал отдельно', '/guides/deshevye-podpiski-chatgpt-claude-gemini')),
 
     heading('verification', 'Что делать, если Claude попросил верификацию'),
     list([
@@ -116,6 +117,7 @@ export const claudeGuideArticle = {
     ]),
     paragraph(strong('Я не рекомендую!'), ' Так как нет гарантии на повторную верификацию через время, а также нет гарантии, что аккаунт забанят после пары дней пользования'),
     paragraph('Но если у вас все таки есть желание - вот ', link('статья про OTC/KYC', '/guides/crypto-otc-kyc'), ', там есть нужные ссылки'),
+    paragraph(link('Если всё же забанили, как сохранить данные', '/guides/claude-zabanili-kak-sohranit-dannye')),
 
     heading('cdk', 'Мой вариант: CDK-ключ на собственный аккаунт'),
     paragraph('Когда надоело биться с верификацией, меня выручили маркеты с кодами активации: ', link('GGsel', 'https://gglead.org/go20580'), ', ', link('Plati.Market', '/account-shop/plati-market'), ', ', link('FunPay', 'https://funpay.com/'), ' и боты в Telegram.'),

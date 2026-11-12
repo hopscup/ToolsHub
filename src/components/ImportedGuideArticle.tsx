@@ -2,6 +2,7 @@ import { ArrowLeft, BookOpen, Check, Copy, Moon, Sun } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import type { ComponentProps } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
+import { ArticleLanguageLink } from './ArticleLanguageLink';
 import { RelatedGuides } from './RelatedGuides';
 import type { RelatedGuide } from './RelatedGuides';
 import { getExternalLinkRel } from '../lib/externalLinks.js';
@@ -202,6 +203,7 @@ export const ImportedGuideArticle = ({
             <span className="hidden truncate font-display text-sm font-bold text-white/80 sm:block">Hopscup's Tools Hub</span>
           </a>
           <div className="flex shrink-0 items-center gap-2">
+            <ArticleLanguageLink />
             <button
               type="button"
               onClick={() => setTheme(isLight ? 'dark' : 'light')}

@@ -22,6 +22,8 @@ import { AiSubscriptionsGuideArticle } from './components/AiSubscriptionsGuideAr
 import { aiSubscriptionsArticle } from './data/aiSubscriptionsContent.js';
 import { MobileAntidetectGuideArticle } from './components/MobileAntidetectGuideArticle';
 import { mobileAntidetectArticle } from './data/mobileAntidetectContent.js';
+import { isIndexablePath, getCanonicalPath, getIndexAlternates, getLanguageSwitchPath, absoluteIndexUrl } from './data/indexPolicy.js';
+import { serviceContextualGuideLinks, sectionContextualGuideLinks } from './data/contextualGuideLinks.js';
 import { antidetectOverviewArticles } from './data/antidetectOverviewContent.js';
 import { OtcKycGuideArticle } from './components/OtcKycGuideArticle';
 import { ExchangeUidsGuideArticle } from './components/ExchangeUidsGuideArticle';
@@ -5278,7 +5280,7 @@ const LanguageFlag = ({ language, className = '' }: { language: Language; classN
   );
 };
 
-const LanguageToggle = ({ lang, onChange }: { lang: Language; onChange: (language: Language) => void }) => {
+const LanguageToggle = ({ lang }: { lang: Language }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const currentLanguage = LANGUAGE_OPTIONS.find((option) => option.value === lang) || LANGUAGE_OPTIONS[0];
@@ -5330,14 +5332,13 @@ const LanguageToggle = ({ lang, onChange }: { lang: Language; onChange: (languag
             {ACTIVE_LANGUAGE_OPTIONS.map((option) => {
               const isSelected = option.value === lang;
               return (
-                <button
+                <a
                   key={option.value}
-                  type="button"
+                  href={getLanguageSwitchPath(window.location.pathname, option.value)}
                   role="menuitemradio"
                   aria-checked={isSelected}
                   onClick={() => {
                     setIsOpen(false);
-                    if (!isSelected) onChange(option.value);
                   }}
                   className={`flex min-h-10 w-full items-center gap-3 rounded-md px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-purple/70 ${
                     isSelected
@@ -5347,7 +5348,7 @@ const LanguageToggle = ({ lang, onChange }: { lang: Language; onChange: (languag
                 >
                   <LanguageFlag language={option.value} className="h-3.5 w-[21px]" />
                   <span lang={option.inLanguage} className="text-sm font-medium">{option.name}</span>
-                </button>
+                </a>
               );
             })}
           </motion.div>
@@ -5570,27 +5571,11 @@ export default function App() {
       (page) => stripLanguagePrefix(window.location.pathname) === `/guides/${page.slug}`,
     );
     const russianOnlyArticle = proxyArticle || Boolean(guideArticle);
-    const untranslatedArticle = russianOnlyArticle && lang !== 'ru';
-    const retiredLanguage = !isActiveLanguage(lang);
-    const canonicalLanguage: Language = retiredLanguage ? 'en' : lang;
     const seoLanding = selectedOffer ? undefined : getSeoLandingFromPath();
     const sectionSeo = seoLanding || SECTION_SEO[activeCategory];
     const offerSeo = selectedOffer?.slug ? selectedOffer.editorial : undefined;
     const servicePageSeo = selectedOffer?.id ? SERVICE_PAGE_SEO_BY_ID[selectedOffer.id] : undefined;
-    const canonicalPath = proxyGuideArticle
-      ? PROXY_GUIDE_ARTICLE_ROUTE
-      : mobileProxyComparisonArticle
-        ? MOBILE_PROXY_COMPARISON_ARTICLE_ROUTE
-      : guideArticle
-        ? `/guides/${guideArticle.slug}`
-      : selectedOffer?.slug
-      ? getLocalizedOfferRoute(selectedOffer, canonicalLanguage)
-      : seoLanding
-        ? getLocalizedSeoLandingRoute(seoLanding, canonicalLanguage)
-        : isHomeRoute
-          ? getLocalizedHomeRoute(canonicalLanguage)
-          : getLocalizedRoute(activeCategory, canonicalLanguage);
-    const canonicalUrl = `${SITE_URL}${canonicalPath}`;
+    const canonicalUrl = absoluteIndexUrl(getCanonicalPath(window.location.pathname), SITE_URL);
     const runtimeSeo = seoLanding || isHomeRoute ? undefined : RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
     const rawTitle = proxyGuideArticle
       ? proxyGuideMeta.title
@@ -5638,7 +5623,7 @@ export default function App() {
       'meta[name="robots"]',
       'name',
       'robots',
-      guideArticle?.indexable === false || untranslatedArticle || retiredLanguage
+      !isIndexablePath(window.location.pathname)
         ? 'noindex, follow'
         : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large',
     );
@@ -5678,32 +5663,8 @@ export default function App() {
     };
 
     document.head.querySelectorAll('link[rel="alternate"][hreflang]').forEach((element) => element.remove());
-    if (russianOnlyArticle) {
-      setAlternate('ru', canonicalUrl);
-    } else {
-      ACTIVE_LANGUAGE_OPTIONS.forEach(({ value, hrefLang }) => {
-        const alternatePath = selectedOffer?.slug
-          ? getLocalizedOfferRoute(selectedOffer, value)
-          : seoLanding
-            ? getLocalizedSeoLandingRoute(seoLanding, value)
-            : isHomeRoute
-              ? getLocalizedHomeRoute(value)
-              : getLocalizedRoute(activeCategory, value);
-        setAlternate(hrefLang, `${SITE_URL}${alternatePath}`);
-      });
-    }
-    setAlternate(
-      'x-default',
-      `${SITE_URL}${selectedOffer?.slug
-        ? getLocalizedOfferRoute(selectedOffer, 'ru')
-        : proxyGuideArticle
-          ? PROXY_GUIDE_ARTICLE_ROUTE
-          : mobileProxyComparisonArticle
-            ? MOBILE_PROXY_COMPARISON_ARTICLE_ROUTE
-          : guideArticle
-            ? `/guides/${guideArticle.slug}`
-          : seoLanding?.route || (isHomeRoute ? '/' : CATEGORY_ROUTES[activeCategory])}`,
-    );
+    getIndexAlternates(window.location.pathname).forEach(item => setAlternate(item.language, absoluteIndexUrl(item.path, SITE_URL)));
+    document.documentElement.dataset.indexPolicyPath = window.location.pathname;
 
     let structuredData = document.head.querySelector<HTMLScriptElement>('#structured-data');
     if (!structuredData) {
@@ -6166,23 +6127,6 @@ export default function App() {
     scrollToPageTop();
   };
 
-  const handleLanguageChange = (nextLanguage: Language) => {
-    const nextRoute = selectedOffer?.slug
-      ? getLocalizedOfferRoute(selectedOffer, nextLanguage)
-      : currentSeoLanding
-        ? getLocalizedSeoLandingRoute(currentSeoLanding, nextLanguage)
-        : isHomeRoute
-          ? getLocalizedHomeRoute(nextLanguage)
-          : getLocalizedRoute(activeCategory, nextLanguage);
-    if (window.location.pathname !== nextRoute) {
-      window.history.pushState(selectedOffer?.slug ? { offerModal: true } : null, '', nextRoute);
-    }
-    setIsHomeRoute(isHomeRoute);
-    setLang(nextLanguage);
-    setSearchQuery('');
-    scrollToPageTop();
-  };
-
   const handleOfferOpen = (offer: Offer) => {
     trackAnalyticsEvent('card_open', {
       service_id: offer.id,
@@ -6506,7 +6450,7 @@ export default function App() {
           </div>
           
           <div className="flex items-center gap-4">
-            <LanguageToggle lang={lang} onChange={handleLanguageChange} />
+            <LanguageToggle lang={lang} />
           </div>
         </div>
 
@@ -7235,6 +7179,9 @@ export default function App() {
               {currentSeoLanding?.guideLink && <p className="mt-4 text-sm leading-relaxed">
                 <a href={`${LANGUAGE_PREFIXES[lang]}${currentSeoLanding.guideLink.href}`} className="text-brand-purple underline underline-offset-4 hover:text-white">{l(currentSeoLanding.guideLink.label)}</a>
               </p>}
+              {!currentSeoLanding && sectionContextualGuideLinks[CATEGORY_ROUTES[activeCategory]]?.map(item => <p key={item.href} className="mt-4 text-sm leading-relaxed">
+                <a href={`${LANGUAGE_PREFIXES[lang]}${item.href}`} className="text-brand-purple underline underline-offset-4 hover:text-white">{l(item.label)}</a>
+              </p>)}
             </div>
             <div className="grid gap-3 w-full lg:max-w-md">
               {lList(currentSectionSeo.points).map((point) => (
@@ -9127,6 +9074,9 @@ export default function App() {
                       </section>}
                     </div>
                   )}
+                  {serviceContextualGuideLinks[selectedOffer.id]?.map(item => <p key={item.href} className="text-sm leading-relaxed text-white/70">
+                    <a href={`${LANGUAGE_PREFIXES[lang]}${item.href}`} className="text-brand-purple hover:underline">{l(item.label)}</a>
+                  </p>)}
                   {selectedAlternatives.length > 0 && <section data-service-alternatives className="min-w-0 space-y-4">
                     <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-brand-purple">{lang === 'ru' ? 'Альтернативы' : 'Alternatives'}</h3>
                     <div className="grid min-w-0 grid-cols-1 gap-3">

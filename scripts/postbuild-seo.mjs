@@ -21,6 +21,8 @@ import { rfNumbersArticle, createRfNumbersContent } from '../src/data/rfNumbersC
 import { youtubeFarmArticle, createYoutubeFarmContent } from '../src/data/youtubeFarmContent.js';
 import { aiSubscriptionsArticle, createAiSubscriptionsContent } from '../src/data/aiSubscriptionsContent.js';
 import { mobileAntidetectArticle, createMobileAntidetectContent } from '../src/data/mobileAntidetectContent.js';
+import { isIndexablePath, getCanonicalPath, getIndexAlternates, getLanguageSwitchPath, absoluteIndexUrl } from '../src/data/indexPolicy.js';
+import { serviceContextualGuideLinks, sectionContextualGuideLinks } from '../src/data/contextualGuideLinks.js';
 import { createGuideRefreshContent } from '../src/data/guideRefreshContent.js';
 import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, getServiceGuide, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
@@ -43,7 +45,6 @@ const languages = [
   { code: 'ko', prefix: '/ko', htmlLang: 'ko-KR', hrefLang: 'ko-KR', ogLocale: 'ko_KR', label: '한국어' },
 ];
 const indexLanguages = languages.filter(({ code }) => code === 'ru' || code === 'en');
-const isIndexLanguage = (language) => indexLanguages.some(({ code }) => code === language.code);
 const { OFFERS, OFFER_DESCRIPTION_TRANSLATIONS } = await loadOffers();
 const accountFarmContent = createAccountFarmContent(OFFERS);
 const linkedGuideContent = {
@@ -1664,8 +1665,7 @@ const localizedPath = (section, language) =>
   section.route === '/' ? language.prefix || '/' : `${language.prefix}${section.route}`;
 const absoluteUrl = (section, language) => `${siteUrl}${localizedPath(section, language) === '/' ? '' : localizedPath(section, language)}`;
 const canonicalUrl = (section, language) => {
-  const canonicalLanguage = section.russianOnly ? languages[0] : !isIndexLanguage(language) ? languages[1] : language;
-  return absoluteUrl(section, canonicalLanguage);
+  return absoluteIndexUrl(getCanonicalPath(localizedPath(section, language)), siteUrl);
 };
 
 const escapeHtml = (value) =>
@@ -1677,12 +1677,8 @@ const escapeHtml = (value) =>
 
 const escapeJson = (value) => JSON.stringify(value, (_, item) => typeof item === 'string' ? plainSeoText(item) : item).replace(/</g, '\\u003c');
 
-const alternateLinks = (section) =>
-  [
-    ...(section.russianOnly ? indexLanguages.slice(0, 1) : indexLanguages)
-      .map((language) => `<link rel="alternate" hreflang="${language.hrefLang}" href="${absoluteUrl(section, language)}" />`),
-    `<link rel="alternate" hreflang="x-default" href="${absoluteUrl(section, languages[0])}" />`,
-  ].join('\n    ');
+const alternateLinks = (section, language) => getIndexAlternates(localizedPath(section, language))
+  .map(item => `<link rel="alternate" hreflang="${item.language}" href="${absoluteIndexUrl(item.path, siteUrl)}" />`).join('\n    ');
 
 const internalLinks = (language) =>
   Object.entries(serviceCategoryRoutes)
@@ -1844,6 +1840,7 @@ const renderServiceContent = (offer, language, metaDescription) => {
     ${offer.promoCode ? `<section data-service-promo>${heading(ru ? 'Промокод и скидка' : 'Promo code and discount')}<p><code>${escapeHtml(offer.promoCode)}</code>${offer.promoDiscount ? ` ${escapeHtml(value(offer.promoDiscount))}` : ''}</p></section>` : ''}
     ${groups.map(group => `<section data-service-group="${group.key}">${heading(group.heading)}<ul>${group.items.map(text => `<li>${escapeHtml(text)}</li>`).join('')}</ul></section>`).join('')}
     ${offer.editorial?.setupGuide ? `<p data-setup-guide>${renderLink({ href: `${language.prefix}${offer.editorial.setupGuide.href}`, label: value(offer.editorial.setupGuide.label) })}</p>` : ''}
+    ${(serviceContextualGuideLinks[offer.id] || []).map(item => `<p>${renderLink({ href: `${language.prefix}${item.href}`, label: value(item.label) })}</p>`).join('')}
     ${offer.details?.targetAudience && !isServiceMetaDescription(value(offer.details.targetAudience), metaDescription) ? `<section>${heading(ru ? 'Для кого' : 'Who it is for')}<p>${escapeHtml(value(offer.details.targetAudience))}</p></section>` : ''}
     ${value(offer.editorial?.verdict) && !isServiceMetaDescription(value(offer.editorial.verdict), metaDescription) ? `<section>${heading(ru ? 'Если коротко' : 'In short')}<p>${escapeHtml(value(offer.editorial.verdict))}</p></section>` : ''}
     <p data-service-cta>${renderLink({ href: offer.url, label: ru ? 'Перейти на сайт сервиса' : 'Visit the service' })}</p>
@@ -1870,7 +1867,7 @@ const renderSectionOffers = (section, language) => {
   }).join('\n');
 };
 
-const renderStaticContent = (section, language) => {
+const renderStaticContent = (section, language, pageLanguage = language) => {
   const offer = offersByRoute.get(section.route);
   const article = articleFallbackByRoute[section.route];
   const vpn = section.route.startsWith('/proxy-vpn/') ? vpnTerms[section.route.slice('/proxy-vpn/'.length)] : undefined;
@@ -1897,6 +1894,7 @@ const renderStaticContent = (section, language) => {
 
   return `
       <article class="seo-fallback"${article ? ` data-static-article="${escapeHtml(section.id)}"` : ''} aria-label="${escapeHtml(title)}">
+        <nav data-language-switcher aria-label="Language"><a href="${getLanguageSwitchPath(localizedPath(section, pageLanguage), 'ru')}" lang="ru">RU</a> <a href="${getLanguageSwitchPath(localizedPath(section, pageLanguage), 'en')}" lang="en">EN</a></nav>
         ${section.id === 'guide-mobile-ip' ? `<nav aria-label="${escapeHtml(labels.nav)}">${internalLinks(language)}</nav>` : ''}
         ${article ? `<div class="fallback-topbar"><div><a href="/"><img src="/logo.webp" alt="Hopscup" width="40" height="40" /></a><a href="${escapeHtml(article.returnHref)}">${escapeHtml(article.returnLabel)}</a></div></div>` : ''}
         <header class="fallback-hero">
@@ -1908,6 +1906,7 @@ const renderStaticContent = (section, language) => {
           ${section.articleVideo ? `<p>${renderLink({ href: section.articleVideo.url, label: section.articleVideo.caption })}</p>` : ''}
           ${section.articleVideoPoster ? `<figure><a href="${escapeHtml(section.articleVideo.url)}" rel="noopener noreferrer"><img src="${section.articleVideoPoster.src}" alt="${escapeHtml(section.articleVideoPoster.alt)}" width="${section.articleVideoPoster.width}" height="${section.articleVideoPoster.height}" /></a></figure>` : ''}
           ${section.guideLink ? `<p>${renderLink({ href: `${language.prefix}${section.guideLink.href}`, label: getLanguage(section.guideLink.label, language) })}</p>` : ''}
+          ${(sectionContextualGuideLinks[section.route] || []).map(item => `<p>${renderLink({ href: `${language.prefix}${item.href}`, label: getLanguage(item.label, language) })}</p>`).join('')}
           ${section.cover ? `<a href="${escapeHtml(section.cover.src)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(section.cover.src)}" alt="${escapeHtml(section.cover.alt)}" width="${section.cover.width}" height="${section.cover.height}" /></a>` : ''}
           ${article?.updated ? `<p class="fallback-updated">${escapeHtml(article.updated)}</p>` : ''}
         </header>
@@ -2045,10 +2044,10 @@ const replaceHead = (html, section, language) => {
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`)
     .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${description}" />`)
     .replace(/<meta name="keywords" content=".*?" \/>/, `<meta name="keywords" content="${keywords}" />`)
-    .replace(/<meta name="robots" content=".*?" \/>/, `<meta name="robots" content="${section.indexable === false || (section.russianOnly && language.code !== 'ru') || !isIndexLanguage(language) ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large'}" />`)
+    .replace(/<meta name="robots" content=".*?" \/>/, `<meta name="robots" content="${!isIndexablePath(localizedPath(section, language)) ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large'}" />`)
     .replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="${url}" />`)
     .replace(/\n\s*<link rel="alternate" hreflang=".*?" href=".*?" \/>/g, '')
-    .replace(/<link rel="canonical" href=".*?" \/>/, (canonical) => `${canonical}\n    ${alternateLinks(section)}`)
+    .replace(/<link rel="canonical" href=".*?" \/>/, (canonical) => `${canonical}\n    ${alternateLinks(section, language)}`)
     .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${title}" />`)
     .replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${description}" />`)
     .replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="${url}" />`)
@@ -2068,24 +2067,18 @@ const replaceHead = (html, section, language) => {
 
 const replaceRootContent = (html, section, language) =>
   // Keep the no-JavaScript page readable without flashing it before React mounts.
-  html.replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root"><noscript>${renderStaticContent(section, section.russianOnly ? languages[0] : language)}\n    </noscript></div>`);
+  html.replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root"><noscript>${renderStaticContent(section, section.russianOnly ? languages[0] : language, language)}\n    </noscript></div>`);
 
 const renderPage = (baseHtml, section, language) => replaceRootContent(replaceHead(stripSeoFallback(baseHtml), section, language), section, language);
 
 const renderSitemap = (pages) => {
-  const sitemapAlternates = (section) =>
-    [
-      ...(section.russianOnly ? indexLanguages.slice(0, 1) : indexLanguages).map(
-        (language) =>
-          `    <xhtml:link rel="alternate" hreflang="${language.hrefLang}" href="${escapeHtml(absoluteUrl(section, language))}" />`,
-      ),
-      `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeHtml(absoluteUrl(section, languages[0]))}" />`,
-    ].join('\n');
+  const sitemapAlternates = (section, language) => getIndexAlternates(localizedPath(section, language))
+    .map(item => `    <xhtml:link rel="alternate" hreflang="${item.language}" href="${escapeHtml(absoluteIndexUrl(item.path, siteUrl))}" />`).join('\n');
 
   const urls = indexLanguages.flatMap((language) =>
-    pages.filter((section) => section.indexable !== false && (!section.russianOnly || language.code === 'ru')).map((section) => `  <url>
+    pages.filter((section) => isIndexablePath(localizedPath(section, language))).map((section) => `  <url>
     <loc>${escapeHtml(absoluteUrl(section, language))}</loc>
-${sitemapAlternates(section)}
+${sitemapAlternates(section, language)}
     <changefreq>${section.changefreq}</changefreq>
     <priority>${section.priority}</priority>
   </url>`),

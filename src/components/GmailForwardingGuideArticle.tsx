@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
+import { ArticleLanguageLink } from './ArticleLanguageLink';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
 import { ArticleImageLink } from './ArticleImageLink';
 import { articleFallbackContent } from '../data/articleFallbackContent.js';
@@ -86,6 +87,7 @@ export const GmailForwardingGuideArticle = ({ offers }: { offers: ArticleService
             <span className="hidden font-display text-sm font-bold text-white/80 sm:block">Hopscup's Tools Hub</span>
           </a>
           <div className="flex items-center gap-2">
+            <ArticleLanguageLink />
             <button
               type="button"
               onClick={() => setTheme(isLight ? 'dark' : 'light')}

@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
+import { ArticleLanguageLink } from './ArticleLanguageLink';
 import { ArticleChecklist } from './ArticleChecklist';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
 import { ArticleImageLink } from './ArticleImageLink';
@@ -114,6 +115,7 @@ export const AntidetectSetupGuideArticle = ({ offers }: { offers: GuideOffer[] }
             <span className="hidden font-display text-sm font-bold text-white/80 sm:block">Hopscup's Tools Hub</span>
           </a>
           <div className="flex items-center gap-2">
+            <ArticleLanguageLink />
             <button
               type="button"
               onClick={() => setTheme(isLight ? 'dark' : 'light')}

@@ -1,3 +1,5 @@
+import { youtubeFarmGuideLink } from './contextualGuideLinks.js';
+
 export const proxyGuideMeta = {
   cover: {
     src: '/article/proxy/cover.webp', previewSrc: '/article/proxy/cover-preview.webp',
@@ -231,6 +233,7 @@ export const proxyGuideBlocks = [
   p(proxyCopy.example),
   screenshot('adspower-socks5-test-cropped.webp', 'Настройка SOCKS5 и успешная проверка соединения в AdsPower', 'SOCKS5 добавлен в AdsPower, проверка соединения пройдена.'),
   p(proxyCopy.mobileSetup), a('Сравнить мобильные прокси', '/proxy-vpn/luchshie-mobilnye-proksi'),
+  a(youtubeFarmGuideLink.label.ru, youtubeFarmGuideLink.href),
   screenshot('mobileproxy-copy-formats.png', 'Форматы копирования HTTP и SOCKS5 в MobileProxy', 'Готовую строку можно скопировать в нужном формате HTTP или SOCKS5.'),
   screenshot('mobileproxy-change-ip.png', 'Кнопка смены IP в кабинете MobileProxy', 'IP меняется по отдельной ссылке в кабинете MobileProxy.'),
   h('cost', proxyComparison.heading), { type: 'image', ...proxyComparison.image },

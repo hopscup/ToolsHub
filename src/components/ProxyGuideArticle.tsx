@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
+import { ArticleLanguageLink } from './ArticleLanguageLink';
+import { youtubeFarmGuideLink } from '../data/contextualGuideLinks.js';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
 import { ArticleChecklist } from './ArticleChecklist';
 import { ArticleImageLink } from './ArticleImageLink';
@@ -131,6 +133,7 @@ export const ProxyGuideArticle = () => {
           <span className="hidden font-display text-sm font-bold text-white/80 sm:block">Hopscup's Tools Hub</span>
         </a>
         <div className="flex items-center gap-2">
+          <ArticleLanguageLink />
           <button
             type="button"
             onClick={() => setTheme(isLight ? 'dark' : 'light')}
@@ -371,6 +374,9 @@ export const ProxyGuideArticle = () => {
             <a href="/proxy-vpn/luchshie-mobilnye-proksi" className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-brand-purple transition-colors hover:text-white">
               Сравнить мобильные прокси <ArrowRight className="h-4 w-4" />
             </a>
+            <p className="mt-4 text-sm font-medium leading-7 text-white/60">
+              <a href={youtubeFarmGuideLink.href} className="font-bold text-brand-purple underline underline-offset-4">{youtubeFarmGuideLink.label.ru}</a>
+            </p>
             <div className="mt-8 grid items-start gap-5 md:grid-cols-2">
               <ArticleScreenshot
                 src="/article/proxy/mobileproxy-copy-formats.png"

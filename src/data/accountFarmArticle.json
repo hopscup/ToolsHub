@@ -380,6 +380,15 @@
       "type": "paragraph",
       "content": [
         {
+          "text": "Как настроить пересылку писем с Gmail",
+          "href": "/guides/gmail-forwarding"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
           "text": "Если нужно подтвердить номер, нужен SMS-активатор."
         }
       ]

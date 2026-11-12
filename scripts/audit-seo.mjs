@@ -8,6 +8,7 @@ import { guidePages } from '../src/data/guidePages.js';
 import { guideCatalog, indexableGuideCatalog } from '../src/data/guideCatalog.js';
 import { isAffiliateUrl } from '../src/lib/externalLinks.js';
 import { legacyIndexedRoutes } from '../src/data/legacyIndexedRoutes.js';
+import { isIndexablePath, indexablePaths, getCanonicalPath, getIndexAlternates, getLanguageSwitchPath, absoluteIndexUrl } from '../src/data/indexPolicy.js';
 import { loadOffers } from './load-offers.mjs';
 import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, plainSeoText } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
@@ -41,7 +42,6 @@ const languages = [
   { prefix: '/zh', htmlLang: 'zh-CN', hrefLang: 'zh-CN', indexable: false },
   { prefix: '/ko', htmlLang: 'ko-KR', hrefLang: 'ko-KR', indexable: false },
 ];
-const indexLanguages = languages.filter(({ indexable }) => indexable);
 const { OFFERS } = await loadOffers();
 const offerByRoute = new Map(OFFERS.filter(offer => offer.slug && offer.category !== 'Guides').map(offer => [`${serviceCategoryRoutes[offer.category]}/${offer.slug}`, offer]));
 const categoryRoutes = [
@@ -97,6 +97,21 @@ const titles = new Set();
 const read = (file) => readFile(path.join(distDir, file), 'utf8');
 const matches = (html, expression) => [...html.matchAll(expression)];
 const escapeHtml = (value) => plainSeoText(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+const checkIndexPolicy = (html, route) => {
+  const indexable = isIndexablePath(route);
+  const canonical = html.match(/<link rel="canonical" href="([^"]+)" \/>/)?.[1];
+  const robots = html.match(/<meta name="robots" content="([^"]+)" \/>/)?.[1];
+  if (canonical !== absoluteIndexUrl(getCanonicalPath(route))) errors.push(`Wrong canonical: ${route}`);
+  if (indexable ? !robots?.startsWith('index, follow') : robots !== 'noindex, follow') errors.push(`Wrong robots policy: ${route}`);
+  if (indexable && !isIndexablePath(new URL(canonical, siteUrl).pathname)) errors.push(`Indexable canonical points to a closed URL: ${route}`);
+  const actual = matches(html, /<link rel="alternate" hreflang="([^"]+)" href="([^"]+)" \/>/g).map(([, language, href]) => ({ language, href }));
+  const expected = getIndexAlternates(route).map(item => ({ language: item.language, href: absoluteIndexUrl(item.path) }));
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) errors.push(`Wrong hreflang set: ${route}`);
+  for (const item of actual) if (!isIndexablePath(new URL(item.href, siteUrl).pathname)) errors.push(`Hreflang points to a closed URL: ${route}`);
+  const switcher = html.match(/<nav data-language-switcher[^>]*>([\s\S]*?)<\/nav>/)?.[1] || '';
+  for (const language of ['ru', 'en']) if (!switcher.includes(`href="${getLanguageSwitchPath(route, language)}"`)) errors.push(`Missing static language link ${language}: ${route}`);
+};
 
 const checkServiceContent = (html, offer, language, route) => {
   const code = language.hrefLang;
@@ -370,9 +385,7 @@ for (const language of languages) {
       errors.push(`Outdated visible DarkStore brand: ${localizedRoute}`);
     }
     const description = html.match(/<meta name="description" content="([^"]+)" \/>/)?.[1]?.trim();
-    const canonical = html.match(/<link rel="canonical" href="([^"]+)" \/>/)?.[1];
     const robotsMeta = html.match(/<meta name="robots" content="([^"]+)" \/>/)?.[1];
-    const alternates = matches(html, /<link rel="alternate" hreflang="([^"]+)" href="([^"]+)" \/>/g);
     const h1Count = matches(html, /<h1[\s>]/g).length;
     const internalLinkCount = matches(html, /<a href="\/(?:en\/|es\/|zh\/|ko\/)?(?:proxy-vpn|antidetect|account-shop|foreign-cards|crypto-exchange|sms-activators|vps|social-boost|steam-topup|guides)(?:\/[^"]*)?"/g).length;
     const structuredDataText = html.match(/<script id="structured-data" type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
@@ -381,17 +394,13 @@ for (const language of languages) {
     if (!title) errors.push(`Missing title: ${localizedRoute}`);
     if (language.indexable && /^\/(proxy-vpn|antidetect)(?:\/|$)/.test(route) && title?.length > 60) errors.push(`Proxy/antidetect title exceeds 60 characters: ${localizedRoute}`);
     const russianOnlyArticle = articleRoutes.has(route);
-    const untranslatedArticle = russianOnlyArticle && language.hrefLang !== 'ru';
-    const indexablePage = language.indexable && !untranslatedArticle && !noIndexRoutes.has(route);
+    const indexablePage = isIndexablePath(localizedRoute);
     if (title && indexablePage && titles.has(title)) errors.push(`Duplicate title: ${title}`);
     if (title && indexablePage) titles.add(title);
     if (!description || description.length < minimumDescriptionLength) errors.push(`Weak description: ${localizedRoute}`);
-    const expectedCanonical = russianOnlyArticle ? `${siteUrl}${route}` : !language.indexable ? `${siteUrl}/en${route}` : `${siteUrl}${localizedRoute}`;
-    if (canonical !== expectedCanonical) errors.push(`Wrong canonical: ${localizedRoute}`);
+    checkIndexPolicy(html, localizedRoute);
     const expectedLang = russianOnlyArticle ? languages[0].htmlLang : language.htmlLang;
     if (html.match(/<html lang="([^"]+)"/)?.[1] !== expectedLang) errors.push(`Wrong lang: ${localizedRoute}`);
-    const expectedAlternates = russianOnlyArticle ? 2 : indexLanguages.length + 1;
-    if (alternates.length !== expectedAlternates) errors.push(`Wrong hreflang count: ${localizedRoute}`);
     if (!indexablePage && robotsMeta !== 'noindex, follow') errors.push(`Page expected to be noindex: ${localizedRoute}`);
     if (indexablePage && !robotsMeta?.startsWith('index, follow')) errors.push(`Indexable page has wrong robots meta: ${localizedRoute}`);
     if (h1Count !== 1) errors.push(`Expected one H1: ${localizedRoute}`);
@@ -416,6 +425,8 @@ for (const language of languages) {
 
 const rootHtml = await read('index.html');
 checkFallback(rootHtml, '/');
+checkIndexPolicy(rootHtml, '/');
+for (const language of languages.filter(item => item.prefix)) checkIndexPolicy(await read(language.prefix.slice(1) + '/index.html'), language.prefix);
 if (!rootHtml.includes(`<link rel="canonical" href="${siteUrl}" />`)) {
   errors.push('Root page must use a self-referencing canonical');
 }
@@ -432,16 +443,13 @@ const moneySitemap = await read('sitemap-money.xml');
 const coreSitemap = await read('sitemap-core.xml');
 const serviceSitemap = await read('sitemap-services.xml');
 const combinedSitemaps = `${moneySitemap}\n${coreSitemap}\n${serviceSitemap}`;
-const indexedArticleCount = [...articleRoutes].filter(route => !noIndexRoutes.has(route)).length;
-const indexableRouteCount = routes.filter(route => !noIndexRoutes.has(route)).length + 1;
-const expectedSitemapUrls = indexLanguages.length * indexableRouteCount - (indexLanguages.length - 1) * indexedArticleCount;
-if (matches(combinedSitemaps, /<loc>/g).length !== expectedSitemapUrls) {
-  errors.push('Sitemap has an unexpected number of canonical URLs');
-}
-const expectedSitemapAlternates = (expectedSitemapUrls - indexedArticleCount) * (indexLanguages.length + 1) + indexedArticleCount * 2;
-if (matches(combinedSitemaps, /<xhtml:link /g).length !== expectedSitemapAlternates) {
-  errors.push('Sitemap has an unexpected number of language alternates');
-}
+const expectedSitemapUrls = indexablePaths.length;
+const actualSitemapUrls = matches(combinedSitemaps, /<loc>([^<]+)<\/loc>/g).map(([, url]) => url);
+const expectedUrls = indexablePaths.map(path => absoluteIndexUrl(path)).sort();
+if (JSON.stringify([...actualSitemapUrls].sort()) !== JSON.stringify(expectedUrls)) errors.push('Sitemap must exactly match the whitelist plus indexable RU guides');
+const expectedSitemapAlternates = indexablePaths.reduce((count, path) => count + getIndexAlternates(path).length, 0);
+if (matches(combinedSitemaps, /<xhtml:link /g).length !== expectedSitemapAlternates) errors.push('Sitemap has an unexpected number of language alternates');
+for (const [, href] of matches(combinedSitemaps, /<xhtml:link[^>]* href="([^"]+)"/g)) if (!isIndexablePath(new URL(href, siteUrl).pathname)) errors.push(`Sitemap hreflang points to a closed URL: ${href}`);
 for (const route of noIndexRoutes) {
   for (const language of languages) {
     if (combinedSitemaps.includes(`${siteUrl}${language.prefix}${route}`)) errors.push(`Noindex route must not be in sitemap: ${language.prefix}${route}`);
@@ -449,10 +457,7 @@ for (const route of noIndexRoutes) {
 }
 for (const route of legacyIndexedRoutes) {
   const html = await read(route.slice(1) + '/index.html');
-  const prefix = route.split('/')[1];
-  const enRoute = route.replace(`/${prefix}`, '/en');
-  const baseRoute = route.replace(`/${prefix}`, '');
-  const expectedCanonical = articleRoutes.has(baseRoute) ? baseRoute : enRoute;
+  const expectedCanonical = getCanonicalPath(route);
   if (!html.includes('<meta name="robots" content="noindex, follow" />')) errors.push(`Legacy page must be noindex: ${route}`);
   if (!html.includes(`<link rel="canonical" href="${siteUrl}${expectedCanonical}" />`)) errors.push(`Wrong legacy canonical target: ${route}`);
   if (combinedSitemaps.includes(`<loc>${siteUrl}${route}</loc>`)) errors.push(`Legacy URL must not be in sitemap: ${route}`);
@@ -470,4 +475,8 @@ if (errors.length) {
   process.exitCode = 1;
 } else {
   console.log(`SEO audit passed: ${languages.length * (routes.length + 1)} rendered pages, ${expectedSitemapUrls} canonical sitemap URLs, robots.txt, and 404.html.`);
+  if (process.env.SEO_AUDIT_BROWSER_MODULE) {
+    const { auditIndexPolicyBrowser } = await import('./audit-index-policy-browser.mjs');
+    await auditIndexPolicyBrowser();
+  } else console.log('React policy checks: set SEO_AUDIT_BROWSER_MODULE to a Playwright module to run the browser audit.');
 }
