@@ -5822,7 +5822,7 @@ export default function App() {
       return normalizedText.includes(query) || (compactQuery.length > 1 && compactText.includes(compactQuery));
     });
 
-    const proxyOrder = ['MobileProxy', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'ProxyShard', 'Proxys.io'];
+    const proxyOrder = ['MobileProxy', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxys.io', 'ProxyShard', 'Proxy6'];
     const cardOrder = ['Zarub', 'PGON', 'Antarctic Wallet', 'QR2Pay', 'Vezdekarta', 'Pionex', 'Cashin Out'];
     const cryptoOrder = ['Prosto Exchange', 'Keine Exchange', 'PGON', 'Antarctic Wallet', 'QR2Pay', 'Hermes Exchange', 'AMLBot', 'BitOK', 'GetBlock', 'MetaMask', 'Rabby Wallet', 'Phantom', 'Backpack', 'Trust Wallet', 'TronLink'];
     return offers.sort((first, second) => {
