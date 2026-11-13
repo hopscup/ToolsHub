@@ -22,6 +22,7 @@ test('three distinct same-category alternatives follow the configured priorities
   assert.deepEqual(getServiceAlternatives(OFFERS.find(item => item.id === 'p6'), OFFERS).map(item => item.id), ['p3', 'p4', 'p1']);
   assert.deepEqual(getServiceAlternatives(OFFERS.find(item => item.id === 'antarctic-card'), OFFERS).slice(0, 2).map(item => item.id), ['pgon', 'zarub']);
   assert.equal(getServiceAlternatives(OFFERS.find(item => item.id === 'st-ggsel'), OFFERS)[0].id, 'st-dark');
+  assert.deepEqual(getServiceAlternatives(OFFERS.find(item => item.id === 'bot-lachuga'), OFFERS).map(item => item.id), ['st-dark', 'st-ggsel', 'st-funpay']);
 });
 
 test('service facts include all card fields, prices and mobile parameters', () => {

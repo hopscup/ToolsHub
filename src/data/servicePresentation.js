@@ -9,9 +9,10 @@ export const serviceCategoryNames = {
 };
 
 const priorities = { Proxy: ['p6', 'p3', 'p4', 'p1'], Cards: ['pgon', 'zarub', 'antarctic-card'], Stores: ['st-dark'] };
+const serviceAlternativePriorities = { 'bot-lachuga': ['st-dark', 'st-ggsel', 'st-funpay'] };
 export const getServiceAlternatives = (offer, offers) => {
   const candidates = offers.filter(item => item.category === offer.category && item.id !== offer.id && item.slug);
-  const preferred = priorities[offer.category] || [];
+  const preferred = serviceAlternativePriorities[offer.id] || priorities[offer.category] || [];
   return [...preferred.map(id => candidates.find(item => item.id === id)).filter(Boolean), ...candidates.filter(item => !preferred.includes(item.id))].slice(0, 3);
 };
 
