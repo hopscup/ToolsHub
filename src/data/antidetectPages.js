@@ -1,3 +1,5 @@
+import { linkenSpherePages } from './botAndLinkenPages.js';
+
 const pageTitle = (name) => ({
   ru: `${name}: обзор антидетект-браузера и тарифов | Hopscup Tools`,
   en: `${name} antidetect browser review and pricing | Hopscup Tools`,
@@ -63,6 +65,7 @@ const advancedConsiderations = {
 };
 
 export const antidetectPages = [
+  ...linkenSpherePages,
   {
     id: 'ant-dolphin',
     slug: 'dolphin-anty',

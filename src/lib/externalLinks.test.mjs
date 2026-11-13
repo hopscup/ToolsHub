@@ -31,6 +31,10 @@ test('referral query parameters and existing path referrals are sponsored', () =
     'https://t.me/iMP_VPN_bot?start=460705268',
     'https://t.me/VPNPPLBot?start=dXNlcl9pZD00NDMwODM',
     'https://t.me/KYCBLOCKBOT?start=HOPSCUP',
+    'https://t.me/BolotoAI?start=r_467483565',
+    'https://t.me/taynikstore_bot?start=ref467483565',
+    'https://t.me/AhlisShop_bot?start=467483565',
+    'https://ls.app/sign-up?promo=hopscup',
   ]) {
     assert.equal(isAffiliateUrl(href), true, href);
     assert.equal(getExternalLinkRel(href), 'sponsored noopener noreferrer', href);
@@ -48,6 +52,14 @@ test('ordinary external resources are not sponsored', () => {
     'https://t.me/hopscupcrpt',
     'https://t.me/thehermesex',
     'https://t.me/example_bot?start=help',
+    'https://t.me/example_bot?start=467483565',
+    'https://t.me/example_bot?start=r_467483565',
+    'https://t.me/BolotoAI',
+    'https://t.me/AhlisShop_bot',
+    'https://t.me/AhlisShop_bot?start=help',
+    'https://t.me/BolotoAI?start=help',
+    'https://ls.app/',
+    'https://example.com/?promo=hopscup',
     'https://t.me/example_bot/app?startapp=help',
     'https://t.me/example_bot/app?startapp=',
     'https://funpay.com/',

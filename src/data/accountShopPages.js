@@ -1,3 +1,5 @@
+import { botShopPages } from './botAndLinkenPages.js';
+
 const shopTitle = (name) => ({
   ru: `${name}: что продают, оплата и мой опыт | Hopscup Tools`,
   en: `${name} review: products, payments, and buying tips | Hopscup Tools`,
@@ -63,6 +65,7 @@ const botConsiderations = {
 };
 
 export const accountShopPages = [
+  ...botShopPages,
   {
     id: 'st-dark',
     slug: 'darkstore',

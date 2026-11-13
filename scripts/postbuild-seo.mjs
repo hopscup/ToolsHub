@@ -5,6 +5,7 @@ import { aiPages, aiSection } from '../src/data/aiPages.js';
 import { a6apiArticle, createA6apiContent } from '../src/data/a6apiContent.js';
 import { getServiceEditorialSections, splitServiceText } from '../src/data/servicePresentation.js';
 import { antidetectPages } from '../src/data/antidetectPages.js';
+import { orderAntidetectAllOffers } from '../src/data/botAndLinkenPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { guidePages } from '../src/data/guidePages.js';
@@ -1875,7 +1876,8 @@ const renderSectionOffers = (section, language) => {
   const category = section.category || Object.keys(serviceCategoryRoutes).find(key => serviceCategoryRoutes[key] === section.route);
   if (!category || category === 'Guides') return '';
   const offers = OFFERS.filter(offer => offer.category === category && (!section.subFilter || section.subFilter === 'None' || offer.subCategory === section.subFilter || offer.subCategories?.includes(section.subFilter)));
-  return offers.map(offer => {
+  const orderedOffers = category === 'Antidetect' && (!section.subFilter || section.subFilter === 'None') ? orderAntidetectAllOffers(offers) : offers;
+  return orderedOffers.map(offer => {
     const route = offer.slug ? `${language.prefix}${serviceCategoryRoutes[category]}/${offer.slug}` : undefined;
     const facts = getServiceSummaryFacts(offer, language.code, { vpnPrice: offer.subCategory === 'VPN' ? localizedServiceValue(vpnTerms[offer.slug]?.price, language.code) : undefined, qr: section.subFilter === 'USDTQR' });
     return `<section data-service-summary="${escapeHtml(offer.id)}"><h2>${route ? renderLink({ href: route, label: offer.name }) : escapeHtml(offer.name)}</h2>

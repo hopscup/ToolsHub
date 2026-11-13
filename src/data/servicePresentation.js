@@ -81,7 +81,14 @@ export const splitServiceText = (text, offer, language) => {
   const segments = [];
   let remaining = text || '';
   while (remaining) {
-    const hit = links.map(link => ({ ...link, index: remaining.indexOf(link.text) })).filter(link => link.index >= 0).sort((a, b) => a.index - b.index || b.text.length - a.text.length)[0];
+    const hit = links.map(link => {
+      let index = remaining.indexOf(link.text);
+      while (index >= 0 && link.wholeWord && (
+        /[\p{L}\p{N}_]/u.test(remaining[index - 1] || '')
+        || /[\p{L}\p{N}_]/u.test(remaining[index + link.text.length] || '')
+      )) index = remaining.indexOf(link.text, index + 1);
+      return { ...link, index };
+    }).filter(link => link.index >= 0).sort((a, b) => a.index - b.index || b.text.length - a.text.length)[0];
     if (!hit) { segments.push({ text: remaining }); break; }
     if (hit.index) segments.push({ text: remaining.slice(0, hit.index) });
     segments.push({ text: hit.text, href: hit.href });

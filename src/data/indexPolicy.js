@@ -28,6 +28,7 @@ export const indexableUrlWhitelist = {
     '/account-shop/darkstore', '/foreign-cards/pgon', '/foreign-cards/zarub', '/foreign-cards/antarctic-wallet',
     '/crypto-exchange/prosto-exchange', '/crypto-exchange/keine-exchange', '/antidetect/shardx',
     '/antidetect/dolphin-anty', '/antidetect/adspower', '/antidetect/octo-browser',
+    '/antidetect/linken-sphere',
     '/antidetect/gologin-mobile', '/antidetect/octo-browser-mobile', '/antidetect/vmos-cloud',
     '/sms-activators/sms-fast', '/sms-activators/herosms', '/account-shop/lachuga-skamera', '/account-shop/apel0sin',
   ],

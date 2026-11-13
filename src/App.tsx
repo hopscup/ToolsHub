@@ -23,6 +23,7 @@ import { aiSubscriptionsArticle } from './data/aiSubscriptionsContent.js';
 import { A6apiGuideArticle } from './components/A6apiGuideArticle';
 import { a6apiArticle } from './data/a6apiContent.js';
 import { aiOffers, aiPages, aiSection } from './data/aiPages.js';
+import { botShopOffers, linkenSphereOffers, orderAntidetectAllOffers } from './data/botAndLinkenPages.js';
 import { AiSectionContent } from './components/AiSectionContent';
 import type { ArticleBlock } from './components/ImportedGuideArticle';
 import { ServiceEditorialSections, ServiceRichText } from './components/ServiceEditorialSections';
@@ -383,7 +384,7 @@ interface Offer {
     pricing?: Localized<string[]>;
     payment?: Localized<string[]>;
     gettingStarted?: Localized<string[]>;
-    inlineLinks?: Localized<{ text: string; href: string }[]>;
+    inlineLinks?: Localized<{ text: string; href: string; wholeWord?: boolean }[]>;
     links?: { href: string; label: Localized }[];
     video?: { id: string; url: string; caption: Localized };
   };
@@ -3263,6 +3264,7 @@ const OFFERS: Offer[] = [
       paymentMethods: { ru: 'Бесплатно', en: 'Free', es: 'Gratis', zh: '免费', ko: '무료' },
     },
   },
+  ...linkenSphereOffers as Offer[],
   // STORES
   {
     id: 'st-dark',
@@ -3366,6 +3368,7 @@ const OFFERS: Offer[] = [
       paymentMethods: { ru: 'Крипта, СБП/RU карты', en: 'Crypto, SBP/RU cards' }
     }
   },
+  ...botShopOffers as Offer[],
   {
     id: 'bot-thegod',
     category: 'Stores',
@@ -5864,6 +5867,7 @@ export default function App() {
     const proxyOrder = ['MobileProxy', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxys.io', 'ProxyShard', 'Proxy6'];
     const cardOrder = ['Zarub', 'PGON', 'Antarctic Wallet', 'QR2Pay', 'Vezdekarta', 'Pionex', 'Cashin Out'];
     const cryptoOrder = ['Prosto Exchange', 'Keine Exchange', 'PGON', 'Antarctic Wallet', 'QR2Pay', 'Hermes Exchange', 'AMLBot', 'BitOK', 'GetBlock', 'MetaMask', 'Rabby Wallet', 'Phantom', 'Backpack', 'Trust Wallet', 'TronLink'];
+    if (activeCategory === 'Antidetect' && subFilter === 'None' && !hasQuery) return orderAntidetectAllOffers(offers) as Offer[];
     return offers.sort((first, second) => {
       if (first.category === 'Guides' && second.category === 'Guides') {
         return Number(second.id === 'guide-mobile-ip') - Number(first.id === 'guide-mobile-ip');

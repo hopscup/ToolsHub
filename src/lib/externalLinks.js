@@ -40,10 +40,14 @@ export const isAffiliateUrl = (href) => {
     }
     if (fromReferralHosts.has(host) && url.searchParams.get('from')) return true;
     if (host === 'socpublic.com' && url.searchParams.get('i')) return true;
+    if (host === 'ls.app' && url.searchParams.get('promo')) return true;
     if (host === 't.me' && /^ref/i.test(url.searchParams.get('startapp') || '')) return true;
     if (host === 't.me' && url.searchParams.get('start')) {
       const start = url.searchParams.get('start');
-      if (/ref/i.test(start) || telegramReferralBots.has(url.pathname.slice(1).toLowerCase())) return true;
+      const bot = url.pathname.slice(1).toLowerCase();
+      if (/ref/i.test(start) || telegramReferralBots.has(bot)
+        || (bot === 'bolotoai' && /^r_/i.test(start))
+        || (bot === 'ahlisshop_bot' && /^\d+$/.test(start))) return true;
     }
     return host === 'partner.soc-proof.su'
       || /^\/ref(?:erral)?(?:\/|\d)/i.test(url.pathname)
