@@ -6920,7 +6920,7 @@ export default function App() {
                         <div className="flex flex-col gap-4">
                           <InfoRow icon={Coins} label={t.paymentMethods} value={l(offer.details?.paymentMethods)} />
                           <InfoRow icon={Globe} label={t.geo} value={l(offer.details?.geo)} />
-                          <InfoRow icon={Layers} label={t.types} value={l(offer.details?.types)} />
+                          {!(offer.category === 'Stores' && offer.subCategory === 'Bot') && <InfoRow icon={Layers} label={t.types} value={l(offer.details?.types)} />}
                           <InfoRow icon={Monitor} label={t.platforms} value={offer.platforms?.join(', ')} />
                         </div>
                       </div>

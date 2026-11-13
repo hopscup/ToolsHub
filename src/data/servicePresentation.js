@@ -141,7 +141,8 @@ export const getServiceSummaryFacts = (offer, language, { vpnPrice, qr = false }
   const keys = qr ? ['countries', 'fee', 'kyc'] : offer.cardStats ? ['issuance', 'topup', 'maintenance']
     : offer.category === 'Antidetect' ? ['freeProfiles', 'tariffStartPrice', 'profiles100Price', 'control', 'format', 'trial']
     : ['geo', 'types', 'price', 'tariffStartPrice', 'main', 'rate', 'paymentMethods', 'platforms'];
-  return keys.map(key => facts.find(fact => fact.key === key)).filter(Boolean).slice(0, 3);
+  const visibleKeys = offer.category === 'Stores' && offer.subCategory === 'Bot' ? keys.filter(key => key !== 'types') : keys;
+  return visibleKeys.map(key => facts.find(fact => fact.key === key)).filter(Boolean).slice(0, 3);
 };
 
 export const getServiceTextGroups = (offer, language) => {

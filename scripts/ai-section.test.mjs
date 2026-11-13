@@ -61,6 +61,15 @@ test('AI preview hides introductions and keeps revised Lumean and OmniRouter fac
   for (const name of ['Lumean', 'OmniRouter']) assert.equal(rowFor(name)[2][0].text, 'Рубли, крипта');
 });
 
+test('Syntx intro uses the author website-or-Telegram wording and retains the Higgsfield link', () => {
+  const offer = services.find(item => item.id === 'ai-syntx');
+  const text = 'Syntx, наверное, самая удобная замена Higgsfield для россиян. Сайт или Telegram-бот, оплата рублями, а внутри больше 100 нейросетей: от ChatGPT и Claude до Kling, Veo и Suno. VPN не нужен.';
+  assert.equal(offer.editorial.description.ru, text);
+  const parts = splitServiceText(text, offer, 'ru');
+  assert.equal(parts.map(part => part.text).join(''), text);
+  assert.ok(parts.some(part => part.text === 'Higgsfield' && part.href === '/ai/higgsfield'));
+});
+
 test('AI WebP logos remain light and each has its supplied PNG fallback', async () => {
   for (const offer of services) {
     assert.equal(offer.logoUrl, `/${offer.id}.webp`);
