@@ -321,9 +321,9 @@ export const seoLandingPages = [
       zh: '订阅商店对比',
       ko: '구독 상점 비교',
     },
-    items: ['Лачуга скамера', 'TheGod Shop', 'Crassus Market', 'Apel0sin', 'apel0sin | market 2.0', 'Petrovich'],
+    items: ['Лачуга', 'TheGod Shop', 'Crassus Market', 'Apel0sin', 'apel0sin | market 2.0', 'Petrovich'],
     serviceLinks: {
-      'Лачуга скамера': '/account-shop/lachuga-skamera',
+      'Лачуга': '/account-shop/lachuga-skamera',
       'TheGod Shop': '/account-shop/thegod-shop',
       'Crassus Market': '/account-shop/crassus-market',
       Apel0sin: '/account-shop/apel0sin',

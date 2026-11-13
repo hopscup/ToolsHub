@@ -3318,10 +3318,10 @@ const OFFERS: Offer[] = [
     subCategory: 'Bot',
     slug: ACCOUNT_SHOP_PAGE_BY_ID['bot-lachuga'].slug,
     editorial: ACCOUNT_SHOP_PAGE_BY_ID['bot-lachuga'].editorial,
-    name: 'Лачуга скамера',
+    name: 'Лачуга',
     description: ACCOUNT_SHOP_PAGE_BY_ID['bot-lachuga'].editorial.description,
     url: 'https://t.me/LachugaSkamera_Bot?start=ref_467483565',
-    logoUrl: '/lachuga.webp',
+    logoUrl: '/lachuga-2026.webp',
     isBestChoice: true,
     details: {
       paymentMethods: { ru: 'Крипта, СБП/RU карты', en: 'Crypto, SBP/RU cards' }
@@ -8123,7 +8123,7 @@ export default function App() {
                       {tx({
                         ru: (
                         <>
-                          Telegram-боты - это удобные мини-магазины, где чаще всего продаются дешёвые аккаунты и подписки на популярные нейросети и сервисы: Gemini, GPT, Claude, CapCut, Canva и похожие продукты. Про покупку дешёвых ИИ-подписок есть отдельный <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">видео-гайд</a>. Такие боты удобно проверять, когда нужна подписка “здесь и сейчас” или хочется найти цену ниже официальной. Из вариантов можно смотреть <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Лачугу скамера</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a> и <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
+                          Telegram-боты - это удобные мини-магазины, где чаще всего продаются дешёвые аккаунты и подписки на популярные нейросети и сервисы: Gemini, GPT, Claude, CapCut, Canva и похожие продукты. Про покупку дешёвых ИИ-подписок есть отдельный <a href={STORE_AI_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="text-brand-purple font-bold hover:underline">видео-гайд</a>. Такие боты удобно проверять, когда нужна подписка “здесь и сейчас” или хочется найти цену ниже официальной. Из вариантов можно смотреть <a href="https://t.me/LachugaSkamera_Bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Лачугу</a>, <a href="https://t.me/bothegreategod_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">TheGod Shop</a>, <a href="https://t.me/crassus_market_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Crassus Market</a>, <a href="https://t.me/vibecodinzz_bot?start=contest_ultra_ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Apel0sin</a>, <a href="https://t.me/apel0sin_market_bot?start=ref_467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">apel0sin | market 2.0</a> и <a href="https://t.me/ptrv4_bot?start=467483565" target="_blank" rel="sponsored noopener noreferrer" className="text-brand-purple font-bold hover:underline">Petrovich</a>.
                         </>
                         ),
                         en: (
