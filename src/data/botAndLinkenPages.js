@@ -6,7 +6,7 @@ const english = {
     title: 'Boloto: ChatGPT, Claude and Grok subscriptions | Hopscup',
     heading: 'Boloto: AI subscriptions through a Telegram bot',
     description: 'Boloto review: subscriptions on your own account, ready-made ChatGPT accounts and Codex numbers. SBP, cards and crypto.',
-    payment: 'SBP, cards (including foreign Mastercard), crypto',
+    payment: 'SBP, cards, crypto',
     editorial: {
       description: 'A Telegram store focused on official ChatGPT Plus and Pro, Claude Pro and Max, Grok and Cursor subscriptions on your own account. Ready-made accounts, promotions and purchase gifts are also available.',
       bestFor: ['Official ChatGPT, Claude, Grok and Cursor subscriptions on your own account.', 'Ready-made ChatGPT Plus accounts with a short or full warranty.', 'Codex activation numbers and Claude accounts over a month old.', 'Help with Claude verification.'],

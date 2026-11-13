@@ -14,7 +14,7 @@ import { loadOffers } from './load-offers.mjs';
 const { OFFERS } = await loadOffers();
 const pages = [...botShopPages, ...linkenSpherePages];
 const hashes = [
-  '3a36366a3c2bd63f35f4dcd55470b0eb9ba3a9c57fe9c501f91c520fa2c55548',
+  'ce3395bc44f746925d8f77e1de2f9dada001c5359d454340c41f2d1e18416c8f',
   '6cd46cb37c9a67a75812abff4227c0320dfeeb25155ca20211ceef0f320ad2fa',
   '3092cbddf32976297a3a8ff4a8965eaf8f136ec8a1ed2419a5af53610162cff0',
   '200c9f76826665109c597e4a5e244cca3540053583de4a188223161e167edabf',

@@ -2,10 +2,12 @@ export const recommendedOfferIds = {
   '/proxy-vpn': ['p6', 'p3', 'p4', 'p1'],
   '/account-shop': ['st-dark', 'bot-lachuga', 'st-funpay', 'st-ggsel'],
   '/antidetect': ['ant-dolphin', 'ant-adspower', 'ant-shardx', 'ant-vision'],
+  '/sms-activators': ['sms-hero', 'sms-fast'],
   '/ai': ['ai-syntx', 'ai-lumean', 'ai-polza'],
   '/foreign-cards': ['pgon', 'zarub', 'antarctic-card'],
   '/crypto-exchange': ['prosto-exchange', 'keine-exchange', 'antarctic-exchange'],
-  '/steam-topup': ['steam-antarctic'],
+  '/steam-topup': ['steam-antarctic', 'steam-lis-skins', 'steam-tf2lavka'],
+  '/vps': ['vps-macloud', 'vps-xorek'],
 };
 
 const topLabel = { ru: 'Топ', en: 'Top' };

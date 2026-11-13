@@ -34,6 +34,32 @@ test('Lachuga, FunPay and GGSel use the requested frequently-used label', () => 
   assert.equal(recommendedOfferLabels['st-dark'], undefined);
 });
 
+test('HeroSMS and SMS Fast use the default go-to badge without changing their order', () => {
+  const ids = recommendedOfferIds['/sms-activators'];
+  assert.deepEqual(ids, ['sms-hero', 'sms-fast']);
+  for (const id of ids) {
+    assert.equal(OFFERS.find(offer => offer.id === id)?.category, 'SMS');
+    assert.equal(recommendedOfferLabels[id], undefined);
+  }
+  assert.deepEqual(OFFERS.filter(offer => offer.category === 'SMS').slice(0, 2).map(offer => offer.id), ids);
+});
+
+test('Boloto payment wording is short in both card data and static source', () => {
+  const offer = OFFERS.find(offer => offer.id === 'bot-boloto');
+  assert.equal(offer.details.paymentMethods.ru, 'СБП, карты, крипта');
+  for (const language of ['en', 'es', 'zh', 'ko']) assert.equal(offer.details.paymentMethods[language], 'SBP, cards, crypto');
+});
+
+test('LIS-SKINS, TF2Lavka, MaCloud and Xorek use default go-to badges while Antarctic stays Top', () => {
+  assert.deepEqual(recommendedOfferIds['/steam-topup'], ['steam-antarctic', 'steam-lis-skins', 'steam-tf2lavka']);
+  assert.deepEqual(recommendedOfferIds['/vps'], ['vps-macloud', 'vps-xorek']);
+  for (const [id, category] of [['steam-lis-skins', 'Steam'], ['steam-tf2lavka', 'Steam'], ['vps-macloud', 'VPS'], ['vps-xorek', 'VPS']]) {
+    assert.equal(OFFERS.find(offer => offer.id === id)?.category, category);
+    assert.equal(recommendedOfferLabels[id], undefined);
+  }
+  assert.equal(recommendedOfferLabels['steam-antarctic'].ru, 'Топ');
+});
+
 test('Telegram shop previews omit Types without deleting the full service data', async () => {
   const app = await readFile('src/App.tsx', 'utf8');
   assert.ok(app.includes("!(offer.category === 'Stores' && offer.subCategory === 'Bot') && <InfoRow icon={Layers} label={t.types}"));
