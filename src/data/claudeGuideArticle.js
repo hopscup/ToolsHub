@@ -109,6 +109,7 @@ export const claudeGuideArticle = {
     paragraph('Но учитывайте: виртуалки, по теории, рейтинг снижают, а после начала оплаты Claude сейчас массово кидает проверку документов - у меня было так. Я получил вериф на трёх аккаунтах подряд - давность регистрации была от полугода до 1 дня'),
     image('payment', 'Виртуальная карта Zarub для оплаты зарубежных сервисов', 466, 803),
     paragraph(link('Где взять подписку дешевле, разобрал отдельно', '/guides/deshevye-podpiski-chatgpt-claude-gemini')),
+    paragraph(link('Claude по API из России для кода', '/ai/omnirouter')),
 
     heading('verification', 'Что делать, если Claude попросил верификацию'),
     list([

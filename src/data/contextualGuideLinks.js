@@ -8,6 +8,10 @@ export const serviceContextualGuideLinks = Object.fromEntries(
 );
 
 export const sectionContextualGuideLinks = {
+  '/account-shop/podpiski-neyrosetey': [{
+    href: '/ai',
+    label: { ru: 'Если не хочется покупать подписку, есть агрегаторы нейросетей с оплатой рублями', en: 'Instead of a subscription, try AI aggregators with RUB payments' },
+  }],
   '/crypto-exchange': [{
     href: '/guides/exchange-uids-addresses',
     label: { ru: 'Где найти UID и адрес на бирже', en: 'Where to find your exchange UID and deposit address' },

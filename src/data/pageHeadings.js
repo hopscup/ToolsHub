@@ -1,6 +1,8 @@
 import { proxyGuideMeta } from './proxyGuideContent.js';
+import { aiSection } from './aiPages.js';
 
 export const pageHeadings = {
+  '/ai': aiSection.heading,
   "/": {
     "ru": "Полезные сервисы для работы с аккаунтами и цифровыми задачами",
     "en": "Useful services for accounts and digital workflows",

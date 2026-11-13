@@ -1,11 +1,14 @@
 const affiliateParameters = new Set([
   'ref', 'refid', 'ref_id', 'referral', 'referral_id', 'refcode', 'ref_code',
   'partner', 'partner_id', 'aff', 'aff_id', 'affiliate', 'affiliate_id',
-  'p', 'ai', 'r', 'rf', 'rid', 'line', 'invite_code', 'claccode',
+  'p', 'ai', 'r', 'rf', 'rid', 'line', 'invite_code', 'claccode', 'fpr',
 ]);
 
 // These existing referrals encode the partner in a path or a generic parameter.
 const affiliatePaths = {
+  'syntx.ai': /^\/welcome\/[^/]+/,
+  'lumean.app': /^\/r\/[^/]+/,
+  'app.omnirouter.cloud': /^\/invite\/[^/]+/,
   'accsmarket.com': /^\/(?:en\/)?9vV7VOzI\/?$/i,
   'aim.market': /^\/p\/[^/]+/,
   'browser.vision': /^\/r\/[^/]+/,

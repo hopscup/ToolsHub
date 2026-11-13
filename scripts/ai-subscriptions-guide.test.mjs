@@ -75,11 +75,11 @@ test('AI subscription video uses the supplied clip and small poster, not a cover
   }
 });
 
-test('AI subscription guide is in Accounts and linked from the subscription landing page', async () => {
+test('AI subscription guide is in AI and linked from the subscription landing page', async () => {
   assert.equal(guideCatalog.find(item => item.id === article.id).route, '/guides/deshevye-podpiski-chatgpt-claude-gemini');
   assert.ok(OFFERS.some(offer => offer.id === article.id && offer.category === 'Guides'));
   const app = await readFile('src/App.tsx', 'utf8');
-  assert.ok(app.includes("'guide-ai-subscriptions': { topic: 'accounts'"));
+  assert.ok(app.includes("'guide-ai-subscriptions': { topic: 'ai'"));
   assert.ok(app.includes('return <AiSubscriptionsGuideArticle'));
   assert.deepEqual(seoLandingPages.find(page => page.id === 'ai-subscriptions').guideLink, {
     href: '/guides/deshevye-podpiski-chatgpt-claude-gemini',

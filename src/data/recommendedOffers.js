@@ -1,6 +1,7 @@
 export const recommendedOfferIds = {
   '/proxy-vpn': ['p6', 'p3', 'p4', 'p1'],
   '/account-shop': ['st-dark'],
+  '/ai': ['ai-syntx', 'ai-lumean', 'ai-polza'],
   '/foreign-cards': ['pgon', 'zarub', 'antarctic-card'],
   '/crypto-exchange': ['prosto-exchange', 'keine-exchange', 'antarctic-exchange'],
   '/steam-topup': ['steam-antarctic'],

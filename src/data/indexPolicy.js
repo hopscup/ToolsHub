@@ -2,6 +2,7 @@ import { guidePages } from './guidePages.js';
 import { pageHeadings } from './pageHeadings.js';
 import { seoLandingPages } from './seoLandingPages.js';
 import { accountShopPages } from './accountShopPages.js';
+import { aiPages } from './aiPages.js';
 import { antidetectPages } from './antidetectPages.js';
 import { foreignCardPages } from './foreignCardPages.js';
 import { cryptoExchangePages } from './cryptoExchangePages.js';
@@ -14,6 +15,8 @@ import { vpnTerms } from './vpnDetails.js';
 export const indexableUrlWhitelist = {
   ru: [
     '/', '/proxy-vpn', '/antidetect', '/account-shop', '/sms-activators', '/foreign-cards',
+    '/ai', '/ai/syntx', '/ai/higgsfield', '/ai/lumean', '/ai/polza-ai',
+    '/ai/omnirouter', '/ai/ghostmetal', '/ai/agentrouter', '/ai/a6api',
     '/crypto-exchange', '/guides', '/steam-topup', '/vps',
     '/proxy-vpn/luchshie-proksi', '/proxy-vpn/luchshie-mobilnye-proksi', '/antidetect/kakoy-vybrat',
     '/proxy-vpn/dlya-akkauntov', '/sms-activators/virtualnye-nomera', '/foreign-cards/oplatit-zarubezhnye-servisy',
@@ -52,6 +55,7 @@ const existingRoutes = new Set([
   ...Object.keys(vpnTerms).map(slug => '/proxy-vpn/' + slug),
   ...[
     ['/account-shop', accountShopPages], ['/antidetect', antidetectPages], ['/foreign-cards', foreignCardPages],
+    ['/ai', aiPages],
     ['/crypto-exchange', cryptoExchangePages], ['/sms-activators', smsPages], ['/social-boost', socialPages],
     ['/steam-topup', steamPages], ['/vps', vpsPages],
   ].flatMap(([category, pages]) => pages.map(page => `${category}/${page.slug}`)),

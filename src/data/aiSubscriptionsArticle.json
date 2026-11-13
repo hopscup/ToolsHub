@@ -223,6 +223,15 @@
           "href": "/guides/zarubezhnaya-karta-s-popolneniem-rublyami"
         }
       ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Если не хочется покупать подписку, есть агрегаторы нейросетей с оплатой рублями",
+          "href": "/ai"
+        }
+      ]
     }
   ],
   "checklist": {

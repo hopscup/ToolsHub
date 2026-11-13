@@ -12,13 +12,13 @@ import { serviceCategoryRoutes } from '../src/data/servicePresentation.js';
 
 const { OFFERS } = await loadOffers();
 
-test('index policy has the approved 50 RU and 13 EN whitelist entries plus RU guides', () => {
-  assert.equal(indexableUrlWhitelist.ru.length, 50);
+test('index policy has the approved 59 RU and 13 EN whitelist entries plus RU guides', () => {
+  assert.equal(indexableUrlWhitelist.ru.length, 59);
   assert.equal(indexableUrlWhitelist.en.length, 13);
-  assert.equal(new Set(Object.values(indexableUrlWhitelist).flat()).size, 63);
-  assert.equal(indexablePaths.filter(path => !path.startsWith('/en')).length, 66);
+  assert.equal(new Set(Object.values(indexableUrlWhitelist).flat()).size, 72);
+  assert.equal(indexablePaths.filter(path => !path.startsWith('/en')).length, 76);
   assert.equal(indexablePaths.filter(path => path.startsWith('/en')).length, 13);
-  assert.equal(new Set(indexablePaths).size, 79);
+  assert.equal(new Set(indexablePaths).size, 89);
   for (const path of indexablePaths) assert.equal(isIndexablePath(path), true);
   for (const guide of guidePages) {
     const route = '/guides/' + guide.slug;

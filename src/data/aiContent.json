@@ -1,0 +1,2462 @@
+{
+  "section": {
+    "route": "/ai",
+    "title": {
+      "ru": "Нейросети из России: агрегаторы и API | Hopscup",
+      "en": "AI tools from Russia: aggregators and APIs | Hopscup",
+      "es": "AI tools from Russia: aggregators and APIs | Hopscup",
+      "zh": "AI tools from Russia: aggregators and APIs | Hopscup",
+      "ko": "AI tools from Russia: aggregators and APIs | Hopscup"
+    },
+    "heading": {
+      "ru": "Нейросети из России: агрегаторы, видео, озвучка и API",
+      "en": "AI tools from Russia: generation, voiceover and APIs",
+      "es": "AI tools from Russia: generation, voiceover and APIs",
+      "zh": "AI tools from Russia: generation, voiceover and APIs",
+      "ko": "AI tools from Russia: generation, voiceover and APIs"
+    },
+    "description": {
+      "ru": "Где пользоваться ChatGPT, Claude, Kling, Veo и ElevenLabs из России: агрегаторы с оплатой рублями, генерация видео, озвучка и API для кода. Цены и мой опыт.",
+      "en": "AI aggregators for text, images, video, voiceover and coding APIs. Compare payment methods, features and pricing.",
+      "es": "AI aggregators for text, images, video, voiceover and coding APIs. Compare payment methods, features and pricing.",
+      "zh": "AI aggregators for text, images, video, voiceover and coding APIs. Compare payment methods, features and pricing.",
+      "ko": "AI aggregators for text, images, video, voiceover and coding APIs. Compare payment methods, features and pricing."
+    },
+    "blocks": {
+      "ru": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "Почти все топовые нейросети либо не принимают российские карты, либо не открываются без VPN, либо и то и другое. Проще всего это обходить через агрегаторы: один сервис, один баланс, а внутри десятки моделей, от ChatGPT и Claude до Kling, Veo и ElevenLabs."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "Здесь собрал сервисы, которыми пользуюсь сам: для генерации видео и картинок, для озвучки роликов и API для кода и своих ботов. Не все работают без VPN и не все принимают карты РФ, это пишу в каждой карточке."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Агрегатор, подписка или магазин аккаунтов"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            [
+              {
+                "text": "Официальная подписка.",
+                "strong": true
+              },
+              {
+                "text": " Максимум возможностей и лимитов, но нужна "
+              },
+              {
+                "text": "зарубежная карта",
+                "href": "/foreign-cards"
+              },
+              {
+                "text": ", а иногда и VPN. Если каждый день сидите в одной нейросети, это всё ещё лучший вариант."
+              }
+            ],
+            [
+              {
+                "text": "Подписка из ",
+                "strong": true
+              },
+              {
+                "text": "Telegram-магазина",
+                "strong": true,
+                "href": "/guides/deshevye-podpiski-chatgpt-claude-gemini"
+              },
+              {
+                "text": ".",
+                "strong": true
+              },
+              {
+                "text": " В разы дешевле, но подписку могут снять, а гарантия обычно короткая."
+              }
+            ],
+            [
+              {
+                "text": "Агрегатор.",
+                "strong": true
+              },
+              {
+                "text": " Платите рублями за то, чем реально пользуетесь, и переключаетесь между моделями в одном окне. Минус: у части моделей лимиты меньше, чем в официальной подписке, а цены в токенах и кредитах приходится пересчитывать."
+              }
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Как выбрать"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            [
+              {
+                "text": "Нужно всё и сразу, можно с телефона:",
+                "strong": true
+              },
+              {
+                "text": " Syntx. Telegram-бот, оплата рублями, внутри текст, картинки, видео и музыка."
+              }
+            ],
+            [
+              {
+                "text": "Делаете ролики, которые залетают в ленту:",
+                "strong": true
+              },
+              {
+                "text": " Higgsfield. Почти все хайповые AI-видео делаются там, но карты РФ он не берёт."
+              }
+            ],
+            [
+              {
+                "text": "Озвучка для YouTube и шортсов:",
+                "strong": true
+              },
+              {
+                "text": " Lumean, голоса ElevenLabs за копейки."
+              }
+            ],
+            [
+              {
+                "text": "Пишете код или делаете ботов:",
+                "strong": true
+              },
+              {
+                "text": " polza.ai, если нужна стабильность и документы. OmniRouter под Claude Code и Codex. GhostMetal как запасной вариант на открытых моделях, если боитесь банов. AgentRouter, чтобы попробовать бесплатно."
+              }
+            ],
+            [
+              {
+                "text": "Нужно много картинок почти даром:",
+                "strong": true
+              },
+              {
+                "text": " A6API, если готовы платить криптой."
+              }
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Сравнение"
+        },
+        {
+          "type": "table",
+          "headers": [
+            [
+              {
+                "text": "Сервис"
+              }
+            ],
+            [
+              {
+                "text": "Для чего"
+              }
+            ],
+            [
+              {
+                "text": "Оплата"
+              }
+            ],
+            [
+              {
+                "text": "Бесплатно"
+              }
+            ],
+            [
+              {
+                "text": "Цена"
+              }
+            ]
+          ],
+          "rows": [
+            [
+              [
+                {
+                  "text": "Syntx"
+                }
+              ],
+              [
+                {
+                  "text": "Чат, картинки, видео, музыка"
+                }
+              ],
+              [
+                {
+                  "text": "Мир, СБП, звёзды Telegram"
+                }
+              ],
+              [
+                {
+                  "text": "5 токенов и 5 запросов"
+                }
+              ],
+              [
+                {
+                  "text": "Basic около 890 ₽/мес"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "Higgsfield"
+                }
+              ],
+              [
+                {
+                  "text": "Видео и фото"
+                }
+              ],
+              [
+                {
+                  "text": "Только "
+                },
+                {
+                  "text": "зарубежная карта",
+                  "href": "/foreign-cards"
+                }
+              ],
+              [
+                {
+                  "text": "Акции для новых"
+                }
+              ],
+              [
+                {
+                  "text": "От $15/мес"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "Lumean"
+                }
+              ],
+              [
+                {
+                  "text": "Речь и звуковые эффекты, чат, картинки"
+                }
+              ],
+              [
+                {
+                  "text": "Рубли, крипта"
+                }
+              ],
+              [
+                {
+                  "text": "Есть бесплатные функции"
+                }
+              ],
+              [
+                {
+                  "text": "100 ₽ хватает на десятки видео"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "polza.ai"
+                }
+              ],
+              [
+                {
+                  "text": "API к 400+ моделям"
+                }
+              ],
+              [
+                {
+                  "text": "Карта РФ, СБП, счёт"
+                }
+              ],
+              [
+                {
+                  "text": "Нет"
+                }
+              ],
+              [
+                {
+                  "text": "Пополнение от ~200 ₽"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "OmniRouter"
+                }
+              ],
+              [
+                {
+                  "text": "API для агентов кода"
+                }
+              ],
+              [
+                {
+                  "text": "Рубли, крипта"
+                }
+              ],
+              [
+                {
+                  "text": "300 кредитов на тест"
+                }
+              ],
+              [
+                {
+                  "text": "Пополнение от 199 ₽"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "GhostMetal"
+                }
+              ],
+              [
+                {
+                  "text": "Открытые модели GLM и Qwen без логов"
+                }
+              ],
+              [
+                {
+                  "text": "Крипта, "
+                },
+                {
+                  "text": "зарубежная карта",
+                  "href": "/foreign-cards"
+                }
+              ],
+              [
+                {
+                  "text": "20 кредитов на 14 дней"
+                }
+              ],
+              [
+                {
+                  "text": "От $10 пакет, подписка от $14/мес"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "AgentRouter"
+                }
+              ],
+              [
+                {
+                  "text": "API для Claude Code"
+                }
+              ],
+              [
+                {
+                  "text": "Без карты на старте"
+                }
+              ],
+              [
+                {
+                  "text": "Бонусные кредиты"
+                }
+              ],
+              [
+                {
+                  "text": "Бесплатно на старте"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "A6API"
+                }
+              ],
+              [
+                {
+                  "text": "Картинки по API"
+                }
+              ],
+              [
+                {
+                  "text": "USDT"
+                }
+              ],
+              [
+                {
+                  "text": "Нет"
+                }
+              ],
+              [
+                {
+                  "text": "От $2 на сотни картинок"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Пара советов"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            [
+              {
+                "text": "Пополняйте понемногу: цены в токенах меняются, а акции бывают постоянно."
+              }
+            ],
+            [
+              {
+                "text": "Ключ от API никому не показывайте и ставьте на него лимит расходов."
+              }
+            ],
+            [
+              {
+                "text": "Рабочий код и личные данные через бесплатных посредников не гоняйте."
+              }
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "Как пользоваться Claude из России и не словить бан",
+              "href": "/guides/claude-iz-rossii-bez-bana"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "Как собрать YouTube-ферму",
+              "href": "/guides/youtube-ferma"
+            }
+          ]
+        }
+      ],
+      "en": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "Compare AI aggregators for images, video, speech and code. Payment methods vary: some accept rubles, others require crypto or a foreign card."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "Choose your workflow"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            [
+              {
+                "text": "Generation: Syntx and Higgsfield."
+              }
+            ],
+            [
+              {
+                "text": "Voiceover: Lumean."
+              }
+            ],
+            [
+              {
+                "text": "APIs and coding: polza.ai, OmniRouter, GhostMetal, AgentRouter and A6API."
+              }
+            ]
+          ]
+        }
+      ],
+      "es": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "Compare AI aggregators for images, video, speech and code. Payment methods vary: some accept rubles, others require crypto or a foreign card."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "Choose your workflow"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            [
+              {
+                "text": "Generation: Syntx and Higgsfield."
+              }
+            ],
+            [
+              {
+                "text": "Voiceover: Lumean."
+              }
+            ],
+            [
+              {
+                "text": "APIs and coding: polza.ai, OmniRouter, GhostMetal, AgentRouter and A6API."
+              }
+            ]
+          ]
+        }
+      ],
+      "zh": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "Compare AI aggregators for images, video, speech and code. Payment methods vary: some accept rubles, others require crypto or a foreign card."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "Choose your workflow"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            [
+              {
+                "text": "Generation: Syntx and Higgsfield."
+              }
+            ],
+            [
+              {
+                "text": "Voiceover: Lumean."
+              }
+            ],
+            [
+              {
+                "text": "APIs and coding: polza.ai, OmniRouter, GhostMetal, AgentRouter and A6API."
+              }
+            ]
+          ]
+        }
+      ],
+      "ko": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "Compare AI aggregators for images, video, speech and code. Payment methods vary: some accept rubles, others require crypto or a foreign card."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "Choose your workflow"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            [
+              {
+                "text": "Generation: Syntx and Higgsfield."
+              }
+            ],
+            [
+              {
+                "text": "Voiceover: Lumean."
+              }
+            ],
+            [
+              {
+                "text": "APIs and coding: polza.ai, OmniRouter, GhostMetal, AgentRouter and A6API."
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "services": [
+    {
+      "id": "ai-syntx",
+      "slug": "syntx",
+      "name": "Syntx",
+      "category": "AI",
+      "subCategory": "AIGeneration",
+      "url": "https://syntx.ai/welcome/sF9BT2ym",
+      "logo": "/ai-syntx.webp",
+      "title": {
+        "ru": "Syntx AI: нейросети в Telegram за рубли | Hopscup",
+        "en": "Syntx AI: AI tools in Telegram for rubles | Hopscup",
+        "es": "Syntx AI: AI tools in Telegram for rubles | Hopscup",
+        "zh": "Syntx AI: AI tools in Telegram for rubles | Hopscup",
+        "ko": "Syntx AI: AI tools in Telegram for rubles | Hopscup"
+      },
+      "heading": {
+        "ru": "Syntx AI: ChatGPT, Claude, Kling и Veo в одном Telegram-боте",
+        "en": "Syntx AI: text, images, video and music in Telegram",
+        "es": "Syntx AI: text, images, video and music in Telegram",
+        "zh": "Syntx AI: text, images, video and music in Telegram",
+        "ko": "Syntx AI: text, images, video and music in Telegram"
+      },
+      "description": {
+        "ru": "Обзор Syntx AI: 100+ нейросетей в одном боте, оплата картой Мир, СБП и звёздами, бесплатный тариф, цены и чем он заменяет Higgsfield для россиян.",
+        "en": "Over 100 AI models in a Telegram bot, with RUB payments and a free trial.",
+        "es": "Over 100 AI models in a Telegram bot, with RUB payments and a free trial.",
+        "zh": "Over 100 AI models in a Telegram bot, with RUB payments and a free trial.",
+        "ko": "Over 100 AI models in a Telegram bot, with RUB payments and a free trial."
+      },
+      "editorial": {
+        "title": {
+          "ru": "Syntx AI: нейросети в Telegram за рубли | Hopscup",
+          "en": "Syntx AI: AI tools in Telegram for rubles | Hopscup",
+          "es": "Syntx AI: AI tools in Telegram for rubles | Hopscup",
+          "zh": "Syntx AI: AI tools in Telegram for rubles | Hopscup",
+          "ko": "Syntx AI: AI tools in Telegram for rubles | Hopscup"
+        },
+        "description": {
+          "ru": "Syntx, наверное, самая удобная замена Higgsfield для россиян. Один Telegram-бот, оплата рублями, а внутри больше 100 нейросетей: от ChatGPT и Claude до Kling, Veo и Suno. VPN не нужен.",
+          "en": "Over 100 AI models in a Telegram bot, with RUB payments and a free trial.",
+          "es": "Over 100 AI models in a Telegram bot, with RUB payments and a free trial.",
+          "zh": "Over 100 AI models in a Telegram bot, with RUB payments and a free trial.",
+          "ko": "Over 100 AI models in a Telegram bot, with RUB payments and a free trial."
+        },
+        "bestFor": {
+          "ru": [
+            "Попробовать видео-нейросети без зарубежной карты.",
+            "Шортсы, обложки и картинки под ролики.",
+            "Одна подписка вместо пяти разных."
+          ],
+          "en": [
+            "Video, thumbnails and creative work without a foreign card."
+          ],
+          "es": [
+            "Video, thumbnails and creative work without a foreign card."
+          ],
+          "zh": [
+            "Video, thumbnails and creative work without a foreign card."
+          ],
+          "ko": [
+            "Video, thumbnails and creative work without a foreign card."
+          ]
+        },
+        "considerations": {
+          "ru": [
+            "Полный набор функций в Telegram-боте @syntxaibot, веб-версия урезанная.",
+            "Токены не сгорают, но тратить их можно только при активной подписке.",
+            "Видео съедает токены быстро: перед большой генерацией смотрите стоимость в боте."
+          ],
+          "en": [
+            "The full feature set is in the Telegram bot.",
+            "Video can spend tokens quickly."
+          ],
+          "es": [
+            "The full feature set is in the Telegram bot.",
+            "Video can spend tokens quickly."
+          ],
+          "zh": [
+            "The full feature set is in the Telegram bot.",
+            "Video can spend tokens quickly."
+          ],
+          "ko": [
+            "The full feature set is in the Telegram bot.",
+            "Video can spend tokens quickly."
+          ]
+        },
+        "verdict": {
+          "ru": "Для россиян это самый простой вход в генерацию видео и картинок: всё на русском, в Telegram и за рубли. Если нужны именно студии Higgsfield и вы готовы платить зарубежной картой, смотрите его карточку. Остальным начинать стоит с Syntx.",
+          "en": "A practical starting point for AI generation in Russian with RUB payments.",
+          "es": "A practical starting point for AI generation in Russian with RUB payments.",
+          "zh": "A practical starting point for AI generation in Russian with RUB payments.",
+          "ko": "A practical starting point for AI generation in Russian with RUB payments."
+        },
+        "inlineLinks": {
+          "ru": [
+            {
+              "text": "Higgsfield",
+              "href": "/ai/higgsfield"
+            }
+          ],
+          "en": [
+            {
+              "text": "Higgsfield",
+              "href": "/ai/higgsfield"
+            }
+          ],
+          "es": [
+            {
+              "text": "Higgsfield",
+              "href": "/ai/higgsfield"
+            }
+          ],
+          "zh": [
+            {
+              "text": "Higgsfield",
+              "href": "/ai/higgsfield"
+            }
+          ],
+          "ko": [
+            {
+              "text": "Higgsfield",
+              "href": "/ai/higgsfield"
+            }
+          ]
+        },
+        "links": [],
+        "capabilities": {
+          "ru": [
+            "Текст: ChatGPT, Claude, Gemini, Grok, DeepSeek, Perplexity, Qwen. Текстовые модели умеют искать в интернете.",
+            "Картинки: Nano Banana, GPT Image, Seedream, Flux, Ideogram, апскейл через Magnific.",
+            "Видео: Kling, Google Veo, Seedance, Runway, Luma, Hailuo, аватары HeyGen.",
+            "Звук: озвучка ElevenLabs, музыка Suno, звук к готовому видео.",
+            "«Тренды»: готовые шаблоны эффектов, которые сейчас залетают в ленту."
+          ],
+          "en": [
+            "Text, image, video and audio models in one bot.",
+            "Includes ChatGPT, Claude, Kling, Veo and Suno."
+          ],
+          "es": [
+            "Text, image, video and audio models in one bot.",
+            "Includes ChatGPT, Claude, Kling, Veo and Suno."
+          ],
+          "zh": [
+            "Text, image, video and audio models in one bot.",
+            "Includes ChatGPT, Claude, Kling, Veo and Suno."
+          ],
+          "ko": [
+            "Text, image, video and audio models in one bot.",
+            "Includes ChatGPT, Claude, Kling, Veo and Suno."
+          ]
+        },
+        "pricing": {
+          "ru": [
+            "Бесплатно: 5 токенов и 5 запросов к текстовым моделям, без срока.",
+            "Basic на месяц стоил 890 ₽ за 260 токенов. Есть подписки на 3, 6 и 12 месяцев, годовая на 15% дешевле.",
+            "Токены уходят на картинки и видео. Текстовые модели и безлимитные инструменты токены не тратят."
+          ],
+          "en": [
+            "Free: 5 tokens and 5 text requests.",
+            "Basic was around RUB 890/month for 260 tokens."
+          ],
+          "es": [
+            "Free: 5 tokens and 5 text requests.",
+            "Basic was around RUB 890/month for 260 tokens."
+          ],
+          "zh": [
+            "Free: 5 tokens and 5 text requests.",
+            "Basic was around RUB 890/month for 260 tokens."
+          ],
+          "ko": [
+            "Free: 5 tokens and 5 text requests.",
+            "Basic was around RUB 890/month for 260 tokens."
+          ]
+        },
+        "gettingStarted": {
+          "ru": [
+            "Переходите по ссылке и запускаете бота.",
+            "Пробуете бесплатные токены на картинках.",
+            "Если нравится, берёте Basic на месяц, а не сразу на год."
+          ],
+          "en": [
+            "Open the link and start the bot.",
+            "Try the free tokens before buying a monthly plan."
+          ],
+          "es": [
+            "Open the link and start the bot.",
+            "Try the free tokens before buying a monthly plan."
+          ],
+          "zh": [
+            "Open the link and start the bot.",
+            "Try the free tokens before buying a monthly plan."
+          ],
+          "ko": [
+            "Open the link and start the bot.",
+            "Try the free tokens before buying a monthly plan."
+          ]
+        }
+      },
+      "details": {
+        "paymentMethods": {
+          "ru": "Мир, СБП, звёзды Telegram",
+          "en": "Mir, SBP, Telegram Stars",
+          "es": "Mir, SBP, Telegram Stars",
+          "zh": "Mir, SBP, Telegram Stars",
+          "ko": "Mir, SBP, Telegram Stars"
+        },
+        "types": {
+          "ru": "Текст: ChatGPT, Claude, Gemini, Grok, DeepSeek, Perplexity, Qwen. Текстовые модели умеют искать в интернете.",
+          "en": "Text, image, video and audio models in one bot.",
+          "es": "Text, image, video and audio models in one bot.",
+          "zh": "Text, image, video and audio models in one bot.",
+          "ko": "Text, image, video and audio models in one bot."
+        }
+      }
+    },
+    {
+      "id": "ai-higgsfield",
+      "slug": "higgsfield",
+      "name": "Higgsfield",
+      "category": "AI",
+      "subCategory": "AIGeneration",
+      "url": "https://higgsfield.ai?fpr=hpsc-198ebf",
+      "logo": "/ai-higgsfield.webp",
+      "title": {
+        "ru": "Higgsfield AI: генерация видео из России | Hopscup",
+        "en": "Higgsfield AI: video generation from Russia | Hopscup",
+        "es": "Higgsfield AI: video generation from Russia | Hopscup",
+        "zh": "Higgsfield AI: video generation from Russia | Hopscup",
+        "ko": "Higgsfield AI: video generation from Russia | Hopscup"
+      },
+      "heading": {
+        "ru": "Higgsfield AI: где делают хайповые видео и как оплатить из России",
+        "en": "Higgsfield AI: video studios and payments from Russia",
+        "es": "Higgsfield AI: video studios and payments from Russia",
+        "zh": "Higgsfield AI: video studios and payments from Russia",
+        "ko": "Higgsfield AI: video studios and payments from Russia"
+      },
+      "description": {
+        "ru": "Обзор Higgsfield AI: Seedance, Cinema Studio и Shorts Studio, тарифы от $15 в месяц, почему не проходят карты РФ и чем я оплачиваю.",
+        "en": "AI video and photo studios with foreign-card payments and plans from $15/month.",
+        "es": "AI video and photo studios with foreign-card payments and plans from $15/month.",
+        "zh": "AI video and photo studios with foreign-card payments and plans from $15/month.",
+        "ko": "AI video and photo studios with foreign-card payments and plans from $15/month."
+      },
+      "editorial": {
+        "title": {
+          "ru": "Higgsfield AI: генерация видео из России | Hopscup",
+          "en": "Higgsfield AI: video generation from Russia | Hopscup",
+          "es": "Higgsfield AI: video generation from Russia | Hopscup",
+          "zh": "Higgsfield AI: video generation from Russia | Hopscup",
+          "ko": "Higgsfield AI: video generation from Russia | Hopscup"
+        },
+        "description": {
+          "ru": "Почти все хайповые AI-видео, которые вы видите в ленте, делаются в Higgsfield. Это студия генерации видео и фото с 35+ моделями и готовыми сценариями под рекламу, шортсы и кино. Российские карты не принимает, я оплачиваю картой Zarub.",
+          "en": "AI video and photo studios with foreign-card payments and plans from $15/month.",
+          "es": "AI video and photo studios with foreign-card payments and plans from $15/month.",
+          "zh": "AI video and photo studios with foreign-card payments and plans from $15/month.",
+          "ko": "AI video and photo studios with foreign-card payments and plans from $15/month."
+        },
+        "bestFor": {
+          "ru": [
+            "Роликам для соцсетей, когда нужно качество как в ленте.",
+            "Креативам под арбитраж и товарку.",
+            "Тем, кому нужны готовые студии, а не просто доступ к моделям."
+          ],
+          "en": [
+            "Social videos, advertising and creative production."
+          ],
+          "es": [
+            "Social videos, advertising and creative production."
+          ],
+          "zh": [
+            "Social videos, advertising and creative production."
+          ],
+          "ko": [
+            "Social videos, advertising and creative production."
+          ]
+        },
+        "considerations": {
+          "ru": [
+            "Карты РФ не проходят, нужна зарубежная.",
+            "Кредиты сгорают, берите тариф под реальный объём.",
+            "Если хочется то же самое за рубли и без заморочек с картой, многие эти модели есть в Syntx."
+          ],
+          "en": [
+            "A foreign card is required.",
+            "Unused monthly credits expire."
+          ],
+          "es": [
+            "A foreign card is required.",
+            "Unused monthly credits expire."
+          ],
+          "zh": [
+            "A foreign card is required.",
+            "Unused monthly credits expire."
+          ],
+          "ko": [
+            "A foreign card is required.",
+            "Unused monthly credits expire."
+          ]
+        },
+        "verdict": {
+          "ru": "Если делаете контент, который должен залетать, Higgsfield сейчас стандарт: здесь самые свежие модели и удобные студии. Главная сложность из России только в оплате, и она решается зарубежной картой.",
+          "en": "Video studios for creators who need current models and production tools.",
+          "es": "Video studios for creators who need current models and production tools.",
+          "zh": "Video studios for creators who need current models and production tools.",
+          "ko": "Video studios for creators who need current models and production tools."
+        },
+        "inlineLinks": {
+          "ru": [
+            {
+              "text": "Zarub",
+              "href": "/foreign-cards/zarub"
+            },
+            {
+              "text": "Syntx",
+              "href": "/ai/syntx"
+            }
+          ],
+          "en": [
+            {
+              "text": "Zarub",
+              "href": "/foreign-cards/zarub"
+            },
+            {
+              "text": "Syntx",
+              "href": "/ai/syntx"
+            }
+          ],
+          "es": [
+            {
+              "text": "Zarub",
+              "href": "/foreign-cards/zarub"
+            },
+            {
+              "text": "Syntx",
+              "href": "/ai/syntx"
+            }
+          ],
+          "zh": [
+            {
+              "text": "Zarub",
+              "href": "/foreign-cards/zarub"
+            },
+            {
+              "text": "Syntx",
+              "href": "/ai/syntx"
+            }
+          ],
+          "ko": [
+            {
+              "text": "Zarub",
+              "href": "/foreign-cards/zarub"
+            },
+            {
+              "text": "Syntx",
+              "href": "/ai/syntx"
+            }
+          ]
+        },
+        "links": [
+          {
+            "href": "/guides/zarubezhnaya-karta-s-popolneniem-rublyami",
+            "label": {
+              "ru": "Какую зарубежную карту выбрать, разобрал отдельно",
+              "en": "How to choose a foreign card",
+              "es": "How to choose a foreign card",
+              "zh": "How to choose a foreign card",
+              "ko": "How to choose a foreign card"
+            }
+          }
+        ],
+        "capabilities": {
+          "ru": [
+            "Видео на Seedance 2.5 до 4K и других топовых моделях, всего больше 35.",
+            "Фото на Seedream 5.5: реалистичные лица, материалы и свет.",
+            "Cinema Studio: киношные сцены с управлением камерой и постоянными персонажами.",
+            "Shorts Studio: повторить трендовый шортс со своим персонажем, голосом и стилем.",
+            "Drama Ads: превратить товар в рекламный ролик.",
+            "Агент, который ведёт производство ролика по задаче, и подключение к Claude через MCP."
+          ],
+          "en": [
+            "35+ models, Cinema Studio, Shorts Studio and Drama Ads."
+          ],
+          "es": [
+            "35+ models, Cinema Studio, Shorts Studio and Drama Ads."
+          ],
+          "zh": [
+            "35+ models, Cinema Studio, Shorts Studio and Drama Ads."
+          ],
+          "ko": [
+            "35+ models, Cinema Studio, Shorts Studio and Drama Ads."
+          ]
+        },
+        "pricing": {
+          "ru": [
+            "(официальный блог, октябрь 2026)",
+            "Starter: $15 в месяц, 200 кредитов.",
+            "Plus: $49 в месяц, 1000 кредитов.",
+            "Ultra: $129 в месяц, 3000 кредитов.",
+            "Сколько кредитов уйдёт на генерацию, зависит от модели, длины и разрешения. Неиспользованные кредиты сгорают каждый месяц. Акции бывают постоянно, например безлимит на отдельные модели на пару недель."
+          ],
+          "en": [
+            "Starter: $15/month, 200 credits.",
+            "Plus: $49/month, 1,000 credits.",
+            "Ultra: $129/month, 3,000 credits.",
+            "Official blog, October 2026."
+          ],
+          "es": [
+            "Starter: $15/month, 200 credits.",
+            "Plus: $49/month, 1,000 credits.",
+            "Ultra: $129/month, 3,000 credits.",
+            "Official blog, October 2026."
+          ],
+          "zh": [
+            "Starter: $15/month, 200 credits.",
+            "Plus: $49/month, 1,000 credits.",
+            "Ultra: $129/month, 3,000 credits.",
+            "Official blog, October 2026."
+          ],
+          "ko": [
+            "Starter: $15/month, 200 credits.",
+            "Plus: $49/month, 1,000 credits.",
+            "Ultra: $129/month, 3,000 credits.",
+            "Official blog, October 2026."
+          ]
+        },
+        "gettingStarted": {
+          "ru": [
+            "Выпускаете зарубежную карту и пополняете под тариф.",
+            "Регистрируетесь по ссылке и берёте Starter на месяц.",
+            "Начинаете с готовых шаблонов, а не с пустого промпта."
+          ],
+          "en": [
+            "Get a foreign card and fund the chosen plan.",
+            "Start with a monthly Starter plan and a ready-made template."
+          ],
+          "es": [
+            "Get a foreign card and fund the chosen plan.",
+            "Start with a monthly Starter plan and a ready-made template."
+          ],
+          "zh": [
+            "Get a foreign card and fund the chosen plan.",
+            "Start with a monthly Starter plan and a ready-made template."
+          ],
+          "ko": [
+            "Get a foreign card and fund the chosen plan.",
+            "Start with a monthly Starter plan and a ready-made template."
+          ]
+        }
+      },
+      "details": {
+        "paymentMethods": {
+          "ru": "зарубежная карта (карты РФ не проходят)",
+          "en": "Foreign bank card; Russian cards are not accepted",
+          "es": "Foreign bank card; Russian cards are not accepted",
+          "zh": "Foreign bank card; Russian cards are not accepted",
+          "ko": "Foreign bank card; Russian cards are not accepted"
+        },
+        "types": {
+          "ru": "Видео на Seedance 2.5 до 4K и других топовых моделях, всего больше 35.",
+          "en": "35+ models, Cinema Studio, Shorts Studio and Drama Ads.",
+          "es": "35+ models, Cinema Studio, Shorts Studio and Drama Ads.",
+          "zh": "35+ models, Cinema Studio, Shorts Studio and Drama Ads.",
+          "ko": "35+ models, Cinema Studio, Shorts Studio and Drama Ads."
+        }
+      }
+    },
+    {
+      "id": "ai-lumean",
+      "slug": "lumean",
+      "name": "Lumean",
+      "category": "AI",
+      "subCategory": "AIVoice",
+      "url": "https://lumean.app/r/z8xjDshw",
+      "logo": "/ai-lumean.webp",
+      "title": {
+        "ru": "Lumean: озвучка голосами ElevenLabs за рубли | Hopscup",
+        "en": "Lumean: ElevenLabs voices with RUB payments | Hopscup",
+        "es": "Lumean: ElevenLabs voices with RUB payments | Hopscup",
+        "zh": "Lumean: ElevenLabs voices with RUB payments | Hopscup",
+        "ko": "Lumean: ElevenLabs voices with RUB payments | Hopscup"
+      },
+      "heading": {
+        "ru": "Lumean: дешёвая озвучка голосами ElevenLabs для видео",
+        "en": "Lumean: affordable ElevenLabs-style voiceover for videos",
+        "es": "Lumean: affordable ElevenLabs-style voiceover for videos",
+        "zh": "Lumean: affordable ElevenLabs-style voiceover for videos",
+        "ko": "Lumean: affordable ElevenLabs-style voiceover for videos"
+      },
+      "description": {
+        "ru": "Обзор Lumean Studio: 4200+ голосов ElevenLabs и других провайдеров, клонирование голоса, звуковые эффекты, чат с нейросетями и API. 100 ₽ хватает на десятки видео.",
+        "en": "4,200+ voices, voice cloning, sound effects, AI chat and an OpenAI-compatible API.",
+        "es": "4,200+ voices, voice cloning, sound effects, AI chat and an OpenAI-compatible API.",
+        "zh": "4,200+ voices, voice cloning, sound effects, AI chat and an OpenAI-compatible API.",
+        "ko": "4,200+ voices, voice cloning, sound effects, AI chat and an OpenAI-compatible API."
+      },
+      "editorial": {
+        "title": {
+          "ru": "Lumean: озвучка голосами ElevenLabs за рубли | Hopscup",
+          "en": "Lumean: ElevenLabs voices with RUB payments | Hopscup",
+          "es": "Lumean: ElevenLabs voices with RUB payments | Hopscup",
+          "zh": "Lumean: ElevenLabs voices with RUB payments | Hopscup",
+          "ko": "Lumean: ElevenLabs voices with RUB payments | Hopscup"
+        },
+        "description": {
+          "ru": "Сервис с копеечной озвучкой: если у вас есть хотя бы 100 рублей, их хватит на десятки видео, а голоса те же, что в ElevenLabs. Интерфейс простой и красивый, разберётся кто угодно.",
+          "en": "4,200+ voices, voice cloning, sound effects, AI chat and an OpenAI-compatible API.",
+          "es": "4,200+ voices, voice cloning, sound effects, AI chat and an OpenAI-compatible API.",
+          "zh": "4,200+ voices, voice cloning, sound effects, AI chat and an OpenAI-compatible API.",
+          "ko": "4,200+ voices, voice cloning, sound effects, AI chat and an OpenAI-compatible API."
+        },
+        "bestFor": {
+          "ru": [
+            "Озвучке роликов для YouTube-фермы и шортсов.",
+            "Аудиокнигам, подкастам и рекламе.",
+            "Если ElevenLabs не принимает вашу карту."
+          ],
+          "en": [
+            "YouTube voiceover, Shorts, podcasts and advertising."
+          ],
+          "es": [
+            "YouTube voiceover, Shorts, podcasts and advertising."
+          ],
+          "zh": [
+            "YouTube voiceover, Shorts, podcasts and advertising."
+          ],
+          "ko": [
+            "YouTube voiceover, Shorts, podcasts and advertising."
+          ]
+        },
+        "considerations": {
+          "ru": [
+            "Клонировать можно только свой голос или голос с согласия владельца.",
+            "Премиальные голоса стоят дороже обычных, смотрите цену до генерации.",
+            "Большой баланс сразу не закидывайте: 100-200 ₽ хватит, чтобы понять, ваш ли это сервис."
+          ],
+          "en": [
+            "Clone only your own voice or with permission.",
+            "Check the voice price before generation and start with a small balance."
+          ],
+          "es": [
+            "Clone only your own voice or with permission.",
+            "Check the voice price before generation and start with a small balance."
+          ],
+          "zh": [
+            "Clone only your own voice or with permission.",
+            "Check the voice price before generation and start with a small balance."
+          ],
+          "ko": [
+            "Clone only your own voice or with permission.",
+            "Check the voice price before generation and start with a small balance."
+          ]
+        },
+        "verdict": {
+          "ru": "Самый дешёвый способ получить голоса уровня ElevenLabs за рубли. Для фермы каналов, где озвучка нужна каждый день, это прям находка.",
+          "en": "Affordable voiceover with RUB payments for frequent video production.",
+          "es": "Affordable voiceover with RUB payments for frequent video production.",
+          "zh": "Affordable voiceover with RUB payments for frequent video production.",
+          "ko": "Affordable voiceover with RUB payments for frequent video production."
+        },
+        "inlineLinks": {
+          "ru": [
+            {
+              "text": "YouTube-фермы",
+              "href": "/guides/youtube-ferma"
+            }
+          ],
+          "en": [
+            {
+              "text": "YouTube-фермы",
+              "href": "/guides/youtube-ferma"
+            }
+          ],
+          "es": [
+            {
+              "text": "YouTube-фермы",
+              "href": "/guides/youtube-ferma"
+            }
+          ],
+          "zh": [
+            {
+              "text": "YouTube-фермы",
+              "href": "/guides/youtube-ferma"
+            }
+          ],
+          "ko": [
+            {
+              "text": "YouTube-фермы",
+              "href": "/guides/youtube-ferma"
+            }
+          ]
+        },
+        "links": [],
+        "capabilities": {
+          "ru": [
+            "Синтез речи: больше 4200 голосов на 32 языках от ElevenLabs, Cartesia, Fish Audio, HeyGen и собственного движка LumVoice.",
+            "Настройки синтеза: скорость, паузы, эмоции, пакетная озвучка файлов.",
+            "Шаблоны готовых пресетов и большая библиотека голосов под задачи: аудиокниги, реклама, ролики.",
+            "Клонирование своего голоса по короткой записи.",
+            "Саунд-дизайн: звуковые эффекты и короткая музыка по текстовому описанию.",
+            "С того же баланса: чат с GPT, Claude, Gemini и DeepSeek, генерация картинок и API, совместимый с OpenAI."
+          ],
+          "en": [
+            "4,200+ voices in 32 languages.",
+            "Voice cloning, sound effects, AI chat, images and API."
+          ],
+          "es": [
+            "4,200+ voices in 32 languages.",
+            "Voice cloning, sound effects, AI chat, images and API."
+          ],
+          "zh": [
+            "4,200+ voices in 32 languages.",
+            "Voice cloning, sound effects, AI chat, images and API."
+          ],
+          "ko": [
+            "4,200+ voices in 32 languages.",
+            "Voice cloning, sound effects, AI chat, images and API."
+          ]
+        },
+        "pricing": {
+          "ru": [
+            "Можно взять подписку на голос или платить только за то, что озвучили.",
+            "100 ₽ хватает на очень много текста.",
+            "Часть функций бесплатная."
+          ],
+          "en": [
+            "Voice subscriptions or pay as you go.",
+            "Free features are available."
+          ],
+          "es": [
+            "Voice subscriptions or pay as you go.",
+            "Free features are available."
+          ],
+          "zh": [
+            "Voice subscriptions or pay as you go.",
+            "Free features are available."
+          ],
+          "ko": [
+            "Voice subscriptions or pay as you go.",
+            "Free features are available."
+          ]
+        },
+        "gettingStarted": {
+          "ru": [
+            "Регистрируетесь по ссылке.",
+            "Выбираете голос в библиотеке или готовый пресет.",
+            "Вставляете текст, настраиваете паузы и скорость и жмёте «Озвучить»."
+          ],
+          "en": [
+            "Register, choose a voice, enter text and generate speech."
+          ],
+          "es": [
+            "Register, choose a voice, enter text and generate speech."
+          ],
+          "zh": [
+            "Register, choose a voice, enter text and generate speech."
+          ],
+          "ko": [
+            "Register, choose a voice, enter text and generate speech."
+          ]
+        }
+      },
+      "details": {
+        "paymentMethods": {
+          "ru": "Рубли, крипта",
+          "en": "Rubles, crypto",
+          "es": "Rubles, crypto",
+          "zh": "Rubles, crypto",
+          "ko": "Rubles, crypto"
+        },
+        "types": {
+          "ru": "Речь, звуковые эффекты (SFX)",
+          "en": "Speech, sound effects (SFX)",
+          "es": "Speech, sound effects (SFX)",
+          "zh": "Speech, sound effects (SFX)",
+          "ko": "Speech, sound effects (SFX)"
+        }
+      }
+    },
+    {
+      "id": "ai-polza",
+      "slug": "polza-ai",
+      "name": "polza.ai",
+      "category": "AI",
+      "subCategory": "AICoding",
+      "url": "https://polza.ai/?referral=Hi1wnR0gHq",
+      "logo": "/ai-polza.webp",
+      "title": {
+        "ru": "Polza.ai: API нейросетей с оплатой рублями | Hopscup",
+        "en": "Polza.ai: AI APIs with RUB payments | Hopscup",
+        "es": "Polza.ai: AI APIs with RUB payments | Hopscup",
+        "zh": "Polza.ai: AI APIs with RUB payments | Hopscup",
+        "ko": "Polza.ai: AI APIs with RUB payments | Hopscup"
+      },
+      "heading": {
+        "ru": "Polza.ai: API ChatGPT, Claude и Gemini с оплатой рублями",
+        "en": "Polza.ai: ChatGPT, Claude and Gemini APIs paid in rubles",
+        "es": "Polza.ai: ChatGPT, Claude and Gemini APIs paid in rubles",
+        "zh": "Polza.ai: ChatGPT, Claude and Gemini APIs paid in rubles",
+        "ko": "Polza.ai: ChatGPT, Claude and Gemini APIs paid in rubles"
+      },
+      "description": {
+        "ru": "Обзор Polza.ai: 400+ моделей через один OpenAI-совместимый API, оплата картой РФ, СБП и по счёту, документы для юрлиц и веб-студия без кода.",
+        "en": "400+ models through an OpenAI-compatible API, RUB payments and business documents.",
+        "es": "400+ models through an OpenAI-compatible API, RUB payments and business documents.",
+        "zh": "400+ models through an OpenAI-compatible API, RUB payments and business documents.",
+        "ko": "400+ models through an OpenAI-compatible API, RUB payments and business documents."
+      },
+      "editorial": {
+        "title": {
+          "ru": "Polza.ai: API нейросетей с оплатой рублями | Hopscup",
+          "en": "Polza.ai: AI APIs with RUB payments | Hopscup",
+          "es": "Polza.ai: AI APIs with RUB payments | Hopscup",
+          "zh": "Polza.ai: AI APIs with RUB payments | Hopscup",
+          "ko": "Polza.ai: AI APIs with RUB payments | Hopscup"
+        },
+        "description": {
+          "ru": "Если нужен API к нейросетям из России, polza.ai самый спокойный вариант: один ключ к сотням моделей, оплата рублями и документы для бухгалтерии. Для ботов и автоматизаций я бы начинал с него.",
+          "en": "400+ models through an OpenAI-compatible API, RUB payments and business documents.",
+          "es": "400+ models through an OpenAI-compatible API, RUB payments and business documents.",
+          "zh": "400+ models through an OpenAI-compatible API, RUB payments and business documents.",
+          "ko": "400+ models through an OpenAI-compatible API, RUB payments and business documents."
+        },
+        "bestFor": {
+          "ru": [
+            "Telegram-ботам, автоматизациям и n8n.",
+            "Компаниям, которым нужны закрывающие документы.",
+            "Разработчикам, которым важна стабильность, а не самая низкая цена."
+          ],
+          "en": [
+            "Bots, automation, n8n and businesses needing invoices."
+          ],
+          "es": [
+            "Bots, automation, n8n and businesses needing invoices."
+          ],
+          "zh": [
+            "Bots, automation, n8n and businesses needing invoices."
+          ],
+          "ko": [
+            "Bots, automation, n8n and businesses needing invoices."
+          ]
+        },
+        "considerations": {
+          "ru": [
+            "Это не подписка: считайте расход, особенно на дорогих моделях.",
+            "Цены моделей сравнивайте в каталоге, они отличаются от официальных.",
+            "Ключ никому не показывайте и ставьте на него лимит бюджета."
+          ],
+          "en": [
+            "Model prices differ; set an API-key spending limit."
+          ],
+          "es": [
+            "Model prices differ; set an API-key spending limit."
+          ],
+          "zh": [
+            "Model prices differ; set an API-key spending limit."
+          ],
+          "ko": [
+            "Model prices differ; set an API-key spending limit."
+          ]
+        },
+        "verdict": {
+          "ru": "Не самый дешёвый, зато самый «взрослый» API-сервис в подборке: оплата как в обычном российском сервисе, документы, запасные провайдеры. Если делаете что-то для работы, берите его.",
+          "en": "A business-oriented API option with RUB payments and accounting documents.",
+          "es": "A business-oriented API option with RUB payments and accounting documents.",
+          "zh": "A business-oriented API option with RUB payments and accounting documents.",
+          "ko": "A business-oriented API option with RUB payments and accounting documents."
+        },
+        "inlineLinks": {
+          "ru": [],
+          "en": [],
+          "es": [],
+          "zh": [],
+          "ko": []
+        },
+        "links": [
+          {
+            "href": "/ai/omnirouter",
+            "label": {
+              "ru": "Для агентов кода вроде Claude Code удобнее OmniRouter",
+              "en": "OmniRouter for coding agents",
+              "es": "OmniRouter for coding agents",
+              "zh": "OmniRouter for coding agents",
+              "ko": "OmniRouter for coding agents"
+            }
+          }
+        ],
+        "capabilities": {
+          "ru": [
+            "Больше 400 моделей от 80+ провайдеров: OpenAI, Anthropic, Google, DeepSeek, xAI, Qwen, Kling и другие.",
+            "API совместим с OpenAI: в готовом коде меняете только адрес и ключ.",
+            "Сам выбирает провайдера и переключает на запасного, если основной упал.",
+            "«Нейростудия» в браузере: текст, картинки, видео, аудио и музыка без кода.",
+            "Промпты и ответы по умолчанию не хранятся.",
+            "Для команд: роли, бюджеты на проекты, отдельные ключи и аналитика расходов.",
+            "Около 30 готовых интеграций: агенты для кода, n8n, LangChain, десктоп-приложения."
+          ],
+          "en": [
+            "400+ models, OpenAI-compatible API and provider failover.",
+            "Web studio, team budgets and integrations."
+          ],
+          "es": [
+            "400+ models, OpenAI-compatible API and provider failover.",
+            "Web studio, team budgets and integrations."
+          ],
+          "zh": [
+            "400+ models, OpenAI-compatible API and provider failover.",
+            "Web studio, team budgets and integrations."
+          ],
+          "ko": [
+            "400+ models, OpenAI-compatible API and provider failover.",
+            "Web studio, team budgets and integrations."
+          ]
+        },
+        "pricing": {
+          "ru": [
+            "Оплата по факту с общего баланса, цена зависит от модели.",
+            "Пополнение примерно от 200 ₽.",
+            "Для юрлиц счета, УПД и ЭДО."
+          ],
+          "en": [
+            "Pay as you go from one balance.",
+            "Top-ups from approximately RUB 200."
+          ],
+          "es": [
+            "Pay as you go from one balance.",
+            "Top-ups from approximately RUB 200."
+          ],
+          "zh": [
+            "Pay as you go from one balance.",
+            "Top-ups from approximately RUB 200."
+          ],
+          "ko": [
+            "Pay as you go from one balance.",
+            "Top-ups from approximately RUB 200."
+          ]
+        },
+        "gettingStarted": {
+          "ru": [
+            "Регистрируетесь по ссылке и пополняете баланс.",
+            "Создаёте ключ в личном кабинете.",
+            "В коде или приложении указываете адрес https://polza.ai/api/v1 и ключ."
+          ],
+          "en": [
+            "Register and top up.",
+            "Create a key and set https://polza.ai/api/v1 as the base URL."
+          ],
+          "es": [
+            "Register and top up.",
+            "Create a key and set https://polza.ai/api/v1 as the base URL."
+          ],
+          "zh": [
+            "Register and top up.",
+            "Create a key and set https://polza.ai/api/v1 as the base URL."
+          ],
+          "ko": [
+            "Register and top up.",
+            "Create a key and set https://polza.ai/api/v1 as the base URL."
+          ]
+        }
+      },
+      "details": {
+        "paymentMethods": {
+          "ru": "карта РФ, СБП, расчётный счёт",
+          "en": "Russian bank card, SBP, bank transfer",
+          "es": "Russian bank card, SBP, bank transfer",
+          "zh": "Russian bank card, SBP, bank transfer",
+          "ko": "Russian bank card, SBP, bank transfer"
+        },
+        "types": {
+          "ru": "Больше 400 моделей от 80+ провайдеров: OpenAI, Anthropic, Google, DeepSeek, xAI, Qwen, Kling и другие.",
+          "en": "400+ models, OpenAI-compatible API and provider failover.",
+          "es": "400+ models, OpenAI-compatible API and provider failover.",
+          "zh": "400+ models, OpenAI-compatible API and provider failover.",
+          "ko": "400+ models, OpenAI-compatible API and provider failover."
+        }
+      }
+    },
+    {
+      "id": "ai-omnirouter",
+      "slug": "omnirouter",
+      "name": "OmniRouter",
+      "category": "AI",
+      "subCategory": "AICoding",
+      "url": "https://app.omnirouter.cloud/invite/2dc161901f23",
+      "logo": "/ai-omnirouter.webp",
+      "title": {
+        "ru": "OmniRouter: API для Claude Code и Codex из РФ | Hopscup",
+        "en": "OmniRouter: Claude Code and Codex APIs from Russia | Hopscup",
+        "es": "OmniRouter: Claude Code and Codex APIs from Russia | Hopscup",
+        "zh": "OmniRouter: Claude Code and Codex APIs from Russia | Hopscup",
+        "ko": "OmniRouter: Claude Code and Codex APIs from Russia | Hopscup"
+      },
+      "heading": {
+        "ru": "OmniRouter: Claude, GPT и Gemini для кодинга из России",
+        "en": "OmniRouter: Claude, GPT and Gemini for coding from Russia",
+        "es": "OmniRouter: Claude, GPT and Gemini for coding from Russia",
+        "zh": "OmniRouter: Claude, GPT and Gemini for coding from Russia",
+        "ko": "OmniRouter: Claude, GPT and Gemini for coding from Russia"
+      },
+      "description": {
+        "ru": "Обзор OmniRouter: один ключ с API в формате OpenAI и Anthropic для Claude Code, Codex и других агентов, баланс в рублях, 300 кредитов на тест.",
+        "en": "OpenAI and Anthropic-compatible APIs for coding agents, RUB balance and test credits.",
+        "es": "OpenAI and Anthropic-compatible APIs for coding agents, RUB balance and test credits.",
+        "zh": "OpenAI and Anthropic-compatible APIs for coding agents, RUB balance and test credits.",
+        "ko": "OpenAI and Anthropic-compatible APIs for coding agents, RUB balance and test credits."
+      },
+      "editorial": {
+        "title": {
+          "ru": "OmniRouter: API для Claude Code и Codex из РФ | Hopscup",
+          "en": "OmniRouter: Claude Code and Codex APIs from Russia | Hopscup",
+          "es": "OmniRouter: Claude Code and Codex APIs from Russia | Hopscup",
+          "zh": "OmniRouter: Claude Code and Codex APIs from Russia | Hopscup",
+          "ko": "OmniRouter: Claude Code and Codex APIs from Russia | Hopscup"
+        },
+        "description": {
+          "ru": "OmniRouter заточен под одну задачу: пользоваться агентами для кода вроде Claude Code и Codex из России без VPN и зарубежной карты. Один ключ, рублёвый баланс, внутри свежие Claude, GPT и Gemini.",
+          "en": "OpenAI and Anthropic-compatible APIs for coding agents, RUB balance and test credits.",
+          "es": "OpenAI and Anthropic-compatible APIs for coding agents, RUB balance and test credits.",
+          "zh": "OpenAI and Anthropic-compatible APIs for coding agents, RUB balance and test credits.",
+          "ko": "OpenAI and Anthropic-compatible APIs for coding agents, RUB balance and test credits."
+        },
+        "bestFor": {
+          "ru": [
+            "Claude Code, Codex и другим агентам для кода.",
+            "Разработчикам из России, которым надоело возиться с VPN и картами.",
+            "Тем, кто хочет переключаться между Claude, GPT и Gemini одним ключом."
+          ],
+          "en": [
+            "Coding agents and switching models with one key."
+          ],
+          "es": [
+            "Coding agents and switching models with one key."
+          ],
+          "zh": [
+            "Coding agents and switching models with one key."
+          ],
+          "ko": [
+            "Coding agents and switching models with one key."
+          ]
+        },
+        "considerations": {
+          "ru": [
+            "Агенты для кода сжигают токены быстро. Opus дорогой, для рутины ставьте Sonnet.",
+            "Тарифы недавно менялись, актуальные цены смотрите на сайте перед пополнением.",
+            "Ключ никому не показывайте."
+          ],
+          "en": [
+            "Coding agents can consume tokens quickly.",
+            "Check the latest prices and keep your key private."
+          ],
+          "es": [
+            "Coding agents can consume tokens quickly.",
+            "Check the latest prices and keep your key private."
+          ],
+          "zh": [
+            "Coding agents can consume tokens quickly.",
+            "Check the latest prices and keep your key private."
+          ],
+          "ko": [
+            "Coding agents can consume tokens quickly.",
+            "Check the latest prices and keep your key private."
+          ]
+        },
+        "verdict": {
+          "ru": "Если пишете код с агентами и сидите в России, это самый прямой путь к Claude и GPT без VPN. Для ботов и автоматизаций с документами для бухгалтерии берите polza.ai.",
+          "en": "An API route for coding agents from Russia with a RUB balance.",
+          "es": "An API route for coding agents from Russia with a RUB balance.",
+          "zh": "An API route for coding agents from Russia with a RUB balance.",
+          "ko": "An API route for coding agents from Russia with a RUB balance."
+        },
+        "inlineLinks": {
+          "ru": [
+            {
+              "text": "polza.ai",
+              "href": "/ai/polza-ai"
+            }
+          ],
+          "en": [
+            {
+              "text": "polza.ai",
+              "href": "/ai/polza-ai"
+            }
+          ],
+          "es": [
+            {
+              "text": "polza.ai",
+              "href": "/ai/polza-ai"
+            }
+          ],
+          "zh": [
+            {
+              "text": "polza.ai",
+              "href": "/ai/polza-ai"
+            }
+          ],
+          "ko": [
+            {
+              "text": "polza.ai",
+              "href": "/ai/polza-ai"
+            }
+          ]
+        },
+        "links": [
+          {
+            "href": "/guides/claude-iz-rossii-bez-bana",
+            "label": {
+              "ru": "Как пользоваться Claude из России, разобрал отдельно",
+              "en": "Using Claude from Russia",
+              "es": "Using Claude from Russia",
+              "zh": "Using Claude from Russia",
+              "ko": "Using Claude from Russia"
+            }
+          }
+        ],
+        "capabilities": {
+          "ru": [
+            "Работает и в формате OpenAI, и в формате Anthropic, поэтому подключается к Claude Code, Codex и другим агентам.",
+            "Модели: Claude Opus и Sonnet 5.5, GPT-5.5 и 5.6, Gemini 3 и другие.",
+            "Кроме текста: генерация картинок, распознавание речи, поиск и MCP.",
+            "Ключ даёт доступ только к моделям: к личному кабинету, файлам и репозиториям он ничего не открывает.",
+            "Есть страница статуса и готовый скилл для агентов."
+          ],
+          "en": [
+            "OpenAI and Anthropic API formats for Claude Code, Codex and other agents."
+          ],
+          "es": [
+            "OpenAI and Anthropic API formats for Claude Code, Codex and other agents."
+          ],
+          "zh": [
+            "OpenAI and Anthropic API formats for Claude Code, Codex and other agents."
+          ],
+          "ko": [
+            "OpenAI and Anthropic API formats for Claude Code, Codex and other agents."
+          ]
+        },
+        "pricing": {
+          "ru": [
+            "При регистрации 300 кредитов на тест.",
+            "Первое пополнение от 199 ₽, следующие от 400 ₽.",
+            "Цены моделей указаны в кредитах за миллион токенов в каталоге на сайте."
+          ],
+          "en": [
+            "300 test credits on registration.",
+            "First top-up from RUB 199, later top-ups from RUB 400."
+          ],
+          "es": [
+            "300 test credits on registration.",
+            "First top-up from RUB 199, later top-ups from RUB 400."
+          ],
+          "zh": [
+            "300 test credits on registration.",
+            "First top-up from RUB 199, later top-ups from RUB 400."
+          ],
+          "ko": [
+            "300 test credits on registration.",
+            "First top-up from RUB 199, later top-ups from RUB 400."
+          ]
+        },
+        "gettingStarted": {
+          "ru": [
+            "Регистрируетесь по ссылке и получаете тестовые кредиты.",
+            "Создаёте ключ.",
+            "В настройках агента указываете адрес https://api.omnirouter.ru и ключ, проверяете на маленькой задаче."
+          ],
+          "en": [
+            "Register, create a key and configure https://api.omnirouter.ru.",
+            "Test on a small task."
+          ],
+          "es": [
+            "Register, create a key and configure https://api.omnirouter.ru.",
+            "Test on a small task."
+          ],
+          "zh": [
+            "Register, create a key and configure https://api.omnirouter.ru.",
+            "Test on a small task."
+          ],
+          "ko": [
+            "Register, create a key and configure https://api.omnirouter.ru.",
+            "Test on a small task."
+          ]
+        }
+      },
+      "details": {
+        "paymentMethods": {
+          "ru": "Рубли, крипта",
+          "en": "Rubles, crypto",
+          "es": "Rubles, crypto",
+          "zh": "Rubles, crypto",
+          "ko": "Rubles, crypto"
+        },
+        "types": {
+          "ru": "Работает и в формате OpenAI, и в формате Anthropic, поэтому подключается к Claude Code, Codex и другим агентам.",
+          "en": "OpenAI and Anthropic API formats for Claude Code, Codex and other agents.",
+          "es": "OpenAI and Anthropic API formats for Claude Code, Codex and other agents.",
+          "zh": "OpenAI and Anthropic API formats for Claude Code, Codex and other agents.",
+          "ko": "OpenAI and Anthropic API formats for Claude Code, Codex and other agents."
+        }
+      }
+    },
+    {
+      "id": "ai-agentrouter",
+      "slug": "agentrouter",
+      "name": "AgentRouter",
+      "category": "AI",
+      "subCategory": "AICoding",
+      "url": "https://agentrouter.org/register?aff=AWbT",
+      "logo": "/ai-agentrouter.webp",
+      "title": {
+        "ru": "AgentRouter: Claude Code бесплатно на старте | Hopscup",
+        "en": "AgentRouter: free starter credits for Claude Code | Hopscup",
+        "es": "AgentRouter: free starter credits for Claude Code | Hopscup",
+        "zh": "AgentRouter: free starter credits for Claude Code | Hopscup",
+        "ko": "AgentRouter: free starter credits for Claude Code | Hopscup"
+      },
+      "heading": {
+        "ru": "AgentRouter: бесплатные кредиты на Claude, GPT и GLM для кодинга",
+        "en": "AgentRouter: starter credits for Claude, GPT and GLM coding",
+        "es": "AgentRouter: starter credits for Claude, GPT and GLM coding",
+        "zh": "AgentRouter: starter credits for Claude, GPT and GLM coding",
+        "ko": "AgentRouter: starter credits for Claude, GPT and GLM coding"
+      },
+      "description": {
+        "ru": "Обзор AgentRouter: регистрация через GitHub без карты, бонусные кредиты на Claude, GPT и GLM, подключение к Claude Code и Codex и риски посредника.",
+        "en": "GitHub registration without a card, bonus API credits and coding-agent support.",
+        "es": "GitHub registration without a card, bonus API credits and coding-agent support.",
+        "zh": "GitHub registration without a card, bonus API credits and coding-agent support.",
+        "ko": "GitHub registration without a card, bonus API credits and coding-agent support."
+      },
+      "editorial": {
+        "title": {
+          "ru": "AgentRouter: Claude Code бесплатно на старте | Hopscup",
+          "en": "AgentRouter: free starter credits for Claude Code | Hopscup",
+          "es": "AgentRouter: free starter credits for Claude Code | Hopscup",
+          "zh": "AgentRouter: free starter credits for Claude Code | Hopscup",
+          "ko": "AgentRouter: free starter credits for Claude Code | Hopscup"
+        },
+        "description": {
+          "ru": "AgentRouter нужен, чтобы попробовать Claude Code и других агентов вообще бесплатно: регистрируетесь через GitHub, карта не нужна, а на баланс падают бонусные кредиты.",
+          "en": "GitHub registration without a card, bonus API credits and coding-agent support.",
+          "es": "GitHub registration without a card, bonus API credits and coding-agent support.",
+          "zh": "GitHub registration without a card, bonus API credits and coding-agent support.",
+          "ko": "GitHub registration without a card, bonus API credits and coding-agent support."
+        },
+        "bestFor": {
+          "ru": [
+            "Попробовать Claude Code перед тем, как платить.",
+            "Пет-проектам и учёбе.",
+            "Сравнить модели на своих задачах."
+          ],
+          "en": [
+            "Testing coding agents, learning and personal projects."
+          ],
+          "es": [
+            "Testing coding agents, learning and personal projects."
+          ],
+          "zh": [
+            "Testing coding agents, learning and personal projects."
+          ],
+          "ko": [
+            "Testing coding agents, learning and personal projects."
+          ]
+        },
+        "considerations": {
+          "ru": [
+            "Это посредник: весь код и промпты идут через чужой сервер. Рабочие проекты, пароли и ключи туда не отправляйте.",
+            "Бонусы могут поменять или убрать в любой момент.",
+            "Для постоянной работы нужен сервис с понятной оплатой."
+          ],
+          "en": [
+            "Requests pass through a third party.",
+            "Do not send work secrets or credentials; bonuses can change."
+          ],
+          "es": [
+            "Requests pass through a third party.",
+            "Do not send work secrets or credentials; bonuses can change."
+          ],
+          "zh": [
+            "Requests pass through a third party.",
+            "Do not send work secrets or credentials; bonuses can change."
+          ],
+          "ko": [
+            "Requests pass through a third party.",
+            "Do not send work secrets or credentials; bonuses can change."
+          ]
+        },
+        "verdict": {
+          "ru": "Отличный способ бесплатно пощупать агентов для кода. Когда поймёте, что это ваше, переходите на OmniRouter или polza.ai.",
+          "en": "A way to try coding agents before choosing a paid provider.",
+          "es": "A way to try coding agents before choosing a paid provider.",
+          "zh": "A way to try coding agents before choosing a paid provider.",
+          "ko": "A way to try coding agents before choosing a paid provider."
+        },
+        "inlineLinks": {
+          "ru": [
+            {
+              "text": "OmniRouter",
+              "href": "/ai/omnirouter"
+            },
+            {
+              "text": "polza.ai",
+              "href": "/ai/polza-ai"
+            }
+          ],
+          "en": [
+            {
+              "text": "OmniRouter",
+              "href": "/ai/omnirouter"
+            },
+            {
+              "text": "polza.ai",
+              "href": "/ai/polza-ai"
+            }
+          ],
+          "es": [
+            {
+              "text": "OmniRouter",
+              "href": "/ai/omnirouter"
+            },
+            {
+              "text": "polza.ai",
+              "href": "/ai/polza-ai"
+            }
+          ],
+          "zh": [
+            {
+              "text": "OmniRouter",
+              "href": "/ai/omnirouter"
+            },
+            {
+              "text": "polza.ai",
+              "href": "/ai/polza-ai"
+            }
+          ],
+          "ko": [
+            {
+              "text": "OmniRouter",
+              "href": "/ai/omnirouter"
+            },
+            {
+              "text": "polza.ai",
+              "href": "/ai/polza-ai"
+            }
+          ]
+        },
+        "links": [],
+        "capabilities": {
+          "ru": [
+            "Один ключ к Claude, GPT и GLM.",
+            "Подключается к Claude Code, Codex и Gemini CLI вместо официального API.",
+            "Регистрация через GitHub, без карты и без документов."
+          ],
+          "en": [
+            "One API key for Claude, GPT and GLM.",
+            "Claude Code, Codex and Gemini CLI support."
+          ],
+          "es": [
+            "One API key for Claude, GPT and GLM.",
+            "Claude Code, Codex and Gemini CLI support."
+          ],
+          "zh": [
+            "One API key for Claude, GPT and GLM.",
+            "Claude Code, Codex and Gemini CLI support."
+          ],
+          "ko": [
+            "One API key for Claude, GPT and GLM.",
+            "Claude Code, Codex and Gemini CLI support."
+          ]
+        },
+        "pricing": {
+          "ru": [
+            "Бонусные кредиты за регистрацию. Сумма меняется: в разное время давали от $50 до $200, по реферальной ссылке обычно больше.",
+            "Это не безлимит: каждый запрос списывает кредиты по токенам."
+          ],
+          "en": [
+            "Registration bonus varies; it is not unlimited access."
+          ],
+          "es": [
+            "Registration bonus varies; it is not unlimited access."
+          ],
+          "zh": [
+            "Registration bonus varies; it is not unlimited access."
+          ],
+          "ko": [
+            "Registration bonus varies; it is not unlimited access."
+          ]
+        },
+        "gettingStarted": {
+          "ru": [
+            "Заводите аккаунт на GitHub, если его нет.",
+            "Регистрируетесь по ссылке через GitHub.",
+            "Создаёте токен и указываете его в Claude Code вместе с адресом AgentRouter."
+          ],
+          "en": [
+            "Sign in through GitHub, create a token and configure the agent."
+          ],
+          "es": [
+            "Sign in through GitHub, create a token and configure the agent."
+          ],
+          "zh": [
+            "Sign in through GitHub, create a token and configure the agent."
+          ],
+          "ko": [
+            "Sign in through GitHub, create a token and configure the agent."
+          ]
+        }
+      },
+      "details": {
+        "paymentMethods": {
+          "ru": "на старте бесплатно, вход через GitHub",
+          "en": "Free to start; GitHub sign-in",
+          "es": "Free to start; GitHub sign-in",
+          "zh": "Free to start; GitHub sign-in",
+          "ko": "Free to start; GitHub sign-in"
+        },
+        "types": {
+          "ru": "Один ключ к Claude, GPT и GLM.",
+          "en": "One API key for Claude, GPT and GLM.",
+          "es": "One API key for Claude, GPT and GLM.",
+          "zh": "One API key for Claude, GPT and GLM.",
+          "ko": "One API key for Claude, GPT and GLM."
+        }
+      }
+    },
+    {
+      "id": "ai-a6api",
+      "slug": "a6api",
+      "name": "A6API",
+      "category": "AI",
+      "subCategory": "AICoding",
+      "url": "https://a6api.ai/?auth=register&aff=vUEg",
+      "logo": "/ai-a6api.webp",
+      "title": {
+        "ru": "A6API: картинки GPT Image за копейки по API | Hopscup",
+        "en": "A6API: low-cost GPT Image generation API | Hopscup",
+        "es": "A6API: low-cost GPT Image generation API | Hopscup",
+        "zh": "A6API: low-cost GPT Image generation API | Hopscup",
+        "ko": "A6API: low-cost GPT Image generation API | Hopscup"
+      },
+      "heading": {
+        "ru": "A6API: генерация картинок GPT Image, Gemini и Grok за доли цента",
+        "en": "A6API: GPT Image, Gemini and Grok images at low cost",
+        "es": "A6API: GPT Image, Gemini and Grok images at low cost",
+        "zh": "A6API: GPT Image, Gemini and Grok images at low cost",
+        "ko": "A6API: GPT Image, Gemini and Grok images at low cost"
+      },
+      "description": {
+        "ru": "Обзор A6API: китайский API-сервис, где 2K-картинка GPT Image выходит около полцента. Оплата USDT, подключение через Cherry Studio и риски.",
+        "en": "A Chinese image API with USDT payments and Cherry Studio support.",
+        "es": "A Chinese image API with USDT payments and Cherry Studio support.",
+        "zh": "A Chinese image API with USDT payments and Cherry Studio support.",
+        "ko": "A Chinese image API with USDT payments and Cherry Studio support."
+      },
+      "editorial": {
+        "title": {
+          "ru": "A6API: картинки GPT Image за копейки по API | Hopscup",
+          "en": "A6API: low-cost GPT Image generation API | Hopscup",
+          "es": "A6API: low-cost GPT Image generation API | Hopscup",
+          "zh": "A6API: low-cost GPT Image generation API | Hopscup",
+          "ko": "A6API: low-cost GPT Image generation API | Hopscup"
+        },
+        "description": {
+          "ru": "Китайский сервис, через который картинки GPT Image 2 выходят примерно в полцента за 2K, а $2 хватает на сотни генераций. Сайт только на китайском и оплата только криптой, зато в разы дешевле, чем напрямую у OpenAI.",
+          "en": "A Chinese image API with USDT payments and Cherry Studio support.",
+          "es": "A Chinese image API with USDT payments and Cherry Studio support.",
+          "zh": "A Chinese image API with USDT payments and Cherry Studio support.",
+          "ko": "A Chinese image API with USDT payments and Cherry Studio support."
+        },
+        "bestFor": {
+          "ru": [
+            "Если нужно много картинок для роликов, обложек и креативов.",
+            "Тем, кто не боится API и китайского интерфейса."
+          ],
+          "en": [
+            "Generating many images for videos, thumbnails and creatives."
+          ],
+          "es": [
+            "Generating many images for videos, thumbnails and creatives."
+          ],
+          "zh": [
+            "Generating many images for videos, thumbnails and creatives."
+          ],
+          "ko": [
+            "Generating many images for videos, thumbnails and creatives."
+          ]
+        },
+        "considerations": {
+          "ru": [
+            "Сайт только на китайском, включайте переводчик в браузере.",
+            "Редактирование готовых картинок работает хуже, чем генерация с нуля.",
+            "Сервис китайский и малоизвестный: больше $2-5 не кладите."
+          ],
+          "en": [
+            "Chinese interface; use browser translation.",
+            "Editing is less reliable than new generation.",
+            "Keep the test balance small."
+          ],
+          "es": [
+            "Chinese interface; use browser translation.",
+            "Editing is less reliable than new generation.",
+            "Keep the test balance small."
+          ],
+          "zh": [
+            "Chinese interface; use browser translation.",
+            "Editing is less reliable than new generation.",
+            "Keep the test balance small."
+          ],
+          "ko": [
+            "Chinese interface; use browser translation.",
+            "Editing is less reliable than new generation.",
+            "Keep the test balance small."
+          ]
+        },
+        "verdict": {
+          "ru": "Самый дешёвый способ генерировать картинки GPT Image, если вам не страшна крипта и китайский интерфейс.",
+          "en": "Low-cost image generation for users comfortable with crypto and an API.",
+          "es": "Low-cost image generation for users comfortable with crypto and an API.",
+          "zh": "Low-cost image generation for users comfortable with crypto and an API.",
+          "ko": "Low-cost image generation for users comfortable with crypto and an API."
+        },
+        "inlineLinks": {
+          "ru": [
+            {
+              "text": "обменнике",
+              "href": "/crypto-exchange/prosto-exchange"
+            }
+          ],
+          "en": [
+            {
+              "text": "обменнике",
+              "href": "/crypto-exchange/prosto-exchange"
+            }
+          ],
+          "es": [
+            {
+              "text": "обменнике",
+              "href": "/crypto-exchange/prosto-exchange"
+            }
+          ],
+          "zh": [
+            {
+              "text": "обменнике",
+              "href": "/crypto-exchange/prosto-exchange"
+            }
+          ],
+          "ko": [
+            {
+              "text": "обменнике",
+              "href": "/crypto-exchange/prosto-exchange"
+            }
+          ]
+        },
+        "links": [
+          {
+            "href": "/guides/gpt-image-deshevo-a6api",
+            "label": {
+              "ru": "Пошаговый гайд с видео: 200+ картинок за $2",
+              "en": "Step-by-step video guide: 200+ images for $2",
+              "es": "Step-by-step video guide: 200+ images for $2",
+              "zh": "Step-by-step video guide: 200+ images for $2",
+              "ko": "Step-by-step video guide: 200+ images for $2"
+            }
+          }
+        ],
+        "capabilities": {
+          "ru": [
+            "API к моделям картинок: GPT Image 2, Gemini, Grok.",
+            "Формат совместим с OpenAI, поэтому работает в программах вроде Cherry Studio.",
+            "В кабинете видна история всех генераций и расходов."
+          ],
+          "en": [
+            "Image APIs for GPT Image 2, Gemini and Grok.",
+            "OpenAI-compatible format and generation-cost history."
+          ],
+          "es": [
+            "Image APIs for GPT Image 2, Gemini and Grok.",
+            "OpenAI-compatible format and generation-cost history."
+          ],
+          "zh": [
+            "Image APIs for GPT Image 2, Gemini and Grok.",
+            "OpenAI-compatible format and generation-cost history."
+          ],
+          "ko": [
+            "Image APIs for GPT Image 2, Gemini and Grok.",
+            "OpenAI-compatible format and generation-cost history."
+          ]
+        },
+        "pricing": {
+          "ru": [
+            "2K-картинка у меня выходила примерно в полцента.",
+            "Пополнял на $2, этого хватает на сотни картинок."
+          ],
+          "en": [
+            "The author paid about half a cent per 2K image.",
+            "A $2 top-up covered hundreds of images in the author test."
+          ],
+          "es": [
+            "The author paid about half a cent per 2K image.",
+            "A $2 top-up covered hundreds of images in the author test."
+          ],
+          "zh": [
+            "The author paid about half a cent per 2K image.",
+            "A $2 top-up covered hundreds of images in the author test."
+          ],
+          "ko": [
+            "The author paid about half a cent per 2K image.",
+            "A $2 top-up covered hundreds of images in the author test."
+          ]
+        },
+        "payment": {
+          "ru": [
+            "Только USDT. Дешевле всего отправлять в сети BSC (BEP20). Купить USDT можно в обменнике, от ~1000 ₽."
+          ],
+          "en": [
+            "USDT"
+          ],
+          "es": [
+            "USDT"
+          ],
+          "zh": [
+            "USDT"
+          ],
+          "ko": [
+            "USDT"
+          ]
+        },
+        "gettingStarted": {
+          "ru": [
+            "Регистрируетесь по ссылке и пополняете баланс в USDT по сети BEP20.",
+            "Жмёте значок ключа, добавляете ключ и сохраняете. Никому его не показывайте.",
+            "В Cherry Studio добавляете провайдера типа New API, вставляете адрес и ключ, жмёте «получить модели» и генерируете в разделе Paint."
+          ],
+          "en": [
+            "Register and top up with USDT over BEP20.",
+            "Create a private API key.",
+            "Use a New API provider in Cherry Studio and generate in Paint."
+          ],
+          "es": [
+            "Register and top up with USDT over BEP20.",
+            "Create a private API key.",
+            "Use a New API provider in Cherry Studio and generate in Paint."
+          ],
+          "zh": [
+            "Register and top up with USDT over BEP20.",
+            "Create a private API key.",
+            "Use a New API provider in Cherry Studio and generate in Paint."
+          ],
+          "ko": [
+            "Register and top up with USDT over BEP20.",
+            "Create a private API key.",
+            "Use a New API provider in Cherry Studio and generate in Paint."
+          ]
+        },
+        "video": {
+          "id": "YWORLiJtg2c",
+          "url": "https://youtu.be/YWORLiJtg2c",
+          "caption": {
+            "ru": "Видео: как настроить A6API",
+            "en": "Video: how to set up A6API",
+            "es": "Video: how to set up A6API",
+            "zh": "Video: how to set up A6API",
+            "ko": "Video: how to set up A6API"
+          }
+        }
+      },
+      "details": {
+        "paymentMethods": {
+          "ru": "USDT",
+          "en": "USDT",
+          "es": "USDT",
+          "zh": "USDT",
+          "ko": "USDT"
+        },
+        "types": {
+          "ru": "API к моделям картинок: GPT Image 2, Gemini, Grok.",
+          "en": "Image APIs for GPT Image 2, Gemini and Grok.",
+          "es": "Image APIs for GPT Image 2, Gemini and Grok.",
+          "zh": "Image APIs for GPT Image 2, Gemini and Grok.",
+          "ko": "Image APIs for GPT Image 2, Gemini and Grok."
+        }
+      }
+    },
+    {
+      "id": "ai-ghostmetal",
+      "slug": "ghostmetal",
+      "name": "GhostMetal",
+      "category": "AI",
+      "subCategory": "AICoding",
+      "url": "https://ghostmetal.io/auth?ref=9RNW9HL9",
+      "logo": "/ai-ghostmetal.webp",
+      "title": {
+        "ru": "GhostMetal: GLM и Qwen без логов, чат и API | Hopscup",
+        "en": "GhostMetal: private GLM and Qwen chat and API | Hopscup",
+        "es": "GhostMetal: private GLM and Qwen chat and API | Hopscup",
+        "zh": "GhostMetal: private GLM and Qwen chat and API | Hopscup",
+        "ko": "GhostMetal: private GLM and Qwen chat and API | Hopscup"
+      },
+      "heading": {
+        "ru": "GhostMetal: открытые модели GLM и Qwen на своих серверах, без логов",
+        "en": "GhostMetal: open-weight GLM and Qwen on owned hardware",
+        "es": "GhostMetal: open-weight GLM and Qwen on owned hardware",
+        "zh": "GhostMetal: open-weight GLM and Qwen on owned hardware",
+        "ko": "GhostMetal: open-weight GLM and Qwen on owned hardware"
+      },
+      "description": {
+        "ru": "Обзор GhostMetal: GLM-5.3 и Qwen-3.8 на собственных видеокартах сервиса, промпты не хранятся, чат и API в формате OpenAI, 20 кредитов на тест.",
+        "en": "Private chat and OpenAI-compatible API, owned hardware and 20 test credits.",
+        "es": "Private chat and OpenAI-compatible API, owned hardware and 20 test credits.",
+        "zh": "Private chat and OpenAI-compatible API, owned hardware and 20 test credits.",
+        "ko": "Private chat and OpenAI-compatible API, owned hardware and 20 test credits."
+      },
+      "editorial": {
+        "title": {
+          "ru": "GhostMetal: GLM и Qwen без логов, чат и API | Hopscup",
+          "en": "GhostMetal: private GLM and Qwen chat and API | Hopscup",
+          "es": "GhostMetal: private GLM and Qwen chat and API | Hopscup",
+          "zh": "GhostMetal: private GLM and Qwen chat and API | Hopscup",
+          "ko": "GhostMetal: private GLM and Qwen chat and API | Hopscup"
+        },
+        "description": {
+          "ru": "OpenAI и Anthropic всё чаще банят аккаунты, и логичный запасной вариант: открытые китайские модели. GhostMetal запускает GLM и Qwen на собственных видеокартах, а не перепродаёт чужой API, и не хранит ваши промпты. Свежие версии GLM для кода и текста уже вполне приятные, не то что раньше.",
+          "en": "Private chat and OpenAI-compatible API, owned hardware and 20 test credits.",
+          "es": "Private chat and OpenAI-compatible API, owned hardware and 20 test credits.",
+          "zh": "Private chat and OpenAI-compatible API, owned hardware and 20 test credits.",
+          "ko": "Private chat and OpenAI-compatible API, owned hardware and 20 test credits."
+        },
+        "bestFor": {
+          "ru": [
+            "Запасному варианту на случай бана в ChatGPT или Claude.",
+            "Тем, кому важна приватность переписки и кода.",
+            "Коду и текстам, где хватает уровня открытых моделей."
+          ],
+          "en": [
+            "A backup to ChatGPT or Claude and privacy-sensitive personal work."
+          ],
+          "es": [
+            "A backup to ChatGPT or Claude and privacy-sensitive personal work."
+          ],
+          "zh": [
+            "A backup to ChatGPT or Claude and privacy-sensitive personal work."
+          ],
+          "ko": [
+            "A backup to ChatGPT or Claude and privacy-sensitive personal work."
+          ]
+        },
+        "considerations": {
+          "ru": [
+            "На сложных задачах открытые модели пока слабее топовых Claude и GPT.",
+            "API открывается только после пополнения.",
+            "Из России проще платить USDT: подписка по карте требует зарубежную карту и продлевается автоматически.",
+            "Если у вас мощная видеокарта, открытые модели можно запускать и у себя бесплатно, но GhostMetal избавляет от возни с железом."
+          ],
+          "en": [
+            "API access requires a top-up.",
+            "Open models can be weaker on difficult tasks.",
+            "Foreign-card subscriptions renew automatically."
+          ],
+          "es": [
+            "API access requires a top-up.",
+            "Open models can be weaker on difficult tasks.",
+            "Foreign-card subscriptions renew automatically."
+          ],
+          "zh": [
+            "API access requires a top-up.",
+            "Open models can be weaker on difficult tasks.",
+            "Foreign-card subscriptions renew automatically."
+          ],
+          "ko": [
+            "API access requires a top-up.",
+            "Open models can be weaker on difficult tasks.",
+            "Foreign-card subscriptions renew automatically."
+          ]
+        },
+        "verdict": {
+          "ru": "Хорошая страховка от банов: открытые модели, свои сервера и никаких логов. Держите его вторым вариантом рядом с основным Claude или ChatGPT.",
+          "en": "A private open-model backup alongside a main AI provider.",
+          "es": "A private open-model backup alongside a main AI provider.",
+          "zh": "A private open-model backup alongside a main AI provider.",
+          "ko": "A private open-model backup alongside a main AI provider."
+        },
+        "inlineLinks": {
+          "ru": [
+            {
+              "text": "USDT",
+              "href": "/crypto-exchange"
+            },
+            {
+              "text": "зарубежную карту",
+              "href": "/foreign-cards"
+            }
+          ],
+          "en": [
+            {
+              "text": "USDT",
+              "href": "/crypto-exchange"
+            },
+            {
+              "text": "foreign card",
+              "href": "/foreign-cards"
+            }
+          ],
+          "es": [
+            {
+              "text": "USDT",
+              "href": "/crypto-exchange"
+            },
+            {
+              "text": "foreign card",
+              "href": "/foreign-cards"
+            }
+          ],
+          "zh": [
+            {
+              "text": "USDT",
+              "href": "/crypto-exchange"
+            },
+            {
+              "text": "foreign card",
+              "href": "/foreign-cards"
+            }
+          ],
+          "ko": [
+            {
+              "text": "USDT",
+              "href": "/crypto-exchange"
+            },
+            {
+              "text": "foreign card",
+              "href": "/foreign-cards"
+            }
+          ]
+        },
+        "links": [
+          {
+            "href": "/guides/claude-zabanili-kak-sohranit-dannye",
+            "label": {
+              "ru": "Если Claude уже забанили, как сохранить данные",
+              "en": "Saving your data after a Claude ban",
+              "es": "Saving your data after a Claude ban",
+              "zh": "Saving your data after a Claude ban",
+              "ko": "Saving your data after a Claude ban"
+            }
+          }
+        ],
+        "capabilities": {
+          "ru": [
+            "Открытые модели GLM-5.3, Qwen-3.8 и другие.",
+            "Чат в браузере. История хранится только на вашем устройстве.",
+            "API в формате OpenAI для своих скриптов, ботов и агентов.",
+            "Промпты и ответы не логируются, на ваших данных модели не обучаются."
+          ],
+          "en": [
+            "Open-weight GLM and Qwen, browser chat and OpenAI-compatible API.",
+            "History stays on the device; prompts are not logged."
+          ],
+          "es": [
+            "Open-weight GLM and Qwen, browser chat and OpenAI-compatible API.",
+            "History stays on the device; prompts are not logged."
+          ],
+          "zh": [
+            "Open-weight GLM and Qwen, browser chat and OpenAI-compatible API.",
+            "History stays on the device; prompts are not logged."
+          ],
+          "ko": [
+            "Open-weight GLM and Qwen, browser chat and OpenAI-compatible API.",
+            "History stays on the device; prompts are not logged."
+          ]
+        },
+        "pricing": {
+          "ru": [
+            "Бесплатно: 20 кредитов на тест. Сгорают через 14 дней, если не пополнить. Внутри все модели и контекст 32K, но без API и веб-поиска.",
+            "Пакеты кредитов за крипту: $10 за 1000, $20 за 2000, $50 за 5000 и больше. Эти кредиты не сгорают.",
+            "Подписки на 30 дней: Pro $14 за 2000 кредитов, Max $39 за 6000, Ultra $99 за 16 000. Выходит на 43-62% больше кредитов, чем пакетами, но неиспользованные кредиты подписки сгорают в конце периода."
+          ],
+          "en": [
+            "20 trial credits, expiring after 14 days without a top-up; no trial API.",
+            "Crypto credit packs from $10.",
+            "30-day subscriptions from $14; unused subscription credits expire."
+          ],
+          "es": [
+            "20 trial credits, expiring after 14 days without a top-up; no trial API.",
+            "Crypto credit packs from $10.",
+            "30-day subscriptions from $14; unused subscription credits expire."
+          ],
+          "zh": [
+            "20 trial credits, expiring after 14 days without a top-up; no trial API.",
+            "Crypto credit packs from $10.",
+            "30-day subscriptions from $14; unused subscription credits expire."
+          ],
+          "ko": [
+            "20 trial credits, expiring after 14 days without a top-up; no trial API.",
+            "Crypto credit packs from $10.",
+            "30-day subscriptions from $14; unused subscription credits expire."
+          ]
+        },
+        "payment": {
+          "ru": [
+            "Крипта: USDT в сетях TRC20, BEP20, Polygon, Arbitrum, Optimism, AVAX и ERC20, а ещё ETH, BTC и XMR. За крипту доступны все пакеты и тарифы.",
+            "Карта через Stripe: только подписки Pro и Max с автопродлением. Российские карты не проходят, нужна зарубежная."
+          ],
+          "en": [
+            "Crypto or foreign card through Stripe; Russian cards are not accepted"
+          ],
+          "es": [
+            "Crypto or foreign card through Stripe; Russian cards are not accepted"
+          ],
+          "zh": [
+            "Crypto or foreign card through Stripe; Russian cards are not accepted"
+          ],
+          "ko": [
+            "Crypto or foreign card through Stripe; Russian cards are not accepted"
+          ]
+        },
+        "gettingStarted": {
+          "ru": [
+            "Регистрируетесь по ссылке.",
+            "Тестируете чат на бесплатных кредитах.",
+            "Если нравится, пополняете и создаёте ключ для API."
+          ],
+          "en": [
+            "Register and try the free chat.",
+            "Top up and create an API key if it fits."
+          ],
+          "es": [
+            "Register and try the free chat.",
+            "Top up and create an API key if it fits."
+          ],
+          "zh": [
+            "Register and try the free chat.",
+            "Top up and create an API key if it fits."
+          ],
+          "ko": [
+            "Register and try the free chat.",
+            "Top up and create an API key if it fits."
+          ]
+        }
+      },
+      "details": {
+        "paymentMethods": {
+          "ru": "крипта (USDT в 7 сетях, ETH, BTC, XMR) или зарубежная карта через Stripe. Карты РФ не подходят.",
+          "en": "Crypto or foreign card through Stripe; Russian cards are not accepted",
+          "es": "Crypto or foreign card through Stripe; Russian cards are not accepted",
+          "zh": "Crypto or foreign card through Stripe; Russian cards are not accepted",
+          "ko": "Crypto or foreign card through Stripe; Russian cards are not accepted"
+        },
+        "types": {
+          "ru": "Открытые модели GLM-5.3, Qwen-3.8 и другие.",
+          "en": "Open-weight GLM and Qwen, browser chat and OpenAI-compatible API.",
+          "es": "Open-weight GLM and Qwen, browser chat and OpenAI-compatible API.",
+          "zh": "Open-weight GLM and Qwen, browser chat and OpenAI-compatible API.",
+          "ko": "Open-weight GLM and Qwen, browser chat and OpenAI-compatible API."
+        }
+      }
+    }
+  ]
+}

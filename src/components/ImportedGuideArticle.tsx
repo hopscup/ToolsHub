@@ -22,7 +22,7 @@ type InlineSegment = {
   code?: boolean;
 };
 
-type ArticleBlock =
+export type ArticleBlock =
   | { type: 'paragraph'; content: InlineSegment[] }
   | { type: 'heading'; level: number; text: string; compact?: boolean; href?: string }
   | { type: 'quote'; content: InlineSegment[] }
@@ -75,7 +75,7 @@ const normalizeHref = (href: string | undefined, sourceAnchors: Record<string, s
   return undefined;
 };
 
-const InlineContent = ({
+export const InlineContent = ({
   content,
   sourceAnchors,
 }: {
@@ -148,7 +148,7 @@ const ImportedCode = ({ label, text }: { key?: string; label: string; text: stri
       </button>
       <span role="status" className="sr-only">{status === 'copied' ? 'Скопировано' : status === 'error' ? 'Не удалось скопировать. Выделите текст вручную.' : ''}</span>
     </div>
-    <pre className="m-0 whitespace-pre-wrap break-words p-4 font-mono text-[13px] leading-6 text-white/75 [overflow-wrap:anywhere]"><code>{text}</code></pre>
+    <pre className="m-0 max-h-[65dvh] overflow-y-auto whitespace-pre-wrap break-words p-4 font-mono text-[13px] leading-6 text-white/75 [overflow-wrap:anywhere]"><code>{text}</code></pre>
   </div>;
 };
 

@@ -20,6 +20,13 @@ import { YoutubeFarmGuideArticle } from './components/YoutubeFarmGuideArticle';
 import { youtubeFarmArticle } from './data/youtubeFarmContent.js';
 import { AiSubscriptionsGuideArticle } from './components/AiSubscriptionsGuideArticle';
 import { aiSubscriptionsArticle } from './data/aiSubscriptionsContent.js';
+import { A6apiGuideArticle } from './components/A6apiGuideArticle';
+import { a6apiArticle } from './data/a6apiContent.js';
+import { aiOffers, aiPages, aiSection } from './data/aiPages.js';
+import { AiSectionContent } from './components/AiSectionContent';
+import type { ArticleBlock } from './components/ImportedGuideArticle';
+import { ServiceEditorialSections, ServiceRichText } from './components/ServiceEditorialSections';
+import { ArticleVideo } from './components/ArticleVideo';
 import { MobileAntidetectGuideArticle } from './components/MobileAntidetectGuideArticle';
 import { mobileAntidetectArticle } from './data/mobileAntidetectContent.js';
 import { isIndexablePath, getCanonicalPath, getIndexAlternates, getLanguageSwitchPath, absoluteIndexUrl } from './data/indexPolicy.js';
@@ -100,6 +107,7 @@ import {
   Linkedin,
   Twitch,
   Music2,
+  AudioLines,
   Chrome,
   Store,
   Layers,
@@ -117,31 +125,33 @@ import {
   Tv,
   Palette,
   Percent,
-  Clock
+  Clock,
+  Sparkles
 } from 'lucide-react';
 
 // --- Types ---
 type Language = 'ru' | 'en' | 'es' | 'zh' | 'ko';
 type Localized<T = string> = Partial<Record<Language, T>> & { ru: T; en: T };
 
-type CategoryType = 'Proxy' | 'Antidetect' | 'Stores' | 'Cards' | 'Crypto' | 'SMS' | 'VPS' | 'Social' | 'Steam' | 'Guides';
+type CategoryType = 'Proxy' | 'Antidetect' | 'Stores' | 'AI' | 'Cards' | 'Crypto' | 'SMS' | 'VPS' | 'Social' | 'Steam' | 'Guides';
 
-type SubCategory = 'Proxy' | 'VPN' | 'PCBasic' | 'PCAdvanced' | 'Mobile' | 'NoKYC' | 'WithKYC' | 'CardCrypto' | 'USDTQR' | 'Web' | 'Bot' | 'AML' | 'Wallet' | 'BoostSites' | 'Bux' | 'SteamFast' | 'SteamItems' | 'None';
-type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto';
+type SubCategory = 'Proxy' | 'VPN' | 'PCBasic' | 'PCAdvanced' | 'Mobile' | 'NoKYC' | 'WithKYC' | 'CardCrypto' | 'USDTQR' | 'Web' | 'Bot' | 'AML' | 'Wallet' | 'BoostSites' | 'Bux' | 'SteamFast' | 'SteamItems' | 'AIGeneration' | 'AIVoice' | 'AICoding' | 'None';
+type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto' | 'ai';
 
 const RECOMMENDED_OFFER_IDS = new Set(Object.values(recommendedOfferIds).flat());
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
   'guide-mobile-antidetect': { topic: 'antidetect', minutes: 9 },
-  'guide-ai-subscriptions': { topic: 'accounts', minutes: 5 },
+  'guide-ai-subscriptions': { topic: 'ai', minutes: 5 },
+  'guide-a6api': { topic: 'ai', minutes: 8 },
   'guide-youtube-farm': { topic: 'accounts', minutes: 9 },
   'guide-rf-numbers': { topic: 'accounts', minutes: 6 },
   'guide-virtual-number': { topic: 'accounts', minutes: 5 },
   'guide-free-antidetect': { topic: 'antidetect', minutes: 8 },
   'guide-shardx-review': { topic: 'antidetect', minutes: 8 },
   'guide-best-mobile-proxies': { topic: 'proxy', minutes: 8 },
-  'guide-claude-recovery': { topic: 'accounts', minutes: 6 },
-  'guide-claude-russia': { topic: 'accounts', minutes: 10 },
+  'guide-claude-recovery': { topic: 'ai', minutes: 6 },
+  'guide-claude-russia': { topic: 'ai', minutes: 10 },
   'guide-discord-token': { topic: 'accounts', minutes: 6 },
   'guide-foreign-cards': { topic: 'crypto', minutes: 7 },
   'guide-mobile-ip': { topic: 'proxy', minutes: 4 },
@@ -153,6 +163,7 @@ const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minut
 };
 
 const GUIDE_TOPIC_LABELS: Record<Exclude<GuideTopic, 'all'>, Localized> = {
+  ai: { ru: 'Нейросети', en: 'AI', es: 'AI', zh: 'AI', ko: 'AI' },
   proxy: { ru: 'IP и прокси', en: 'IP & proxies', es: 'IP y proxies', zh: 'IP 与代理', ko: 'IP 및 프록시' },
   antidetect: { ru: 'Антидетект', en: 'Antidetect', es: 'Antidetect', zh: '反检测', ko: '안티디텍트' },
   accounts: { ru: 'Аккаунты', en: 'Accounts', es: 'Cuentas', zh: '账号', ko: '계정' },
@@ -160,6 +171,11 @@ const GUIDE_TOPIC_LABELS: Record<Exclude<GuideTopic, 'all'>, Localized> = {
 };
 
 const GUIDE_TOPIC_STYLES: Record<Exclude<GuideTopic, 'all'>, { icon: string; label: string; glow: string }> = {
+  ai: {
+    icon: 'border-amber-300/25 bg-amber-300/10 text-amber-200',
+    label: 'text-amber-200',
+    glow: 'group-hover:border-amber-300/35 group-hover:shadow-[0_18px_55px_rgba(252,211,77,0.1)]',
+  },
   proxy: {
     icon: 'border-[#BD7BFF]/30 bg-[#BD7BFF]/10 text-[#BD7BFF]',
     label: 'text-[#BD7BFF]',
@@ -216,6 +232,7 @@ const HOME_SEO = {
 };
 
 const CATEGORY_HERO_SUBTITLES: Record<CategoryType, Localized> = {
+  AI: aiSection.heading,
   Proxy: {
     ru: 'Подберите прокси или VPN для аккаунтов, рекламы и других задач',
     en: 'Find the right proxy or VPN for accounts, ads, and everyday work',
@@ -299,6 +316,7 @@ interface Offer {
   url: string;
   webUrl?: string;
   logoUrl?: string;
+  logoFallback?: string;
   promoCode?: string;
   previousIssuance?: Localized;
   promoDiscount?: Localized;
@@ -361,6 +379,13 @@ interface Offer {
     considerations: Localized<string[]>;
     verdict: Localized;
     setupGuide?: { href: string; label: Localized };
+    capabilities?: Localized<string[]>;
+    pricing?: Localized<string[]>;
+    payment?: Localized<string[]>;
+    gettingStarted?: Localized<string[]>;
+    inlineLinks?: Localized<{ text: string; href: string }[]>;
+    links?: { href: string; label: Localized }[];
+    video?: { id: string; url: string; caption: Localized };
   };
 }
 
@@ -389,6 +414,7 @@ const SEO_LANDING_PAGES = seoLandingPages as SeoLandingPage[];
 const SERVICE_PAGE_SEO_BY_ID = Object.fromEntries(
   [
     ...accountShopPages,
+    ...aiPages,
     ...antidetectPages,
     ...cryptoExchangePages,
     ...foreignCardPages,
@@ -427,6 +453,7 @@ const CATEGORIES: { id: CategoryType; icon: any; title: Localized; subFilters?: 
       video: 'https://youtu.be/3wjIQRrOdd0?si=04kDWjWwLatAVipc' 
     } 
   },
+  { id: 'AI', icon: Sparkles, title: { ru: 'Нейросети', en: 'AI tools', es: 'AI tools', zh: 'AI tools', ko: 'AI tools' }, subFilters: ['AIGeneration', 'AIVoice', 'AICoding'] },
   { id: 'Cards', icon: CreditCard, title: { ru: 'Зарубежные Карты', en: 'Virtual Cards', es: 'Tarjetas virtuales', zh: '虚拟卡', ko: '가상 카드' }, subFilters: ['NoKYC', 'WithKYC'], guides: { text: '#', video: '#' } },
   { 
     id: 'Crypto', 
@@ -446,6 +473,7 @@ const CATEGORY_ROUTES: Record<CategoryType, string> = {
   Proxy: '/proxy-vpn',
   Antidetect: '/antidetect',
   Stores: '/account-shop',
+  AI: '/ai',
   Cards: '/foreign-cards',
   Crypto: '/crypto-exchange',
   SMS: '/sms-activators',
@@ -739,6 +767,7 @@ const SECTION_SEO: Record<CategoryType, {
   intro: Localized;
   points: Localized<string[]>;
 }> = {
+  AI: aiSection,
   Proxy: {
     route: CATEGORY_ROUTES.Proxy,
     title: {
@@ -1926,6 +1955,16 @@ const GUIDE_PAGE_BY_ID = Object.fromEntries(
 }>;
 
 const OFFERS: Offer[] = [
+  ...aiOffers as Offer[],
+  {
+    id: a6apiArticle.id,
+    category: 'Guides',
+    name: a6apiArticle.title,
+    slug: a6apiArticle.slug,
+    editorial: GUIDE_PAGE_BY_ID[a6apiArticle.id].editorial,
+    description: GUIDE_PAGE_BY_ID[a6apiArticle.id].editorial.description,
+    url: `/guides/${a6apiArticle.slug}`,
+  },
   {
     id: 'qr2pay-card',
     category: 'Cards',
@@ -5424,7 +5463,7 @@ export default function App() {
     const paymentMethods = l(offer.details?.paymentMethods);
     const extra = [geo, types, paymentMethods].filter(Boolean).join(' · ');
 
-    const templates: Record<Exclude<Language, 'ru' | 'en'>, Record<CategoryType, string>> = {
+    const templates: Record<Exclude<Language, 'ru' | 'en'>, Partial<Record<CategoryType, string>>> = {
       es: {
         Proxy: `${title} es un servicio para trabajar con proxies o VPN. Encaja para cuentas, automatización, registros y tareas donde importan el tipo de IP, el GEO y la forma de pago.${extra ? ` Datos clave: ${extra}.` : ''}`,
         Antidetect: `${title} es una solución antidetect para multiaccounting y gestión de perfiles. Sirve para separar entornos, trabajar con proxies y reducir señales sospechosas para plataformas con antifraude.${extra ? ` Datos clave: ${extra}.` : ''}`,
@@ -5463,7 +5502,7 @@ export default function App() {
       },
     };
 
-    return templates[lang][offer.category];
+    return templates[lang][offer.category] || l(offer.description);
   };
 
   const saveAnalyticsConsent = (consent: Exclude<AnalyticsConsent, null>) => {
@@ -5865,7 +5904,7 @@ export default function App() {
     counts.all += 1;
     counts[GUIDE_CARD_META[offer.id]?.topic || 'accounts'] += 1;
     return counts;
-  }, { all: hasFeaturedProxyGuide ? 1 : 0, proxy: hasFeaturedProxyGuide ? 1 : 0, antidetect: 0, accounts: 0, crypto: 0 });
+  }, { all: hasFeaturedProxyGuide ? 1 : 0, proxy: hasFeaturedProxyGuide ? 1 : 0, antidetect: 0, accounts: 0, crypto: 0, ai: 0 });
   const visibleGuideOffers = guideTopicFilter === 'all'
     ? filteredOffers
     : filteredOffers.filter((offer) => (GUIDE_CARD_META[offer.id]?.topic || 'accounts') === guideTopicFilter);
@@ -5978,6 +6017,9 @@ export default function App() {
     consentNecessary: tx({ ru: 'Только необходимое', en: 'Necessary only', es: 'Solo necesarias', zh: '仅必要功能', ko: '필수 항목만' }),
     types: tx({ ru: 'Типы', en: 'Types', es: 'Tipos', zh: '类型', ko: '유형' }),
     subFilters: {
+      AIGeneration: tx({ ru: 'Генерация', en: 'Generation' }),
+      AIVoice: tx({ ru: 'Озвучка', en: 'Voiceover' }),
+      AICoding: tx({ ru: 'API и кодинг', en: 'APIs & coding' }),
       Proxy: tx({ ru: 'Прокси', en: 'Proxy', es: 'Proxy', zh: '代理', ko: '프록시' }),
       VPN: 'VPN',
       PCBasic: tx({ ru: 'ПК базовые', en: 'PC Basic', es: 'PC básico', zh: '基础 PC', ko: 'PC 기본' }),
@@ -6190,6 +6232,7 @@ export default function App() {
       || stripLanguagePrefix(window.location.pathname) === `/guides/${rfNumbersArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${youtubeFarmArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${aiSubscriptionsArticle.slug}`
+      || stripLanguagePrefix(window.location.pathname) === `/guides/${a6apiArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${mobileAntidetectArticle.slug}`
     ) {
       document.body.style.removeProperty('overflow');
@@ -6247,7 +6290,7 @@ export default function App() {
       && (subFilter === 'Mobile' || selectedOffer.subCategory === 'Mobile'),
   );
   const selectedVpnTerms = selectedOffer?.subCategory === 'VPN' ? vpnTerms[selectedOffer.slug] : undefined;
-  const selectedEditorialNotes = lList(selectedOffer?.editorial?.considerations).filter(item =>
+  const selectedEditorialNotes = lList<string>(selectedOffer?.editorial?.considerations).filter(item =>
     !['prosto-exchange', 'antarctic-exchange', 'qr2pay-exchange', 'qr2pay-card'].includes(selectedOffer?.id || '')
       || !lList(selectedOffer?.details?.nuances).includes(item),
   );
@@ -6336,6 +6379,9 @@ export default function App() {
   if (stripLanguagePrefix(window.location.pathname) === `/guides/${aiSubscriptionsArticle.slug}`) {
     return <AiSubscriptionsGuideArticle offers={OFFERS} />;
   }
+  if (stripLanguagePrefix(window.location.pathname) === `/guides/${a6apiArticle.slug}`) {
+    return <A6apiGuideArticle offers={OFFERS} />;
+  }
   if (stripLanguagePrefix(window.location.pathname) === `/guides/${mobileAntidetectArticle.slug}`) {
     return <MobileAntidetectGuideArticle offers={OFFERS} />;
   }
@@ -6364,6 +6410,7 @@ export default function App() {
           || offer.id === rfNumbersArticle.id
           || offer.id === youtubeFarmArticle.id
           || offer.id === aiSubscriptionsArticle.id
+          || offer.id === a6apiArticle.id
           || offer.id === mobileAntidetectArticle.id
           || antidetectOverviewArticles.some(article => article.id === offer.id)
           || offer.id === 'guide-mobile-ip'
@@ -6552,6 +6599,9 @@ export default function App() {
                       {filter === 'AML' && <ShieldCheck className="mr-2 inline-block h-4 w-4" />}
                       {filter === 'USDTQR' && <QrCode className="mr-2 inline-block h-4 w-4" />}
                       {filter === 'Wallet' && <Wallet className="mr-2 inline-block h-4 w-4" />}
+                      {filter === 'AIGeneration' && <Sparkles aria-hidden="true" className="mr-2 inline-block h-4 w-4" />}
+                      {filter === 'AIVoice' && <AudioLines aria-hidden="true" className="mr-2 inline-block h-4 w-4" />}
+                      {filter === 'AICoding' && <Code aria-hidden="true" className="mr-2 inline-block h-4 w-4" />}
                       {t.subFilters[filter] || filter}
                     </button>
                   ))}
@@ -6750,6 +6800,7 @@ export default function App() {
                     { id: 'proxy', label: l(GUIDE_TOPIC_LABELS.proxy) },
                     { id: 'antidetect', label: l(GUIDE_TOPIC_LABELS.antidetect) },
                     { id: 'accounts', label: l(GUIDE_TOPIC_LABELS.accounts) },
+                    { id: 'ai', label: l(GUIDE_TOPIC_LABELS.ai) },
                     { id: 'crypto', label: l(GUIDE_TOPIC_LABELS.crypto) },
                   ] as { id: GuideTopic; label: string }[]).map((topic) => (
                     <button
@@ -6888,7 +6939,7 @@ export default function App() {
                                   loading="lazy"
                                   decoding="async"
                                   onError={(event) => {
-                                    event.currentTarget.src = '/logo.webp';
+                                    event.currentTarget.src = event.currentTarget.getAttribute('src') === offer.logoFallback ? '/logo.webp' : offer.logoFallback || '/logo.webp';
                                   }}
                                   className={offer.id === 'ant-donut' ? 'w-full h-full object-cover invert' : 'w-full h-full object-cover'}
                                 />
@@ -6902,7 +6953,7 @@ export default function App() {
                           </div>
                         </div>
 
-                        {offer.category !== 'Cards' && offer.category !== 'Stores' && offer.category !== 'Proxy' && offer.category !== 'Antidetect' && offer.category !== 'Crypto' && offer.category !== 'Social' && offer.category !== 'VPS' && offer.category !== 'Steam' && offer.category !== 'Guides' && (
+                        {offer.category !== 'Cards' && offer.category !== 'Stores' && offer.category !== 'Proxy' && offer.category !== 'Antidetect' && offer.category !== 'Crypto' && offer.category !== 'Social' && offer.category !== 'VPS' && offer.category !== 'Steam' && offer.category !== 'Guides' && offer.category !== 'AI' && (
                           <p className="text-white/60 text-base mb-6 leading-relaxed font-medium min-h-[3.5rem] group-hover:text-white transition-colors">
                             {offerDescription(offer)}
                           </p>
@@ -7157,7 +7208,10 @@ export default function App() {
       </main>
 
       {/* SEO Section Intro */}
-      <section className="max-w-6xl mx-auto px-6 mt-16 relative z-10">
+      {activeCategory === 'AI' ? <section className="relative z-10 mx-auto mt-16 max-w-6xl px-6" data-ai-section>
+        <SectionHeading className="mb-6 font-display text-2xl font-black text-white md:text-3xl">{l(aiSection.heading)}</SectionHeading>
+        <AiSectionContent blocks={l(aiSection.blocks as Localized<ArticleBlock[]>)} />
+      </section> : <section className="max-w-6xl mx-auto px-6 mt-16 relative z-10">
         <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.035] backdrop-blur-xl p-6 md:p-8 shadow-[0_24px_80px_rgba(0,0,0,0.22)]">
           <div className="flex flex-col lg:flex-row gap-6 lg:items-start lg:justify-between">
             <div className="max-w-2xl">
@@ -7179,7 +7233,7 @@ export default function App() {
               {currentSeoLanding?.guideLink && <p className="mt-4 text-sm leading-relaxed">
                 <a href={`${LANGUAGE_PREFIXES[lang]}${currentSeoLanding.guideLink.href}`} className="text-brand-purple underline underline-offset-4 hover:text-white">{l(currentSeoLanding.guideLink.label)}</a>
               </p>}
-              {!currentSeoLanding && sectionContextualGuideLinks[CATEGORY_ROUTES[activeCategory]]?.map(item => <p key={item.href} className="mt-4 text-sm leading-relaxed">
+              {sectionContextualGuideLinks[currentSeoLanding?.route || CATEGORY_ROUTES[activeCategory]]?.map(item => <p key={item.href} className="mt-4 text-sm leading-relaxed">
                 <a href={`${LANGUAGE_PREFIXES[lang]}${item.href}`} className="text-brand-purple underline underline-offset-4 hover:text-white">{l(item.label)}</a>
               </p>)}
             </div>
@@ -7197,6 +7251,7 @@ export default function App() {
         </div>
       </section>
 
+      }
       {currentSeoLanding?.id === 'foreign-card-payments' && (
         <div className="max-w-4xl mx-auto px-6 mt-8 relative z-10">
           <a href="/guides/zarubezhnaya-karta-s-popolneniem-rublyami" className="inline-flex items-center gap-3 text-brand-purple hover:underline">
@@ -8680,7 +8735,7 @@ export default function App() {
                         alt={selectedOffer.name}
                         decoding="async"
                         onError={(event) => {
-                          event.currentTarget.src = '/logo.webp';
+                          event.currentTarget.src = event.currentTarget.getAttribute('src') === selectedOffer.logoFallback ? '/logo.webp' : selectedOffer.logoFallback || '/logo.webp';
                         }}
                         className={selectedOffer.id === 'ant-donut' ? 'w-full h-full object-cover invert' : 'w-full h-full object-cover'}
                       />
@@ -8701,7 +8756,7 @@ export default function App() {
                       {t.description}
                     </h4>
                     <p className="text-white/80 leading-relaxed text-base font-medium">
-                      {offerDescription(selectedOffer)}
+                      <ServiceRichText text={offerDescription(selectedOffer)} offer={selectedOffer} language={lang} />
                     </p>
                   </div>
 
@@ -8771,6 +8826,7 @@ export default function App() {
                     </div>
                   )}
 
+                  {selectedOffer.editorial?.video && <ArticleVideo video={{ ...selectedOffer.editorial.video, caption: l(selectedOffer.editorial.video.caption) }} />}
                   {selectedOffer.details?.supports && (
                     <div className="bg-white/[0.03] p-6 rounded-2xl border border-white/10">
                       <h4 className="text-[11px] uppercase font-black text-white/40 tracking-[0.2em] mb-4">
@@ -9014,19 +9070,20 @@ export default function App() {
 
                   {selectedOffer.editorial && (
                     <div className="space-y-6">
+                      <ServiceEditorialSections offer={selectedOffer} language={lang} />
                       <section className="space-y-4">
                         <h3 className="flex items-center gap-2 text-[11px] uppercase font-black text-brand-purple tracking-[0.2em]">
                           <Zap className="w-4 h-4" />
                           {t.bestFor}
                         </h3>
                         <ul className="space-y-3">
-                          {lList(selectedOffer.editorial.bestFor).map((item, index) => (
+                          {lList<string>(selectedOffer.editorial.bestFor).map((item, index) => (
                             <li
                               key={index}
                               className="flex gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.03] px-4 py-3 text-sm font-medium leading-relaxed text-white/70"
                             >
                               <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-purple shadow-[0_0_9px_rgba(189,123,255,0.8)]" />
-                              {item}
+                              <ServiceRichText text={item} offer={selectedOffer} language={lang} />
                             </li>
                           ))}
                         </ul>
@@ -9041,7 +9098,7 @@ export default function App() {
                           {selectedEditorialNotes.map((item, index) => (
                             <li key={index} className="flex gap-3 text-sm leading-relaxed text-white/55">
                               <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange" />
-                              {item}
+                              <ServiceRichText text={item} offer={selectedOffer} language={lang} />
                             </li>
                           ))}
                         </ul>
@@ -9069,9 +9126,12 @@ export default function App() {
                           {t.editorialVerdict}
                         </h3>
                         <p className="text-sm font-medium leading-relaxed text-white/75">
-                          {l(selectedOffer.editorial.verdict)}
+                          <ServiceRichText text={l(selectedOffer.editorial.verdict)} offer={selectedOffer} language={lang} />
                         </p>
                       </section>}
+                      {selectedOffer.editorial.links?.map(item => <p key={item.href} className="text-sm leading-7">
+                        <a href={`${LANGUAGE_PREFIXES[lang]}${item.href}`} className="font-bold text-brand-purple underline underline-offset-4 hover:text-white">{l(item.label)}</a>
+                      </p>)}
                     </div>
                   )}
                   {serviceContextualGuideLinks[selectedOffer.id]?.map(item => <p key={item.href} className="text-sm leading-relaxed text-white/70">

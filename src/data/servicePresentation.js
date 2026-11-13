@@ -1,9 +1,10 @@
 export const serviceCategoryRoutes = {
-  Proxy: '/proxy-vpn', Antidetect: '/antidetect', Stores: '/account-shop', Cards: '/foreign-cards',
+  Proxy: '/proxy-vpn', Antidetect: '/antidetect', Stores: '/account-shop', AI: '/ai', Cards: '/foreign-cards',
   Crypto: '/crypto-exchange', SMS: '/sms-activators', VPS: '/vps', Social: '/social-boost', Steam: '/steam-topup', Guides: '/guides',
 };
 export const serviceCategoryNames = {
   Proxy: ['Прокси и VPN', 'Proxy / VPN'], Antidetect: ['Антидетекты', 'Antidetect'], Stores: ['Магазины аккаунтов', 'Account shops'],
+  AI: ['Нейросети', 'AI tools'],
   Cards: ['Зарубежные карты', 'Foreign cards'], Crypto: ['Криптообменники', 'Crypto exchange'], SMS: ['SMS-активаторы', 'SMS activators'],
   VPS: ['VDS/VPS', 'VDS/VPS'], Social: ['Накрутка и буксы', 'Social boost'], Steam: ['Пополнение Steam', 'Steam top-up'], Guides: ['Гайды', 'Guides'],
 };
@@ -68,6 +69,25 @@ export const sectionSeoTitles = {
 export const localizedServiceValue = (value, language) => {
   if (value == null) return '';
   return typeof value === 'object' && !Array.isArray(value) ? value[language] ?? value.en ?? value.ru ?? '' : value;
+};
+
+export const getServiceEditorialSections = (offer, language) => [
+  ['capabilities', 'Что умеет', 'Features'], ['pricing', 'Цены', 'Pricing'],
+  ['payment', 'Оплата', 'Payment'], ['gettingStarted', 'Как начать', 'Getting started'],
+].map(([key, ru, en]) => ({ key, heading: language === 'ru' ? ru : en, ordered: key === 'gettingStarted', items: localizedServiceValue(offer.editorial?.[key], language) || [] })).filter(section => section.items.length);
+
+export const splitServiceText = (text, offer, language) => {
+  const links = localizedServiceValue(offer.editorial?.inlineLinks, language) || [];
+  const segments = [];
+  let remaining = text || '';
+  while (remaining) {
+    const hit = links.map(link => ({ ...link, index: remaining.indexOf(link.text) })).filter(link => link.index >= 0).sort((a, b) => a.index - b.index || b.text.length - a.text.length)[0];
+    if (!hit) { segments.push({ text: remaining }); break; }
+    if (hit.index) segments.push({ text: remaining.slice(0, hit.index) });
+    segments.push({ text: hit.text, href: hit.href });
+    remaining = remaining.slice(hit.index + hit.text.length);
+  }
+  return segments;
 };
 
 export const isServiceMetaDescription = (text, description) => Boolean(text && description)

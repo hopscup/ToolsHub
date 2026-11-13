@@ -1,6 +1,9 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { accountShopPages } from '../src/data/accountShopPages.js';
+import { aiPages } from '../src/data/aiPages.js';
+import { getServiceEditorialSections } from '../src/data/servicePresentation.js';
+import { a6apiArticle, createA6apiContent } from '../src/data/a6apiContent.js';
 import { antidetectPages } from '../src/data/antidetectPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
@@ -45,6 +48,7 @@ const languages = [
 const { OFFERS } = await loadOffers();
 const offerByRoute = new Map(OFFERS.filter(offer => offer.slug && offer.category !== 'Guides').map(offer => [`${serviceCategoryRoutes[offer.category]}/${offer.slug}`, offer]));
 const categoryRoutes = [
+  '/ai',
   '/proxy-vpn',
   '/antidetect',
   '/account-shop',
@@ -58,6 +62,7 @@ const categoryRoutes = [
   ...seoLandingPages.map((page) => page.route),
 ];
 const serviceRoutes = [
+  ...aiPages.map(page => `/ai/${page.slug}`),
   '/proxy-vpn/luchshie-proksi',
   '/proxy-vpn/luchshie-mobilnye-proksi',
   '/proxy-vpn/proxyshard',
@@ -122,7 +127,9 @@ const checkServiceContent = (html, offer, language, route) => {
     if (!content.includes(`<dd>${escapeHtml(fact.value)}</dd>`)) errors.push(`Missing service fact ${fact.key}: ${route}`);
   }
   const texts = [localizedServiceValue(offer.description, code), localizedServiceValue(offer.details?.descriptionDetailed, code), localizedServiceValue(offer.details?.targetAudience, code), localizedServiceValue(offer.editorial?.description, code), localizedServiceValue(offer.editorial?.verdict, code), ...(offer.promoCode ? [localizedServiceValue(offer.promoDiscount, code)] : []), ...getServiceTextGroups(offer, code).flatMap(group => group.items)].filter(Boolean);
-  for (const text of texts.filter(text => !isMeta(text))) if (!content.includes(escapeHtml(text))) errors.push(`Missing service text: ${route}: ${text}`);
+  texts.push(...getServiceEditorialSections(offer, code).flatMap(section => section.items));
+  const visibleContent = content.replace(/<[^>]*>/g, '');
+  for (const text of texts.filter(text => !isMeta(text))) if (!visibleContent.includes(escapeHtml(text))) errors.push(`Missing service text: ${route}: ${text}`);
   for (const [, paragraph] of matches(content, /<p\b[^>]*>([\s\S]*?)<\/p>/g)) {
     if (isServiceMetaDescription(paragraph.replace(/<[^>]*>/g, ''), metaDescription)) errors.push(`Service paragraph duplicates meta description: ${route}`);
   }
@@ -148,7 +155,9 @@ const checkSectionSummaries = (html, language, route) => {
     if (/data-service-(?:content|alternatives|group|cta)|href="https?:\/\//.test(summary)) errors.push(`Section summary contains full or external service content: ${route}: ${id}`);
     const facts = summary.match(/<p data-summary-facts>([\s\S]*?)<\/p>/)?.[1] || '';
     if (matches(facts, /<span>/g).length > 3) errors.push(`Too many service summary facts: ${route}: ${id}`);
-    if (!summary.includes(escapeHtml(localizedServiceValue(offer.description, language.hrefLang)))) errors.push(`Missing short service description: ${route}: ${id}`);
+    const description = escapeHtml(localizedServiceValue(offer.description, language.hrefLang));
+    if (category === 'AI' && summary.includes(description)) errors.push(`AI preview contains editorial introduction: ${route}: ${id}`);
+    if (category !== 'AI' && !summary.includes(description)) errors.push(`Missing short service description: ${route}: ${id}`);
     if (offer.slug) {
       const href = `${language.prefix}${serviceCategoryRoutes[category]}/${offer.slug}`;
       if (matches(summary, /<a\b/g).length !== 2 || !summary.includes(`<h2><a href="${href}">`)) errors.push(`Wrong internal service summary links: ${route}: ${id}`);
@@ -161,7 +170,8 @@ const checkArticleContent = (html, route, localizedRoute) => {
     : route === `/guides/${rfNumbersArticle.slug}` ? createRfNumbersContent(OFFERS)
     : route === `/guides/${youtubeFarmArticle.slug}` ? createYoutubeFarmContent(OFFERS)
     : route === `/guides/${aiSubscriptionsArticle.slug}` ? createAiSubscriptionsContent(OFFERS)
-    : route === `/guides/${mobileAntidetectArticle.slug}` ? createMobileAntidetectContent(OFFERS) : undefined;
+    : route === `/guides/${mobileAntidetectArticle.slug}` ? createMobileAntidetectContent(OFFERS)
+    : route === `/guides/${a6apiArticle.slug}` ? createA6apiContent(OFFERS) : undefined;
   if (numberGuide) {
     const { article, checklist } = numberGuide;
     const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1] || '';
