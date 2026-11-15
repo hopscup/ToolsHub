@@ -1,3 +1,4 @@
+import { ArticleToc } from './ArticleToc';
 import {
   ArrowLeft,
   CheckCircle2,
@@ -119,21 +120,12 @@ export const GmailForwardingGuideArticle = ({ offers }: { offers: ArticleService
         </section>
 
         <div className="mx-auto grid max-w-6xl gap-8 px-5 md:px-8 lg:grid-cols-[220px_minmax(0,760px)] lg:justify-center">
-          <aside className="hidden lg:block">
-            <nav className="article-toc sticky top-24 rounded-2xl border border-white/[0.08] bg-[#111111]/80 p-4 backdrop-blur-xl" aria-label="Содержание статьи">
-              <p className="px-2 pb-3 text-[10px] font-black uppercase tracking-[0.2em] text-white/25">Содержание</p>
-              {[
+          <ArticleToc items={[
                 ['#before', 'Перед началом'],
                 ['#add-address', 'Добавление адреса'],
                 ['#enable', 'Включение пересылки'],
                 ['#result', 'Проверка результата'],
-              ].map(([href, label]) => (
-                <a key={href} href={href} className="block rounded-lg px-2 py-2 text-xs font-semibold text-white/45 transition-colors hover:bg-white/5 hover:text-brand-purple">
-                  {label}
-                </a>
-              ))}
-            </nav>
-          </aside>
+              ].map(([href, label]) => ({ id: href.slice(1), label }))} />
 
           <article className="article-card min-w-0 rounded-[1.5rem] border border-white/[0.08] bg-[#0d0d0d]/90 px-5 py-7 shadow-2xl backdrop-blur-xl md:px-9 md:py-10">
             <section id="before" className="scroll-mt-28">

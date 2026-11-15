@@ -136,8 +136,34 @@
 }
 
 .proxy-guide-article {
+  --article-anchor-offset: 84px;
+  overflow: clip;
   color-scheme: dark;
   transition: background-color 180ms ease, color 180ms ease;
+}
+
+.proxy-guide-article :is(h2, h3, section)[id] {
+  scroll-margin-top: var(--article-anchor-offset);
+}
+
+.proxy-guide-article .article-toc a[aria-current="location"] {
+  color: #bd7bff;
+  background-color: rgb(189 123 255 / 10%);
+}
+
+.proxy-guide-article [data-anchor-highlight] {
+  background-clip: content-box;
+  animation: article-anchor-highlight 1400ms ease-out;
+}
+
+@keyframes article-anchor-highlight {
+  0%, 35% { background-color: rgb(189 123 255 / 15%); }
+  100% { background-color: transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proxy-guide-article [data-anchor-highlight] { animation: none; }
+  .proxy-guide-article .article-toc a { transition: none; }
 }
 
 html:has(.proxy-guide-article),
@@ -148,18 +174,14 @@ body:has(.proxy-guide-article) {
 }
 
 @media (min-width: 1024px) {
-  .proxy-guide-article {
-    overflow: clip;
-  }
-
-  body:has(.proxy-guide-article) {
-    overflow: visible !important;
-  }
-
   .proxy-guide-article .article-toc {
     max-height: calc(100dvh - 7rem);
     overflow-y: auto;
   }
+}
+
+body:has(.proxy-guide-article) {
+  overflow: visible !important;
 }
 
 html:has(dialog[data-article-image-viewer][open]),

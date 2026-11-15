@@ -1,3 +1,4 @@
+import { ArticleToc } from './ArticleToc';
 import { ArrowLeft, BookOpen, Check, Copy, Moon, Sun } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import type { ComponentProps } from 'react';
@@ -241,14 +242,7 @@ export const ImportedGuideArticle = ({
         </section>
 
         <div className="mx-auto grid max-w-6xl gap-8 px-5 md:px-8 lg:grid-cols-[220px_minmax(0,760px)] lg:justify-center">
-          <aside className="hidden lg:block">
-            <nav className="article-toc sticky top-24 rounded-2xl border border-white/[0.08] bg-[#111111]/80 p-4 backdrop-blur-xl" aria-label="Содержание статьи">
-              <p className="px-2 pb-3 text-[10px] font-black uppercase tracking-[0.2em] text-white/25">Содержание</p>
-              {toc.map(({ id, label }) => (
-                <a key={id} href={`#${id}`} className="block rounded-lg px-2 py-2 text-xs font-semibold leading-5 text-white/45 transition-colors hover:bg-white/5 hover:text-brand-purple">{label}</a>
-              ))}
-            </nav>
-          </aside>
+          <ArticleToc items={toc} />
 
           <article className="article-card min-w-0 rounded-[1.5rem] border border-white/[0.08] bg-[#0d0d0d]/90 px-5 py-7 shadow-2xl backdrop-blur-xl md:px-9 md:py-10"
             onClick={onServiceClick ? event => {

@@ -810,11 +810,11 @@
           "ko": "Mir, SBP, Telegram Stars"
         },
         "types": {
-          "ru": "Текст: ChatGPT, Claude, Gemini, Grok, DeepSeek, Perplexity, Qwen. Текстовые модели умеют искать в интернете.",
-          "en": "Text, image, video and audio models in one bot.",
-          "es": "Text, image, video and audio models in one bot.",
-          "zh": "Text, image, video and audio models in one bot.",
-          "ko": "Text, image, video and audio models in one bot."
+          "ru": "100+ нейросетей в одном боте: ChatGPT, Claude, Kling, Veo, Suno",
+          "en": "100+ AI models in one bot: ChatGPT, Claude, Kling, Veo, Suno",
+          "es": "100+ AI models in one bot: ChatGPT, Claude, Kling, Veo, Suno",
+          "zh": "100+ AI models in one bot: ChatGPT, Claude, Kling, Veo, Suno",
+          "ko": "100+ AI models in one bot: ChatGPT, Claude, Kling, Veo, Suno"
         }
       }
     },
@@ -1056,18 +1056,18 @@
       },
       "details": {
         "paymentMethods": {
-          "ru": "зарубежная карта (карты РФ не проходят)",
-          "en": "Foreign bank card; Russian cards are not accepted",
-          "es": "Foreign bank card; Russian cards are not accepted",
-          "zh": "Foreign bank card; Russian cards are not accepted",
-          "ko": "Foreign bank card; Russian cards are not accepted"
+          "ru": "Зарубежная карта, РФ не проходят",
+          "en": "Foreign card, Russian cards not accepted",
+          "es": "Foreign card, Russian cards not accepted",
+          "zh": "Foreign card, Russian cards not accepted",
+          "ko": "Foreign card, Russian cards not accepted"
         },
         "types": {
-          "ru": "Видео на Seedance 2.5 до 4K и других топовых моделях, всего больше 35.",
-          "en": "35+ models, Cinema Studio, Shorts Studio and Drama Ads.",
-          "es": "35+ models, Cinema Studio, Shorts Studio and Drama Ads.",
-          "zh": "35+ models, Cinema Studio, Shorts Studio and Drama Ads.",
-          "ko": "35+ models, Cinema Studio, Shorts Studio and Drama Ads."
+          "ru": "Хайповые AI-видео: Seedance 2.5 в 4K, 35+ моделей, шаблоны трендов",
+          "en": "Viral AI videos: Seedance 2.5 in 4K, 35+ models, trend templates",
+          "es": "Viral AI videos: Seedance 2.5 in 4K, 35+ models, trend templates",
+          "zh": "Viral AI videos: Seedance 2.5 in 4K, 35+ models, trend templates",
+          "ko": "Viral AI videos: Seedance 2.5 in 4K, 35+ models, trend templates"
         }
       }
     },
@@ -1275,11 +1275,11 @@
           "ko": "Rubles, crypto"
         },
         "types": {
-          "ru": "Речь, звуковые эффекты (SFX)",
-          "en": "Speech, sound effects (SFX)",
-          "es": "Speech, sound effects (SFX)",
-          "zh": "Speech, sound effects (SFX)",
-          "ko": "Speech, sound effects (SFX)"
+          "ru": "Голоса ElevenLabs за копейки, 4200+ голосов, звуковые эффекты",
+          "en": "ElevenLabs voices for pennies, 4,200+ voices, sound effects",
+          "es": "ElevenLabs voices for pennies, 4,200+ voices, sound effects",
+          "zh": "ElevenLabs voices for pennies, 4,200+ voices, sound effects",
+          "ko": "ElevenLabs voices for pennies, 4,200+ voices, sound effects"
         }
       }
     },
@@ -1467,18 +1467,18 @@
       },
       "details": {
         "paymentMethods": {
-          "ru": "карта РФ, СБП, расчётный счёт",
-          "en": "Russian bank card, SBP, bank transfer",
-          "es": "Russian bank card, SBP, bank transfer",
-          "zh": "Russian bank card, SBP, bank transfer",
-          "ko": "Russian bank card, SBP, bank transfer"
+          "ru": "Карта РФ, СБП, счёт для юрлиц",
+          "en": "Russian card, SBP, invoice for companies",
+          "es": "Russian card, SBP, invoice for companies",
+          "zh": "Russian card, SBP, invoice for companies",
+          "ko": "Russian card, SBP, invoice for companies"
         },
         "types": {
-          "ru": "Больше 400 моделей от 80+ провайдеров: OpenAI, Anthropic, Google, DeepSeek, xAI, Qwen, Kling и другие.",
-          "en": "400+ models, OpenAI-compatible API and provider failover.",
-          "es": "400+ models, OpenAI-compatible API and provider failover.",
-          "zh": "400+ models, OpenAI-compatible API and provider failover.",
-          "ko": "400+ models, OpenAI-compatible API and provider failover."
+          "ru": "400+ моделей по одному API, оплата рублями",
+          "en": "400+ models via one API, pay in rubles",
+          "es": "400+ models via one API, pay in rubles",
+          "zh": "400+ models via one API, pay in rubles",
+          "ko": "400+ models via one API, pay in rubles"
         }
       }
     },
@@ -1696,11 +1696,11 @@
           "ko": "Rubles, crypto"
         },
         "types": {
-          "ru": "Работает и в формате OpenAI, и в формате Anthropic, поэтому подключается к Claude Code, Codex и другим агентам.",
-          "en": "OpenAI and Anthropic API formats for Claude Code, Codex and other agents.",
-          "es": "OpenAI and Anthropic API formats for Claude Code, Codex and other agents.",
-          "zh": "OpenAI and Anthropic API formats for Claude Code, Codex and other agents.",
-          "ko": "OpenAI and Anthropic API formats for Claude Code, Codex and other agents."
+          "ru": "Claude, GPT и Gemini для Claude Code и Codex без VPN",
+          "en": "Claude, GPT and Gemini for Claude Code and Codex without VPN",
+          "es": "Claude, GPT and Gemini for Claude Code and Codex without VPN",
+          "zh": "Claude, GPT and Gemini for Claude Code and Codex without VPN",
+          "ko": "Claude, GPT and Gemini for Claude Code and Codex without VPN"
         }
       }
     },
@@ -1913,18 +1913,18 @@
       },
       "details": {
         "paymentMethods": {
-          "ru": "на старте бесплатно, вход через GitHub",
-          "en": "Free to start; GitHub sign-in",
-          "es": "Free to start; GitHub sign-in",
-          "zh": "Free to start; GitHub sign-in",
-          "ko": "Free to start; GitHub sign-in"
+          "ru": "Бесплатно на старте",
+          "en": "Free to start",
+          "es": "Free to start",
+          "zh": "Free to start",
+          "ko": "Free to start"
         },
         "types": {
-          "ru": "Один ключ к Claude, GPT и GLM.",
-          "en": "One API key for Claude, GPT and GLM.",
-          "es": "One API key for Claude, GPT and GLM.",
-          "zh": "One API key for Claude, GPT and GLM.",
-          "ko": "One API key for Claude, GPT and GLM."
+          "ru": "Бесплатные кредиты на Claude Code через GitHub",
+          "en": "Free Claude Code credits via GitHub",
+          "es": "Free Claude Code credits via GitHub",
+          "zh": "Free Claude Code credits via GitHub",
+          "ko": "Free Claude Code credits via GitHub"
         }
       }
     },
@@ -2178,11 +2178,11 @@
           "ko": "USDT"
         },
         "types": {
-          "ru": "API к моделям картинок: GPT Image 2, Gemini, Grok.",
-          "en": "Image APIs for GPT Image 2, Gemini and Grok.",
-          "es": "Image APIs for GPT Image 2, Gemini and Grok.",
-          "zh": "Image APIs for GPT Image 2, Gemini and Grok.",
-          "ko": "Image APIs for GPT Image 2, Gemini and Grok."
+          "ru": "GPT Image 2 за полцента, Gemini и Grok по API",
+          "en": "GPT Image 2 for half a cent, Gemini and Grok via API",
+          "es": "GPT Image 2 for half a cent, Gemini and Grok via API",
+          "zh": "GPT Image 2 for half a cent, Gemini and Grok via API",
+          "ko": "GPT Image 2 for half a cent, Gemini and Grok via API"
         }
       }
     },
@@ -2443,18 +2443,18 @@
       },
       "details": {
         "paymentMethods": {
-          "ru": "крипта (USDT в 7 сетях, ETH, BTC, XMR) или зарубежная карта через Stripe. Карты РФ не подходят.",
-          "en": "Crypto or foreign card through Stripe; Russian cards are not accepted",
-          "es": "Crypto or foreign card through Stripe; Russian cards are not accepted",
-          "zh": "Crypto or foreign card through Stripe; Russian cards are not accepted",
-          "ko": "Crypto or foreign card through Stripe; Russian cards are not accepted"
+          "ru": "Крипта, зарубежная карта",
+          "en": "Crypto, foreign card",
+          "es": "Crypto, foreign card",
+          "zh": "Crypto, foreign card",
+          "ko": "Crypto, foreign card"
         },
         "types": {
-          "ru": "Открытые модели GLM-5.3, Qwen-3.8 и другие.",
-          "en": "Open-weight GLM and Qwen, browser chat and OpenAI-compatible API.",
-          "es": "Open-weight GLM and Qwen, browser chat and OpenAI-compatible API.",
-          "zh": "Open-weight GLM and Qwen, browser chat and OpenAI-compatible API.",
-          "ko": "Open-weight GLM and Qwen, browser chat and OpenAI-compatible API."
+          "ru": "GLM и Qwen без логов: чат и API",
+          "en": "GLM and Qwen with no logs: chat and API",
+          "es": "GLM and Qwen with no logs: chat and API",
+          "zh": "GLM and Qwen with no logs: chat and API",
+          "ko": "GLM and Qwen with no logs: chat and API"
         }
       }
     }
