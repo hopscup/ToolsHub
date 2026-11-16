@@ -2748,6 +2748,7 @@ const OFFERS: Offer[] = [
       en: 'Fast VPN for daily use. Suitable for bypassing blocks, watching YouTube without ads, and working with foreign services. It has a convenient Telegram bot and a referral program.'
     },
     url: 'https://t.me/VPNPPLBot?start=dXNlcl9pZD00NDMwODM',
+    webUrl: 'https://app.privatepeople.top?partner_id=443083',
     logoUrl: '/ppl-vpn.webp',
     isBestChoice: true,
     platforms: ['Windows', 'macOS', 'Android', 'iOS', 'Linux'],
