@@ -29,6 +29,8 @@ const telegramReferralBots = new Set([
 ]);
 const nonAffiliateHosts = new Set(['chromewebstore.google.com', 'github.com', 'amlbot.com']);
 
+export const isTelegramUrl = href => typeof href === 'string' && /^https?:\/\/(?:www\.)?(?:t\.me|telegram\.me)\//i.test(href);
+
 export const isAffiliateUrl = (href) => {
   if (typeof href !== 'string' || !/^https?:\/\//i.test(href)) return false;
   try {
@@ -41,12 +43,13 @@ export const isAffiliateUrl = (href) => {
     if (fromReferralHosts.has(host) && url.searchParams.get('from')) return true;
     if (host === 'socpublic.com' && url.searchParams.get('i')) return true;
     if (host === 'ls.app' && url.searchParams.get('promo')) return true;
-    if (host === 't.me' && /^ref/i.test(url.searchParams.get('startapp') || '')) return true;
-    if (host === 't.me' && url.searchParams.get('start')) {
+    const telegram = host === 't.me' || host === 'telegram.me';
+    if (telegram && /^ref/i.test(url.searchParams.get('startapp') || '')) return true;
+    if (telegram && url.searchParams.get('start')) {
       const start = url.searchParams.get('start');
       const bot = url.pathname.slice(1).toLowerCase();
       if (/ref/i.test(start) || telegramReferralBots.has(bot)
-        || (bot === 'bolotoai' && /^r_/i.test(start))
+        || (['bolotoai', 'quattrovpn_bot'].includes(bot) && /^r_/i.test(start))
         || (bot === 'ahlisshop_bot' && /^\d+$/.test(start))) return true;
     }
     return host === 'partner.soc-proof.su'

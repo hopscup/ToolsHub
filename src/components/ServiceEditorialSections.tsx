@@ -1,7 +1,7 @@
 import { getServiceEditorialSections, splitServiceText } from '../data/servicePresentation.js';
 import { getExternalLinkRel } from '../lib/externalLinks.js';
 
-type EditorialOffer = { editorial?: { inlineLinks?: object; capabilities?: object; pricing?: object; payment?: object; gettingStarted?: object } };
+type EditorialOffer = { editorial?: { inlineLinks?: object; capabilities?: object; pricing?: object; payment?: object; gettingStarted?: object; telegramFallback?: object } };
 
 export const ServiceRichText = ({ text, offer, language }: { text: string; offer: EditorialOffer; language: string }) => <span>{splitServiceText(text, offer, language).map((part, index) => part.href
   ? <a key={index} href={`${part.href.startsWith('/') && language !== 'ru' ? '/' + language : ''}${part.href}`} {...(part.href.startsWith('http') ? { target: '_blank', rel: getExternalLinkRel(part.href) } : {})} className="font-bold text-brand-purple underline underline-offset-4 hover:text-white">{part.text}</a>

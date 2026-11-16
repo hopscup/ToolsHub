@@ -21,7 +21,8 @@ test('four-guide refresh preserves the approved Discord, card and Gmail instruct
   assert.equal(hash([gmail.before, gmail.sections, gmail.result]), 'ea5117e5d34e975e6cb644068b8bb2e9205083e6a61a66b8c4f8830802234d30');
   assert.deepEqual(content['guide-discord-token'].blocks.slice(0, -1), discordTokenArticle.blocks);
   const cardBlocks = foreignCardArticle.flatMap(section => [section.heading, ...section.paragraphs, ...(section.links || []).map(link => link.label)]);
-  assert.deepEqual(content['guide-foreign-cards'].blocks.slice(0, cardBlocks.length).map(block => block.text || block.content.map(part => part.text).join('')), cardBlocks);
+  const originalCardBlocks = content['guide-foreign-cards'].blocks.filter(block => !block.content?.some(part => part.text.startsWith('Недавно в PGON добавили оплату по местным QR-кодам за границей:')));
+  assert.deepEqual(originalCardBlocks.slice(0, cardBlocks.length).map(block => block.text || block.content.map(part => part.text).join('')), cardBlocks);
 });
 
 test('new article service links follow OFFERS, while existing exchange registrations stay intact', () => {
@@ -55,7 +56,7 @@ test('four guides use fixed Git-based publication dates and the requested titles
   for (const [id, meta] of Object.entries(guideRefreshMeta)) {
     const page = guidePages.find(page => page.id === id);
     assert.equal(page.datePublished, meta.datePublished);
-    assert.equal(page.dateModified, '2026-11-10');
+    assert.equal(page.dateModified, id === 'guide-foreign-cards' ? '2026-11-16' : '2026-11-10');
   }
   assert.equal(guidePages.find(page => page.id === 'guide-discord-token').title.ru, 'Как войти в Discord по токену: расширение и F12 | Hopscup');
   assert.equal(guidePages.find(page => page.id === 'guide-uids-addresses').title.ru, 'Много UID и адресов на OKX: субаккаунты | Hopscup');

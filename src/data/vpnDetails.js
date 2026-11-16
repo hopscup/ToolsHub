@@ -1,39 +1,56 @@
-// Terms supplied by the site owner on 2026-10-28, shared by React and static HTML.
+// Terms supplied by the site owner, shared by React and static HTML.
 export const vpnTerms = {
   'all-vpn': {
     free: { ru: '3 часа', en: '3 hours' },
     price: { ru: 'от 199 ₽/мес', en: 'from 199 RUB/mo' },
     geo: { ru: '20+', en: '20+' },
+    allowlist: { ru: '50 ГБ в месяц', en: '50 GB per month' },
   },
   'ppl-vpn': {
     free: { ru: '3 дня', en: '3 days' },
     price: { ru: 'от 124 ₽/мес', en: 'from 124 RUB/mo' },
     geo: { ru: '10+', en: '10+' },
+    allowlist: { ru: 'Нет', en: 'No' },
   },
   prostovpn: {
     free: { ru: '3 дня', en: '3 days' },
     price: { ru: 'от 249 ₽/мес', en: 'from 249 RUB/mo' },
     geo: { ru: '10+', en: '10+' },
+    allowlist: { ru: 'Есть, режим X100', en: 'Yes, X100 mode' },
   },
   'giga-vpn': {
     free: { ru: '3 дня', en: '3 days' },
     price: { ru: 'от 149,92 ₽/мес', en: 'from 149.92 RUB/mo' },
     geo: { ru: '10+', en: '10+' },
+    allowlist: { ru: 'Есть', en: 'Yes' },
   },
   'tochka-g': {
     free: { ru: '2 дня', en: '2 days' },
     price: { ru: 'от 179 ₽/мес', en: 'from 179 RUB/mo' },
     geo: { ru: '10+', en: '10+' },
+    allowlist: { ru: 'Тариф G Premium', en: 'G Premium plan' },
   },
   'giga-dollar-vpn': {
     free: { ru: '3 дня', en: '3 days' },
-    price: { ru: 'от 90 ₽/мес', en: 'from 90 RUB/mo' },
+    price: { ru: 'от 169 ₽/мес', en: 'from 169 RUB/mo' },
     geo: { ru: '6+', en: '6+' },
+    allowlist: { ru: 'Безлимит через Ускоритель', en: 'Unlimited via Accelerator' },
   },
   'imp-vpn': {
     free: { ru: '3 дня', en: '3 days' },
     price: { ru: 'от 158 ₽/мес', en: 'from 158 RUB/mo' },
     geo: { ru: '10+', en: '10+' },
+    allowlist: { ru: '50 ГБ в месяц', en: '50 GB per month' },
+  },
+  'quattro-vpn': {
+    free: { ru: 'Нет', en: 'No' },
+    price: { ru: 'от 300 ₽/30 дней', en: 'from 300 RUB/30 days' },
+    allowlist: { ru: '500 ГБ в месяц', en: '500 GB per month' },
+  },
+  'taynik-vpn': {
+    free: { ru: '14 дней', en: '14 days' },
+    price: { ru: 'от 199 ₽/мес', en: 'from 199 RUB/mo' },
+    allowlist: { ru: 'Есть, отдельный сервер', en: 'Yes, dedicated server' },
   },
 };
 
@@ -66,6 +83,7 @@ export const impVpnPage = {
   slug: 'imp-vpn',
   name: 'iMP VPN',
   logo: '/imp-vpn.webp',
+  platforms: ['Windows', 'macOS', 'Android', 'iOS'],
   url: 'https://t.me/iMP_VPN_bot?start=460705268',
   title: {
     ru: 'iMP VPN: 3 дня бесплатно, цена и подключение | Hopscup Tools',

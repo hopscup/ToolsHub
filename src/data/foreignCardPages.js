@@ -1,3 +1,4 @@
+import { withPgonQrAbroad } from './pgonQrAbroad.js';
 import { antarcticCardPage } from './antarcticWallet.js';
 import { qr2payCardPage } from './qr2pay.js';
 
@@ -250,7 +251,7 @@ export const foreignCardPages = [
       },
     },
   },
-  {
+  withPgonQrAbroad({
     id: 'pgon',
     slug: 'pgon',
     name: 'PGON',
@@ -307,5 +308,5 @@ export const foreignCardPages = [
         ko: 'PGON은 단순한 해외 카드가 아닙니다. 하나의 Telegram 앱에서 러시아 암호화폐 QR 결제와 해외 서비스용 Visa를 함께 제공하는 점이 강점입니다. 다만 KYC 없이 쓰는 QR 수수료가 높으므로 최종 금액을 먼저 비교하세요.',
       },
     },
-  },
+  }),
 ];

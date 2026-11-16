@@ -37,6 +37,7 @@ import { socialPages } from '../src/data/socialPages.js';
 import { steamPages } from '../src/data/steamPages.js';
 import { vpsPages } from '../src/data/vpsPages.js';
 import { allVpnConsiderations, allVpnPros, allVpnSummary, impVpnPage, vpnTerms } from '../src/data/vpnDetails.js';
+import { newVpnPages } from '../src/data/vpnUpdates.js';
 
 const siteUrl = 'https://hopscup.tools';
 const distDir = path.resolve('dist');
@@ -605,6 +606,12 @@ const createServicePage = (page) => ({
 });
 
 const servicePages = [
+  ...newVpnPages.map(page => createServicePage({
+    id: page.id, route: `/proxy-vpn/${page.slug}`, name: page.name, logo: page.logo,
+    title: page.title, description: page.description, heading: page.heading,
+    intro: page.editorial.description, keywords: page.heading,
+    points: page.editorial.bestFor, items: page.editorial.considerations,
+  })),
   ...aiPages.map(page => createServicePage({
     id: page.id, route: `/ai/${page.slug}`, name: page.name, logo: page.logo,
     title: page.title, description: page.description, heading: page.heading,
@@ -1865,7 +1872,7 @@ const renderServiceContent = (offer, language, metaDescription) => {
     ${value(offer.editorial?.verdict) && !isServiceMetaDescription(value(offer.editorial.verdict), metaDescription) ? `<section>${heading(ru ? 'Если коротко' : 'In short')}<p>${richText(value(offer.editorial.verdict))}</p></section>` : ''}
     ${(offer.editorial?.links || []).map(item => `<p>${renderLink({ href: `${language.prefix}${item.href}`, label: value(item.label) })}</p>`).join('')}
     <p data-service-cta>${renderLink({ href: offer.url, label: ru ? 'Перейти на сайт сервиса' : 'Visit the service' })}</p>
-    ${offer.webUrl ? `<p>${renderLink({ href: offer.webUrl, label: ru ? 'Сайт сервиса' : 'Service website' })}</p>` : ''}
+    ${offer.webUrl ? `<p>${renderLink({ href: offer.webUrl, label: value(offer.webLabel) || (ru ? 'Сайт сервиса' : 'Service website') })}</p>` : ''}
     <section data-service-alternatives>${heading(ru ? 'Альтернативы' : 'Alternatives')}<ul>${alternatives.map(item => `<li>${renderLink({ href: `${language.prefix}${serviceCategoryRoutes[item.category]}/${item.slug}`, label: item.name })}<p>${escapeHtml(getOfferDescription(item, language))}</p></li>`).join('')}</ul>
       <p>${renderLink({ href: `${language.prefix}${guide.href}`, label: value(guide.label) })}</p>
     </section>

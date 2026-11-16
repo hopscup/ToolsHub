@@ -55,7 +55,7 @@ import { appendLocalizedItems, pgonQrNotes, prostoQrNotes, qrCardLabels, qrPayme
 import { guidePages } from './data/guidePages.js';
 import { guideCatalogById } from './data/guideCatalog.js';
 import { recommendedOfferIds, recommendedOfferLabels } from './data/recommendedOffers.js';
-import { getExternalLinkRel } from './lib/externalLinks.js';
+import { getExternalLinkRel, isTelegramUrl } from './lib/externalLinks.js';
 import { compactSeoTitle, sectionSeoTitles, getServiceAlternatives, getServiceGuide } from './data/servicePresentation.js';
 import { siteDateModified } from './data/buildDate.js';
 import { seoLandingPages } from './data/seoLandingPages.js';
@@ -65,6 +65,8 @@ import { steamPages } from './data/steamPages.js';
 import { vpsPages } from './data/vpsPages.js';
 import { pageHeadings } from './data/pageHeadings.js';
 import { allVpnPros, allVpnSummary, impVpnPage, vpnTerms } from './data/vpnDetails.js';
+import { newVpnOffers, vpnEditorialAdditions } from './data/vpnUpdates.js';
+import { pgonQrAbroad } from './data/pgonQrAbroad.js';
 import {
   getAnalyticsConsent,
   initializeAnalyticsFromConsent,
@@ -316,6 +318,7 @@ interface Offer {
   description: Localized;
   url: string;
   webUrl?: string;
+  webLabel?: Localized;
   logoUrl?: string;
   logoFallback?: string;
   promoCode?: string;
@@ -367,6 +370,7 @@ interface Offer {
     price?: Localized;
     freeTrial?: Localized;
     ipRotation?: Localized;
+    devices?: Localized;
     supports?: Localized<string[]>;
     nuances?: Localized<string[]>;
     pros?: Localized<string[]>;
@@ -384,6 +388,7 @@ interface Offer {
     pricing?: Localized<string[]>;
     payment?: Localized<string[]>;
     gettingStarted?: Localized<string[]>;
+    telegramFallback?: Localized<string[]>;
     inlineLinks?: Localized<{ text: string; href: string; wholeWord?: boolean }[]>;
     links?: { href: string; label: Localized }[];
     video?: { id: string; url: string; caption: Localized };
@@ -2756,7 +2761,7 @@ const OFFERS: Offer[] = [
       geo: vpnTerms['ppl-vpn'].geo,
       paymentMethods: { ru: 'Банковские карты, СБП, Криптовалюта', en: 'Bank cards, SBP, Crypto', es: 'Tarjetas bancarias, SBP, cripto', zh: '银行卡、SBP、加密货币', ko: '은행 카드, SBP, 암호화폐' }
     },
-    editorial: ADDITIONAL_PROXY_EDITORIALS['ppl-vpn'],
+    editorial: { ...ADDITIONAL_PROXY_EDITORIALS['ppl-vpn'], ...vpnEditorialAdditions['ppl-vpn'] },
   },
   {
     id: 'vpn-prosto',
@@ -2777,6 +2782,27 @@ const OFFERS: Offer[] = [
     },
     editorial: ADDITIONAL_PROXY_EDITORIALS.prostovpn,
   },
+  {
+    id: impVpnPage.id,
+    category: 'Proxy',
+    subCategory: 'VPN',
+    slug: impVpnPage.slug,
+    name: impVpnPage.name,
+    description: impVpnPage.description,
+    url: impVpnPage.url,
+    logoUrl: impVpnPage.logo,
+    platforms: impVpnPage.platforms,
+    details: {
+      geo: impVpnPage.geo,
+      paymentMethods: impVpnPage.paymentMethods,
+      pros: {
+        ru: ['3 дня бесплатно', 'До 5 устройств', 'Безлимитный обычный трафик', 'Автоматический выбор сервера'],
+        en: ['3 free days', 'Up to 5 devices', 'Unlimited regular traffic', 'Automatic server selection'],
+      },
+    },
+    editorial: impVpnPage.editorial,
+  },
+  ...newVpnOffers.filter(offer => offer.id === 'vpn-quattro') as Offer[],
   {
     id: 'vpn-giga',
     category: 'Proxy',
@@ -2868,7 +2894,7 @@ const OFFERS: Offer[] = [
         ]
       }
     },
-    editorial: ADDITIONAL_PROXY_EDITORIALS['tochka-g'],
+    editorial: { ...ADDITIONAL_PROXY_EDITORIALS['tochka-g'], ...vpnEditorialAdditions['tochka-g'] },
   },
   {
     id: 'vpn-giga-dollar',
@@ -2917,27 +2943,9 @@ const OFFERS: Offer[] = [
         ko: ['가속기는 별도 구매이며 활성 VPN 구독이 필요합니다.', '각 활성 구독은 한 번만 일시 정지할 수 있습니다.', '현재 가격과 제공 지역은 봇에서 확인하세요.'],
       },
     },
-    editorial: ADDITIONAL_PROXY_EDITORIALS['giga-dollar-vpn'],
+    editorial: { ...ADDITIONAL_PROXY_EDITORIALS['giga-dollar-vpn'], ...vpnEditorialAdditions['giga-dollar-vpn'] },
   },
-  {
-    id: impVpnPage.id,
-    category: 'Proxy',
-    subCategory: 'VPN',
-    slug: impVpnPage.slug,
-    name: impVpnPage.name,
-    description: impVpnPage.description,
-    url: impVpnPage.url,
-    logoUrl: impVpnPage.logo,
-    details: {
-      geo: impVpnPage.geo,
-      paymentMethods: impVpnPage.paymentMethods,
-      pros: {
-        ru: ['3 дня бесплатно', 'До 5 устройств', 'Безлимитный обычный трафик', 'Автоматический выбор сервера'],
-        en: ['3 free days', 'Up to 5 devices', 'Unlimited regular traffic', 'Automatic server selection'],
-      },
-    },
-    editorial: impVpnPage.editorial,
-  },
+  ...newVpnOffers.filter(offer => offer.id === 'vpn-taynik') as Offer[],
   // ANTIDETECT
   {
     id: 'ant-dolphin',
@@ -3793,11 +3801,11 @@ const OFFERS: Offer[] = [
         ko: '러시아, Telegram 온라인 출금'
       },
       types: {
-        ru: 'Вывод крипты в рубли через ОСТ, обмен крипты, оплата по QR',
-        en: 'Crypto-to-RUB OST payouts, crypto exchange, QR payments',
-        es: 'Pagos OST de cripto a RUB, cambio de cripto y pagos QR',
-        zh: '加密货币兑卢布 OST 付款、币币兑换、二维码付款',
-        ko: '암호화폐-RUB OST 지급, 암호화폐 교환, QR 결제'
+        ru: 'Вывод крипты в рубли через ОСТ, обмен крипты, оплата по QR. QR-оплата за границей',
+        en: 'Crypto-to-RUB OST payouts, crypto exchange, QR payments. QR payments abroad',
+        es: 'Pagos OST de cripto a RUB, cambio de cripto y pagos QR. QR payments abroad',
+        zh: '加密货币兑卢布 OST 付款、币币兑换、二维码付款. QR payments abroad',
+        ko: '암호화폐-RUB OST 지급, 암호화폐 교환, QR 결제. QR payments abroad'
       },
       paymentMethods: {
         ru: 'Криптовалюта; вывод на карту или по СБП',
@@ -4517,6 +4525,7 @@ const OFFERS: Offer[] = [
       type: { ru: 'Visa', en: 'Visa', es: 'Visa', zh: 'Visa', ko: 'Visa' }
     },
     details: {
+      types: pgonQrAbroad.types,
       pros: {
         ru: ['Оплата криптой по QR СБП/НСПК в РФ', 'Виртуальная Visa для зарубежных сервисов', 'Пополнение через СБП или USDT'],
         en: ['Crypto payments through SBP/NSPK QR codes in Russia', 'Virtual Visa for foreign services', 'Funding through SBP or USDT'],
@@ -5992,6 +6001,7 @@ export default function App() {
     tariffStart: tx({ ru: 'Стартовый тариф', en: 'Starter Plan', es: 'Plan inicial', zh: '入门套餐', ko: '시작 요금제' }),
     vpnFree: tx({ ru: 'Бесплатно', en: 'Free trial', es: 'Gratis', zh: '免费试用', ko: '무료 체험' }),
     vpnPrice: tx({ ru: 'Цена', en: 'Price', es: 'Precio', zh: '价格', ko: '요금' }),
+    vpnAllowlist: tx({ ru: 'Белые списки', en: 'Allowlist networks', es: 'Allowlist networks', zh: 'Allowlist networks', ko: 'Allowlist networks' }),
     profiles100: tx({ ru: '100 профилей', en: '100 Profiles', es: '100 perfiles', zh: '100 个配置文件', ko: '프로필 100개' }),
     control: tx({ ru: 'Управление', en: 'Control', es: 'Control', zh: '操作设备', ko: '제어 기기' }),
     format: tx({ ru: 'Формат', en: 'Format', es: 'Formato', zh: '形式', ko: '형식' }),
@@ -7068,6 +7078,7 @@ export default function App() {
                             <InfoRow icon={Percent} label={l(qrCardLabels.fee)} value={l(offer.qrDetails.fee)} />
                             <InfoRow icon={ShieldCheck} label={l(qrCardLabels.kyc)} value={l(offer.qrDetails.kyc)} />
                             <InfoRow icon={Gauge} label={l(qrCardLabels.limit)} value={l(offer.qrDetails.limit)} />
+                            {offer.id === 'pgon-exchange' && <p data-qr-abroad className="text-sm font-medium leading-6 text-white/60">{l(pgonQrAbroad.exchangeDescription)}</p>}
                           </>
                         ) : offer.category === 'Antidetect' && (subFilter === 'Mobile' || offer.subCategory === 'Mobile') && offer.mobileDetails ? (
                           <>
@@ -7081,6 +7092,7 @@ export default function App() {
                               <>
                                 <InfoRow icon={Clock} label={t.vpnFree} value={l(vpnTerms[offer.slug].free)} />
                                 <InfoRow icon={CreditCard} label={t.vpnPrice} value={l(vpnTerms[offer.slug].price)} />
+                                <InfoRow icon={ShieldCheck} label={t.vpnAllowlist} value={l(vpnTerms[offer.slug].allowlist)} />
                               </>
                             )}
                             <InfoRow icon={Users} label={t.freeProfiles} value={l(offer.freeProfiles)} />
@@ -7156,7 +7168,7 @@ export default function App() {
                             service_id: offer.id,
                             service_name: offer.name,
                             category: offer.category,
-                            destination: offer.url.startsWith('https://t.me/') ? 'telegram' : 'website',
+                            destination: isTelegramUrl(offer.url) ? 'telegram' : 'website',
                             language: lang,
                             placement: 'catalog_card',
                             link_url: offer.url,
@@ -8928,6 +8940,8 @@ export default function App() {
                         <>
                           <InfoRow icon={Clock} label={t.vpnFree} value={l(selectedVpnTerms.free)} />
                           <InfoRow icon={CreditCard} label={t.vpnPrice} value={l(selectedVpnTerms.price)} />
+                          <InfoRow icon={ShieldCheck} label={t.vpnAllowlist} value={l(selectedVpnTerms.allowlist)} />
+                          <InfoRow icon={Users} label={tx({ ru: 'Устройства', en: 'Devices' })} value={l(selectedOffer.details?.devices)} />
                         </>
                       )}
                       {isSelectedOfferMobileAntidetect && selectedOffer.mobileDetails && (
@@ -9170,7 +9184,7 @@ export default function App() {
                       service_id: selectedOffer.id,
                       service_name: selectedOffer.name,
                       category: selectedOffer.category,
-                      destination: selectedOffer.url.startsWith('https://t.me/') ? 'telegram' : 'website',
+                      destination: isTelegramUrl(selectedOffer.url) ? 'telegram' : 'website',
                       language: lang,
                       placement: 'modal_primary',
                       link_url: selectedOffer.url,
@@ -9189,7 +9203,7 @@ export default function App() {
                             zh: '在 Telegram 打开 Hermes',
                             ko: 'Telegram에서 Hermes 열기',
                           })
-                      : selectedOffer.url.startsWith('https://t.me/')
+                      : isTelegramUrl(selectedOffer.url)
                         ? t.openTelegramBot
                         : tx({
                             ru: `Перейти в ${offerTitle(selectedOffer)}`,
@@ -9216,7 +9230,7 @@ export default function App() {
                       })}
                       className="flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/10 bg-white/5 px-5 py-3 text-xs font-black uppercase tracking-[0.12em] text-white/60 transition-all hover:border-brand-purple/40 hover:bg-white/10 hover:text-white"
                     >
-                      {t.openWebsite}
+                      {selectedOffer.webLabel ? l(selectedOffer.webLabel) : t.openWebsite}
                       <ExternalLink className="w-5 h-5" />
                     </a>
                   )}

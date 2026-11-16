@@ -1,7 +1,10 @@
 import { proxyGuideMeta } from './proxyGuideContent.js';
 import { aiSection } from './aiPages.js';
 
+import { newVpnPages } from './vpnUpdates.js';
+
 export const pageHeadings = {
+  ...Object.fromEntries(newVpnPages.map(page => [`/proxy-vpn/${page.slug}`, page.heading])),
   '/ai': aiSection.heading,
   "/": {
     "ru": "Полезные сервисы для работы с аккаунтами и цифровыми задачами",

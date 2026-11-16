@@ -1,3 +1,5 @@
+import { vpnTerms } from './vpnDetails.js';
+
 export const serviceCategoryRoutes = {
   Proxy: '/proxy-vpn', Antidetect: '/antidetect', Stores: '/account-shop', AI: '/ai', Cards: '/foreign-cards',
   Crypto: '/crypto-exchange', SMS: '/sms-activators', VPS: '/vps', Social: '/social-boost', Steam: '/steam-topup', Guides: '/guides',
@@ -74,6 +76,7 @@ export const localizedServiceValue = (value, language) => {
 export const getServiceEditorialSections = (offer, language) => [
   ['capabilities', 'Что умеет', 'Features'], ['pricing', 'Цены', 'Pricing'],
   ['payment', 'Оплата', 'Payment'], ['gettingStarted', 'Как начать', 'Getting started'],
+  ['telegramFallback', 'Если не работает Telegram', 'If Telegram is unavailable'],
 ].map(([key, ru, en]) => ({ key, heading: language === 'ru' ? ru : en, ordered: key === 'gettingStarted', items: localizedServiceValue(offer.editorial?.[key], language) || [] })).filter(section => section.items.length);
 
 export const splitServiceText = (text, offer, language) => {
@@ -118,6 +121,7 @@ export const serviceFactLabels = {
   verification: ['Верификация', 'Verification'], cashback: ['Кешбэк', 'Cashback'], topup: ['Пополнение', 'Top-up'],
   commission: ['Комиссия', 'Fee'], type: ['Тип карты', 'Card type'],
   countries: ['Страны оплаты', 'Countries'], fee: ['Комиссия QR', 'QR fee'], limit: ['Лимит', 'Limit'],
+  allowlist: ['Белые списки', 'Allowlist networks'], devices: ['Устройства', 'Devices'],
 };
 
 export const getServiceFacts = (offer, language) => {
@@ -127,6 +131,10 @@ export const getServiceFacts = (offer, language) => {
     if (text !== '' && text != null && (!Array.isArray(text) || text.length)) facts.push({ key, label: label || serviceFactLabels[key]?.[language === 'ru' ? 0 : 1] || key, value: Array.isArray(text) ? text.join(', ') : text });
   };
   for (const key of ['geo', 'types', 'price', 'freeTrial', 'ipRotation', 'paymentMethods', 'rate', 'fees', 'kyc', 'minTopup']) add(key, offer.details?.[key]);
+  if (offer.subCategory === 'VPN') {
+    add('allowlist', vpnTerms[offer.slug]?.allowlist);
+    add('devices', offer.details?.devices);
+  }
   for (const key of ['freeProfiles', 'tariffStartPrice', 'profiles100Price', 'platforms', 'payments']) add(key, offer[key], key === 'profiles100Price' ? localizedServiceValue(offer.profilesPriceLabel, language) : undefined);
   for (const key of ['main', 'secondary']) add(key, offer.priceInfo?.[key]);
   for (const key of ['control', 'format', 'trial']) add(key, offer.mobileDetails?.[key]);
@@ -138,7 +146,7 @@ export const getServiceFacts = (offer, language) => {
 export const getServiceSummaryFacts = (offer, language, { vpnPrice, qr = false } = {}) => {
   const facts = getServiceFacts(offer, language);
   if (vpnPrice) facts.push({ key: 'price', label: serviceFactLabels.price[language === 'ru' ? 0 : 1], value: vpnPrice });
-  const keys = qr ? ['countries', 'fee', 'kyc'] : offer.cardStats ? ['issuance', 'topup', 'maintenance']
+  const keys = qr ? ['countries', 'fee', 'kyc'] : offer.subCategory === 'VPN' ? ['price', 'allowlist', 'geo'] : offer.cardStats ? ['issuance', 'topup', 'maintenance']
     : offer.category === 'Antidetect' ? ['freeProfiles', 'tariffStartPrice', 'profiles100Price', 'control', 'format', 'trial']
     : ['geo', 'types', 'price', 'tariffStartPrice', 'main', 'rate', 'paymentMethods', 'platforms'];
   const visibleKeys = offer.category === 'Stores' && offer.subCategory === 'Bot' ? keys.filter(key => key !== 'types') : keys;

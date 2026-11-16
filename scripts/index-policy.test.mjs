@@ -30,7 +30,8 @@ test('index policy has the approved 60 RU and 13 EN whitelist entries plus RU gu
 test('closed services, sections and landings remain noindex regardless of category', () => {
   for (const offer of OFFERS.filter(offer => offer.category === 'Social' || offer.subCategory === 'VPN')) {
     const category = offer.category === 'Social' ? '/social-boost/' : '/proxy-vpn/';
-    for (const prefix of ['', '/en']) assert.equal(isIndexablePath(prefix + category + offer.slug), offer.subCategory === 'VPN' && prefix === '');
+    const indexedVpnSlugs = ['prostovpn', 'ppl-vpn', 'imp-vpn', 'all-vpn', 'giga-vpn', 'giga-dollar-vpn', 'tochka-g'];
+    for (const prefix of ['', '/en']) assert.equal(isIndexablePath(prefix + category + offer.slug), offer.subCategory === 'VPN' && prefix === '' && indexedVpnSlugs.includes(offer.slug));
   }
   for (const route of ['/social-boost', '/social-boost/gde-brat-referalov', '/crypto-exchange/aml-proverka', '/guides/akkaunty-ip-gmail-kripta', '/guides/crypto-otc-kyc', '/crypto-exchange/antarctic-wallet', '/crypto-exchange/pgon', '/crypto-exchange/qr2pay', '/steam-topup/antarctic-wallet', '/steam-topup/ggsel', '/en/guides']) assert.equal(isIndexablePath(route), false, route);
   for (const page of seoLandingPages) assert.equal(isIndexablePath('/en' + page.route), false);

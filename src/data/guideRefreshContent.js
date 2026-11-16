@@ -1,6 +1,7 @@
 import { articleFallbackContent } from './articleFallbackContent.js';
 import { discordTokenArticle } from './discordTokenArticle.js';
 import { foreignCardArticle } from './foreignCardArticle.js';
+import { pgonQrAbroad } from './pgonQrAbroad.js';
 import exchangeUidsArticle from './exchangeUidsArticle.json' with { type: 'json' };
 
 export const guideRefreshCovers = {
@@ -13,7 +14,7 @@ export const guideRefreshCovers = {
 export const guideRefreshMeta = {
   'guide-gmail-forwarding': { cover: guideRefreshCovers['guide-gmail-forwarding'], datePublished: '2026-08-30T01:39:58+03:00', dateModified: '2026-11-10' },
   'guide-discord-token': { cover: guideRefreshCovers['guide-discord-token'], datePublished: '2026-10-26T17:38:30+03:00', dateModified: '2026-11-10', title: 'Как войти в Discord по токену: расширение и F12 | Hopscup' },
-  'guide-foreign-cards': { cover: guideRefreshCovers['guide-foreign-cards'], datePublished: '2026-10-14T16:08:38+03:00', dateModified: '2026-11-10' },
+  'guide-foreign-cards': { cover: guideRefreshCovers['guide-foreign-cards'], datePublished: '2026-10-14T16:08:38+03:00', dateModified: '2026-11-16' },
   'guide-uids-addresses': { cover: guideRefreshCovers['guide-uids-addresses'], datePublished: exchangeUidsArticle.datePublished, dateModified: exchangeUidsArticle.dateModified, title: exchangeUidsArticle.seoTitle, heading: exchangeUidsArticle.title, intro: exchangeUidsArticle.intro },
 };
 
@@ -70,7 +71,7 @@ export const createGuideRefreshContent = offers => {
     if (rest) parts.push(text(rest));
     return paragraph(parts);
   };
-  const cardBlocks = foreignCardArticle.flatMap((section) => [heading(section.heading), ...section.paragraphs.map(cardParagraph), ...(section.links || []).map(item => paragraph([link(item.label, item.href)]))]);
+  const cardBlocks = foreignCardArticle.flatMap((section) => [heading(section.heading), ...section.paragraphs.map(cardParagraph), ...(section.heading === 'PGON: карта, криптокошелёк и QR-платежи в Telegram' ? [paragraph([text(pgonQrAbroad.articleSentence)])] : []), ...(section.links || []).map(item => paragraph([link(item.label, item.href)]))]);
   const cardsHeadingIds = Object.fromEntries(foreignCardArticle.map((section, index) => [section.heading, `cards-${index}`]));
   cardsHeadingIds['Ещё варианты'] = 'more-options';
   cardBlocks.push(heading('Ещё варианты'),

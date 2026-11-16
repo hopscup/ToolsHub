@@ -62,6 +62,8 @@ const categoryRoutes = [
   ...seoLandingPages.map((page) => page.route),
 ];
 const serviceRoutes = [
+  '/proxy-vpn/quattro-vpn',
+  '/proxy-vpn/taynik-vpn',
   ...aiPages.map(page => `/ai/${page.slug}`),
   '/proxy-vpn/luchshie-proksi',
   '/proxy-vpn/luchshie-mobilnye-proksi',

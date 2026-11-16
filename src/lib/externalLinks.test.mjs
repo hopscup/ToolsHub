@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { getExternalLinkRel, isAffiliateUrl } from './externalLinks.js';
+import { getExternalLinkRel, isAffiliateUrl, isTelegramUrl } from './externalLinks.js';
+
+test('Telegram bot destinations recognize both official host spellings', () => {
+  for (const url of ['https://t.me/QuattroVPN_BOT', 'https://telegram.me/QuattroVPN_BOT', 'https://www.telegram.me/QuattroVPN_BOT']) assert.equal(isTelegramUrl(url), true);
+  for (const url of ['https://quattro.app/', 'https://telegram.me.example.com/bot', '/t.me/example', undefined]) assert.equal(isTelegramUrl(url), false);
+});
 
 test('referral query parameters and existing path referrals are sponsored', () => {
   for (const href of [
@@ -35,6 +40,10 @@ test('referral query parameters and existing path referrals are sponsored', () =
     'https://t.me/taynikstore_bot?start=ref467483565',
     'https://t.me/AhlisShop_bot?start=467483565',
     'https://ls.app/sign-up?promo=hopscup',
+    'https://telegram.me/QuattroVPN_BOT?start=r_QTvaoAABoVcA2Pbb',
+    'https://t.me/QuattroVPN_BOT?start=r_QTvaoAABoVcA2Pbb',
+    'https://quattro.app/register?ref=QTvaoAABoVcA2Pbb',
+    'https://t.me/vpntaynik_bot?start=ref467483565',
   ]) {
     assert.equal(isAffiliateUrl(href), true, href);
     assert.equal(getExternalLinkRel(href), 'sponsored noopener noreferrer', href);
@@ -58,6 +67,10 @@ test('ordinary external resources are not sponsored', () => {
     'https://t.me/AhlisShop_bot',
     'https://t.me/AhlisShop_bot?start=help',
     'https://t.me/BolotoAI?start=help',
+    'https://telegram.me/QuattroVPN_BOT',
+    'https://telegram.me/QuattroVPN_BOT?start=help',
+    'https://telegram.me/example_bot?start=r_example',
+    'https://quattro.app/',
     'https://ls.app/',
     'https://example.com/?promo=hopscup',
     'https://t.me/example_bot/app?startapp=help',

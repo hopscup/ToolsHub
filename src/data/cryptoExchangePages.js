@@ -1,3 +1,4 @@
+import { withPgonQrAbroad } from './pgonQrAbroad.js';
 import { antarcticExchangePage } from './antarcticWallet.js';
 import { qr2payExchangePage } from './qr2pay.js';
 import { appendLocalizedItems, pgonQrNotes, prostoQrNotes } from './cryptoQrDetails.js';
@@ -129,7 +130,7 @@ export const cryptoExchangePages = [
       },
     },
   },
-  {
+  withPgonQrAbroad({
     id: 'pgon-exchange',
     slug: 'pgon',
     name: 'PGON',
@@ -186,7 +187,7 @@ export const cryptoExchangePages = [
         ko: 'PGON은 소액 및 중간 규모 출금에서 편리한 P2P 대안입니다. 법인이 지급하고 조건을 미리 확인할 수 있습니다. 카드 5%, SBP 6.5%이므로 다른 환전 서비스와 최종 금액을 비교하세요.',
       },
     },
-  },
+  }),
   {
     id: 'keine-exchange',
     slug: 'keine-exchange',
