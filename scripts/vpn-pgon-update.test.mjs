@@ -125,6 +125,21 @@ test('Telegram fallbacks and Dollar VPN updates use shared linked editorial sect
   assert.ok(dollar.editorial.pricing.ru[0].includes('5 устройств'));
 });
 
+test('Tochka G keeps its Telegram CTA and adds the free 40 minute secondary link', async () => {
+  const offer = OFFERS.find(item => item.id === 'vpn-tochka-g');
+  assert.equal(offer.url, 'https://t.me/tochka_GI_bot?start=811308241');
+  assert.equal(offer.webUrl, 'https://access.gotam.pro/');
+  assert.equal(offer.webLabel.ru, 'Фри 40 минут');
+  assert.equal(offer.webLabel.en, 'Free 40 minutes');
+  for (const language of ['', 'en/', 'es/', 'zh/', 'ko/']) {
+    const html = await readFile(`dist/${language}proxy-vpn/tochka-g/index.html`, 'utf8');
+    const label = offer.webLabel[language ? 'en' : 'ru'];
+    const secondary = `href="${offer.webUrl}" rel="noopener noreferrer">${label}</a>`;
+    assert.ok(html.includes(secondary));
+    assert.ok(html.indexOf(offer.url) < html.indexOf(secondary));
+  }
+});
+
 test('PGON QR abroad appears in both descriptions and the first card use case', () => {
   const card = OFFERS.find(offer => offer.id === 'pgon');
   const crypto = OFFERS.find(offer => offer.id === 'pgon-exchange');

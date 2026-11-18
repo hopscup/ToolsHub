@@ -2853,6 +2853,8 @@ const OFFERS: Offer[] = [
       en: 'A Telegram-bot VPN service focused on staying connected and quickly replacing configs. If a config stops working, it can be replaced through the bot or support. There are separate Telegram solutions, including a personal proxy and newer VPN configs for Telegram, AI services, and other apps.'
     },
     url: 'https://t.me/tochka_GI_bot?start=811308241',
+    webUrl: 'https://access.gotam.pro/',
+    webLabel: { ru: 'Фри 40 минут', en: 'Free 40 minutes', es: 'Free 40 minutes', zh: 'Free 40 minutes', ko: 'Free 40 minutes' },
     logoUrl: '/tochka-g.webp',
     platforms: ['Windows', 'macOS', 'Android', 'iOS', 'Linux'],
     details: {
