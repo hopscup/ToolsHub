@@ -22,6 +22,7 @@ import { createAccountFarmContent } from '../src/data/accountFarmContent.js';
 import { antidetectOverviewArticles, createAntidetectOverviewContent } from '../src/data/antidetectOverviewContent.js';
 import { virtualNumberArticle, createVirtualNumberContent } from '../src/data/virtualNumberContent.js';
 import { rfNumbersArticle, createRfNumbersContent } from '../src/data/rfNumbersContent.js';
+import { happRoutingArticle, createHappRoutingContent } from '../src/data/happRoutingContent.js';
 import { youtubeFarmArticle, createYoutubeFarmContent } from '../src/data/youtubeFarmContent.js';
 import { aiSubscriptionsArticle, createAiSubscriptionsContent } from '../src/data/aiSubscriptionsContent.js';
 import { mobileAntidetectArticle, createMobileAntidetectContent } from '../src/data/mobileAntidetectContent.js';
@@ -53,6 +54,7 @@ const indexLanguages = languages.filter(({ code }) => code === 'ru' || code === 
 const { OFFERS, OFFER_DESCRIPTION_TRANSLATIONS } = await loadOffers();
 const accountFarmContent = createAccountFarmContent(OFFERS);
 const linkedGuideContent = {
+  [happRoutingArticle.id]: createHappRoutingContent(OFFERS),
   [a6apiArticle.id]: createA6apiContent(OFFERS),
   ...Object.fromEntries(antidetectOverviewArticles.map(article => [article.id, createAntidetectOverviewContent(article, OFFERS)])),
   [virtualNumberArticle.id]: createVirtualNumberContent(OFFERS),
@@ -1734,17 +1736,17 @@ const renderGuideBlocks = (blocks, headingIds = {}) => {
     }
     if (block.type === 'list') {
       const tag = block.ordered ? 'ol' : 'ul';
-      return `<${tag}>${block.items.map(item => `<li>${inline(item)}</li>`).join('')}</${tag}>`;
+      return `<${tag}${block.ordered && block.start ? ` start="${block.start}"` : ''}>${block.items.map(item => `<li>${inline(item)}</li>`).join('')}</${tag}>`;
     }
     if (block.type === 'callout') return `<aside${block.warning ? ' data-warning="true" class="border-l-2 border-orange-400 bg-orange-400/[0.08] px-5 py-4"' : ''}><p>${escapeHtml(block.text)}</p>${block.items ? `<ul>${block.items.map(item => `<li>${inline(item)}</li>`).join('')}</ul>` : ''}${block.footer ? `<p>${escapeHtml(block.footer)}</p>` : ''}</aside>`;
-    if (block.type === 'image') return `<figure><a href="${escapeHtml(block.src)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(block.src)}" alt="${escapeHtml(block.alt)}"${block.width ? ` width="${block.width}" height="${block.height}"` : ''} loading="lazy" /></a>${block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : ''}</figure>`;
+    if (block.type === 'image') return `<figure${block.maxWidth ? ` style="max-width:${block.maxWidth}px;margin-left:auto;margin-right:auto"` : ''}><a href="${escapeHtml(block.src)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(block.src)}" alt="${escapeHtml(block.alt)}"${block.width ? ` width="${block.width}" height="${block.height}"` : ''}${block.maxWidth ? ' style="display:block;width:100%;height:auto"' : ''} loading="lazy" /></a>${block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : ''}</figure>`;
     return `<p>${inline(block.content)}</p>`;
   }).join('\n');
 };
 
 const renderChecklist = (checklist) => `<section id="start" data-article-checklist><h2>${escapeHtml(checklist.heading || 'Коротко: что делать')}</h2>
     ${renderGuideBlocks([{ type: 'list', ordered: true, items: checklist.items }])}
-    <div data-checklist-sources>${checklist.sources.length ? `<h3>${escapeHtml(checklist.sourcesHeading || 'Где брать:')}</h3>${checklist.sources.map(source => `<p>${source.label ? `${escapeHtml(source.label)}: ` : ''}${source.links.map(link => renderLink({ href: link.href, label: link.text })).join(' · ')}</p>`).join('')}` : ''}
+    <div data-checklist-sources>${checklist.sources.length ? `<h3>${escapeHtml(checklist.sourcesHeading || 'Где брать:')}</h3>${checklist.sources.map(source => `<p>${source.label ? `${escapeHtml(source.label)}: ` : ''}${source.links.map(link => renderLink({ href: link.href, label: link.text })).join(escapeHtml(source.separator ?? ' · '))}</p>`).join('')}` : ''}
     ${checklist.note.length ? `<p><small>${checklist.note.map(part => part.strong ? `<strong>${escapeHtml(part.text)}</strong>` : escapeHtml(part.text)).join('')}</small></p>` : ''}<p>${renderLink(checklist.action)}</p></div></section>`;
 
 const renderMobileIpGuideBody = () => mobileIpGuideBlocks.map(block => {

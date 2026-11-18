@@ -30,6 +30,7 @@ import { accountFarmArticle, createAccountFarmContent } from '../src/data/accoun
 import { antidetectOverviewArticles, createAntidetectOverviewContent } from '../src/data/antidetectOverviewContent.js';
 import { virtualNumberArticle, createVirtualNumberContent } from '../src/data/virtualNumberContent.js';
 import { rfNumbersArticle, createRfNumbersContent } from '../src/data/rfNumbersContent.js';
+import { happRoutingArticle, createHappRoutingContent } from '../src/data/happRoutingContent.js';
 import { youtubeFarmArticle, createYoutubeFarmContent } from '../src/data/youtubeFarmContent.js';
 import { aiSubscriptionsArticle, createAiSubscriptionsContent } from '../src/data/aiSubscriptionsContent.js';
 import { mobileAntidetectArticle, createMobileAntidetectContent } from '../src/data/mobileAntidetectContent.js';
@@ -169,6 +170,7 @@ const checkSectionSummaries = (html, language, route) => {
 
 const checkArticleContent = (html, route, localizedRoute) => {
   const numberGuide = route === `/guides/${virtualNumberArticle.slug}` ? createVirtualNumberContent(OFFERS)
+    : route === `/guides/${happRoutingArticle.slug}` ? createHappRoutingContent(OFFERS)
     : route === `/guides/${rfNumbersArticle.slug}` ? createRfNumbersContent(OFFERS)
     : route === `/guides/${youtubeFarmArticle.slug}` ? createYoutubeFarmContent(OFFERS)
     : route === `/guides/${aiSubscriptionsArticle.slug}` ? createAiSubscriptionsContent(OFFERS)
@@ -185,10 +187,18 @@ const checkArticleContent = (html, route, localizedRoute) => {
       Object.values(value).forEach(visit);
     };
     visit([article.blocks, article.introParagraphs, checklist.items, checklist.sources, checklist.note]);
-    for (const text of [article.intro, ...article.introParagraphs.filter(part => typeof part === 'string'), ...(article.introCallout ? [article.introCallout.text] : []), article.video.caption, checklist.action.label]) {
+    for (const text of [article.intro, ...article.introParagraphs.filter(part => typeof part === 'string'), ...(article.introCallout ? [article.introCallout.text] : []), ...(article.video ? [article.video.caption] : []), checklist.action.label]) {
       if (!content.includes(escapeHtml(text))) errors.push(`Incomplete virtual number guide: ${localizedRoute}: ${text}`);
     }
-    if (!content.includes(`<h1>${escapeHtml(article.title)}</h1>`) || !content.includes('data-article-checklist') || !content.includes(`href="${article.video.url}"`)) errors.push(`Missing virtual number guide structure: ${localizedRoute}`);
+    if (!content.includes(`<h1>${escapeHtml(article.title)}</h1>`) || !content.includes('data-article-checklist') || article.video && !content.includes(`href="${article.video.url}"`)) errors.push(`Missing virtual number guide structure: ${localizedRoute}`);
+    if (article.id === happRoutingArticle.id) {
+      const images = article.blocks.filter(block => block.type === 'image');
+      if (images.length !== 13 || /happ-14|iframe|data-article-video/.test(content)) errors.push(`Unexpected Happ image or video content: ${localizedRoute}`);
+      for (const image of images) {
+        if (!content.includes(`src="${image.src}"`) || !content.includes(`alt="${escapeHtml(image.alt)}"`)) errors.push(`Missing Happ screenshot: ${localizedRoute}: ${image.src}`);
+      }
+      if ((content.match(/max-width:360px/g) || []).length !== 13) errors.push(`Wrong Happ screenshot display width: ${localizedRoute}`);
+    }
     if (/FAQPage|Похожие статьи|data-related-guides|[—–]/.test(content)) errors.push(`Unrequested virtual number guide content: ${localizedRoute}`);
     const schema = JSON.parse(html.match(/<script[^>]*id="structured-data"[^>]*>([\s\S]*?)<\/script>/)?.[1] || '[]').find(item => item['@type'] === 'Article');
     if (schema?.datePublished !== article.datePublished || schema?.dateModified !== article.dateModified) errors.push(`Wrong fixed virtual number guide dates: ${localizedRoute}`);

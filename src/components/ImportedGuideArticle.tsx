@@ -28,10 +28,10 @@ export type ArticleBlock =
   | { type: 'heading'; level: number; text: string; compact?: boolean; href?: string }
   | { type: 'quote'; content: InlineSegment[] }
   | { type: 'callout'; level: number; text: string; items?: InlineSegment[][]; footer?: string; warning?: boolean }
-  | { type: 'list'; ordered: boolean; items: InlineSegment[][] }
+  | { type: 'list'; ordered: boolean; items: InlineSegment[][]; start?: number }
   | { type: 'code'; label: string; text: string }
   | { type: 'table'; headers: InlineSegment[][]; rows: InlineSegment[][][] }
-  | { type: 'image'; src: string; alt: string; caption: string; width?: number; height?: number };
+  | { type: 'image'; src: string; alt: string; caption: string; width?: number; height?: number; maxWidth?: number };
 
 export type ArticleData = {
   title: string;
@@ -110,10 +110,10 @@ export const InlineContent = ({
   </>
 );
 
-const ImportedImage = ({ src, alt, caption, index, width, height }: { key?: string; src: string; alt: string; caption: string; index: number; width?: number; height?: number }) => {
+const ImportedImage = ({ src, alt, caption, index, width, height, maxWidth }: { key?: string; src: string; alt: string; caption: string; index: number; width?: number; height?: number; maxWidth?: number }) => {
   const usefulAlt = alt || `Скриншот ${index + 1} из статьи`;
   return (
-    <figure className="mx-auto my-8" style={width ? { maxWidth: width } : undefined}>
+    <figure className="mx-auto my-8" style={maxWidth || width ? { maxWidth: maxWidth || width } : undefined}>
       <ArticleImageLink
         src={src} alt={usefulAlt} caption={caption}
         className="block overflow-hidden rounded-2xl border border-white/10 bg-white transition-colors hover:border-brand-purple/45"
@@ -272,6 +272,7 @@ export const ImportedGuideArticle = ({
                     caption={block.caption}
                     width={block.width}
                     height={block.height}
+                    maxWidth={block.maxWidth}
                     index={currentImageIndex}
                   />
                 );
@@ -298,7 +299,7 @@ export const ImportedGuideArticle = ({
               if (block.type === 'list') {
                 const List = block.ordered ? 'ol' : 'ul';
                 return (
-                  <List key={`list-${blockIndex}`} className={`my-6 space-y-3 pl-6 text-sm font-medium leading-7 text-white/65 marker:font-black marker:text-brand-purple md:text-base ${block.ordered ? 'list-decimal' : 'list-disc'}`}>
+                  <List key={`list-${blockIndex}`} {...(block.ordered && block.start ? { start: block.start } : {})} className={`my-6 space-y-3 pl-6 text-sm font-medium leading-7 text-white/65 marker:font-black marker:text-brand-purple md:text-base ${block.ordered ? 'list-decimal' : 'list-disc'}`}>
                     {block.items.map((item, itemIndex) => <li key={`item-${itemIndex}`}><InlineContent content={item} sourceAnchors={sourceAnchors} /></li>)}
                   </List>
                 );

@@ -16,6 +16,8 @@ import { VirtualNumberGuideArticle } from './components/VirtualNumberGuideArticl
 import { virtualNumberArticle } from './data/virtualNumberContent.js';
 import { RfNumbersGuideArticle } from './components/RfNumbersGuideArticle';
 import { rfNumbersArticle } from './data/rfNumbersContent.js';
+import { HappRoutingGuideArticle } from './components/HappRoutingGuideArticle';
+import { happRoutingArticle } from './data/happRoutingContent.js';
 import { YoutubeFarmGuideArticle } from './components/YoutubeFarmGuideArticle';
 import { youtubeFarmArticle } from './data/youtubeFarmContent.js';
 import { AiSubscriptionsGuideArticle } from './components/AiSubscriptionsGuideArticle';
@@ -144,6 +146,7 @@ type GuideTopic = 'all' | 'proxy' | 'antidetect' | 'accounts' | 'crypto' | 'ai';
 const RECOMMENDED_OFFER_IDS = new Set(Object.values(recommendedOfferIds).flat());
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
+  'guide-happ-routing': { topic: 'proxy', minutes: 5 },
   'guide-mobile-antidetect': { topic: 'antidetect', minutes: 9 },
   'guide-ai-subscriptions': { topic: 'ai', minutes: 5 },
   'guide-a6api': { topic: 'ai', minutes: 8 },
@@ -2065,6 +2068,15 @@ const OFFERS: Offer[] = [
     editorial: GUIDE_PAGE_BY_ID[rfNumbersArticle.id].editorial,
     description: GUIDE_PAGE_BY_ID[rfNumbersArticle.id].editorial.description,
     url: `/guides/${rfNumbersArticle.slug}`,
+  },
+  {
+    id: happRoutingArticle.id,
+    category: 'Guides',
+    name: guideCatalogById[happRoutingArticle.id].title.ru,
+    slug: happRoutingArticle.slug,
+    editorial: GUIDE_PAGE_BY_ID[happRoutingArticle.id].editorial,
+    description: GUIDE_PAGE_BY_ID[happRoutingArticle.id].editorial.description,
+    url: `/guides/${happRoutingArticle.slug}`,
   },
   {
     id: virtualNumberArticle.id,
@@ -6246,6 +6258,7 @@ export default function App() {
       || antidetectOverviewArticles.some(article => stripLanguagePrefix(window.location.pathname) === `/guides/${article.slug}`)
       || stripLanguagePrefix(window.location.pathname) === `/guides/${virtualNumberArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${rfNumbersArticle.slug}`
+      || stripLanguagePrefix(window.location.pathname) === `/guides/${happRoutingArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${youtubeFarmArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${aiSubscriptionsArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${a6apiArticle.slug}`
@@ -6389,6 +6402,9 @@ export default function App() {
   if (stripLanguagePrefix(window.location.pathname) === `/guides/${rfNumbersArticle.slug}`) {
     return <RfNumbersGuideArticle offers={OFFERS} />;
   }
+  if (stripLanguagePrefix(window.location.pathname) === `/guides/${happRoutingArticle.slug}`) {
+    return <HappRoutingGuideArticle offers={OFFERS} />;
+  }
   if (stripLanguagePrefix(window.location.pathname) === `/guides/${youtubeFarmArticle.slug}`) {
     return <YoutubeFarmGuideArticle offers={OFFERS} />;
   }
@@ -6424,6 +6440,7 @@ export default function App() {
           offer.id === 'guide-best-mobile-proxies'
           || offer.id === virtualNumberArticle.id
           || offer.id === rfNumbersArticle.id
+          || offer.id === happRoutingArticle.id
           || offer.id === youtubeFarmArticle.id
           || offer.id === aiSubscriptionsArticle.id
           || offer.id === a6apiArticle.id

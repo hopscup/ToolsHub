@@ -6,7 +6,7 @@ type Segment = { text: string; href?: string; strong?: boolean };
 export const ArticleChecklist = ({ items, sources, heading = 'Коротко: что делать', sourcesHeading = 'Где брать:', action, note, onExternalClick }: {
   key?: number;
   items: Segment[][];
-  sources: { label: string; links: { text: string; href: string }[] }[];
+  sources: { label: string; links: { text: string; href: string }[]; separator?: string }[];
   sourcesHeading?: string;
   heading?: string;
   action: { href: string; label: string };
@@ -36,7 +36,7 @@ export const ArticleChecklist = ({ items, sources, heading = 'Коротко: ч
             {source.label && <span>{source.label}: </span>}
             {source.links.map((link, index) => (
               <span key={link.href}>
-                {index > 0 && ' · '}
+                {index > 0 && (source.separator ?? ' · ')}
                 <a href={link.href} target="_blank" rel={getExternalLinkRel(link.href)} onClick={() => onExternalClick?.(link.href)}
                   className="font-bold text-brand-purple underline underline-offset-4">{link.text}</a>
               </span>

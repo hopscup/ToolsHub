@@ -1,0 +1,101 @@
+{
+  "id": "guide-happ-routing",
+  "slug": "happ-marshrutizaciya",
+  "title": "Как настроить маршрутизацию в Happ, чтобы российские сайты работали с включённым VPN",
+  "seoTitle": "Маршрутизация в Happ: банки работают с VPN | Hopscup",
+  "description": "Раздельное туннелирование в Happ за 5 минут: российские сайты, банки и маркетплейсы идут напрямую, а зарубежные сервисы через VPN. Пошагово со скриншотами.",
+  "sourceUrl": "",
+  "datePublished": "2026-11-18",
+  "dateModified": "2026-11-18",
+  "intro": "Надоело каждый раз выключать VPN, чтобы зайти в банк, на Озон или Госуслуги, а потом включать обратно? Это решается одной настройкой в Happ, она называется маршрутизация, или раздельное туннелирование.",
+  "introParagraphs": [
+    "Суть простая: российские сайты и приложения идут напрямую, с вашего обычного айпи, а всё остальное через VPN. Настраивается один раз минут за пять, дальше VPN можно вообще не выключать.",
+    "Показываю на iPhone, на Android меню почти такое же."
+  ],
+  "introCallout": {
+    "text": "Часть VPN-сервисов уже присылает готовый профиль маршрутизации вместе с подпиской. Перед настройкой зайдите в Настройки → Маршрутизация: если там уже есть профиль и роутинг включён, ничего делать не нужно.",
+    "warning": false
+  },
+  "headingIds": {
+    "Шаг 1. Открываем маршрутизацию": "open-routing",
+    "Шаг 2. Создаём профиль": "create-profile",
+    "Шаг 3. Обновляем геобазы": "update-geodata",
+    "Шаг 4. Добавляем российские сайты в «Напрямую»": "direct-russian-sites",
+    "Шаг 5. Проверяем «Глобальный прокси-сервер»": "global-proxy",
+    "Шаг 6. Переподключаем VPN": "reconnect-vpn",
+    "Если что-то не работает": "troubleshooting"
+  },
+  "blocks": [
+    { "type": "heading", "level": 2, "text": "Шаг 1. Открываем маршрутизацию" },
+    { "type": "list", "ordered": true, "items": [
+      [{ "text": "На главном экране Happ жмём шестерёнку в левом верхнем углу." }],
+      [{ "text": "Заходим в раздел «Маршрутизация»." }]
+    ] },
+    { "type": "image", "src": "/article/happ-routing/happ-01-glavnyj-ekran.webp", "alt": "Главный экран Happ: шестерёнка настроек в левом верхнем углу", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "paragraph", "content": [{ "text": "Сразу включить «Использовать роутинг» не выйдет: Happ напишет, что у вас нет профилей маршрутизации. Поэтому сначала создаём профиль." }] },
+    { "type": "heading", "level": 2, "text": "Шаг 2. Создаём профиль" },
+    { "type": "list", "ordered": true, "items": [[{ "text": "Жмём три точки в правом верхнем углу." }]] },
+    { "type": "image", "src": "/article/happ-routing/happ-02-marshrutizaciya.webp", "alt": "Экран маршрутизации Happ: меню с тремя точками справа вверху", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "list", "ordered": true, "start": 2, "items": [[{ "text": "Выбираем «Новый профиль»." }]] },
+    { "type": "image", "src": "/article/happ-routing/happ-03-novyj-profil.webp", "alt": "Пункт «Новый профиль» в меню маршрутизации Happ", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "list", "ordered": true, "start": 3, "items": [[{ "text": "Пишем любое название, например «RU напрямую», и жмём «Создать»." }]] },
+    { "type": "image", "src": "/article/happ-routing/happ-04-nazvanie-profilya.webp", "alt": "Ввод названия профиля маршрутизации и кнопка «Создать» в Happ", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "list", "ordered": true, "start": 4, "items": [[{ "text": "Включаем тумблер «Использовать роутинг», в списке ниже появится ваш профиль. Заходим в него." }]] },
+    { "type": "image", "src": "/article/happ-routing/happ-05-vklyuchit-routing.webp", "alt": "Включённый тумблер «Использовать роутинг» и выбор созданного профиля Happ", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "heading", "level": 2, "text": "Шаг 3. Обновляем геобазы" },
+    { "type": "paragraph", "content": [{ "text": "Внутри профиля первым делом обновляем две базы: geosite и geoip. Это списки сайтов и айпи-адресов по странам, по ним Happ и понимает, что российское, а что нет. Жмём на круглые стрелки напротив каждой, обновление занимает пару секунд." }] },
+    { "type": "paragraph", "content": [{ "text": "Потом спускаемся ниже и заходим в «Редактировать правила»." }] },
+    { "type": "image", "src": "/article/happ-routing/happ-06-geobazy-i-pravila.webp", "alt": "Обновление баз geosite и geoip и переход к редактированию правил Happ", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "heading", "level": 2, "text": "Шаг 4. Добавляем российские сайты в «Напрямую»" },
+    { "type": "list", "ordered": true, "items": [[{ "text": "Открываем раздел «Напрямую»." }]] },
+    { "type": "image", "src": "/article/happ-routing/happ-07-napryamuyu.webp", "alt": "Раздел «Напрямую» в редакторе правил маршрутизации Happ", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "list", "ordered": true, "start": 2, "items": [[{ "text": "Внизу жмём «Показать теги geosite»." }]] },
+    { "type": "image", "src": "/article/happ-routing/happ-08-teg-geosite.webp", "alt": "Кнопка «Показать теги geosite» под списком прямых подключений Happ", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "list", "ordered": true, "start": 3, "items": [[{ "text": "В поиске пишем category-ru и выбираем geosite:category-ru, строка подсветится зелёным. Это все российские сайты и сервисы. Подтверждаем и возвращаемся назад." }]] },
+    { "type": "image", "src": "/article/happ-routing/happ-09-geosite-category-ru.webp", "alt": "Поиск category-ru и выбор тега geosite:category-ru в Happ", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "list", "ordered": true, "start": 4, "items": [[{ "text": "То же самое для айпи: жмём «Показать теги geoip», пишем ru и выбираем geoip:ru. Это все российские айпи-адреса." }]] },
+    { "type": "image", "src": "/article/happ-routing/happ-10-geoip-ru.webp", "alt": "Поиск ru и выбор тега geoip:ru для российских IP-адресов в Happ", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "list", "ordered": true, "start": 5, "items": [[{ "text": "Проверяем: в списке «Напрямую» должны появиться обе строки." }]] },
+    { "type": "image", "src": "/article/happ-routing/happ-11-spisok-napryamuyu.webp", "alt": "Теги geosite:category-ru и geoip:ru добавлены в список «Напрямую» в Happ", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "callout", "level": 2, "warning": false, "text": "Если какое-то приложение или сайт всё равно продолжает ругаться на VPN, его можно добавить сюда вручную: просто впишите домен отдельной строкой, например ozon.ru." },
+    { "type": "heading", "level": 2, "text": "Шаг 5. Проверяем «Глобальный прокси-сервер»" },
+    { "type": "paragraph", "content": [{ "text": "Возвращаемся в «Редактирование правил» и смотрим, что тумблер «Глобальный прокси-сервер» включён. Если его выключить, весь трафик пойдёт мимо VPN, кроме того, что вы указали вручную, то есть получится наоборот." }] },
+    { "type": "image", "src": "/article/happ-routing/happ-12-globalnyj-proksi.webp", "alt": "Включённый «Глобальный прокси-сервер» в настройках правил Happ", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "heading", "level": 2, "text": "Шаг 6. Переподключаем VPN" },
+    { "type": "paragraph", "content": [{ "text": "Выходим на главный экран, выключаем и снова включаем VPN, чтобы настройки применились. Если хочется, можно заодно обновить подписку круглыми стрелками." }] },
+    { "type": "image", "src": "/article/happ-routing/happ-13-perepodklyuchit.webp", "alt": "Кнопка переподключения VPN на главном экране Happ после настройки маршрутизации", "caption": "", "width": 800, "height": 1440, "maxWidth": 360 },
+    { "type": "paragraph", "content": [{ "text": "Проверяем: Озон, Вайлдберриз, банки и Госуслуги открываются с включённым VPN, а зарубежные сервисы работают через VPN, как и раньше." }] },
+    { "type": "heading", "level": 2, "text": "Если что-то не работает" },
+    { "type": "list", "ordered": false, "items": [
+      [{ "text": "Российское приложение всё равно не открывается.", "strong": true }, { "text": " Добавьте его домен вручную в «Напрямую». Какие-то приложения ходят на свои отдельные адреса, которых нет в общей базе." }],
+      [{ "text": "Зарубежный сайт перестал открываться.", "strong": true }, { "text": " Проверьте, что тумблер «Глобальный прокси-сервер» включён, и обновите геобазы." }],
+      [{ "text": "После обновления подписки всё слетело.", "strong": true }, { "text": " Некоторые сервисы присылают свой профиль маршрутизации и перезаписывают ваш. Зайдите в «Маршрутизация» и выберите свой профиль." }],
+      [{ "text": "Happ нет в App Store.", "strong": true }, { "text": " Есть Happ Lite, его пока можно скачать из российского App Store. Либо меняете регион App Store на любой другой, например Сингапур, и качаете обычный Happ. На Android просто ставите apk." }]
+    ] },
+    { "type": "paragraph", "content": [{ "text": "Какой VPN выбрать и у кого есть обход белых списков, собрал у себя на сайте", "href": "/proxy-vpn" }] }
+  ],
+  "checklist": {
+    "heading": "Коротко: что делать",
+    "items": [
+      [{ "text": "Настройки → Маршрутизация → три точки → «Новый профиль»." }],
+      [{ "text": "Включаете «Использовать роутинг» и заходите в профиль." }],
+      [{ "text": "Обновляете geosite и geoip." }],
+      [{ "text": "В «Напрямую» добавляете geosite:category-ru и geoip:ru." }],
+      [{ "text": "Проверяете, что «Глобальный прокси-сервер» включён, и переподключаете VPN." }]
+    ],
+    "sourcesHeading": "Где брать:",
+    "sources": [
+      { "label": "VPN, которые работают в Happ", "links": [
+        { "text": "PPL VPN", "serviceId": "vpn-ppl" },
+        { "text": "iMP VPN", "serviceId": "vpn-imp" },
+        { "text": "ALL VPN", "serviceId": "vpn-all" }
+      ] },
+      { "label": "Если VPN нужен только на компьютере", "separator": " + ", "links": [
+        { "text": "бесплатный антидетект", "href": "/guides/besplatnye-antidetekt-brauzery" },
+        { "text": "прокси до 2$ в месяц", "href": "/proxy-vpn/luchshie-proksi" }
+      ] }
+    ],
+    "note": [{ "text": "Промокод hopscup на прокси почти везде." }],
+    "action": { "href": "/proxy-vpn", "label": "Все VPN на сайте" }
+  }
+}
