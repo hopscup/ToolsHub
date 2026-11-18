@@ -26,7 +26,12 @@ test('Happ guide shares exact metadata, fixed draft dates and catalogue registra
   assert.ok(app.includes('return <HappRoutingGuideArticle'));
   assert.equal(article.video, undefined);
   assert.equal(article.cover, undefined);
-  assert.equal(article.catalogCover, undefined);
+  assert.deepEqual(page.catalogCover, article.catalogCover);
+  assert.deepEqual(guideCatalog.find(guide => guide.id === article.id).cover, article.catalogCover);
+  assert.equal(article.catalogCover.src, '/article/happ-routing/preview.webp');
+  assert.equal(article.catalogCover.width, 640);
+  assert.equal(article.catalogCover.height, 361);
+  assert.ok((await stat('public' + article.catalogCover.src)).size < 50000);
   assert.doesNotMatch(JSON.stringify(happRoutingArticle), /—|\[скрин|Выноска:|\(Ссылка:/);
 });
 
@@ -48,7 +53,7 @@ test('Happ guide preserves six steps, continued numbering, two callouts and five
 test('Happ uses the thirteen original portrait screenshots without the Ozon result', async () => {
   const images = article.blocks.filter(block => block.type === 'image');
   assert.equal(images.length, 13);
-  assert.equal((await readdir('public/article/happ-routing')).length, 13);
+  assert.equal((await readdir('public/article/happ-routing')).filter(file => /^happ-\d+/.test(file)).length, 13);
   for (const [index, image] of images.entries()) {
     assert.ok(image.src.includes(`happ-${String(index + 1).padStart(2, '0')}-`));
     assert.ok(image.alt.length > 25);
