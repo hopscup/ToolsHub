@@ -7,6 +7,12 @@
   "sourceUrl": "",
   "datePublished": "2026-11-18",
   "dateModified": "2026-11-18",
+  "cover": {
+    "src": "/article/happ-routing/cover.webp",
+    "alt": "Маршрутизация VPN в Happ: раздельное подключение российских и зарубежных сервисов",
+    "width": 1280,
+    "height": 721
+  },
   "catalogCover": {
     "src": "/article/happ-routing/preview.webp",
     "alt": "Маршрутизация VPN в Happ: раздельное подключение российских и зарубежных сервисов",

@@ -25,7 +25,11 @@ test('Happ guide shares exact metadata, fixed draft dates and catalogue registra
   assert.ok(app.includes("'guide-happ-routing': { topic: 'proxy'"));
   assert.ok(app.includes('return <HappRoutingGuideArticle'));
   assert.equal(article.video, undefined);
-  assert.equal(article.cover, undefined);
+  assert.deepEqual(page.cover, article.cover);
+  assert.equal(article.cover.src, '/article/happ-routing/cover.webp');
+  assert.equal(article.cover.width, 1280);
+  assert.equal(article.cover.height, 721);
+  assert.ok((await stat('public' + article.cover.src)).size < 100000);
   assert.deepEqual(page.catalogCover, article.catalogCover);
   assert.deepEqual(guideCatalog.find(guide => guide.id === article.id).cover, article.catalogCover);
   assert.equal(article.catalogCover.src, '/article/happ-routing/preview.webp');
@@ -90,6 +94,8 @@ test('Happ full static article is indexed only in RU with correct images, links 
     assert.ok(!prefix || !sitemap.includes(prefix + route));
     const html = await readFile(`dist${prefix}${route}/index.html`, 'utf8');
     const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)[1];
+    assert.ok(content.includes(`src="${article.cover.src}"`));
+    assert.ok(html.includes(`property="og:image" content="https://hopscup.tools${article.cover.src}"`));
     assert.ok(html.includes(`rel="canonical" href="https://hopscup.tools${route}"`));
     assert.ok(html.includes(`name="robots" content="${prefix ? 'noindex' : 'index'}, follow`));
     assert.equal((content.match(/max-width:360px/g) || []).length, 13);

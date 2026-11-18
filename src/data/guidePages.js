@@ -35,7 +35,7 @@ export const guidePages = [
     articleIntroCallout: 'introCallout' in article ? article.introCallout : undefined,
     articleVideo: article.video,
     articleVideoPoster: article.videoPoster,
-    cover: undefined,
+    cover: 'cover' in article ? article.cover : undefined,
     catalogCover: article.catalogCover,
     datePublished: article.datePublished,
     dateModified: article.dateModified,
