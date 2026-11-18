@@ -16,9 +16,9 @@ test('index policy has the approved 60 RU and 13 EN whitelist entries plus RU gu
   assert.equal(indexableUrlWhitelist.ru.length, 60);
   assert.equal(indexableUrlWhitelist.en.length, 13);
   assert.equal(new Set(Object.values(indexableUrlWhitelist).flat()).size, 73);
-  assert.equal(indexablePaths.filter(path => !path.startsWith('/en')).length, 78);
+  assert.equal(indexablePaths.filter(path => !path.startsWith('/en')).length, 79);
   assert.equal(indexablePaths.filter(path => path.startsWith('/en')).length, 13);
-  assert.equal(new Set(indexablePaths).size, 91);
+  assert.equal(new Set(indexablePaths).size, 92);
   for (const path of indexablePaths) assert.equal(isIndexablePath(path), true);
   for (const guide of guidePages) {
     const route = '/guides/' + guide.slug;

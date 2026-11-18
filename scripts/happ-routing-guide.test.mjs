@@ -84,7 +84,7 @@ test('Happ VPN summary referrals resolve from OFFERS and remain sponsored', asyn
 });
 
 test('Happ full static article is indexed only in RU with correct images, links and list starts', async () => {
-  assert.equal(indexablePaths.length, 91);
+  assert.equal(indexablePaths.length, 92);
   assert.equal(isIndexablePath(route), true);
   const sitemap = (await Promise.all(['money', 'core', 'services'].map(name => readFile(`dist/sitemap-${name}.xml`, 'utf8')))).join('');
   assert.ok(sitemap.includes(`<loc>https://hopscup.tools${route}</loc>`));

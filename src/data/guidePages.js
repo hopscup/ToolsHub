@@ -10,6 +10,7 @@ import { antidetectOverviewArticles } from './antidetectOverviewContent.js';
 import { virtualNumberArticle } from './virtualNumberContent.js';
 import { rfNumbersArticle } from './rfNumbersContent.js';
 import { happRoutingArticle } from './happRoutingContent.js';
+import { vpn4gArticle } from './vpn4gContent.js';
 import { youtubeFarmArticle } from './youtubeFarmContent.js';
 import { aiSubscriptionsArticle } from './aiSubscriptionsContent.js';
 import { a6apiArticle } from './a6apiContent.js';
@@ -25,7 +26,7 @@ const guideTitle = (title) => ({
 });
 
 export const guidePages = [
-  ...[happRoutingArticle, a6apiArticle, mobileAntidetectArticle, aiSubscriptionsArticle, youtubeFarmArticle, rfNumbersArticle, virtualNumberArticle].map(article => ({
+  ...[vpn4gArticle, happRoutingArticle, a6apiArticle, mobileAntidetectArticle, aiSubscriptionsArticle, youtubeFarmArticle, rfNumbersArticle, virtualNumberArticle].map(article => ({
     id: article.id,
     indexable: true,
     slug: article.slug,

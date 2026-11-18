@@ -68,7 +68,7 @@ test('new VPN order, facts and sponsored destinations preserve existing bot link
 });
 
 test('new VPNs and every translation remain noindex without expanding sitemap', () => {
-  assert.equal(indexablePaths.length, 91);
+  assert.equal(indexablePaths.length, 92);
   for (const page of newVpnPages) for (const prefix of ['', '/en', '/es', '/zh', '/ko']) {
     const route = `${prefix}/proxy-vpn/${page.slug}`;
     assert.equal(isIndexablePath(route), false);

@@ -23,11 +23,12 @@ import { antidetectOverviewArticles, createAntidetectOverviewContent } from '../
 import { virtualNumberArticle, createVirtualNumberContent } from '../src/data/virtualNumberContent.js';
 import { rfNumbersArticle, createRfNumbersContent } from '../src/data/rfNumbersContent.js';
 import { happRoutingArticle, createHappRoutingContent } from '../src/data/happRoutingContent.js';
+import { vpn4gArticle, createVpn4gContent } from '../src/data/vpn4gContent.js';
 import { youtubeFarmArticle, createYoutubeFarmContent } from '../src/data/youtubeFarmContent.js';
 import { aiSubscriptionsArticle, createAiSubscriptionsContent } from '../src/data/aiSubscriptionsContent.js';
 import { mobileAntidetectArticle, createMobileAntidetectContent } from '../src/data/mobileAntidetectContent.js';
 import { isIndexablePath, getCanonicalPath, getIndexAlternates, getLanguageSwitchPath, absoluteIndexUrl } from '../src/data/indexPolicy.js';
-import { serviceContextualGuideLinks, sectionContextualGuideLinks } from '../src/data/contextualGuideLinks.js';
+import { getServiceContextualGuideLinks, getSectionContextualGuideLinks } from '../src/data/contextualGuideLinks.js';
 import { createGuideRefreshContent } from '../src/data/guideRefreshContent.js';
 import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, getServiceGuide, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
@@ -54,6 +55,7 @@ const indexLanguages = languages.filter(({ code }) => code === 'ru' || code === 
 const { OFFERS, OFFER_DESCRIPTION_TRANSLATIONS } = await loadOffers();
 const accountFarmContent = createAccountFarmContent(OFFERS);
 const linkedGuideContent = {
+  [vpn4gArticle.id]: createVpn4gContent(OFFERS),
   [happRoutingArticle.id]: createHappRoutingContent(OFFERS),
   [a6apiArticle.id]: createA6apiContent(OFFERS),
   ...Object.fromEntries(antidetectOverviewArticles.map(article => [article.id, createAntidetectOverviewContent(article, OFFERS)])),
@@ -1869,7 +1871,7 @@ const renderServiceContent = (offer, language, metaDescription) => {
     ${getServiceEditorialSections(offer, language.code).map(section => `<section data-editorial-section="${section.key}">${heading(section.heading)}<${section.ordered ? 'ol' : 'ul'}>${section.items.map(text => `<li>${richText(text)}</li>`).join('')}</${section.ordered ? 'ol' : 'ul'}></section>`).join('')}
     ${groups.map(group => `<section data-service-group="${group.key}">${heading(group.heading)}<ul>${group.items.map(text => `<li>${richText(text)}</li>`).join('')}</ul></section>`).join('')}
     ${offer.editorial?.setupGuide ? `<p data-setup-guide>${renderLink({ href: `${language.prefix}${offer.editorial.setupGuide.href}`, label: value(offer.editorial.setupGuide.label) })}</p>` : ''}
-    ${(serviceContextualGuideLinks[offer.id] || []).map(item => `<p>${renderLink({ href: `${language.prefix}${item.href}`, label: value(item.label) })}</p>`).join('')}
+    ${getServiceContextualGuideLinks(offer).map(item => `<p>${renderLink({ href: `${language.prefix}${item.href}`, label: value(item.label) })}</p>`).join('')}
     ${offer.details?.targetAudience && !isServiceMetaDescription(value(offer.details.targetAudience), metaDescription) ? `<section>${heading(ru ? 'Для кого' : 'Who it is for')}<p>${escapeHtml(value(offer.details.targetAudience))}</p></section>` : ''}
     ${value(offer.editorial?.verdict) && !isServiceMetaDescription(value(offer.editorial.verdict), metaDescription) ? `<section>${heading(ru ? 'Если коротко' : 'In short')}<p>${richText(value(offer.editorial.verdict))}</p></section>` : ''}
     ${(offer.editorial?.links || []).map(item => `<p>${renderLink({ href: `${language.prefix}${item.href}`, label: value(item.label) })}</p>`).join('')}
@@ -1937,7 +1939,7 @@ const renderStaticContent = (section, language, pageLanguage = language) => {
           ${section.articleVideo ? `<p>${renderLink({ href: section.articleVideo.url, label: section.articleVideo.caption })}</p>` : ''}
           ${section.articleVideoPoster ? `<figure><a href="${escapeHtml(section.articleVideo.url)}" rel="noopener noreferrer"><img src="${section.articleVideoPoster.src}" alt="${escapeHtml(section.articleVideoPoster.alt)}" width="${section.articleVideoPoster.width}" height="${section.articleVideoPoster.height}" /></a></figure>` : ''}
           ${section.guideLink ? `<p>${renderLink({ href: `${language.prefix}${section.guideLink.href}`, label: getLanguage(section.guideLink.label, language) })}</p>` : ''}
-          ${(sectionContextualGuideLinks[section.route] || []).map(item => `<p>${renderLink({ href: `${language.prefix}${item.href}`, label: getLanguage(item.label, language) })}</p>`).join('')}
+          ${getSectionContextualGuideLinks(section.route).map(item => `<p>${renderLink({ href: `${language.prefix}${item.href}`, label: getLanguage(item.label, language) })}</p>`).join('')}
           ${section.cover ? `<a href="${escapeHtml(section.cover.src)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(section.cover.src)}" alt="${escapeHtml(section.cover.alt)}" width="${section.cover.width}" height="${section.cover.height}" /></a>` : ''}
           ${article?.updated ? `<p class="fallback-updated">${escapeHtml(article.updated)}</p>` : ''}
         </header>

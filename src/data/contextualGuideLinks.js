@@ -7,6 +7,20 @@ export const serviceContextualGuideLinks = Object.fromEntries(
   ['ant-shardx', 'ant-adspower', 'ant-dolphin'].map(id => [id, [youtubeFarmGuideLink]]),
 );
 
+export const happRoutingGuideLink = {
+  href: '/guides/happ-marshrutizaciya',
+  label: { ru: 'Как настроить Happ, чтобы банки и Озон работали с включённым VPN', en: 'How to set up Happ so banks and Ozon work with VPN enabled' },
+};
+export const vpn4gGuideLink = {
+  href: '/guides/vpn-ne-rabotaet-na-4g',
+  label: { ru: 'Почему VPN не работает на 4G и что делать', en: 'Why VPN does not work on 4G and what to do' },
+};
+
+export const getServiceContextualGuideLinks = offer => [
+  ...(serviceContextualGuideLinks[offer.id] || []),
+  ...(offer.subCategory === 'VPN' && /\b(?:happ|incy)\b/i.test(JSON.stringify([offer.description, offer.editorial, offer.details])) ? [happRoutingGuideLink] : []),
+];
+
 export const sectionContextualGuideLinks = {
   '/account-shop/podpiski-neyrosetey': [{
     href: '/ai',
@@ -17,3 +31,8 @@ export const sectionContextualGuideLinks = {
     label: { ru: 'Где найти UID и адрес на бирже', en: 'Where to find your exchange UID and deposit address' },
   }],
 };
+
+export const getSectionContextualGuideLinks = (route, subFilter) => [
+  ...(sectionContextualGuideLinks[route] || []),
+  ...(route === '/proxy-vpn' && (subFilter === undefined || subFilter === 'VPN') ? [happRoutingGuideLink, vpn4gGuideLink] : []),
+];

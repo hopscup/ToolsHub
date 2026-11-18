@@ -18,6 +18,8 @@ import { RfNumbersGuideArticle } from './components/RfNumbersGuideArticle';
 import { rfNumbersArticle } from './data/rfNumbersContent.js';
 import { HappRoutingGuideArticle } from './components/HappRoutingGuideArticle';
 import { happRoutingArticle } from './data/happRoutingContent.js';
+import { Vpn4gGuideArticle } from './components/Vpn4gGuideArticle';
+import { vpn4gArticle } from './data/vpn4gContent.js';
 import { YoutubeFarmGuideArticle } from './components/YoutubeFarmGuideArticle';
 import { youtubeFarmArticle } from './data/youtubeFarmContent.js';
 import { AiSubscriptionsGuideArticle } from './components/AiSubscriptionsGuideArticle';
@@ -33,7 +35,7 @@ import { ArticleVideo } from './components/ArticleVideo';
 import { MobileAntidetectGuideArticle } from './components/MobileAntidetectGuideArticle';
 import { mobileAntidetectArticle } from './data/mobileAntidetectContent.js';
 import { isIndexablePath, getCanonicalPath, getIndexAlternates, getLanguageSwitchPath, absoluteIndexUrl } from './data/indexPolicy.js';
-import { serviceContextualGuideLinks, sectionContextualGuideLinks } from './data/contextualGuideLinks.js';
+import { getServiceContextualGuideLinks, getSectionContextualGuideLinks } from './data/contextualGuideLinks.js';
 import { antidetectOverviewArticles } from './data/antidetectOverviewContent.js';
 import { OtcKycGuideArticle } from './components/OtcKycGuideArticle';
 import { ExchangeUidsGuideArticle } from './components/ExchangeUidsGuideArticle';
@@ -147,6 +149,7 @@ const RECOMMENDED_OFFER_IDS = new Set(Object.values(recommendedOfferIds).flat())
 
 const GUIDE_CARD_META: Record<string, { topic: Exclude<GuideTopic, 'all'>; minutes: number }> = {
   'guide-happ-routing': { topic: 'proxy', minutes: 5 },
+  'guide-vpn-4g': { topic: 'proxy', minutes: 7 },
   'guide-mobile-antidetect': { topic: 'antidetect', minutes: 9 },
   'guide-ai-subscriptions': { topic: 'ai', minutes: 5 },
   'guide-a6api': { topic: 'ai', minutes: 8 },
@@ -2077,6 +2080,15 @@ const OFFERS: Offer[] = [
     editorial: GUIDE_PAGE_BY_ID[happRoutingArticle.id].editorial,
     description: GUIDE_PAGE_BY_ID[happRoutingArticle.id].editorial.description,
     url: `/guides/${happRoutingArticle.slug}`,
+  },
+  {
+    id: vpn4gArticle.id,
+    category: 'Guides',
+    name: guideCatalogById[vpn4gArticle.id].title.ru,
+    slug: vpn4gArticle.slug,
+    editorial: GUIDE_PAGE_BY_ID[vpn4gArticle.id].editorial,
+    description: GUIDE_PAGE_BY_ID[vpn4gArticle.id].editorial.description,
+    url: `/guides/${vpn4gArticle.slug}`,
   },
   {
     id: virtualNumberArticle.id,
@@ -6259,6 +6271,7 @@ export default function App() {
       || stripLanguagePrefix(window.location.pathname) === `/guides/${virtualNumberArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${rfNumbersArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${happRoutingArticle.slug}`
+      || stripLanguagePrefix(window.location.pathname) === `/guides/${vpn4gArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${youtubeFarmArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${aiSubscriptionsArticle.slug}`
       || stripLanguagePrefix(window.location.pathname) === `/guides/${a6apiArticle.slug}`
@@ -6405,6 +6418,9 @@ export default function App() {
   if (stripLanguagePrefix(window.location.pathname) === `/guides/${happRoutingArticle.slug}`) {
     return <HappRoutingGuideArticle offers={OFFERS} />;
   }
+  if (stripLanguagePrefix(window.location.pathname) === `/guides/${vpn4gArticle.slug}`) {
+    return <Vpn4gGuideArticle offers={OFFERS} />;
+  }
   if (stripLanguagePrefix(window.location.pathname) === `/guides/${youtubeFarmArticle.slug}`) {
     return <YoutubeFarmGuideArticle offers={OFFERS} />;
   }
@@ -6441,6 +6457,7 @@ export default function App() {
           || offer.id === virtualNumberArticle.id
           || offer.id === rfNumbersArticle.id
           || offer.id === happRoutingArticle.id
+          || offer.id === vpn4gArticle.id
           || offer.id === youtubeFarmArticle.id
           || offer.id === aiSubscriptionsArticle.id
           || offer.id === a6apiArticle.id
@@ -7268,7 +7285,7 @@ export default function App() {
               {currentSeoLanding?.guideLink && <p className="mt-4 text-sm leading-relaxed">
                 <a href={`${LANGUAGE_PREFIXES[lang]}${currentSeoLanding.guideLink.href}`} className="text-brand-purple underline underline-offset-4 hover:text-white">{l(currentSeoLanding.guideLink.label)}</a>
               </p>}
-              {sectionContextualGuideLinks[currentSeoLanding?.route || CATEGORY_ROUTES[activeCategory]]?.map(item => <p key={item.href} className="mt-4 text-sm leading-relaxed">
+              {getSectionContextualGuideLinks(currentSeoLanding?.route || CATEGORY_ROUTES[activeCategory], subFilter).map(item => <p key={item.href} className="mt-4 text-sm leading-relaxed">
                 <a href={`${LANGUAGE_PREFIXES[lang]}${item.href}`} className="text-brand-purple underline underline-offset-4 hover:text-white">{l(item.label)}</a>
               </p>)}
             </div>
@@ -9171,7 +9188,7 @@ export default function App() {
                       </p>)}
                     </div>
                   )}
-                  {serviceContextualGuideLinks[selectedOffer.id]?.map(item => <p key={item.href} className="text-sm leading-relaxed text-white/70">
+                  {getServiceContextualGuideLinks(selectedOffer).map(item => <p key={item.href} className="text-sm leading-relaxed text-white/70">
                     <a href={`${LANGUAGE_PREFIXES[lang]}${item.href}`} className="text-brand-purple hover:underline">{l(item.label)}</a>
                   </p>)}
                   {selectedAlternatives.length > 0 && <section data-service-alternatives className="min-w-0 space-y-4">

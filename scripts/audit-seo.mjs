@@ -31,6 +31,7 @@ import { antidetectOverviewArticles, createAntidetectOverviewContent } from '../
 import { virtualNumberArticle, createVirtualNumberContent } from '../src/data/virtualNumberContent.js';
 import { rfNumbersArticle, createRfNumbersContent } from '../src/data/rfNumbersContent.js';
 import { happRoutingArticle, createHappRoutingContent } from '../src/data/happRoutingContent.js';
+import { vpn4gArticle, createVpn4gContent } from '../src/data/vpn4gContent.js';
 import { youtubeFarmArticle, createYoutubeFarmContent } from '../src/data/youtubeFarmContent.js';
 import { aiSubscriptionsArticle, createAiSubscriptionsContent } from '../src/data/aiSubscriptionsContent.js';
 import { mobileAntidetectArticle, createMobileAntidetectContent } from '../src/data/mobileAntidetectContent.js';
@@ -171,6 +172,7 @@ const checkSectionSummaries = (html, language, route) => {
 const checkArticleContent = (html, route, localizedRoute) => {
   const numberGuide = route === `/guides/${virtualNumberArticle.slug}` ? createVirtualNumberContent(OFFERS)
     : route === `/guides/${happRoutingArticle.slug}` ? createHappRoutingContent(OFFERS)
+    : route === `/guides/${vpn4gArticle.slug}` ? createVpn4gContent(OFFERS)
     : route === `/guides/${rfNumbersArticle.slug}` ? createRfNumbersContent(OFFERS)
     : route === `/guides/${youtubeFarmArticle.slug}` ? createYoutubeFarmContent(OFFERS)
     : route === `/guides/${aiSubscriptionsArticle.slug}` ? createAiSubscriptionsContent(OFFERS)
@@ -198,6 +200,11 @@ const checkArticleContent = (html, route, localizedRoute) => {
         if (!content.includes(`src="${image.src}"`) || !content.includes(`alt="${escapeHtml(image.alt)}"`)) errors.push(`Missing Happ screenshot: ${localizedRoute}: ${image.src}`);
       }
       if ((content.match(/max-width:360px/g) || []).length !== 13) errors.push(`Wrong Happ screenshot display width: ${localizedRoute}`);
+    }
+    if (article.id === vpn4gArticle.id) {
+      const table = article.blocks.find(block => block.type === 'table');
+      if (table.rows.length !== 9 || !content.includes('<table')) errors.push(`Missing VPN 4G table: ${localizedRoute}`);
+      if (!content.includes(`src="${article.videoPoster.src}"`)) errors.push(`Missing VPN 4G video poster: ${localizedRoute}`);
     }
     if (/FAQPage|Похожие статьи|data-related-guides|[—–]/.test(content)) errors.push(`Unrequested virtual number guide content: ${localizedRoute}`);
     const schema = JSON.parse(html.match(/<script[^>]*id="structured-data"[^>]*>([\s\S]*?)<\/script>/)?.[1] || '[]').find(item => item['@type'] === 'Article');
