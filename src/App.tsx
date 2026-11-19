@@ -50,7 +50,7 @@ import { proxyGuideMeta } from './data/proxyGuideContent.js';
 import { mobileProxyMeta } from './data/articleFallbackContent.js';
 import { RecommendedBadge } from './components/RecommendedBadge';
 import { accountShopPages } from './data/accountShopPages.js';
-import { getPartnerIntroduction, withPartnerEditorial } from './data/partnerCardRefresh.js';
+import { getPartnerIntroduction, partnerMetadataById, withPartnerEditorial } from './data/partnerCardRefresh.js';
 import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
 import { foreignCardPages } from './data/foreignCardPages.js';
@@ -385,6 +385,7 @@ interface Offer {
     descriptionDetailed?: Localized;
   };
   editorial?: {
+    dateModified?: string;
     seoDescription?: Localized;
     title: Localized;
     description: Localized;
@@ -1869,6 +1870,7 @@ const FOREIGN_CARD_PAGE_BY_ID = Object.fromEntries(
   ]),
 ) as Record<string, {
   slug: string;
+  tileDescription?: Localized;
   editorial: NonNullable<Offer['editorial']>;
 }>;
 
@@ -2314,7 +2316,7 @@ const OFFERS: Offer[] = [
       types: { ru: 'IPv4, ISP, Residential, Mobile', en: 'IPv4, ISP, Residential, Mobile', es: 'IPv4, ISP, Residential, Mobile', zh: 'IPv4、ISP、Residential、Mobile', ko: 'IPv4, ISP, Residential, Mobile' },
       paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта', en: 'Visa/Mastercard, Crypto', es: 'Visa/Mastercard, cripto', zh: 'Visa/Mastercard、加密货币', ko: 'Visa/Mastercard, 암호화폐' }
     },
-    editorial: ADDITIONAL_PROXY_EDITORIALS.proxyshard,
+    editorial: withPartnerEditorial(ADDITIONAL_PROXY_EDITORIALS.proxyshard, 'p1'),
   },
   {
     id: 'p2',
@@ -2530,7 +2532,7 @@ const OFFERS: Offer[] = [
       types: { ru: 'IPv4, IPv6, ISP, Residential, Mobile', en: 'IPv4, IPv6, ISP, Residential, Mobile', es: 'IPv4, IPv6, ISP, Residential, Mobile', zh: 'IPv4、IPv6、ISP、Residential、Mobile', ko: 'IPv4, IPv6, ISP, Residential, Mobile' },
       paymentMethods: { ru: 'Visa/Mastercard, Криптовалюта, PayPal', en: 'Visa/Mastercard, Crypto, PayPal', es: 'Visa/Mastercard, cripto, PayPal', zh: 'Visa/Mastercard、加密货币、PayPal', ko: 'Visa/Mastercard, 암호화폐, PayPal' }
     },
-    editorial: ADDITIONAL_PROXY_EDITORIALS['proxy-seller'],
+    editorial: withPartnerEditorial(ADDITIONAL_PROXY_EDITORIALS['proxy-seller'], 'p4'),
   },
   {
     id: 'p5',
@@ -4266,7 +4268,7 @@ const OFFERS: Offer[] = [
     name: 'Zarub',
     slug: FOREIGN_CARD_PAGE_BY_ID.zarub.slug,
     editorial: FOREIGN_CARD_PAGE_BY_ID.zarub.editorial,
-    description: FOREIGN_CARD_PAGE_BY_ID.zarub.editorial.description,
+    description: FOREIGN_CARD_PAGE_BY_ID.zarub.tileDescription || FOREIGN_CARD_PAGE_BY_ID.zarub.editorial.description,
     url: 'https://t.me/zarub_robot?start=ref_PqBrBs',
     logoUrl: '/zarub.webp',
     isBestChoice: true,
@@ -4539,7 +4541,7 @@ const OFFERS: Offer[] = [
     name: 'PGON',
     slug: FOREIGN_CARD_PAGE_BY_ID.pgon.slug,
     editorial: FOREIGN_CARD_PAGE_BY_ID.pgon.editorial,
-    description: FOREIGN_CARD_PAGE_BY_ID.pgon.editorial.description,
+    description: FOREIGN_CARD_PAGE_BY_ID.pgon.tileDescription || FOREIGN_CARD_PAGE_BY_ID.pgon.editorial.description,
     url: 'https://t.me/pgon?start=ref_1ob10bl6',
     logoUrl: '/pgon.png',
     cardStats: {
@@ -5670,7 +5672,9 @@ export default function App() {
         || sectionSeo.title.en;
     const currentRoute = stripLanguagePrefix(window.location.pathname);
     const sectionTitle = !selectedOffer && !seoLanding && isActiveLanguage(lang) ? sectionSeoTitles[currentRoute] : undefined;
-    const title = compactSeoTitle(sectionTitle ? l(sectionTitle) + ' | Hopscup' : rawTitle, currentRoute, lang);
+    const title = partnerMetadataById[selectedOffer?.id]?.title
+      ? getLocalizedValue<string>(partnerMetadataById[selectedOffer.id].title, lang)
+      : compactSeoTitle(sectionTitle ? l(sectionTitle) + ' | Hopscup' : rawTitle, currentRoute, lang);
     const description = proxyGuideArticle
       ? proxyGuideMeta.description
       : mobileProxyComparisonArticle
@@ -5791,7 +5795,7 @@ export default function App() {
       ? {
           '@context': 'https://schema.org',
           '@type': 'WebPage',
-          dateModified: siteDateModified,
+          dateModified: selectedOffer.editorial?.dateModified || siteDateModified,
           name: title,
           description,
           url: canonicalUrl,

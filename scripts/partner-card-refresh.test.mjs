@@ -41,7 +41,7 @@ test('only DarkShopping changes SEO metadata while proxy descriptions stay indep
     assert.ok(offer.editorial.seoDescription.en.startsWith(offer.name + ' review'));
     assert.notEqual(offer.editorial.seoDescription.ru, offer.editorial.description.ru);
   }
-  assert.equal(getPartnerIntroduction(OFFERS.find(offer => offer.id === 'p1'), 'ru'), undefined);
+  assert.equal(getPartnerIntroduction(OFFERS.find(offer => offer.id === 'p2'), 'ru'), undefined);
   assert.equal(getPartnerIntroduction(OFFERS.find(offer => offer.id === 'p3'), 'es'), undefined);
 });
 

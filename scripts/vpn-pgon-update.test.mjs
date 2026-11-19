@@ -142,13 +142,12 @@ test('Tochka G keeps its Telegram CTA and adds the free 40 minute secondary link
   }
 });
 
-test('PGON QR abroad appears in both descriptions and the first card use case', () => {
+test('PGON retains QR abroad tile facts and the exchange description independently of refreshed card copy', () => {
   const card = OFFERS.find(offer => offer.id === 'pgon');
   const crypto = OFFERS.find(offer => offer.id === 'pgon-exchange');
   for (const language of ['ru', 'en', 'es', 'zh', 'ko']) {
-    assert.ok(card.editorial.description[language].endsWith(pgonQrAbroad.cardDescription[language]));
-    assert.equal(card.editorial.bestFor[language][0], pgonQrAbroad.bestFor[language]);
-    assert.equal(card.editorial.considerations[language].at(-1), pgonQrAbroad.consideration[language]);
+    assert.ok(card.description[language].endsWith(pgonQrAbroad.cardDescription[language]));
+    assert.ok(!(card.editorial.description[language] || card.editorial.description.en).includes(pgonQrAbroad.cardDescription[language]));
     assert.ok(crypto.editorial.description[language].endsWith(pgonQrAbroad.exchangeDescription[language]));
     assert.equal(card.details.types[language], pgonQrAbroad.types[language]);
   }

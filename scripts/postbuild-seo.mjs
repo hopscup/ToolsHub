@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { accountShopPages } from '../src/data/accountShopPages.js';
-import { getPartnerIntroduction } from '../src/data/partnerCardRefresh.js';
+import { getPartnerIntroduction, partnerMetadataById } from '../src/data/partnerCardRefresh.js';
 import { aiPages, aiSection } from '../src/data/aiPages.js';
 import { a6apiArticle, createA6apiContent } from '../src/data/a6apiContent.js';
 import { getServiceEditorialSections, splitServiceText } from '../src/data/servicePresentation.js';
@@ -1662,6 +1662,12 @@ for (const page of indexablePages) {
   const title = sectionSeoTitles[page.route];
   if (title) page.title = { ...page.title, ru: title.ru + ' | Hopscup', en: title.en + ' | Hopscup' };
   page.title = Object.fromEntries(Object.entries(page.title).map(([lang, value]) => [lang, compactSeoTitle(value, page.route, lang)]));
+  const metadata = Object.values(partnerMetadataById).find(item => item.route === page.route);
+  if (metadata) {
+    page.title = metadata.title;
+    page.description = metadata.description;
+    page.dateModified = metadata.dateModified;
+  }
 }
 const vpnServiceRoutes = new Set([
   '/proxy-vpn/all-vpn',
@@ -1999,7 +2005,7 @@ const collectionSchema = (section, language) => ({
 const serviceSchema = (section, language) => ({
   '@context': 'https://schema.org',
   '@type': 'WebPage',
-  dateModified: siteDateModified,
+  dateModified: section.dateModified || siteDateModified,
   name: getLanguage(section.title, language),
   description: getLanguage(section.description, language),
   url: absoluteUrl(section, language),

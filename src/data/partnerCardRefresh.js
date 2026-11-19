@@ -1,4 +1,32 @@
 const l = (ru, en) => ({ ru, en });
+const enFallback = (ru, en) => ({ ru, en, es: en, zh: en, ko: en });
+
+export const partnerMetadataById = {
+  'p4': {
+    route: '/proxy-vpn/proxy-seller',
+    title: enFallback('Proxy-Seller: отзыв, цены и какие прокси брать | Hopscup', 'Proxy-Seller review: prices and proxy types | Hopscup'),
+    description: enFallback('Мой отзыв о Proxy-Seller: IPv4, ISP, резидентские и мобильные прокси в 220+ странах. Что брать под YouTube, Claude и фермы аккаунтов, цены и промокод hopscup.', 'My Proxy-Seller review: IPv4, ISP, residential and mobile proxies in 220+ countries. Prices, the hopscup code and choices for YouTube, Claude and account work.'),
+    dateModified: '2026-11-19',
+  },
+  'p1': {
+    route: '/proxy-vpn/proxyshard',
+    title: enFallback('ProxyShard: отзыв, прокси с UDP и оплата криптой | Hopscup', 'ProxyShard review: UDP proxies and crypto payments | Hopscup'),
+    description: enFallback('Мой отзыв о ProxyShard: IPv4, ISP, резидентские и мобильные прокси от команды антидетекта ShardX. SOCKS5 с UDP, пополнение от 5$, оплата криптой или зарубежной картой.', 'My ProxyShard review: IPv4, ISP, residential and mobile proxies from the ShardX team. SOCKS5 with UDP, a $5 minimum deposit, crypto or foreign-card payments.'),
+    dateModified: '2026-11-19',
+  },
+  'zarub': {
+    route: '/foreign-cards/zarub',
+    title: enFallback('Zarub: отзыв о карте без KYC и комиссии | Hopscup', 'Zarub review: no-KYC Visa card and fees | Hopscup'),
+    description: enFallback('Мой отзыв о Zarub: зарубежная Visa без KYC, пополнение через СБП или USDT. Оплачиваю ей ChatGPT, Claude, Higgsfield и другие подписки. Выпуск, комиссии и промокод HOPS.', 'My Zarub review: a no-KYC Visa funded by SBP or USDT. I use it for ChatGPT, Claude, Higgsfield and other subscriptions. Issuance, fees and the HOPS code.'),
+    dateModified: '2026-11-19',
+  },
+  'pgon': {
+    route: '/foreign-cards/pgon',
+    title: enFallback('PGON: отзыв, карта Visa и оплата криптой по QR | Hopscup', 'PGON review: Visa card and crypto QR payments | Hopscup'),
+    description: enFallback('Мой отзыв о PGON: кошелёк в Telegram с виртуальной Visa и оплатой криптой по QR в России и за границей. Выпуск около 8$, лимит без паспорта, комиссии.', 'My PGON review: a Telegram wallet with a virtual Visa and crypto QR payments in Russia and abroad. Issuance around $8, no-passport limits and fees.'),
+    dateModified: '2026-11-19',
+  },
+};
 
 export const darkShoppingMetadata = {
   title: l('DarkShopping: отзыв, аккаунты и почты, как покупать | Hopscup', 'DarkShopping review: accounts, email and buying | Hopscup'),
@@ -6,6 +34,237 @@ export const darkShoppingMetadata = {
 };
 
 export const partnerEditorialById = {
+  p4: {
+    description: l('Proxy-Seller один из сервисов, где я беру прокси уже не первый год. Здесь есть всё: от простых датацентровых IPv4 до резидентских и мобильных, и больше 220 стран. Поэтому, когда нужна редкая страна или прокси посерьёзнее, я обычно иду сюда. Особенно понравились их резидентские.', 'Proxy-Seller has been one of my proxy providers for years. It covers everything from basic datacenter IPv4 to residential and mobile proxies in over 220 countries. I usually go here for a less common location or a more demanding task. I have particularly liked its residential proxies.'),
+    capabilities: l([
+      'IPv4, IPv6, ISP, Residential и Mobile в одном кабинете.',
+      '220+ стран, можно найти почти любое гео.',
+      'HTTP и SOCKS5.',
+      'Оплата картой Visa/Mastercard, криптой или PayPal.',
+    ], [
+      'IPv4, IPv6, ISP, Residential and Mobile in one dashboard.',
+      '220+ countries, including less common locations.',
+      'HTTP and SOCKS5.',
+      'Visa/Mastercard, crypto and PayPal payments.',
+    ]),
+    pricing: l([
+      'IPv4 примерно от 1$ за штуку в месяц, ISP от 2$, резидентские от 3$ за гигабайт.',
+      'Промокод hopscup на скидку 10%.',
+    ], [
+      'IPv4 starts at roughly $1 per IP per month, ISP at $2 and residential traffic at $3 per GB.',
+      'Use hopscup for a 10% discount.',
+    ]),
+    bestFor: l([
+      'YouTube-фермам и обычной работе с аккаунтами: Discord, X, Google на простых IPv4.',
+      'Claude и другим сервисам, где нужен «домашний» айпи: тут берите ISP.',
+      'Задачам, где обычный серверный айпи уже не проходит: соцсети, реклама, крипта. Тогда смотрите резидентские или мобильные.',
+    ], [
+      'YouTube accounts and routine Discord, X and Google work with basic IPv4.',
+      'Claude and services that need a home-style IP: choose ISP.',
+      'Social media, advertising and crypto tasks that reject server IPs: consider residential or mobile proxies.',
+    ]),
+    considerations: l([
+      'Каталог большой, поэтому смотрите внимательно, что покупаете: отдельный айпи на месяц или резидентские с оплатой за трафик.',
+      'IPv6 берите, только если точно знаете, что нужный сайт или программа его поддерживает. Иначе просто не заработает.',
+      'Для простых задач не нужно сразу брать резидентские или мобильные. Хорошего IPv4 или ISP часто хватает.',
+    ], [
+      'Check whether you are buying a dedicated IP for a month or residential traffic billed by usage.',
+      'Only buy IPv6 if your target website or application supports it.',
+      'Basic tasks rarely need residential or mobile proxies from the start. A good IPv4 or ISP proxy is often enough.',
+    ]),
+    gettingStarted: l([
+      'Регистрируетесь по ссылке и выбираете тип прокси и страну.',
+      'Берёте пару штук на тест с промокодом hopscup.',
+      'Вставляете прокси в профиль антидетекта, ставите порт SOCKS5 и проверяете айпи на чекере.',
+    ], [
+      'Register through the link and choose a proxy type and country.',
+      'Buy a couple of proxies to test with the hopscup code.',
+      'Add them to your antidetect profile, select the SOCKS5 port and check the IP.',
+    ]),
+    verdict: l('Один из самых качественных прокси-сервисов, которые я знаю. Беру его, когда важна стабильная работа и качество айпи, а огромный выбор стран и типов тут идёт приятным бонусом.', 'One of the better proxy services I have used. I choose it when stable connections and IP quality matter, with a large range of locations and types as a bonus.'),
+    links: [
+      { href: '/proxy-vpn/luchshie-proksi', label: l('Какие прокси выбрать под задачу, разобрал отдельно', 'Choosing the right proxy type for your task') },
+      { href: '/proxy-vpn/luchshie-mobilnye-proksi', label: l('Чем мобильные прокси отличаются от других', 'How mobile proxies differ from other types') },
+      { href: '/guides/claude-iz-rossii-bez-bana', label: l('Прокси для Claude', 'Proxies for Claude') },
+    ],
+  },
+  p1: {
+    description: l('ProxyShard это прокси от той же команды, что делает бесплатный антидетект ShardX. Беру у них датацентровые IPv4 под YouTube наравне с ProxyWing и Proxy-Seller, а ISP под Claude. Главная фишка: SOCKS5 с поддержкой UDP на всех типах прокси, а не только на дорогих.', 'ProxyShard is run by the team behind the free ShardX antidetect browser. I buy its datacenter IPv4 for YouTube alongside ProxyWing and Proxy-Seller, and ISP proxies for Claude. Its standout feature is SOCKS5 with UDP on every proxy type, not just the expensive ones.'),
+    capabilities: l([
+      'IPv4, ISP, Residential и Mobile в одном кабинете.',
+      '100+ стран.',
+      'SOCKS5 с UDP на всех типах. Это нужно, например, для звонков, игр и приложений, которые ходят не только через браузер.',
+      'Оплата криптой или зарубежной картой.',
+    ], [
+      'IPv4, ISP, Residential and Mobile in one dashboard.',
+      '100+ countries.',
+      'SOCKS5 with UDP on every type, useful for calls, games and applications beyond the browser.',
+      'Crypto or foreign-card payments.',
+    ]),
+    pricing: l([
+      'Пополнение от 5$, так что потестить можно почти бесплатно.',
+      'Датацентровые IPv4 в районе 1-2$ за штуку в месяц, ISP немного дороже.',
+      'Промокод hopscup.',
+    ], [
+      'A $5 minimum deposit makes it inexpensive to test.',
+      'Datacenter IPv4 costs around $1-2 per IP per month; ISP is a little more.',
+      'The hopscup promo code is available.',
+    ]),
+    bestFor: l([
+      'YouTube-фермам и аккаунтам по схеме 1 аккаунт = 1 прокси = 1 профиль антидетекта.',
+      'Claude и другим нейросетям, где нужен чистый айпи: берите ISP.',
+      'Тем, кто уже сидит на ShardX и хочет прокси от той же команды.',
+      'Задачам, где нужен UDP: с обычными HTTP-прокси такое не заработает.',
+    ], [
+      'YouTube and account work using one account, one proxy and one antidetect profile.',
+      'Claude and other AI services that need a clean IP: start with ISP.',
+      'ShardX users who want proxies from the same team.',
+      'Tasks that need UDP, which regular HTTP proxies cannot handle.',
+    ]),
+    considerations: l([
+      'Российской картой тут не оплатить. Нужна крипта или зарубежная карта, я для таких сервисов использую Zarub.',
+      'Начинайте с IPv4 или ISP: они дешевле и для большинства задач подходят без проблем. Резидентские и мобильные берите, если площадка плохо принимает серверный айпи.',
+      'Перед оплатой проверьте страну и тип прокси, чтобы случайно не взять не тот тариф.',
+    ], [
+      'Russian cards are not accepted. You need crypto or a foreign card; I use Zarub for services like this.',
+      'Start with IPv4 or ISP. They cost less and suit most tasks. Consider residential or mobile if the platform rejects server IPs.',
+      'Double-check the country and proxy type before paying.',
+    ]),
+    gettingStarted: l([
+      'Регистрируетесь по ссылке и пополняете баланс от 5$ криптой или зарубежной картой.',
+      'Берёте пару IPv4 или ISP нужной страны с промокодом hopscup.',
+      'Вставляете прокси в профиль антидетекта, ставите порт SOCKS5 и проверяете айпи на чекере.',
+    ], [
+      'Register through the link and deposit at least $5 using crypto or a foreign card.',
+      'Buy a couple of IPv4 or ISP proxies in your chosen country with hopscup.',
+      'Add them to your antidetect profile, select the SOCKS5 port and check the IP.',
+    ]),
+    verdict: l('Хороший баланс цены, скорости и качества, плюс UDP на всех типах. Если у вас есть крипта или зарубежная карта, это один из лучших вариантов для старта: закинули 5$ и проверили сами.', 'A good balance of price, speed and IP quality, with UDP on every type. If you have crypto or a foreign card, a $5 test makes it an accessible starting point.'),
+    links: [
+      { href: '/antidetect/shardx', label: l('Бесплатный антидетект ShardX от этой же команды', 'Free ShardX antidetect browser from the same team') },
+      { href: '/foreign-cards/zarub', label: l('Zarub: карта, которой я плачу за такие сервисы', 'Zarub: the card I use to pay for services like this') },
+      { href: '/guides/claude-iz-rossii-bez-bana', label: l('Прокси для Claude', 'Proxies for Claude') },
+      { href: '/proxy-vpn/luchshie-proksi', label: l('Какие прокси выбрать под задачу', 'Choosing proxies for your task') },
+    ],
+  },
+  zarub: {
+    description: l('Сам сейчас пользуюсь картой Zarub, она прекрасно оплачивает все мои подписки. Это зарубежная Visa (США), которая выпускается прямо в Telegram без KYC: без паспорта и селфи. Пополняете через СБП рублями или в USDT и сразу платите там, где российские карты не принимают.', 'Zarub is the card I currently use for my subscriptions. It is a US Visa issued inside Telegram without a passport or selfie. Fund it with rubles through SBP or with USDT, then pay at services that do not accept Russian cards.'),
+    capabilities: l([
+      'Виртуальная Visa без верификации.',
+      'Пополнение через СБП или USDT. Крипту лишний раз не надо выводить на свои основные карты.',
+      'Проходит в ChatGPT, Claude, Gemini, Higgsfield, Netflix, Spotify, Google Play и App Store.',
+      'Booking, Airbnb, Amazon и обычные покупки за границей.',
+      'Иногда проходит даже в российских магазинах, например на OZON.',
+    ], [
+      'A virtual Visa without identity verification.',
+      'SBP or USDT funding, without first cashing crypto out to your main bank card.',
+      'Works with ChatGPT, Claude, Gemini, Higgsfield, Netflix, Spotify, Google Play and the App Store.',
+      'Booking, Airbnb, Amazon and everyday purchases abroad.',
+      'It sometimes even works at Russian stores such as OZON.',
+    ]),
+    pricing: l([
+      'Выпуск 14$ по промокоду HOPS, без промокода 19$.',
+      'Обслуживание бесплатное.',
+      'Комиссии за пополнение и операции смотрите в плитке выше, перед пополнением считайте итоговую сумму.',
+    ], [
+      'Issuance is $14 with HOPS, or $19 without the code.',
+      'No maintenance fee.',
+      'See the facts above for top-up and transaction fees, and calculate the total before funding.',
+    ]),
+    bestFor: l([
+      'Подписки на нейросети: ChatGPT, Claude, Gemini. Higgsfield, который не берёт российские карты, я оплачиваю именно Zarub.',
+      'Прокси и сервисы, где оплата только зарубежной картой или криптой.',
+      'Тем, кто не хочет проходить KYC и отправлять документы.',
+    ], [
+      'AI subscriptions such as ChatGPT, Claude and Gemini. I also use it for Higgsfield, which does not accept Russian cards.',
+      'Proxy providers and services that accept only foreign cards or crypto.',
+      'Users who do not want to send identity documents for KYC.',
+    ]),
+    considerations: l([
+      'Выпуск занимает от нескольких минут до суток.',
+      'Первую оплату лучше сделать небольшой, чтобы проверить, что сервис карту принимает.',
+      'Я не держу на таких картах крупный баланс и пополняю их под конкретные покупки.',
+    ], [
+      'Issuance can take a few minutes or up to a day.',
+      'Start with a small payment to check merchant acceptance.',
+      'I keep no large balance on cards like this and fund them for specific purchases.',
+    ]),
+    gettingStarted: l([
+      'Заходите в бота по ссылке и выпускаете карту с промокодом HOPS.',
+      'Пополняете через СБП или USDT, минимум от 10$.',
+      'Привязываете карту к подписке и проверяете на небольшой сумме.',
+    ], [
+      'Open the bot through the link and issue a card with HOPS.',
+      'Top up at least $10 through SBP or USDT.',
+      'Link it to your subscription and test with a small payment.',
+    ]),
+    verdict: l('Моя основная карта для зарубежных подписок. Без KYC, пополнение рублями или USDT, и проходит почти везде, где мне нужно.', 'My main card for foreign subscriptions. No KYC, RUB or USDT funding, and it works with almost every service I need.'),
+    links: [
+      { href: '/guides/zarubezhnaya-karta-s-popolneniem-rublyami', label: l('Сравнил Zarub, PGON и ВездеКарту по комиссиям и пополнению', 'Comparing Zarub, PGON and Vezdekarta fees and funding') },
+      { href: '/ai/higgsfield', label: l('Higgsfield: оплачиваю его этой картой', 'Higgsfield: I pay for it with this card') },
+      { href: '/guides/deshevye-podpiski-chatgpt-claude-gemini', label: l('Если карта нужна ради одной подписки, есть вариант дешевле', 'A cheaper option if you only need one subscription') },
+    ],
+  },
+  pgon: {
+    description: l('PGON, или пижон, как я его называю, это кошелёк прямо в Telegram. В нём есть криптобаланс, рубли, оплата по QR и зарубежная Visa. То есть это не просто карта под одну подписку, а несколько полезных функций в одном месте. Мне он удобен тем, что я пользуюсь криптой: не нужно сначала выводить USDT в рубли, а потом снова менять рубли на доллары ради подписки.', 'PGON is a wallet inside Telegram with crypto, rubles, QR payments and a foreign Visa. Rather than just a card for one subscription, it combines several payment tools. Since I use crypto, I can pay without cashing USDT out to rubles and converting it back to dollars for a subscription.'),
+    capabilities: l([
+      'Виртуальная Visa: номер, срок и CVV, поддерживает Apple Pay и Google Pay.',
+      'Оплата криптой по QR СБП в России: сканируете QR на кассе, сервис сам меняет крипту на рубли.',
+      'Оплата по местным QR за границей: Таиланд, Вьетнам, Индонезия и другие страны, прямо с баланса USDT, TON или SOL.',
+      'Пополнение криптой или рублями через СБП.',
+    ], [
+      'A virtual Visa with a number, expiry date and CVV, plus Apple Pay and Google Pay support.',
+      'Crypto payments through SBP QR codes in Russia, with conversion to rubles handled by the service.',
+      'Local QR payments in Thailand, Vietnam, Indonesia and other countries directly from USDT, TON or SOL.',
+      'Crypto funding or RUB top-ups through SBP.',
+    ]),
+    pricing: l([
+      'Выпуск Visa около 8$, обслуживание бесплатное.',
+      'Пополнение криптой без комиссии сервиса, платите только комиссию сети. Перевод с кошелька на карту у меня стоил 1,6%.',
+      'Рубли через СБП: 5% без полного KYC, с KYC дешевле.',
+      'Оплата по QR в России: 5% с KYC и 15% без KYC.',
+    ], [
+      'Visa issuance costs around $8, with no maintenance fee.',
+      'Crypto deposits have no service fee, only the network fee. Moving funds from the wallet to my card cost 1.6%.',
+      'RUB top-ups through SBP cost 5% without full KYC and less with KYC.',
+      'QR payments in Russia cost 5% with KYC or 15% without.',
+    ]),
+    bestFor: l([
+      'Тем, у кого уже есть крипта или доход в USDT.',
+      'Подпискам: я для теста выпустил карту и сразу оплатил месяц ChatGPT.',
+      'Поездкам за границу: платите по QR без наличных и поиска обменников.',
+    ], [
+      'Users who already hold crypto or receive USDT.',
+      'Subscriptions: I issued a card and immediately tested it with a month of ChatGPT.',
+      'Travel abroad: pay by QR without cash or looking for an exchange service.',
+    ]),
+    considerations: l([
+      'Начать можно без паспорта и селфи, но при моём оформлении лимит был около 500$ в месяц. Для пары подписок этого с головой, для большего нужен KYC.',
+      'Для рублей по СБП нужны только ФИО и номер телефона, привязанные к банку, с которого пополняете. Фото документов не нужно.',
+      'Без KYC оплата по QR в России дорогая, поэтому сначала сравните итоговую сумму в боте.',
+      'Курс, комиссии и лимиты меняются, смотрите итог перед подтверждением.',
+    ], [
+      'You can start without a passport or selfie. My initial limit was about $500 per month, enough for a couple of subscriptions; higher usage needs KYC.',
+      'SBP funding requires only the name and phone number linked to the bank account you pay from, not document photos.',
+      'QR payments in Russia are expensive without KYC, so compare the final amount in the bot first.',
+      'Rates, fees and limits change. Check the total before confirming.',
+    ]),
+    gettingStarted: l([
+      'Заходите в бота по ссылке и пополняете баланс криптой или через СБП.',
+      'Выпускаете виртуальную Visa.',
+      'Оплачиваете подписку или платите по QR прямо с баланса.',
+    ], [
+      'Open the bot through the link and fund the wallet with crypto or SBP.',
+      'Issue a virtual Visa.',
+      'Pay a subscription or scan a QR code to pay from the wallet.',
+    ]),
+    verdict: l('Если у вас уже есть крипта, PGON удобнее обычной зарубежной карты: в одном кошельке и Visa для подписок, и оплата по QR в России и за границей. Если нужна просто карта под подписки с пополнением рублями, посмотрите ещё Zarub.', 'If you already use crypto, PGON offers more than a regular foreign card: Visa subscriptions and QR payments in Russia and abroad in one wallet. For a card mainly funded in rubles for subscriptions, also consider Zarub.'),
+    links: [
+      { href: '/guides/zarubezhnaya-karta-s-popolneniem-rublyami', label: l('Сравнил PGON, Zarub и ВездеКарту по комиссиям', 'Comparing PGON, Zarub and Vezdekarta fees') },
+      { href: '/crypto-exchange/qr-sbp', label: l('Где ещё можно платить криптой по QR', 'Other ways to pay with crypto by QR') },
+      { href: '/foreign-cards/zarub', label: l('Zarub: если нужна просто карта под подписки', 'Zarub: if you just need a card for subscriptions') },
+    ],
+  },
   'st-dark': {
     description: l('DarkShopping это магазин аккаунтов, которым я пользуюсь уже давно. Вместе с FunPay он закрывает примерно 95% моих потребностей. Сюда я иду за рабочими аккаунтами, почтами и расходниками: Gmail, Outlook, Telegram, Discord, Facebook, Instagram и другие позиции под регистрацию, фарм и обычную работу.', 'DarkShopping is one of my regular sources for work accounts and email inboxes. Together with FunPay, it covers about 95% of what I buy. I use it for Gmail, Outlook, Telegram, Discord, Facebook and Instagram accounts for registrations and day-to-day work.'),
     capabilities: l([
@@ -182,15 +441,27 @@ export const withPartnerEditorial = (editorial, id) => {
   const update = partnerEditorialById[id];
   if (!update) return editorial;
   const { links, ...fields } = update;
+  const localizedLinks = partnerMetadataById[id]
+    ? links.map(link => ({ ...link, label: enFallback(link.label.ru, link.label.en) }))
+    : links;
   return {
     ...editorial,
+    ...(partnerMetadataById[id] ? {
+      title: partnerMetadataById[id].title,
+      seoDescription: partnerMetadataById[id].description,
+      dateModified: partnerMetadataById[id].dateModified,
+    } : {}),
     // Keep proxy metadata independent of the new author introduction.
     ...(['p3', 'p6'].includes(id) ? { seoDescription: editorial.seoDescription || editorial.description } : {}),
-    ...Object.fromEntries(Object.entries(fields).map(([key, value]) => [key, { ...editorial[key], ...value }])),
-    links: [...(editorial.links || []).filter(link => !links.some(item => item.href === link.href)), ...links],
+    ...Object.fromEntries(Object.entries(fields).map(([key, value]) => [key, partnerMetadataById[id]
+      ? enFallback(value.ru, value.en)
+      : { ...editorial[key], ...value }])),
+    links: [...(editorial.links || []).filter(link => !links.some(item => item.href === link.href)), ...localizedLinks],
   };
 };
 
-export const getPartnerIntroduction = (offer, language) => ['ru', 'en'].includes(language) && partnerEditorialById[offer.id]
+export const getPartnerIntroduction = (offer, language) => partnerMetadataById[offer.id]
+  ? offer.editorial?.description?.[language] || offer.editorial?.description?.en
+  : ['ru', 'en'].includes(language) && partnerEditorialById[offer.id]
   ? offer.editorial?.description?.[language]
   : undefined;

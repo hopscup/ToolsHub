@@ -1,4 +1,5 @@
 import { withPgonQrAbroad } from './pgonQrAbroad.js';
+import { partnerMetadataById, withPartnerEditorial } from './partnerCardRefresh.js';
 import { antarcticCardPage } from './antarcticWallet.js';
 import { qr2payCardPage } from './qr2pay.js';
 
@@ -309,4 +310,10 @@ export const foreignCardPages = [
       },
     },
   }),
-];
+].map(page => partnerMetadataById[page.id] ? {
+  ...page,
+  title: partnerMetadataById[page.id].title,
+  description: partnerMetadataById[page.id].description,
+  tileDescription: page.tileDescription || page.editorial.description,
+  editorial: withPartnerEditorial(page.editorial, page.id),
+} : page);

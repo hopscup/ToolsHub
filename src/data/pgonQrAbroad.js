@@ -11,17 +11,16 @@ export const pgonQrAbroad = {
 
 export const withPgonQrAbroad = page => {
   const languages = ['ru', 'en', 'es', 'zh', 'ko'];
-  const card = page.id === 'pgon';
-  const addition = card ? pgonQrAbroad.cardDescription : pgonQrAbroad.exchangeDescription;
+  // The refreshed card already covers QR abroad; keep its legacy tile copy only.
+  if (page.id === 'pgon') return {
+    ...page,
+    tileDescription: page.tileDescription || Object.fromEntries(languages.map(language => [language, `${page.editorial.description[language]} ${pgonQrAbroad.cardDescription[language]}`])),
+  };
   return {
     ...page,
     editorial: {
       ...page.editorial,
-      description: Object.fromEntries(languages.map(language => [language, `${page.editorial.description[language]} ${addition[language]}`])),
-      ...(card ? {
-        bestFor: Object.fromEntries(languages.map(language => [language, [pgonQrAbroad.bestFor[language], ...page.editorial.bestFor[language]]])),
-        considerations: Object.fromEntries(languages.map(language => [language, [...page.editorial.considerations[language], pgonQrAbroad.consideration[language]]])),
-      } : {}),
+      description: Object.fromEntries(languages.map(language => [language, `${page.editorial.description[language]} ${pgonQrAbroad.exchangeDescription[language]}`])),
     },
   };
 };
