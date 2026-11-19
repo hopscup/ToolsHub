@@ -1838,6 +1838,7 @@ const ACCOUNT_SHOP_PAGE_BY_ID = Object.fromEntries(
   ]),
 ) as Record<string, {
   slug: string;
+  tileDescription?: Localized;
   editorial: NonNullable<Offer['editorial']>;
 }>;
 
@@ -1854,6 +1855,7 @@ const ANTIDETECT_PAGE_BY_ID = Object.fromEntries(
   ]),
 ) as Record<string, {
   slug: string;
+  tileDescription?: Localized;
   editorial: NonNullable<Offer['editorial']>;
 }>;
 
@@ -3290,7 +3292,7 @@ const OFFERS: Offer[] = [
     slug: ANTIDETECT_PAGE_BY_ID['ant-shardx'].slug,
     editorial: ANTIDETECT_PAGE_BY_ID['ant-shardx'].editorial,
     name: 'ShardX',
-    description: ANTIDETECT_PAGE_BY_ID['ant-shardx'].editorial.description,
+    description: ANTIDETECT_PAGE_BY_ID['ant-shardx'].tileDescription || ANTIDETECT_PAGE_BY_ID['ant-shardx'].editorial.description,
     url: 'https://github.com/ProxyShard/ShardBrowser',
     logoUrl: '/proxyshard.webp',
     freeProfiles: { ru: 'Без ограничений', en: 'Unlimited', es: 'Ilimitados', zh: '无限', ko: '무제한' },
@@ -3398,7 +3400,7 @@ const OFFERS: Offer[] = [
     slug: ACCOUNT_SHOP_PAGE_BY_ID['bot-lachuga'].slug,
     editorial: ACCOUNT_SHOP_PAGE_BY_ID['bot-lachuga'].editorial,
     name: 'Лачуга',
-    description: ACCOUNT_SHOP_PAGE_BY_ID['bot-lachuga'].editorial.description,
+    description: ACCOUNT_SHOP_PAGE_BY_ID['bot-lachuga'].tileDescription || ACCOUNT_SHOP_PAGE_BY_ID['bot-lachuga'].editorial.description,
     url: 'https://t.me/LachugaSkamera_Bot?start=ref_467483565',
     logoUrl: '/lachuga-2026.webp',
     isBestChoice: true,

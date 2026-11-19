@@ -1,4 +1,5 @@
 import { linkenSpherePages } from './botAndLinkenPages.js';
+import { partnerMetadataById, withPartnerEditorial } from './partnerCardRefresh.js';
 
 const pageTitle = (name) => ({
   ru: `${name}: обзор антидетект-браузера и тарифов | Hopscup Tools`,
@@ -1096,6 +1097,13 @@ export const antidetectPages = [
     },
   },
 ].map(page => {
+  if (page.id === 'ant-shardx') return {
+    ...page,
+    title: partnerMetadataById[page.id].title,
+    description: partnerMetadataById[page.id].description,
+    tileDescription: page.editorial.description,
+    editorial: withPartnerEditorial(page.editorial, page.id),
+  };
   if (![basicConsiderations, advancedConsiderations].includes(page.editorial.considerations)) return page;
   return { ...page, editorial: { ...page.editorial,
     considerations: { ru: [], en: [], es: [], zh: [], ko: [] },

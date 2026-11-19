@@ -19,7 +19,7 @@ export const vpn4gGuideLink = {
 export const getServiceContextualGuideLinks = offer => [
   ...(serviceContextualGuideLinks[offer.id] || []),
   ...(offer.subCategory === 'VPN' && /\b(?:happ|incy)\b/i.test(JSON.stringify([offer.description, offer.editorial, offer.details])) ? [happRoutingGuideLink] : []),
-];
+].filter(link => !offer.editorial?.links?.some(item => item.href === link.href));
 
 export const sectionContextualGuideLinks = {
   '/account-shop/podpiski-neyrosetey': [{

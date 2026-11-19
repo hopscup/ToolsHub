@@ -1,5 +1,5 @@
 import { botShopPages } from './botAndLinkenPages.js';
-import { darkShoppingMetadata, withPartnerEditorial } from './partnerCardRefresh.js';
+import { darkShoppingMetadata, partnerMetadataById, withPartnerEditorial } from './partnerCardRefresh.js';
 
 const shopTitle = (name) => ({
   ru: `${name}: что продают, оплата и мой опыт | Hopscup Tools`,
@@ -627,4 +627,10 @@ export const accountShopPages = [
       },
     },
   },
-];
+].map(page => page.id === 'bot-lachuga' ? {
+  ...page,
+  title: partnerMetadataById[page.id].title,
+  description: partnerMetadataById[page.id].description,
+  tileDescription: page.editorial.description,
+  editorial: withPartnerEditorial(page.editorial, page.id),
+} : page);

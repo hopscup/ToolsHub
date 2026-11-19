@@ -2,6 +2,18 @@ const l = (ru, en) => ({ ru, en });
 const enFallback = (ru, en) => ({ ru, en, es: en, zh: en, ko: en });
 
 export const partnerMetadataById = {
+  'bot-lachuga': {
+    route: '/account-shop/lachuga-skamera',
+    title: enFallback('Лачуга: отзыв, дешёвые Gemini, ChatGPT и Claude | Hopscup', 'Lachuga review: affordable Gemini, ChatGPT and Claude | Hopscup'),
+    description: enFallback('Мой отзыв о Лачуге: Telegram-магазин с дешёвыми подписками Gemini, ChatGPT, Claude, CapCut и Canva. Что брал сам, сколько стоит, гарантия и как покупать.', 'My Lachuga review: a Telegram shop for discounted Gemini, ChatGPT, Claude, CapCut and Canva subscriptions. What I bought, prices, warranties and how to order.'),
+    dateModified: '2026-11-19',
+  },
+  'ant-shardx': {
+    route: '/antidetect/shardx',
+    title: enFallback('ShardX: отзыв, бесплатный антидетект без лимита | Hopscup', 'ShardX: free antidetect, unlimited profiles | Hopscup'),
+    description: enFallback('Мой отзыв о ShardX: полностью бесплатный антидетект от команды ProxyShard, профили без лимита, без регистрации. Проверка на утечки, API и MCP, минусы и как начать.', 'My ShardX review: a free antidetect browser from the ProxyShard team, with unlimited profiles and no registration. Leak tests, API and MCP, limitations and setup.'),
+    dateModified: '2026-11-19',
+  },
   'p4': {
     route: '/proxy-vpn/proxy-seller',
     title: enFallback('Proxy-Seller: отзыв, цены и какие прокси брать | Hopscup', 'Proxy-Seller review: prices and proxy types | Hopscup'),
@@ -34,6 +46,125 @@ export const darkShoppingMetadata = {
 };
 
 export const partnerEditorialById = {
+  'bot-lachuga': {
+    description: l('Несмотря на нейминг автора, Лачуга оказалась очень даже рабочей лошадкой. Это Telegram-магазин с дешёвыми подписками и аккаунтами: Gemini, ChatGPT, Claude, CapCut, Canva и другие сервисы. Покупка идёт прямо через бота, а на часть товаров дают гарантию. Я брал тут и Gemini, и Claude, всё работает.', 'Despite the creator\'s naming choice, Lachuga has proved useful for me. It is a Telegram shop for discounted Gemini, ChatGPT, Claude, CapCut, Canva and other subscriptions and accounts. You buy inside the bot, and some products include a warranty. I have bought both Gemini and Claude here, and they work.'),
+    capabilities: l([
+      'Подписки на нейросети: Gemini, ChatGPT, Claude и другие.',
+      'CapCut, Canva и похожие сервисы для контента.',
+      'Часть подписок встаёт на ваш собственный аккаунт по коду активации.',
+      'Оплата криптой, по СБП или российской картой прямо в боте.',
+      'Часто бывают акции.',
+    ], [
+      'Gemini, ChatGPT, Claude and other AI subscriptions.',
+      'CapCut, Canva and similar content tools.',
+      'Some subscriptions activate on your own account with a code.',
+      'Crypto, SBP and Russian-card payments inside the bot.',
+      'Frequent promotions.',
+    ]),
+    pricing: l([
+      'Я взял себе и друзьям 4 аккаунта Gemini на 18 месяцев примерно за 5$, а официально один месяц стоит 20$. Внутри чат, Nano Banana Pro, Veo 3 и все другие ИИ-продукты Google.',
+      'Claude Pro на месяц брал примерно за 2500 ₽, когда надоело биться с верификацией при оплате.',
+      'Цены часто меняются, актуальные смотрите в боте.',
+    ], [
+      'I bought four 18-month Gemini accounts for myself and friends for about $5, compared with an official price of $20 for one month. That included chat, Nano Banana Pro, Veo 3 and Google\'s other AI tools.',
+      'I paid roughly RUB 2,500 for a month of Claude Pro after getting tired of verification problems at checkout.',
+      'Prices change often; check the bot for current offers.',
+    ]),
+    bestFor: l([
+      'Тем, кому нужны Gemini, ChatGPT или Claude дешевле официальной цены.',
+      'Тем, у кого не проходит оплата российской картой, а заводить зарубежную ради одной подписки не хочется.',
+      'Монтажу и дизайну: CapCut и Canva.',
+    ], [
+      'Gemini, ChatGPT or Claude below the official subscription price.',
+      'Users whose Russian card is rejected and who do not want a foreign card just for one subscription.',
+      'Editing and design work with CapCut and Canva.',
+    ]),
+    considerations: l([
+      'Гарантия зависит от товара. На Gemini мне дали гарантию на месяц.',
+      'Основной аккаунт с важными файлами и перепиской я бы туда не привязывал.',
+      'Перед покупкой читайте правила замены и сроки гарантии в описании.',
+    ], [
+      'Warranty terms depend on the product. My Gemini purchase had one month of coverage.',
+      'I would not link a main account containing important files or conversations.',
+      'Read the replacement rules and warranty period in the listing before buying.',
+    ]),
+    gettingStarted: l([
+      'Заходите в бота по ссылке и пополняете баланс.',
+      'Выбираете подписку в каталоге и читаете описание: срок, гарантию и как её активировать.',
+      'Оплачиваете и получаете аккаунт или код с ссылкой, куда его ввести.',
+    ], [
+      'Open the bot through the link and fund your balance.',
+      'Choose a subscription and read the duration, warranty and activation instructions.',
+      'Pay and receive an account, or a code with a link explaining where to redeem it.',
+    ]),
+    verdict: l('Один из моих основных ботов для подписок на нейросети. Gemini на полтора года за копейки и Claude Pro без возни с оплатой. Главное читать описание товара и не ставить подписку на аккаунт, который жалко потерять.', 'One of my main bots for AI subscriptions: inexpensive 18-month Gemini accounts and Claude Pro without payment hassles. Read the listing carefully, and avoid using an account you cannot afford to lose.'),
+    links: [
+      { href: '/guides/deshevye-podpiski-chatgpt-claude-gemini', label: l('Сравнил Лачугу, Crassus, Апельсин и Петровича по ценам', 'Comparing Lachuga, Crassus, Apel0sin and Petrovich prices') },
+      { href: '/guides/claude-iz-rossii-bez-bana', label: l('Как зарегистрироваться в Claude из России и не словить бан', 'Registering for Claude from Russia and avoiding a ban') },
+      { href: '/foreign-cards/zarub', label: l('Если нужна своя зарубежная карта для подписок', 'If you need your own foreign card for subscriptions') },
+    ],
+  },
+  'ant-shardx': {
+    description: l('ShardX это полностью бесплатный антидетект от команды ProxyShard. Без лимита профилей, без подписок и даже без регистрации: скачали с GitHub и работаете. Профили хранятся локально на вашем компьютере, можно создавать хоть сотню и настраивать каждый отдельно. Сразу скажу: с разработчиками я лично не знаком, и денег за рекламу мне никто не платил.', 'ShardX is a completely free antidetect browser from the ProxyShard team. There are no profile limits, subscriptions or even registration: download it from GitHub and get started. Profiles stay on your computer, and you can create hundreds with individual settings. To be clear, I do not know the developers personally and nobody paid me to promote it.'),
+    capabilities: l([
+      'Любое количество локальных профилей бесплатно, на Windows, Mac и Linux.',
+      'Около 170 готовых отпечатков, Auto noise, язык и часовой пояс подстраиваются под прокси автоматически.',
+      'HTTP и SOCKS5 прокси. С UDP-прокси умеет пускать через прокси WebRTC и QUIC, а не просто отключать их.',
+      'Локальный API и MCP: можно управлять профилями через нейросеть или скрипты, работает с Playwright и Puppeteer.',
+      'Проверял на Pixelscan, BrowserLeaks и Fingerprint: утечек нет.',
+    ], [
+      'Unlimited free local profiles on Windows, Mac and Linux.',
+      'Around 170 prepared fingerprints, Auto noise, and automatic language and time-zone settings based on the proxy.',
+      'HTTP and SOCKS5 proxies. With a UDP-capable proxy, it can route WebRTC and QUIC through the proxy rather than simply disable them.',
+      'A local API and MCP for controlling profiles through AI or scripts, with Playwright and Puppeteer support.',
+      'I tested it on Pixelscan, BrowserLeaks and Fingerprint and found no leaks.',
+    ]),
+    pricing: l([
+      'Полностью бесплатно, платных тарифов нет вообще.',
+      'Платить придётся только за прокси, если они нужны.',
+    ], [
+      'Completely free, with no paid plans.',
+      'You only pay for proxies if you need them.',
+    ]),
+    bestFor: l([
+      'Соло-работе, когда профилей нужно больше, чем дают бесплатные тарифы Dolphin, AdsPower или GoLogin.',
+      'YouTube-фермам, Gmail, Discord, X и обычному мультиаккаунтингу.',
+      'Автоматизации: я через Codex от ChatGPT и MCP прошу нейронку создать профили, подключить прокси и открыть Pixelscan, и она делает всё сама.',
+      'Тем, кому нужен браузер со своим айпи на компе вместо VPN.',
+    ], [
+      'Solo work needing more profiles than the free Dolphin, AdsPower or GoLogin plans allow.',
+      'YouTube accounts, Gmail, Discord, X and routine multi-account work.',
+      'Automation: I use ChatGPT\'s Codex with MCP to create profiles, attach proxies and open Pixelscan for me.',
+      'A desktop browser with its own IP instead of a VPN.',
+    ]),
+    considerations: l([
+      'Профили занимают место на диске: 100 профилей спокойно съедают 20-50 ГБ.',
+      'Программа без подписи Windows, поэтому при запуске выскакивает SmartScreen, а на VirusTotal был один детект от ноунейм-антивируса. Качайте только с официального GitHub.',
+      'Профили лежат на одном компьютере. Для команды и синхронизации между устройствами удобнее платные антики с облаком.',
+      'Свои основные аккаунты через MCP не автоматизируйте: тот же Discord не любит автоматизацию и банит даже аккаунты с хорошей историей.',
+    ], [
+      'Profiles use disk space: 100 profiles can easily take 20-50 GB.',
+      'The Windows app is unsigned and triggers SmartScreen. VirusTotal showed one detection from a little-known antivirus. Download only from the official GitHub.',
+      'Profiles stay on one computer. Paid browsers with cloud storage are more convenient for teams and syncing across devices.',
+      'Do not automate important personal accounts through MCP. Discord, for example, can ban even established accounts for automation.',
+    ]),
+    gettingStarted: l([
+      'Скачиваете ShardX по ссылке с GitHub под свою систему.',
+      'Создаёте профиль и вставляете прокси, лучше SOCKS5 с UDP.',
+      'Проверяете профиль на Pixelscan и только потом создаёте остальные.',
+    ], [
+      'Download ShardX for your operating system from GitHub using the link.',
+      'Create a profile and add a proxy, preferably SOCKS5 with UDP.',
+      'Test the profile on Pixelscan before creating the rest.',
+    ]),
+    verdict: l('Лучший бесплатный антидетект, который я пробовал: профили без лимита, нормальные отпечатки и даже MCP. Если вы работаете один и вам мало 2-5 бесплатных профилей у других, начните с него, а платить за антик есть смысл уже под команду и облако.', 'The best free antidetect browser I have tried: unlimited profiles, usable fingerprints and even MCP. If you work alone and need more than the 2-5 free profiles offered elsewhere, start here. Paying makes more sense when you need team features and cloud storage.'),
+    setupGuide: { href: '/guides/shardx-obzor', label: l('Подробный обзор ShardX с проверкой на утечки', 'Detailed ShardX review with leak checks') },
+    links: [
+      { href: '/proxy-vpn/proxyshard', label: l('Прокси от этой же команды, SOCKS5 с UDP', 'Proxies from the same team: SOCKS5 with UDP') },
+      { href: '/guides/besplatnye-antidetekt-brauzery', label: l('Все бесплатные антидетекты и сколько профилей дают', 'Free antidetect browsers and their profile limits') },
+      { href: '/guides/youtube-ferma', label: l('Как собрать YouTube-ферму на антидетекте и прокси', 'Setting up YouTube accounts with an antidetect browser and proxies') },
+    ],
+  },
   p4: {
     description: l('Proxy-Seller один из сервисов, где я беру прокси уже не первый год. Здесь есть всё: от простых датацентровых IPv4 до резидентских и мобильных, и больше 220 стран. Поэтому, когда нужна редкая страна или прокси посерьёзнее, я обычно иду сюда. Особенно понравились их резидентские.', 'Proxy-Seller has been one of my proxy providers for years. It covers everything from basic datacenter IPv4 to residential and mobile proxies in over 220 countries. I usually go here for a less common location or a more demanding task. I have particularly liked its residential proxies.'),
     capabilities: l([
@@ -440,7 +571,7 @@ export const partnerEditorialById = {
 export const withPartnerEditorial = (editorial, id) => {
   const update = partnerEditorialById[id];
   if (!update) return editorial;
-  const { links, ...fields } = update;
+  const { links, setupGuide, ...fields } = update;
   const localizedLinks = partnerMetadataById[id]
     ? links.map(link => ({ ...link, label: enFallback(link.label.ru, link.label.en) }))
     : links;
@@ -456,6 +587,7 @@ export const withPartnerEditorial = (editorial, id) => {
     ...Object.fromEntries(Object.entries(fields).map(([key, value]) => [key, partnerMetadataById[id]
       ? enFallback(value.ru, value.en)
       : { ...editorial[key], ...value }])),
+    ...(setupGuide ? { setupGuide: { ...setupGuide, label: enFallback(setupGuide.label.ru, setupGuide.label.en) } } : {}),
     links: [...(editorial.links || []).filter(link => !links.some(item => item.href === link.href)), ...localizedLinks],
   };
 };

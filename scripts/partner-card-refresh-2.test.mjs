@@ -21,7 +21,7 @@ const snapshot = {
     "zarub": "cd55b328810de4f5cbca2a2c6db9cc94b892d339227dee60910c7bc1e819c24f",
     "pgon": "e13b10499082976ca2aa6f86c7a3e3076af451747be164408abc54fb60775054"
   },
-  "others": "232763638a6dc9242cc856f47ab098d7a7fb16565d00c872fc3dac7da575dd80",
+  "others": "84c74878a28f55b062052ffcbf251b990aec7d243f1eb4838cf7082e974ac0e7",
   "guideDates": "0ed3ebd20646d3e7509e5cd31b3af7bbf43a8dd92a7662f8f6d3e472d4f2cfe9",
   "headings": [
     {
@@ -94,7 +94,8 @@ test('second partner batch preserves every tile field, other offers and all guid
     assert.equal(hash(facts), expected, id);
     assert.match(getExternalLinkRel(facts.url), /sponsored/);
   }
-  assert.equal(hash(OFFERS.filter(item => !snapshot.facts[item.id]).map(item => ({id: item.id, hash: hash(item)}))), snapshot.others);
+  // The third approved batch has its own editorial and tile snapshots.
+  assert.equal(hash(OFFERS.filter(item => !snapshot.facts[item.id] && !['bot-lachuga', 'ant-shardx'].includes(item.id)).map(item => ({id: item.id, hash: hash(item)}))), snapshot.others);
   assert.equal(hash(guidePages.map(page => ({id: page.id, datePublished: page.datePublished, dateModified: page.dateModified}))), snapshot.guideDates);
 });
 

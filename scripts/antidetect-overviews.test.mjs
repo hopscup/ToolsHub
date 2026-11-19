@@ -13,10 +13,11 @@ test('ShardX service card links to the detailed review through shared editorial 
   const expected = {
     href: '/guides/shardx-obzor',
     label: {
-      ru: 'Подробный обзор ShardX с настройкой и проверкой на утечки',
-      en: 'Detailed ShardX review with setup and leak checks',
+      ru: 'Подробный обзор ShardX с проверкой на утечки',
+      en: 'Detailed ShardX review with leak checks',
     },
   };
+  for (const language of ['es', 'zh', 'ko']) expected.label[language] = expected.label.en;
   assert.deepEqual(antidetectPages.find(page => page.id === 'ant-shardx').editorial.setupGuide, expected);
   assert.deepEqual(OFFERS.find(offer => offer.id === 'ant-shardx').editorial.setupGuide, expected);
 });
