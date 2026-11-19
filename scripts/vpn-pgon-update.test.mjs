@@ -38,6 +38,8 @@ test('new VPN order, facts and sponsored destinations preserve existing bot link
   const offers = OFFERS.filter(offer => offer.subCategory === 'VPN');
   assert.deepEqual(offers.map(offer => offer.id), ['vpn-all', 'vpn-ppl', 'vpn-prosto', 'vpn-imp', 'vpn-quattro', 'vpn-giga', 'vpn-tochka-g', 'vpn-giga-dollar', 'vpn-taynik']);
   const imp = offers.find(offer => offer.id === 'vpn-imp');
+  assert.equal(imp.url, 'https://t.me/iMP_VPN_bot?start=6532969757');
+  assert.equal(getExternalLinkRel(imp.url), 'sponsored noopener noreferrer');
   assert.deepEqual(imp.platforms, ['Windows', 'macOS', 'Android', 'iOS']);
   for (const language of ['ru', 'en']) {
     assert.ok(getServiceFacts(imp, language).some(fact => fact.key === 'platforms' && fact.value === 'Windows, macOS, Android, iOS'));

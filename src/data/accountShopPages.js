@@ -1,4 +1,5 @@
 import { botShopPages } from './botAndLinkenPages.js';
+import { darkShoppingMetadata, withPartnerEditorial } from './partnerCardRefresh.js';
 
 const shopTitle = (name) => ({
   ru: `${name}: что продают, оплата и мой опыт | Hopscup Tools`,
@@ -73,12 +74,10 @@ export const accountShopPages = [
     logo: '/darkstore.png',
     title: {
       ...shopTitle('DarkShopping'),
-      ru: 'DarkShopping: магазин аккаунтов, почт и соцсетей | Hopscup Tools',
-      en: 'DarkShopping: accounts, email and social media shop | Hopscup Tools',
+      ...darkShoppingMetadata.title,
     },
     description: {
-      ru: 'Обзор DarkShopping: Gmail, Telegram, Facebook, Instagram и другие рабочие аккаунты, способы оплаты и правила безопасной покупки.',
-      en: 'DarkShopping review covering Gmail, Telegram, Facebook, Instagram, other work accounts, payments, and safer buying.',
+      ...darkShoppingMetadata.description,
       es: 'Análisis de DarkShopping: Gmail, Telegram, Facebook, Instagram, otras cuentas de trabajo, pagos y compra segura.',
       zh: 'DarkShopping 评测：Gmail、Telegram、Facebook、Instagram 等工作账号、付款方式与购买建议。',
       ko: 'DarkShopping 리뷰: Gmail, Telegram, Facebook, Instagram 등 작업용 계정, 결제와 구매 팁.',
@@ -97,7 +96,7 @@ export const accountShopPages = [
       zh: 'DarkShopping 评测, Gmail 账号, Telegram 账号, 工作账号',
       ko: 'DarkShopping 리뷰, Gmail 계정 구매, Telegram 계정 구매, 작업용 계정',
     },
-    editorial: {
+    editorial: withPartnerEditorial({
       description: {
         ru: 'DarkShopping я в основном использую для рабочих аккаунтов, почт и расходников. Здесь есть Gmail, Telegram, Facebook, Instagram и другие позиции под регистрацию, фарм и обычную работу.',
         en: 'I mainly use DarkShopping for work accounts, emails, and consumables. It lists Gmail, Telegram, Facebook, Instagram, and other products for registrations and everyday work.',
@@ -120,7 +119,7 @@ export const accountShopPages = [
         zh: 'DarkShopping 和 FunPay 能解决我大约 95% 的需求。账号、邮箱和耗材方面，我通常先看 DarkShopping。',
         ko: 'DarkShopping와 FunPay로 제 구매 수요의 약 95%를 해결합니다. 계정, 이메일과 소모품은 주로 DarkShopping에서 찾습니다.',
       },
-    },
+    }, 'st-dark'),
   },
   {
     id: 'st1',

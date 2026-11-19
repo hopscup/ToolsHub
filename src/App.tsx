@@ -50,6 +50,7 @@ import { proxyGuideMeta } from './data/proxyGuideContent.js';
 import { mobileProxyMeta } from './data/articleFallbackContent.js';
 import { RecommendedBadge } from './components/RecommendedBadge';
 import { accountShopPages } from './data/accountShopPages.js';
+import { getPartnerIntroduction, withPartnerEditorial } from './data/partnerCardRefresh.js';
 import { antidetectPages } from './data/antidetectPages.js';
 import { cryptoExchangePages } from './data/cryptoExchangePages.js';
 import { foreignCardPages } from './data/foreignCardPages.js';
@@ -384,6 +385,7 @@ interface Offer {
     descriptionDetailed?: Localized;
   };
   editorial?: {
+    seoDescription?: Localized;
     title: Localized;
     description: Localized;
     bestFor: Localized<string[]>;
@@ -2430,7 +2432,7 @@ const OFFERS: Offer[] = [
       types: { ru: 'IPv4, ISP, Residential', en: 'IPv4, ISP, Residential', es: 'IPv4, ISP, Residential', zh: 'IPv4、ISP、Residential', ko: 'IPv4, ISP, Residential' },
       paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto', es: 'Visa/Mastercard, SBP/Mir, cripto', zh: 'Visa/Mastercard、SBP/Mir、加密货币', ko: 'Visa/Mastercard, SBP/Mir, 암호화폐' }
     },
-    editorial: {
+    editorial: withPartnerEditorial({
       title: {
         ru: 'ProxyWing: обзор IPv4, ISP, Residential и Mobile прокси | Hopscup Tools',
         en: 'ProxyWing review: IPv4, ISP, Residential, and Mobile proxies | Hopscup Tools',
@@ -2506,7 +2508,7 @@ const OFFERS: Offer[] = [
         zh: '大多数任务可以从普通 IPv4 开始。只有目标平台或工作流程确实需要时，再选择价格更高的代理类型。',
         ko: '대부분의 작업은 일반 IPv4부터 시작하는 것이 합리적입니다. 대상 플랫폼이나 작업 방식이 실제로 요구할 때 더 비싼 유형을 선택하면 됩니다.',
       },
-    }
+    }, 'p3')
   },
   {
     id: 'p4',
@@ -2649,7 +2651,7 @@ const OFFERS: Offer[] = [
       types: { ru: 'Mobile', en: 'Mobile', es: 'Mobile', zh: 'Mobile', ko: 'Mobile' },
       paymentMethods: { ru: 'Visa/Mastercard, СБП/Мир, Криптовалюта', en: 'Visa/Mastercard, SBP/Mir, Crypto', es: 'Visa/Mastercard, SBP/Mir, cripto', zh: 'Visa/Mastercard、SBP/Mir、加密货币', ko: 'Visa/Mastercard, SBP/Mir, 암호화폐' }
     },
-    editorial: {
+    editorial: withPartnerEditorial({
       title: {
         ru: 'MobileProxy: обзор мобильных прокси со сменой IP | Hopscup Tools',
         en: 'MobileProxy review: mobile proxies with IP rotation | Hopscup Tools',
@@ -2725,7 +2727,7 @@ const OFFERS: Offer[] = [
         zh: '需要移动网络来源和方便更换地址时再选择 MobileProxy。基础采集或简单自动化通常没有必要为移动代理支付更高费用。',
         ko: '모바일 IP 출처와 편리한 주소 변경이 필요할 때 MobileProxy를 선택하면 됩니다. 기본 스크래핑이나 단순 자동화에는 추가 비용을 낼 필요가 없는 경우가 많습니다.',
       },
-    }
+    }, 'p6')
   },
   {
     id: 'p7',
@@ -5677,7 +5679,7 @@ export default function App() {
         ? getLocalizedValue(guideArticle.description, 'ru') || guideArticle.description.en
       : isHomeRoute
       ? getLocalizedValue(HOME_SEO.description, lang) || HOME_SEO.description.en
-      : getLocalizedValue(servicePageSeo?.description || offerSeo?.description, lang)
+      : getLocalizedValue(servicePageSeo?.description || offerSeo?.seoDescription || offerSeo?.description, lang)
         || runtimeSeo?.description
         || getLocalizedValue(sectionSeo.description, lang)
         || sectionSeo.description.en;
@@ -8808,7 +8810,7 @@ export default function App() {
                       {t.description}
                     </h4>
                     <p className="text-white/80 leading-relaxed text-base font-medium">
-                      <ServiceRichText text={offerDescription(selectedOffer)} offer={selectedOffer} language={lang} />
+                      <ServiceRichText text={getPartnerIntroduction(selectedOffer, lang) || offerDescription(selectedOffer)} offer={selectedOffer} language={lang} />
                     </p>
                   </div>
 

@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { accountShopPages } from '../src/data/accountShopPages.js';
+import { getPartnerIntroduction } from '../src/data/partnerCardRefresh.js';
 import { aiPages, aiSection } from '../src/data/aiPages.js';
 import { a6apiArticle, createA6apiContent } from '../src/data/a6apiContent.js';
 import { getServiceEditorialSections, splitServiceText } from '../src/data/servicePresentation.js';
@@ -1850,14 +1851,14 @@ const getOfferDescription = (offer, language) => localizedServiceValue(
   language.code,
 );
 
-const renderServiceContent = (offer, language, metaDescription) => {
+const renderServiceContent = (offer, language, metaDescription, introduction) => {
   const ru = language.code === 'ru';
   const value = data => localizedServiceValue(data, language.code);
   const heading = text => `<h2>${escapeHtml(text)}</h2>`;
   const facts = getServiceFacts(offer, language.code);
   const vpn = offer.subCategory === 'VPN' ? vpnTerms[offer.slug] : undefined;
   if (vpn) facts.push({ label: ru ? 'Бесплатно' : 'Free trial', value: value(vpn.free) }, { label: ru ? 'Цена' : 'Price', value: value(vpn.price) });
-  const paragraphs = getServiceParagraphs(offer, language.code, metaDescription);
+  const paragraphs = getServiceParagraphs(offer, language.code, metaDescription).filter(text => !getPartnerIntroduction(offer, language.code) || text !== introduction);
   const groups = getServiceTextGroups(offer, language.code);
   const alternatives = getServiceAlternatives(offer, OFFERS);
   const guide = getServiceGuide(offer);
@@ -1909,7 +1910,7 @@ const renderStaticContent = (section, language, pageLanguage = language) => {
   const heroTitle = section.heroHeading && getLanguage(section.heroHeading, language) !== "Hopscup's Tools Hub"
     ? getLanguage(section.heroHeading, language)
     : title;
-  const heroIntro = offer ? getOfferDescription(offer, language) : article?.intro || (section.heroIntro ? getLanguage(section.heroIntro, language) : intro);
+  const heroIntro = offer ? getPartnerIntroduction(offer, language.code) || getOfferDescription(offer, language) : article?.intro || (section.heroIntro ? getLanguage(section.heroIntro, language) : intro);
   const points = getLanguage(section.points, language);
   const items = Array.isArray(section.items) ? section.items : getLanguage(section.items, language);
   const labels = fallbackLabels[language.code] || fallbackLabels.en;
@@ -1945,7 +1946,7 @@ const renderStaticContent = (section, language, pageLanguage = language) => {
         </header>
         ${!offer && vpn ? `<section aria-label="${language.code === 'ru' ? 'Цена и бесплатный период' : 'Pricing and free trial'}"><dl><dt>${language.code === 'ru' ? 'Бесплатно' : 'Free trial'}</dt><dd>${escapeHtml(getLanguage(vpn.free, language))}</dd><dt>${language.code === 'ru' ? 'Цена' : 'Price'}</dt><dd>${escapeHtml(getLanguage(vpn.price, language))}</dd></dl></section>` : ''}
         ${!offer && section.cta ? `<p><a href="${escapeHtml(section.cta.href)}" target="_blank" rel="${getExternalLinkRel(section.cta.href) || 'noopener noreferrer'}">${escapeHtml(getLanguage(section.cta.label, language))}</a></p>` : ''}
-        ${offer ? renderServiceContent(offer, language, getLanguage(section.description, language)) : section.id === 'guide-best-proxies' ? `<div class="fallback-body">${renderProxyGuideBody()}</div>` : section.id === 'guide-mobile-ip' ? `<div class="fallback-body">${renderMobileIpGuideBody()}</div>` : section.articleBlocks ? `<div class="fallback-body">${renderGuideBlocks(section.articleBlocks, section.articleHeadingIds)}${section.articleChecklist ? renderChecklist(section.articleChecklist) : ''}</div>` : article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
+        ${offer ? renderServiceContent(offer, language, getLanguage(section.description, language), heroIntro) : section.id === 'guide-best-proxies' ? `<div class="fallback-body">${renderProxyGuideBody()}</div>` : section.id === 'guide-mobile-ip' ? `<div class="fallback-body">${renderMobileIpGuideBody()}</div>` : section.articleBlocks ? `<div class="fallback-body">${renderGuideBlocks(section.articleBlocks, section.articleHeadingIds)}${section.articleChecklist ? renderChecklist(section.articleChecklist) : ''}</div>` : article ? `<div class="fallback-body">${renderArticleBody(article, section.route)}</div>` : `
         ${section.heroHeading ? `
         <section>
           ${heroTitle !== title ? `<h2>${escapeHtml(title)}</h2>` : ''}

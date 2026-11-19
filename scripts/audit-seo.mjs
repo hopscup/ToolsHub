@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { accountShopPages } from '../src/data/accountShopPages.js';
+import { getPartnerIntroduction } from '../src/data/partnerCardRefresh.js';
 import { aiPages } from '../src/data/aiPages.js';
 import { getServiceEditorialSections } from '../src/data/servicePresentation.js';
 import { a6apiArticle, createA6apiContent } from '../src/data/a6apiContent.js';
@@ -130,7 +131,7 @@ const checkServiceContent = (html, offer, language, route) => {
   for (const fact of getServiceFacts(offer, code)) {
     if (!content.includes(`<dd>${escapeHtml(fact.value)}</dd>`)) errors.push(`Missing service fact ${fact.key}: ${route}`);
   }
-  const texts = [localizedServiceValue(offer.description, code), localizedServiceValue(offer.details?.descriptionDetailed, code), localizedServiceValue(offer.details?.targetAudience, code), localizedServiceValue(offer.editorial?.description, code), localizedServiceValue(offer.editorial?.verdict, code), ...(offer.promoCode ? [localizedServiceValue(offer.promoDiscount, code)] : []), ...getServiceTextGroups(offer, code).flatMap(group => group.items)].filter(Boolean);
+  const texts = [getPartnerIntroduction(offer, code) || localizedServiceValue(offer.description, code), localizedServiceValue(offer.details?.descriptionDetailed, code), localizedServiceValue(offer.details?.targetAudience, code), localizedServiceValue(offer.editorial?.description, code), localizedServiceValue(offer.editorial?.verdict, code), ...(offer.promoCode ? [localizedServiceValue(offer.promoDiscount, code)] : []), ...getServiceTextGroups(offer, code).flatMap(group => group.items)].filter(Boolean);
   texts.push(...getServiceEditorialSections(offer, code).flatMap(section => section.items));
   const visibleContent = content.replace(/<[^>]*>/g, '');
   for (const text of texts.filter(text => !isMeta(text))) if (!visibleContent.includes(escapeHtml(text))) errors.push(`Missing service text: ${route}: ${text}`);

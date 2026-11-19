@@ -84,7 +84,7 @@ export const impVpnPage = {
   name: 'iMP VPN',
   logo: '/imp-vpn.webp',
   platforms: ['Windows', 'macOS', 'Android', 'iOS'],
-  url: 'https://t.me/iMP_VPN_bot?start=460705268',
+  url: 'https://t.me/iMP_VPN_bot?start=6532969757',
   title: {
     ru: 'iMP VPN: 3 дня бесплатно, цена и подключение | Hopscup Tools',
     en: 'iMP VPN: 3 free days, pricing, and setup | Hopscup Tools',
