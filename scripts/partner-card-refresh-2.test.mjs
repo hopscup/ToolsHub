@@ -9,6 +9,7 @@ import {foreignCardPages} from '../src/data/foreignCardPages.js';
 import {guidePages} from '../src/data/guidePages.js';
 import {pgonQrAbroad, withPgonQrAbroad} from '../src/data/pgonQrAbroad.js';
 import {getExternalLinkRel} from '../src/lib/externalLinks.js';
+import {normalizeCopy, staticServiceText, withoutEditorialParagraphBreaks} from './partner-copy-helpers.mjs';
 
 const {OFFERS} = await loadOffers();
 const hash = data => createHash('sha256').update(JSON.stringify(data)).digest('hex');
@@ -16,12 +17,12 @@ const fields = {description: 'Описание', capabilities: 'Что умее�
 const source = (await readFile(new URL('./fixtures/partner-cards-2.md', import.meta.url), 'utf8')).replaceAll('\r\n', '\n');
 const snapshot = {
   "facts": {
-    "p1": "95d711cedd7cc1715bc4e52475d3a55cee2c1454fd8bc671dc7b05366db8ca40",
+    "p1": "239c5fef382706ed11c03da29c64dab765a9777db8ce074d73ff37b37035346e",
     "p4": "9ba625c621c48e1bb174bc606343c26e7c94b1434dcc092aa982deaa1f4fe049",
     "zarub": "cd55b328810de4f5cbca2a2c6db9cc94b892d339227dee60910c7bc1e819c24f",
     "pgon": "e13b10499082976ca2aa6f86c7a3e3076af451747be164408abc54fb60775054"
   },
-  "others": "84c74878a28f55b062052ffcbf251b990aec7d243f1eb4838cf7082e974ac0e7",
+  "others": "a72987ba2b069078398c0d5fd23a5de3489834c62c2ea5082e2768f8db4d6134",
   "guideDates": "0ed3ebd20646d3e7509e5cd31b3af7bbf43a8dd92a7662f8f6d3e472d4f2cfe9",
   "headings": [
     {
@@ -34,11 +35,11 @@ const snapshot = {
     },
     {
       "route": "/proxy-vpn/proxyshard",
-      "h1": "ProxyShard: разные типы прокси в одном сервисе"
+      "h1": "ShardX (бывший ProxyShard): разные типы прокси в одном сервисе"
     },
     {
       "route": "/en/proxy-vpn/proxyshard",
-      "h1": "ProxyShard: multiple proxy types in one service"
+      "h1": "ShardX (formerly ProxyShard): multiple proxy types in one service"
     },
     {
       "route": "/foreign-cards/zarub",
@@ -77,7 +78,7 @@ test('second partner batch matches all seven Russian fields, SEO and links in th
   for (const page of approved) {
     const offer = OFFERS.find(item => item.id === page.id);
     for (const [key, value] of Object.entries(page.editorial)) {
-      assert.deepEqual(offer.editorial[key].ru, value, page.id + ': ' + key);
+      assert.deepEqual(normalizeCopy(offer.editorial[key].ru), normalizeCopy(value), page.id + ': ' + key);
       assert.ok(offer.editorial[key].en.length, page.id + ': EN ' + key);
     }
     assert.equal(partnerMetadataById[page.id].title.ru, page.title);
@@ -95,7 +96,7 @@ test('second partner batch preserves every tile field, other offers and all guid
     assert.match(getExternalLinkRel(facts.url), /sponsored/);
   }
   // The third approved batch has its own editorial and tile snapshots.
-  assert.equal(hash(OFFERS.filter(item => !snapshot.facts[item.id] && !['bot-lachuga', 'ant-shardx'].includes(item.id)).map(item => ({id: item.id, hash: hash(item)}))), snapshot.others);
+  assert.equal(hash(OFFERS.filter(item => !snapshot.facts[item.id] && !['bot-lachuga', 'ant-shardx'].includes(item.id)).map(item => ({id: item.id, hash: hash(withoutEditorialParagraphBreaks(item))}))), snapshot.others);
   assert.equal(hash(guidePages.map(page => ({id: page.id, datePublished: page.datePublished, dateModified: page.dateModified}))), snapshot.guideDates);
 });
 
@@ -138,6 +139,7 @@ test('static cards render complete author copy, exact SEO, unchanged H1 and inte
     const language = prefix ? 'en' : 'ru';
     const html = await readFile('dist' + prefix + page.route + '/index.html', 'utf8');
     const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)[1];
+    const visibleText = staticServiceText(content);
     assert.ok(html.includes('<title>' + escape(partnerMetadataById[page.id].title[language]) + '</title>'));
     assert.ok(html.includes('name="description" content="' + escape(partnerMetadataById[page.id].description[language]) + '"'));
     const schemas = [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].flatMap(match => JSON.parse(match[1]));
@@ -148,9 +150,9 @@ test('static cards render complete author copy, exact SEO, unchanged H1 and inte
     }
     for (const key of Object.keys(fields)) {
       const value = partnerEditorialById[page.id][key][language];
-      for (const text of Array.isArray(value) ? value : [value]) assert.ok(content.includes(escape(text)), page.id + ': ' + prefix + ' ' + key);
+      for (const text of Array.isArray(value) ? value : [value]) assert.ok(visibleText.includes(escape(normalizeCopy(text))), page.id + ': ' + prefix + ' ' + key);
     }
-    assert.equal(content.split(escape(partnerEditorialById[page.id].description[language])).length - 1, 1);
+    assert.equal(visibleText.split(escape(normalizeCopy(partnerEditorialById[page.id].description[language]))).length - 1, 1);
     for (const link of partnerEditorialById[page.id].links) {
       const anchor = '<a href="' + prefix + link.href + '">' + escape(link.label[language]) + '</a>';
       assert.ok(content.includes(anchor), anchor);

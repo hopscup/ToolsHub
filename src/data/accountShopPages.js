@@ -633,4 +633,7 @@ export const accountShopPages = [
   description: partnerMetadataById[page.id].description,
   tileDescription: page.editorial.description,
   editorial: withPartnerEditorial(page.editorial, page.id),
+} : page.id === 'st-dark' ? {
+  ...page,
+  tileDescription: Object.fromEntries(Object.entries(page.editorial.description).map(([language, text]) => [language, text.replace(/\r?\n\s*\r?\n/g, ' ')])),
 } : page);

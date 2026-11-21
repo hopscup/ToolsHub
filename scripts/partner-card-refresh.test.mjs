@@ -8,6 +8,7 @@ import {accountShopPages} from '../src/data/accountShopPages.js';
 import {getServiceEditorialSections} from '../src/data/servicePresentation.js';
 import {isIndexablePath, indexablePaths} from '../src/data/indexPolicy.js';
 import {getExternalLinkRel} from '../src/lib/externalLinks.js';
+import {normalizeCopy, staticServiceText} from './partner-copy-helpers.mjs';
 const {OFFERS} = await loadOffers();
 const fields = ['description', 'capabilities', 'pricing', 'bestFor', 'considerations', 'gettingStarted', 'verdict'];
 const hash = data => createHash('sha256').update(JSON.stringify(data)).digest('hex');
@@ -20,7 +21,7 @@ const expected = {
 test('three partner cards preserve the exact approved Russian editorial and original facts', () => {
   for (const [id, snapshot] of Object.entries(expected)) {
     const offer = OFFERS.find(offer => offer.id === id);
-    assert.equal(hash(fields.map(key => [key, offer.editorial[key].ru])), snapshot.copy, id);
+    assert.equal(hash(fields.map(key => [key, normalizeCopy(offer.editorial[key].ru)])), snapshot.copy, id);
     const {editorial, description, ...facts} = offer;
     assert.equal(hash(facts), snapshot.facts, id);
     assert.match(getExternalLinkRel(offer.url), /sponsored/);
@@ -64,12 +65,13 @@ test('partner card static RU and EN include the author blocks and requested guid
     const language = prefix ? 'en' : 'ru';
     const html = await readFile(`dist${prefix}${snapshot.route}/index.html`, 'utf8');
     const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)[1];
+    const visibleText = staticServiceText(content);
     const intro = partnerEditorialById[id].description[language];
     const escape = text => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
-    assert.equal(content.split(escape(intro)).length - 1, 1, snapshot.route);
+    assert.equal(visibleText.split(escape(normalizeCopy(intro))).length - 1, 1, snapshot.route);
     for (const key of fields) {
       const value = partnerEditorialById[id][key][language];
-      for (const text of Array.isArray(value) ? value : [value]) assert.ok(content.includes(escape(text)), `${id}: ${key}`);
+      for (const text of Array.isArray(value) ? value : [value]) assert.ok(visibleText.includes(escape(normalizeCopy(text))), `${id}: ${key}`);
     }
     for (const link of partnerEditorialById[id].links) {
       assert.ok(content.includes(`href="${prefix}${link.href}"`));

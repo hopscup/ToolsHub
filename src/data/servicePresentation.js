@@ -42,7 +42,7 @@ export const plainSeoText = value => String(value).replace(/[—–]/g, '-');
 const shortServiceTitles = {
   '/proxy-vpn/luchshie-proksi': ['Какие прокси выбрать для аккаунтов в 2026', 'Which proxies to choose for accounts in 2026'],
   '/antidetect/kakoy-vybrat': ['Какой антидетект выбрать: сравнение сервисов', 'Which antidetect browser to choose: comparison'],
-  '/proxy-vpn/proxyshard': ['ProxyShard: IPv4, ISP, Residential и Mobile', 'ProxyShard: IPv4, ISP, Residential and Mobile'],
+  '/proxy-vpn/proxyshard': ['ShardX: IPv4, ISP, Residential и Mobile', 'ShardX: IPv4, ISP, Residential and Mobile'],
   '/proxy-vpn/proxywing': ['ProxyWing: IPv4, ISP, Residential и Mobile', 'ProxyWing: IPv4, ISP, Residential and Mobile'],
   '/proxy-vpn/proxy-seller': ['Proxy-Seller: IPv4, ISP, Residential и Mobile', 'Proxy-Seller: IPv4, ISP, Residential and Mobile'],
   '/proxy-vpn/mobileproxy': ['MobileProxy: мобильные прокси со сменой IP', 'MobileProxy: mobile proxies with IP rotation'],
@@ -100,13 +100,17 @@ export const splitServiceText = (text, offer, language) => {
   return segments;
 };
 
+export const splitServiceParagraphs = text => String(text ?? '').split(/\r?\n\s*\r?\n/).map(paragraph => paragraph.trim()).filter(Boolean);
+export const normalizeServiceText = text => String(text ?? '').replace(/\s+/g, ' ').trim();
+
 export const isServiceMetaDescription = (text, description) => Boolean(text && description)
   && plainSeoText(text).replace(/\s+/g, ' ').trim() === plainSeoText(description).replace(/\s+/g, ' ').trim();
 
 export const getServiceParagraphs = (offer, language, metaDescription) => {
   const value = data => localizedServiceValue(data, language);
-  return [...new Set([value(offer.details?.descriptionDetailed), value(offer.editorial?.description)])]
-    .filter(text => text && text !== value(offer.description) && !isServiceMetaDescription(text, metaDescription));
+  return [...new Set([value(offer.details?.descriptionDetailed), value(offer.editorial?.description)]
+    .filter(text => text && text !== value(offer.description) && !isServiceMetaDescription(text, metaDescription))
+    .flatMap(splitServiceParagraphs))];
 };
 
 export const serviceFactLabels = {

@@ -8,7 +8,7 @@ const image = (name, alt, width, height) => ({ type: 'image', src: `/guides/clau
 const services = {
   proxywing: 'https://dashboard.proxywing.com/billing/aff.php?aff=813',
   proxySeller: 'https://proxy-seller.com/?partner=RIPC5NDAEYRZPZ',
-  proxyshard: 'https://proxyshard.com?ref=hopscup',
+  proxyshard: 'https://shardx.com/?ref=hopscup',
   adspower: 'https://www.adspower-ru.com/share/e1UrIy',
   shardx: 'https://github.com/ProxyShard/ShardBrowser',
   smsFast: 'https://smsfast.pro/?ref=1100157',
@@ -69,7 +69,7 @@ export const claudeGuideArticle = {
     list([
       [link('ProxyWing', services.proxywing), { text: ', промокод ' }, strong('hopscup'), { text: ';' }],
       [link('Proxy-Seller', services.proxySeller), { text: ', промокод ' }, strong('hopscup'), { text: ';' }],
-      [link('ProxyShard', services.proxyshard), { text: ', промокод ' }, strong('hopscup'), { text: '.' }],
+      [link('ShardX (бывший ProxyShard)', services.proxyshard), { text: ', промокод ' }, strong('hopscup'), { text: '.' }],
     ]),
     paragraph('👉 Больше выбора прокси с ценами, типами и способами оплаты у меня на сайте в разделе ', link('Прокси и VPN', '/proxy-vpn'), '.'),
     image('proxy', 'Настройки статичного прокси в личном кабинете', 1175, 730),

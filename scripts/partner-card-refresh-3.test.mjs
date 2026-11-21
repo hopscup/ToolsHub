@@ -11,6 +11,7 @@ import {guidePages} from '../src/data/guidePages.js';
 import {getServiceContextualGuideLinks} from '../src/data/contextualGuideLinks.js';
 import {isIndexablePath} from '../src/data/indexPolicy.js';
 import {getExternalLinkRel} from '../src/lib/externalLinks.js';
+import {normalizeCopy, staticServiceText, withoutEditorialParagraphBreaks} from './partner-copy-helpers.mjs';
 
 const {OFFERS} = await loadOffers();
 const hash = data => createHash('sha256').update(JSON.stringify(data)).digest('hex');
@@ -18,10 +19,10 @@ const fields = {description: 'Описание', capabilities: 'Что умее�
 const source = (await readFile(new URL('./fixtures/partner-cards-3.md', import.meta.url), 'utf8')).replaceAll('\r\n', '\n');
 const snapshot = {
   "facts": {
-    "ant-shardx": "001752b3e5aa3738903661371ac0d2a409744a172d67a599e53b8eca86636282",
+    "ant-shardx": "3a99a06a80a74fc9433906f81eadf72863ee794750403b4793ccfe1b9b78d7b4",
     "bot-lachuga": "956f17ae9ffb52e074f9328ca338f67f4ddb9308794f18c2e4574c2e5992a8a8"
   },
-  "others": "2f354ffb0694495142fbf806599b8a4c9255d8581fa5ab59b6ad105de42ec037",
+  "others": "8adf1472cd1b80d9a8e208716085b066f2aca106692ee76a2f449799748b4eca",
   "guideDates": "0ed3ebd20646d3e7509e5cd31b3af7bbf43a8dd92a7662f8f6d3e472d4f2cfe9",
   "headings": [
     {
@@ -34,11 +35,11 @@ const snapshot = {
     },
     {
       "route": "/antidetect/shardx",
-      "h1": "ShardX: бесплатный антидетект от ProxyShard"
+      "h1": "ShardX: бесплатный антидетект без лимита профилей"
     },
     {
       "route": "/en/antidetect/shardx",
-      "h1": "ShardX: a free antidetect browser from ProxyShard"
+      "h1": "ShardX: free antidetect with unlimited profiles"
     }
   ]
 };
@@ -62,7 +63,7 @@ test('third partner batch matches all seven Russian fields, SEO and complete lin
   for (const page of approved) {
     const offer = OFFERS.find(item => item.id === page.id);
     for (const [key, value] of Object.entries(page.editorial)) {
-      assert.deepEqual(offer.editorial[key].ru, value, page.id + ': ' + key);
+      assert.deepEqual(normalizeCopy(offer.editorial[key].ru), normalizeCopy(value), page.id + ': ' + key);
       assert.ok(offer.editorial[key].en.length, page.id + ': EN ' + key);
     }
     assert.equal(partnerMetadataById[page.id].title.ru, page.title);
@@ -82,7 +83,7 @@ test('Lachuga and ShardX keep all original tile fields, other offers and guide d
     const {editorial, ...facts} = OFFERS.find(item => item.id === id);
     assert.equal(hash(facts), expected, id);
   }
-  assert.equal(hash(OFFERS.filter(item => !snapshot.facts[item.id]).map(item => ({id: item.id, hash: hash(item)}))), snapshot.others);
+  assert.equal(hash(OFFERS.filter(item => !snapshot.facts[item.id]).map(item => ({id: item.id, hash: hash(withoutEditorialParagraphBreaks(item))}))), snapshot.others);
   assert.equal(hash(guidePages.map(page => ({id: page.id, datePublished: page.datePublished, dateModified: page.dateModified}))), snapshot.guideDates);
   assert.match(getExternalLinkRel(OFFERS.find(item => item.id === 'bot-lachuga').url), /sponsored/);
   assert.equal(getExternalLinkRel(OFFERS.find(item => item.id === 'ant-shardx').url), 'noopener noreferrer');
@@ -121,6 +122,7 @@ test('static third-batch cards have full copy, single review and YouTube links, 
     const language = prefix ? 'en' : 'ru';
     const html = await readFile('dist' + prefix + page.route + '/index.html', 'utf8');
     const content = html.match(/<noscript>([\s\S]*?)<\/noscript>/)[1];
+    const visibleText = staticServiceText(content);
     assert.ok(html.includes('<title>' + escape(partnerMetadataById[page.id].title[language]) + '</title>'));
     assert.ok(html.includes('name="description" content="' + escape(partnerMetadataById[page.id].description[language]) + '"'));
     const schemas = [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].flatMap(match => JSON.parse(match[1]));
@@ -131,9 +133,9 @@ test('static third-batch cards have full copy, single review and YouTube links, 
     }
     for (const key of Object.keys(fields)) {
       const value = partnerEditorialById[page.id][key][language];
-      for (const text of Array.isArray(value) ? value : [value]) assert.ok(content.includes(escape(text)), page.id + ': ' + prefix + ' ' + key);
+      for (const text of Array.isArray(value) ? value : [value]) assert.ok(visibleText.includes(escape(normalizeCopy(text))), page.id + ': ' + prefix + ' ' + key);
     }
-    assert.equal(content.split(escape(partnerEditorialById[page.id].description[language])).length - 1, 1);
+    assert.equal(visibleText.split(escape(normalizeCopy(partnerEditorialById[page.id].description[language]))).length - 1, 1);
     const offer = OFFERS.find(item => item.id === page.id);
     for (const link of linksFor(offer)) {
       const href = prefix + link.href;

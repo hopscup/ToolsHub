@@ -9,7 +9,7 @@ test('Telegram bot destinations recognize both official host spellings', () => {
 
 test('referral query parameters and existing path referrals are sponsored', () => {
   for (const href of [
-    'https://proxyshard.com?ref=hopscup',
+    'https://shardx.com/?ref=hopscup',
     'https://dark.shopping/category/view/gmail?p=95083',
     'https://proxy-seller.com/?partner=RIPC5NDAEYRZPZ',
     'https://dashboard.proxywing.com/billing/aff.php?aff=813',

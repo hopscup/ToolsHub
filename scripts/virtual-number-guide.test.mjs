@@ -44,7 +44,7 @@ test('virtual number guide retains numbered steps, bold country labels and check
   const countries = article.blocks.find(block => block.type === 'list' && !block.ordered);
   assert.deepEqual(countries.items.map(item => item[0]), [{ text: 'Claude:', strong: true }, { text: 'ChatGPT и Codex:', strong: true }, { text: 'Discord:', strong: true }]);
   assert.equal(checklist.items.length, 5);
-  assert.deepEqual(checklist.sources.map(source => source.links.map(link => link.text)), [['SMS-Fast', 'HeroSMS', 'NumeraSMS'], ['ProxyWing', 'Proxy-Seller', 'ProxyShard']]);
+  assert.deepEqual(checklist.sources.map(source => source.links.map(link => link.text)), [['SMS-Fast', 'HeroSMS', 'NumeraSMS'], ['ProxyWing', 'Proxy-Seller', 'ShardX (бывший ProxyShard)']]);
   assert.equal(checklist.note.map(part => part.text).join(''), 'Промокод hopscup на прокси почти везде.');
   assert.equal(checklist.action.href, '/sms-activators');
   assert.equal(article.introParagraphs[0].find(part => part.href)?.href, '/sms-activators');

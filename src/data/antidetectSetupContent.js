@@ -85,7 +85,7 @@ export const antidetectSetupAdditions = {
   proxy: [
     { text: 'Для обычных задач хватит IPv4 за 1-2$, для строгих площадок берите ISP. Я беру у ' },
     { text: 'ProxyWing', service: 'proxywing' }, { text: ' (оплата картой РФ) и ' },
-    { text: 'ProxyShard', service: 'proxyshard' }, { text: ' (лучше всего работают с ShardX: SOCKS5 с UDP). Если аккаунтов много и сидите по очереди, удобнее мобильные от ' },
+    { text: 'ShardX (бывший ProxyShard)', service: 'proxyshard' }, { text: ' (лучше всего работают с антидетектом ShardX: SOCKS5 с UDP). Если аккаунтов много и сидите по очереди, удобнее мобильные от ' },
     { text: 'MobileProxy', service: 'mobileproxy' }, { text: '. Промокод ' }, { text: 'hopscup', strong: true }, { text: ' почти везде.' },
   ],
   airplane: [{ text: 'Аккаунтов пара штук - хватит ' }, { text: 'режима самолёта', href: '/guides/mobile-ip-airplane-mode' }, { text: '.' }],
@@ -116,7 +116,7 @@ export const createAntidetectGuideChecklist = offers => {
     ].map(text => [{ text }]),
     sources: [
       { label: 'Антидетекты бесплатно', links: [link('adspower', 'AdsPower'), link('dolphin', 'Dolphin'), link('shardx', 'ShardX', true)] },
-      { label: 'Прокси', links: [link('proxywing', 'ProxyWing'), link('proxyshard', 'ProxyShard'), link('mobileproxy', 'MobileProxy')] },
+      { label: 'Прокси', links: [link('proxywing', 'ProxyWing'), link('proxyshard', 'ShardX'), link('mobileproxy', 'MobileProxy')] },
     ],
     note: [{ text: 'Промокод ' }, { text: 'hopscup', strong: true }, { text: ' почти везде.' }],
     action: { href: '/antidetect', label: 'Все антидетекты на сайте' },

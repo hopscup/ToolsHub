@@ -30,7 +30,7 @@ import { aiOffers, aiPages, aiSection } from './data/aiPages.js';
 import { botShopOffers, linkenSphereOffers, orderAntidetectAllOffers } from './data/botAndLinkenPages.js';
 import { AiSectionContent } from './components/AiSectionContent';
 import type { ArticleBlock } from './components/ImportedGuideArticle';
-import { ServiceEditorialSections, ServiceRichText } from './components/ServiceEditorialSections';
+import { ServiceEditorialSections, ServiceRichText, ServiceParagraphs } from './components/ServiceEditorialSections';
 import { ArticleVideo } from './components/ArticleVideo';
 import { MobileAntidetectGuideArticle } from './components/MobileAntidetectGuideArticle';
 import { mobileAntidetectArticle } from './data/mobileAntidetectContent.js';
@@ -1170,18 +1170,18 @@ const RUNTIME_SEO_TRANSLATIONS: Partial<Record<CategoryType, Partial<Record<Lang
 const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']>> = {
   proxyshard: {
     title: {
-      ru: 'ProxyShard: обзор IPv4, ISP, Residential и Mobile прокси | Hopscup Tools',
-      en: 'ProxyShard review: IPv4, ISP, Residential, and Mobile proxies | Hopscup Tools',
-      es: 'ProxyShard: análisis de proxies IPv4, ISP, Residential y Mobile | Hopscup Tools',
-      zh: 'ProxyShard 评测：IPv4、ISP、Residential 与 Mobile 代理 | Hopscup Tools',
-      ko: 'ProxyShard 리뷰: IPv4, ISP, Residential 및 Mobile 프록시 | Hopscup Tools',
+      ru: 'ShardX: обзор IPv4, ISP, Residential и Mobile прокси | Hopscup Tools',
+      en: 'ShardX review: IPv4, ISP, Residential, and Mobile proxies | Hopscup Tools',
+      es: 'ShardX: análisis de proxies IPv4, ISP, Residential y Mobile | Hopscup Tools',
+      zh: 'ShardX 评测：IPv4、ISP、Residential 与 Mobile 代理 | Hopscup Tools',
+      ko: 'ShardX 리뷰: IPv4, ISP, Residential 및 Mobile 프록시 | Hopscup Tools',
     },
     description: {
-      ru: 'Обзор ProxyShard: IPv4, ISP, Residential и Mobile-прокси, более 100 стран, способы оплаты и выбор типа IP под конкретную задачу.',
-      en: 'ProxyShard review covering IPv4, ISP, Residential, and Mobile proxies, 100+ countries, payment methods, and choosing the right IP type.',
-      es: 'Análisis de ProxyShard: proxies IPv4, ISP, Residential y Mobile, más de 100 países, pagos y elección del tipo de IP.',
-      zh: 'ProxyShard 评测：IPv4、ISP、Residential 和 Mobile 代理，覆盖 100 多个国家、付款方式以及不同任务的 IP 类型选择。',
-      ko: 'ProxyShard 리뷰: IPv4, ISP, Residential, Mobile 프록시, 100개 이상의 국가, 결제 수단과 작업별 IP 유형 선택.',
+      ru: 'Обзор ShardX: IPv4, ISP, Residential и Mobile-прокси, более 100 стран, способы оплаты и выбор типа IP под конкретную задачу.',
+      en: 'ShardX review covering IPv4, ISP, Residential, and Mobile proxies, 100+ countries, payment methods, and choosing the right IP type.',
+      es: 'Análisis de ShardX: proxies IPv4, ISP, Residential y Mobile, más de 100 países, pagos y elección del tipo de IP.',
+      zh: 'ShardX 评测：IPv4、ISP、Residential 和 Mobile 代理，覆盖 100 多个国家、付款方式以及不同任务的 IP 类型选择。',
+      ko: 'ShardX 리뷰: IPv4, ISP, Residential, Mobile 프록시, 100개 이상의 국가, 결제 수단과 작업별 IP 유형 선택.',
     },
     bestFor: {
       ru: [
@@ -1238,7 +1238,7 @@ const ADDITIONAL_PROXY_EDITORIALS: Record<string, NonNullable<Offer['editorial']
       ],
     },
     verdict: {
-      ru: 'ProxyShard даёт хороший баланс между ценой, скоростью и качеством. Для простых задач я бы начал с IPv4 или ISP, а Residential и Mobile оставил для случаев, где нужен максимальный траст.',
+      ru: 'ShardX даёт хороший баланс между ценой, скоростью и качеством. Для простых задач я бы начал с IPv4 или ISP, а Residential и Mobile оставил для случаев, где нужен максимальный траст.',
       en: 'A convenient all-round option when your work needs different proxy types. You do not need the most expensive type by default, so match the IP source to the platform.',
       es: 'Una opción universal y cómoda si necesitas distintos tipos de proxy. No hace falta elegir siempre el más caro: adapta la fuente de IP a la plataforma.',
       zh: '需要多种代理类型时，这是方便的综合选择。不必默认购买最贵的类型，应根据平台要求选择 IP 来源。',
@@ -2304,13 +2304,13 @@ const OFFERS: Offer[] = [
     category: 'Proxy',
     subCategory: 'Proxy',
     slug: 'proxyshard',
-    name: 'ProxyShard',
+    name: 'ShardX',
     description: { 
-      ru: 'Сервис от команды бесплатного антидетекта ShardX. SOCKS5 с UDP на всех типах прокси. Пополнение от 5$, оплата криптой или зарубежной картой.',
-      en: 'From the team behind the free ShardX antidetect browser. SOCKS5 with UDP on every proxy type. Top up from $5 with crypto or a foreign card.'
+      ru: 'ShardX (бывший ProxyShard): сервис от команды одноимённого бесплатного антидетекта. SOCKS5 с UDP на всех типах прокси. Пополнение от 5$, оплата криптой или зарубежной картой.',
+      en: 'ShardX (formerly ProxyShard): from the team behind the free antidetect browser of the same name. SOCKS5 with UDP on every proxy type. Top up from $5 with crypto or a foreign card.'
     },
-    url: 'https://proxyshard.com?ref=hopscup',
-    logoUrl: '/proxyshard.webp',
+    url: 'https://shardx.com/?ref=hopscup',
+    logoUrl: '/shardx-proxy.webp',
     promoCode: 'hopscup',
     isBestChoice: true,
     details: {
@@ -3313,7 +3313,7 @@ const OFFERS: Offer[] = [
     slug: ACCOUNT_SHOP_PAGE_BY_ID['st-dark'].slug,
     editorial: ACCOUNT_SHOP_PAGE_BY_ID['st-dark'].editorial,
     name: 'DarkShopping',
-    description: ACCOUNT_SHOP_PAGE_BY_ID['st-dark'].editorial.description,
+    description: ACCOUNT_SHOP_PAGE_BY_ID['st-dark'].tileDescription || ACCOUNT_SHOP_PAGE_BY_ID['st-dark'].editorial.description,
     url: 'https://dark.shopping/category/view/gmail?p=95083',
     logoUrl: '/darkstore.webp',
     isBestChoice: true,
@@ -5907,7 +5907,7 @@ export default function App() {
       return normalizedText.includes(query) || (compactQuery.length > 1 && compactText.includes(compactQuery));
     });
 
-    const proxyOrder = ['MobileProxy', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxys.io', 'ProxyShard', 'Proxy6'];
+    const proxyOrder = ['MobileProxy', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxys.io', 'ShardX', 'Proxy6'];
     const cardOrder = ['Zarub', 'PGON', 'Antarctic Wallet', 'QR2Pay', 'Vezdekarta', 'Pionex', 'Cashin Out'];
     const cryptoOrder = ['Prosto Exchange', 'Keine Exchange', 'PGON', 'Antarctic Wallet', 'QR2Pay', 'Hermes Exchange', 'AMLBot', 'BitOK', 'GetBlock', 'MetaMask', 'Rabby Wallet', 'Phantom', 'Backpack', 'Trust Wallet', 'TronLink'];
     if (activeCategory === 'Antidetect' && subFilter === 'None' && !hasQuery) return orderAntidetectAllOffers(offers) as Offer[];
@@ -8815,9 +8815,7 @@ export default function App() {
                     <h4 className="text-[11px] uppercase font-black text-brand-purple tracking-[0.2em] mb-3">
                       {t.description}
                     </h4>
-                    <p className="text-white/80 leading-relaxed text-base font-medium">
-                      <ServiceRichText text={getPartnerIntroduction(selectedOffer, lang) || offerDescription(selectedOffer)} offer={selectedOffer} language={lang} />
-                    </p>
+                    <ServiceParagraphs text={getPartnerIntroduction(selectedOffer, lang) || offerDescription(selectedOffer)} offer={selectedOffer} language={lang} className="text-white/80 leading-relaxed text-base font-medium" />
                   </div>
 
                   {selectedOffer.cardStats && (
@@ -9187,9 +9185,7 @@ export default function App() {
                           <Star className="w-4 h-4" />
                           {t.editorialVerdict}
                         </h3>
-                        <p className="text-sm font-medium leading-relaxed text-white/75">
-                          <ServiceRichText text={l(selectedOffer.editorial.verdict)} offer={selectedOffer} language={lang} />
-                        </p>
+                        <ServiceParagraphs text={l(selectedOffer.editorial.verdict)} offer={selectedOffer} language={lang} className="text-sm font-medium leading-relaxed text-white/75" />
                       </section>}
                       {selectedOffer.editorial.links?.map(item => <p key={item.href} className="text-sm leading-7">
                         <a href={`${LANGUAGE_PREFIXES[lang]}${item.href}`} className="font-bold text-brand-purple underline underline-offset-4 hover:text-white">{l(item.label)}</a>

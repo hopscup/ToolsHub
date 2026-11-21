@@ -18,7 +18,7 @@ test('antidetect guide links resolve to the current OFFERS entries', () => {
 test('antidetect checklist has the requested sources and uses an internal ShardX link', () => {
   const checklist = createAntidetectGuideChecklist(OFFERS);
   assert.equal(checklist.items.length, 5);
-  assert.deepEqual(checklist.sources.map(source => source.links.map(link => link.text)), [['AdsPower', 'Dolphin', 'ShardX'], ['ProxyWing', 'ProxyShard', 'MobileProxy']]);
+  assert.deepEqual(checklist.sources.map(source => source.links.map(link => link.text)), [['AdsPower', 'Dolphin', 'ShardX'], ['ProxyWing', 'ShardX', 'MobileProxy']]);
   assert.equal(checklist.sources[0].links[2].href, '/antidetect/shardx');
   assert.equal(checklist.action.href, '/antidetect');
   assert.equal(checklist.note.map(part => part.text).join(''), 'Промокод hopscup почти везде.');

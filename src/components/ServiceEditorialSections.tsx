@@ -1,4 +1,4 @@
-import { getServiceEditorialSections, splitServiceText } from '../data/servicePresentation.js';
+import { getServiceEditorialSections, splitServiceText, splitServiceParagraphs } from '../data/servicePresentation.js';
 import { getExternalLinkRel } from '../lib/externalLinks.js';
 
 type EditorialOffer = { editorial?: { inlineLinks?: object; capabilities?: object; pricing?: object; payment?: object; gettingStarted?: object; telegramFallback?: object } };
@@ -6,6 +6,10 @@ type EditorialOffer = { editorial?: { inlineLinks?: object; capabilities?: objec
 export const ServiceRichText = ({ text, offer, language }: { text: string; offer: EditorialOffer; language: string }) => <span>{splitServiceText(text, offer, language).map((part, index) => part.href
   ? <a key={index} href={`${part.href.startsWith('/') && language !== 'ru' ? '/' + language : ''}${part.href}`} {...(part.href.startsWith('http') ? { target: '_blank', rel: getExternalLinkRel(part.href) } : {})} className="font-bold text-brand-purple underline underline-offset-4 hover:text-white">{part.text}</a>
   : <span key={index}>{part.text}</span>)}</span>;
+
+export const ServiceParagraphs = ({ text, offer, language, className = '' }: { text: string; offer: EditorialOffer; language: string; className?: string }) => <div data-service-paragraphs className={`space-y-4 ${className}`}>
+  {splitServiceParagraphs(text).map((paragraph, index) => <p key={index}><ServiceRichText text={paragraph} offer={offer} language={language} /></p>)}
+</div>;
 
 export const ServiceEditorialSections = ({ offer, language }: { offer: EditorialOffer; language: string }) => <>
   {getServiceEditorialSections(offer, language).map(section => {

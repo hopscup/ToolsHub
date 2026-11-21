@@ -97,9 +97,9 @@ export const seoLandingPages = [
       zh: '账号代理对比',
       ko: '계정용 프록시 비교',
     },
-    items: ['MobileProxy', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'ProxyShard', 'Proxys.io'],
+    items: ['MobileProxy', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'ShardX', 'Proxys.io'],
     serviceLinks: {
-      ProxyShard: '/proxy-vpn/proxyshard',
+      ShardX: '/proxy-vpn/proxyshard',
       Proxyline: '/proxy-vpn/proxyline',
       ProxyWing: '/proxy-vpn/proxywing',
       'Proxy-Seller': '/proxy-vpn/proxy-seller',

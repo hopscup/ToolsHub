@@ -112,11 +112,11 @@ export const pageHeadings = {
     "ko": "MobileProxy: IP 변경이 가능한 모바일 프록시"
   },
   "/proxy-vpn/proxyshard": {
-    "ru": "ProxyShard: разные типы прокси в одном сервисе",
-    "en": "ProxyShard: multiple proxy types in one service",
-    "es": "ProxyShard: varios tipos de proxy en un servicio",
-    "zh": "ProxyShard：一个服务中的多种代理类型",
-    "ko": "ProxyShard: 하나의 서비스에서 여러 프록시 유형"
+    "ru": "ShardX (бывший ProxyShard): разные типы прокси в одном сервисе",
+    "en": "ShardX (formerly ProxyShard): multiple proxy types in one service",
+    "es": "ShardX (formerly ProxyShard): multiple proxy types in one service",
+    "zh": "ShardX (formerly ProxyShard): multiple proxy types in one service",
+    "ko": "ShardX (formerly ProxyShard): multiple proxy types in one service"
   },
   "/proxy-vpn/proxy-seller": {
     "ru": "Proxy-Seller: большой выбор прокси и гео",

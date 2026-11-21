@@ -47,7 +47,7 @@ test('YouTube farm keeps the author steps, bold labels and analysis lists', () =
 
 test('YouTube farm checklist keeps the five author items and source order', () => {
   assert.equal(checklist.items.length, 5);
-  assert.deepEqual(checklist.sources.map(source => source.links.map(link => link.text)), [['ShardX', 'Dolphin', 'AdsPower'], ['Proxy-Seller', 'ProxyWing', 'ProxyShard']]);
+  assert.deepEqual(checklist.sources.map(source => source.links.map(link => link.text)), [['ShardX', 'Dolphin', 'AdsPower'], ['Proxy-Seller', 'ProxyWing', 'ShardX']]);
   assert.equal(checklist.sources[0].links[0].href, '/antidetect/shardx');
   assert.equal(checklist.note.map(part => part.text).join(''), 'Промокод hopscup почти везде.');
   assert.equal(checklist.action.href, '/proxy-vpn');

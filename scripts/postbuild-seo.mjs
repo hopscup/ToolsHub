@@ -33,7 +33,7 @@ import { getServiceContextualGuideLinks, getSectionContextualGuideLinks } from '
 import { createGuideRefreshContent } from '../src/data/guideRefreshContent.js';
 import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, serviceCategoryNames, getServiceGuide, plainSeoText, compactSeoTitle, sectionSeoTitles } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
-import { getServiceParagraphs, getServiceSummaryFacts, isServiceMetaDescription } from '../src/data/servicePresentation.js';
+import { getServiceParagraphs, getServiceSummaryFacts, isServiceMetaDescription, splitServiceParagraphs } from '../src/data/servicePresentation.js';
 import { seoLandingPages } from '../src/data/seoLandingPages.js';
 import { smsPages } from '../src/data/smsPages.js';
 import { socialPages } from '../src/data/socialPages.js';
@@ -159,9 +159,9 @@ const sections = [
       zh: ['移动、住宅和 ISP 代理更适合高信任度任务。', 'IPv4/IPv6 通常足够用于采集和简单自动化。', '购买前检查地区、代理类型、支付方式和 fraud score。'],
       ko: ['신뢰가 중요한 작업에는 mobile, residential, ISP 프록시가 더 적합합니다.', '스크래핑과 단순 자동화에는 IPv4/IPv6로 충분한 경우가 많습니다.', '구매 전 GEO, 프록시 유형, 결제 방식, fraud score를 확인하세요.'],
     },
-    items: ['ProxyShard', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'MobileProxy', 'Proxys.io', 'ALL VPN', 'PPL VPN', 'ProstoVPN', 'GIGA VPN', 'Точка G', 'Giga Dollar VPN', 'iMP VPN'],
+    items: ['ShardX', 'Proxyline', 'ProxyWing', 'Proxy-Seller', 'Proxy6', 'MobileProxy', 'Proxys.io', 'ALL VPN', 'PPL VPN', 'ProstoVPN', 'GIGA VPN', 'Точка G', 'Giga Dollar VPN', 'iMP VPN'],
     serviceLinks: {
-      ProxyShard: '/proxy-vpn/proxyshard',
+      ShardX: '/proxy-vpn/proxyshard',
       Proxyline: '/proxy-vpn/proxyline',
       ProxyWing: '/proxy-vpn/proxywing',
       'Proxy-Seller': '/proxy-vpn/proxy-seller',
@@ -1050,36 +1050,36 @@ const servicePages = [
   createServicePage({
     id: 'proxyshard',
     route: '/proxy-vpn/proxyshard',
-    name: 'ProxyShard',
-    logo: '/proxyshard.png',
+    name: 'ShardX',
+    logo: '/shardx-proxy.webp',
     title: {
-      ru: 'ProxyShard: обзор IPv4, ISP, Residential и Mobile прокси | Hopscup Tools',
-      en: 'ProxyShard review: IPv4, ISP, Residential, and Mobile proxies | Hopscup Tools',
-      es: 'ProxyShard: análisis de proxies IPv4, ISP, Residential y Mobile | Hopscup Tools',
-      zh: 'ProxyShard 评测：IPv4、ISP、Residential 与 Mobile 代理 | Hopscup Tools',
-      ko: 'ProxyShard 리뷰: IPv4, ISP, Residential 및 Mobile 프록시 | Hopscup Tools',
+      ru: 'ShardX: обзор IPv4, ISP, Residential и Mobile прокси | Hopscup Tools',
+      en: 'ShardX review: IPv4, ISP, Residential, and Mobile proxies | Hopscup Tools',
+      es: 'ShardX: análisis de proxies IPv4, ISP, Residential y Mobile | Hopscup Tools',
+      zh: 'ShardX 评测：IPv4、ISP、Residential 与 Mobile 代理 | Hopscup Tools',
+      ko: 'ShardX 리뷰: IPv4, ISP, Residential 및 Mobile 프록시 | Hopscup Tools',
     },
     description: {
-      ru: 'Обзор ProxyShard: Residential, ISP, Mobile и Datacenter-прокси, более 100 стран, способы оплаты и выбор типа IP под конкретную задачу.',
-      en: 'ProxyShard review covering Residential, ISP, Mobile, and Datacenter proxies, 100+ countries, payment methods, and choosing the right IP type.',
-      es: 'Análisis de ProxyShard: proxies Residential, ISP, Mobile y Datacenter, más de 100 países, pagos y elección del tipo de IP.',
-      zh: 'ProxyShard 评测：Residential、ISP、Mobile 和 Datacenter 代理，覆盖 100 多个国家、付款方式以及不同任务的 IP 类型选择。',
-      ko: 'ProxyShard 리뷰: Residential, ISP, Mobile, Datacenter 프록시, 100개 이상의 국가, 결제 수단과 작업별 IP 유형 선택.',
+      ru: 'Обзор ShardX: Residential, ISP, Mobile и Datacenter-прокси, более 100 стран, способы оплаты и выбор типа IP под конкретную задачу.',
+      en: 'ShardX review covering Residential, ISP, Mobile, and Datacenter proxies, 100+ countries, payment methods, and choosing the right IP type.',
+      es: 'Análisis de ShardX: proxies Residential, ISP, Mobile y Datacenter, más de 100 países, pagos y elección del tipo de IP.',
+      zh: 'ShardX 评测：Residential、ISP、Mobile 和 Datacenter 代理，覆盖 100 多个国家、付款方式以及不同任务的 IP 类型选择。',
+      ko: 'ShardX 리뷰: Residential, ISP, Mobile, Datacenter 프록시, 100개 이상의 국가, 결제 수단과 작업별 IP 유형 선택.',
     },
     heading: pageHeadings['/proxy-vpn/proxyshard'],
     intro: {
-      ru: 'В ProxyShard есть Residential, Mobile, ISP и Datacenter-прокси. Я бы начал с более дешёвого Datacenter или ISP, а если конкретная площадка принимает его плохо, уже перешёл на Residential или Mobile.',
-      en: 'ProxyShard combines Residential, Mobile, ISP, and Datacenter proxies. It is convenient when projects need different IP sources without changing providers.',
-      es: 'ProxyShard reúne Residential, Mobile, ISP y Datacenter. Es cómodo cuando distintos proyectos necesitan fuentes de IP diferentes.',
-      zh: 'ProxyShard 提供 Residential、Mobile、ISP 和 Datacenter 代理，适合不同项目需要不同 IP 来源但不想更换服务商的情况。',
-      ko: 'ProxyShard는 Residential, Mobile, ISP, Datacenter를 제공합니다. 프로젝트마다 다른 IP가 필요하지만 공급업체를 바꾸고 싶지 않을 때 편리합니다.',
+      ru: 'В ShardX есть Residential, Mobile, ISP и Datacenter-прокси. Я бы начал с более дешёвого Datacenter или ISP, а если конкретная площадка принимает его плохо, уже перешёл на Residential или Mobile.',
+      en: 'ShardX combines Residential, Mobile, ISP, and Datacenter proxies. It is convenient when projects need different IP sources without changing providers.',
+      es: 'ShardX reúne Residential, Mobile, ISP y Datacenter. Es cómodo cuando distintos proyectos necesitan fuentes de IP diferentes.',
+      zh: 'ShardX 提供 Residential、Mobile、ISP 和 Datacenter 代理，适合不同项目需要不同 IP 来源但不想更换服务商的情况。',
+      ko: 'ShardX는 Residential, Mobile, ISP, Datacenter를 제공합니다. 프로젝트마다 다른 IP가 필요하지만 공급업체를 바꾸고 싶지 않을 때 편리합니다.',
     },
     keywords: {
-      ru: 'ProxyShard обзор, ProxyShard прокси, residential прокси, mobile прокси, ISP прокси, datacenter прокси',
-      en: 'ProxyShard review, ProxyShard proxies, residential proxy, mobile proxy, ISP proxy, datacenter proxy',
-      es: 'ProxyShard análisis, proxy residential, proxy móvil, proxy ISP, proxy datacenter',
-      zh: 'ProxyShard 评测, Residential 代理, Mobile 代理, ISP 代理, Datacenter 代理',
-      ko: 'ProxyShard 리뷰, Residential 프록시, Mobile 프록시, ISP 프록시, Datacenter 프록시',
+      ru: 'ShardX обзор, ShardX прокси, residential прокси, mobile прокси, ISP прокси, datacenter прокси',
+      en: 'ShardX review, ShardX proxies, residential proxy, mobile proxy, ISP proxy, datacenter proxy',
+      es: 'ShardX análisis, proxy residential, proxy móvil, proxy ISP, proxy datacenter',
+      zh: 'ShardX 评测, Residential 代理, Mobile 代理, ISP 代理, Datacenter 代理',
+      ko: 'ShardX 리뷰, Residential 프록시, Mobile 프록시, ISP 프록시, Datacenter 프록시',
     },
     points: {
       ru: ['Обычные задачи на Datacenter или ISP.', 'Рекламные кабинеты и сложные задачи на Residential или Mobile.', 'Работа с разными типами прокси через один сервис.'],
@@ -1864,7 +1864,8 @@ const renderServiceContent = (offer, language, metaDescription, introduction) =>
   const facts = getServiceFacts(offer, language.code);
   const vpn = offer.subCategory === 'VPN' ? vpnTerms[offer.slug] : undefined;
   if (vpn) facts.push({ label: ru ? 'Бесплатно' : 'Free trial', value: value(vpn.free) }, { label: ru ? 'Цена' : 'Price', value: value(vpn.price) });
-  const paragraphs = getServiceParagraphs(offer, language.code, metaDescription).filter(text => !getPartnerIntroduction(offer, language.code) || text !== introduction);
+  const introductionParagraphs = splitServiceParagraphs(introduction);
+  const paragraphs = getServiceParagraphs(offer, language.code, metaDescription).filter(text => !getPartnerIntroduction(offer, language.code) || !introductionParagraphs.includes(text));
   const groups = getServiceTextGroups(offer, language.code);
   const alternatives = getServiceAlternatives(offer, OFFERS);
   const guide = getServiceGuide(offer);
@@ -1880,7 +1881,7 @@ const renderServiceContent = (offer, language, metaDescription, introduction) =>
     ${offer.editorial?.setupGuide ? `<p data-setup-guide>${renderLink({ href: `${language.prefix}${offer.editorial.setupGuide.href}`, label: value(offer.editorial.setupGuide.label) })}</p>` : ''}
     ${getServiceContextualGuideLinks(offer).map(item => `<p>${renderLink({ href: `${language.prefix}${item.href}`, label: value(item.label) })}</p>`).join('')}
     ${offer.details?.targetAudience && !isServiceMetaDescription(value(offer.details.targetAudience), metaDescription) ? `<section>${heading(ru ? 'Для кого' : 'Who it is for')}<p>${escapeHtml(value(offer.details.targetAudience))}</p></section>` : ''}
-    ${value(offer.editorial?.verdict) && !isServiceMetaDescription(value(offer.editorial.verdict), metaDescription) ? `<section>${heading(ru ? 'Если коротко' : 'In short')}<p>${richText(value(offer.editorial.verdict))}</p></section>` : ''}
+    ${value(offer.editorial?.verdict) && !isServiceMetaDescription(value(offer.editorial.verdict), metaDescription) ? `<section>${heading(ru ? 'Если коротко' : 'In short')}${splitServiceParagraphs(value(offer.editorial.verdict)).map(text => `<p>${richText(text)}</p>`).join('')}</section>` : ''}
     ${(offer.editorial?.links || []).map(item => `<p>${renderLink({ href: `${language.prefix}${item.href}`, label: value(item.label) })}</p>`).join('')}
     <p data-service-cta>${renderLink({ href: offer.url, label: ru ? 'Перейти на сайт сервиса' : 'Visit the service' })}</p>
     ${offer.webUrl ? `<p>${renderLink({ href: offer.webUrl, label: value(offer.webLabel) || (ru ? 'Сайт сервиса' : 'Service website') })}</p>` : ''}
@@ -1940,7 +1941,7 @@ const renderStaticContent = (section, language, pageLanguage = language) => {
         <header class="fallback-hero">
           ${article ? `<p class="fallback-badge">${escapeHtml(article.badge)}</p>` : ''}
           <h1>${escapeHtml(heroTitle)}</h1>
-          ${section.id === 'ai' || offer?.category === 'AI' || offer && isServiceMetaDescription(heroIntro, getLanguage(section.description, language)) ? '' : `<p>${escapeHtml(heroIntro)}</p>`}
+          ${section.id === 'ai' || offer?.category === 'AI' || offer && isServiceMetaDescription(heroIntro, getLanguage(section.description, language)) ? '' : (offer ? splitServiceParagraphs(heroIntro) : [heroIntro]).map(text => `<p>${escapeHtml(text)}</p>`).join('')}
           ${(section.articleIntroParagraphs || []).map(paragraph => typeof paragraph === 'string' ? `<p>${escapeHtml(paragraph)}</p>` : renderGuideBlocks([{ type: 'paragraph', content: paragraph }])).join('')}
           ${section.articleIntroCallout ? renderGuideBlocks([{ type: 'callout', level: 2, ...section.articleIntroCallout }]) : ''}
           ${section.articleVideo ? `<p>${renderLink({ href: section.articleVideo.url, label: section.articleVideo.caption })}</p>` : ''}

@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { accountShopPages } from '../src/data/accountShopPages.js';
-import { getPartnerIntroduction } from '../src/data/partnerCardRefresh.js';
+import { getPartnerIntroduction, partnerMetadataById } from '../src/data/partnerCardRefresh.js';
 import { aiPages } from '../src/data/aiPages.js';
 import { getServiceEditorialSections } from '../src/data/servicePresentation.js';
 import { a6apiArticle, createA6apiContent } from '../src/data/a6apiContent.js';
@@ -14,7 +14,7 @@ import { isAffiliateUrl } from '../src/lib/externalLinks.js';
 import { legacyIndexedRoutes } from '../src/data/legacyIndexedRoutes.js';
 import { isIndexablePath, indexablePaths, getCanonicalPath, getIndexAlternates, getLanguageSwitchPath, absoluteIndexUrl } from '../src/data/indexPolicy.js';
 import { loadOffers } from './load-offers.mjs';
-import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, plainSeoText } from '../src/data/servicePresentation.js';
+import { getServiceAlternatives, getServiceFacts, getServiceTextGroups, localizedServiceValue, serviceCategoryRoutes, plainSeoText, normalizeServiceText } from '../src/data/servicePresentation.js';
 import { siteDateModified } from '../src/data/buildDate.js';
 import { proxyGuideMeta } from '../src/data/proxyGuideContent.js';
 import { mobileIpGuideMeta } from '../src/data/mobileIpGuideContent.js';
@@ -133,8 +133,8 @@ const checkServiceContent = (html, offer, language, route) => {
   }
   const texts = [getPartnerIntroduction(offer, code) || localizedServiceValue(offer.description, code), localizedServiceValue(offer.details?.descriptionDetailed, code), localizedServiceValue(offer.details?.targetAudience, code), localizedServiceValue(offer.editorial?.description, code), localizedServiceValue(offer.editorial?.verdict, code), ...(offer.promoCode ? [localizedServiceValue(offer.promoDiscount, code)] : []), ...getServiceTextGroups(offer, code).flatMap(group => group.items)].filter(Boolean);
   texts.push(...getServiceEditorialSections(offer, code).flatMap(section => section.items));
-  const visibleContent = content.replace(/<[^>]*>/g, '');
-  for (const text of texts.filter(text => !isMeta(text))) if (!visibleContent.includes(escapeHtml(text))) errors.push(`Missing service text: ${route}: ${text}`);
+  const visibleContent = normalizeServiceText(content.replace(/<\/(?:p|li|h[1-6]|div|section|dd|dt)>/gi, ' ').replace(/<[^>]*>/g, ''));
+  for (const text of texts.filter(text => !isMeta(text))) if (!visibleContent.includes(normalizeServiceText(escapeHtml(text)))) errors.push(`Missing service text: ${route}: ${text}`);
   for (const [, paragraph] of matches(content, /<p\b[^>]*>([\s\S]*?)<\/p>/g)) {
     if (isServiceMetaDescription(paragraph.replace(/<[^>]*>/g, ''), metaDescription)) errors.push(`Service paragraph duplicates meta description: ${route}`);
   }
@@ -443,7 +443,9 @@ for (const language of languages) {
       for (const requiredType of ['WebSite', 'Organization', pageType]) {
         if (!types.includes(requiredType)) errors.push(`Missing ${requiredType} schema: ${localizedRoute}`);
       }
-      if (pageType !== 'Article' && structuredData.find(item => item['@type'] === pageType)?.dateModified !== siteDateModified) errors.push(`Missing build dateModified: ${localizedRoute}`);
+      const fixedServiceDate = pageType === 'WebPage' ? Object.values(partnerMetadataById).find(page => page.route === route)?.dateModified : undefined;
+      const expectedDateModified = fixedServiceDate || siteDateModified;
+      if (pageType !== 'Article' && structuredData.find(item => item['@type'] === pageType)?.dateModified !== expectedDateModified) errors.push(`Wrong dateModified (expected ${expectedDateModified}): ${localizedRoute}`);
       const articleMeta = ({ '/proxy-vpn/luchshie-proksi': proxyGuideMeta, '/proxy-vpn/luchshie-mobilnye-proksi': mobileProxyMeta, '/guides/mobile-ip-airplane-mode': mobileIpGuideMeta, '/guides/kak-nastroit-antidetect-brauzer': antidetectSetupMeta, '/guides/account-farm': accountFarmArticle, '/guides/claude-iz-rossii-bez-bana': claudeGuideArticle })[route];
       if (articleMeta && structuredData.find(item => item['@type'] === 'Article')?.dateModified !== articleMeta.dateModified) errors.push(`Wrong fixed article dateModified: ${localizedRoute}`);
       if (route === '/guides/claude-iz-rossii-bez-bana' && structuredData.find(item => item['@type'] === 'Article')?.datePublished !== claudeGuideArticle.datePublished) errors.push(`Wrong Claude article datePublished: ${localizedRoute}`);

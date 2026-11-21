@@ -11,7 +11,7 @@ export const partnerMetadataById = {
   'ant-shardx': {
     route: '/antidetect/shardx',
     title: enFallback('ShardX: отзыв, бесплатный антидетект без лимита | Hopscup', 'ShardX: free antidetect, unlimited profiles | Hopscup'),
-    description: enFallback('Мой отзыв о ShardX: полностью бесплатный антидетект от команды ProxyShard, профили без лимита, без регистрации. Проверка на утечки, API и MCP, минусы и как начать.', 'My ShardX review: a free antidetect browser from the ProxyShard team, with unlimited profiles and no registration. Leak tests, API and MCP, limitations and setup.'),
+    description: enFallback('Мой отзыв о ShardX: полностью бесплатный антидетект от одноимённого прокси-сервиса, профили без лимита, без регистрации. Проверка на утечки, API и MCP, минусы и как начать.', 'My ShardX review: a free antidetect browser from the proxy service of the same name, with unlimited profiles and no registration. Leak tests, API and MCP, limitations and setup.'),
     dateModified: '2026-11-19',
   },
   'p4': {
@@ -22,8 +22,8 @@ export const partnerMetadataById = {
   },
   'p1': {
     route: '/proxy-vpn/proxyshard',
-    title: enFallback('ProxyShard: отзыв, прокси с UDP и оплата криптой | Hopscup', 'ProxyShard review: UDP proxies and crypto payments | Hopscup'),
-    description: enFallback('Мой отзыв о ProxyShard: IPv4, ISP, резидентские и мобильные прокси от команды антидетекта ShardX. SOCKS5 с UDP, пополнение от 5$, оплата криптой или зарубежной картой.', 'My ProxyShard review: IPv4, ISP, residential and mobile proxies from the ShardX team. SOCKS5 with UDP, a $5 minimum deposit, crypto or foreign-card payments.'),
+    title: enFallback('ShardX (ProxyShard): отзыв, прокси с UDP | Hopscup', 'ShardX (ProxyShard) review: UDP proxies | Hopscup'),
+    description: enFallback('Мой отзыв о ShardX, бывшем ProxyShard: IPv4, ISP, резидентские и мобильные прокси от команды одноимённого бесплатного антидетекта. SOCKS5 с UDP, пополнение от 5$, оплата криптой или зарубежной картой.', 'My review of ShardX, formerly ProxyShard: IPv4, ISP, residential and mobile proxies from the team behind the free antidetect browser of the same name. SOCKS5 with UDP, a $5 minimum deposit, crypto or foreign-card payments.'),
     dateModified: '2026-11-19',
   },
   'zarub': {
@@ -47,7 +47,7 @@ export const darkShoppingMetadata = {
 
 export const partnerEditorialById = {
   'bot-lachuga': {
-    description: l('Несмотря на нейминг автора, Лачуга оказалась очень даже рабочей лошадкой. Это Telegram-магазин с дешёвыми подписками и аккаунтами: Gemini, ChatGPT, Claude, CapCut, Canva и другие сервисы. Покупка идёт прямо через бота, а на часть товаров дают гарантию. Я брал тут и Gemini, и Claude, всё работает.', 'Despite the creator\'s naming choice, Lachuga has proved useful for me. It is a Telegram shop for discounted Gemini, ChatGPT, Claude, CapCut, Canva and other subscriptions and accounts. You buy inside the bot, and some products include a warranty. I have bought both Gemini and Claude here, and they work.'),
+    description: l('Несмотря на нейминг автора, Лачуга оказалась очень даже рабочей лошадкой.\n\nЭто Telegram-магазин с дешёвыми подписками и аккаунтами: Gemini, ChatGPT, Claude, CapCut, Canva и другие сервисы. Покупка идёт прямо через бота, а на часть товаров дают гарантию.\n\nЯ брал тут и Gemini, и Claude, всё работает.', 'Despite the creator\'s naming choice, Lachuga has proved useful for me.\n\nIt is a Telegram shop for discounted Gemini, ChatGPT, Claude, CapCut, Canva and other subscriptions and accounts. You buy inside the bot, and some products include a warranty.\n\nI have bought both Gemini and Claude here, and they work.'),
     capabilities: l([
       'Подписки на нейросети: Gemini, ChatGPT, Claude и другие.',
       'CapCut, Canva и похожие сервисы для контента.',
@@ -105,7 +105,7 @@ export const partnerEditorialById = {
     ],
   },
   'ant-shardx': {
-    description: l('ShardX это полностью бесплатный антидетект от команды ProxyShard. Без лимита профилей, без подписок и даже без регистрации: скачали с GitHub и работаете. Профили хранятся локально на вашем компьютере, можно создавать хоть сотню и настраивать каждый отдельно. Сразу скажу: с разработчиками я лично не знаком, и денег за рекламу мне никто не платил.', 'ShardX is a completely free antidetect browser from the ProxyShard team. There are no profile limits, subscriptions or even registration: download it from GitHub and get started. Profiles stay on your computer, and you can create hundreds with individual settings. To be clear, I do not know the developers personally and nobody paid me to promote it.'),
+    description: l('ShardX это полностью бесплатный антидетект от одноимённого прокси-сервиса ShardX, раньше он назывался ProxyShard.\n\nБез лимита профилей, без подписок и даже без регистрации: скачали с GitHub и работаете. Профили хранятся локально на вашем компьютере, можно создавать хоть сотню и настраивать каждый отдельно.\n\nСразу скажу: с разработчиками я лично не знаком, и денег за рекламу мне никто не платил.', 'ShardX is a completely free antidetect browser from the proxy service of the same name, formerly ProxyShard.\n\nThere are no profile limits, subscriptions or even registration: download it from GitHub and get started. Profiles stay on your computer, and you can create hundreds with individual settings.\n\nTo be clear, I do not know the developers personally and nobody paid me to promote it.'),
     capabilities: l([
       'Любое количество локальных профилей бесплатно, на Windows, Mac и Linux.',
       'Около 170 готовых отпечатков, Auto noise, язык и часовой пояс подстраиваются под прокси автоматически.',
@@ -166,7 +166,7 @@ export const partnerEditorialById = {
     ],
   },
   p4: {
-    description: l('Proxy-Seller один из сервисов, где я беру прокси уже не первый год. Здесь есть всё: от простых датацентровых IPv4 до резидентских и мобильных, и больше 220 стран. Поэтому, когда нужна редкая страна или прокси посерьёзнее, я обычно иду сюда. Особенно понравились их резидентские.', 'Proxy-Seller has been one of my proxy providers for years. It covers everything from basic datacenter IPv4 to residential and mobile proxies in over 220 countries. I usually go here for a less common location or a more demanding task. I have particularly liked its residential proxies.'),
+    description: l('Proxy-Seller один из сервисов, где я беру прокси уже не первый год. Здесь есть всё: от простых датацентровых IPv4 до резидентских и мобильных, и больше 220 стран.\n\nПоэтому, когда нужна редкая страна или прокси посерьёзнее, я обычно иду сюда. Особенно понравились их резидентские.', 'Proxy-Seller has been one of my proxy providers for years. It covers everything from basic datacenter IPv4 to residential and mobile proxies in over 220 countries.\n\nI usually go here for a less common location or a more demanding task. I have particularly liked its residential proxies.'),
     capabilities: l([
       'IPv4, IPv6, ISP, Residential и Mobile в одном кабинете.',
       '220+ стран, можно найти почти любое гео.',
@@ -220,7 +220,7 @@ export const partnerEditorialById = {
     ],
   },
   p1: {
-    description: l('ProxyShard это прокси от той же команды, что делает бесплатный антидетект ShardX. Беру у них датацентровые IPv4 под YouTube наравне с ProxyWing и Proxy-Seller, а ISP под Claude. Главная фишка: SOCKS5 с поддержкой UDP на всех типах прокси, а не только на дорогих.', 'ProxyShard is run by the team behind the free ShardX antidetect browser. I buy its datacenter IPv4 for YouTube alongside ProxyWing and Proxy-Seller, and ISP proxies for Claude. Its standout feature is SOCKS5 with UDP on every proxy type, not just the expensive ones.'),
+    description: l('ShardX, бывший ProxyShard: сервис недавно переименовали, и теперь прокси называются так же, как их бесплатный антидетект.\n\nБеру у них датацентровые IPv4 под YouTube наравне с ProxyWing и Proxy-Seller, а ISP под Claude. Главная фишка: SOCKS5 с поддержкой UDP на всех типах прокси, а не только на дорогих.', 'ShardX, formerly ProxyShard, was recently renamed: its proxies now share a name with the team\'s free antidetect browser.\n\nI buy its datacenter IPv4 for YouTube alongside ProxyWing and Proxy-Seller, and ISP proxies for Claude. Its standout feature is SOCKS5 with UDP on every proxy type, not just the expensive ones.'),
     capabilities: l([
       'IPv4, ISP, Residential и Mobile в одном кабинете.',
       '100+ стран.',
@@ -244,12 +244,12 @@ export const partnerEditorialById = {
     bestFor: l([
       'YouTube-фермам и аккаунтам по схеме 1 аккаунт = 1 прокси = 1 профиль антидетекта.',
       'Claude и другим нейросетям, где нужен чистый айпи: берите ISP.',
-      'Тем, кто уже сидит на ShardX и хочет прокси от той же команды.',
+      'Тем, кто уже сидит на антидетекте ShardX и хочет прокси от той же команды.',
       'Задачам, где нужен UDP: с обычными HTTP-прокси такое не заработает.',
     ], [
       'YouTube and account work using one account, one proxy and one antidetect profile.',
       'Claude and other AI services that need a clean IP: start with ISP.',
-      'ShardX users who want proxies from the same team.',
+      'ShardX antidetect users who want proxies from the same team.',
       'Tasks that need UDP, which regular HTTP proxies cannot handle.',
     ]),
     considerations: l([
@@ -279,7 +279,7 @@ export const partnerEditorialById = {
     ],
   },
   zarub: {
-    description: l('Сам сейчас пользуюсь картой Zarub, она прекрасно оплачивает все мои подписки. Это зарубежная Visa (США), которая выпускается прямо в Telegram без KYC: без паспорта и селфи. Пополняете через СБП рублями или в USDT и сразу платите там, где российские карты не принимают.', 'Zarub is the card I currently use for my subscriptions. It is a US Visa issued inside Telegram without a passport or selfie. Fund it with rubles through SBP or with USDT, then pay at services that do not accept Russian cards.'),
+    description: l('Сам сейчас пользуюсь картой Zarub, она прекрасно оплачивает все мои подписки.\n\nЭто зарубежная Visa (США), которая выпускается прямо в Telegram без KYC: без паспорта и селфи. Пополняете через СБП рублями или в USDT и сразу платите там, где российские карты не принимают.', 'Zarub is the card I currently use for my subscriptions.\n\nIt is a US Visa issued inside Telegram without a passport or selfie. Fund it with rubles through SBP or with USDT, then pay at services that do not accept Russian cards.'),
     capabilities: l([
       'Виртуальная Visa без верификации.',
       'Пополнение через СБП или USDT. Крипту лишний раз не надо выводить на свои основные карты.',
@@ -337,7 +337,7 @@ export const partnerEditorialById = {
     ],
   },
   pgon: {
-    description: l('PGON, или пижон, как я его называю, это кошелёк прямо в Telegram. В нём есть криптобаланс, рубли, оплата по QR и зарубежная Visa. То есть это не просто карта под одну подписку, а несколько полезных функций в одном месте. Мне он удобен тем, что я пользуюсь криптой: не нужно сначала выводить USDT в рубли, а потом снова менять рубли на доллары ради подписки.', 'PGON is a wallet inside Telegram with crypto, rubles, QR payments and a foreign Visa. Rather than just a card for one subscription, it combines several payment tools. Since I use crypto, I can pay without cashing USDT out to rubles and converting it back to dollars for a subscription.'),
+    description: l('PGON, или пижон, как я его называю, это кошелёк прямо в Telegram. В нём есть криптобаланс, рубли, оплата по QR и зарубежная Visa.\n\nТо есть это не просто карта под одну подписку, а несколько полезных функций в одном месте.\n\nМне он удобен тем, что я пользуюсь криптой: не нужно сначала выводить USDT в рубли, а потом снова менять рубли на доллары ради подписки.', 'PGON is a wallet inside Telegram with crypto, rubles, QR payments and a foreign Visa.\n\nRather than just a card for one subscription, it combines several payment tools.\n\nSince I use crypto, I can pay without cashing USDT out to rubles and converting it back to dollars for a subscription.'),
     capabilities: l([
       'Виртуальная Visa: номер, срок и CVV, поддерживает Apple Pay и Google Pay.',
       'Оплата криптой по QR СБП в России: сканируете QR на кассе, сервис сам меняет крипту на рубли.',
@@ -397,7 +397,7 @@ export const partnerEditorialById = {
     ],
   },
   'st-dark': {
-    description: l('DarkShopping это магазин аккаунтов, которым я пользуюсь уже давно. Вместе с FunPay он закрывает примерно 95% моих потребностей. Сюда я иду за рабочими аккаунтами, почтами и расходниками: Gmail, Outlook, Telegram, Discord, Facebook, Instagram и другие позиции под регистрацию, фарм и обычную работу.', 'DarkShopping is one of my regular sources for work accounts and email inboxes. Together with FunPay, it covers about 95% of what I buy. I use it for Gmail, Outlook, Telegram, Discord, Facebook and Instagram accounts for registrations and day-to-day work.'),
+    description: l('DarkShopping это магазин аккаунтов, которым я пользуюсь уже давно. Вместе с FunPay он закрывает примерно 95% моих потребностей.\n\nСюда я иду за рабочими аккаунтами, почтами и расходниками: Gmail, Outlook, Telegram, Discord, Facebook, Instagram и другие позиции под регистрацию, фарм и обычную работу.', 'DarkShopping is one of my regular sources for work accounts and email inboxes. Together with FunPay, it covers about 95% of what I buy.\n\nI use it for Gmail, Outlook, Telegram, Discord, Facebook and Instagram accounts for registrations and day-to-day work.'),
     capabilities: l([
       'Почты: Gmail, Outlook, iCloud, firstmail и другие, в том числе пачками.',
       'Аккаунты соцсетей и мессенджеров: Telegram, Discord, Facebook, Instagram, X и другие.',
@@ -452,7 +452,7 @@ export const partnerEditorialById = {
     ],
   },
   p6: {
-    description: l('Пользуюсь MobileProxy больше трёх лет, отлично подходят для любых задач, и не только для крипты. Это мобильные прокси: айпи настоящих сотовых операторов, к которым у сайтов больше всего доверия. Трафик безлимитный, айпи меняется по кнопке, а гео можно выбрать вплоть до города.', 'I have used MobileProxy for over three years for account work and crypto-related tasks. It provides real mobile-carrier IPs, unlimited traffic, one-click IP rotation and locations down to the city.'),
+    description: l('Пользуюсь MobileProxy больше трёх лет, отлично подходят для любых задач, и не только для крипты.\n\nЭто мобильные прокси: айпи настоящих сотовых операторов, к которым у сайтов больше всего доверия. Трафик безлимитный, айпи меняется по кнопке, а гео можно выбрать вплоть до города.', 'I have used MobileProxy for over three years for account work and crypto-related tasks.\n\nIt provides real mobile-carrier IPs, unlimited traffic, one-click IP rotation and locations down to the city.'),
     capabilities: l([
       'Смена айпи по кнопке раз в 10 секунд, смена гео раз в 10 минут, выбор области и города.',
       'Безлимитный трафик на тарифах.',
@@ -513,7 +513,7 @@ export const partnerEditorialById = {
     ],
   },
   p3: {
-    description: l('С начала 2025 года сижу на прокси от ProxyWing. Перешёл к ним по совету ребят из чата: ISP Германия и Франция работают стабильно, а выходит дешевле, чем у прошлого провайдера. Для YouTube и большинства задач мы с ребятами в 95% случаев берём самые простые датацентровые IPv4, и ProxyWing один из сервисов, где я их покупаю.', 'I have used ProxyWing since early 2025 after a recommendation from our chat. Its German and French ISP proxies have been stable and cheaper than my previous provider. For about 95% of our YouTube and routine account tasks, my friends and I use basic datacenter IPv4, and this is one of my sources.'),
+    description: l('С начала 2025 года сижу на прокси от ProxyWing. Перешёл к ним по совету ребят из чата: ISP Германия и Франция работают стабильно, а выходит дешевле, чем у прошлого провайдера.\n\nДля YouTube и большинства задач мы с ребятами в 95% случаев берём самые простые датацентровые IPv4, и ProxyWing один из сервисов, где я их покупаю.', 'I have used ProxyWing since early 2025 after a recommendation from our chat. Its German and French ISP proxies have been stable and cheaper than my previous provider.\n\nFor about 95% of our YouTube and routine account tasks, my friends and I use basic datacenter IPv4, and this is one of my sources.'),
     capabilities: l([
       'Все типы в одном кабинете: IPv4, ISP, Residential и Mobile.',
       '200+ стран.',

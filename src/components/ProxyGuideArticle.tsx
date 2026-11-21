@@ -347,8 +347,8 @@ export const ProxyGuideArticle = () => {
               src="/article/proxy/proxyshard-issued-proxy.webp"
               width={574}
               height={220}
-              alt="Выдача купленного IPv4 в кабинете ProxyShard"
-              caption="ProxyShard: формат IP:порт:логин:пароль. Чувствительные значения частично скрыты."
+              alt="Выдача купленного IPv4 в кабинете ShardX"
+              caption="ShardX: формат IP:порт:логин:пароль. Чувствительные значения частично скрыты."
             />
             <p className="text-sm font-medium leading-7 text-white/60">
               {proxyCopy.example}

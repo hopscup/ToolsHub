@@ -212,7 +212,7 @@
           "text": ", "
         },
         {
-          "text": "ProxyShard",
+          "text": "ShardX (бывший ProxyShard)",
           "serviceId": "p1"
         },
         {
@@ -613,7 +613,7 @@
             "serviceId": "p3"
           },
           {
-            "text": "ProxyShard",
+            "text": "ShardX",
             "serviceId": "p1"
           }
         ]

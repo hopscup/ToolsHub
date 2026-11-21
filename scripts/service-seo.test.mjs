@@ -83,7 +83,7 @@ test('MobileProxy facts and four partner descriptions use the approved copy', ()
     p6: 'Пользуюсь больше трёх лет. Трафик безлимитный, IP меняется по кнопке раз в 10 секунд, гео можно выбрать вплоть до города. Есть бесплатный тест на 3 часа.',
     p3: 'С начала 2025 сижу на их ISP. Начинать советую с IPv4, а если площадка принимает их плохо, в том же кабинете есть ISP, Residential и Mobile. Оплата картой РФ.',
     p4: 'Больше 220 стран и все основные типы, от IPv4 до Mobile. Беру, когда нужен большой выбор гео или Residential.',
-    p1: 'Сервис от команды бесплатного антидетекта ShardX. SOCKS5 с UDP на всех типах прокси. Пополнение от 5$, оплата криптой или зарубежной картой.',
+    p1: 'ShardX (бывший ProxyShard): сервис от команды одноимённого бесплатного антидетекта. SOCKS5 с UDP на всех типах прокси. Пополнение от 5$, оплата криптой или зарубежной картой.',
   };
   for (const [id, description] of Object.entries(expected)) assert.equal(OFFERS.find(offer => offer.id === id).description.ru, description);
   const mobile = OFFERS.find(offer => offer.id === 'p6');
