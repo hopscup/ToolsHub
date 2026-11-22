@@ -1,0 +1,10 @@
+{
+  "origin": "https://hopscup.tools",
+  "key": "52519850e54d58525d59b8b841ce1c2c",
+  "endpoints": [
+    "https://api.indexnow.org/indexnow",
+    "https://yandex.com/indexnow"
+  ],
+  "maxUrlsPerRequest": 10000,
+  "timeoutMs": 20000
+}

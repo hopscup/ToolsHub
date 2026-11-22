@@ -2,11 +2,12 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import ts from 'typescript';
 import { build } from 'esbuild';
+import { createHash } from 'node:crypto';
 
 // Read only the data dependency graph, never evaluate the React application.
-export const loadOffers = async () => {
-  const file = path.resolve('src/App.tsx');
-  const source = ts.createSourceFile(file, await readFile(file, 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+export const loadOffers = async ({snapshot, extraNames = [], shellSignature = false} = {}) => {
+  const file = path.resolve(snapshot?.root || process.cwd(), 'src/App.tsx');
+  const source = ts.createSourceFile(file, snapshot ? snapshot.read(file) : await readFile(file, 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   const declarations = new Map();
   const imports = new Map();
   for (const statement of source.statements) {
@@ -33,7 +34,8 @@ export const loadOffers = async () => {
     };
     visit(declaration.initializer);
   };
-  for (const name of ['OFFERS', 'CATEGORY_ROUTES', 'OFFER_DESCRIPTION_TRANSLATIONS']) {
+  const exportedNames = ['OFFERS', 'CATEGORY_ROUTES', 'OFFER_DESCRIPTION_TRANSLATIONS', ...extraNames];
+  for (const name of exportedNames) {
     if (!declarations.has(name)) throw Error(`Missing offer data declaration: ${name}`);
     visitName(name);
   }
@@ -51,7 +53,14 @@ export const loadOffers = async () => {
       if (selected.has(declaration.name.text)) lines.push(`const ${printer.printNode(ts.EmitHint.Unspecified, declaration, source)};`);
     }
   }
-  lines.push('export { OFFERS, CATEGORY_ROUTES, OFFER_DESCRIPTION_TRANSLATIONS };');
-  const result = await build({ stdin: { contents: lines.join('\n'), resolveDir: path.dirname(file), loader: 'ts' }, bundle: true, platform: 'node', format: 'esm', write: false, logLevel: 'silent' });
+  lines.push('export { ' + exportedNames.join(', ') + ' };');
+  if (shellSignature) {
+    const shell = source.statements.filter(statement => {
+      if (ts.isImportDeclaration(statement)) return !statement.moduleSpecifier.text.startsWith('./data/');
+      return !ts.isVariableStatement(statement) || statement.declarationList.declarations.some(item => !selected.has(item.name.text));
+    }).map(statement => statement.getText(source)).join('\n');
+    lines.push('export const appShellSignature = ' + JSON.stringify(createHash('sha256').update(shell).digest('hex')) + ';');
+  }
+  const result = await build({ stdin: { contents: lines.join('\n'), resolveDir: path.dirname(file), loader: 'ts' }, plugins: snapshot ? [snapshot.plugin] : [], bundle: true, platform: 'node', format: 'esm', write: false, logLevel: 'silent' });
   return import('data:text/javascript;base64,' + Buffer.from(result.outputFiles[0].text).toString('base64'));
 };
