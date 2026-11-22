@@ -686,7 +686,7 @@ export const partnerEditorialById = {
     ],
   },
   'ant-shardx': {
-    description: l('ShardX это полностью бесплатный антидетект от одноимённого прокси-сервиса ShardX, раньше он назывался ProxyShard.\n\nБез лимита профилей, без подписок и даже без регистрации: скачали с GitHub и работаете. Профили хранятся локально на вашем компьютере, можно создавать хоть сотню и настраивать каждый отдельно.\n\nСразу скажу: с разработчиками я лично не знаком, и денег за рекламу мне никто не платил.', 'ShardX is a completely free antidetect browser from the proxy service of the same name, formerly ProxyShard.\n\nThere are no profile limits, subscriptions or even registration: download it from GitHub and get started. Profiles stay on your computer, and you can create hundreds with individual settings.\n\nTo be clear, I do not know the developers personally and nobody paid me to promote it.'),
+    description: l('ShardX это полностью бесплатный антидетект от одноимённого прокси-сервиса ShardX, раньше он назывался ProxyShard.\n\nБез лимита профилей, без подписок и даже без регистрации: скачали с GitHub и работаете. Профили хранятся локально на вашем компьютере, можно создавать хоть сотню и настраивать каждый отдельно.', 'ShardX is a completely free antidetect browser from the proxy service of the same name, formerly ProxyShard.\n\nThere are no profile limits, subscriptions or even registration: download it from GitHub and get started. Profiles stay on your computer, and you can create hundreds with individual settings.'),
     capabilities: l([
       'Любое количество локальных профилей бесплатно, на Windows, Mac и Linux.',
       'Около 170 готовых отпечатков, Auto noise, язык и часовой пояс подстраиваются под прокси автоматически.',

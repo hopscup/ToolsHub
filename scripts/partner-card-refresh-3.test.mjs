@@ -58,6 +58,14 @@ const approved = source.split(/\n# /).slice(1).map(chunk => {
 const escape = value => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const linksFor = offer => [...offer.editorial.links, ...(offer.editorial.setupGuide ? [offer.editorial.setupGuide] : []), ...getServiceContextualGuideLinks(offer)];
 
+test('ShardX description omits the removed developer and advertising disclaimer in every language', () => {
+  const description = OFFERS.find(offer => offer.id === 'ant-shardx').editorial.description;
+  for (const text of Object.values(description)) {
+    assert.doesNotMatch(text, /Сразу скажу|денег за рекламу|developers personally|paid me to promote/);
+    assert.equal(text.split('\n\n').length, 2);
+  }
+});
+
 test('third partner batch matches all seven Russian fields, SEO and complete link captions in the attachment', () => {
   assert.equal(approved.length, 2);
   for (const page of approved) {
