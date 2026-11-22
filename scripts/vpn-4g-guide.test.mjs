@@ -69,7 +69,7 @@ test('VPN 4G service links and summary resolve six sponsored live offers', async
 
 test('Happ backlinks are limited to qualifying VPN cards and the VPN tab without changing Happ', async () => {
   const linked = OFFERS.filter(offer => [...(offer.editorial?.links || []), ...getServiceContextualGuideLinks(offer)].some(link => link.href === happRoutingGuideLink.href));
-  assert.deepEqual(linked.map(offer => offer.id), ['vpn-all', 'vpn-ppl', 'vpn-imp', 'vpn-quattro', 'vpn-giga', 'vpn-tochka-g', 'vpn-giga-dollar']);
+  assert.deepEqual(linked.map(offer => offer.id), ['vpn-all', 'vpn-ppl', 'vpn-prosto', 'vpn-imp', 'vpn-quattro', 'vpn-giga', 'vpn-tochka-g', 'vpn-giga-dollar']);
   for (const offer of OFFERS.filter(offer => offer.slug && offer.category !== 'Guides')) {
     const qualifies = offer.subCategory === 'VPN' && /\b(?:happ|incy)\b/i.test(JSON.stringify([offer.description, offer.editorial, offer.details]));
     const explicitLink = offer.editorial?.links?.some(link => link.href === happRoutingGuideLink.href);
@@ -83,7 +83,7 @@ test('Happ backlinks are limited to qualifying VPN cards and the VPN tab without
 });
 
 test('VPN 4G static HTML is complete and indexed only in RU', async () => {
-  assert.equal(indexablePaths.length, 92);
+  assert.equal(indexablePaths.length, 93);
   const sitemap = (await Promise.all(['money', 'core', 'services'].map(name => readFile(`dist/sitemap-${name}.xml`, 'utf8')))).join('');
   assert.ok(sitemap.includes(`<loc>https://hopscup.tools${route}</loc>`));
   for (const prefix of ['', '/en', '/es', '/zh', '/ko']) {

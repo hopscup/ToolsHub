@@ -2810,7 +2810,7 @@ const OFFERS: Offer[] = [
       geo: vpnTerms.prostovpn.geo,
       paymentMethods: { ru: 'Банковские карты, СБП', en: 'Bank cards, SBP', es: 'Tarjetas bancarias, SBP', zh: '银行卡、SBP', ko: '은행 카드, SBP' }
     },
-    editorial: ADDITIONAL_PROXY_EDITORIALS.prostovpn,
+    editorial: withPartnerEditorial(ADDITIONAL_PROXY_EDITORIALS.prostovpn, 'vpn-prosto'),
   },
   {
     id: impVpnPage.id,
@@ -2870,7 +2870,7 @@ const OFFERS: Offer[] = [
         ]
       }
     },
-    editorial: ADDITIONAL_PROXY_EDITORIALS['giga-vpn'],
+    editorial: withPartnerEditorial(ADDITIONAL_PROXY_EDITORIALS['giga-vpn'], 'vpn-giga'),
   },
   {
     id: 'vpn-tochka-g',
@@ -2975,7 +2975,7 @@ const OFFERS: Offer[] = [
         ko: ['가속기는 별도 구매이며 활성 VPN 구독이 필요합니다.', '각 활성 구독은 한 번만 일시 정지할 수 있습니다.', '현재 가격과 제공 지역은 봇에서 확인하세요.'],
       },
     },
-    editorial: { ...ADDITIONAL_PROXY_EDITORIALS['giga-dollar-vpn'], ...vpnEditorialAdditions['giga-dollar-vpn'] },
+    editorial: withPartnerEditorial({ ...ADDITIONAL_PROXY_EDITORIALS['giga-dollar-vpn'], ...vpnEditorialAdditions['giga-dollar-vpn'] }, 'vpn-giga-dollar'),
   },
   ...newVpnOffers.filter(offer => offer.id === 'vpn-taynik') as Offer[],
   // ANTIDETECT

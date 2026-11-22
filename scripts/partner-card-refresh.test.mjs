@@ -60,7 +60,7 @@ test('partner capabilities, pricing and numbered getting started use common edit
 });
 
 test('partner card static RU and EN include the author blocks and requested guide links once', async () => {
-  assert.equal(indexablePaths.length, 92);
+  assert.equal(indexablePaths.length, 93);
   for (const [id, snapshot] of Object.entries(expected)) for (const prefix of ['', '/en']) {
     const language = prefix ? 'en' : 'ru';
     const html = await readFile(`dist${prefix}${snapshot.route}/index.html`, 'utf8');

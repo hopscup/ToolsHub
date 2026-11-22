@@ -65,7 +65,7 @@ test('fourth batch preserves tiles, VPN terms, referrals, fallback blocks, all o
     assert.match(getExternalLinkRel(facts.url), /sponsored/);
   }
   assert.deepEqual(vpnTerms, snapshot.vpnTerms);
-  assert.equal(hash(OFFERS.filter(item => !snapshot.facts[item.id])), snapshot.others);
+  assert.equal(hash(OFFERS.filter(item => !snapshot.facts[item.id] && !['vpn-giga-dollar', 'vpn-giga', 'vpn-prosto', 'vpn-quattro', 'vpn-taynik'].includes(item.id))), snapshot.others);
   assert.equal(hash(guidePages.map(page => ({id: page.id, datePublished: page.datePublished, dateModified: page.dateModified}))), snapshot.guideDates);
 });
 

@@ -31,9 +31,9 @@ test('nine partner introductions match the supplied paragraph boundaries exactly
 });
 
 test('paragraph-only changes leave catalogue copy, metadata, verdicts and all other offer data intact',()=>{
- // The separately tested fourth batch changes copy, not just paragraph boundaries.
- const serialized=JSON.stringify(OFFERS.filter(offer=>!['vpn-ppl','vpn-imp','vpn-all','vpn-tochka-g'].includes(offer.id)).map(withoutEditorialParagraphBreaks));
- assert.equal(createHash('sha256').update(serialized).digest('hex'),'365e79f651b64dec51c3b16f0ff3d41fea6f76cf70f59b8f09c11b316fafb57c');
+ // The separately tested fourth and fifth batches change copy, not just paragraph boundaries.
+ const serialized=JSON.stringify(OFFERS.filter(offer=>!['vpn-ppl','vpn-imp','vpn-all','vpn-tochka-g','vpn-giga-dollar','vpn-giga','vpn-prosto','vpn-quattro','vpn-taynik'].includes(offer.id)).map(withoutEditorialParagraphBreaks));
+ assert.equal(createHash('sha256').update(serialized).digest('hex'),'ba0ca772d31a22b94afc2cd7da626490196d86eaaf11e5fe37cc98594e1fd6dd');
  for(const id of ids)assert.ok(!OFFERS.find(offer=>offer.id===id).description.ru.includes('\n\n'),id);
 });
 

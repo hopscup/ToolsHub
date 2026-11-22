@@ -63,37 +63,39 @@ test('new VPN order, facts and sponsored destinations preserve existing bot link
   assert.equal(taynik.details.devices.en, '3 devices');
   assert.equal(taynik.details.paymentMethods.ru, 'Карта РФ, СБП, USDT, Bybit Pay, Telegram Stars');
   assert.equal(taynik.details.paymentMethods.en, 'Russian card, SBP, USDT, Bybit Pay, Telegram Stars');
-  assert.ok(taynik.editorial.capabilities.ru.includes('Приложение: Тайник VPN.'));
+  assert.ok(taynik.editorial.capabilities.ru.some(text => text.includes('своё приложение Тайник VPN')));
   const ppl = offers.find(offer => offer.id === 'vpn-ppl');
   assert.equal(ppl.url, 'https://t.me/VPNPPLBot?start=dXNlcl9pZD00NDMwODM');
   assert.equal(ppl.webUrl, 'https://app.privatepeople.top?partner_id=443083');
 });
 
-test('new VPNs and every translation remain noindex without expanding sitemap', () => {
-  assert.equal(indexablePaths.length, 92);
+test('only approved RU Quattro is indexed while Taynik and all translated VPNs remain noindex', () => {
+  assert.equal(indexablePaths.length, 93);
   for (const page of newVpnPages) for (const prefix of ['', '/en', '/es', '/zh', '/ko']) {
     const route = `${prefix}/proxy-vpn/${page.slug}`;
-    assert.equal(isIndexablePath(route), false);
-    assert.deepEqual(getIndexAlternates(route), []);
-    assert.ok(!indexablePaths.includes(route));
+    const indexed = !prefix && page.id === 'vpn-quattro';
+    assert.equal(isIndexablePath(route), indexed);
+    assert.deepEqual(getIndexAlternates(route), indexed ? [{ language: 'ru', path: route }, { language: 'x-default', path: route }] : []);
+    assert.equal(indexablePaths.includes(route), indexed);
   }
   assert.equal(getLanguageSwitchPath('/proxy-vpn/quattro-vpn', 'en'), '/en/proxy-vpn/quattro-vpn');
 });
 
-test('generated VPN HTML keeps the new services closed and the field present in every language', async () => {
+test('generated VPN HTML opens only RU Quattro and keeps facts present in every language', async () => {
   const sitemaps = (await Promise.all(['money', 'core', 'services'].map(name => readFile(`dist/sitemap-${name}.xml`, 'utf8')))).join('');
   for (const page of newVpnPages) for (const prefix of ['', 'en/', 'es/', 'zh/', 'ko/']) {
     const html = await readFile(`dist/${prefix}proxy-vpn/${page.slug}/index.html`, 'utf8');
-    assert.match(html, /<meta name="robots" content="noindex, follow"/);
-    assert.doesNotMatch(html, /hreflang=/);
+    const indexed = !prefix && page.id === 'vpn-quattro';
+    assert.match(html, indexed ? /<meta name="robots" content="index, follow/ : /<meta name="robots" content="noindex, follow"/);
+    if (!indexed) assert.doesNotMatch(html, /hreflang=/);
     assert.ok(html.includes(page.url.replaceAll('&', '&amp;')));
     assert.ok(html.includes('rel="sponsored noopener noreferrer"'));
     assert.ok(html.includes(prefix ? vpnTerms[page.slug].allowlist.en : vpnTerms[page.slug].allowlist.ru));
     const language = prefix ? 'en' : 'ru';
     assert.ok(html.includes(vpnTerms[page.slug].free[language]));
     assert.ok(html.includes(page.details.paymentMethods[language]));
-    for (const item of page.editorial.capabilities[language]) assert.ok(html.includes(item));
-    assert.ok(!sitemaps.includes(`/proxy-vpn/${page.slug}`));
+    for (const item of OFFERS.find(offer => offer.id === page.id).editorial.capabilities[language]) assert.ok(html.includes(item));
+    assert.equal(sitemaps.includes(`<loc>https://hopscup.tools/${prefix}proxy-vpn/${page.slug}</loc>`), indexed);
   }
   for (const prefix of ['', 'en/']) {
     const html = await readFile(`dist/${prefix}proxy-vpn/index.html`, 'utf8');
@@ -122,9 +124,9 @@ test('Telegram fallbacks and Dollar VPN updates use shared linked editorial sect
   }
   const dollar = OFFERS.find(offer => offer.id === 'vpn-giga-dollar');
   assert.equal(vpnTerms['giga-dollar-vpn'].price.ru, 'от 169 ₽/мес');
-  assert.ok(dollar.editorial.capabilities.ru.some(text => text.includes('https://dollarvpn.shop')));
+  assert.ok(dollar.editorial.capabilities.ru.some(text => text.includes('dollarvpn.shop')));
   assert.ok(dollar.editorial.capabilities.ru.some(text => text.includes('Расширение для Chrome')));
-  assert.ok(dollar.editorial.pricing.ru[0].includes('5 устройств'));
+  assert.ok(dollar.editorial.pricing.ru.some(text => text.includes('5 устройств')));
 });
 
 test('Tochka G keeps its Telegram CTA and adds the free 40 minute secondary link', async () => {

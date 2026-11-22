@@ -1,3 +1,5 @@
+import { withPartnerEditorial } from './partnerCardRefresh.js';
+
 const l = (ru, en) => ({ ru, en, es: en, zh: en, ko: en });
 
 export const newVpnPages = [
@@ -64,6 +66,7 @@ export const newVpnPages = [
 
 export const newVpnOffers = newVpnPages.map(page => ({
   ...page, category: 'Proxy', subCategory: 'VPN', logoUrl: page.logo,
+  editorial: withPartnerEditorial(page.editorial, page.id),
 }));
 
 export const vpnEditorialAdditions = {

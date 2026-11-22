@@ -12,13 +12,13 @@ import { serviceCategoryRoutes } from '../src/data/servicePresentation.js';
 
 const { OFFERS } = await loadOffers();
 
-test('index policy has the approved 60 RU and 13 EN whitelist entries plus RU guides', () => {
-  assert.equal(indexableUrlWhitelist.ru.length, 60);
+test('index policy has the approved 61 RU and 13 EN whitelist entries plus RU guides', () => {
+  assert.equal(indexableUrlWhitelist.ru.length, 61);
   assert.equal(indexableUrlWhitelist.en.length, 13);
-  assert.equal(new Set(Object.values(indexableUrlWhitelist).flat()).size, 73);
-  assert.equal(indexablePaths.filter(path => !path.startsWith('/en')).length, 79);
+  assert.equal(new Set(Object.values(indexableUrlWhitelist).flat()).size, 74);
+  assert.equal(indexablePaths.filter(path => !path.startsWith('/en')).length, 80);
   assert.equal(indexablePaths.filter(path => path.startsWith('/en')).length, 13);
-  assert.equal(new Set(indexablePaths).size, 92);
+  assert.equal(new Set(indexablePaths).size, 93);
   for (const path of indexablePaths) assert.equal(isIndexablePath(path), true);
   for (const guide of guidePages) {
     const route = '/guides/' + guide.slug;
@@ -30,7 +30,7 @@ test('index policy has the approved 60 RU and 13 EN whitelist entries plus RU gu
 test('closed services, sections and landings remain noindex regardless of category', () => {
   for (const offer of OFFERS.filter(offer => offer.category === 'Social' || offer.subCategory === 'VPN')) {
     const category = offer.category === 'Social' ? '/social-boost/' : '/proxy-vpn/';
-    const indexedVpnSlugs = ['prostovpn', 'ppl-vpn', 'imp-vpn', 'all-vpn', 'giga-vpn', 'giga-dollar-vpn', 'tochka-g'];
+    const indexedVpnSlugs = ['prostovpn', 'ppl-vpn', 'imp-vpn', 'all-vpn', 'giga-vpn', 'giga-dollar-vpn', 'tochka-g', 'quattro-vpn'];
     for (const prefix of ['', '/en']) assert.equal(isIndexablePath(prefix + category + offer.slug), offer.subCategory === 'VPN' && prefix === '' && indexedVpnSlugs.includes(offer.slug));
   }
   for (const route of ['/social-boost', '/social-boost/gde-brat-referalov', '/crypto-exchange/aml-proverka', '/guides/akkaunty-ip-gmail-kripta', '/guides/crypto-otc-kyc', '/crypto-exchange/antarctic-wallet', '/crypto-exchange/pgon', '/crypto-exchange/qr2pay', '/steam-topup/antarctic-wallet', '/steam-topup/ggsel', '/en/guides']) assert.equal(isIndexablePath(route), false, route);
@@ -73,8 +73,8 @@ test('language links preserve existing noindex counterparts and fall back only f
   assert.equal(normalizeIndexPath('/proxy-vpn/?x=1#start'), '/proxy-vpn');
 });
 
-test('all seven RU VPN cards are indexed without exposing their EN copies in sitemap or hreflang', () => {
-  for (const slug of ['prostovpn', 'ppl-vpn', 'imp-vpn', 'all-vpn', 'giga-vpn', 'giga-dollar-vpn', 'tochka-g']) {
+test('all eight approved RU VPN cards are indexed without exposing their EN copies in sitemap or hreflang', () => {
+  for (const slug of ['prostovpn', 'ppl-vpn', 'imp-vpn', 'all-vpn', 'giga-vpn', 'giga-dollar-vpn', 'tochka-g', 'quattro-vpn']) {
     const route = '/proxy-vpn/' + slug;
     assert.equal(isIndexablePath(route), true);
     assert.equal(isIndexablePath('/en' + route), false);

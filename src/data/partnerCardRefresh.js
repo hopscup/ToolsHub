@@ -2,6 +2,36 @@ const l = (ru, en) => ({ ru, en });
 const enFallback = (ru, en) => ({ ru, en, es: en, zh: en, ko: en });
 
 export const partnerMetadataById = {
+  'vpn-giga-dollar': {
+    route: '/proxy-vpn/giga-dollar-vpn',
+    title: enFallback('Giga Dollar VPN: обзор, белые списки без лимита | Hopscup', 'Giga Dollar VPN: unlimited allowlist traffic | Hopscup'),
+    description: enFallback('Обзор Giga Dollar VPN: Ускоритель для белых списков без лимита трафика, от 1 до 15 устройств, посуточные тарифы, сайт без Telegram и расширение для браузера. 3 дня бесплатно, от 169 ₽.', 'Giga Dollar VPN overview: an Accelerator with unlimited allowlist traffic, 1-15 devices, daily plans, a website without Telegram and a browser extension. Three free days, from RUB 169.'),
+    dateModified: '2026-11-22',
+  },
+  'vpn-giga': {
+    route: '/proxy-vpn/giga-vpn',
+    title: enFallback('GIGA VPN: обзор, 3 дня бесплатно и белые списки | Hopscup', 'GIGA VPN: 3-day trial and allowlist support | Hopscup'),
+    description: enFallback('Обзор GIGA VPN: VPN в Telegram-боте, 3 дня бесплатно, обход белых списков, подключение через INCY или Happ. Оплата по СБП, картой РФ, криптой или звёздами Telegram, от 149 ₽.', 'GIGA VPN overview: a Telegram VPN with three free days, allowlist support and setup through INCY or Happ. Pay by SBP, Russian card, crypto or Telegram Stars. From RUB 149 a month.'),
+    dateModified: '2026-11-22',
+  },
+  'vpn-prosto': {
+    route: '/proxy-vpn/prostovpn',
+    title: enFallback('ProstoVPN: обзор, белые списки, безлимит устройств | Hopscup', 'ProstoVPN: allowlists and unlimited devices | Hopscup'),
+    description: enFallback('Обзор ProstoVPN: обход белых списков в режиме X100, устройства без лимита, 1000 ГБ трафика в месяц, Smart TV и Linux. 3 дня бесплатно, от 249 ₽, оплата картой или СБП.', 'ProstoVPN overview: X100 allowlist bypass, unlimited devices, 1,000 GB a month, Smart TV and Linux support. Three free days, from RUB 249, with bank-card or SBP payments.'),
+    dateModified: '2026-11-22',
+  },
+  'vpn-quattro': {
+    route: '/proxy-vpn/quattro-vpn',
+    title: enFallback('Quattro VPN: обзор, 500 ГБ на белые списки | Hopscup', 'Quattro VPN: 500 GB for allowlist networks | Hopscup'),
+    description: enFallback('Обзор Quattro VPN: 560 серверов, 500 ГБ LTE-трафика на белые списки, Gemini на всех серверах, до 5 устройств. От 300 ₽ за 30 дней, бесплатного теста нет.', 'Quattro VPN overview: 560 servers, 500 GB of LTE traffic for allowlist networks, Gemini access across servers and up to five devices. From RUB 300 for 30 days, with no free trial.'),
+    dateModified: '2026-11-22',
+  },
+  'vpn-taynik': {
+    route: '/proxy-vpn/taynik-vpn',
+    title: enFallback('Тайник VPN: обзор, 14 дней бесплатно, белые списки | Hopscup', 'Taynik VPN: 14-day trial and allowlist access | Hopscup'),
+    description: enFallback('Обзор Тайник VPN: 14 дней бесплатно, отдельный сервер под белые списки, заточен под Gemini, ChatGPT и Claude. От 199 ₽ в месяц, оплата картой РФ, СБП, USDT или звёздами.', 'Taynik VPN overview: 14 free days, a dedicated allowlist server and a focus on Gemini, ChatGPT and Claude. From RUB 199 a month, paid by Russian card, SBP, USDT or Telegram Stars.'),
+    dateModified: '2026-11-22',
+  },
   'vpn-ppl': {
     route: "/proxy-vpn/ppl-vpn",
     title: enFallback("PPL VPN: отзыв, 3 дня бесплатно, сайт без Telegram | Hopscup", "PPL VPN: 3 free days, pay without Telegram | Hopscup"),
@@ -70,6 +100,299 @@ export const darkShoppingMetadata = {
 };
 
 export const partnerEditorialById = {
+  'vpn-giga-dollar': {
+    description: l('Giga Dollar VPN интересен двумя вещами: Ускорителем для белых списков без ограничений по трафику и гибкими тарифами.\n\nМожно взять VPN хоть на несколько дней, хоть на год, и выбрать от 1 до 15 устройств. А если Telegram не открывается, всё то же самое есть на сайте с входом по почте.', 'Giga Dollar VPN stands out for two things: an Accelerator with unlimited traffic for allowlist networks and flexible plans.\n\nYou can subscribe for a few days or a full year and choose between 1 and 15 devices. If Telegram will not open, the website offers the same features with email sign-in.'),
+    capabilities: l([
+      'Ускоритель для белых списков без лимита трафика, работает на всех устройствах из тарифа.',
+      'Авто-сервер в Happ: приложение само выбирает рабочую страну.',
+      'От 1 до 15 устройств на подписку.',
+      'Сайт dollarvpn.shop полностью дублирует бота, вход по почте.',
+      'Расширение для Chrome, Яндекс Браузера и Edge: через VPN можно пускать только нейросети или только то, что не открывается.',
+      'Подписку можно один раз заморозить.',
+      'База из 50+ инструкций: как настроить Happ и другие приложения и что делать, если VPN подключён, а интернета нет.',
+      'Оплата звёздами Telegram, картой, по СБП или криптой.',
+    ], [
+      'An Accelerator for allowlist networks with no traffic cap, available on every device included in your plan.',
+      'Happ Auto Server automatically selects a working country.',
+      'Between 1 and 15 devices per subscription.',
+      'The dollarvpn.shop website mirrors the bot and supports email sign-in.',
+      'An extension for Chrome, Yandex Browser and Edge: route only AI tools or blocked websites through the VPN.',
+      'You can freeze the subscription once.',
+      'More than 50 guides covering Happ, other clients and troubleshooting a connected VPN with no internet access.',
+      'Telegram Stars, bank-card, SBP and crypto payments.',
+    ]),
+    pricing: l([
+      '3 дня бесплатно на тест.',
+      'От 169 ₽ в месяц за 5 устройств, есть посуточный тариф.',
+      'Скидки до 30% при оплате на год.',
+      'Ускоритель докупается отдельно к активной подписке.',
+    ], [
+      'A three-day free trial.',
+      'From RUB 169 a month for five devices; daily plans are also available.',
+      'Up to 30% off when paying for a year.',
+      'The Accelerator is a separate purchase that requires an active subscription.',
+    ]),
+    bestFor: l([
+      'Тем, у кого на мобильном интернете белые списки и не хватает гигабайт у других VPN.',
+      'Когда VPN нужен на пару дней, например в поездку.',
+      'Семье или большому количеству устройств.',
+      'Тем, кому нужен VPN только в браузере: расширение не трогает банки и маркетплейсы.',
+    ], [
+      'Mobile allowlist restrictions when other VPNs do not include enough traffic.',
+      'A VPN for a few days, such as a short trip.',
+      'Families or users with many devices.',
+      'Browser-only VPN use: the extension leaves banking apps and marketplaces on a direct connection.',
+    ]),
+    considerations: l([
+      'Ускоритель работает только вместе с активной VPN-подпиской и покупается отдельно.',
+      'Заморозка доступна один раз на подписку.',
+      'Список стран и цены периодически меняются, итог смотрите в боте перед оплатой.',
+    ], [
+      'The Accelerator is sold separately and only works with an active VPN subscription.',
+      'You can freeze each subscription once.',
+      'Countries and prices change from time to time. Check the bot before paying.',
+    ]),
+    gettingStarted: l([
+      'Заходите в бота или на сайт и берёте 3 дня бесплатно.',
+      'Вставляете подписку в Happ или INCY и включаете Авто-сервер.',
+      'Проверяете на вайфае и на 4G. Если на улице белые списки, докупаете Ускоритель.',
+    ], [
+      'Open the bot or website and claim the three-day trial.',
+      'Import the subscription into Happ or INCY and enable Auto Server.',
+      'Test on Wi-Fi and 4G. If your mobile connection uses allowlists, purchase the Accelerator.',
+    ]),
+    verdict: l('Один из самых сильных вариантов, если на мобильном интернете белые списки: Ускоритель без лимита по трафику. Плюс гибкие тарифы на дни и до 15 устройств.', 'One of the strongest options for mobile allowlist restrictions, thanks to the Accelerator\'s unlimited traffic. Flexible daily plans and support for up to 15 devices are useful extras.'),
+    links: [
+      { href: '/guides/vpn-ne-rabotaet-na-4g', label: l('Почему VPN не работает на 4G и у каких VPN есть белые списки', 'Why VPN fails on 4G and which VPNs support allowlists') },
+      { href: '/guides/happ-marshrutizaciya', label: l('Как настроить маршрутизацию в Happ, чтобы банки работали с VPN', 'Happ routing: keep banking apps working with VPN enabled') },
+      { href: '/proxy-vpn', label: l('Все VPN с ценами и пробниками', 'All VPNs with prices and trials') },
+    ],
+  },
+  'vpn-giga': {
+    description: l('GIGA VPN это VPN прямо в Telegram-боте, без своего приложения и сложных настроек.\n\nВсё просто: зашли в бота, взяли 3 бесплатных дня, получили подписку и вставили её в INCY или Happ. Есть обход белых списков, а оплатить можно хоть звёздами Telegram.', 'GIGA VPN runs through a Telegram bot, without its own app or complicated setup.\n\nOpen the bot, claim three free days, receive a subscription and import it into INCY or Happ. It supports allowlist bypass, and you can even pay with Telegram Stars.'),
+    capabilities: l([
+      'Подписка и инструкции прямо в Telegram-боте.',
+      'Подключение через INCY или Happ на Windows, macOS, Android и iOS.',
+      'Обход белых списков на мобильном интернете.',
+      'Работают Telegram, Gemini, Polymarket и другие зарубежные сервисы.',
+      'Оплата по СБП (QR), картой РФ, криптой или звёздами Telegram.',
+    ], [
+      'Subscription delivery and instructions inside the Telegram bot.',
+      'Connect through INCY or Happ on Windows, macOS, Android and iOS.',
+      'Allowlist bypass on mobile data.',
+      'Access to Telegram, Gemini, Polymarket and other international services.',
+      'SBP QR, Russian bank-card, crypto and Telegram Stars payments.',
+    ]),
+    pricing: l([
+      '3 дня бесплатно на тест.',
+      'От 149 ₽ в месяц.',
+    ], [
+      'A three-day free trial.',
+      'From RUB 149 a month.',
+    ]),
+    bestFor: l([
+      'Тем, кто хочет сначала бесплатно проверить VPN на своём интернете.',
+      'Тем, кому удобно, когда подписка и инструкция приходят прямо в Telegram.',
+      'Как запасной VPN к основному.',
+    ], [
+      'Testing a VPN on your own connection before paying.',
+      'Users who prefer receiving the subscription and setup instructions in Telegram.',
+      'A backup to your main VPN.',
+    ]),
+    considerations: l([
+      'Своего приложения нет, нужен INCY или Happ. Сам сервис советует INCY как более стабильный.',
+      'Сколько трафика дают на белые списки, проверяйте в боте до оплаты.',
+      'Тарифы и страны иногда меняются, итог смотрите в боте.',
+    ], [
+      'There is no standalone app; use INCY or Happ. The service recommends INCY as the more stable choice.',
+      'Check the bot for the allowlist traffic allowance before paying.',
+      'Plans and countries sometimes change. Confirm the current offer in the bot.',
+    ]),
+    gettingStarted: l([
+      'Заходите в бота по ссылке и берёте 3 дня бесплатно.',
+      'Ставите INCY или Happ и вставляете подписку.',
+      'Проверяете на вайфае и на 4G и, если всё ок, оплачиваете.',
+    ], [
+      'Open the bot through the link and claim three free days.',
+      'Install INCY or Happ and import the subscription.',
+      'Test on Wi-Fi and 4G, then pay if it works for you.',
+    ]),
+    verdict: l('Простой VPN через Telegram с бесплатным тестом и белыми списками. Хорошо подходит как второй VPN, чтобы доступ оставался всегда.', 'A straightforward Telegram VPN with a free trial and allowlist support. A useful second VPN to help keep access available.'),
+    links: [
+      { href: '/guides/vpn-ne-rabotaet-na-4g', label: l('Почему VPN не работает на 4G и что делать', 'Why VPN does not work on 4G and what to do') },
+      { href: '/proxy-vpn', label: l('Все VPN с ценами и пробниками', 'All VPNs with prices and trials') },
+    ],
+  },
+  'vpn-prosto': {
+    description: l('ProstoVPN это VPN из экосистемы Prosto, той же команды, что делает обменник Prosto Exchange.\n\nГлавные фишки: встроенный обход белых списков и никаких ограничений по количеству устройств. Телефон, ноутбук, планшет и телевизор можно подключить на одну подписку.', 'ProstoVPN belongs to the Prosto ecosystem, from the same team as Prosto Exchange.\n\nIts main features are built-in allowlist bypass and no limit on device count. A phone, laptop, tablet and TV can all use one subscription.'),
+    capabilities: l([
+      'Обход белых списков в режиме X100: на белые списки дают больше трафика, чем раньше (было X40).',
+      'Устройства без лимита.',
+      '1000 ГБ трафика в месяц.',
+      'Windows, macOS, Android, iOS, Linux и Smart TV.',
+      'Несколько режимов скорости под разные задачи.',
+    ], [
+      'X100 allowlist bypass mode, with a larger allowance than the previous X40 mode.',
+      'Unlimited devices.',
+      '1,000 GB of traffic a month.',
+      'Windows, macOS, Android, iOS, Linux and Smart TV.',
+      'Several speed modes for different tasks.',
+    ]),
+    pricing: l([
+      '3 дня бесплатно на тест.',
+      'От 249 ₽ в месяц.',
+      'Есть реферальная программа: за друзей дают дни подписки.',
+    ], [
+      'A three-day free trial.',
+      'From RUB 249 a month.',
+      'A referral programme awards subscription days for inviting friends.',
+    ]),
+    bestFor: l([
+      'Большой семье или куче своих устройств, включая телевизор.',
+      'Тем, у кого на мобильном интернете белые списки.',
+      'Тем, кто уже меняет крипту в Prosto Exchange.',
+    ], [
+      'Large families or many personal devices, including a TV.',
+      'Mobile connections restricted by allowlists.',
+      'Users who already exchange crypto through Prosto Exchange.',
+    ]),
+    considerations: l([
+      'Оплата только картой или по СБП, криптой здесь не заплатить.',
+      'Если один режим работает медленно, попробуйте другой: на разных сетях результат отличается.',
+    ], [
+      'Payments are by bank card or SBP only; crypto is not accepted.',
+      'Try another speed mode if one is slow. Performance varies between networks.',
+    ]),
+    gettingStarted: l([
+      'Заходите в бота по ссылке и берёте 3 дня бесплатно.',
+      'Вставляете подписку в Happ или другое приложение по инструкции из бота.',
+      'Проверяете на вайфае и на 4G, в том числе режим X100, и только потом оплачиваете.',
+    ], [
+      'Open the bot through the link and claim three free days.',
+      'Import the subscription into Happ or another client following the bot\'s instructions.',
+      'Test on Wi-Fi and 4G, including X100 mode, before paying.',
+    ]),
+    verdict: l('Лучший вариант, если устройств много: одна подписка без лимита, плюс белые списки и Smart TV. Для большой семьи выходит выгоднее, чем брать несколько VPN.', 'The best fit when you have many devices: one subscription with no device cap, plus allowlist support and Smart TV compatibility. For a large family it can be cheaper than buying several VPN subscriptions.'),
+    links: [
+      { href: '/guides/vpn-ne-rabotaet-na-4g', label: l('Почему VPN не работает на 4G и у каких VPN есть белые списки', 'Why VPN fails on 4G and which VPNs support allowlists') },
+      { href: '/crypto-exchange/prosto-exchange', label: l('Обменник крипты от этой же команды', 'The crypto exchange from the same team') },
+      { href: '/proxy-vpn', label: l('Все VPN с ценами и пробниками', 'All VPNs with prices and trials') },
+    ],
+  },
+  'vpn-quattro': {
+    description: l('Quattro один из самых популярных VPN этой осени: его советуют почти все обзоры и мои знакомые, и отзывы я видел только положительные.\n\nСам ещё не пользовался: бесплатного теста у них нет, и цена повыше. Но по белым спискам тут одно из самых щедрых предложений, 500 ГБ LTE-трафика в месяц.', 'Quattro is one of the most popular VPNs this autumn. It comes up in almost every roundup and in recommendations from people I know, and the reviews I have seen have all been positive.\n\nI have not used it myself: there is no free trial, and it costs more. But its 500 GB monthly LTE allowance is one of the more generous offers for allowlist restrictions.'),
+    capabilities: l([
+      '560 серверов, в том числе LTE под белые списки, есть безлимитные LTE.',
+      '500 ГБ LTE-трафика на 30 дней. Трафик тратится только на LTE-серверах, обычные без лимита.',
+      'Gemini и другие нейросети Google работают на быстрых и LTE-серверах.',
+      'Личный кабинет на сайте: сами собираете подписку по дням, гигабайтам и устройствам.',
+      'Приложения: Happ, Quattro, Clash, Throne. Есть даже для телевизора.',
+      'Оплата картой, по СБП, криптой или звёздами Telegram.',
+    ], [
+      '560 servers, including LTE options for allowlist networks and some unlimited LTE servers.',
+      '500 GB of LTE traffic for 30 days. Only LTE servers use this allowance; regular servers have unlimited traffic.',
+      'Gemini and other Google AI tools work on the fast and LTE servers.',
+      'A website dashboard where you can configure days, data and device count.',
+      'Happ, Quattro, Clash and Throne clients, including TV options.',
+      'Bank-card, SBP, crypto and Telegram Stars payments.',
+    ]),
+    pricing: l([
+      'От 300 ₽ на 30 дней, до 5 устройств.',
+      'Бесплатного теста нет.',
+    ], [
+      'From RUB 300 for 30 days, with up to five devices.',
+      'No free trial.',
+    ]),
+    bestFor: l([
+      'Тем, у кого часто белые списки и другим VPN не хватает трафика.',
+      'Нейросетям, особенно Gemini.',
+      'Тем, кто готов заплатить сразу за проверенный многими сервис.',
+    ], [
+      'Frequent allowlist restrictions when other VPNs do not include enough data.',
+      'AI tools, especially Gemini.',
+      'Users willing to pay upfront for a service tried by many others.',
+    ]),
+    considerations: l([
+      'Сервис прямо пишет, что работа с мобильными операторами не гарантируется, и за это деньги не возвращают.',
+      'Торренты только на серверах с пометкой Torrent. За нарушение и превышение лимита устройств блок без возврата.',
+      'Если на мобильном интернете работают только 1-2 LTE-сервера, включите и выключите авиарежим и проверьте список снова.',
+      'Кнопку «Перевыпустить подписку» без необходимости не жмите: она отключает от подписки все устройства.',
+    ], [
+      'The service explicitly does not guarantee mobile carrier compatibility or offer refunds for it.',
+      'Torrents are allowed only on servers marked Torrent. Breaking the rules or exceeding the device limit can lead to a block without a refund.',
+      'If only one or two LTE servers work on mobile data, toggle airplane mode and check the list again.',
+      'Do not use the reissue-subscription button without a reason: it disconnects every device from the subscription.',
+    ]),
+    gettingStarted: l([
+      'Заходите в бота или на сайт по ссылке.',
+      'Оплачиваете 30 дней и вставляете подписку в Happ.',
+      'Проверяете LTE-серверы на 4G и обычные на вайфае.',
+    ], [
+      'Open the bot or website through the link.',
+      'Pay for 30 days and import the subscription into Happ.',
+      'Test LTE servers on 4G and regular servers on Wi-Fi.',
+    ]),
+    verdict: l('Если готовы заплатить без теста, это сейчас один из самых сильных вариантов под белые списки. Если хочется сначала попробовать бесплатно, начните с iMP или Giga Dollar.', 'If you are willing to pay without a trial, this is currently one of the strongest options for allowlist networks. If you prefer a free test first, start with iMP or Giga Dollar.'),
+    links: [
+      { href: '/guides/vpn-ne-rabotaet-na-4g', label: l('Почему VPN не работает на 4G и у каких VPN есть белые списки', 'Why VPN fails on 4G and which VPNs support allowlists') },
+      { href: '/proxy-vpn/imp-vpn', label: l('VPN с белыми списками и бесплатным тестом', 'A VPN with allowlist support and a free trial') },
+      { href: '/proxy-vpn', label: l('Все VPN с ценами и пробниками', 'All VPNs with prices and trials') },
+    ],
+  },
+  'vpn-taynik': {
+    description: l('Тайник VPN сделал магазин Тайник, тот самый, где продают подписки на нейросети. Запустился в октябре 2026 и заточен как раз под Gemini, Antigravity, ChatGPT и Claude.\n\nГлавный плюс: 14 дней бесплатно, это самый длинный тест среди VPN у меня на сайте. С 16 ноября добавили отдельный сервер под белые списки.', 'Taynik VPN was launched by the Taynik shop that sells AI subscriptions. It started in October 2026 and focuses on Gemini, Antigravity, ChatGPT and Claude.\n\nIts main advantage is 14 free days, the longest VPN trial on my site. A dedicated server for allowlist restrictions was added on November 16.'),
+    capabilities: l([
+      'Отдельный сервер под белые списки на мобильном интернете.',
+      'Нейросети: Gemini, Antigravity, ChatGPT, Claude.',
+      'Смартфон, компьютер и планшет, своё приложение Тайник VPN.',
+      '3 устройства на подписку, можно докупить.',
+      'Оплата картой РФ, по СБП, USDT, Bybit Pay или звёздами Telegram.',
+    ], [
+      'A dedicated server for allowlist restrictions on mobile data.',
+      'AI tools: Gemini, Antigravity, ChatGPT and Claude.',
+      'Smartphones, computers and tablets, with the service\'s own Taynik VPN app.',
+      'Three devices per subscription, with extra devices available to buy.',
+      'Russian bank-card, SBP, USDT, Bybit Pay and Telegram Stars payments.',
+    ]),
+    pricing: l([
+      '14 дней бесплатно.',
+      '199 ₽ в месяц, 3 месяца 499 ₽, 6 месяцев 899 ₽, год 1590 ₽.',
+    ], [
+      'A 14-day free trial.',
+      'RUB 199 for one month, RUB 499 for three months, RUB 899 for six months or RUB 1,590 for a year.',
+    ]),
+    bestFor: l([
+      'Тем, кто хочет спокойно протестировать VPN без денег.',
+      'Нейросетям, особенно Gemini.',
+      'Тем, кто уже покупает подписки в магазине Тайник.',
+    ], [
+      'Taking time to test a VPN without paying.',
+      'AI tools, especially Gemini.',
+      'Users who already buy subscriptions from the Taynik shop.',
+    ]),
+    considerations: l([
+      'Сервис молодой: в начале ноября были перебои, после чего его переделали. Часть стран пока восстанавливается.',
+      'По умолчанию 3 устройства, остальные докупаются.',
+    ], [
+      'The service is new. It had outages in early November and was then reworked; some countries are still being restored.',
+      'Three devices are included by default; additional devices cost extra.',
+    ]),
+    gettingStarted: l([
+      'Заходите в бота по ссылке и включаете 14 бесплатных дней.',
+      'Подключаете смартфон или компьютер по инструкции из бота.',
+      'За две недели проверяете нейросети, вайфай и 4G, и только потом решаете, платить или нет.',
+    ], [
+      'Open the bot through the link and activate 14 free days.',
+      'Connect your phone or computer following the bot\'s instructions.',
+      'Use the two weeks to test AI tools, Wi-Fi and 4G before deciding whether to pay.',
+    ]),
+    verdict: l('Хороший вариант на попробовать: двух бесплатных недель хватит, чтобы понять, работает ли он у вас. Как основной я бы его ставил, когда сервис ещё немного обкатается.', 'A good option to try: two free weeks should tell you whether it works on your connection. I would wait for the service to mature a little before relying on it as my main VPN.'),
+    links: [
+      { href: '/account-shop/taynik', label: l('Магазин Тайник: подписки на нейросети', 'Taynik shop: AI subscriptions') },
+      { href: '/guides/vpn-ne-rabotaet-na-4g', label: l('Почему VPN не работает на 4G и что делать', 'Why VPN does not work on 4G and what to do') },
+      { href: '/proxy-vpn', label: l('Все VPN с ценами и пробниками', 'All VPNs with prices and trials') },
+    ],
+  },
   'vpn-ppl': {
     description: l('PPL VPN мой основной VPN, сижу на нём уже около 8 месяцев, и с компьютера, и с телефона. Нейросети, Spotify, Telegram, YouTube и всё остальное.\n\nПеребои за это время бывали, но максимум часа на два, и всего раза два.\n\nШустрый, YouTube идёт без рекламы, а купить подписку можно даже тогда, когда не открывается вообще ничего.', 'PPL VPN is my main VPN. I have used it on both my computer and phone for around eight months: AI tools, Spotify, Telegram, YouTube and everything else.\n\nThere have been outages, but only a couple, each lasting no more than about two hours.\n\nIt is fast, YouTube plays without ads, and you can buy a subscription even when nothing else will open.'),
     capabilities: l([

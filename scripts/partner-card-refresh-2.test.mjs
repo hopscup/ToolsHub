@@ -22,7 +22,7 @@ const snapshot = {
     "zarub": "cd55b328810de4f5cbca2a2c6db9cc94b892d339227dee60910c7bc1e819c24f",
     "pgon": "e13b10499082976ca2aa6f86c7a3e3076af451747be164408abc54fb60775054"
   },
-  "others": "f09b321c591fce2a02ba16eb8de1d9bee7208e563bf8dceda27915616cb3dd04",
+  "others": "0b3aa1033d59e7a82523d31028ab62161a04c0c498046c1ff2a03b8999652a30",
   "guideDates": "0ed3ebd20646d3e7509e5cd31b3af7bbf43a8dd92a7662f8f6d3e472d4f2cfe9",
   "headings": [
     {
@@ -96,7 +96,7 @@ test('second partner batch preserves every tile field, other offers and all guid
     assert.match(getExternalLinkRel(facts.url), /sponsored/);
   }
   // Later approved batches have their own editorial and tile snapshots.
-  assert.equal(hash(OFFERS.filter(item => !snapshot.facts[item.id] && !['bot-lachuga', 'ant-shardx', 'vpn-ppl', 'vpn-imp', 'vpn-all', 'vpn-tochka-g'].includes(item.id)).map(item => ({id: item.id, hash: hash(withoutEditorialParagraphBreaks(item))}))), snapshot.others);
+  assert.equal(hash(OFFERS.filter(item => !snapshot.facts[item.id] && !['bot-lachuga', 'ant-shardx', 'vpn-ppl', 'vpn-imp', 'vpn-all', 'vpn-tochka-g', 'vpn-giga-dollar', 'vpn-giga', 'vpn-prosto', 'vpn-quattro', 'vpn-taynik'].includes(item.id)).map(item => ({id: item.id, hash: hash(withoutEditorialParagraphBreaks(item))}))), snapshot.others);
   assert.equal(hash(guidePages.map(page => ({id: page.id, datePublished: page.datePublished, dateModified: page.dateModified}))), snapshot.guideDates);
 });
 

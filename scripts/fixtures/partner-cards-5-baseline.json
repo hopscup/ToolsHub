@@ -1,0 +1,343 @@
+{
+  "facts": {
+    "vpn-prosto": "f9d8644f0343c93dbdafe56f9f2a7cf280c34989d3fd2fa0dbef185713859be8",
+    "vpn-quattro": "d90de27e56f4928ce3ae5f592424bd256ebe67ecfe8734feac5915b35f8d8ea2",
+    "vpn-giga": "8b5ea60a9e030c2c5cc37565de3821734696e7713afd8bdb70937b550e3ef369",
+    "vpn-giga-dollar": "9bfe52ff7cb380969379e8ac40f0743707c7275e7efa21b42da908aa8a418429",
+    "vpn-taynik": "ab0469a941a74cc703dc893bed87d02515e98319009767dae3b446ff09b4ad8e"
+  },
+  "preservedEditorial": {
+    "vpn-prosto": {},
+    "vpn-quattro": {},
+    "vpn-giga": {},
+    "vpn-giga-dollar": {
+      "inlineLinks": {
+        "ru": [
+          {
+            "text": "https://dollarvpn.shop",
+            "href": "https://dollarvpn.shop"
+          }
+        ],
+        "en": [
+          {
+            "text": "https://dollarvpn.shop",
+            "href": "https://dollarvpn.shop"
+          }
+        ],
+        "es": [
+          {
+            "text": "https://dollarvpn.shop",
+            "href": "https://dollarvpn.shop"
+          }
+        ],
+        "zh": [
+          {
+            "text": "https://dollarvpn.shop",
+            "href": "https://dollarvpn.shop"
+          }
+        ],
+        "ko": [
+          {
+            "text": "https://dollarvpn.shop",
+            "href": "https://dollarvpn.shop"
+          }
+        ]
+      }
+    },
+    "vpn-taynik": {}
+  },
+  "others": "32563b93f0d187b4a65c55bad2955e59bec6f7fd5d2d3a7b46308418d2751f6e",
+  "guideDates": "0ed3ebd20646d3e7509e5cd31b3af7bbf43a8dd92a7662f8f6d3e472d4f2cfe9",
+  "vpnTerms": {
+    "all-vpn": {
+      "free": {
+        "ru": "3 часа",
+        "en": "3 hours"
+      },
+      "price": {
+        "ru": "от 199 ₽/мес",
+        "en": "from 199 RUB/mo"
+      },
+      "geo": {
+        "ru": "20+",
+        "en": "20+"
+      },
+      "allowlist": {
+        "ru": "50 ГБ в месяц",
+        "en": "50 GB per month"
+      }
+    },
+    "ppl-vpn": {
+      "free": {
+        "ru": "3 дня",
+        "en": "3 days"
+      },
+      "price": {
+        "ru": "от 124 ₽/мес",
+        "en": "from 124 RUB/mo"
+      },
+      "geo": {
+        "ru": "10+",
+        "en": "10+"
+      },
+      "allowlist": {
+        "ru": "Нет",
+        "en": "No"
+      }
+    },
+    "prostovpn": {
+      "free": {
+        "ru": "3 дня",
+        "en": "3 days"
+      },
+      "price": {
+        "ru": "от 249 ₽/мес",
+        "en": "from 249 RUB/mo"
+      },
+      "geo": {
+        "ru": "10+",
+        "en": "10+"
+      },
+      "allowlist": {
+        "ru": "Есть, режим X100",
+        "en": "Yes, X100 mode"
+      }
+    },
+    "giga-vpn": {
+      "free": {
+        "ru": "3 дня",
+        "en": "3 days"
+      },
+      "price": {
+        "ru": "от 149,92 ₽/мес",
+        "en": "from 149.92 RUB/mo"
+      },
+      "geo": {
+        "ru": "10+",
+        "en": "10+"
+      },
+      "allowlist": {
+        "ru": "Есть",
+        "en": "Yes"
+      }
+    },
+    "tochka-g": {
+      "free": {
+        "ru": "2 дня",
+        "en": "2 days"
+      },
+      "price": {
+        "ru": "от 179 ₽/мес",
+        "en": "from 179 RUB/mo"
+      },
+      "geo": {
+        "ru": "10+",
+        "en": "10+"
+      },
+      "allowlist": {
+        "ru": "Тариф G Premium",
+        "en": "G Premium plan"
+      }
+    },
+    "giga-dollar-vpn": {
+      "free": {
+        "ru": "3 дня",
+        "en": "3 days"
+      },
+      "price": {
+        "ru": "от 169 ₽/мес",
+        "en": "from 169 RUB/mo"
+      },
+      "geo": {
+        "ru": "6+",
+        "en": "6+"
+      },
+      "allowlist": {
+        "ru": "Безлимит через Ускоритель",
+        "en": "Unlimited via Accelerator"
+      }
+    },
+    "imp-vpn": {
+      "free": {
+        "ru": "3 дня",
+        "en": "3 days"
+      },
+      "price": {
+        "ru": "от 158 ₽/мес",
+        "en": "from 158 RUB/mo"
+      },
+      "geo": {
+        "ru": "10+",
+        "en": "10+"
+      },
+      "allowlist": {
+        "ru": "50 ГБ в месяц",
+        "en": "50 GB per month"
+      }
+    },
+    "quattro-vpn": {
+      "free": {
+        "ru": "Нет",
+        "en": "No"
+      },
+      "price": {
+        "ru": "от 300 ₽/30 дней",
+        "en": "from 300 RUB/30 days"
+      },
+      "allowlist": {
+        "ru": "500 ГБ в месяц",
+        "en": "500 GB per month"
+      }
+    },
+    "taynik-vpn": {
+      "free": {
+        "ru": "14 дней",
+        "en": "14 days"
+      },
+      "price": {
+        "ru": "от 199 ₽/мес",
+        "en": "from 199 RUB/mo"
+      },
+      "allowlist": {
+        "ru": "Есть, отдельный сервер",
+        "en": "Yes, dedicated server"
+      }
+    }
+  },
+  "indexablePaths": [
+    "/",
+    "/proxy-vpn",
+    "/antidetect",
+    "/account-shop",
+    "/sms-activators",
+    "/foreign-cards",
+    "/ai",
+    "/ai/syntx",
+    "/ai/higgsfield",
+    "/ai/lumean",
+    "/ai/polza-ai",
+    "/ai/omnirouter",
+    "/ai/ghostmetal",
+    "/ai/agentrouter",
+    "/ai/a6api",
+    "/crypto-exchange",
+    "/guides",
+    "/steam-topup",
+    "/vps",
+    "/proxy-vpn/luchshie-proksi",
+    "/proxy-vpn/luchshie-mobilnye-proksi",
+    "/antidetect/kakoy-vybrat",
+    "/proxy-vpn/dlya-akkauntov",
+    "/sms-activators/virtualnye-nomera",
+    "/foreign-cards/oplatit-zarubezhnye-servisy",
+    "/account-shop/podpiski-neyrosetey",
+    "/crypto-exchange/obmen-kripty",
+    "/crypto-exchange/qr-sbp",
+    "/crypto-exchange/koshelki",
+    "/steam-topup/kak-vygodno-popolnit-steam",
+    "/vps/kakoy-vps-vybrat",
+    "/proxy-vpn/mobileproxy",
+    "/proxy-vpn/proxywing",
+    "/proxy-vpn/proxy-seller",
+    "/proxy-vpn/proxyshard",
+    "/proxy-vpn/prostovpn",
+    "/proxy-vpn/ppl-vpn",
+    "/proxy-vpn/imp-vpn",
+    "/proxy-vpn/all-vpn",
+    "/proxy-vpn/giga-vpn",
+    "/proxy-vpn/giga-dollar-vpn",
+    "/proxy-vpn/tochka-g",
+    "/account-shop/darkstore",
+    "/foreign-cards/pgon",
+    "/foreign-cards/zarub",
+    "/foreign-cards/antarctic-wallet",
+    "/crypto-exchange/prosto-exchange",
+    "/crypto-exchange/keine-exchange",
+    "/antidetect/shardx",
+    "/antidetect/dolphin-anty",
+    "/antidetect/adspower",
+    "/antidetect/octo-browser",
+    "/antidetect/linken-sphere",
+    "/antidetect/gologin-mobile",
+    "/antidetect/octo-browser-mobile",
+    "/antidetect/vmos-cloud",
+    "/sms-activators/sms-fast",
+    "/sms-activators/herosms",
+    "/account-shop/lachuga-skamera",
+    "/account-shop/apel0sin",
+    "/en",
+    "/en/proxy-vpn",
+    "/en/antidetect",
+    "/en/account-shop",
+    "/en/sms-activators",
+    "/en/foreign-cards",
+    "/en/proxy-vpn/mobileproxy",
+    "/en/proxy-vpn/proxywing",
+    "/en/proxy-vpn/proxy-seller",
+    "/en/proxy-vpn/proxyshard",
+    "/en/account-shop/darkstore",
+    "/en/foreign-cards/pgon",
+    "/en/foreign-cards/zarub",
+    "/guides/vpn-ne-rabotaet-na-4g",
+    "/guides/happ-marshrutizaciya",
+    "/guides/gpt-image-deshevo-a6api",
+    "/guides/antidetekt-na-telefone",
+    "/guides/deshevye-podpiski-chatgpt-claude-gemini",
+    "/guides/youtube-ferma",
+    "/guides/mnogo-rf-nomerov",
+    "/guides/virtualnyj-nomer-dlya-registracii",
+    "/guides/besplatnye-antidetekt-brauzery",
+    "/guides/shardx-obzor",
+    "/guides/claude-zabanili-kak-sohranit-dannye",
+    "/guides/claude-iz-rossii-bez-bana",
+    "/guides/discord-vhod-po-tokenu",
+    "/guides/zarubezhnaya-karta-s-popolneniem-rublyami",
+    "/guides/mobile-ip-airplane-mode",
+    "/guides/gmail-forwarding",
+    "/guides/account-farm",
+    "/guides/exchange-uids-addresses",
+    "/guides/kak-nastroit-antidetect-brauzer"
+  ],
+  "headings": [
+    {
+      "route": "/proxy-vpn/giga-dollar-vpn",
+      "h1": "Giga Dollar VPN: тарифы по дням и до 15 устройств"
+    },
+    {
+      "route": "/en/proxy-vpn/giga-dollar-vpn",
+      "h1": "Giga Dollar VPN: daily plans and up to 15 devices"
+    },
+    {
+      "route": "/proxy-vpn/giga-vpn",
+      "h1": "GIGA VPN через Telegram для компьютера и телефона"
+    },
+    {
+      "route": "/en/proxy-vpn/giga-vpn",
+      "h1": "GIGA VPN through Telegram for desktop and mobile"
+    },
+    {
+      "route": "/proxy-vpn/prostovpn",
+      "h1": "ProstoVPN для нескольких устройств"
+    },
+    {
+      "route": "/en/proxy-vpn/prostovpn",
+      "h1": "ProstoVPN for multiple devices"
+    },
+    {
+      "route": "/proxy-vpn/quattro-vpn",
+      "h1": "Quattro VPN: 500 ГБ для белых списков"
+    },
+    {
+      "route": "/en/proxy-vpn/quattro-vpn",
+      "h1": "Quattro VPN: 500 GB for allowlist networks"
+    },
+    {
+      "route": "/proxy-vpn/taynik-vpn",
+      "h1": "Тайник VPN: 14 дней бесплатно"
+    },
+    {
+      "route": "/en/proxy-vpn/taynik-vpn",
+      "h1": "Taynik VPN: 14 days free"
+    }
+  ]
+}

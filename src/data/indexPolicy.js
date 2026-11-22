@@ -25,6 +25,7 @@ export const indexableUrlWhitelist = {
     '/proxy-vpn/mobileproxy', '/proxy-vpn/proxywing', '/proxy-vpn/proxy-seller', '/proxy-vpn/proxyshard',
     '/proxy-vpn/prostovpn', '/proxy-vpn/ppl-vpn', '/proxy-vpn/imp-vpn', '/proxy-vpn/all-vpn',
     '/proxy-vpn/giga-vpn', '/proxy-vpn/giga-dollar-vpn', '/proxy-vpn/tochka-g',
+    '/proxy-vpn/quattro-vpn',
     '/account-shop/darkstore', '/foreign-cards/pgon', '/foreign-cards/zarub', '/foreign-cards/antarctic-wallet',
     '/crypto-exchange/prosto-exchange', '/crypto-exchange/keine-exchange', '/antidetect/shardx',
     '/antidetect/dolphin-anty', '/antidetect/adspower', '/antidetect/octo-browser',

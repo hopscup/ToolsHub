@@ -38,7 +38,7 @@ test('rebrand leaves all remaining author sections and the antidetect GitHub lin
  assert.ok(antidetect.editorial.description.ru.startsWith('ShardX это полностью бесплатный антидетект от одноимённого прокси-сервиса ShardX, раньше он назывался ProxyShard.'));
  for(const offer of [proxy,antidetect])assert.equal(offer.editorial.dateModified,'2026-11-19');
  assert.equal(hash(guidePages.map(page=>({id:page.id,datePublished:page.datePublished,dateModified:page.dateModified}))),'0ed3ebd20646d3e7509e5cd31b3af7bbf43a8dd92a7662f8f6d3e472d4f2cfe9');
- assert.equal(indexablePaths.length,92);
+ assert.equal(indexablePaths.length,93);
 });
 test('every guide introduces the proxy former name once and preserves later short mentions',async()=>{
  for(const route of ['/guides/account-farm','/guides/besplatnye-antidetekt-brauzery','/guides/shardx-obzor','/guides/virtualnyj-nomer-dlya-registracii','/guides/youtube-ferma','/guides/claude-iz-rossii-bez-bana','/guides/kak-nastroit-antidetect-brauzer','/proxy-vpn/luchshie-proksi']){
