@@ -12,6 +12,41 @@ const { OFFERS } = await loadOffers();
 const { article, checklist } = createMobileAntidetectContent(OFFERS);
 const all = value => Array.isArray(value) ? value.flatMap(all) : value && typeof value === 'object' ? [value, ...Object.values(value).flatMap(all)] : [];
 
+const approvedParagraphGroups = [
+  [
+    "Если встроенной функции нет, есть приложения вроде Parallel Space, Dual Space, Super Clone и App Cloner. Root-права для них обычно не нужны.",
+    "Но у сторонних клонеров периодически начинаются приколы: приложение вылетает, ломается загрузка файлов, возникают проблемы с Google Play Services, а после обновления оригинального приложения клон перестаёт запускаться.",
+    "Поэтому сначала всегда пробуйте встроенное клонирование."
+  ],
+  [
+    "По факту вы получите настоящие отдельные устройства: своё железо, свои данные, настоящие датчики и камеру, отдельные Google-сервисы и возможность поставить сим-карту. И никаких ежемесячных подписок.",
+    "Минус один: дешёвые телефоны могут не тянуть новые версии приложений.",
+    "Но если аккаунтов немного и они должны жить долго, физические Android могут выйти выгоднее подписок. А когда попользовались, можно продать там же."
+  ]
+];
+
+test('mobile antidetect splits the two approved paragraphs without changing words or dates', () => {
+  for (const [index, expected] of approvedParagraphGroups.entries()) {
+    const start = article.blocks.findIndex(block => block.type === 'paragraph' && block.content[0]?.text === expected[0]);
+    assert.ok(start >= 0);
+    assert.deepEqual(article.blocks.slice(start, start + expected.length).map(block => block.content), expected.map(text => [{text}]));
+    assert.equal(expected.join(' ').length, [416, 415][index]);
+  }
+  assert.equal(article.dateModified, '2026-11-12');
+});
+
+test('the six approved paragraphs render separately in static RU and closed language copies', async () => {
+  for (const prefix of ['', '/en', '/es', '/zh', '/ko']) {
+    const html = await readFile('dist' + prefix + '/guides/antidetekt-na-telefone/index.html', 'utf8');
+    const body = html.match(/<noscript>([\s\S]*?)<\/noscript>/)[1];
+    for (const group of approvedParagraphGroups) for (const text of group) {
+      assert.equal(body.split('<p>' + text + '</p>').length - 1, 1, prefix + ': ' + text);
+    }
+    const schemas = [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].flatMap(match => JSON.parse(match[1]));
+    assert.equal(schemas.find(schema => schema['@type'] === 'Article').dateModified, '2026-11-12');
+  }
+});
+
 test('only the six requested mobile service cards link to the mobile guide', () => {
   const ids = ['ant-gologin-mobile', 'ant-octo-mobile', 'ant-vmos-cloud', 'ant-duoplus', 'ant-geelark', 'ant-morelogin-mobile'];
   assert.deepEqual(OFFERS.filter(offer => getServiceGuide(offer).href === '/guides/antidetekt-na-telefone').map(offer => offer.id).sort(), [...ids].sort());

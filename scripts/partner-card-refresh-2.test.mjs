@@ -22,7 +22,7 @@ const snapshot = {
     "zarub": "cd55b328810de4f5cbca2a2c6db9cc94b892d339227dee60910c7bc1e819c24f",
     "pgon": "e13b10499082976ca2aa6f86c7a3e3076af451747be164408abc54fb60775054"
   },
-  "others": "a72987ba2b069078398c0d5fd23a5de3489834c62c2ea5082e2768f8db4d6134",
+  "others": "f09b321c591fce2a02ba16eb8de1d9bee7208e563bf8dceda27915616cb3dd04",
   "guideDates": "0ed3ebd20646d3e7509e5cd31b3af7bbf43a8dd92a7662f8f6d3e472d4f2cfe9",
   "headings": [
     {
@@ -95,8 +95,8 @@ test('second partner batch preserves every tile field, other offers and all guid
     assert.equal(hash(facts), expected, id);
     assert.match(getExternalLinkRel(facts.url), /sponsored/);
   }
-  // The third approved batch has its own editorial and tile snapshots.
-  assert.equal(hash(OFFERS.filter(item => !snapshot.facts[item.id] && !['bot-lachuga', 'ant-shardx'].includes(item.id)).map(item => ({id: item.id, hash: hash(withoutEditorialParagraphBreaks(item))}))), snapshot.others);
+  // Later approved batches have their own editorial and tile snapshots.
+  assert.equal(hash(OFFERS.filter(item => !snapshot.facts[item.id] && !['bot-lachuga', 'ant-shardx', 'vpn-ppl', 'vpn-imp', 'vpn-all', 'vpn-tochka-g'].includes(item.id)).map(item => ({id: item.id, hash: hash(withoutEditorialParagraphBreaks(item))}))), snapshot.others);
   assert.equal(hash(guidePages.map(page => ({id: page.id, datePublished: page.datePublished, dateModified: page.dateModified}))), snapshot.guideDates);
 });
 

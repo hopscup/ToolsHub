@@ -68,11 +68,12 @@ test('VPN 4G service links and summary resolve six sponsored live offers', async
 });
 
 test('Happ backlinks are limited to qualifying VPN cards and the VPN tab without changing Happ', async () => {
-  const linked = OFFERS.filter(offer => getServiceContextualGuideLinks(offer).some(link => link.href === happRoutingGuideLink.href));
-  assert.deepEqual(linked.map(offer => offer.id), ['vpn-all', 'vpn-quattro', 'vpn-giga', 'vpn-tochka-g', 'vpn-giga-dollar']);
+  const linked = OFFERS.filter(offer => [...(offer.editorial?.links || []), ...getServiceContextualGuideLinks(offer)].some(link => link.href === happRoutingGuideLink.href));
+  assert.deepEqual(linked.map(offer => offer.id), ['vpn-all', 'vpn-ppl', 'vpn-imp', 'vpn-quattro', 'vpn-giga', 'vpn-tochka-g', 'vpn-giga-dollar']);
   for (const offer of OFFERS.filter(offer => offer.slug && offer.category !== 'Guides')) {
     const qualifies = offer.subCategory === 'VPN' && /\b(?:happ|incy)\b/i.test(JSON.stringify([offer.description, offer.editorial, offer.details]));
-    assert.equal(getServiceContextualGuideLinks(offer).some(link => link.href === happRoutingGuideLink.href), qualifies);
+    const explicitLink = offer.editorial?.links?.some(link => link.href === happRoutingGuideLink.href);
+    assert.equal(getServiceContextualGuideLinks(offer).some(link => link.href === happRoutingGuideLink.href), qualifies && !explicitLink);
   }
   assert.deepEqual(getSectionContextualGuideLinks('/proxy-vpn', 'VPN'), [happRoutingGuideLink, vpn4gGuideLink]);
   assert.deepEqual(getSectionContextualGuideLinks('/proxy-vpn', 'Proxy'), []);

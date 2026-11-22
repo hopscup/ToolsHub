@@ -1,0 +1,346 @@
+{
+  "facts": {
+    "vpn-all": "ecd0b87bb6ee036b2084078d21b0a8b0148d16d2ebff2e72df7fdb42f3175d69",
+    "vpn-ppl": "38eb43832c0f47dbe28d75c54e8794f66ee6673658e1397e0c8bfc2e23fea92f",
+    "vpn-imp": "485c5dd732dbfa4799843c967e14c347d6dc4e67d1d439ac99bd87d0df722f45",
+    "vpn-tochka-g": "c699c7df0532da0438b2af43d4a9908219dbd9751c57bb28baa6089c702f5eee"
+  },
+  "preservedEditorial": {
+    "vpn-all": {},
+    "vpn-ppl": {
+      "telegramFallback": {
+        "ru": [
+          "Купить или продлить подписку без Telegram можно на сайте https://app.privatepeople.top. Бесплатный прокси для Telegram: https://proxytg.top."
+        ],
+        "en": [
+          "Buy or renew a subscription without Telegram at https://app.privatepeople.top. Free Telegram proxy: https://proxytg.top."
+        ],
+        "es": [
+          "Buy or renew a subscription without Telegram at https://app.privatepeople.top. Free Telegram proxy: https://proxytg.top."
+        ],
+        "zh": [
+          "Buy or renew a subscription without Telegram at https://app.privatepeople.top. Free Telegram proxy: https://proxytg.top."
+        ],
+        "ko": [
+          "Buy or renew a subscription without Telegram at https://app.privatepeople.top. Free Telegram proxy: https://proxytg.top."
+        ]
+      },
+      "inlineLinks": {
+        "ru": [
+          {
+            "text": "https://app.privatepeople.top",
+            "href": "https://app.privatepeople.top?partner_id=443083"
+          },
+          {
+            "text": "https://proxytg.top",
+            "href": "https://proxytg.top"
+          }
+        ],
+        "en": [
+          {
+            "text": "https://app.privatepeople.top",
+            "href": "https://app.privatepeople.top?partner_id=443083"
+          },
+          {
+            "text": "https://proxytg.top",
+            "href": "https://proxytg.top"
+          }
+        ],
+        "es": [
+          {
+            "text": "https://app.privatepeople.top",
+            "href": "https://app.privatepeople.top?partner_id=443083"
+          },
+          {
+            "text": "https://proxytg.top",
+            "href": "https://proxytg.top"
+          }
+        ],
+        "zh": [
+          {
+            "text": "https://app.privatepeople.top",
+            "href": "https://app.privatepeople.top?partner_id=443083"
+          },
+          {
+            "text": "https://proxytg.top",
+            "href": "https://proxytg.top"
+          }
+        ],
+        "ko": [
+          {
+            "text": "https://app.privatepeople.top",
+            "href": "https://app.privatepeople.top?partner_id=443083"
+          },
+          {
+            "text": "https://proxytg.top",
+            "href": "https://proxytg.top"
+          }
+        ]
+      }
+    },
+    "vpn-imp": {},
+    "vpn-tochka-g": {
+      "telegramFallback": {
+        "ru": [
+          "Чтобы зайти в бота и оплатить конфиг, когда Telegram не открывается: ссылка https://access.gotam.pro ставит временный прокси в Telegram. После установки конфига этот прокси лучше удалить: Настройки, Данные и память, Прокси. Ещё вариант: сайт https://tochkag.online выдаёт временную ссылку для Happ."
+        ],
+        "en": [
+          "To open the bot and pay for a config when Telegram is unavailable, https://access.gotam.pro installs a temporary Telegram proxy. After installing the VPN config, remove the proxy in Settings, Data and Storage, Proxy. Alternatively, https://tochkag.online provides a temporary Happ link."
+        ],
+        "es": [
+          "To open the bot and pay for a config when Telegram is unavailable, https://access.gotam.pro installs a temporary Telegram proxy. After installing the VPN config, remove the proxy in Settings, Data and Storage, Proxy. Alternatively, https://tochkag.online provides a temporary Happ link."
+        ],
+        "zh": [
+          "To open the bot and pay for a config when Telegram is unavailable, https://access.gotam.pro installs a temporary Telegram proxy. After installing the VPN config, remove the proxy in Settings, Data and Storage, Proxy. Alternatively, https://tochkag.online provides a temporary Happ link."
+        ],
+        "ko": [
+          "To open the bot and pay for a config when Telegram is unavailable, https://access.gotam.pro installs a temporary Telegram proxy. After installing the VPN config, remove the proxy in Settings, Data and Storage, Proxy. Alternatively, https://tochkag.online provides a temporary Happ link."
+        ]
+      },
+      "inlineLinks": {
+        "ru": [
+          {
+            "text": "https://access.gotam.pro",
+            "href": "https://access.gotam.pro"
+          },
+          {
+            "text": "https://tochkag.online",
+            "href": "https://tochkag.online"
+          }
+        ],
+        "en": [
+          {
+            "text": "https://access.gotam.pro",
+            "href": "https://access.gotam.pro"
+          },
+          {
+            "text": "https://tochkag.online",
+            "href": "https://tochkag.online"
+          }
+        ],
+        "es": [
+          {
+            "text": "https://access.gotam.pro",
+            "href": "https://access.gotam.pro"
+          },
+          {
+            "text": "https://tochkag.online",
+            "href": "https://tochkag.online"
+          }
+        ],
+        "zh": [
+          {
+            "text": "https://access.gotam.pro",
+            "href": "https://access.gotam.pro"
+          },
+          {
+            "text": "https://tochkag.online",
+            "href": "https://tochkag.online"
+          }
+        ],
+        "ko": [
+          {
+            "text": "https://access.gotam.pro",
+            "href": "https://access.gotam.pro"
+          },
+          {
+            "text": "https://tochkag.online",
+            "href": "https://tochkag.online"
+          }
+        ]
+      }
+    }
+  },
+  "others": "6631bbc9e449f4dda2c75709cf2efca10a73e62ef1aad55426f93bf84011f52d",
+  "guideDates": "0ed3ebd20646d3e7509e5cd31b3af7bbf43a8dd92a7662f8f6d3e472d4f2cfe9",
+  "vpnTerms": {
+    "all-vpn": {
+      "free": {
+        "ru": "3 часа",
+        "en": "3 hours"
+      },
+      "price": {
+        "ru": "от 199 ₽/мес",
+        "en": "from 199 RUB/mo"
+      },
+      "geo": {
+        "ru": "20+",
+        "en": "20+"
+      },
+      "allowlist": {
+        "ru": "50 ГБ в месяц",
+        "en": "50 GB per month"
+      }
+    },
+    "ppl-vpn": {
+      "free": {
+        "ru": "3 дня",
+        "en": "3 days"
+      },
+      "price": {
+        "ru": "от 124 ₽/мес",
+        "en": "from 124 RUB/mo"
+      },
+      "geo": {
+        "ru": "10+",
+        "en": "10+"
+      },
+      "allowlist": {
+        "ru": "Нет",
+        "en": "No"
+      }
+    },
+    "prostovpn": {
+      "free": {
+        "ru": "3 дня",
+        "en": "3 days"
+      },
+      "price": {
+        "ru": "от 249 ₽/мес",
+        "en": "from 249 RUB/mo"
+      },
+      "geo": {
+        "ru": "10+",
+        "en": "10+"
+      },
+      "allowlist": {
+        "ru": "Есть, режим X100",
+        "en": "Yes, X100 mode"
+      }
+    },
+    "giga-vpn": {
+      "free": {
+        "ru": "3 дня",
+        "en": "3 days"
+      },
+      "price": {
+        "ru": "от 149,92 ₽/мес",
+        "en": "from 149.92 RUB/mo"
+      },
+      "geo": {
+        "ru": "10+",
+        "en": "10+"
+      },
+      "allowlist": {
+        "ru": "Есть",
+        "en": "Yes"
+      }
+    },
+    "tochka-g": {
+      "free": {
+        "ru": "2 дня",
+        "en": "2 days"
+      },
+      "price": {
+        "ru": "от 179 ₽/мес",
+        "en": "from 179 RUB/mo"
+      },
+      "geo": {
+        "ru": "10+",
+        "en": "10+"
+      },
+      "allowlist": {
+        "ru": "Тариф G Premium",
+        "en": "G Premium plan"
+      }
+    },
+    "giga-dollar-vpn": {
+      "free": {
+        "ru": "3 дня",
+        "en": "3 days"
+      },
+      "price": {
+        "ru": "от 169 ₽/мес",
+        "en": "from 169 RUB/mo"
+      },
+      "geo": {
+        "ru": "6+",
+        "en": "6+"
+      },
+      "allowlist": {
+        "ru": "Безлимит через Ускоритель",
+        "en": "Unlimited via Accelerator"
+      }
+    },
+    "imp-vpn": {
+      "free": {
+        "ru": "3 дня",
+        "en": "3 days"
+      },
+      "price": {
+        "ru": "от 158 ₽/мес",
+        "en": "from 158 RUB/mo"
+      },
+      "geo": {
+        "ru": "10+",
+        "en": "10+"
+      },
+      "allowlist": {
+        "ru": "50 ГБ в месяц",
+        "en": "50 GB per month"
+      }
+    },
+    "quattro-vpn": {
+      "free": {
+        "ru": "Нет",
+        "en": "No"
+      },
+      "price": {
+        "ru": "от 300 ₽/30 дней",
+        "en": "from 300 RUB/30 days"
+      },
+      "allowlist": {
+        "ru": "500 ГБ в месяц",
+        "en": "500 GB per month"
+      }
+    },
+    "taynik-vpn": {
+      "free": {
+        "ru": "14 дней",
+        "en": "14 days"
+      },
+      "price": {
+        "ru": "от 199 ₽/мес",
+        "en": "from 199 RUB/mo"
+      },
+      "allowlist": {
+        "ru": "Есть, отдельный сервер",
+        "en": "Yes, dedicated server"
+      }
+    }
+  },
+  "headings": [
+    {
+      "route": "/proxy-vpn/ppl-vpn",
+      "h1": "PPL VPN для повседневного использования"
+    },
+    {
+      "route": "/en/proxy-vpn/ppl-vpn",
+      "h1": "PPL VPN for everyday use"
+    },
+    {
+      "route": "/proxy-vpn/imp-vpn",
+      "h1": "iMP VPN: VPN через Telegram на 5 устройств"
+    },
+    {
+      "route": "/en/proxy-vpn/imp-vpn",
+      "h1": "iMP VPN: Telegram VPN for 5 devices"
+    },
+    {
+      "route": "/proxy-vpn/all-vpn",
+      "h1": "ALL VPN: несколько VPN в одной подписке"
+    },
+    {
+      "route": "/en/proxy-vpn/all-vpn",
+      "h1": "ALL VPN: multiple VPN connections in one subscription"
+    },
+    {
+      "route": "/proxy-vpn/tochka-g",
+      "h1": "Точка G: VPN-конфиги и прокси для Telegram"
+    },
+    {
+      "route": "/en/proxy-vpn/tochka-g",
+      "h1": "Tochka G: VPN configs and Telegram proxy"
+    }
+  ]
+}

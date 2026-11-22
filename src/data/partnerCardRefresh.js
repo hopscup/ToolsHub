@@ -2,6 +2,30 @@ const l = (ru, en) => ({ ru, en });
 const enFallback = (ru, en) => ({ ru, en, es: en, zh: en, ko: en });
 
 export const partnerMetadataById = {
+  'vpn-ppl': {
+    route: "/proxy-vpn/ppl-vpn",
+    title: enFallback("PPL VPN: отзыв, 3 дня бесплатно, сайт без Telegram | Hopscup", "PPL VPN: 3 free days, pay without Telegram | Hopscup"),
+    description: enFallback("Мой отзыв о PPL VPN: пользуюсь около 8 месяцев на ПК и телефоне. 3 дня бесплатно, от 124 ₽ в месяц, сайт для оплаты без Telegram и VPN, приложения для всех систем.", "My PPL VPN review after around eight months on desktop and phone. Three free days, plans from RUB 124 a month, payment on a website without Telegram, and clients for all major systems."),
+    dateModified: '2026-11-22',
+  },
+  'vpn-imp': {
+    route: "/proxy-vpn/imp-vpn",
+    title: enFallback("iMP VPN: отзыв, 3 дня бесплатно и белые списки | Hopscup", "iMP VPN review: 3 free days and mobile allowlists | Hopscup"),
+    description: enFallback("Мой отзыв о iMP VPN: пользуюсь как запасным на ПК и телефоне. 3 дня бесплатно, до 5 устройств, безлимитный трафик и 50 ГБ на белые списки, российские сайты работают без отключения VPN.", "My iMP VPN review: a backup on desktop and phone, with three free days, up to five devices, unlimited regular traffic and 50 GB for allowlist networks. Russian sites work without disconnecting."),
+    dateModified: '2026-11-22',
+  },
+  'vpn-all': {
+    route: "/proxy-vpn/all-vpn",
+    title: enFallback("ALL VPN: обзор, 50+ VPN в одной подписке | Hopscup", "ALL VPN: 50+ VPNs in one subscription | Hopscup"),
+    description: enFallback("Обзор ALL VPN: больше 50 разных VPN в одной подписке, переключение прямо в Happ, 50 ГБ на белые списки. 3 часа бесплатно, от 199 ₽ в месяц, оплата по СБП, картой, звёздами или криптой.", "ALL VPN combines more than 50 VPN services in one subscription, with switching inside Happ and 50 GB for allowlist networks. Three free hours, from RUB 199 a month, and SBP, card, Stars or crypto payments."),
+    dateModified: '2026-11-22',
+  },
+  'vpn-tochka-g': {
+    route: "/proxy-vpn/tochka-g",
+    title: enFallback("Точка G VPN: обзор, белые списки и Telegram | Hopscup", "Tochka G VPN: allowlists and Telegram access | Hopscup"),
+    description: enFallback("Обзор Точки G: VPN в Telegram с подпиской G, тарифом G Premium под белые списки и бесплатной ссылкой на 40 минут, чтобы зайти в Telegram и оплатить VPN. 2 дня бесплатно, от 179 ₽.", "Tochka G review: a Telegram VPN with the G subscription, G Premium for allowlist networks, and a free 40-minute link to reach Telegram and pay. Two free days, plans from RUB 179."),
+    dateModified: '2026-11-22',
+  },
   'bot-lachuga': {
     route: '/account-shop/lachuga-skamera',
     title: enFallback('Лачуга: отзыв, дешёвые Gemini, ChatGPT и Claude | Hopscup', 'Lachuga review: affordable Gemini, ChatGPT and Claude | Hopscup'),
@@ -46,6 +70,240 @@ export const darkShoppingMetadata = {
 };
 
 export const partnerEditorialById = {
+  'vpn-ppl': {
+    description: l('PPL VPN мой основной VPN, сижу на нём уже около 8 месяцев, и с компьютера, и с телефона. Нейросети, Spotify, Telegram, YouTube и всё остальное.\n\nПеребои за это время бывали, но максимум часа на два, и всего раза два.\n\nШустрый, YouTube идёт без рекламы, а купить подписку можно даже тогда, когда не открывается вообще ничего.', 'PPL VPN is my main VPN. I have used it on both my computer and phone for around eight months: AI tools, Spotify, Telegram, YouTube and everything else.\n\nThere have been outages, but only a couple, each lasting no more than about two hours.\n\nIt is fast, YouTube plays without ads, and you can buy a subscription even when nothing else will open.'),
+    capabilities: l([
+      'Приложения и инструкции для Windows, macOS, Android, iOS и Linux, ключ можно вставить в Happ или INCY.',
+      '10+ стран.',
+      'Сайт, который открывается без VPN: зашли с браузера, оплатили и получили ключ. Telegram для этого не нужен.',
+      'Бесплатный прокси для Telegram, чтобы зайти в бота, если телега не грузит.',
+      'Оплата картой, по СБП или криптой.',
+    ], [
+      'Apps and setup guides for Windows, macOS, Android, iOS and Linux. You can import the key into Happ or INCY.',
+      'More than 10 countries.',
+      'A website that opens without a VPN: pay in your browser and receive a key without using Telegram.',
+      'A free Telegram proxy to reach the bot when Telegram will not connect.',
+      'Bank-card, SBP and crypto payments.',
+    ]),
+    pricing: l([
+      '3 дня бесплатно на тест.',
+      'Подписка от 124 ₽ в месяц.',
+    ], [
+      'A three-day free trial.',
+      'Subscriptions from RUB 124 a month.',
+    ]),
+    bestFor: l([
+      'Как основной VPN на каждый день: нейросети, YouTube, Spotify, Telegram и зарубежные сайты.',
+      'Тем, у кого VPN закончился и Telegram не грузит: подписку можно купить на сайте прямо из браузера.',
+      'Одной подпиской на компьютер и телефон.',
+    ], [
+      'An everyday VPN for AI tools, YouTube, Spotify, Telegram and international websites.',
+      'Renewing an expired subscription when Telegram will not load: buy directly in your browser.',
+      'Using one subscription on your computer and phone.',
+    ]),
+    considerations: l([
+      'Обхода белых списков нет. Если у вас на мобильном интернете режут всё, кроме разрешённых сайтов, держите вторым iMP или ALL VPN.',
+      'Скорость зависит от страны и вашего провайдера. Если какой-то сервис не открывается, попробуйте другое гео.',
+      'Перед использованием обновляйте подписку в приложении стрелками: серверы иногда меняются.',
+    ], [
+      'It does not bypass mobile allowlists. If your mobile connection blocks everything except approved sites, keep iMP or ALL VPN as a backup.',
+      'Speeds depend on the country and your internet provider. Try another location if a service will not open.',
+      'Refresh the subscription in your client using the arrow button before connecting; servers sometimes change.',
+    ]),
+    gettingStarted: l([
+      'Заходите в бота или на сайт по ссылке и берёте 3 дня бесплатно.',
+      'Копируете ключ и вставляете его в Happ или INCY.',
+      'Проверяете на вайфае и на мобильном интернете и, если всё ок, оплачиваете.',
+    ], [
+      'Open the bot or website through the link and claim the three-day trial.',
+      'Copy the key and import it into Happ or INCY.',
+      'Test on both Wi-Fi and mobile data, then pay if it works for you.',
+    ]),
+    verdict: l('Мой основной VPN уже больше полугода: быстро, стабильно и недорого. Белых списков не пробивает, поэтому на мобильном интернете в регионах с глушилками держите рядом второй VPN.', 'My main VPN for over half a year: fast, reliable and inexpensive. It does not bypass allowlists, so keep a second VPN for mobile data in regions with restrictive filtering.'),
+    links: [
+      { href: '/guides/vpn-ne-rabotaet-na-4g', label: l('Почему VPN не работает на 4G и что делать', 'Why VPN does not work on 4G and what to do') },
+      { href: '/guides/happ-marshrutizaciya', label: l('Как настроить маршрутизацию в Happ, чтобы банки работали с VPN', 'Happ routing: keep banking apps working with VPN enabled') },
+      { href: '/proxy-vpn/imp-vpn', label: l('Запасной VPN с белыми списками', 'A backup VPN for allowlist networks') },
+    ],
+  },
+  'vpn-imp': {
+    description: l('iMP VPN пользуюсь как запасным уже пару месяцев, тоже на компе и на телефоне, пока без нареканий.\n\nБольше всего понравилось, что тут даже маршрутизацию настраивать не пришлось: все российские сервисы работают без выключения VPN. Плюс есть отдельные LTE-серверы под белые списки на мобильном интернете.', 'I have used iMP VPN as a backup on both my computer and phone for a couple of months, with no complaints so far.\n\nMy favourite part is that I did not have to configure routing: Russian services work without switching the VPN off. There are also dedicated LTE servers for mobile allowlist restrictions.'),
+    capabilities: l([
+      'До 5 устройств на одну подписку.',
+      'Обычный трафик без лимита.',
+      'LTE-серверы под белые списки: 50 ГБ в месяц, можно докупить.',
+      'Российские сайты и банки открываются с включённым VPN прямо из коробки.',
+      'Выбор страны вручную или автоподключение, 10+ стран.',
+      'Оплата по СБП, картой или криптой.',
+    ], [
+      'Up to five devices on one subscription.',
+      'Unlimited regular traffic.',
+      'LTE servers for allowlist networks: 50 GB a month, with extra data available to buy.',
+      'Russian websites and banking apps work with the VPN enabled, without extra setup.',
+      'Manual country selection or automatic connection, with more than 10 countries.',
+      'SBP, bank-card and crypto payments.',
+    ]),
+    pricing: l([
+      '3 дня бесплатно на тест.',
+      'Подписка от 158 ₽ в месяц.',
+    ], [
+      'A three-day free trial.',
+      'Subscriptions from RUB 158 a month.',
+    ]),
+    bestFor: l([
+      'Тем, у кого на мобильном интернете белые списки.',
+      'Тем, кто не хочет возиться с настройкой маршрутизации: банки и маркетплейсы работают сразу.',
+      'Как запасной VPN к основному, чтобы доступ оставался всегда.',
+      'Семье или нескольким своим устройствам: до 5 на одну подписку.',
+    ], [
+      'Mobile connections restricted to allowlisted sites.',
+      'Users who do not want to configure routing: banking apps and marketplaces work out of the box.',
+      'A backup to your main VPN so you retain access.',
+      'Families or several personal devices: up to five on one subscription.',
+    ]),
+    considerations: l([
+      'На белые списки отдельный лимит 50 ГБ, обычный трафик он не трогает. Если гигов не хватает, их можно докупить.',
+      'Работа LTE-серверов зависит от оператора, поэтому пробуйте несколько вариантов из списка.',
+      'Серверы с пометкой HY2 / Hysteria2 пока тестовые.',
+    ], [
+      'The 50 GB allowlist allowance is separate from regular traffic. You can buy more if needed.',
+      'LTE compatibility depends on your mobile carrier, so try several options in the list.',
+      'Servers marked HY2 / Hysteria2 are still experimental.',
+    ]),
+    gettingStarted: l([
+      'Заходите в бота по ссылке и берёте 3 дня бесплатно.',
+      'Вставляете ключ в Happ или INCY.',
+      'Проверяете обычные серверы на вайфае, а LTE на мобильном интернете, и только потом оплачиваете.',
+    ], [
+      'Open the bot through the link and claim the three-day trial.',
+      'Import the key into Happ or INCY.',
+      'Test regular servers on Wi-Fi and LTE servers on mobile data before paying.',
+    ]),
+    verdict: l('Отличный запасной VPN, а для многих и основной: белые списки, 5 устройств и российские сервисы без отключения VPN. Если у вас на улице не грузит ничего, начните тест именно с него.', 'An excellent backup, and a potential main VPN: allowlist support, five devices and Russian services without disconnecting. If nothing loads on mobile data outside, start by testing this one.'),
+    links: [
+      { href: '/guides/vpn-ne-rabotaet-na-4g', label: l('Почему VPN не работает на 4G и у каких VPN есть белые списки', 'Why VPN fails on 4G and which VPNs support allowlists') },
+      { href: '/proxy-vpn/ppl-vpn', label: l('Мой основной VPN', 'My main VPN') },
+      { href: '/proxy-vpn', label: l('Все VPN с ценами и пробниками', 'All VPNs with prices and trials') },
+    ],
+  },
+  'vpn-all': {
+    description: l('ALL VPN прикольная штука: больше 50 разных VPN-сервисов в одной подписке. Один отвалился, переключились на другой прямо внутри Happ, и всё.\n\nНе нужно каждый раз искать, тестить и оплачивать новый VPN, когда старый перестал подключаться.', 'ALL VPN is an interesting setup: more than 50 different VPN services in one subscription. If one stops connecting, switch to another inside Happ and carry on.\n\nYou do not need to find, test and pay for a new VPN every time the previous one goes down.'),
+    capabilities: l([
+      '50+ VPN и 20+ стран в одной подписке.',
+      'Переключение между VPN прямо в Happ или другом совместимом приложении.',
+      'Обход белых списков: 50 ГБ в месяц.',
+      'От 5 до 50 устройств и от 500 ГБ до безлимита трафика в зависимости от тарифа.',
+      'Оплата по СБП, картой, звёздами Telegram или через CryptoBot.',
+    ], [
+      'More than 50 VPN services and 20 countries in one subscription.',
+      'Switch between VPNs inside Happ or another compatible client.',
+      'Allowlist bypass with 50 GB a month.',
+      'Five to 50 devices and 500 GB to unlimited traffic, depending on the plan.',
+      'Pay by SBP, bank card, Telegram Stars or CryptoBot.',
+    ]),
+    pricing: l([
+      '3 часа бесплатно, чтобы проверить на своём интернете.',
+      'Подписка от 199 ₽ в месяц.',
+      'Есть тариф «Навсегда». Акции и его цена меняются, итог смотрите в боте.',
+    ], [
+      'Three free hours to test on your own connection.',
+      'Subscriptions from RUB 199 a month.',
+      'A lifetime plan is available. Promotions and its price change, so check the bot before paying.',
+    ]),
+    bestFor: l([
+      'Тем, кто устал покупать новый VPN каждый раз, когда старый перестаёт работать.',
+      'Одной подпиской на телефон, компьютер и устройства близких.',
+      'Мобильному интернету с белыми списками.',
+    ], [
+      'Users tired of buying a new VPN whenever the previous one stops working.',
+      'One subscription for your phone, computer and family devices.',
+      'Mobile connections restricted by allowlists.',
+    ]),
+    considerations: l([
+      'Это набор разных VPN внутри одной подписки, а не своё отдельное приложение. Подключаетесь через Happ или похожее приложение.',
+      '3 часа на тест мало, поэтому проверяйте сразу и на вайфае, и на мобильном интернете.',
+      'Количество устройств и лимит трафика зависят от тарифа, смотрите их до оплаты.',
+    ], [
+      'This is a bundle of VPN services, not a standalone app. Connect through Happ or a similar client.',
+      'Three hours is a short trial, so test both Wi-Fi and mobile data immediately.',
+      'Device and traffic limits depend on the plan; check them before paying.',
+    ]),
+    gettingStarted: l([
+      'Заходите в бота по ссылке и берёте 3 часа бесплатно.',
+      'Вставляете подписку в Happ и видите список разных VPN.',
+      'Пробуете несколько на вайфае и на 4G и, если всё ок, оплачиваете.',
+    ], [
+      'Open the bot through the link and claim three free hours.',
+      'Import the subscription into Happ to see the different VPN options.',
+      'Try several on Wi-Fi and 4G, then pay if they work for you.',
+    ]),
+    verdict: l('Хороший вариант, если не хотите зависеть от одного VPN: отвалился один, переключились на другой внутри той же подписки. Особенно удобно, когда подключаете сразу несколько устройств.', 'A useful choice if you do not want to depend on one VPN: when one fails, switch to another within the same subscription. Especially convenient for connecting several devices.'),
+    links: [
+      { href: '/guides/vpn-ne-rabotaet-na-4g', label: l('Почему VPN не работает на 4G и что делать', 'Why VPN does not work on 4G and what to do') },
+      { href: '/guides/happ-marshrutizaciya', label: l('Фишки Happ: маршрутизация, чтобы банки работали с VPN', 'Happ routing tips: keep banking apps working with VPN enabled') },
+      { href: '/proxy-vpn', label: l('Все VPN с ценами и пробниками', 'All VPNs with prices and trials') },
+    ],
+  },
+  'vpn-tochka-g': {
+    description: l('Точка G это VPN в Telegram-боте, и у них есть фишка, которая выручает в самой тупой ситуации.\n\nVPN закончился, Telegram не грузит, а купить новый можно только в боте в том же Telegram. У Точки G есть ссылка, которая бесплатно оживляет Telegram минут на 40: зашли в бота, оплатили конфиг, и всё.\n\nПлюс новая подписка G, где страну можно переключать самому, без возни с новыми конфигами.', 'Tochka G is a VPN sold through a Telegram bot, with a feature that helps in a particularly frustrating situation.\n\nYour VPN has expired, Telegram will not load, and the only place to buy another is a bot inside Telegram. Tochka G has a link that restores Telegram access for around 40 minutes, giving you time to open the bot and pay for a config.\n\nThere is also the new G subscription, which lets you change countries without repeatedly importing new configs.'),
+    capabilities: l([
+      'Подписка G: работает с Telegram и нейросетями, страну переключаете сами.',
+      'Тариф G Premium под белые списки на мобильном интернете.',
+      'Бесплатный временный прокси для Telegram на 40 минут, чтобы зайти в бота и оплатить.',
+      'Сайт, который выдаёт временную ссылку для Happ.',
+      'Если конфиг перестал работать, его меняют через бота или поддержку. За серьёзные сбои компенсируют днями.',
+      'Оплата по СБП или криптой.',
+    ], [
+      'The G subscription works with Telegram and AI tools and lets you select the country yourself.',
+      'G Premium for allowlist restrictions on mobile data.',
+      'A free temporary Telegram proxy for 40 minutes, so you can reach the bot and pay.',
+      'A website that supplies a temporary Happ link.',
+      'Replace failed configs through the bot or support. Serious outages are compensated with extra subscription days.',
+      'SBP or crypto payments.',
+    ]),
+    pricing: l([
+      '2 дня бесплатно на тест.',
+      'Подписка от 179 ₽ в месяц.',
+      'Стандарт для обычного использования и Telegram, G Premium для белых списков.',
+    ], [
+      'A two-day free trial.',
+      'Subscriptions from RUB 179 a month.',
+      'Standard for everyday use and Telegram; G Premium for allowlist networks.',
+    ]),
+    bestFor: l([
+      'Тем, у кого не грузит Telegram, а VPN нужно купить прямо сейчас.',
+      'Мобильному интернету с белыми списками: берите G Premium.',
+      'Тем, кому проще написать в поддержку, чем самому разбираться с конфигами.',
+    ], [
+      'Buying a VPN immediately when Telegram will not load.',
+      'Mobile connections with allowlists: choose G Premium.',
+      'Users who would rather contact support than troubleshoot configs themselves.',
+    ]),
+    considerations: l([
+      'После того как поставили нормальный конфиг, временный прокси из Telegram лучше удалить: Настройки, Данные и память, Прокси. Он временный, и потом Telegram просто перестанет работать.',
+      'Белые списки есть только на тарифе G Premium, на стандартном их нет.',
+      'Если всё работает, конфиг без причины не меняйте.',
+    ], [
+      'After installing a working VPN config, remove the temporary Telegram proxy under Settings, Data and Storage, Proxy. It is temporary, and Telegram will stop connecting through it later.',
+      'Allowlist support is only included in G Premium, not Standard.',
+      'Do not replace a working config without a reason.',
+    ]),
+    gettingStarted: l([
+      'Если Telegram не грузит, переходите по бесплатной ссылке на 40 минут: она есть на этой странице в блоке «Если не работает Telegram».',
+      'Заходите в бота, берёте 2 дня бесплатно и вставляете подписку в Happ.',
+      'Проверяете на вайфае и на 4G, выбираете Стандарт или G Premium и оплачиваете.',
+    ], [
+      'If Telegram will not load, use the free 40-minute link in the "If Telegram does not work" block on this page.',
+      'Open the bot, claim the two-day trial and import the subscription into Happ.',
+      'Test on Wi-Fi and 4G, choose Standard or G Premium, and pay.',
+    ]),
+    verdict: l('Полезен уже из-за одной ссылки на 40 минут: это способ купить VPN, когда не работает вообще ничего. А если у вас на улице белые списки, смотрите тариф G Premium.', 'The 40-minute link alone makes this useful: it gives you a way to buy a VPN when nothing else works. If your mobile connection uses allowlists, look at G Premium.'),
+    links: [
+      { href: '/guides/vpn-ne-rabotaet-na-4g', label: l('Что делать, если не работает вообще ничего', 'What to do when nothing will connect') },
+      { href: '/proxy-vpn/ppl-vpn', label: l('VPN, который можно купить на сайте без Telegram', 'A VPN you can buy on a website without Telegram') },
+      { href: '/proxy-vpn', label: l('Все VPN с ценами и пробниками', 'All VPNs with prices and trials') },
+    ],
+  },
   'bot-lachuga': {
     description: l('Несмотря на нейминг автора, Лачуга оказалась очень даже рабочей лошадкой.\n\nЭто Telegram-магазин с дешёвыми подписками и аккаунтами: Gemini, ChatGPT, Claude, CapCut, Canva и другие сервисы. Покупка идёт прямо через бота, а на часть товаров дают гарантию.\n\nЯ брал тут и Gemini, и Claude, всё работает.', 'Despite the creator\'s naming choice, Lachuga has proved useful for me.\n\nIt is a Telegram shop for discounted Gemini, ChatGPT, Claude, CapCut, Canva and other subscriptions and accounts. You buy inside the bot, and some products include a warranty.\n\nI have bought both Gemini and Claude here, and they work.'),
     capabilities: l([

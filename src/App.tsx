@@ -2770,7 +2770,7 @@ const OFFERS: Offer[] = [
       paymentMethods: { ru: 'СБП, карта, Telegram Stars, CryptoBot', en: 'SBP, bank card, Telegram Stars, CryptoBot', es: 'SBP, tarjeta, Telegram Stars, CryptoBot', zh: 'SBP、银行卡、Telegram Stars、CryptoBot', ko: 'SBP, 은행 카드, Telegram Stars, CryptoBot' },
       pros: allVpnPros,
     },
-    editorial: ADDITIONAL_PROXY_EDITORIALS['all-vpn'],
+    editorial: withPartnerEditorial(ADDITIONAL_PROXY_EDITORIALS['all-vpn'], 'vpn-all'),
   },
   {
     id: 'vpn-ppl',
@@ -2791,7 +2791,7 @@ const OFFERS: Offer[] = [
       geo: vpnTerms['ppl-vpn'].geo,
       paymentMethods: { ru: 'Банковские карты, СБП, Криптовалюта', en: 'Bank cards, SBP, Crypto', es: 'Tarjetas bancarias, SBP, cripto', zh: '银行卡、SBP、加密货币', ko: '은행 카드, SBP, 암호화폐' }
     },
-    editorial: { ...ADDITIONAL_PROXY_EDITORIALS['ppl-vpn'], ...vpnEditorialAdditions['ppl-vpn'] },
+    editorial: withPartnerEditorial({ ...ADDITIONAL_PROXY_EDITORIALS['ppl-vpn'], ...vpnEditorialAdditions['ppl-vpn'] }, 'vpn-ppl'),
   },
   {
     id: 'vpn-prosto',
@@ -2830,7 +2830,7 @@ const OFFERS: Offer[] = [
         en: ['3 free days', 'Up to 5 devices', 'Unlimited regular traffic', 'Automatic server selection'],
       },
     },
-    editorial: impVpnPage.editorial,
+    editorial: withPartnerEditorial(impVpnPage.editorial, 'vpn-imp'),
   },
   ...newVpnOffers.filter(offer => offer.id === 'vpn-quattro') as Offer[],
   {
@@ -2926,7 +2926,7 @@ const OFFERS: Offer[] = [
         ]
       }
     },
-    editorial: { ...ADDITIONAL_PROXY_EDITORIALS['tochka-g'], ...vpnEditorialAdditions['tochka-g'] },
+    editorial: withPartnerEditorial({ ...ADDITIONAL_PROXY_EDITORIALS['tochka-g'], ...vpnEditorialAdditions['tochka-g'] }, 'vpn-tochka-g'),
   },
   {
     id: 'vpn-giga-dollar',
@@ -5657,7 +5657,7 @@ export default function App() {
     const seoLanding = selectedOffer ? undefined : getSeoLandingFromPath();
     const sectionSeo = seoLanding || SECTION_SEO[activeCategory];
     const offerSeo = selectedOffer?.slug ? selectedOffer.editorial : undefined;
-    const servicePageSeo = selectedOffer?.id ? SERVICE_PAGE_SEO_BY_ID[selectedOffer.id] : undefined;
+    const servicePageSeo = selectedOffer?.id ? partnerMetadataById[selectedOffer.id] || SERVICE_PAGE_SEO_BY_ID[selectedOffer.id] : undefined;
     const canonicalUrl = absoluteIndexUrl(getCanonicalPath(window.location.pathname), SITE_URL);
     const runtimeSeo = seoLanding || isHomeRoute ? undefined : RUNTIME_SEO_TRANSLATIONS[activeCategory]?.[lang];
     const rawTitle = proxyGuideArticle

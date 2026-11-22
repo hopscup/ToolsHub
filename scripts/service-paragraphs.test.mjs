@@ -27,12 +27,13 @@ test('nine partner introductions match the supplied paragraph boundaries exactly
   assert.equal(offer.editorial.description.ru,approved[id],id);
   assert.equal(splitServiceParagraphs(offer.editorial.description.en).length,splitServiceParagraphs(approved[id]).length,id+': EN');
  }
- for(const id of ['vpn-ppl','vpn-imp','vpn-all','vpn-tochka-g'])assert.notEqual(OFFERS.find(offer=>offer.id===id).editorial.description.ru,approved[id],id+': next batch remains pending');
+ for(const id of ['vpn-ppl','vpn-imp','vpn-all','vpn-tochka-g'])assert.equal(OFFERS.find(offer=>offer.id===id).editorial.description.ru,approved[id],id+': fourth batch paragraph boundaries');
 });
 
 test('paragraph-only changes leave catalogue copy, metadata, verdicts and all other offer data intact',()=>{
- const serialized=JSON.stringify(OFFERS.map(withoutEditorialParagraphBreaks));
- assert.equal(createHash('sha256').update(serialized).digest('hex'),'deec38b89b5e7e95faeceb3d5344ad0c4f75cfff43ed7fc6c47512e91fb9c69e');
+ // The separately tested fourth batch changes copy, not just paragraph boundaries.
+ const serialized=JSON.stringify(OFFERS.filter(offer=>!['vpn-ppl','vpn-imp','vpn-all','vpn-tochka-g'].includes(offer.id)).map(withoutEditorialParagraphBreaks));
+ assert.equal(createHash('sha256').update(serialized).digest('hex'),'365e79f651b64dec51c3b16f0ff3d41fea6f76cf70f59b8f09c11b316fafb57c');
  for(const id of ids)assert.ok(!OFFERS.find(offer=>offer.id===id).description.ru.includes('\n\n'),id);
 });
 
