@@ -2141,6 +2141,7 @@ const renderSitemapIndex = () => `<?xml version="1.0" encoding="UTF-8"?>
 `;
 
 const indexHtml = await readFile(path.join(distDir, 'index.html'), 'utf8');
+const cloudflareAnalyticsSnippet = indexHtml.match(/<!-- Cloudflare Web Analytics -->[\s\S]*?<!-- End Cloudflare Web Analytics -->/)?.[0] || '';
 const defaultSection = sections.find((section) => section.id === 'home');
 const defaultLanguage = languages.find((language) => language.code === 'ru');
 
@@ -2199,6 +2200,7 @@ await writeFile(
       <p>Такого адреса нет. Вернитесь к подборке сервисов Hopscup.</p>
       <a href="/proxy-vpn">Перейти на главную</a>
     </main>
+    ${cloudflareAnalyticsSnippet}
   </body>
 </html>
 `,
