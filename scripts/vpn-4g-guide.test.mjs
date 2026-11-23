@@ -24,9 +24,15 @@ test('VPN 4G guide uses source metadata, fixed draft dates and the proxy catalog
   assert.equal(guideCatalog.find(guide => guide.id === article.id).route, route);
   assert.ok(OFFERS.some(offer => offer.id === article.id && offer.category === 'Guides'));
   assert.equal(article.cover, undefined);
-  assert.equal(article.catalogCover, undefined);
+  assert.deepEqual(page.catalogCover, article.catalogCover);
+  assert.deepEqual(guideCatalog.find(guide => guide.id === article.id).cover, article.catalogCover);
+  assert.equal(article.catalogCover.src, '/article/vpn-4g/catalog-preview.webp');
+  assert.equal(article.catalogCover.width, 640);
+  assert.equal(article.catalogCover.height, 360);
+  assert.ok((await stat('public' + article.catalogCover.src)).size < 50000);
   assert.equal(article.video.id, 'Tcv021y6VKo');
   assert.equal(article.video.caption, 'Видеоверсия этого гайда');
+  assert.equal(article.videoPoster.src, '/article/vpn-4g/video-poster.webp');
   assert.ok((await stat('public' + article.videoPoster.src)).size < 50000);
   assert.doesNotMatch(JSON.stringify(article), /—|\(Ссылки?:|\[ССЫЛКА/);
   const app = await readFile('src/App.tsx', 'utf8');

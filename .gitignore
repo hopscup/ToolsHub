@@ -2,6 +2,7 @@ node_modules/
 build/
 dist/
 coverage/
+reports/content-regression*/
 .DS_Store
 *.log
 .indexnow/

@@ -1852,10 +1852,11 @@ const renderArticleBody = (article, route) => {
     ${(article.links || []).map((item) => `<p>${link(item)}</p>`).join('')}`;
 };
 
-const getOfferDescription = (offer, language) => localizedServiceValue(
-  language.code === 'ru' || language.code === 'en' ? offer.description : OFFER_DESCRIPTION_TRANSLATIONS[offer.id] || offer.description,
-  language.code,
-);
+const getOfferDescription = (offer, language) => {
+  const own = offer.description?.[language.code];
+  if (['Stores', 'Antidetect', 'Cards', 'Crypto', 'Guides'].includes(offer.category) && offer.editorial && own) return own;
+  return OFFER_DESCRIPTION_TRANSLATIONS[offer.id]?.[language.code] || own || localizedServiceValue(offer.description, language.code);
+};
 
 const renderServiceContent = (offer, language, metaDescription, introduction) => {
   const ru = language.code === 'ru';
@@ -1871,7 +1872,7 @@ const renderServiceContent = (offer, language, metaDescription, introduction) =>
   const guide = getServiceGuide(offer);
   const richText = text => splitServiceText(text, offer, language.code).map(part => part.href ? renderLink({ href: `${part.href.startsWith('/') ? language.prefix : ''}${part.href}`, label: part.text }) : escapeHtml(part.text)).join('');
   return `<div data-service-content="${escapeHtml(offer.id)}">
-    ${offer.category === 'AI' && !isServiceMetaDescription(value(offer.description), metaDescription) ? `<p>${richText(value(offer.description))}</p>` : ''}
+    ${offer.category === 'AI' ? `<p>${richText(value(offer.description))}</p>` : ''}
     ${paragraphs.map(text => `<p>${richText(text)}</p>`).join('')}
     ${offer.editorial?.video ? `<p>${renderLink({ href: offer.editorial.video.url, label: value(offer.editorial.video.caption) })}</p>` : ''}
     ${facts.length ? `<section data-service-facts>${heading(ru ? 'Условия и характеристики' : 'Terms and features')}<dl>${facts.map(fact => `<dt>${escapeHtml(fact.label)}</dt><dd>${escapeHtml(fact.value)}</dd>`).join('')}</dl></section>` : ''}
@@ -1899,9 +1900,11 @@ const renderSectionOffers = (section, language) => {
   return orderedOffers.map(offer => {
     const route = offer.slug ? `${language.prefix}${serviceCategoryRoutes[category]}/${offer.slug}` : undefined;
     const facts = getServiceSummaryFacts(offer, language.code, { vpnPrice: offer.subCategory === 'VPN' ? localizedServiceValue(vpnTerms[offer.slug]?.price, language.code) : undefined, qr: section.subFilter === 'USDTQR' });
+    const cardStats = offer.cardStats ? getServiceFacts(offer, language.code).filter(fact => ['commission', 'qrPayments'].includes(fact.key)) : [];
     return `<section data-service-summary="${escapeHtml(offer.id)}"><h2>${route ? renderLink({ href: route, label: offer.name }) : escapeHtml(offer.name)}</h2>
       ${category !== 'AI' ? `<p>${escapeHtml(getOfferDescription(offer, language))}</p>` : ''}
       ${facts.length ? `<p data-summary-facts>${facts.map(fact => `<span>${escapeHtml(fact.label)}: ${escapeHtml(fact.value)}</span>`).join(' · ')}</p>` : ''}
+      ${cardStats.length ? `<dl data-summary-card-stats>${cardStats.map(fact => `<dt>${escapeHtml(fact.label)}</dt><dd>${escapeHtml(fact.value)}</dd>`).join('')}</dl>` : ''}
       ${offer.promoCode ? `<p>${language.code === 'ru' ? 'Промокод' : 'Promo code'}: <code>${escapeHtml(offer.promoCode)}</code>${offer.promoDiscount ? ` ${escapeHtml(localizedServiceValue(offer.promoDiscount, language.code))}` : ''}</p>` : ''}
       ${route ? `<p>${renderLink({ href: route, label: language.code === 'ru' ? 'Подробнее о сервисе' : 'More about the service' })}</p>` : ''}
     </section>`;
@@ -1941,7 +1944,7 @@ const renderStaticContent = (section, language, pageLanguage = language) => {
         <header class="fallback-hero">
           ${article ? `<p class="fallback-badge">${escapeHtml(article.badge)}</p>` : ''}
           <h1>${escapeHtml(heroTitle)}</h1>
-          ${section.id === 'ai' || offer?.category === 'AI' || offer && isServiceMetaDescription(heroIntro, getLanguage(section.description, language)) ? '' : (offer ? splitServiceParagraphs(heroIntro) : [heroIntro]).map(text => `<p>${escapeHtml(text)}</p>`).join('')}
+          ${section.id === 'ai' || offer?.category === 'AI' ? '' : (offer ? splitServiceParagraphs(heroIntro) : [heroIntro]).map(text => `<p>${escapeHtml(text)}</p>`).join('')}
           ${(section.articleIntroParagraphs || []).map(paragraph => typeof paragraph === 'string' ? `<p>${escapeHtml(paragraph)}</p>` : renderGuideBlocks([{ type: 'paragraph', content: paragraph }])).join('')}
           ${section.articleIntroCallout ? renderGuideBlocks([{ type: 'callout', level: 2, ...section.articleIntroCallout }]) : ''}
           ${section.articleVideo ? `<p>${renderLink({ href: section.articleVideo.url, label: section.articleVideo.caption })}</p>` : ''}

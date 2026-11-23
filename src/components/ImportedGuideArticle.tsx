@@ -205,8 +205,10 @@ export const ImportedGuideArticle = ({
             <span className="hidden truncate font-display text-sm font-bold text-white/80 sm:block">Hopscup's Tools Hub</span>
           </a>
           <div className="site-header-actions flex shrink-0 items-center gap-2">
-            <ArticleLanguageLink />
-            <MobileNavigation/>
+            <a href="/guides" className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold text-white/60 transition-colors hover:border-brand-purple/40 hover:text-white md:px-4">
+              <ArrowLeft className="h-4 w-4" />
+              <span className="hidden sm:inline">К гайдам</span>
+            </a>
             <button
               type="button"
               onClick={() => setTheme(isLight ? 'dark' : 'light')}
@@ -216,10 +218,8 @@ export const ImportedGuideArticle = ({
             >
               {isLight ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
             </button>
-            <a href="/guides" className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold text-white/60 transition-colors hover:border-brand-purple/40 hover:text-white md:px-4">
-              <ArrowLeft className="h-4 w-4" />
-              <span className="hidden sm:inline">К гайдам</span>
-            </a>
+            <ArticleLanguageLink />
+            <MobileNavigation/>
           </div>
         </div>
       </header>

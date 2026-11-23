@@ -9,7 +9,7 @@ import { BackgroundParticles } from './components/BackgroundParticles';
 import { burstPromoStars, useCatalogReveal } from './lib/uiEffects';
 import {SiteThemeToggle} from './components/SiteTheme';
 import {MobileNavigation} from './components/MobileNavigation';
-import {categoryFilterCount} from './lib/catalogCounts.js';
+import {categoryFilterCount,groupCatalogOffers,shouldGroupCatalogOffers} from './lib/catalogCounts.js';
 import { ProxyGuideArticle } from './components/ProxyGuideArticle';
 import { MobileProxyComparisonArticle } from './components/MobileProxyComparisonArticle';
 import { MobileIpGuideArticle } from './components/MobileIpGuideArticle';
@@ -367,6 +367,7 @@ interface Offer {
     cashback: Localized;
     topup: Localized;
     commission: Localized;
+    qrPayments?: Localized;
     paySystems: Localized;
     type: Localized;
   };
@@ -4558,10 +4559,10 @@ const OFFERS: Offer[] = [
       cashback: { ru: 'Нет', en: 'No', es: 'No', zh: '无', ko: '없음' },
       topup: { ru: 'СБП/USDT', en: 'SBP/USDT', es: 'SBP/USDT', zh: 'SBP/USDT', ko: 'SBP/USDT' },
       commission: { ru: '5% / 15%', en: '5% / 15%', es: '5% / 15%', zh: '5% / 15%', ko: '5% / 15%' },
+      qrPayments: pgonQrAbroad.cardQrPayments,
       type: { ru: 'Visa', en: 'Visa', es: 'Visa', zh: 'Visa', ko: 'Visa' }
     },
     details: {
-      types: pgonQrAbroad.types,
       pros: {
         ru: ['Оплата криптой по QR СБП/НСПК в РФ', 'Виртуальная Visa для зарубежных сервисов', 'Пополнение через СБП или USDT'],
         en: ['Crypto payments through SBP/NSPK QR codes in Russia', 'Virtual Visa for foreign services', 'Funding through SBP or USDT'],
@@ -5944,6 +5945,7 @@ export default function App() {
     });
   }, [activeCategory, subFilter, searchQuery]);
 
+
   const renderGuideIcon = (id: string, className: string) => {
     const guideIcons: Record<string, any> = {
       'guide-discord-token': MessageSquare,
@@ -6325,6 +6327,10 @@ export default function App() {
   }, [selectedOffer, lang]);
 
   const activeCategoryData = CATEGORIES.find(c => c.id === activeCategory);
+  const showCatalogGroups = shouldGroupCatalogOffers(activeCategory, subFilter, searchQuery, isHomeRoute);
+  const catalogGroups = showCatalogGroups
+    ? groupCatalogOffers(filteredOffers, activeCategoryData?.subFilters || [])
+    : [{id: 'None', offers: filteredOffers}];
   const currentSectionSeo = currentSeoLanding && ['crypto-sbp-qr', 'crypto-aml-checks', 'crypto-wallets'].includes(currentSeoLanding.id)
     ? currentSeoLanding
     : SECTION_SEO[activeCategory];
@@ -6569,8 +6575,8 @@ export default function App() {
           </div>
           
           <div className="site-header-actions flex items-center gap-4">
-            <LanguageToggle lang={lang} />
             <SiteThemeToggle/>
+            <LanguageToggle lang={lang} />
             <MobileNavigation items={CATEGORIES.map(cat => {const Icon = cat.icon || Globe;return {href:getLocalizedRoute(cat.id,lang),label:l(cat.title),icon:<Icon className="h-5 w-5"/>};})}
               socials={t.social.map(social => {const Icon=social.icon;return <a key={social.id} href={social.url} target="_blank" rel="noopener noreferrer" className="site-theme-toggle" aria-label={social.id==='yt'?'YouTube':'Telegram'}><Icon className="h-5 w-5"/></a>;})}/>
           </div>
@@ -6967,8 +6973,14 @@ export default function App() {
                 </p>
               </section>
             )}
+            <div className="space-y-14">
+            {catalogGroups.map(group => <section key={group.id} data-catalog-group={showCatalogGroups ? group.id : undefined}>
+            {showCatalogGroups && <h2 className="mb-6 flex items-center gap-3 font-display text-2xl font-bold text-white">
+              {group.id === 'None' ? (activeCategory === 'Crypto' ? tx({ru:'Обменники',en:'Exchanges'}) : l(activeCategoryData?.title)) : t.subFilters[group.id] || group.id}
+              <span className="font-sans text-sm font-bold text-white/40">{group.offers.length}</span>
+            </h2>}
             <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full${activeCategory === 'Crypto' && subFilter === 'USDTQR' ? ' auto-rows-fr' : ''}`}>
-              {filteredOffers.map((offer, index) => (
+              {group.offers.map((offer, index) => (
                 <motion.div
                   layout
                   key={offer.id}
@@ -7130,6 +7142,18 @@ export default function App() {
                           </div>
                           <span className="text-base text-white/80 font-bold">{l(offer.cardStats.cashback)}</span>
                         </div>
+                        {[
+                          { key: 'commission', label: tx({ ru: 'Комиссия', en: 'Commission' }), value: l(offer.cardStats.commission) },
+                          { key: 'qrPayments', label: tx({ ru: 'QR-оплата', en: 'QR payments' }), value: l(offer.cardStats.qrPayments) },
+                        ].filter(row => row.value).map(({ key, label, value }) => (
+                          <div key={key} data-card-stat={key} className="flex justify-between items-center gap-3 px-1">
+                            <div className="flex items-center gap-3">
+                              <div className="w-1.5 h-1.5 shrink-0 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
+                              <span className="text-[12px] text-white/30 uppercase font-black tracking-[0.2em]">{label}</span>
+                            </div>
+                            <span className="min-w-0 text-right text-base text-white/80 font-bold">{value}</span>
+                          </div>
+                        ))}
                         <div className="flex justify-between items-center px-1">
                           <div className="flex items-center gap-3">
                             <div className="w-1.5 h-1.5 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
@@ -7282,6 +7306,8 @@ export default function App() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+            </section>)}
             </div>
             </div>
             )
@@ -8898,6 +8924,18 @@ export default function App() {
                         </div>
                         <p className="text-white font-bold text-base">{l(selectedOffer.cardStats.cashback)}</p>
                       </div>
+                      {[
+                        { key: 'commission', label: tx({ ru: 'Комиссия', en: 'Commission' }), value: l(selectedOffer.cardStats.commission) },
+                        { key: 'qrPayments', label: tx({ ru: 'QR-оплата', en: 'QR payments' }), value: l(selectedOffer.cardStats.qrPayments) },
+                      ].filter(row => row.value).map(({ key, label, value }) => (
+                        <div key={key} data-card-stat={key} className="flex justify-between items-center gap-3 group/stat">
+                          <div className="flex items-center gap-3">
+                            <div className="w-1.5 h-1.5 shrink-0 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
+                            <h4 className="text-[11px] uppercase font-black text-white/30 tracking-[0.2em] group-hover/stat:text-white/60 transition-colors">{label}</h4>
+                          </div>
+                          <p className="min-w-0 text-right text-white font-bold text-base">{value}</p>
+                        </div>
+                      ))}
                       <div className="flex justify-between items-center group/stat">
                         <div className="flex items-center gap-3">
                           <div className="w-1.5 h-1.5 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />

@@ -20,7 +20,7 @@ const snapshot = {
     "p1": "239c5fef382706ed11c03da29c64dab765a9777db8ce074d73ff37b37035346e",
     "p4": "9ba625c621c48e1bb174bc606343c26e7c94b1434dcc092aa982deaa1f4fe049",
     "zarub": "cd55b328810de4f5cbca2a2c6db9cc94b892d339227dee60910c7bc1e819c24f",
-    "pgon": "e13b10499082976ca2aa6f86c7a3e3076af451747be164408abc54fb60775054"
+    "pgon": "1fff9af45d0c161fb2253ad02346d08432cd6949f40677482dabae6aad4b41b6"
   },
   "others": "0b3aa1033d59e7a82523d31028ab62161a04c0c498046c1ff2a03b8999652a30",
   "guideDates": "0ed3ebd20646d3e7509e5cd31b3af7bbf43a8dd92a7662f8f6d3e472d4f2cfe9",
@@ -128,7 +128,8 @@ test('PGON author copy has no legacy QR append while its exchange card and tile 
   for (const language of ['ru', 'en', 'es', 'zh', 'ko']) {
     assert.ok(pgon.description[language].endsWith(pgonQrAbroad.cardDescription[language]));
     assert.ok(exchange.editorial.description[language].endsWith(pgonQrAbroad.exchangeDescription[language]));
-    assert.equal(pgon.details.types[language], pgonQrAbroad.types[language]);
+    assert.equal(pgon.details.types, undefined);
+    assert.equal(pgon.cardStats.qrPayments[language], pgonQrAbroad.cardQrPayments[language]);
     assert.equal(withPgonQrAbroad(cardPage).editorial, cardPage.editorial);
     assert.ok(!localizedServiceValue(pgon.editorial.considerations, language).includes(pgonQrAbroad.consideration[language]));
   }

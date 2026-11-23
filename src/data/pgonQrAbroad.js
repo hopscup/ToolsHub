@@ -6,6 +6,7 @@ export const pgonQrAbroad = {
   consideration: l('Полный список стран для QR-оплаты смотрите внутри кошелька, он пополняется.', 'Check the wallet for the full list of countries supporting QR payments; more countries are being added.'),
   exchangeDescription: l('Теперь QR-оплата работает и за границей: Таиланд, Вьетнам, Индонезия и другие страны, напрямую с баланса USDT, TON или SOL.', 'QR payments now also work abroad in Thailand, Vietnam, Indonesia and other countries, directly from your USDT, TON or SOL balance.'),
   types: l('QR-оплата за границей', 'QR payments abroad'),
+  cardQrPayments: l('РФ и за границей', 'Russia and abroad'),
   articleSentence: 'Недавно в PGON добавили оплату по местным QR-кодам за границей: в Таиланде, Вьетнаме, Индонезии и других странах можно платить прямо с баланса USDT, TON или SOL.',
 };
 

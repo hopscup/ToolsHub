@@ -6,8 +6,6 @@ interface Star {
   speed: number;
   size: number;
   flickerOffset: number;
-  opacity: number;
-  twinkles: boolean;
 }
 
 interface ShootingStar {
@@ -51,12 +49,9 @@ const DesktopParticles = () => {
     const getNextShootingStarDelay = () => 5000 + Math.random() * 5000;
     let nextShootingStarAt = Date.now() + getNextShootingStarDelay();
     let isPageVisible = !document.hidden;
-    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let reducedMotion = motionPreference.matches;
     let isLight = document.documentElement.dataset.siteTheme === 'light';
     const themeObserver = new MutationObserver(() => {
       isLight = document.documentElement.dataset.siteTheme === 'light';
-      if (reducedMotion && isPageVisible) animate();
     });
     themeObserver.observe(document.documentElement,{attributes:true,attributeFilter:['data-site-theme']});
 
@@ -67,7 +62,6 @@ const DesktopParticles = () => {
       filmCanvas.width = window.innerWidth;
       filmCanvas.height = window.innerHeight;
       initStars();
-      if (reducedMotion && isPageVisible) animate();
     };
 
     const initStars = () => {
@@ -78,9 +72,7 @@ const DesktopParticles = () => {
           radius: Math.random() * Math.max(canvas.width, canvas.height) * 0.8,
           speed: Math.random() * 0.0004 + 0.0001,
           size: Math.random() * 1.2 + 0.4,
-          flickerOffset: Math.random() * 100,
-          opacity: 0.16 + Math.random() * 0.42,
-          twinkles: i % 4 === 0,
+          flickerOffset: Math.random() * 100
         });
       }
     };
@@ -149,7 +141,7 @@ const DesktopParticles = () => {
         return;
       }
 
-      if (!reducedMotion && frameTime - lastFrameTime < targetFrameMs) {
+      if (frameTime - lastFrameTime < targetFrameMs) {
         animationFrameId = requestAnimationFrame(animate);
         return;
       }
@@ -163,11 +155,13 @@ const DesktopParticles = () => {
       const now = Date.now();
 
       stars.forEach((star) => {
-        if (!reducedMotion) star.angle += star.speed;
+        star.angle += star.speed;
         const x = centerX + Math.cos(star.angle) * star.radius;
         const y = centerY + Math.sin(star.angle) * star.radius;
 
-        const flicker = star.opacity + (!reducedMotion && star.twinkles ? Math.sin(now * 0.0018 + star.flickerOffset) * 0.14 : 0);
+        const flicker = isLight
+          ? (star.size >= 1.1 ? 0.7 + Math.sin(now * 0.003 + star.flickerOffset) * 0.1 : 0.425 + Math.sin(now * 0.003 + star.flickerOffset) * 0.075)
+          : 0.4 + Math.sin(now * 0.003 + star.flickerOffset) * 0.3;
         
         ctx.fillStyle = isLight ? `rgba(29, 29, 31, ${flicker})` : `rgba(255, 255, 255, ${flicker})`;
         ctx.beginPath();
@@ -175,7 +169,7 @@ const DesktopParticles = () => {
         ctx.fill();
       });
 
-      for (let i = shootingStars.length - 1; !reducedMotion && i >= 0; i--) {
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
         const s = shootingStars[i];
         s.x += s.vx;
         s.y += s.vy;
@@ -184,7 +178,7 @@ const DesktopParticles = () => {
         const alpha = s.life / s.maxLife;
         const grad = ctx.createLinearGradient(s.x, s.y, s.x - s.vx * s.length, s.y - s.vy * s.length);
         grad.addColorStop(0, isLight ? `rgba(29, 29, 31, ${alpha})` : `rgba(255, 255, 255, ${alpha})`);
-        grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        grad.addColorStop(1, isLight ? 'rgba(29, 29, 31, 0)' : 'rgba(255, 255, 255, 0)');
 
         ctx.strokeStyle = grad;
         ctx.lineWidth = 1.4 + alpha;
@@ -197,18 +191,19 @@ const DesktopParticles = () => {
       }
 
       // Film effect - update grain only occasionally for performance
-      if (!reducedMotion && now >= nextShootingStarAt) {
+      if (now >= nextShootingStarAt) {
         spawnShootingStar();
         nextShootingStarAt = now + getNextShootingStarDelay();
       }
 
-      if (!isMobile && (reducedMotion || now - lastGrainTime > 150)) {
+      if (!isMobile && now - lastGrainTime > 150) {
         fctx.clearRect(0, 0, filmCanvas.width, filmCanvas.height);
-        if (!reducedMotion) { generateGrain(); drawScratches(); }
+        generateGrain();
+        drawScratches();
         lastGrainTime = now;
       }
 
-      if (!reducedMotion) animationFrameId = requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
     const handleVisibilityChange = () => {
@@ -216,21 +211,12 @@ const DesktopParticles = () => {
       cancelAnimationFrame(animationFrameId);
       if (isPageVisible) {
         lastFrameTime = 0;
-        if (reducedMotion) animate();
-        else animationFrameId = requestAnimationFrame(animate);
+        animationFrameId = requestAnimationFrame(animate);
       }
-    };
-    const handleMotionPreference = () => {
-      reducedMotion = motionPreference.matches;
-      shootingStars = [];
-      cancelAnimationFrame(animationFrameId);
-      lastFrameTime = 0;
-      if (isPageVisible) animate();
     };
 
     window.addEventListener('resize', resize);
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    motionPreference.addEventListener('change', handleMotionPreference);
     resize();
     animate();
 
@@ -239,7 +225,6 @@ const DesktopParticles = () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);
       themeObserver.disconnect();
-      motionPreference.removeEventListener('change', handleMotionPreference);
     };
   }, []);
 
@@ -266,5 +251,5 @@ export const BackgroundParticles = () => {
     media.addEventListener('change',change);
     return () => media.removeEventListener('change',change);
   }, []);
-  return mobile ? <div className="site-mobile-sky" aria-hidden="true"><i/><i/><span className="site-mobile-twinkles"/></div> : <DesktopParticles/>;
+  return mobile ? <div className="site-mobile-sky" aria-hidden="true"><i/><i/><i/><i/><i/><span className="site-mobile-twinkles"/></div> : <DesktopParticles/>;
 };

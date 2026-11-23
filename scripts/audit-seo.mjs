@@ -135,8 +135,12 @@ const checkServiceContent = (html, offer, language, route) => {
   texts.push(...getServiceEditorialSections(offer, code).flatMap(section => section.items));
   const visibleContent = normalizeServiceText(content.replace(/<\/(?:p|li|h[1-6]|div|section|dd|dt)>/gi, ' ').replace(/<[^>]*>/g, ''));
   for (const text of texts.filter(text => !isMeta(text))) if (!visibleContent.includes(normalizeServiceText(escapeHtml(text)))) errors.push(`Missing service text: ${route}: ${text}`);
-  for (const [, paragraph] of matches(content, /<p\b[^>]*>([\s\S]*?)<\/p>/g)) {
-    if (isServiceMetaDescription(paragraph.replace(/<[^>]*>/g, ''), metaDescription)) errors.push(`Service paragraph duplicates meta description: ${route}`);
+  const metaParagraphs = matches(content, /<p\b[^>]*>([\s\S]*?)<\/p>/g)
+    .filter(([, paragraph]) => isServiceMetaDescription(paragraph.replace(/<[^>]*>/g, ''), metaDescription));
+  const authorIntroduction = getPartnerIntroduction(offer, code) || localizedServiceValue(offer.description, code);
+  // A meta summary may quote the author introduction, but must not add repeated SEO filler.
+  if (metaParagraphs.length > 1 || (metaParagraphs.length && !isMeta(authorIntroduction))) {
+    errors.push(`Unexpected or repeated meta-description paragraph: ${route}`);
   }
   if (offer.promoCode && !content.includes(`<code>${escapeHtml(offer.promoCode)}</code>`)) errors.push(`Missing service promo: ${route}`);
   if (!content.includes(`href="${escapeHtml(offer.url)}"`)) errors.push(`Missing service CTA: ${route}`);

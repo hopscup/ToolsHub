@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile,stat} from 'node:fs/promises';
-import {categoryFilterCount} from '../src/lib/catalogCounts.js';
+import {categoryFilterCount,groupCatalogOffers,shouldGroupCatalogOffers} from '../src/lib/catalogCounts.js';
 import {loadOffers} from './load-offers.mjs';
 import {getPartnerIntroduction} from '../src/data/partnerCardRefresh.js';
 import {normalizeServiceText,splitServiceParagraphs} from '../src/data/servicePresentation.js';
@@ -55,7 +55,8 @@ test('new effects use one-shot intersection reveals, successful-copy bursts, red
  const effects=await readFile('src/lib/uiEffects.ts','utf8'),css=await readFile('src/theme.css','utf8'),particles=await readFile('src/components/BackgroundParticles.tsx','utf8'),app=await readFile('src/App.tsx','utf8');
  for(const token of ['IntersectionObserver','observer?.unobserve','seen.current.add','prefers-reduced-motion: reduce','index < 6','animationend','star.remove()','burst.remove()'])assert.ok(effects.includes(token),token);
  for(const token of ['site-wordmark-window 9s','site-wordmark-text 9s','site-card-rise','site-copy-star','site-star-glint','svg.site-search-icon','site-social-button svg.lucide'])assert.ok(css.includes(token),token);
- for(const token of ['motionPreference','reducedMotion','visibilitychange','twinkles: i % 4 === 0','rgba(45, 45, 52','site-mobile-twinkles'])assert.ok(particles.includes(token),token);
+ for(const token of ['visibilitychange','rgba(45, 45, 52','site-mobile-twinkles'])assert.ok(particles.includes(token),token);
+ assert.ok(!particles.includes('prefers-reduced-motion'));assert.equal((particles.match(/<i\/>/g)||[]).length,5);
  assert.ok(app.includes('burstPromoStars(sourceId)'));assert.equal((app.match(/data-promo-source=/g)||[]).length,3);assert.ok(!app.includes('delay: index * 0.1'));assert.ok(!app.includes('initial={{ opacity: 0, y: 30 }}'));
  for(const theme of ['dark','light'])assert.ok((await stat('public/sky/twinkles-'+theme+'.webp')).size<20000);
 });
@@ -85,6 +86,42 @@ test('three approved partner cards retain their authored description before fact
 
 test('surfaces shield the sky, the light header has a small shadow, and promo stars keep visible sizes',async()=>{
  const css=await readFile('src/theme.css','utf8'),effects=await readFile('src/lib/uiEffects.ts','utf8');
- for(const token of ['backdrop-filter:blur(10px)','rgb(22 20 27 / 90%)','rgb(255 255 255 / 94%)','0 8px 24px -16px rgb(0 0 0 / 12%)','site-copy-star 650ms','rotate(65deg)','background:#a05bff','mask-image:radial-gradient(ellipse 60% 75%'])assert.ok(css.includes(token),token);
+ for(const token of ['backdrop-filter:blur(10px)','rgb(22 20 27 / 90%)','rgb(255 255 255 / 94%)','0 8px 24px -16px rgb(0 0 0 / 12%)','site-copy-star 650ms','rotate(65deg)','background:#a05bff'])assert.ok(css.includes(token),token);
+ assert.ok(!css.includes('mask-image:radial-gradient(ellipse 60% 75%'));
  assert.ok(effects.includes('const radius = 28 + index % 3 * 5'));assert.ok(effects.includes('const size = 8 + index % 3'));assert.ok(!effects.includes('42 + index'));
+});
+
+test('All catalogue groups retain each service once and preserve relative order in each subtype',()=>{
+ const proxy=OFFERS.filter(o=>o.category==='Proxy'),groups=groupCatalogOffers(proxy,['Proxy','VPN']);
+ assert.deepEqual(groups.map(g=>[g.id,g.offers.length]),[['Proxy',7],['VPN',9]]);
+ for(const group of groups)assert.deepEqual(group.offers.map(o=>o.id),proxy.filter(o=>o.subCategory===group.id).map(o=>o.id));
+ const overlap=[{id:'one',subCategory:'NoKYC',subCategories:['WithKYC']},{id:'two',subCategory:'WithKYC'},{id:'other'}];
+ const cards=groupCatalogOffers(overlap,['NoKYC','WithKYC']);assert.deepEqual(cards.flatMap(g=>g.offers).map(o=>o.id),['one','two','other']);
+});
+
+test('background remains animated with reduced motion while foreground effects remain disabled',async()=>{
+ const css=await readFile('src/theme.css','utf8'),source=await readFile('src/components/BackgroundParticles.tsx','utf8');
+ const reduced=css.slice(css.lastIndexOf('@media(prefers-reduced-motion:reduce)'));
+ assert.ok(!reduced.includes('site-mobile-sky'));assert.ok(!reduced.includes('site-mobile-twinkles'));
+ assert.ok(reduced.includes('.site-wordmark-glint,.site-recommend-glint i { animation:none'));
+ assert.ok(!source.includes('reducedMotion'));assert.ok(css.includes('animation:site-meteor 20s'));
+ for(const delay of ['4s','8s','12s','16s'])assert.ok(css.includes('animation-delay:'+delay));
+});
+
+test('only the Proxy section groups its All catalogue; search, home and other categories stay flat',()=>{
+ assert.equal(shouldGroupCatalogOffers('Proxy','None',''),true);
+ for(const category of ['Antidetect','Stores','AI','Cards','Crypto','Social','Steam','SMS','VPS','Guides'])assert.equal(shouldGroupCatalogOffers(category,'None',''),false,category);
+ for(const filter of ['Proxy','VPN'])assert.equal(shouldGroupCatalogOffers('Proxy',filter,''),false);
+ assert.equal(shouldGroupCatalogOffers('Proxy','None','test'),false);assert.equal(shouldGroupCatalogOffers('Proxy','None','',true),false);
+});
+
+test('catalogue and all article header templates keep theme, language and mobile menu in DOM order',async()=>{
+ const app=await readFile('src/App.tsx','utf8'),header=app.slice(app.indexOf('className="site-header-actions'),app.indexOf('{/* Bottom Row: Categories */}'));
+ assert.ok(header.indexOf('<SiteThemeToggle')<header.indexOf('<LanguageToggle'));assert.ok(header.indexOf('<LanguageToggle')<header.indexOf('<MobileNavigation'));
+ for(const name of ['ImportedGuideArticle','ProxyGuideArticle','AntidetectSetupGuideArticle','GmailForwardingGuideArticle','MobileIpGuideArticle','MobileProxyComparisonArticle']){
+  const source=await readFile('src/components/'+name+'.tsx','utf8'),actions=source.slice(source.indexOf('className="site-header-actions'),source.indexOf('</header>'));
+  assert.ok(actions.indexOf('className="article-theme-toggle')<actions.indexOf('<ArticleLanguageLink'),name);
+  assert.ok(actions.indexOf('<ArticleLanguageLink')<actions.indexOf('<MobileNavigation'),name);
+  assert.ok(!actions.slice(actions.indexOf('<MobileNavigation')).includes('<a '),name+' burger must be rightmost');
+ }
 });

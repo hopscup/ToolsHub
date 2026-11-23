@@ -151,7 +151,8 @@ test('PGON retains QR abroad tile facts and the exchange description independent
     assert.ok(card.description[language].endsWith(pgonQrAbroad.cardDescription[language]));
     assert.ok(!(card.editorial.description[language] || card.editorial.description.en).includes(pgonQrAbroad.cardDescription[language]));
     assert.ok(crypto.editorial.description[language].endsWith(pgonQrAbroad.exchangeDescription[language]));
-    assert.equal(card.details.types[language], pgonQrAbroad.types[language]);
+    assert.equal(card.details.types, undefined);
+    assert.equal(card.cardStats.qrPayments[language], pgonQrAbroad.cardQrPayments[language]);
   }
   assert.equal(card.cardStats.type.ru, 'Visa');
   assert.equal(card.url, 'https://t.me/pgon?start=ref_1ob10bl6');

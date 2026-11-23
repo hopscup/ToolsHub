@@ -22,7 +22,7 @@ const snapshot = {
     "ant-shardx": "3a99a06a80a74fc9433906f81eadf72863ee794750403b4793ccfe1b9b78d7b4",
     "bot-lachuga": "956f17ae9ffb52e074f9328ca338f67f4ddb9308794f18c2e4574c2e5992a8a8"
   },
-  "others": "323d7b0cfa84743331cf1a4c5b1ef057e1f18507405dfc60c5d17d28fbaacf63",
+  "others": "f8219d6f5740a7f7ff73f8c798b02650aed9f79a8ed3c27aa53fd7069734bdea",
   "guideDates": "0ed3ebd20646d3e7509e5cd31b3af7bbf43a8dd92a7662f8f6d3e472d4f2cfe9",
   "headings": [
     {

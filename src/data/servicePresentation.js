@@ -128,7 +128,7 @@ export const serviceFactLabels = {
   control: ['Управление', 'Control'], format: ['Формат', 'Format'], trial: ['Пробный период', 'Trial'],
   issuance: ['Выпуск', 'Issuance'], maintenance: ['Обслуживание', 'Maintenance'], paySystems: ['Apple/Google Pay', 'Apple/Google Pay'],
   verification: ['Верификация', 'Verification'], cashback: ['Кешбэк', 'Cashback'], topup: ['Пополнение', 'Top-up'],
-  commission: ['Комиссия', 'Fee'], type: ['Тип карты', 'Card type'],
+  commission: ['Комиссия', 'Commission'], qrPayments: ['QR-оплата', 'QR payments'], type: ['Тип карты', 'Card type'],
   countries: ['Страны оплаты', 'Countries'], fee: ['Комиссия QR', 'QR fee'], limit: ['Лимит', 'Limit'],
   allowlist: ['Белые списки', 'Allowlist networks'], devices: ['Устройства', 'Devices'],
 };
