@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Star {
   angle: number;
@@ -6,6 +6,8 @@ interface Star {
   speed: number;
   size: number;
   flickerOffset: number;
+  opacity: number;
+  twinkles: boolean;
 }
 
 interface ShootingStar {
@@ -18,7 +20,7 @@ interface ShootingStar {
   length: number;
 }
 
-export const BackgroundParticles = () => {
+const DesktopParticles = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const filmCanvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -49,6 +51,14 @@ export const BackgroundParticles = () => {
     const getNextShootingStarDelay = () => 5000 + Math.random() * 5000;
     let nextShootingStarAt = Date.now() + getNextShootingStarDelay();
     let isPageVisible = !document.hidden;
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let reducedMotion = motionPreference.matches;
+    let isLight = document.documentElement.dataset.siteTheme === 'light';
+    const themeObserver = new MutationObserver(() => {
+      isLight = document.documentElement.dataset.siteTheme === 'light';
+      if (reducedMotion && isPageVisible) animate();
+    });
+    themeObserver.observe(document.documentElement,{attributes:true,attributeFilter:['data-site-theme']});
 
     const resize = () => {
       if (!canvas || !filmCanvas) return;
@@ -57,6 +67,7 @@ export const BackgroundParticles = () => {
       filmCanvas.width = window.innerWidth;
       filmCanvas.height = window.innerHeight;
       initStars();
+      if (reducedMotion && isPageVisible) animate();
     };
 
     const initStars = () => {
@@ -67,7 +78,9 @@ export const BackgroundParticles = () => {
           radius: Math.random() * Math.max(canvas.width, canvas.height) * 0.8,
           speed: Math.random() * 0.0004 + 0.0001,
           size: Math.random() * 1.2 + 0.4,
-          flickerOffset: Math.random() * 100
+          flickerOffset: Math.random() * 100,
+          opacity: 0.16 + Math.random() * 0.42,
+          twinkles: i % 4 === 0,
         });
       }
     };
@@ -111,7 +124,9 @@ export const BackgroundParticles = () => {
 
     const drawScratches = () => {
       if (isMobile) return;
-      fctx.strokeStyle = `rgba(255, 255, 255, ${Math.random() * 0.15 + 0.05})`;
+      fctx.strokeStyle = isLight
+        ? `rgba(45, 45, 52, ${Math.random() * 0.04 + 0.01})`
+        : `rgba(255, 255, 255, ${Math.random() * 0.15 + 0.05})`;
       fctx.lineWidth = Math.random() * 1.5 + 0.5;
 
       for (let i = 0; i < 3; i++) {
@@ -134,7 +149,7 @@ export const BackgroundParticles = () => {
         return;
       }
 
-      if (frameTime - lastFrameTime < targetFrameMs) {
+      if (!reducedMotion && frameTime - lastFrameTime < targetFrameMs) {
         animationFrameId = requestAnimationFrame(animate);
         return;
       }
@@ -148,19 +163,19 @@ export const BackgroundParticles = () => {
       const now = Date.now();
 
       stars.forEach((star) => {
-        star.angle += star.speed;
+        if (!reducedMotion) star.angle += star.speed;
         const x = centerX + Math.cos(star.angle) * star.radius;
         const y = centerY + Math.sin(star.angle) * star.radius;
 
-        const flicker = 0.4 + Math.sin(now * 0.003 + star.flickerOffset) * 0.3;
+        const flicker = star.opacity + (!reducedMotion && star.twinkles ? Math.sin(now * 0.0018 + star.flickerOffset) * 0.14 : 0);
         
-        ctx.fillStyle = `rgba(255, 255, 255, ${flicker})`;
+        ctx.fillStyle = isLight ? `rgba(29, 29, 31, ${flicker})` : `rgba(255, 255, 255, ${flicker})`;
         ctx.beginPath();
         ctx.arc(x, y, star.size, 0, Math.PI * 2);
         ctx.fill();
       });
 
-      for (let i = shootingStars.length - 1; i >= 0; i--) {
+      for (let i = shootingStars.length - 1; !reducedMotion && i >= 0; i--) {
         const s = shootingStars[i];
         s.x += s.vx;
         s.y += s.vy;
@@ -168,7 +183,7 @@ export const BackgroundParticles = () => {
 
         const alpha = s.life / s.maxLife;
         const grad = ctx.createLinearGradient(s.x, s.y, s.x - s.vx * s.length, s.y - s.vy * s.length);
-        grad.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
+        grad.addColorStop(0, isLight ? `rgba(29, 29, 31, ${alpha})` : `rgba(255, 255, 255, ${alpha})`);
         grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
         ctx.strokeStyle = grad;
@@ -182,19 +197,18 @@ export const BackgroundParticles = () => {
       }
 
       // Film effect - update grain only occasionally for performance
-      if (now >= nextShootingStarAt) {
+      if (!reducedMotion && now >= nextShootingStarAt) {
         spawnShootingStar();
         nextShootingStarAt = now + getNextShootingStarDelay();
       }
 
-      if (!isMobile && now - lastGrainTime > 150) {
+      if (!isMobile && (reducedMotion || now - lastGrainTime > 150)) {
         fctx.clearRect(0, 0, filmCanvas.width, filmCanvas.height);
-        generateGrain();
-        drawScratches();
+        if (!reducedMotion) { generateGrain(); drawScratches(); }
         lastGrainTime = now;
       }
 
-      animationFrameId = requestAnimationFrame(animate);
+      if (!reducedMotion) animationFrameId = requestAnimationFrame(animate);
     };
 
     const handleVisibilityChange = () => {
@@ -202,12 +216,21 @@ export const BackgroundParticles = () => {
       cancelAnimationFrame(animationFrameId);
       if (isPageVisible) {
         lastFrameTime = 0;
-        animationFrameId = requestAnimationFrame(animate);
+        if (reducedMotion) animate();
+        else animationFrameId = requestAnimationFrame(animate);
       }
+    };
+    const handleMotionPreference = () => {
+      reducedMotion = motionPreference.matches;
+      shootingStars = [];
+      cancelAnimationFrame(animationFrameId);
+      lastFrameTime = 0;
+      if (isPageVisible) animate();
     };
 
     window.addEventListener('resize', resize);
     document.addEventListener('visibilitychange', handleVisibilityChange);
+    motionPreference.addEventListener('change', handleMotionPreference);
     resize();
     animate();
 
@@ -215,6 +238,8 @@ export const BackgroundParticles = () => {
       window.removeEventListener('resize', resize);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);
+      themeObserver.disconnect();
+      motionPreference.removeEventListener('change', handleMotionPreference);
     };
   }, []);
 
@@ -222,13 +247,24 @@ export const BackgroundParticles = () => {
     <>
       <canvas 
         ref={canvasRef} 
-        className="fixed inset-0 pointer-events-none z-0 sm:blur-[1px]" 
+        className="site-universe-stars fixed inset-0 pointer-events-none z-0 sm:blur-[1px]"
       />
       <canvas 
         ref={filmCanvasRef} 
         style={{ mixBlendMode: 'overlay', opacity: 0.4 }}
-        className="fixed inset-0 pointer-events-none z-[1] hidden md:block" 
+        className="site-universe-film fixed inset-0 pointer-events-none z-[1] hidden md:block"
       />
     </>
   );
+};
+
+export const BackgroundParticles = () => {
+  const [mobile,setMobile] = useState(() => window.matchMedia('(max-width: 767px), (pointer: coarse)').matches);
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 767px), (pointer: coarse)');
+    const change = () => setMobile(media.matches);
+    media.addEventListener('change',change);
+    return () => media.removeEventListener('change',change);
+  }, []);
+  return mobile ? <div className="site-mobile-sky" aria-hidden="true"><i/><i/><span className="site-mobile-twinkles"/></div> : <DesktopParticles/>;
 };

@@ -18,10 +18,8 @@ export const ArticleVideo = ({ video, poster }: ArticleVideoProps) => {
         className="group absolute inset-0 block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-brand-purple">
         {poster && <img src={poster.src} alt={poster.alt} width={poster.width} height={poster.height}
           fetchPriority="high" decoding="async" className="block h-full w-full object-contain" />}
-        <span className="absolute inset-0 flex items-center justify-center">
-          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-black/80 text-[#fff] shadow-lg transition-colors group-hover:bg-brand-purple">
-            <Play aria-hidden="true" className="h-6 w-6 fill-current" />
-          </span>
+        <span className="site-video-play rounded-full transition-colors" aria-hidden="true">
+          <Play aria-hidden="true" className="fill-current" />
         </span>
       </button>}
     </div>

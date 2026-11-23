@@ -104,11 +104,11 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
   
-  --color-brand-purple: #BD7BFF;
+  --color-brand-purple: #7E1BFF;
   --color-brand-orange: #FF7A00;
   --color-bg-dark: #050505;
   --color-card-dark: #111111;
-  --color-brand-purple-light: #9D58FF;
+  --color-brand-purple-light: #7E1BFF;
 }
 
 @layer base {

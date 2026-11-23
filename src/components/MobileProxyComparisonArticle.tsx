@@ -15,6 +15,8 @@ import {
 import { useEffect, useState } from 'react';
 import { trackAnalyticsEvent } from '../analytics';
 import { BackgroundParticles } from './BackgroundParticles';
+import {readSiteTheme,writeSiteTheme} from './SiteTheme';
+import {MobileNavigation} from './MobileNavigation';
 import { ArticleLanguageLink } from './ArticleLanguageLink';
 import { ArticleChecklist } from './ArticleChecklist';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
@@ -44,7 +46,6 @@ const providers: Provider[] = mobileProxyProviders;
 
 type ArticleTheme = 'dark' | 'light';
 
-const ARTICLE_THEME_KEY = 'hopscup-article-theme';
 
 const ArticleScreenshot = ({ src, alt, caption }: { key?: string; src: string; alt: string; caption: string }) => (
   <figure className="my-8 min-w-0">
@@ -61,12 +62,12 @@ const ArticleScreenshot = ({ src, alt, caption }: { key?: string; src: string; a
 export const MobileProxyComparisonArticle = () => {
   const [theme, setTheme] = useState<ArticleTheme>(() => {
     if (typeof window === 'undefined') return 'dark';
-    return window.localStorage.getItem(ARTICLE_THEME_KEY) === 'light' ? 'light' : 'dark';
+    return readSiteTheme();
   });
   const [copiedProvider, setCopiedProvider] = useState<string | null>(null);
 
   useEffect(() => {
-    window.localStorage.setItem(ARTICLE_THEME_KEY, theme);
+    writeSiteTheme(theme);
     document.documentElement.dataset.articleTheme = theme;
 
     return () => {
@@ -131,8 +132,9 @@ export const MobileProxyComparisonArticle = () => {
             <img src="/logo.webp" alt="Hopscup" className="h-10 w-10 rounded-xl border border-white/10 object-cover" />
             <span className="hidden font-display text-sm font-bold text-white/80 sm:block">Hopscup's Tools Hub</span>
           </a>
-          <div className="flex items-center gap-2">
+          <div className="site-header-actions flex items-center gap-2">
             <ArticleLanguageLink />
+            <MobileNavigation/>
             <button
               type="button"
               onClick={() => setTheme(isLight ? 'dark' : 'light')}

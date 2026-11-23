@@ -6,6 +6,10 @@
 import { useState, useMemo, useEffect, useRef, type ReactNode } from 'react';
 import { AnimatePresence, LazyMotion, domAnimation, m as motion, useIsPresent } from 'motion/react';
 import { BackgroundParticles } from './components/BackgroundParticles';
+import { burstPromoStars, useCatalogReveal } from './lib/uiEffects';
+import {SiteThemeToggle} from './components/SiteTheme';
+import {MobileNavigation} from './components/MobileNavigation';
+import {categoryFilterCount} from './lib/catalogCounts.js';
 import { ProxyGuideArticle } from './components/ProxyGuideArticle';
 import { MobileProxyComparisonArticle } from './components/MobileProxyComparisonArticle';
 import { MobileIpGuideArticle } from './components/MobileIpGuideArticle';
@@ -5447,6 +5451,10 @@ const OfferModalHeading = ({ children, className }: { children: ReactNode; class
   return <Heading id="offer-modal-title" className={className}>{children}</Heading>;
 };
 
+const clearActionPress = ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
+  currentTarget.querySelectorAll('[data-touch-pressed]').forEach(element => element.removeAttribute('data-touch-pressed'));
+};
+
 export default function App() {
   const initialCategory = getCategoryFromPath();
   const currentSeoLanding = getSeoLandingFromPath();
@@ -5470,6 +5478,10 @@ export default function App() {
   const [isSteamGuideOpen, setIsSteamGuideOpen] = useState(false);
   const [guideTopicFilter, setGuideTopicFilter] = useState<GuideTopic>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  useEffect(() => {
+    document.documentElement.toggleAttribute('data-guide-article', /^\/(?:en\/|es\/|zh\/|ko\/)?guides\/[^/]+/.test(window.location.pathname));
+  });
+  useCatalogReveal(`${activeCategory}|${subFilter}|${guideTopicFilter}|${lang}|${searchQuery}|${isHomeRoute}`);
   const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsent>(() => getAnalyticsConsent());
   const [isAnalyticsSettingsOpen, setIsAnalyticsSettingsOpen] = useState(false);
   const [placeholderText, setPlaceholderText] = useState('');
@@ -6129,6 +6141,7 @@ export default function App() {
 
   const markPromoAsCopied = (sourceId: string) => {
     setCopiedPromoId(sourceId);
+    burstPromoStars(sourceId);
     if (copiedPromoTimerRef.current) clearTimeout(copiedPromoTimerRef.current);
     copiedPromoTimerRef.current = setTimeout(() => {
       setCopiedPromoId(null);
@@ -6486,10 +6499,10 @@ export default function App() {
         event.preventDefault();
         handleOfferOpen(offer);
       }}
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
+      data-catalog-card={offer.id}
+      initial={false}
       exit={{ opacity: 0, scale: 0.98 }}
-      transition={{ duration: 0.4, delay: index * 0.06 }}
+      transition={{ duration: 0.4 }}
       className={`group flex min-h-[190px] flex-col rounded-2xl border border-white/[0.09] bg-[#111111]/80 p-5 text-left backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/[0.045] ${styles.glow}`}
     >
       {cover ? (
@@ -6526,7 +6539,7 @@ export default function App() {
       <div className="mesh-gradient" />
       
       {/* Unified Header & Navigation */}
-      <div className="sticky top-0 z-[90] bg-bg-dark/70 backdrop-blur-2xl border-b border-white/5 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
+      <div className="site-unified-header sticky top-0 z-[90] bg-bg-dark/70 backdrop-blur-2xl border-b border-white/5 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
         {/* Top Row: Logo & Language Toggle */}
         <div className="py-2 px-6 md:px-12 flex justify-between items-center border-b border-white/5">
           <div className="flex items-center gap-4">
@@ -6534,7 +6547,7 @@ export default function App() {
               <img src="/logo.webp" alt="Hopscup's Tools Hub" className="w-full h-full object-cover" />
             </a>
             
-            <div className="flex items-center gap-2">
+            <div className="hidden items-center gap-2 md:flex">
               {t.social?.map((social) => {
                 const Icon = social.icon;
                 if (!Icon) return null;
@@ -6545,7 +6558,8 @@ export default function App() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 bg-white/5 rounded-lg hover:bg-brand-purple/20 transition-all border border-white/5 hover:border-brand-purple/30"
+                    className="site-social-button p-2 bg-white/5 rounded-lg hover:bg-brand-purple/20 transition-all border border-white/5 hover:border-brand-purple/30"
+                    aria-label={social.id === 'yt' ? 'YouTube' : social.id === 'tg' ? 'Telegram' : social.id}
                   >
                     <Icon className="w-4 h-4 text-white/40 hover:text-brand-purple transition-colors" />
                   </motion.a>
@@ -6554,13 +6568,16 @@ export default function App() {
             </div>
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="site-header-actions flex items-center gap-4">
             <LanguageToggle lang={lang} />
+            <SiteThemeToggle/>
+            <MobileNavigation items={CATEGORIES.map(cat => {const Icon = cat.icon || Globe;return {href:getLocalizedRoute(cat.id,lang),label:l(cat.title),icon:<Icon className="h-5 w-5"/>};})}
+              socials={t.social.map(social => {const Icon=social.icon;return <a key={social.id} href={social.url} target="_blank" rel="noopener noreferrer" className="site-theme-toggle" aria-label={social.id==='yt'?'YouTube':'Telegram'}><Icon className="h-5 w-5"/></a>;})}/>
           </div>
         </div>
 
         {/* Bottom Row: Categories */}
-        <div className="py-3 px-4 overflow-x-auto scrollbar-hide">
+        <div className="site-section-navigation hidden py-3 px-4 overflow-x-auto scrollbar-hide md:block">
           <div className="max-w-7xl mx-auto flex flex-nowrap md:flex-wrap justify-start md:justify-center gap-3">
             {CATEGORIES.map((cat) => {
               const Icon = cat.icon || Globe;
@@ -6593,21 +6610,22 @@ export default function App() {
       {/* Hero Section */}
       <section className="pt-16 md:pt-20 pb-12 px-6 max-w-6xl mx-auto text-center relative z-10 font-display">
         <motion.div
-           initial={{ opacity: 0, y: 30 }}
+           initial={false}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <p id="hero-title" className="text-5xl md:text-8xl font-bold tracking-tighter mb-4 bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-transparent">
             {t.heroTitle}
+            <span className="site-wordmark-glint" aria-hidden="true"><span>{t.heroTitle}</span></span>
           </p>
           <p className="text-white/60 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed font-light">
             {t.heroSub}
           </p>
 
           {/* Search Bar */}
-          <div className="max-w-2xl mx-auto flex items-center gap-2 bg-white/5 p-1 rounded-2xl border border-white/5 backdrop-blur-xl">
+          <div className="site-search-field max-w-2xl mx-auto flex items-center gap-2 bg-white/5 p-1 rounded-2xl border border-white/5 backdrop-blur-xl">
             <div className="flex-1 relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-brand-purple transition-colors" />
+              <Search className="site-search-icon absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-brand-purple transition-colors" />
               <input 
                 type="text"
                 placeholder={placeholderText}
@@ -6622,16 +6640,17 @@ export default function App() {
 
       {/* Sub-Filters & Section Guides */}
       {hasSectionControls && (
-        <div className="max-w-6xl mx-auto px-6 mb-16 relative z-30">
+        <div data-catalog-controls data-category={activeCategory} className="site-section-controls max-w-6xl mx-auto px-6 mb-16 relative z-30">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="site-filter-chips flex flex-wrap justify-center gap-3">
               {activeCategoryData?.subFilters && (
                 <>
                   <button
                     onClick={() => {
                       handleSubFilterChange('None');
                     }}
-                    className={`px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border-2 ${
+                    aria-pressed={subFilter === 'None'}
+                    className={`site-filter-chip px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border-2 ${
                       subFilter === 'None' 
                         ? 'bg-brand-purple border-brand-purple text-white shadow-[0_0_20px_rgba(129,28,254,0.3)]' 
                         : 'bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:border-white/20'
@@ -6641,6 +6660,7 @@ export default function App() {
                     {activeCategory === 'Crypto'
                       ? tx({ ru: 'Обменники', en: 'Exchanges', es: 'Exchanges', zh: '兑换服务', ko: '환전소' })
                       : t.all}
+                    <span className="site-filter-count">{categoryFilterCount(OFFERS,activeCategory)}</span>
                   </button>
                   {activeCategoryData.subFilters.map(filter => (
                     <button
@@ -6648,7 +6668,8 @@ export default function App() {
                       onClick={() => {
                         handleSubFilterChange(filter);
                       }}
-                      className={`px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border-2 ${
+                      aria-pressed={subFilter === filter}
+                      className={`site-filter-chip px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border-2 ${
                         subFilter === filter 
                           ? 'bg-brand-purple border-brand-purple text-white shadow-[0_0_20px_rgba(129,28,254,0.3)]' 
                           : 'bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:border-white/20'
@@ -6661,6 +6682,7 @@ export default function App() {
                       {filter === 'AIVoice' && <AudioLines aria-hidden="true" className="mr-2 inline-block h-4 w-4" />}
                       {filter === 'AICoding' && <Code aria-hidden="true" className="mr-2 inline-block h-4 w-4" />}
                       {t.subFilters[filter] || filter}
+                      <span className="site-filter-count">{categoryFilterCount(OFFERS,activeCategory,filter)}</span>
                     </button>
                   ))}
                 </>
@@ -6668,7 +6690,17 @@ export default function App() {
             </div>
 
             {activeCategoryData?.guides && (
-              <div className="flex flex-wrap justify-center md:justify-end gap-3">
+              <div className="site-section-actions flex flex-wrap justify-center md:justify-end gap-3"
+                onPointerDownCapture={event => {
+                  if (event.pointerType === 'mouse') return;
+                  const action = (event.target as Element).closest('a,button');
+                  if (action?.parentElement === event.currentTarget) action.setAttribute('data-touch-pressed', 'true');
+                }}
+                onPointerUpCapture={clearActionPress} onPointerCancelCapture={clearActionPress}
+                onPointerLeave={clearActionPress}
+                onBlurCapture={event => {
+                  if (!event.currentTarget.contains(event.relatedTarget)) clearActionPress(event);
+                }}>
                 {activeCategory === 'Proxy' ? (
                   <>
                     <button
@@ -6866,14 +6898,14 @@ export default function App() {
                       type="button"
                       aria-pressed={guideTopicFilter === topic.id}
                       onClick={() => setGuideTopicFilter(topic.id)}
-                      className={`inline-flex min-h-10 shrink-0 items-center gap-2 rounded-lg border px-3 py-2 text-[11px] font-black uppercase transition-colors md:px-4 ${
+                      className={`site-guide-topic inline-flex min-h-10 shrink-0 items-center gap-2 rounded-lg border px-3 py-2 text-[11px] font-black uppercase transition-colors md:px-4 ${
                         guideTopicFilter === topic.id
                           ? 'border-brand-purple/45 bg-brand-purple/15 text-brand-purple'
                           : 'border-white/10 bg-white/[0.025] text-white/45 hover:border-white/25 hover:text-white/80'
                       }`}
                     >
                       {topic.label}
-                      <span className={`inline-flex h-5 min-w-5 items-center justify-center rounded px-1 text-[10px] tabular-nums ${guideTopicFilter === topic.id ? 'bg-brand-purple/15 text-brand-purple' : 'bg-white/[0.06] text-white/50'}`}>
+                      <span className={`site-filter-count inline-flex h-5 min-w-5 items-center justify-center rounded px-1 text-[10px] tabular-nums ${guideTopicFilter === topic.id ? 'bg-brand-purple/15 text-brand-purple' : 'bg-white/[0.06] text-white/50'}`}>
                         {guideTopicCounts[topic.id]}
                       </span>
                     </button>
@@ -6940,10 +6972,10 @@ export default function App() {
                 <motion.div
                   layout
                   key={offer.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  data-catalog-card={offer.id}
+                  initial={false}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  transition={{ duration: 0.5 }}
                   className="bg-[#111111]/80 backdrop-blur-xl p-7 rounded-[1.5rem] group flex flex-col justify-between gap-8 relative overflow-hidden h-full border border-white/5 shadow-2xl hover:border-brand-purple/30 hover:shadow-[0_0_60px_rgba(129,28,254,0.15)] transition-all duration-500 hover:-translate-y-1"
                 >
                   {isRecommended(offer) && <RecommendedBadge language={lang === 'ru' ? 'ru' : 'en'} label={recommendedOfferLabels[offer.id]?.[lang === 'ru' ? 'ru' : 'en']} />}
@@ -7058,6 +7090,7 @@ export default function App() {
                               <button
                                 type="button"
                                 onClick={() => copyToClipboard(offer.promoCode, `card-${offer.id}`)}
+                                data-promo-source={`card-${offer.id}`}
                                 title={`${t.promo}: ${offer.promoCode}`}
                                 aria-label={`${copiedPromoId === `card-${offer.id}` ? t.copied : t.promo} ${offer.promoCode}`}
                                 aria-live="polite"
@@ -7171,6 +7204,7 @@ export default function App() {
                     {offer.promoCode && !offer.previousIssuance && (
                       <button
                         onClick={() => copyToClipboard(offer.promoCode || '', `card-${offer.id}`)}
+                        data-promo-source={`card-${offer.id}`}
                         aria-label={`${copiedPromoId === `card-${offer.id}` ? t.copied : t.promo} ${offer.promoCode}`}
                         title={`${t.promo}: ${offer.promoCode}`}
                         aria-live="polite"
@@ -7379,7 +7413,8 @@ export default function App() {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white/5 rounded-xl hover:bg-brand-purple/20 transition-all border border-white/5 hover:border-brand-purple/30"
+                className="site-social-button p-3 bg-white/5 rounded-xl hover:bg-brand-purple/20 transition-all border border-white/5 hover:border-brand-purple/30"
+                aria-label={social.id === 'yt' ? 'YouTube' : social.id === 'tg' ? 'Telegram' : social.id}
               >
                 <Icon className="w-5 h-5 text-white/50 hover:text-brand-purple transition-colors" />
               </motion.a>
@@ -8810,8 +8845,8 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="min-h-0 flex-1 space-y-6 overflow-y-auto px-6 py-5 custom-scrollbar md:px-8 md:py-6">
-                  <div>
+                <div key={selectedOffer.id} data-offer-scroll className="min-h-0 flex-1 space-y-6 overflow-y-auto px-6 py-5 custom-scrollbar md:px-8 md:py-6">
+                  <div data-offer-description>
                     <h4 className="text-[11px] uppercase font-black text-brand-purple tracking-[0.2em] mb-3">
                       {t.description}
                     </h4>
@@ -8819,7 +8854,7 @@ export default function App() {
                   </div>
 
                   {selectedOffer.cardStats && (
-                    <div className="flex flex-col gap-4 py-6 border-y border-white/5">
+                    <div data-offer-facts className="flex flex-col gap-4 py-6 border-y border-white/5">
                       <div className="flex justify-between items-center group/stat">
                         <div className="flex items-center gap-3">
                           <div className="w-1.5 h-1.5 rounded-full bg-[#BD7BFF] shadow-[0_0_10px_#BD7BFF]" />
@@ -8961,6 +8996,7 @@ export default function App() {
 
                   {(selectedOffer.mobileDetails || selectedOffer.freeProfiles || selectedOffer.tariffStartPrice || selectedOffer.profiles100Price || selectedOffer.details?.price || selectedOffer.details?.freeTrial || selectedOffer.details?.ipRotation || selectedOffer.details?.rate || selectedOffer.details?.geo || selectedOffer.details?.types || selectedOffer.platforms?.length || selectedOffer.details?.paymentMethods) && (
                     <div
+                      data-offer-facts
                       className={
                         selectedOffer.category === 'Proxy'
                           ? 'grid grid-cols-1 gap-3 border-y border-white/5 py-5'
@@ -9277,6 +9313,7 @@ export default function App() {
                   {selectedOffer.promoCode && (
                     <button
                       onClick={() => copyToClipboard(selectedOffer.promoCode || '', `modal-${selectedOffer.id}`)}
+                      data-promo-source={`modal-${selectedOffer.id}`}
                       aria-label={`${copiedPromoId === `modal-${selectedOffer.id}` ? t.copied : t.promo} ${selectedOffer.promoCode}`}
                       title={`${t.promo}: ${selectedOffer.promoCode}`}
                       aria-live="polite"

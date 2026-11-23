@@ -49,9 +49,14 @@ export const RecommendedBadge = ({ language, label: customLabel }: { language: '
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') event.stopPropagation();
         }}
-        className="flex h-[26px] w-[26px] items-center justify-center rounded-full border border-[#FACC15]/25 bg-[#FACC15]/[0.045] text-[#FACC15]/90 shadow-[0_0_12px_rgba(250,204,21,0.10)] hover:border-[#FACC15]/45 hover:bg-[#FACC15]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FACC15]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-dark"
+        className="site-recommend-button flex h-[26px] w-[26px] items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/55 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-dark"
       >
-        <Star className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden="true" />
+        <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 overflow-visible" aria-hidden="true">
+          <defs><linearGradient id={`${popoverId}-glass`} x1="0" y1="0" x2="1" y2="1"><stop stopColor="#F5A94A"/><stop offset=".5" stopColor="#DCA2D1"/><stop offset="1" stopColor="#7E1BFF"/></linearGradient></defs>
+          <Star fill={`url(#${popoverId}-glass)`} stroke="white" strokeOpacity=".7" strokeWidth={1}/>
+          <path d="M9 8.5 12 3l2.2 4.6" fill="none" stroke="white" strokeOpacity=".7" strokeWidth="1" strokeLinecap="round"/>
+        </svg>
+        <span className="site-recommend-glint" aria-hidden="true"><i/></span>
       </button>
       <AnimatePresence>
         {mode && (
@@ -63,10 +68,10 @@ export const RecommendedBadge = ({ language, label: customLabel }: { language: '
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 4 }}
               transition={{ duration: 0.15, ease: 'easeOut' }}
-              className="relative block whitespace-nowrap rounded-md border border-[#FACC15]/20 bg-[#111014] px-2 py-0.5 text-[11px] font-semibold leading-[14px] text-[#FACC15]/90 shadow-lg"
+              className="site-recommend-tooltip relative block whitespace-nowrap rounded-md border px-2 py-0.5 text-[11px] font-semibold leading-[14px] shadow-lg"
             >
               {label}
-              <span aria-hidden="true" className="pointer-events-none absolute -right-[3px] top-1/2 h-1.5 w-1.5 -translate-y-1/2 rotate-45 border-r border-t border-[#FACC15]/20 bg-[#111014]" />
+              <span aria-hidden="true" className="site-recommend-tooltip pointer-events-none absolute -right-[3px] top-1/2 h-1.5 w-1.5 -translate-y-1/2 rotate-45 border-r border-t" />
             </motion.span>
           </span>
         )}

@@ -3,6 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script id="site-theme-bootstrap">
+      (() => {
+        let theme = 'dark';
+        try { if (localStorage.getItem('hopscup-site-theme') === 'light') theme = 'light'; } catch {}
+        document.documentElement.dataset.siteTheme = theme;
+        const guide = /^\/(?:en\/|es\/|zh\/|ko\/)?guides\/[^/]+/.test(location.pathname);
+        document.documentElement.toggleAttribute('data-guide-article', guide);
+        if (guide) ['latin', 'cyrillic'].forEach(subset => {
+          const link = document.createElement('link');
+          link.rel = 'preload'; link.as = 'font'; link.type = 'font/woff2'; link.crossOrigin = '';
+          link.href = '/fonts/montserrat/montserrat-' + subset + '.woff2';
+          document.head.appendChild(link);
+        });
+      })();
+    </script>
+    <link rel="preload" href="/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7SUc.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2" as="font" type="font/woff2" crossorigin />
+    <style>html[data-site-theme="light"],html[data-site-theme="light"] body { background:#fff; } html[data-site-theme="dark"] { color-scheme:dark; }</style>
     <title>Прокси и VPN для аккаунтов, фарма и работы | Hopscup Tools</title>
     <meta name="description" content="Подборка прокси, VPN, антидетектов, SMS-активаторов, зарубежных карт, VDS/VPS, магазинов аккаунтов и других сервисов для работы." />
     <meta name="keywords" content="прокси, vpn, антидетект, sms активаторы, зарубежные карты, купить аккаунты, купить крипту, vps серверы, пополнение steam, полезные гайды" />

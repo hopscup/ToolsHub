@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
+import {readSiteTheme,writeSiteTheme} from './SiteTheme';
+import {MobileNavigation} from './MobileNavigation';
 import { ArticleLanguageLink } from './ArticleLanguageLink';
 import { youtubeFarmGuideLink } from '../data/contextualGuideLinks.js';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
@@ -76,7 +78,6 @@ const OutboundButton = ({ provider }: { provider: Provider }) => (
 
 type ArticleTheme = 'dark' | 'light';
 
-const ARTICLE_THEME_KEY = 'hopscup-article-theme';
 
 export const ProxyGuideArticle = () => {
   const [copiedProvider, setCopiedProvider] = useState<string | null>(null);
@@ -105,11 +106,11 @@ export const ProxyGuideArticle = () => {
   };
   const [theme, setTheme] = useState<ArticleTheme>(() => {
     if (typeof window === 'undefined') return 'dark';
-    return window.localStorage.getItem(ARTICLE_THEME_KEY) === 'light' ? 'light' : 'dark';
+    return readSiteTheme();
   });
 
   useEffect(() => {
-    window.localStorage.setItem(ARTICLE_THEME_KEY, theme);
+    writeSiteTheme(theme);
     document.documentElement.dataset.articleTheme = theme;
 
     return () => {
@@ -133,8 +134,9 @@ export const ProxyGuideArticle = () => {
           <img src="/logo.webp" alt="Hopscup" className="h-10 w-10 rounded-xl border border-white/10 object-cover" />
           <span className="hidden font-display text-sm font-bold text-white/80 sm:block">Hopscup's Tools Hub</span>
         </a>
-        <div className="flex items-center gap-2">
-          <ArticleLanguageLink />
+        <div className="site-header-actions flex items-center gap-2">
+            <ArticleLanguageLink />
+            <MobileNavigation/>
           <button
             type="button"
             onClick={() => setTheme(isLight ? 'dark' : 'light')}

@@ -13,6 +13,8 @@ import {
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
+import {readSiteTheme,writeSiteTheme} from './SiteTheme';
+import {MobileNavigation} from './MobileNavigation';
 import { ArticleLanguageLink } from './ArticleLanguageLink';
 import { ArticleChecklist } from './ArticleChecklist';
 import { ArticleSocialFooter } from './ArticleSocialFooter';
@@ -24,7 +26,6 @@ import { trackAnalyticsEvent } from '../analytics';
 
 type ArticleTheme = 'dark' | 'light';
 
-const ARTICLE_THEME_KEY = 'hopscup-article-theme';
 
 const GuideNote = ({ children, warning = false }: { children: ReactNode; warning?: boolean }) => (
   <div className={`my-6 rounded-r-2xl border-l-2 px-5 py-4 text-sm font-semibold leading-7 md:text-base ${warning ? 'border-brand-orange bg-brand-orange/[0.06] text-white/65' : 'border-brand-purple bg-brand-purple/[0.07] text-white/65'}`}>
@@ -73,11 +74,11 @@ type GuideOffer = { id: string; name: string; url: string; category: string; slu
 export const AntidetectSetupGuideArticle = ({ offers }: { offers: GuideOffer[] }) => {
   const [theme, setTheme] = useState<ArticleTheme>(() => {
     if (typeof window === 'undefined') return 'dark';
-    return window.localStorage.getItem(ARTICLE_THEME_KEY) === 'light' ? 'light' : 'dark';
+    return readSiteTheme();
   });
 
   useEffect(() => {
-    window.localStorage.setItem(ARTICLE_THEME_KEY, theme);
+    writeSiteTheme(theme);
     document.documentElement.dataset.articleTheme = theme;
 
     return () => {
@@ -115,8 +116,9 @@ export const AntidetectSetupGuideArticle = ({ offers }: { offers: GuideOffer[] }
             <img src="/logo.webp" alt="Hopscup" className="h-10 w-10 rounded-xl border border-white/10 object-cover" />
             <span className="hidden font-display text-sm font-bold text-white/80 sm:block">Hopscup's Tools Hub</span>
           </a>
-          <div className="flex items-center gap-2">
+          <div className="site-header-actions flex items-center gap-2">
             <ArticleLanguageLink />
+            <MobileNavigation/>
             <button
               type="button"
               onClick={() => setTheme(isLight ? 'dark' : 'light')}

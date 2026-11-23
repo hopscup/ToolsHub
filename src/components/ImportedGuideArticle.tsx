@@ -3,6 +3,8 @@ import { ArrowLeft, BookOpen, Check, Copy, Moon, Sun } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import type { ComponentProps } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
+import {readSiteTheme,writeSiteTheme} from './SiteTheme';
+import {MobileNavigation} from './MobileNavigation';
 import { ArticleLanguageLink } from './ArticleLanguageLink';
 import { RelatedGuides } from './RelatedGuides';
 import type { RelatedGuide } from './RelatedGuides';
@@ -57,7 +59,6 @@ type ImportedGuideArticleProps = {
   onServiceClick?: (href: string, placement: 'article_cta' | 'article_summary') => void;
 };
 
-const ARTICLE_THEME_KEY = 'hopscup-article-theme';
 
 const normalizeHref = (href: string | undefined, sourceAnchors: Record<string, string>) => {
   if (!href) return undefined;
@@ -167,11 +168,11 @@ export const ImportedGuideArticle = ({
 }: ImportedGuideArticleProps) => {
   const [theme, setTheme] = useState<ArticleTheme>(() => {
     if (typeof window === 'undefined') return 'dark';
-    return window.localStorage.getItem(ARTICLE_THEME_KEY) === 'light' ? 'light' : 'dark';
+    return readSiteTheme();
   });
 
   useEffect(() => {
-    window.localStorage.setItem(ARTICLE_THEME_KEY, theme);
+    writeSiteTheme(theme);
     document.documentElement.dataset.articleTheme = theme;
     return () => {
       delete document.documentElement.dataset.articleTheme;
@@ -203,8 +204,9 @@ export const ImportedGuideArticle = ({
             <img src="/logo.webp" alt="Hopscup" className="h-10 w-10 shrink-0 rounded-xl border border-white/10 object-cover" />
             <span className="hidden truncate font-display text-sm font-bold text-white/80 sm:block">Hopscup's Tools Hub</span>
           </a>
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="site-header-actions flex shrink-0 items-center gap-2">
             <ArticleLanguageLink />
+            <MobileNavigation/>
             <button
               type="button"
               onClick={() => setTheme(isLight ? 'dark' : 'light')}
