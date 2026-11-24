@@ -170,6 +170,12 @@ test('change comparison detects modified and newly indexable pages, not tooling-
   assert.equal(changedPathsBetween(before,after,['src/components/ArticleToc.tsx']).paths.length,3);
 });
 
+test('homepage selection changes notify only the two indexable homepages',()=>{
+  const site={shell:'same',models:new Map([['/','home'],['/en','home'],['/proxy-vpn','catalogue']])};
+  assert.deepEqual(changedPathsBetween(site,site,['src/data/homePage.js']).paths,['/','/en']);
+  assert.deepEqual(changedPathsBetween(site,site,['scripts/home-page.test.mjs']).paths,[]);
+});
+
 test('real Git comparison of the VPN release detects four indexable cards and excludes Taynik',async()=>{
   const result=await lastCommitChanges({root:projectRoot,revision:'48c8831eb637865baaef9ea85dbcbf51fa6b96a9'});
   assert.deepEqual(result.paths.sort(),['/proxy-vpn/giga-dollar-vpn','/proxy-vpn/giga-vpn','/proxy-vpn/prostovpn','/proxy-vpn/quattro-vpn']);

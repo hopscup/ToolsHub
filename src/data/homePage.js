@@ -142,7 +142,7 @@ export const homeHeroCopy = {
   ],
 };
 
-export const homeFeaturedIds = ['p6', 'p3', 'vpn-ppl', 'zarub', 'st-dark', 'ant-shardx'];
+export const homeFeaturedIds = ['p6', 'p3', 'st-dark', 'zarub', 'vpn-all', 'ant-shardx'];
 export const homeGuideEnglish = {
   'guide-vpn-4g': { title: 'VPN not working on 4G: what to do when nothing loads', description: 'Mobile-data allowlists, older protocols, Happ on iPhone and ways to buy a VPN when Telegram will not open.' },
   'guide-happ-routing': { title: 'Set up Happ routing so Russian sites work with your VPN on', description: 'Split tunneling in Happ: send Russian banking and shopping traffic directly while international services use the VPN.' },

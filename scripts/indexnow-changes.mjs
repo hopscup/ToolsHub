@@ -77,6 +77,7 @@ export const changedPathsBetween = (before, after, files = []) => {
     || /\.(?:css|html)$/.test(file) || ['scripts/postbuild-seo.mjs', 'vite.config.ts', 'src/main.tsx'].includes(file));
   const assets = files.filter(file => file.startsWith('public/')).map(file => file.slice('public'.length));
   const paths = [...after.models].filter(([route, content]) => shared
+    || (['/', '/en'].includes(route) && files.includes('src/data/homePage.js'))
     || before.models.get(route) !== content
     || assets.some(asset => content.includes(asset))).map(([route]) => route);
   return {paths, sharedRenderChange: shared};

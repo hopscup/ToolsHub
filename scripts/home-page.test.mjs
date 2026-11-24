@@ -14,6 +14,7 @@ test('homepage counts and featured services use live data without modifying the 
  assert.equal(home.serviceCount,OFFERS.filter(offer=>offer.category!=='Guides').length);
  assert.equal(home.guideCount,guideCatalog.filter(guide=>guide.indexable!==false).length);
  assert.deepEqual(home.featured.map(offer=>offer.id),homeFeaturedIds);
+ assert.deepEqual(homeFeaturedIds,['p6','p3','st-dark','zarub','vpn-all','ant-shardx']);
  const dates=Object.fromEntries(guidePages.map(page=>[page.id,page.datePublished]));
  for(const guide of home.guides)assert.notEqual(guide.indexable,false);
  for(let i=1;i<home.guides.length;i++)assert.ok(Date.parse(dates[home.guides[i-1].id])>=Date.parse(dates[home.guides[i].id]));
@@ -30,6 +31,7 @@ test('RU and EN static homepages contain every authored hub paragraph, link, fea
   for(const copy of [...Object.values(homeCopy),...Object.values(homeHeroCopy)])if(copy?.[language])for(const paragraph of Array.isArray(copy[language])?copy[language]:[copy[language]])assert.ok(text.includes(plainSeoText(paragraph)),paragraph);
   for(const task of homeHeroCopy.tasks){assert.ok(text.includes(task.title[language]));const offer=OFFERS.find(item=>item.id===task.offerId);assert.ok(text.includes(offer.name));}
   assert.ok(staticHtml.includes('id="home-tasks"'));
+  assert.deepEqual([...staticHtml.matchAll(/data-service-summary="([^"]+)"/g)].map(match=>match[1]),homeFeaturedIds);
   for(const task of homeCopy.tasks){assert.ok(text.includes(task.title[language]));assert.ok(text.includes(task.text[language]));for(const link of task.links){assert.ok(staticHtml.includes(`href="${homeLink(link.href,language)}"`));assert.ok(text.includes(link.label[language]));}}
   for(const offer of home.featured){
     assert.ok(staticHtml.includes(`data-service-summary="${offer.id}"`));
