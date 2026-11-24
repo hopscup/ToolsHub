@@ -3,6 +3,8 @@ html #hero-title.home-hero-title { background-image:none;overflow:visible; }
 .home-hero [class],.home-hero code { letter-spacing:0 !important; }
 .home-hero .home-hero-wordmark { font-size:80px; }
 .home-hero .home-hero-sub { font-size:26px; }
+.home-hero :is(.home-hero-wordmark,.home-hero-preview-head h2) { font-family:'Space Grotesk','Space Grotesk Fallback',sans-serif; }
+.home-hero .home-hero-sub { font-family:'Space Grotesk','Space Grotesk Fallback',var(--site-body-font); }
 html[data-site-theme] .home-hero svg.lucide { color:inherit !important; }
 html[data-site-theme] .home-hero .home-hero-task-arrow { color:#6f6b7b !important; }
 @media(max-width:767px) {

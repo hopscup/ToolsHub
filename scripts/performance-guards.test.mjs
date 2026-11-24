@@ -56,6 +56,7 @@ test('prerender has real markup, one H1 per layer, inline styles and unique non-
     const html=await readFile('dist/'+route+'index.html','utf8'),layers=pageLayers(html);
     assert.equal(layers.prerendered,true,route);assert.equal(layers.headingCount,1,route);
     assert.ok(layers.prerender.includes('<template data-prerender-root>'));
+    assert.ok(!html.includes('html:not([data-js-enabled]) #root'),'Prerender must be inert template content, not CSS-hidden text');
     assert.ok(html.includes('id="prerender-bootstrap"'));assert.ok(html.includes('root.replaceChildren(template.content)'));
     assert.ok(html.includes('id="first-screen-css"'));assert.ok(html.includes('id="site-theme-bootstrap"'));
     assert.ok(html.indexOf('id="site-theme-bootstrap"')<html.indexOf('<body>'));
@@ -65,6 +66,10 @@ test('prerender has real markup, one H1 per layer, inline styles and unique non-
     visit(parse(html));assert.equal(new Set(preloads).size,preloads.length,route);
     assert.ok(preloads.every(href=>!href.includes('/analytics-')));
     assert.ok(styles.every(attrs=>attrs.media==='print' && 'data-deferred-css' in attrs && attrs.onload.includes("this.media='all'")));
+    if(route==='guides/youtube-ferma/'){
+      assert.ok(html.includes('data-embedded-article-fonts'));
+      assert.equal((html.match(/data:font\/woff2;base64,/g)||[]).length,2,'First article paint must use its final Latin/Cyrillic font without a swap');
+    }
   }
 });
 

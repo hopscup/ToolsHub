@@ -25,7 +25,7 @@ test('Montserrat uses local variable WOFF2 Cyrillic and Latin faces for all five
  assert.match(css,/#hero-title \{ font-family:'Space Grotesk'/);assert.doesNotMatch(css,/Unbounded|heading-preview/);
  assert.ok(css.includes('html[data-guide-article] .proxy-guide-article article :is(h2,h3)'));
  const base=await readFile('src/index.css','utf8');assert.ok(base.includes('--font-sans: "Inter"'));assert.ok(!css.includes('font-size:13px;font-weight:600;letter-spacing:.04em'));
- const html=await readFile('index.html','utf8');assert.ok(html.includes("if (guide) ['latin', 'cyrillic']"));assert.ok(!html.includes('<link rel="preload" href="/fonts/montserrat'));
+ const html=await readFile('index.html','utf8');assert.ok(html.includes("if (guide && !document.documentElement.hasAttribute('data-embedded-article-fonts')) ['latin', 'cyrillic']"));assert.ok(!html.includes('<link rel="preload" href="/fonts/montserrat'));
 });
 
 test('active counters, secondary outlines, mobile controls and video play have dedicated protected styles',async()=>{

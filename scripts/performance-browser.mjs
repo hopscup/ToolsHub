@@ -21,6 +21,8 @@ async function contextFor(width,theme,slow=true) {
     localStorage.setItem('hopscup-site-theme',value);localStorage.setItem('hopscup-analytics-consent','denied');
     window.__layoutShifts=0;
     window.__layoutShiftDetails=[];
+    window.__analyticsStarts=[];
+    new MutationObserver(records=>{for(const record of records)for(const node of record.addedNodes)if(node.tagName==='SCRIPT'&&/cloudflareinsights\.com|\/_vercel\/insights/.test(node.src))window.__analyticsStarts.push({url:node.src,readyState:document.readyState,load:performance.getEntriesByType('navigation')[0]?.loadEventEnd||0,now:performance.now()});}).observe(document,{childList:true,subtree:true});
     new PerformanceObserver(list=>{for(const entry of list.getEntries())if(!entry.hadRecentInput){window.__layoutShifts+=entry.value;window.__layoutShiftDetails.push({value:entry.value,sources:entry.sources?.map(source=>({html:source.node?.outerHTML?.slice(0,220),before:source.previousRect.toJSON(),after:source.currentRect.toJSON()}))});}}).observe({type:'layout-shift',buffered:true});
   },theme);
   const page=await context.newPage();page.setDefaultTimeout(30000);
@@ -50,8 +52,7 @@ try {
       await context.route('**/*',async request=>{
         if(isWorkstationInjectionUrl(request.request().url()))return fulfillBlockedAnalytics(request);
         if(isAnalyticsUrl(request.request().url())){
-          const timing=await page.evaluate(()=>({readyState:document.readyState,load:performance.getEntriesByType('navigation')[0]?.loadEventEnd||0,now:performance.now()})).catch(()=>({}));
-          report.analytics.push({url:request.request().url(),...timing});return fulfillBlockedAnalytics(request);
+          return fulfillBlockedAnalytics(request);
         }
         if(/\/assets\/index-[\w-]+\.js$/.test(new URL(request.request().url()).pathname))await gate;
         await request.continue().catch(()=>{});
@@ -68,6 +69,7 @@ try {
       release();
       await page.waitForFunction(route=>document.documentElement.dataset.indexPolicyPath===route,route);
       await page.waitForLoadState('networkidle',{timeout:60000});
+      report.analytics.push(...await page.evaluate(()=>window.__analyticsStarts));
       const after=await page.evaluate(()=>({theme:document.documentElement.dataset.siteTheme,background:getComputedStyle(document.body).backgroundColor,sameHeading:window.__originalHeading===document.querySelector('#root h1'),headings:document.querySelectorAll('#root h1').length,cls:window.__layoutShifts,shifts:window.__layoutShiftDetails,raw:/Загрузка\.\.\.|Loading\.\.\./.test(document.querySelector('#root').textContent)}));
       assert.equal(after.sameHeading,true,'React replaced prerendered heading: '+route);assert.equal(after.headings,1);assert.equal(after.theme,theme);assert.equal(after.background,before.background);assert.equal(after.raw,false);
       report.matrix.push({width,theme,route,...after});console.log(JSON.stringify(report.matrix.at(-1)));
@@ -97,6 +99,7 @@ try {
   // A genuine HTTP 404 exercises both the early bootstrap and all dynamic import paths.
   for(const [name,route,pattern]of [
     ['entry','/proxy-vpn',/\/assets\/index-[\w-]+\.js$/],
+    ['styles','/proxy-vpn',/\/assets\/index-[\w-]+\.css$/],
     ['app','/proxy-vpn',/\/assets\/App-[\w-]+\.js$/],
     ['catalogue','/proxy-vpn',/\/assets\/ru-[\w-]+\.js$/],
     ['editorial','/proxy-vpn/proxywing',/\/assets\/p3-[\w-]+\.js$/],
