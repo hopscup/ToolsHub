@@ -9,7 +9,7 @@ import {getServiceFacts, localizedServiceValue} from '../src/data/servicePresent
 
 const {OFFERS} = await loadOffers();
 const cards = OFFERS.filter(offer => offer.cardStats);
-const source = ts.createSourceFile('App.tsx', await readFile('src/App.tsx', 'utf8') + await readFile('src/components/ServiceModal.tsx', 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+const source = ts.createSourceFile('App.tsx', await readFile('src/App.tsx', 'utf8') + await readFile('src/components/ServiceModalFrame.tsx', 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 const fragments = new Map();
 const visit = node => {
   if (ts.isJsxExpression(node) && node.expression) {

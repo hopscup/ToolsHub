@@ -4,7 +4,10 @@
  */
 
 import { Suspense, lazy, useState, useMemo, useEffect, useRef, type ReactNode } from 'react';
-import {loadServiceContent, loadSearchContent} from './lib/clientContent';
+import {getCachedServiceContent, loadServiceContent, loadSearchContent} from './lib/clientContent';
+import {createPreloader, scheduleIdlePreload} from './lib/idlePreload.js';
+import {ServiceModalFrame} from './components/ServiceModalFrame';
+import {EditorialSkeleton} from './components/EditorialSkeleton';
 import { AnimatePresence, LazyMotion, domAnimation, motion, useIsPresent } from './components/CssTransitions';
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { burstPromoStars, useCatalogReveal } from './lib/uiEffects';
@@ -16,8 +19,10 @@ const MobileProxyComparisonArticle = lazy(() => import('./components/MobileProxy
 const MobileIpGuideArticle = lazy(() => import('./components/MobileIpGuideArticle').then(module => ({default: module.MobileIpGuideArticle})));
 const GmailForwardingGuideArticle = lazy(() => import('./components/GmailForwardingGuideArticle').then(module => ({default: module.GmailForwardingGuideArticle})));
 const AccountFarmGuideArticle = lazy(() => import('./components/AccountFarmGuideArticle').then(module => ({default: module.AccountFarmGuideArticle})));
-const ServiceModal = lazy(() => import('./components/ServiceModal').then(module => ({default: module.ServiceModal})));
-const CatalogToolsDialogs = lazy(() => import('./components/CatalogToolsDialogs').then(module => ({default: module.CatalogToolsDialogs})));
+const loadServiceModal = createPreloader(() => import('./components/ServiceModal').then(module => ({default: module.ServiceModal})));
+const loadCatalogToolsDialogs = createPreloader(() => import('./components/CatalogToolsDialogs').then(module => ({default: module.CatalogToolsDialogs})));
+const ServiceModal = lazy(loadServiceModal);
+const CatalogToolsDialogs = lazy(loadCatalogToolsDialogs);
 const FreeAntidetectGuideArticle = lazy(() => import('./components/FreeAntidetectGuideArticle').then(module => ({default: module.FreeAntidetectGuideArticle})));
 const ShardxReviewGuideArticle = lazy(() => import('./components/ShardxReviewGuideArticle').then(module => ({default: module.ShardxReviewGuideArticle})));
 const VirtualNumberGuideArticle = lazy(() => import('./components/VirtualNumberGuideArticle').then(module => ({default: module.VirtualNumberGuideArticle})));
@@ -5448,9 +5453,8 @@ export default function App() {
   const isHomeHub = isHomeRoute && isActiveLanguage(lang);
   const home = getHomeSelections(OFFERS);
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(getOfferFromPath());
-  const [offerModalMounted, setOfferModalMounted] = useState(false);
-  useEffect(() => {if (selectedOffer && selectedOffer.category !== 'Guides') setOfferModalMounted(true);}, [selectedOffer?.id]);
   const [offerLoadError, setOfferLoadError] = useState(false);
+  const [offerLoadAttempt, setOfferLoadAttempt] = useState(0);
   useEffect(() => {
     if (!selectedOffer || selectedOffer.category === 'Guides' || (selectedOffer as Offer & {__editorialLoaded?: boolean}).__editorialLoaded) return;
     let current = true;
@@ -5459,7 +5463,7 @@ export default function App() {
       if (current) setSelectedOffer(offer);
     }).catch(() => {if (current) setOfferLoadError(true);});
     return () => {current = false;};
-  }, [selectedOffer?.id, lang]);
+  }, [selectedOffer?.id, lang, offerLoadAttempt]);
   const activeCategoryRef = useRef(activeCategory);
   const subFilterRef = useRef(subFilter);
   const closingSubFilterRef = useRef<SubCategory | null>(null);
@@ -5474,6 +5478,14 @@ export default function App() {
   const toolDialogsVisible = isProxyGuideOpen || isProxyCheckerOpen || isAntidetectGuideOpen || isActivatorGuideOpen || isStoresGuideOpen || isCardsGuideOpen || isSocialGuideOpen || isSteamGuideOpen;
   const [toolDialogsMounted, setToolDialogsMounted] = useState(false);
   useEffect(() => {if (toolDialogsVisible) setToolDialogsMounted(true);}, [toolDialogsVisible]);
+  useEffect(() => {
+    let current = true;
+    const cancel = scheduleIdlePreload(() => {
+      void loadServiceModal().catch(() => {});
+      void loadCatalogToolsDialogs().then(() => {if (current) setToolDialogsMounted(true);}, () => {});
+    });
+    return () => {current = false; cancel();};
+  }, []);
   const [guideTopicFilter, setGuideTopicFilter] = useState<GuideTopic>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchContent, setSearchContent] = useState<Record<string, string> | null>(null);
@@ -6237,7 +6249,14 @@ export default function App() {
     scrollToPageTop();
   };
 
+  const handleOfferIntent = (offer: Offer) => {
+    if (offer.category === 'Guides') return;
+    void loadServiceContent(offer.id, lang).catch(() => {});
+    void loadServiceModal().catch(() => {});
+  };
+
   const handleOfferOpen = (offer: Offer) => {
+    handleOfferIntent(offer);
     trackAnalyticsEvent('card_open', {
       service_id: offer.id,
       service_name: offer.name,
@@ -6266,7 +6285,7 @@ export default function App() {
     setSubFilter(nextSubFilter);
     activeCategoryRef.current = offer.category;
     subFilterRef.current = nextSubFilter;
-    setSelectedOffer(offer);
+    setSelectedOffer(getCachedServiceContent(offer.id, lang) || offer);
   };
 
   const handleOfferClose = () => {
@@ -6404,6 +6423,9 @@ export default function App() {
                   layout
                   key={offer.id}
                   data-catalog-card={offer.id}
+                  onPointerEnter={() => handleOfferIntent(offer)}
+                  onFocusCapture={() => handleOfferIntent(offer)}
+                  onTouchStart={() => handleOfferIntent(offer)}
                   initial={false}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.5 }}
@@ -6847,6 +6869,8 @@ export default function App() {
     </motion.a>
     );
   });
+
+  const serviceModalProps = {PROXY_ANTIDETECT_VIDEO_URL,LANGUAGE_PREFIXES,getLocalizedOfferRoute,OfferModalHeading,ServiceEditorialSections,ServiceRichText,ServiceParagraphs,ArticleVideo,getServiceContextualGuideLinks,getPartnerIntroduction,getExternalLinkRel,isTelegramUrl,getServiceGuide,trackAnalyticsEvent,lang,selectedOffer,copiedPromoId,l,lList,tx,offerTitle,offerDescription,t,copyToClipboard,handleOfferOpen,handleOfferClose,selectedOfferHeading,isSelectedOfferMobileAntidetect,selectedVpnTerms,selectedEditorialNotes,selectedAlternatives,InfoRow};
 
   return (
     <LazyMotion features={domAnimation} strict>
@@ -7526,15 +7550,15 @@ export default function App() {
 
       {(toolDialogsVisible || toolDialogsMounted) && <Suspense fallback={null}><CatalogToolsDialogs PROXY_ANTIDETECT_VIDEO_URL={PROXY_ANTIDETECT_VIDEO_URL} CARDS_VIDEO_URL={CARDS_VIDEO_URL} SOCIAL_VIDEO_URL={SOCIAL_VIDEO_URL} STORE_AI_VIDEO_URL={STORE_AI_VIDEO_URL} STORE_ACCOUNTS_VIDEO_URL={STORE_ACCOUNTS_VIDEO_URL} STEAM_PRICE_TABLE_URL={STEAM_PRICE_TABLE_URL} isProxyGuideOpen={isProxyGuideOpen} setIsProxyGuideOpen={setIsProxyGuideOpen} isProxyCheckerOpen={isProxyCheckerOpen} setIsProxyCheckerOpen={setIsProxyCheckerOpen} isAntidetectGuideOpen={isAntidetectGuideOpen} setIsAntidetectGuideOpen={setIsAntidetectGuideOpen} isActivatorGuideOpen={isActivatorGuideOpen} setIsActivatorGuideOpen={setIsActivatorGuideOpen} isStoresGuideOpen={isStoresGuideOpen} setIsStoresGuideOpen={setIsStoresGuideOpen} isCardsGuideOpen={isCardsGuideOpen} setIsCardsGuideOpen={setIsCardsGuideOpen} isSocialGuideOpen={isSocialGuideOpen} setIsSocialGuideOpen={setIsSocialGuideOpen} isSteamGuideOpen={isSteamGuideOpen} setIsSteamGuideOpen={setIsSteamGuideOpen} tx={tx} t={t} /></Suspense>}
 
-      {(selectedOffer || offerModalMounted) && <Suspense fallback={null}><ServiceModal PROXY_ANTIDETECT_VIDEO_URL={PROXY_ANTIDETECT_VIDEO_URL} LANGUAGE_PREFIXES={LANGUAGE_PREFIXES} getLocalizedOfferRoute={getLocalizedOfferRoute} OfferModalHeading={OfferModalHeading} ServiceEditorialSections={ServiceEditorialSections} ServiceRichText={ServiceRichText} ServiceParagraphs={ServiceParagraphs} ArticleVideo={ArticleVideo} getServiceContextualGuideLinks={getServiceContextualGuideLinks} getPartnerIntroduction={getPartnerIntroduction} getExternalLinkRel={getExternalLinkRel} isTelegramUrl={isTelegramUrl} getServiceGuide={getServiceGuide} trackAnalyticsEvent={trackAnalyticsEvent} lang={lang} selectedOffer={selectedOffer} copiedPromoId={copiedPromoId} l={l} lList={lList} tx={tx} offerTitle={offerTitle} offerDescription={offerDescription} t={t} copyToClipboard={copyToClipboard} handleOfferOpen={handleOfferOpen} handleOfferClose={handleOfferClose} selectedOfferHeading={selectedOfferHeading} isSelectedOfferMobileAntidetect={isSelectedOfferMobileAntidetect} selectedVpnTerms={selectedVpnTerms} selectedEditorialNotes={selectedEditorialNotes} selectedAlternatives={selectedAlternatives} InfoRow={InfoRow} /></Suspense>}
-
-      {selectedOffer && !(selectedOffer as Offer & {__editorialLoaded?: boolean}).__editorialLoaded && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-6" role="status">
-        <div className="rounded-2xl border border-white/10 bg-bg-dark p-6 text-white">
-          <p>{offerLoadError ? tx({ru:'Не удалось загрузить карточку.',en:'Unable to load this service.'}) : tx({ru:'Загрузка...',en:'Loading...'})}</p>
-          {offerLoadError && <button className="mt-4 underline" onClick={() => location.reload()}>{tx({ru:'Повторить',en:'Retry'})}</button>}
-          <button className="ml-4 underline" onClick={handleOfferClose}>{tx({ru:'Закрыть',en:'Close'})}</button>
-        </div>
-      </div>}
+      <Suspense fallback={null}><ServiceModalFrame {...serviceModalProps}
+        isCatalogModal={Boolean(window.history.state?.offerModal)} offerLoadError={offerLoadError}
+        onRetry={() => setOfferLoadAttempt(attempt => attempt + 1)}
+        description={window.history.state?.offerModal
+          ? <Suspense fallback={<EditorialSkeleton />}><ServiceModal {...serviceModalProps} part="description" /></Suspense>
+          : <ServiceModal {...serviceModalProps} part="description" />}
+        editorialContent={window.history.state?.offerModal
+          ? <Suspense fallback={<EditorialSkeleton />}><ServiceModal {...serviceModalProps} part="editorial" /></Suspense>
+          : <ServiceModal {...serviceModalProps} part="editorial" />} /></Suspense>
     </div>
     </LazyMotion>
   );

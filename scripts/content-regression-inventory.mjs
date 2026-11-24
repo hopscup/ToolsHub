@@ -123,7 +123,7 @@ export const routeFromFile = file => '/' + file.replaceAll('\\', '/').replace(/(
 export const extractNoscript = html => [...html.matchAll(/<noscript\b[^>]*>([\s\S]*?)<\/noscript\s*>/gi)].map(match => match[1]).join('\n');
 
 async function sourceFingerprint(root) {
-  const files = ['src/App.tsx', 'src/components/ServiceModal.tsx', 'src/components/CatalogToolsDialogs.tsx', 'scripts/client-content-plugin.mjs', 'src/lib/clientContent.ts', 'src/lib/externalLinks.js', ...(await readdir(path.join(root, 'src/data'), { recursive: true }))
+  const files = ['src/App.tsx', 'src/components/ServiceModal.tsx', 'src/components/ServiceModalFrame.tsx', 'src/components/EditorialSkeleton.tsx', 'src/components/CatalogToolsDialogs.tsx', 'scripts/client-content-plugin.mjs', 'src/lib/clientContent.ts', 'src/lib/serviceContentCache.js', 'src/lib/idlePreload.js', 'src/lib/externalLinks.js', ...(await readdir(path.join(root, 'src/data'), { recursive: true }))
     .filter(file => /\.(?:js|json|ts)$/.test(file)).map(file => 'src/data/' + file.replaceAll('\\', '/'))].sort();
   return hash((await Promise.all(files.map(async file => `${file}:${hash(await readFile(path.join(root, file)))}`))).join('\n'));
 }
