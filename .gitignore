@@ -1,6 +1,8 @@
 node_modules/
 build/
 dist/
+.prerender/
+.vercel/
 coverage/
 reports/content-regression*/
 .DS_Store

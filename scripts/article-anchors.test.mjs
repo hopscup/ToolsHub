@@ -31,6 +31,6 @@ test('every article template uses shared navigation and static anchors keep thei
   const html = await readFile('index.html', 'utf8');
   const css = await readFile('src/index.css', 'utf8');
   assert.match(html, /\.seo-fallback :is\(h2, h3, section\)\[id\] \{ scroll-margin-top: 84px; \}/);
-  assert.match(css, /prefers-reduced-motion: reduce/);
+  assert.doesNotMatch(css, /prefers-reduced-motion/);
   assert.doesNotMatch(css + html, /scroll-behavior:\s*smooth/);
 });

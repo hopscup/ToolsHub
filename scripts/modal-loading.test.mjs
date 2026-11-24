@@ -59,5 +59,5 @@ test('card chrome is eager, text is intent-loaded, and lazy windows have no raw 
   assert.ok(frame.includes('(loaded || isCatalogModal)'));
   for(const token of ['data-offer-description','selectedOffer.cardStats','selectedOffer.details?.geo','selectedOffer.url','selectedOffer.webUrl','selectedOffer.promoCode','EditorialSkeleton'])assert.ok(frame.includes(token),token);
   assert.ok(css.includes('height:calc(100dvh - 2rem)'));
-  assert.ok(css.includes('150ms'));assert.ok(css.includes('prefers-reduced-motion:reduce'));assert.ok(css.includes('data-site-theme="light"'));
+  assert.ok(css.includes('150ms'));assert.ok(!css.includes('prefers-reduced-motion'));assert.ok(css.includes('data-site-theme="light"'));
 });

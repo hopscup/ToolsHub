@@ -6,7 +6,7 @@ import './home-hero.css';
  * Первый экран главной (/ и /en) по согласованному макету glavnaya-hero.html.
  * Шапку и меню НЕ рендерит: они остаются общими компонентами сайта.
  * Превью «Что нужно сделать?» наклоняется за мышкой (только ПК, только transform),
- * на тач-устройствах и при prefers-reduced-motion наклона нет.
+ * на тач-устройствах наклона нет.
  */
 
 type Localized = { ru: string; en: string };
@@ -41,8 +41,7 @@ function useTilt<T extends HTMLElement>() {
     const el = ref.current;
     if (!el) return;
     const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!fine || reduced) return;
+    if (!fine) return;
     const zone = el.closest<HTMLElement>('[data-home-hero]') || el;
     let frame = 0, tx = 0, ty = 0, cx = 0, cy = 0, gx = 50, gy = 30;
     const MAX = 7; // градусов

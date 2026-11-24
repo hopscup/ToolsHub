@@ -5,7 +5,7 @@ import {build} from 'esbuild';
 import {loadOffers} from './load-offers.mjs';
 
 const languages = ['ru', 'en', 'es', 'zh', 'ko'];
-const roots = ['OFFERS', 'OFFER_DESCRIPTION_TRANSLATIONS', 'SEO_LANDING_PAGES', 'SERVICE_PAGE_SEO_BY_ID', 'SECTION_SEO', 'RUNTIME_SEO_TRANSLATIONS'];
+const roots = ['OFFERS', 'HOME_STATS', 'OFFER_DESCRIPTION_TRANSLATIONS', 'SEO_LANDING_PAGES', 'SERVICE_PAGE_SEO_BY_ID', 'SECTION_SEO', 'RUNTIME_SEO_TRANSLATIONS'];
 const liveModules = new Set(['indexPolicy', 'servicePresentation', 'contextualGuideLinks', 'homePage']);
 const metadataFields = new Set(['id', 'slug', 'name', 'title', 'description', 'heading', 'intro', 'cover', 'catalogCover', 'datePublished', 'dateModified', 'indexable']);
 const metadata = value => Array.isArray(value) ? value.map(metadata) : value && typeof value === 'object'
@@ -36,6 +36,7 @@ const identifiers = node => {
 export function clientContentPlugin() {
   let prepared;
   let repository;
+  let serverBuild = false;
   const prepare = () => prepared ||= (async () => {
     const file = path.join(repository, 'src/App.tsx');
     const text = await readFile(file, 'utf8');
@@ -100,6 +101,7 @@ export function clientContentPlugin() {
         name === 'seoLandingPages' ? values[name].map(page => ({route: page.route}))
         : /Pages$/.test(name) && name !== 'guidePages' ? values[name].map(page => ({id: page.id, slug: page.slug}))
         : /Article|Articles/.test(name) ? (Array.isArray(values[name]) ? values[name].map(page => ({id:page.id,slug:page.slug})) : {id:values[name].id,slug:values[name].slug})
+        : name === 'guideCardMeta' ? values[name]
         : /Meta$/.test(name) || name === 'guidePages' ? metadata(values[name]) : values[name]]));
     }
     const partner = await import('../src/data/partnerCardRefresh.js');
@@ -119,9 +121,10 @@ export function clientContentPlugin() {
   })();
   return {
     name: 'client-content-boundaries', enforce: 'pre',
-    configResolved(config) {repository = config.root;},
+    configResolved(config) {repository = config.root; serverBuild = Boolean(config.build.ssr);},
     async resolveId(id, importer) {
       if (id.startsWith('virtual:client-')) return '\0' + id;
+      if (serverBuild) return;
       if (!importer || !id.includes('/data/') && !id.startsWith('./')) return;
       const parent = importer.replaceAll('\\', '/');
       const module = path.basename(id, '.js');
@@ -130,8 +133,9 @@ export function clientContentPlugin() {
     },
     async load(id) {
       if (!id.startsWith('\0virtual:client-')) return;
+      if (serverBuild) return 'export const catalogues={};export const services={};export const guides={};export const loadSearch=async()=>({default:{}});';
       const data = await prepare();
-      if (id === '\0virtual:client-loaders') return `export const loadSearch=()=>import('virtual:client-search');export const guides={${Object.keys(data.guideMetadata).map(key => `${JSON.stringify(key)}:()=>import(${JSON.stringify('virtual:client-guide-meta/' + key)})`).join(',')}};export const catalogues={${languages.map(language => `${language}:()=>import('virtual:client-catalogue/${language}')`).join(',')}};export const services={${Object.keys(data.services).map(key => `${JSON.stringify(key)}:()=>import(${JSON.stringify('virtual:client-service/' + key)})`).join(',')}};`;
+      if (id === '\0virtual:client-loaders') return `import {importWithRecovery as protect} from '/src/lib/importWithRecovery.ts';export const loadSearch=()=>protect(()=>import('virtual:client-search'));export const guides={${Object.keys(data.guideMetadata).map(key => `${JSON.stringify(key)}:()=>protect(()=>import(${JSON.stringify('virtual:client-guide-meta/' + key)}))`).join(',')}};export const catalogues={${languages.map(language => `${language}:()=>protect(()=>import('virtual:client-catalogue/${language}'))`).join(',')}};export const services={${Object.keys(data.services).map(key => `${JSON.stringify(key)}:()=>protect(()=>import(${JSON.stringify('virtual:client-service/' + key)}))`).join(',')}};`;
       if (id === '\0virtual:client-search') return `export default ${JSON.stringify(data.search)};`;
       if (id.startsWith('\0virtual:client-guide-meta/')) return `export default ${JSON.stringify(data.guideMetadata[id.split('/').at(-1)])};`;
       if (id.startsWith('\0virtual:client-catalogue/')) return `export default ${JSON.stringify(data.languageData[id.split('/').at(-1)])};`;
@@ -146,11 +150,14 @@ export function clientContentPlugin() {
       return output;
     },
     async transform(code, id) {
+      if (serverBuild) return;
       if (!id.replaceAll('\\', '/').endsWith('/src/App.tsx')) return;
       const data = await prepare();
       return {code: data.shell, map: null};
     },
-    transformIndexHtml: {order: 'post', handler(html, context) {
+    transformIndexHtml: {order: 'post', async handler(html, context) {
+      const recovery = await build({stdin:{contents:`import {installChunkRecovery} from './src/lib/chunkRecoveryPolicy.js';installChunkRecovery(window);`,resolveDir:repository},bundle:true,format:'iife',minify:true,write:false,logLevel:'silent'});
+      html = html.replace('<head>', '<head><script id="chunk-recovery-bootstrap">' + recovery.outputFiles[0].text.replaceAll('</script','<\\/script') + '</script>');
       if (!context.bundle) return html;
       const chunks = Object.values(context.bundle).filter(item => item.type === 'chunk');
       const app = chunks.find(item => Object.keys(item.modules).some(id => id.replaceAll('\\', '/').endsWith('/src/App.tsx')));

@@ -12,17 +12,22 @@ export const writeSiteTheme = (theme: SiteTheme) => {
   try { localStorage.setItem(SITE_THEME_KEY,theme); } catch {}
   window.dispatchEvent(new Event('hopscup-site-theme-change'));
 };
-export function SiteThemeToggle() {
-  const [theme,setTheme] = useState<SiteTheme>(readSiteTheme);
+export function useSiteTheme():[SiteTheme,(theme:SiteTheme)=>void] {
+  const [theme,setTheme] = useState<SiteTheme>('dark');
   useEffect(() => {
     const sync = () => setTheme(document.documentElement.dataset.siteTheme === 'light' ? 'light' : 'dark');
     const storage = () => {writeSiteTheme(readSiteTheme());sync();};
+    sync();
     window.addEventListener('hopscup-site-theme-change',sync);window.addEventListener('storage',storage);
     return () => {window.removeEventListener('hopscup-site-theme-change',sync);window.removeEventListener('storage',storage);};
   }, []);
+  return [theme,next=>{writeSiteTheme(next);setTheme(next);}];
+}
+export function SiteThemeToggle() {
+  const [theme,setTheme] = useSiteTheme();
   const label = theme === 'dark' ? 'Включить светлую тему' : 'Включить темную тему';
   return <button type="button" className="site-theme-toggle" aria-label={label} title={label}
-    onClick={() => writeSiteTheme(theme === 'dark' ? 'light' : 'dark')}>
+    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
     {theme === 'dark' ? <Sun size={17} aria-hidden="true"/> : <Moon size={17} aria-hidden="true"/>}
   </button>;
 }

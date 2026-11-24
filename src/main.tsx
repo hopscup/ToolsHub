@@ -1,14 +1,20 @@
 import {StrictMode, Suspense} from 'react';
-import {createRoot} from 'react-dom/client';
-import {Analytics} from '@vercel/analytics/react';
+import {createRoot,hydrateRoot} from 'react-dom/client';
 import {prepareClientContent} from './lib/clientContent';
+import {startDeferredAnalytics} from './lib/deferredAnalytics';
+import {importWithRecovery} from './lib/importWithRecovery';
+import {HydrationReady} from './HydrationReady';
+import {waitForPageStyles} from './lib/pageStyles';
 import './index.css';
 import './theme.css';
+import './font-fallbacks.css';
 import './components/home-hero-integration.css';
 
-prepareClientContent().then(() => import('./App.tsx')).then(({default: App}) => createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Suspense fallback={<div className="min-h-screen" aria-busy="true" />}><App /></Suspense>
-    <Analytics />
-  </StrictMode>,
-));
+startDeferredAnalytics();
+Promise.all([prepareClientContent(),waitForPageStyles()]).then(() => importWithRecovery(() => import('./App.tsx'))).then(async ({default:App,prepareInitialRender}) => {
+  await prepareInitialRender();
+  const root=document.getElementById('root')!;
+  const tree=<StrictMode><Suspense fallback={null}><App /></Suspense><HydrationReady /></StrictMode>;
+  if(root.hasAttribute('data-prerendered')) hydrateRoot(root,tree);
+  else createRoot(root).render(tree);
+});

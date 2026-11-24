@@ -13,7 +13,7 @@ import {
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
-import {readSiteTheme,writeSiteTheme} from './SiteTheme';
+import {readSiteTheme,useSiteTheme} from './SiteTheme';
 import {MobileNavigation} from './MobileNavigation';
 import { ArticleLanguageLink } from './ArticleLanguageLink';
 import { ArticleChecklist } from './ArticleChecklist';
@@ -72,14 +72,10 @@ const ArticleScreenshot = ({ src, alt, caption }: { src: string; alt: string; ca
 type GuideOffer = { id: string; name: string; url: string; category: string; slug?: string };
 
 export const AntidetectSetupGuideArticle = ({ offers }: { offers: GuideOffer[] }) => {
-  const [theme, setTheme] = useState<ArticleTheme>(() => {
-    if (typeof window === 'undefined') return 'dark';
-    return readSiteTheme();
-  });
+  const [theme, setTheme] = useSiteTheme();
 
   useEffect(() => {
-    writeSiteTheme(theme);
-    document.documentElement.dataset.articleTheme = theme;
+    document.documentElement.dataset.articleTheme = readSiteTheme();
 
     return () => {
       delete document.documentElement.dataset.articleTheme;

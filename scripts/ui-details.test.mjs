@@ -58,9 +58,10 @@ test('recommendation keeps its 26px button and existing tooltip text while chang
  for(const text of ['h-[26px] w-[26px]','Выбираю чаще всего','customLabel','right-4 top-4','linearGradient','#F5A94A','#7E1BFF','site-recommend-tooltip'])assert.ok(source.includes(text));
 });
 
-test('new effects use one-shot intersection reveals, successful-copy bursts, reduced motion and neutral social exceptions',async()=>{
+test('new effects use one-shot reveals, successful-copy bursts and neutral social exceptions without disabling motion',async()=>{
  const effects=await readFile('src/lib/uiEffects.ts','utf8'),css=await readFile('src/theme.css','utf8'),particles=await readFile('src/components/BackgroundParticles.tsx','utf8'),app=await readFile('src/App.tsx','utf8')+await readFile('src/components/ServiceModalFrame.tsx','utf8');
- for(const token of ['IntersectionObserver','observer?.unobserve','seen.current.add','prefers-reduced-motion: reduce','index < 6','animationend','star.remove()','burst.remove()'])assert.ok(effects.includes(token),token);
+ for(const token of ['IntersectionObserver','observer?.unobserve','seen.current.add','firstPaint.current','index < 6','animationend','star.remove()','burst.remove()'])assert.ok(effects.includes(token),token);
+ assert.ok(!effects.includes('prefers-reduced-motion'));
  for(const token of ['site-wordmark-window 9s','site-wordmark-text 9s','site-card-rise','site-copy-star','site-star-glint','svg.site-search-icon','site-social-button svg.lucide'])assert.ok(css.includes(token),token);
  for(const token of ['visibilitychange','rgba(45, 45, 52','site-mobile-sky'])assert.ok(particles.includes(token),token);
  assert.ok(!particles.includes('prefers-reduced-motion'));assert.equal((particles.match(/<i\/>/g)||[]).length,0);
@@ -106,11 +107,9 @@ test('All catalogue groups retain each service once and preserve relative order 
  const cards=groupCatalogOffers(overlap,['NoKYC','WithKYC']);assert.deepEqual(cards.flatMap(g=>g.offers).map(o=>o.id),['one','two','other']);
 });
 
-test('desktop stays animated while the mobile sky is static and foreground respects reduced motion',async()=>{
+test('desktop stays animated, mobile sky stays static and reduced-motion does not disable foreground effects',async()=>{
  const css=await readFile('src/theme.css','utf8'),source=await readFile('src/components/BackgroundParticles.tsx','utf8');
- const reduced=css.slice(css.lastIndexOf('@media(prefers-reduced-motion:reduce)'));
- assert.ok(!reduced.includes('site-mobile-sky'));assert.ok(!reduced.includes('site-mobile-twinkles'));
- assert.ok(reduced.includes('.site-wordmark-glint,.site-recommend-glint i { animation:none'));
+ assert.ok(!css.includes('prefers-reduced-motion'));
  assert.ok(!source.includes('reducedMotion'));assert.ok(!css.includes('animation:site-meteor'));
  assert.ok(!css.includes('site-mobile-twinkles'));
 });

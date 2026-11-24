@@ -2,15 +2,15 @@ import { useLayoutEffect, useRef } from 'react';
 
 export function useCatalogReveal(resetKey: string) {
   const seen = useRef(new Set<string>());
+  const firstPaint = useRef(true);
   useLayoutEffect(() => {
     const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-catalog-card]'));
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const show = (card: HTMLElement) => {
       seen.current.add(card.dataset.catalogCard || '');
       card.dataset.revealState = 'shown';
       card.addEventListener('animationend', () => { card.dataset.revealState = 'done'; }, { once: true });
     };
-    const observer = !reduced && 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+    const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         show(entry.target as HTMLElement);
@@ -18,7 +18,9 @@ export function useCatalogReveal(resetKey: string) {
       });
     }, { threshold: 0.06 }) : null;
     cards.forEach((card, index) => {
-      if (reduced || seen.current.has(card.dataset.catalogCard || '') || !observer) {
+      const rect=card.getBoundingClientRect();
+      if ((firstPaint.current && rect.top < window.innerHeight && rect.bottom > 0) || seen.current.has(card.dataset.catalogCard || '') || !observer) {
+        seen.current.add(card.dataset.catalogCard || '');
         card.dataset.revealState = 'done';
         return;
       }
@@ -26,12 +28,13 @@ export function useCatalogReveal(resetKey: string) {
       card.dataset.revealState = 'pending';
       observer.observe(card);
     });
+    firstPaint.current=false;
     return () => observer?.disconnect();
   }, [resetKey]);
 }
 
 export function burstPromoStars(sourceId: string) {
-  if (document.hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (document.hidden) return;
   const button = Array.from(document.querySelectorAll<HTMLElement>('[data-promo-source]'))
     .find(element => element.dataset.promoSource === sourceId);
   if (!button) return;

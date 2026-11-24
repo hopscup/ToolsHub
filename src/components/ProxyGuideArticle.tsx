@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
-import {readSiteTheme,writeSiteTheme} from './SiteTheme';
+import {readSiteTheme,useSiteTheme} from './SiteTheme';
 import {MobileNavigation} from './MobileNavigation';
 import { ArticleLanguageLink } from './ArticleLanguageLink';
 import { youtubeFarmGuideLink } from '../data/contextualGuideLinks.js';
@@ -104,14 +104,10 @@ export const ProxyGuideArticle = () => {
     });
     window.setTimeout(() => setCopiedProvider(current => current === provider.id ? null : current), 1800);
   };
-  const [theme, setTheme] = useState<ArticleTheme>(() => {
-    if (typeof window === 'undefined') return 'dark';
-    return readSiteTheme();
-  });
+  const [theme, setTheme] = useSiteTheme();
 
   useEffect(() => {
-    writeSiteTheme(theme);
-    document.documentElement.dataset.articleTheme = theme;
+    document.documentElement.dataset.articleTheme = readSiteTheme();
 
     return () => {
       delete document.documentElement.dataset.articleTheme;

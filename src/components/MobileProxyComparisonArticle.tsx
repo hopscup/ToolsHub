@@ -15,7 +15,7 @@ import {
 import { useEffect, useState } from 'react';
 import { trackAnalyticsEvent } from '../analytics';
 import { BackgroundParticles } from './BackgroundParticles';
-import {readSiteTheme,writeSiteTheme} from './SiteTheme';
+import {readSiteTheme,useSiteTheme} from './SiteTheme';
 import {MobileNavigation} from './MobileNavigation';
 import { ArticleLanguageLink } from './ArticleLanguageLink';
 import { ArticleChecklist } from './ArticleChecklist';
@@ -60,15 +60,11 @@ const ArticleScreenshot = ({ src, alt, caption }: { key?: string; src: string; a
 );
 
 export const MobileProxyComparisonArticle = () => {
-  const [theme, setTheme] = useState<ArticleTheme>(() => {
-    if (typeof window === 'undefined') return 'dark';
-    return readSiteTheme();
-  });
+  const [theme, setTheme] = useSiteTheme();
   const [copiedProvider, setCopiedProvider] = useState<string | null>(null);
 
   useEffect(() => {
-    writeSiteTheme(theme);
-    document.documentElement.dataset.articleTheme = theme;
+    document.documentElement.dataset.articleTheme = readSiteTheme();
 
     return () => {
       delete document.documentElement.dataset.articleTheme;

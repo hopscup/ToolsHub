@@ -46,7 +46,7 @@ export const loadOffers = async ({snapshot, extraNames = [], shellSignature = fa
       const bindings = (statement.importClause?.namedBindings?.elements || []).filter(binding => usedImports.has(binding.name.text));
       if (!bindings.length) continue;
       const module = statement.moduleSpecifier.text;
-      if (!module.startsWith('./data/')) throw Error(`Unexpected non-data offer dependency: ${module}`);
+      if (!module.startsWith('./data/') && module !== './lib/homeStats.js') throw Error(`Unexpected non-data offer dependency: ${module}`);
       lines.push(`import { ${bindings.map(binding => binding.getText(source)).join(', ')} } from ${JSON.stringify(module)};`);
     }
     if (ts.isVariableStatement(statement)) for (const declaration of statement.declarationList.declarations) {

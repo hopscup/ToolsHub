@@ -3,7 +3,7 @@ import { ArrowLeft, BookOpen, Check, Copy, Moon, Sun } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import type { ComponentProps } from 'react';
 import { BackgroundParticles } from './BackgroundParticles';
-import {readSiteTheme,writeSiteTheme} from './SiteTheme';
+import {readSiteTheme,useSiteTheme} from './SiteTheme';
 import {MobileNavigation} from './MobileNavigation';
 import { ArticleLanguageLink } from './ArticleLanguageLink';
 import { RelatedGuides } from './RelatedGuides';
@@ -166,14 +166,10 @@ export const ImportedGuideArticle = ({
   checklist,
   onServiceClick,
 }: ImportedGuideArticleProps) => {
-  const [theme, setTheme] = useState<ArticleTheme>(() => {
-    if (typeof window === 'undefined') return 'dark';
-    return readSiteTheme();
-  });
+  const [theme, setTheme] = useSiteTheme();
 
   useEffect(() => {
-    writeSiteTheme(theme);
-    document.documentElement.dataset.articleTheme = theme;
+    document.documentElement.dataset.articleTheme = readSiteTheme();
     return () => {
       delete document.documentElement.dataset.articleTheme;
     };

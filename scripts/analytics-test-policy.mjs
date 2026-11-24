@@ -10,6 +10,9 @@ export function isAnalyticsUrl(value) {
     || /^\/_vercel\/(?:insights|speed-insights)(?:\/|$)/.test(pathname);
 }
 
+// Neutralize the workstation's injected script, without changing antivirus settings.
+export const isWorkstationInjectionUrl=value=>new URL(value).hostname==='me.kis.v2.scr.kaspersky-labs.com';
+
 // An empty local response prevents both tracking and expected blocked-script console errors.
 export const fulfillBlockedAnalytics = route => route.fulfill({
   status:200, contentType:'application/javascript', body:'',

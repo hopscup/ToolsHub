@@ -6,7 +6,7 @@ export function CryptoSubtitle({ filter, language }: { filter: string; language:
   const element = useRef<HTMLParagraphElement>(null);
   const previous = useRef(text);
   useEffect(() => {
-    if (previous.current !== text && !matchMedia('(prefers-reduced-motion: reduce)').matches) element.current?.animate([{opacity:0},{opacity:1}], {duration:200});
+    if (previous.current !== text) element.current?.animate([{opacity:0},{opacity:1}], {duration:200});
     previous.current = text;
   }, [text]);
   return <p ref={element} data-crypto-subtitle

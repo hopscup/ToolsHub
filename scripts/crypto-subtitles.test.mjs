@@ -19,15 +19,18 @@ test('direct crypto tab routes initialize the same filters as subtitle selection
  assert.ok(app.includes("getSeoLandingFromPath(path)?.subFilter || 'None'"));
  assert.ok(app.includes("activeCategory === 'Crypto' ? <CryptoSubtitle filter={subFilter} language={lang} />"));
  const component=await readFile('src/components/CryptoSubtitle.tsx','utf8');
- for(const token of ['previous.current !== text',"matchMedia('(prefers-reduced-motion: reduce)')",'[{opacity:0},{opacity:1}]','duration:200'])assert.ok(component.includes(token));
+ for(const token of ['previous.current !== text','[{opacity:0},{opacity:1}]','duration:200'])assert.ok(component.includes(token));
+ assert.ok(!component.includes('prefers-reduced-motion'));
  assert.ok(!component.includes('translate'));assert.ok(!component.includes(' y:'));
 });
 
-test('crypto subtitle copy is runtime-only and never enters static SEO generation',async()=>{
+test('crypto subtitle prerender does not change the original noscript or meta description',async()=>{
  const script=await readFile('scripts/postbuild-seo.mjs','utf8');
  assert.ok(!script.includes('cryptoSubtitles'));
  for(const copy of Object.values(cryptoSubtitles))for(const prefix of ['','en/']){
   const html=await readFile(`dist/${prefix}crypto-exchange/index.html`,'utf8');
-  assert.ok(!html.includes(copy.ru));assert.ok(!html.includes(copy.en));
+  const fallback=html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1]||'';
+  const description=html.match(/<meta name="description" content="([^"]*)"/)?.[1]||'';
+  for(const text of [copy.ru,copy.en]){assert.ok(!fallback.includes(text));assert.ok(!description.includes(text));}
  }
 });

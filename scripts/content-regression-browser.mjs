@@ -1,7 +1,7 @@
 import { createServer } from 'node:http';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import {isAnalyticsUrl,fulfillBlockedAnalytics} from './analytics-test-policy.mjs';
+import {isAnalyticsUrl,isWorkstationInjectionUrl,fulfillBlockedAnalytics} from './analytics-test-policy.mjs';
 import { pathToFileURL } from 'node:url';
 import { appendFileSync, existsSync } from 'node:fs';
 import { createInventory, saveInventory, checkServiceSnapshot, checkExternalLinkParity, hash, normalizeUrl, isExternalUrl } from './content-regression-inventory.mjs';
@@ -38,7 +38,7 @@ export function snapshotDom({ html, service = false } = {}) {
   };
 }
 
-async function startDistServer(dist) {
+export async function startDistServer(dist) {
   const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.txt': 'text/plain' };
   const server = createServer(async (request, response) => {
     try {
@@ -47,7 +47,8 @@ async function startDistServer(dist) {
       const file = path.resolve(dist, '.' + pathname);
       if (!file.startsWith(dist + path.sep)) throw Error('Path outside dist');
       const bytes = await readFile(file);
-      response.writeHead(200, { 'Content-Type': mime[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store', 'X-Content-Hash': hash(bytes) });
+      const cache=pathname.startsWith('/assets/')?'public, max-age=31536000, immutable':pathname.startsWith('/fonts/')?'public, max-age=2592000':/\.(webp|png|jpe?g|svg|avif|gif|ico)$/.test(pathname)?'public, max-age=86400, stale-while-revalidate=604800':'public, max-age=0, must-revalidate';
+      response.writeHead(200, { 'Content-Type': mime[path.extname(file)] || 'application/octet-stream', 'Cache-Control': cache, 'X-Content-Hash': hash(bytes) });
       response.end(bytes);
     } catch { response.writeHead(404); response.end('Not found'); }
   });
@@ -112,12 +113,13 @@ export async function runContentRegression({ staticOnly = false, serviceLanguage
     report.unexecutedReactRoutes = inventory.pages.filter(page => !selected.has(page.route)).map(page => page.route);
     const worker = async () => {
       const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce', serviceWorkers: 'block' });
-      await context.route('**/*', route => isAnalyticsUrl(route.request().url()) ? fulfillBlockedAnalytics(route) : route.request().url().startsWith(server.base + '/') ? route.continue() : route.abort());
+      await context.route('**/*', route => isAnalyticsUrl(route.request().url())||isWorkstationInjectionUrl(route.request().url()) ? fulfillBlockedAnalytics(route) : route.request().url().startsWith(server.base + '/') ? route.continue() : route.abort());
       await context.addInitScript(() => localStorage.setItem('hopscup-analytics-consent', 'denied'));
       const tab = await context.newPage();
       tab.setDefaultTimeout(12000);
       let pageErrors = [];
       tab.on('pageerror', error => pageErrors.push(error.message));
+      tab.on('console', message => {if(['error','warning'].includes(message.type()))pageErrors.push(message.text());});
       try {
         while (cursor < selectedPages.length) {
           const page = selectedPages[cursor++];
@@ -129,6 +131,7 @@ export async function runContentRegression({ staticOnly = false, serviceLanguage
             // Chromium may reserialize textual response bodies; hash the exact server bytes instead.
             if (response.headers()['x-content-hash'] !== page.hash) throw Error('HTML changed since inventory creation');
             await tab.waitForFunction(route => document.documentElement.dataset.indexPolicyPath === route, page.route);
+            await tab.waitForLoadState('networkidle');
             if (page.service) await tab.locator('[role="dialog"][aria-labelledby="offer-modal-title"]').waitFor();
             else await tab.locator('#root main, #root article').first().waitFor();
             const snapshot = await tab.evaluate(snapshotDom, { service: Boolean(page.service) });

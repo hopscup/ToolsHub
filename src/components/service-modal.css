@@ -7,6 +7,3 @@ html[data-site-theme="light"] .service-editorial-skeleton span { background:rgb(
 .service-modal-frame[data-catalog-modal] .service-editorial-reveal { animation:editorial-reveal 150ms ease-out both; }
 @keyframes editorial-skeleton-pulse { to { opacity:.45; } }
 @keyframes editorial-reveal { from { opacity:0; } to { opacity:1; } }
-@media(prefers-reduced-motion:reduce) {
-  .service-editorial-skeleton span,.service-editorial-reveal { animation:none; }
-}

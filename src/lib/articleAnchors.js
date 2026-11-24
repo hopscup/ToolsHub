@@ -24,7 +24,6 @@ export const scrollProgress = progress => 1 - Math.pow(1 - progress, 3);
 export const mountArticleAnchors = root => {
   const header = root.querySelector('.article-header');
   const links = [...root.querySelectorAll('.article-toc a[href]')];
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const resolve = hash => {
     const target = document.getElementById(decodeAnchorId(hash));
     if (!target || !root.contains(target)) return null;
@@ -103,26 +102,19 @@ export const mountArticleAnchors = root => {
       if (!focusAttributes.has(heading)) focusAttributes.set(heading, heading.getAttribute('tabindex'));
       heading.setAttribute('tabindex', '-1');
       heading.focus({ preventScroll: true });
-      if (!reducedMotion.matches) {
-        highlighted = heading;
-        heading.setAttribute('data-anchor-highlight', '');
-        highlightTimer = window.setTimeout(clearHighlight, 1400);
-      }
+      highlighted = heading;
+      heading.setAttribute('data-anchor-highlight', '');
+      highlightTimer = window.setTimeout(clearHighlight, 1400);
     };
-    if (reducedMotion.matches) {
-      window.scrollTo({ top: destination(), behavior: 'instant' });
-      finish();
-    } else {
-      const startY = window.scrollY;
-      const startTime = performance.now();
-      const frame = now => {
-        const progress = Math.min(1, (now - startTime) / ARTICLE_SCROLL_DURATION);
-        window.scrollTo({ top: startY + (destination() - startY) * scrollProgress(progress), behavior: 'instant' });
-        if (progress < 1) animation = requestAnimationFrame(frame);
-        else finish();
-      };
-      animation = requestAnimationFrame(frame);
-    }
+    const startY = window.scrollY;
+    const startTime = performance.now();
+    const frame = now => {
+      const progress = Math.min(1, (now - startTime) / ARTICLE_SCROLL_DURATION);
+      window.scrollTo({ top: startY + (destination() - startY) * scrollProgress(progress), behavior: 'instant' });
+      if (progress < 1) animation = requestAnimationFrame(frame);
+      else finish();
+    };
+    animation = requestAnimationFrame(frame);
     return true;
   };
   const click = event => {
@@ -139,10 +131,6 @@ export const mountArticleAnchors = root => {
   const keydown = event => {
     if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' ', 'Escape'].includes(event.key)) cancel();
   };
-  const motionChange = () => {
-    clearHighlight();
-    if (navigating && reducedMotion.matches) navigate(location.hash, false);
-  };
   measureHeader();
   const headerObserver = new ResizeObserver(measureHeader);
   if (header) headerObserver.observe(header);
@@ -153,7 +141,6 @@ export const mountArticleAnchors = root => {
   window.addEventListener('wheel', cancel, { passive: true });
   window.addEventListener('touchstart', cancel, { passive: true });
   window.addEventListener('keydown', keydown);
-  reducedMotion.addEventListener('change', motionChange);
 
   // Wait for fonts and images above a deep link before measuring its final position.
   const initial = resolve(location.hash);
@@ -184,7 +171,6 @@ export const mountArticleAnchors = root => {
     window.removeEventListener('wheel', cancel);
     window.removeEventListener('touchstart', cancel);
     window.removeEventListener('keydown', keydown);
-    reducedMotion.removeEventListener('change', motionChange);
     root.style.removeProperty('--article-anchor-offset');
     links.forEach(link => link.removeAttribute('aria-current'));
     for (const [heading, previous] of focusAttributes) {

@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import {pageLayers} from './html-layers.mjs';
 import { accountShopPages } from '../src/data/accountShopPages.js';
 import { getPartnerIntroduction, partnerMetadataById } from '../src/data/partnerCardRefresh.js';
 import { aiPages } from '../src/data/aiPages.js';
@@ -354,8 +355,8 @@ const checkFallback = (html, route) => {
   if (matches(html, /<article class="seo-fallback"/g).length !== 1) {
     errors.push(`Expected one static fallback: ${route}`);
   }
-  if (!/<div id="root">\s*<noscript>\s*<article class="seo-fallback"[\s\S]*?<\/article>\s*<\/noscript>\s*<\/div>/.test(html)) {
-    errors.push(`Static fallback must be a no-JavaScript page inside React root: ${route}`);
+  if (!/<noscript>\s*<article class="seo-fallback"[\s\S]*?<\/article>\s*<\/noscript>/.test(html)) {
+    errors.push(`Static fallback must remain a complete no-JavaScript page: ${route}`);
   }
   const rules = matches(html, /\.seo-fallback[^{}]*\{([^{}]*)\}/g);
   const hidingDeclaration = /(?:display\s*:\s*none|visibility\s*:\s*(?:hidden|collapse)|opacity\s*:\s*0(?:\D|$)|(?:max-)?(?:width|height)\s*:\s*[01]px|overflow(?:-[xy])?\s*:\s*hidden|clip(?:-path)?\s*:|position\s*:\s*(?:absolute|fixed)|text-indent\s*:\s*-)/i;
@@ -401,7 +402,10 @@ for (const language of languages) {
     let html;
 
     try {
-      html = await read(file);
+      const original = await read(file);
+      const layers = pageLayers(original);
+      if (!layers.prerendered || layers.headingCount !== 1) errors.push(`Expected one prerendered H1: ${localizedRoute}`);
+      html = layers.staticDocument;
     } catch {
       errors.push(`Missing page: ${localizedRoute}`);
       continue;
@@ -459,7 +463,10 @@ for (const language of languages) {
   }
 }
 
-const rootHtml = await read('index.html');
+const rootSource = await read('index.html');
+const rootLayers = pageLayers(rootSource);
+if (!rootLayers.prerendered || rootLayers.headingCount !== 1) errors.push('Expected one prerendered home H1');
+const rootHtml = rootLayers.staticDocument;
 checkFallback(rootHtml, '/');
 checkIndexPolicy(rootHtml, '/');
 for (const language of languages.filter(item => item.prefix)) checkIndexPolicy(await read(language.prefix.slice(1) + '/index.html'), language.prefix);

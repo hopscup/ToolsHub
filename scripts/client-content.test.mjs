@@ -22,7 +22,7 @@ test('language projection loads one explicit translation and preserves existing 
 
 test('every article component is lazy and shell has no motion runtime dependency',async()=>{
  const app=await readFile('src/App.tsx','utf8');
- const articles=[...app.matchAll(/const (\w+Article) = lazy\(\(\) => import\('([^']+)'\)/g)];
+ const articles=[...app.matchAll(/const (\w+Article) = lazy\(\(\) => importWithRecovery\(\(\) => import\('([^']+)'\)/g)];
  assert.equal(articles.length,22);
  assert.ok(!/import \{ \w+Article \} from '\.\/components\//.test(app));
  for(const file of ['src/App.tsx','src/components/HomeHub.tsx','src/components/RecommendedBadge.tsx','src/components/CryptoSubtitle.tsx'])assert.ok(!(await readFile(file,'utf8')).includes("from 'motion/react'"),file);
@@ -33,7 +33,8 @@ test('mobile section strip remains visible with burger and skies stay within 40 
  const app=await readFile('src/App.tsx','utf8'),background=await readFile('src/components/BackgroundParticles.tsx','utf8');
  assert.ok(app.includes('site-section-navigation py-3 px-4 overflow-x-auto scrollbar-hide'));
  assert.ok(app.includes('flex flex-nowrap md:flex-wrap'));assert.ok(app.includes('<MobileNavigation'));
- assert.ok(background.includes('mobile ? <div className="site-mobile-sky" aria-hidden="true"/>'));
+ assert.ok(background.includes('useState<boolean|null>(null)'));
+ assert.ok(background.includes('mobile !== false ? <div className="site-mobile-sky" aria-hidden="true"/>'));
  for(const theme of ['dark','light'])assert.ok((await readFile(`public/sky/${theme}.webp`)).length<=40000);
 });
 

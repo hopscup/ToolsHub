@@ -246,12 +246,13 @@ const DesktopParticles = () => {
 const MOBILE_SKY_QUERY = '(max-width: 767px), (max-width: 1023px) and (pointer: coarse)';
 
 export const BackgroundParticles = () => {
-  const [mobile,setMobile] = useState(() => window.matchMedia(MOBILE_SKY_QUERY).matches);
+  const [mobile,setMobile] = useState<boolean|null>(null);
   useEffect(() => {
     const media = window.matchMedia(MOBILE_SKY_QUERY);
     const change = () => setMobile(media.matches);
+    change();
     media.addEventListener('change',change);
     return () => media.removeEventListener('change',change);
   }, []);
-  return mobile ? <div className="site-mobile-sky" aria-hidden="true"/> : <DesktopParticles/>;
+  return mobile !== false ? <div className="site-mobile-sky" aria-hidden="true"/> : <DesktopParticles/>;
 };

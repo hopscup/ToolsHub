@@ -1,5 +1,6 @@
 import {catalogues, services, guides, loadSearch} from 'virtual:client-loaders';
 import {createServiceContentCache} from './serviceContentCache.js';
+import {serviceCategoryRoutes} from '../data/servicePresentation.js';
 
 let content: any;
 export const clientLanguage = () => location.pathname.match(/^\/(en|es|zh|ko)(?:\/|$)/)?.[1] || 'ru';
@@ -10,6 +11,9 @@ export async function prepareClientContent() {
     const metadata = (await guides[slug]()).default;
     Object.assign(content.modules.guidePages.guidePages.find(page => page.slug === slug),metadata);
   }
+  const route=location.pathname.replace(/^\/(en|es|zh|ko)(?=\/|$)/,'').replace(/\/$/,'');
+  const service = content.constants.OFFERS.find(offer => offer.category!=='Guides' && offer.slug && route===serviceCategoryRoutes[offer.category]+'/'+offer.slug);
+  if (service) Object.assign(service, await loadServiceContent(service.id, clientLanguage()));
 }
 export function getClientContent() {
   if (!content) throw new Error('Client catalogue was not prepared');

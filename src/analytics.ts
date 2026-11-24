@@ -1,4 +1,4 @@
-import { track as trackVercelEvent } from '@vercel/analytics';
+import {trackDeferredEvent as trackVercelEvent} from './lib/deferredAnalytics';
 
 const MEASUREMENT_ID = 'G-W3M6HF3T1X';
 const CONSENT_STORAGE_KEY = 'hopscup-analytics-consent';

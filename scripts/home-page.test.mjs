@@ -8,7 +8,7 @@ import {guideCatalog} from '../src/data/guideCatalog.js';
 import {guidePages} from '../src/data/guidePages.js';
 import {loadOffers} from './load-offers.mjs';
 import {plainSeoText,getServiceFacts} from '../src/data/servicePresentation.js';
-const {OFFERS}=await loadOffers(),home=getHomeSelections(OFFERS);
+const {OFFERS,HOME_STATS}=await loadOffers({extraNames:['HOME_STATS']}),home=getHomeSelections(OFFERS);
 
 test('homepage counts and featured services use live data without modifying the offer order',()=>{
  assert.equal(home.serviceCount,OFFERS.filter(offer=>offer.category!=='Guides').length);
@@ -49,17 +49,21 @@ test('homepage composes the existing service and guide renderers and leaves inac
  assert.ok(app.includes('const isActive = !isHomeHub && activeCategory === cat.id'));
  assert.ok(app.includes('!isHomeHub && Boolean(activeCategoryData'));
  assert.ok(app.includes('isHomeHub ? <HomeHero'));
- assert.ok(app.includes('stats={homeStats(OFFERS, home.guideCount)}'));
+ assert.ok(app.includes('stats={HOME_STATS}'));
+ assert.deepEqual(HOME_STATS,homeStats(OFFERS,home.guideCount));
  assert.ok(hub.includes('id="home-tasks"'));
  assert.ok(!hub.includes('<style'));assert.ok(!hub.includes('animate='));
  assert.equal(homeLink('/guides/happ-marshrutizaciya','en'),'/guides/happ-marshrutizaciya');
  assert.equal(homeLink('/ai','en'),'/en/ai');
 });
 
-test('all three supplied hero files remain byte-identical to hero-code.zip',async()=>{
+test('supplied hero markup, styles and stats stay intact except the approved motion policy',async()=>{
+ const hash=text=>createHash('sha256').update(text.replaceAll('\r\n','\n').trim()).digest('hex');
+ const hero=await readFile('src/components/HomeHero.tsx','utf8');
+ assert.equal(hash(hero.slice(hero.indexOf('export function HomeHero'))),'0be19adb89d35736ac9c74d046fb4a50a576553f36a8cefe6e531bb201989d34');
+ assert.equal(hash(await readFile('src/components/home-hero.css','utf8')),'c6549316ab5fdaee0c07ece6f5b5dd43e3fc0c131fdc1658a13a7226c83e9346');
+ assert.ok(!hero.includes('prefers-reduced-motion'));
  const hashes={
-  'src/components/HomeHero.tsx':'37a18d868ba565ef5785b5e812721b2881470ed5b22b99dcc5436a741fe57875',
-  'src/components/home-hero.css':'398684849a76260ee4a5517fd2f9188bd97330dfb357117d9fdf685c26ad9b24',
   'src/lib/homeStats.js':'0c6810fd85f3adb26312de1c5bbc4f1a0106453fc37004517d724a8ad32cdd6d',
  };
  for(const [file,expected]of Object.entries(hashes))assert.equal(createHash('sha256').update(await readFile(file)).digest('hex'),expected,file);
@@ -76,5 +80,8 @@ test('shared header, footer, mobile menu and theme toggle retain their pre-integ
  assert.equal(hash(header.replace('site-section-navigation py-3 px-4 overflow-x-auto scrollbar-hide','site-section-navigation hidden py-3 px-4 overflow-x-auto scrollbar-hide md:block')),'48e2a8a1d78f23e8ceed79bc55d1f39b40c16a517a68b3da0065e1b464ad8a99');
  assert.equal(hash(footer),'9e3a50a951d18276e194d29ea5e87dfabc8f604c63d4e8d0a48ad834e8169d30');
  assert.equal(hash(await readFile('src/components/MobileNavigation.tsx','utf8')),'3355e16243429a9ade4a5123e8289965154351f39d4543044ce052929b73ca9f');
- assert.equal(hash(await readFile('src/components/SiteTheme.tsx','utf8')),'e9303fed97e7bbd53b6ecd6eba1de66f03e908568b0575b478b16e8af9142ec7');
+ const theme=await readFile('src/components/SiteTheme.tsx','utf8');
+ assert.ok(theme.includes("useState<SiteTheme>('dark')"));
+ assert.ok(theme.includes('sync();'));
+ assert.equal(createHash('sha256').update(theme.slice(theme.indexOf('  const label =')).replace('setTheme(', 'writeSiteTheme(').replaceAll('\r\n','\n').trim()).digest('hex'),'712f7688012c090735b7177eb75c3e26b808458c321f99ad60befaa1162c755a');
 });

@@ -8,17 +8,19 @@ const scriptIn=html=>{
   const tags=[...html.matchAll(/<script\b[^>]*>[\s\S]*?<\/script>/gi)].map(match=>({tag:match[0],index:match.index})).filter(item=>item.tag.includes(source));
   assert.equal(tags.length,1);
   const {tag,index}=tags[0];
-  assert.match(tag,/\bdefer(?:\s|>|=)/);
-  assert.match(tag,/\basync(?:\s|>|=)/);
-  assert.match(tag,/type="module"/);
-  assert.match(tag,/fetchpriority="low"/);
-  const data=tag.match(/data-cf-beacon='([^']+)'/)[1];
+  assert.match(tag,/script.defer = true/);
+  assert.match(tag,/script.async = true/);
+  assert.match(tag,/script.fetchPriority = 'low'/);
+  assert.match(tag,/requestIdleCallback/);
+  assert.match(tag,/addEventListener\('load'/);
+  assert.ok(!/<script[^>]+src=/.test(tag));
+  const data=tag.match(/script.dataset.cfBeacon = '([^']+)'/)[1];
   assert.equal(JSON.parse(data).token,token);
   assert.ok(index<html.lastIndexOf('</body>'));
   assert.ok(index>html.lastIndexOf('</head>'));
 };
 
-test('Cloudflare is a single non-blocking module in source HTML without changing Vercel Analytics',async()=>{
+test('Cloudflare is loaded once after load and idle without changing the Vercel dependency',async()=>{
   scriptIn(await readFile('index.html','utf8'));
   const pkg=JSON.parse(await readFile('package.json','utf8'));
   assert.equal(pkg.dependencies['@vercel/analytics'],'^2.0.1');

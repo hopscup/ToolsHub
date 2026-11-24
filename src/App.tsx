@@ -8,36 +8,38 @@ import {getCachedServiceContent, loadServiceContent, loadSearchContent} from './
 import {createPreloader, scheduleIdlePreload} from './lib/idlePreload.js';
 import {ServiceModalFrame} from './components/ServiceModalFrame';
 import {EditorialSkeleton} from './components/EditorialSkeleton';
+import {importWithRecovery} from './lib/importWithRecovery';
 import { AnimatePresence, LazyMotion, domAnimation, motion, useIsPresent } from './components/CssTransitions';
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { burstPromoStars, useCatalogReveal } from './lib/uiEffects';
 import {SiteThemeToggle} from './components/SiteTheme';
 import {MobileNavigation} from './components/MobileNavigation';
 import {categoryFilterCount,groupCatalogOffers,shouldGroupCatalogOffers} from './lib/catalogCounts.js';
-const ProxyGuideArticle = lazy(() => import('./components/ProxyGuideArticle').then(module => ({default: module.ProxyGuideArticle})));
-const MobileProxyComparisonArticle = lazy(() => import('./components/MobileProxyComparisonArticle').then(module => ({default: module.MobileProxyComparisonArticle})));
-const MobileIpGuideArticle = lazy(() => import('./components/MobileIpGuideArticle').then(module => ({default: module.MobileIpGuideArticle})));
-const GmailForwardingGuideArticle = lazy(() => import('./components/GmailForwardingGuideArticle').then(module => ({default: module.GmailForwardingGuideArticle})));
-const AccountFarmGuideArticle = lazy(() => import('./components/AccountFarmGuideArticle').then(module => ({default: module.AccountFarmGuideArticle})));
-const loadServiceModal = createPreloader(() => import('./components/ServiceModal').then(module => ({default: module.ServiceModal})));
-const loadCatalogToolsDialogs = createPreloader(() => import('./components/CatalogToolsDialogs').then(module => ({default: module.CatalogToolsDialogs})));
+const ProxyGuideArticle = lazy(() => importWithRecovery(() => import('./components/ProxyGuideArticle')).then(module => ({default: module.ProxyGuideArticle})));
+const MobileProxyComparisonArticle = lazy(() => importWithRecovery(() => import('./components/MobileProxyComparisonArticle')).then(module => ({default: module.MobileProxyComparisonArticle})));
+const MobileIpGuideArticle = lazy(() => importWithRecovery(() => import('./components/MobileIpGuideArticle')).then(module => ({default: module.MobileIpGuideArticle})));
+const GmailForwardingGuideArticle = lazy(() => importWithRecovery(() => import('./components/GmailForwardingGuideArticle')).then(module => ({default: module.GmailForwardingGuideArticle})));
+const AccountFarmGuideArticle = lazy(() => importWithRecovery(() => import('./components/AccountFarmGuideArticle')).then(module => ({default: module.AccountFarmGuideArticle})));
+const loadServiceModal = createPreloader(() => importWithRecovery(() => import('./components/ServiceModal')).then(module => ({default: module.ServiceModal})));
+const loadCatalogToolsDialogs = createPreloader(() => importWithRecovery(() => import('./components/CatalogToolsDialogs')).then(module => ({default: module.CatalogToolsDialogs})));
 const ServiceModal = lazy(loadServiceModal);
+let initialServiceModal:typeof import('./components/ServiceModal').ServiceModal|undefined;
 const CatalogToolsDialogs = lazy(loadCatalogToolsDialogs);
-const FreeAntidetectGuideArticle = lazy(() => import('./components/FreeAntidetectGuideArticle').then(module => ({default: module.FreeAntidetectGuideArticle})));
-const ShardxReviewGuideArticle = lazy(() => import('./components/ShardxReviewGuideArticle').then(module => ({default: module.ShardxReviewGuideArticle})));
-const VirtualNumberGuideArticle = lazy(() => import('./components/VirtualNumberGuideArticle').then(module => ({default: module.VirtualNumberGuideArticle})));
+const FreeAntidetectGuideArticle = lazy(() => importWithRecovery(() => import('./components/FreeAntidetectGuideArticle')).then(module => ({default: module.FreeAntidetectGuideArticle})));
+const ShardxReviewGuideArticle = lazy(() => importWithRecovery(() => import('./components/ShardxReviewGuideArticle')).then(module => ({default: module.ShardxReviewGuideArticle})));
+const VirtualNumberGuideArticle = lazy(() => importWithRecovery(() => import('./components/VirtualNumberGuideArticle')).then(module => ({default: module.VirtualNumberGuideArticle})));
 import { virtualNumberArticle } from './data/virtualNumberContent.js';
-const RfNumbersGuideArticle = lazy(() => import('./components/RfNumbersGuideArticle').then(module => ({default: module.RfNumbersGuideArticle})));
+const RfNumbersGuideArticle = lazy(() => importWithRecovery(() => import('./components/RfNumbersGuideArticle')).then(module => ({default: module.RfNumbersGuideArticle})));
 import { rfNumbersArticle } from './data/rfNumbersContent.js';
-const HappRoutingGuideArticle = lazy(() => import('./components/HappRoutingGuideArticle').then(module => ({default: module.HappRoutingGuideArticle})));
+const HappRoutingGuideArticle = lazy(() => importWithRecovery(() => import('./components/HappRoutingGuideArticle')).then(module => ({default: module.HappRoutingGuideArticle})));
 import { happRoutingArticle } from './data/happRoutingContent.js';
-const Vpn4gGuideArticle = lazy(() => import('./components/Vpn4gGuideArticle').then(module => ({default: module.Vpn4gGuideArticle})));
+const Vpn4gGuideArticle = lazy(() => importWithRecovery(() => import('./components/Vpn4gGuideArticle')).then(module => ({default: module.Vpn4gGuideArticle})));
 import { vpn4gArticle } from './data/vpn4gContent.js';
-const YoutubeFarmGuideArticle = lazy(() => import('./components/YoutubeFarmGuideArticle').then(module => ({default: module.YoutubeFarmGuideArticle})));
+const YoutubeFarmGuideArticle = lazy(() => importWithRecovery(() => import('./components/YoutubeFarmGuideArticle')).then(module => ({default: module.YoutubeFarmGuideArticle})));
 import { youtubeFarmArticle } from './data/youtubeFarmContent.js';
-const AiSubscriptionsGuideArticle = lazy(() => import('./components/AiSubscriptionsGuideArticle').then(module => ({default: module.AiSubscriptionsGuideArticle})));
+const AiSubscriptionsGuideArticle = lazy(() => importWithRecovery(() => import('./components/AiSubscriptionsGuideArticle')).then(module => ({default: module.AiSubscriptionsGuideArticle})));
 import { aiSubscriptionsArticle } from './data/aiSubscriptionsContent.js';
-const A6apiGuideArticle = lazy(() => import('./components/A6apiGuideArticle').then(module => ({default: module.A6apiGuideArticle})));
+const A6apiGuideArticle = lazy(() => importWithRecovery(() => import('./components/A6apiGuideArticle')).then(module => ({default: module.A6apiGuideArticle})));
 import { a6apiArticle } from './data/a6apiContent.js';
 import { aiOffers, aiPages, aiSection } from './data/aiPages.js';
 import { botShopOffers, linkenSphereOffers } from './data/botAndLinkenPages.js';
@@ -46,18 +48,18 @@ import { AiSectionContent } from './components/AiSectionContent';
 import type { ArticleBlock } from './components/ImportedGuideArticle';
 import { ServiceEditorialSections, ServiceRichText, ServiceParagraphs } from './components/ServiceEditorialSections';
 import { ArticleVideo } from './components/ArticleVideo';
-const MobileAntidetectGuideArticle = lazy(() => import('./components/MobileAntidetectGuideArticle').then(module => ({default: module.MobileAntidetectGuideArticle})));
+const MobileAntidetectGuideArticle = lazy(() => importWithRecovery(() => import('./components/MobileAntidetectGuideArticle')).then(module => ({default: module.MobileAntidetectGuideArticle})));
 import { mobileAntidetectArticle } from './data/mobileAntidetectContent.js';
 import { isIndexablePath, getCanonicalPath, getIndexAlternates, getLanguageSwitchPath, absoluteIndexUrl } from './data/indexPolicy.js';
 import { getServiceContextualGuideLinks, getSectionContextualGuideLinks } from './data/contextualGuideLinks.js';
 import { antidetectOverviewArticles } from './data/antidetectOverviewContent.js';
-const OtcKycGuideArticle = lazy(() => import('./components/OtcKycGuideArticle').then(module => ({default: module.OtcKycGuideArticle})));
-const ExchangeUidsGuideArticle = lazy(() => import('./components/ExchangeUidsGuideArticle').then(module => ({default: module.ExchangeUidsGuideArticle})));
-const AntidetectSetupGuideArticle = lazy(() => import('./components/AntidetectSetupGuideArticle').then(module => ({default: module.AntidetectSetupGuideArticle})));
-const ForeignCardGuideArticle = lazy(() => import('./components/ForeignCardGuideArticle').then(module => ({default: module.ForeignCardGuideArticle})));
-const DiscordTokenGuideArticle = lazy(() => import('./components/DiscordTokenGuideArticle').then(module => ({default: module.DiscordTokenGuideArticle})));
-const ClaudeGuideArticle = lazy(() => import('./components/ClaudeGuideArticle').then(module => ({default: module.ClaudeGuideArticle})));
-const ClaudeRecoveryGuideArticle = lazy(() => import('./components/ClaudeRecoveryGuideArticle').then(module => ({default: module.ClaudeRecoveryGuideArticle})));
+const OtcKycGuideArticle = lazy(() => importWithRecovery(() => import('./components/OtcKycGuideArticle')).then(module => ({default: module.OtcKycGuideArticle})));
+const ExchangeUidsGuideArticle = lazy(() => importWithRecovery(() => import('./components/ExchangeUidsGuideArticle')).then(module => ({default: module.ExchangeUidsGuideArticle})));
+const AntidetectSetupGuideArticle = lazy(() => importWithRecovery(() => import('./components/AntidetectSetupGuideArticle')).then(module => ({default: module.AntidetectSetupGuideArticle})));
+const ForeignCardGuideArticle = lazy(() => importWithRecovery(() => import('./components/ForeignCardGuideArticle')).then(module => ({default: module.ForeignCardGuideArticle})));
+const DiscordTokenGuideArticle = lazy(() => importWithRecovery(() => import('./components/DiscordTokenGuideArticle')).then(module => ({default: module.DiscordTokenGuideArticle})));
+const ClaudeGuideArticle = lazy(() => importWithRecovery(() => import('./components/ClaudeGuideArticle')).then(module => ({default: module.ClaudeGuideArticle})));
+const ClaudeRecoveryGuideArticle = lazy(() => importWithRecovery(() => import('./components/ClaudeRecoveryGuideArticle')).then(module => ({default: module.ClaudeRecoveryGuideArticle})));
 import { claudeGuideArticle } from './data/claudeGuideArticle.js';
 import { claudeRecoveryArticle } from './data/claudeRecoveryArticle.js';
 import { proxyGuideMeta } from './data/proxyGuideContent.js';
@@ -4893,14 +4895,22 @@ const OFFERS: Offer[] = [
   }
 ];
 
+const HOME_STATS = homeStats(OFFERS,getHomeSelections(OFFERS).guideCount);
+
 const getOfferFromPath = (
   path = typeof window !== 'undefined' ? window.location.pathname : '/',
 ): Offer | null => {
   const normalizedPath = stripLanguagePrefix(path);
-  return OFFERS.find((offer) =>
+  const offer = OFFERS.find((offer) =>
     Boolean(offer.slug) && normalizedPath === `${CATEGORY_ROUTES[offer.category]}/${offer.slug}`,
   ) || null;
+  return offer && import.meta.env.SSR ? {...offer, __editorialLoaded:true} as Offer : offer;
 };
+
+export async function prepareInitialRender() {
+  const offer=getOfferFromPath();
+  if(offer && offer.category!=='Guides')initialServiceModal=(await loadServiceModal()).default;
+}
 
 const OFFER_DESCRIPTION_TRANSLATIONS: Partial<Record<string, Partial<Record<Language, string>>>> = {
   'guide-mobile-ip': {
@@ -5499,7 +5509,9 @@ export default function App() {
     document.documentElement.toggleAttribute('data-guide-article', /^\/(?:en\/|es\/|zh\/|ko\/)?guides\/[^/]+/.test(window.location.pathname));
   });
   useCatalogReveal(`${activeCategory}|${subFilter}|${guideTopicFilter}|${lang}|${searchQuery}|${isHomeRoute}`);
-  const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsent>(() => getAnalyticsConsent());
+  const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsent>(null);
+  const [clientReady,setClientReady] = useState(false);
+  useEffect(() => {setAnalyticsConsent(getAnalyticsConsent());setClientReady(true);}, []);
   const [isAnalyticsSettingsOpen, setIsAnalyticsSettingsOpen] = useState(false);
   const [placeholderText, setPlaceholderText] = useState('');
   const [wordIndex, setWordIndex] = useState(0);
@@ -6870,6 +6882,7 @@ export default function App() {
     );
   });
 
+  const OfferContent=initialServiceModal || ServiceModal;
   const serviceModalProps = {PROXY_ANTIDETECT_VIDEO_URL,LANGUAGE_PREFIXES,getLocalizedOfferRoute,OfferModalHeading,ServiceEditorialSections,ServiceRichText,ServiceParagraphs,ArticleVideo,getServiceContextualGuideLinks,getPartnerIntroduction,getExternalLinkRel,isTelegramUrl,getServiceGuide,trackAnalyticsEvent,lang,selectedOffer,copiedPromoId,l,lList,tx,offerTitle,offerDescription,t,copyToClipboard,handleOfferOpen,handleOfferClose,selectedOfferHeading,isSelectedOfferMobileAntidetect,selectedVpnTerms,selectedEditorialNotes,selectedAlternatives,InfoRow};
 
   return (
@@ -6948,7 +6961,7 @@ export default function App() {
       </div>
 
       {/* Hero Section */}
-      {isHomeHub ? <HomeHero lang={lang} offers={OFFERS} stats={homeStats(OFFERS, home.guideCount)}
+      {isHomeHub ? <HomeHero lang={lang} offers={OFFERS} stats={HOME_STATS}
         youtubeUrl={lang === 'ru' ? 'https://www.youtube.com/@hopscup' : 'https://www.youtube.com/@Hopscup_eng'}
         onOpenOffer={handleOfferOpen} onCopyPromo={copyToClipboard} copiedPromoId={copiedPromoId}
         onPickTask={() => {
@@ -6958,7 +6971,7 @@ export default function App() {
             const header = document.querySelector('.site-unified-header');
             const top = target.getBoundingClientRect().top + window.scrollY - (header?.getBoundingClientRect().height || 0) - 20;
             window.history.replaceState(window.history.state, '', '#home-tasks');
-            window.scrollTo({top, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+            window.scrollTo({top, behavior:'smooth'});
             target.querySelector('h2')?.focus({preventScroll:true});
           });
         }} /> : (
@@ -7150,7 +7163,7 @@ export default function App() {
                     <a
                       href={STEAM_PRICE_TABLE_URL}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel={getExternalLinkRel(STEAM_PRICE_TABLE_URL)}
                       onClick={() => trackGuideOpen('steam_price_table')}
                       className="flex items-center gap-2.5 px-8 py-4 bg-brand-purple/10 hover:bg-brand-purple text-brand-purple hover:text-white rounded-2xl border-2 border-brand-purple/30 shadow-[0_0_20px_rgba(129,28,254,0.1)] hover:shadow-[0_0_30px_rgba(129,28,254,0.3)] transition-all text-[10px] font-black uppercase tracking-widest"
                     >
@@ -7506,7 +7519,7 @@ export default function App() {
       </footer>
 
       <AnimatePresence>
-        {(analyticsConsent === null || isAnalyticsSettingsOpen) && (
+        {clientReady && (analyticsConsent === null || isAnalyticsSettingsOpen) && (
           <motion.aside
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -7554,11 +7567,11 @@ export default function App() {
         isCatalogModal={Boolean(window.history.state?.offerModal)} offerLoadError={offerLoadError}
         onRetry={() => setOfferLoadAttempt(attempt => attempt + 1)}
         description={window.history.state?.offerModal
-          ? <Suspense fallback={<EditorialSkeleton />}><ServiceModal {...serviceModalProps} part="description" /></Suspense>
-          : <ServiceModal {...serviceModalProps} part="description" />}
+          ? <Suspense fallback={<EditorialSkeleton />}><OfferContent {...serviceModalProps} part="description" /></Suspense>
+          : <OfferContent {...serviceModalProps} part="description" />}
         editorialContent={window.history.state?.offerModal
-          ? <Suspense fallback={<EditorialSkeleton />}><ServiceModal {...serviceModalProps} part="editorial" /></Suspense>
-          : <ServiceModal {...serviceModalProps} part="editorial" />} /></Suspense>
+          ? <Suspense fallback={<EditorialSkeleton />}><OfferContent {...serviceModalProps} part="editorial" /></Suspense>
+          : <OfferContent {...serviceModalProps} part="editorial" />} /></Suspense>
     </div>
     </LazyMotion>
   );

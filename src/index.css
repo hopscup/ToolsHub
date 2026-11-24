@@ -32,7 +32,7 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
+  --font-display: "Space Grotesk", "Space Grotesk Fallback", sans-serif;
   
   --color-brand-purple: #7E1BFF;
   --color-brand-orange: #FF7A00;
@@ -91,10 +91,6 @@
   100% { background-color: transparent; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .proxy-guide-article [data-anchor-highlight] { animation: none; }
-  .proxy-guide-article .article-toc a { transition: none; }
-}
 
 html:has(.proxy-guide-article),
 body:has(.proxy-guide-article) {
