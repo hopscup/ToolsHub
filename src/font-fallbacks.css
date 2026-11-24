@@ -17,3 +17,7 @@
 @font-face { font-family:'Inter Fallback';src:local('Arial');font-style:normal;font-weight:400;size-adjust:105.9374%;ascent-override:91.4692%;descent-override:22.7493%;line-gap-override:0%;unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116; }
 @font-face { font-family:'Inter Fallback';src:local('Arial');font-style:normal;font-weight:500;size-adjust:107.2098%;ascent-override:90.3836%;descent-override:22.4793%;line-gap-override:0%;unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116; }
 @font-face { font-family:'Inter Fallback';src:local('Arial Bold');font-style:normal;font-weight:600 900;size-adjust:101.4276%;ascent-override:95.5361%;descent-override:23.7608%;line-gap-override:0%;unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116; }
+/* Match spaces separately so mixed Cyrillic/Latin headings keep the same wrapping. */
+@font-face { font-family:'Space Grotesk Fallback';src:local('Arial');font-style:normal;font-weight:500;size-adjust:91.7821%;ascent-override:107.2105%;descent-override:31.8145%;line-gap-override:0%;unicode-range:U+0020; }
+@font-face { font-family:'Space Grotesk Fallback';src:local('Arial Bold');font-style:normal;font-weight:600;size-adjust:91.7821%;ascent-override:107.2105%;descent-override:31.8145%;line-gap-override:0%;unicode-range:U+0020; }
+@font-face { font-family:'Space Grotesk Fallback';src:local('Arial Bold');font-style:normal;font-weight:700 900;size-adjust:91.4221%;ascent-override:107.6326%;descent-override:31.9397%;line-gap-override:0%;unicode-range:U+0020; }

@@ -5,6 +5,7 @@ import {pathToFileURL} from 'node:url';
 import {parse} from 'parse5';
 import {createCriticalCss} from './critical-css.mjs';
 import postcss from 'postcss';
+import valueParser from 'postcss-value-parser';
 
 const root=process.cwd(),dist=path.join(root,'dist'),server=path.join(root,'.prerender');
 await build({build:{ssr:'src/entry-server.tsx',outDir:server,emptyOutDir:true,minify:false,rollupOptions:{output:{entryFileNames:'entry-server.mjs'}}},logLevel:'warn'});
@@ -14,22 +15,43 @@ const attr=(node,name)=>node.attrs?.find(item=>item.name===name)?.value;
 const cssCache=new Map();
 let extractCss;
 let articleFonts;
+let commonFonts;
+const embeddedFontPaths=new Set();
+async function embedFont(face){
+  let href;
+  valueParser(face.nodes.find(node=>node.prop==='src').value).walk(node=>{if(node.type==='function'&&node.value==='url')href=node.nodes[0]?.value;});
+  if(!href?.startsWith('/fonts/'))throw Error('First-screen font must be a local WOFF2');
+  embeddedFontPaths.add(href);
+  const target=path.resolve(dist,'.'+href);
+  if(!target.startsWith(path.join(dist,'fonts')+path.sep))throw Error('Font outside public/fonts');
+  const bytes=await readFile(target);
+  face.walkDecls('src',decl=>{decl.value='url("data:font/woff2;base64,'+bytes.toString('base64')+'") format("woff2")';});
+  face.walkDecls('font-display',decl=>{decl.value='block';});
+  return face.toString();
+}
 let count=0;
 for(const relative of await readdir(dist,{recursive:true})) {
   if(!relative.endsWith('index.html'))continue;
   const file=path.join(dist,relative),html=await readFile(file,'utf8');
   const document=parse(html,{sourceCodeLocationInfo:true,scriptingEnabled:true});
   let mount,head,htmlNode;
-  const preloads=new Set(),edits=[],styles=[];
+  const preloads=new Set(),edits=[],styles=[],fontPreloads=[],deferredModules=[];
   walk(document,node=>{
     if(node.tagName==='div'&&attr(node,'id')==='root')mount=node;
     if(node.tagName==='head')head=node;
     if(node.tagName==='html')htmlNode=node;
     if(node.tagName!=='link')return;
     const rel=attr(node,'rel'),href=attr(node,'href');
+    if(rel==='preload'&&attr(node,'as')==='font')fontPreloads.push(node);
     if(rel==='modulepreload') {
       if(preloads.has(href)||/\/analytics-[^/]+\.js$/.test(href))edits.push([node.sourceCodeLocation.startOffset,node.sourceCodeLocation.endOffset,'']);
-      else preloads.add(href);
+      else {
+        preloads.add(href);
+        if(/\/assets\/(?:App|ru|en|es|zh|ko|icons)-[^/]+\.js$/.test(href)){
+          deferredModules.push(html.slice(node.sourceCodeLocation.startOffset,node.sourceCodeLocation.endOffset));
+          edits.push([node.sourceCodeLocation.startOffset,node.sourceCodeLocation.endOffset,'']);
+        }
+      }
     }
     if(rel==='stylesheet'&&href?.startsWith('/assets/')){
       styles.push(href);
@@ -46,6 +68,14 @@ for(const relative of await readdir(dist,{recursive:true})) {
   let css='';
   for(const href of styles){if(!cssCache.has(href))cssCache.set(href,await readFile(path.join(dist,href),'utf8'));css+=cssCache.get(href);}
   if(!css)throw Error('Missing first screen styles: '+route);
+  if(!commonFonts){
+    const faces=[];
+    postcss.parse(css).walkAtRules('font-face',rule=>{
+      if(['Space Grotesk','Inter'].includes(rule.nodes.find(node=>node.prop==='font-family')?.value.replaceAll(/['"]/g,'')))faces.push(rule.clone());
+    });
+    if(faces.length!==3)throw Error('Expected Space Grotesk and two Inter subsets');
+    commonFonts=(await Promise.all(faces.map(embedFont))).join('');
+  }
   if(!articleFonts){
     const faces=[];
     postcss.parse(css).walkAtRules('font-face',face=>{
@@ -54,24 +84,22 @@ for(const relative of await readdir(dist,{recursive:true})) {
     });
     articleFonts='';
     for(const face of faces){
-      const subset=face.nodes.find(node=>node.prop==='unicode-range').value.includes('0400')?'cyrillic':'latin';
-      const bytes=await readFile(path.join(dist,'fonts/montserrat/montserrat-'+subset+'.woff2'));
-      face.walkDecls('src',decl=>{decl.value='url("data:font/woff2;base64,'+bytes.toString('base64')+'") format("woff2")';});
-      face.walkDecls('font-display',decl=>{decl.value='block';});
-      articleFonts+=face.toString();
+      articleFonts+=await embedFont(face);
     }
     if(faces.length!==2)throw Error('Expected two Montserrat subsets');
   }
   extractCss ||= createCriticalCss(css);
-  css=extractCss(rendered);
+  css=extractCss(rendered)+commonFonts;
+  for(const node of fontPreloads)if(embeddedFontPaths.has(attr(node,'href')))edits.push([node.sourceCodeLocation.startOffset,node.sourceCodeLocation.endOffset,'']);
   if(/^\/(?:en\/|es\/|zh\/|ko\/)?guides\/[^/]+/.test(route)){
     css+=articleFonts;
     const location=htmlNode.sourceCodeLocation.startTag;
     edits.push([location.startOffset,location.endOffset,html.slice(location.startOffset,location.endOffset).replace(/>$/,' data-embedded-article-fonts>')]);
   }
-  const activate=`<script id="prerender-bootstrap">(()=>{const root=document.getElementById('root');const template=root.querySelector('template[data-prerender-root]');root.replaceChildren(template.content);})();</script>`;
+  // Decode embedded fonts, never network or OS fonts; app preloads resume after the first frame.
+  const activate=`<script id="prerender-bootstrap">(()=>{const root=document.getElementById('root');const template=root.querySelector('template[data-prerender-root]');const fonts=[...(document.fonts||[])].filter(face=>face.display==='block').map(face=>face.load().catch(()=>{}));let timer;window.__hopscupPrerenderReady=Promise.race([Promise.all(fonts).then(()=>true),new Promise(resolve=>{timer=setTimeout(()=>resolve(false),500)})]).then(ready=>{clearTimeout(timer);document.documentElement.dataset.prerenderFonts=ready?'ready':'timeout';root.replaceChildren(template.content);requestAnimationFrame(()=>{const modules=document.getElementById('deferred-module-preloads');if(modules)document.head.append(modules.content)})});})();</script>`;
   edits.push([mount.sourceCodeLocation.startOffset,mount.sourceCodeLocation.endOffset,`<div id="root" data-prerendered><template data-prerender-root>${rendered}</template></div>${activate}${fallback}`]);
-  edits.push([head.sourceCodeLocation.endTag.startOffset,head.sourceCodeLocation.endTag.startOffset,`<style id="first-screen-css">${css.replaceAll('</style','<\\/style')}</style>`]);
+  edits.push([head.sourceCodeLocation.endTag.startOffset,head.sourceCodeLocation.endTag.startOffset,`<style id="first-screen-css">${css.replaceAll('</style','<\\/style')}</style><template id="deferred-module-preloads">${deferredModules.join('')}</template>`]);
   let result=html;
   for(const [start,end,value]of edits.sort((a,b)=>b[0]-a[0]))result=result.slice(0,start)+value+result.slice(end);
   await writeFile(file,result);

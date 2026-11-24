@@ -12,7 +12,7 @@ import './components/home-hero-integration.css';
 
 startDeferredAnalytics();
 Promise.all([prepareClientContent(),waitForPageStyles()]).then(() => importWithRecovery(() => import('./App.tsx'))).then(async ({default:App,prepareInitialRender}) => {
-  await prepareInitialRender();
+  await Promise.all([prepareInitialRender(),window.__hopscupPrerenderReady]);
   const root=document.getElementById('root')!;
   const tree=<StrictMode><Suspense fallback={null}><App /></Suspense><HydrationReady /></StrictMode>;
   if(root.hasAttribute('data-prerendered')) hydrateRoot(root,tree);

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile,readdir} from 'node:fs/promises';
 import {parse} from 'parse5';
+import {runInNewContext} from 'node:vm';
 import {createChunkRecovery,isChunkLoadError,CHUNK_RELOAD_KEY} from '../src/lib/chunkRecoveryPolicy.js';
 import {pageLayers} from './html-layers.mjs';
 import {createCriticalCss} from './critical-css.mjs';
@@ -68,19 +69,33 @@ test('prerender has real markup, one H1 per layer, inline styles and unique non-
     assert.ok(styles.every(attrs=>attrs.media==='print' && 'data-deferred-css' in attrs && attrs.onload.includes("this.media='all'")));
     if(route==='guides/youtube-ferma/'){
       assert.ok(html.includes('data-embedded-article-fonts'));
-      assert.equal((html.match(/data:font\/woff2;base64,/g)||[]).length,2,'First article paint must use its final Latin/Cyrillic font without a swap');
+      assert.equal((html.match(/data:font\/woff2;base64,/g)||[]).length,5,'First article paint uses its display, UI and Latin/Cyrillic body fonts without a swap');
     }
+    else assert.equal((html.match(/data:font\/woff2;base64,/g)||[]).length,3,'Display and UI fonts must be ready in the first paint');
   }
 });
 
 test('main hydrates the prerender and analytics cannot enter the initial dependency graph',async()=>{
   const main=await readFile('src/main.tsx','utf8'),analytics=await readFile('src/analytics.ts','utf8'),deferred=await readFile('src/lib/deferredAnalytics.ts','utf8');
   assert.ok(main.includes('hydrateRoot(root,tree)'));assert.ok(main.includes('root.hasAttribute(\'data-prerendered\')'));
+  assert.ok(main.includes('window.__hopscupPrerenderReady'));
+  const app=await readFile('src/App.tsx','utf8');assert.ok(app.includes('const isCatalogModal=clientReady&&Boolean(window.history.state?.offerModal)'));
   assert.ok(!main.includes("from '@vercel/analytics"));assert.ok(!analytics.includes("from '@vercel/analytics'"));
   assert.ok(deferred.includes('scheduleIdlePreload'));assert.ok(deferred.includes("import('@vercel/analytics')"));
   const content=await readFile('src/lib/clientContent.ts','utf8');
   assert.ok(content.includes("offer.category!=='Guides'"));
   assert.ok(content.includes("route===serviceCategoryRoutes[offer.category]+'/'+offer.slug"),'Duplicate service slugs must be resolved with their category');
+});
+
+test('prerender activation only decodes embedded fonts and cannot wait indefinitely for a font service',async()=>{
+  const html=await readFile('dist/index.html','utf8');let source;
+  const visit=node=>{if(node.tagName==='script'&&node.attrs.some(attr=>attr.name==='id'&&attr.value==='prerender-bootstrap'))source=node.childNodes.map(node=>node.value).join('');for(const child of node.childNodes||[])visit(child);};visit(parse(html));
+  let replacements=0,deadline;
+  const content={},window={},root={querySelector:()=>({content}),replaceChildren:value=>{assert.equal(value,content);replacements++;}};
+  const document={documentElement:{dataset:{}},getElementById:()=>root,fonts:[{family:'Inter',display:'swap',load(){throw Error('Network font must not be awaited');}},{family:'Inter Fallback',display:'auto',load(){throw Error('OS font must not be awaited');}},{family:'Inter',display:'block',load:()=>new Promise(()=>{})}]};
+  runInNewContext(source,{window,document,requestAnimationFrame:()=>{},setTimeout:(callback,delay)=>{deadline=delay;callback();return 1;},clearTimeout:()=>{}});
+  await window.__hopscupPrerenderReady;
+  assert.equal(deadline,500);assert.equal(replacements,1);assert.equal(document.documentElement.dataset.prerenderFonts,'timeout');
 });
 
 test('canonical home counters do not depend on the language of payment descriptions',async()=>{

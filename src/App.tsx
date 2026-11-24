@@ -5511,6 +5511,7 @@ export default function App() {
   useCatalogReveal(`${activeCategory}|${subFilter}|${guideTopicFilter}|${lang}|${searchQuery}|${isHomeRoute}`);
   const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsent>(null);
   const [clientReady,setClientReady] = useState(false);
+  const isCatalogModal=clientReady&&Boolean(window.history.state?.offerModal);
   useEffect(() => {setAnalyticsConsent(getAnalyticsConsent());setClientReady(true);}, []);
   const [isAnalyticsSettingsOpen, setIsAnalyticsSettingsOpen] = useState(false);
   const [placeholderText, setPlaceholderText] = useState('');
@@ -7564,12 +7565,12 @@ export default function App() {
       {(toolDialogsVisible || toolDialogsMounted) && <Suspense fallback={null}><CatalogToolsDialogs PROXY_ANTIDETECT_VIDEO_URL={PROXY_ANTIDETECT_VIDEO_URL} CARDS_VIDEO_URL={CARDS_VIDEO_URL} SOCIAL_VIDEO_URL={SOCIAL_VIDEO_URL} STORE_AI_VIDEO_URL={STORE_AI_VIDEO_URL} STORE_ACCOUNTS_VIDEO_URL={STORE_ACCOUNTS_VIDEO_URL} STEAM_PRICE_TABLE_URL={STEAM_PRICE_TABLE_URL} isProxyGuideOpen={isProxyGuideOpen} setIsProxyGuideOpen={setIsProxyGuideOpen} isProxyCheckerOpen={isProxyCheckerOpen} setIsProxyCheckerOpen={setIsProxyCheckerOpen} isAntidetectGuideOpen={isAntidetectGuideOpen} setIsAntidetectGuideOpen={setIsAntidetectGuideOpen} isActivatorGuideOpen={isActivatorGuideOpen} setIsActivatorGuideOpen={setIsActivatorGuideOpen} isStoresGuideOpen={isStoresGuideOpen} setIsStoresGuideOpen={setIsStoresGuideOpen} isCardsGuideOpen={isCardsGuideOpen} setIsCardsGuideOpen={setIsCardsGuideOpen} isSocialGuideOpen={isSocialGuideOpen} setIsSocialGuideOpen={setIsSocialGuideOpen} isSteamGuideOpen={isSteamGuideOpen} setIsSteamGuideOpen={setIsSteamGuideOpen} tx={tx} t={t} /></Suspense>}
 
       <Suspense fallback={null}><ServiceModalFrame {...serviceModalProps}
-        isCatalogModal={Boolean(window.history.state?.offerModal)} offerLoadError={offerLoadError}
+        isCatalogModal={isCatalogModal} offerLoadError={offerLoadError}
         onRetry={() => setOfferLoadAttempt(attempt => attempt + 1)}
-        description={window.history.state?.offerModal
+        description={isCatalogModal
           ? <Suspense fallback={<EditorialSkeleton />}><OfferContent {...serviceModalProps} part="description" /></Suspense>
           : <OfferContent {...serviceModalProps} part="description" />}
-        editorialContent={window.history.state?.offerModal
+        editorialContent={isCatalogModal
           ? <Suspense fallback={<EditorialSkeleton />}><OfferContent {...serviceModalProps} part="editorial" /></Suspense>
           : <OfferContent {...serviceModalProps} part="editorial" />} /></Suspense>
     </div>

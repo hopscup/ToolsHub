@@ -6,11 +6,11 @@ import {chromium} from 'playwright';
 import {startDistServer} from './content-regression-browser.mjs';
 import {isAnalyticsUrl,isWorkstationInjectionUrl,fulfillBlockedAnalytics} from './analytics-test-policy.mjs';
 
-const output=path.resolve(process.env.PERFORMANCE_REPORT || '../../reports/optimization-2026-11-24/browser');
-const videoDir=process.env.PERFORMANCE_VIDEO_DIR || 'D:/Projects/ToolsHub/optimization-2026-11-24/videos';
+const output=path.resolve(process.env.PERFORMANCE_REPORT || 'reports/performance');
+const videoDir=process.env.PERFORMANCE_VIDEO_DIR || path.join(output,'videos');
 await mkdir(output,{recursive:true});
 const server=await startDistServer(path.resolve('dist'));
-const browser=await chromium.launch({executablePath:process.env.PERFORMANCE_BROWSER || 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true});
+const browser=await chromium.launch({executablePath:process.env.PERFORMANCE_BROWSER || 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true,ignoreDefaultArgs:['--hide-scrollbars']});
 const report={matrix:[],recovery:[],navigation:[],videos:[],errors:[],analytics:[],passed:false};
 const routes=process.env.PERFORMANCE_ROUTES?.split(',')||['/','/en','/proxy-vpn','/guides','/proxy-vpn/luchshie-proksi','/proxy-vpn/proxywing','/guides/youtube-ferma','/crypto-exchange/qr-sbp'];
 const routeName=route=>route.replaceAll('/','-').replace(/^-|-$/g,'')||'home';
@@ -61,18 +61,22 @@ try {
       await page.locator('#root h1').waitFor();
       const before=await page.evaluate(()=>{
         window.__originalHeading=document.querySelector('#root h1');
-        return {theme:document.documentElement.dataset.siteTheme,background:getComputedStyle(document.body).backgroundColor,headings:document.querySelectorAll('#root h1').length,text:document.querySelector('#root').textContent.length,hydrated:document.documentElement.dataset.hydrated==='true'};
+        return {theme:document.documentElement.dataset.siteTheme,fontWarmup:document.documentElement.dataset.prerenderFonts,background:getComputedStyle(document.body).backgroundColor,headings:document.querySelectorAll('#root h1').length,text:document.querySelector('#root').textContent.length,hydrated:document.documentElement.dataset.hydrated==='true'};
       });
       assert.equal(before.theme,theme);assert.equal(before.headings,1);assert.ok(before.text>100);assert.equal(before.hydrated,false);
-      if(route==='/proxy-vpn/proxywing')await page.locator('[data-service-modal-frame]').waitFor();
+      if(route==='/proxy-vpn/proxywing'){
+        await page.locator('[data-service-modal-frame]').waitFor();
+        assert.equal(await page.evaluate(()=>getComputedStyle(document.body).overflow),'hidden','Direct modal must lock the page before hydration');
+      }
       await page.screenshot({path:output+`/${width}-${theme}-${routeName(route)}-prerender.png`});
       release();
       await page.waitForFunction(route=>document.documentElement.dataset.indexPolicyPath===route,route);
       await page.waitForLoadState('networkidle',{timeout:60000});
       report.analytics.push(...await page.evaluate(()=>window.__analyticsStarts));
       const after=await page.evaluate(()=>({theme:document.documentElement.dataset.siteTheme,background:getComputedStyle(document.body).backgroundColor,sameHeading:window.__originalHeading===document.querySelector('#root h1'),headings:document.querySelectorAll('#root h1').length,cls:window.__layoutShifts,shifts:window.__layoutShiftDetails,raw:/Загрузка\.\.\.|Loading\.\.\./.test(document.querySelector('#root').textContent)}));
+      report.matrix.push({width,theme,route,fontWarmup:before.fontWarmup,...after});console.log(JSON.stringify(report.matrix.at(-1)));
       assert.equal(after.sameHeading,true,'React replaced prerendered heading: '+route);assert.equal(after.headings,1);assert.equal(after.theme,theme);assert.equal(after.background,before.background);assert.equal(after.raw,false);
-      report.matrix.push({width,theme,route,...after});console.log(JSON.stringify(report.matrix.at(-1)));
+      assert.equal(Math.round(after.cls*1000),0,'Visible layout shifted during first paint or hydration: '+route+' (raw CLS '+after.cls+')');
       await context.unroute('**/*');
     }
     await context.close();
@@ -86,7 +90,15 @@ try {
     await page.locator('[data-catalog-card="p3"]').getByRole('link',{name:'Подробнее',exact:true}).click({noWaitAfter:true});await page.waitForURL(url=>url.pathname.replace(/\/$/,'')==='/proxy-vpn/proxywing',{waitUntil:'commit'});await page.locator('[data-service-modal-frame]').waitFor();
     await page.goBack({waitUntil:'commit'});await page.waitForURL(server.base+'/proxy-vpn',{waitUntil:'commit'});await page.locator('#root h1').waitFor();release();
     await page.waitForFunction(()=>document.documentElement.dataset.indexPolicyPath==='/proxy-vpn');
-    report.navigation.push({width,unhydratedCardLink:true,back:true});await context.close();
+    await page.locator('[data-catalog-card="p3"]').getByRole('link',{name:'Подробнее',exact:true}).click();
+    await page.waitForFunction(()=>history.state?.offerModal===true);
+    await page.reload({waitUntil:'networkidle'});
+    await page.waitForFunction(()=>document.documentElement.dataset.indexPolicyPath==='/proxy-vpn/proxywing');
+    await page.locator('[data-offer-description] p').first().waitFor();
+    await page.getByRole('button',{name:'Закрыть',exact:true}).click();
+    await page.waitForURL(server.base+'/proxy-vpn');
+    await page.waitForFunction(()=>!document.querySelector('[data-service-modal-frame]')&&getComputedStyle(document.body).overflowY!=='hidden');
+    report.navigation.push({width,unhydratedCardLink:true,back:true,catalogModalReload:true,scrollRestored:true});await context.close();
   }
   const withoutJs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
   const staticPage=await withoutJs.newPage();

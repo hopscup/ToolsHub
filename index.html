@@ -187,7 +187,7 @@
           script.dataset.cfBeacon = '{"token":"6d6b22f25a3f49e5900bef8f27d8a222"}';
           document.body.appendChild(script);
         };
-        const idle = () => 'requestIdleCallback' in window ? requestIdleCallback(load, {timeout:3000}) : setTimeout(load, 250);
+        const idle = () => Promise.resolve(window.__hopscupPrerenderReady).then(() => 'requestIdleCallback' in window ? requestIdleCallback(load, {timeout:3000}) : setTimeout(load, 250));
         if (document.readyState === 'complete') idle();
         else window.addEventListener('load', idle, {once:true});
       })();

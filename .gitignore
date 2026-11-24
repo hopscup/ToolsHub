@@ -5,6 +5,7 @@ dist/
 .vercel/
 coverage/
 reports/content-regression*/
+reports/performance/
 .DS_Store
 *.log
 .indexnow/

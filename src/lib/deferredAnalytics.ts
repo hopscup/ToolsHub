@@ -11,11 +11,11 @@ export function trackDeferredEvent(name:string,properties:Record<string,any>) {
 export function startDeferredAnalytics() {
   if (scheduled) return;
   scheduled = true;
-  scheduleIdlePreload(() => {
+  void Promise.resolve(window.__hopscupPrerenderReady).then(()=>scheduleIdlePreload(() => {
     void import('@vercel/analytics').then(module => {
       module.inject({framework:'react'});
       tracker = module.track;
       for (const [name,properties] of queue.splice(0)) tracker(name,properties);
     }).catch(() => {scheduled = false;});
-  });
+  }));
 }
