@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
+import {isAnalyticsUrl,fulfillBlockedAnalytics} from './analytics-test-policy.mjs';
+import {loadOffers} from './load-offers.mjs';
 import { isIndexablePath, getCanonicalPath, getIndexAlternates, getLanguageSwitchPath, absoluteIndexUrl } from '../src/data/indexPolicy.js';
 
 export const auditIndexPolicyBrowser = async () => {
@@ -27,7 +29,7 @@ export const auditIndexPolicyBrowser = async () => {
     let cursor = 0;
     const worker = async () => {
       const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
-      await context.route('**/*', route => route.request().url().startsWith(base) ? route.continue() : route.abort());
+      await context.route('**/*', route => isAnalyticsUrl(route.request().url()) ? fulfillBlockedAnalytics(route) : route.request().url().startsWith(base) ? route.continue() : route.abort());
       await context.addInitScript(() => localStorage.setItem('hopscup-analytics-consent', 'denied'));
       const page = await context.newPage();
       try {
@@ -54,7 +56,7 @@ export const auditIndexPolicyBrowser = async () => {
     await Promise.all(Array.from({ length: 4 }, worker));
 
     const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
-    await context.route('**/*', route => route.request().url().startsWith(base) ? route.continue() : route.abort());
+    await context.route('**/*', route => isAnalyticsUrl(route.request().url()) ? fulfillBlockedAnalytics(route) : route.request().url().startsWith(base) ? route.continue() : route.abort());
     const page = await context.newPage();
     for (const route of ['/', '/proxy-vpn', '/crypto-exchange', '/en', '/en/guides', '/social-boost', '/guides/antidetekt-na-telefone']) {
       await page.goto(base + route); await page.waitForFunction(route => document.documentElement.dataset.indexPolicyPath === route, route);
@@ -75,7 +77,10 @@ export const auditIndexPolicyBrowser = async () => {
       ['/guides/account-farm', '/guides/gmail-forwarding', 'Как настроить пересылку писем с Gmail'],
       ['/crypto-exchange', '/guides/exchange-uids-addresses', 'Где найти UID и адрес на бирже'],
     ];
-    for (const [route, href, label] of links) {
+    const {OFFERS,CATEGORY_ROUTES} = await loadOffers();
+    for (const [route, href, fallbackLabel] of links) {
+      const offer = OFFERS.find(item => `${CATEGORY_ROUTES[item.category]}/${item.slug}` === route);
+      const label = offer?.editorial?.links?.find(item => item.href === href)?.label?.ru || fallbackLabel;
       await page.goto(base + route); await page.waitForFunction(route => document.documentElement.dataset.indexPolicyPath === route, route);
       const link = page.getByRole('link', { name: label, exact: true });
       assert.equal(await link.getAttribute('href'), href, route);

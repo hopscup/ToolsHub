@@ -60,7 +60,7 @@ test('virtual number video reuses ArticleVideo without a standalone cover', asyn
     assert.equal(image.width / image.height, 16 / 9);
   }
   const app = await readFile('src/App.tsx', 'utf8');
-  assert.ok(app.includes("'guide-virtual-number': { topic: 'accounts'"));
+  assert.equal((await import('../src/data/guideCatalog.js')).guideCardMeta['guide-virtual-number'].topic, 'accounts');
   assert.ok(app.includes('return <VirtualNumberGuideArticle'));
 });
 

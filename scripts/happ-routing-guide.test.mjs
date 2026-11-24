@@ -22,7 +22,7 @@ test('Happ guide shares exact metadata, fixed draft dates and catalogue registra
   assert.equal(guideCatalog.find(guide => guide.id === article.id).route, route);
   assert.equal(OFFERS.find(offer => offer.id === article.id).category, 'Guides');
   const app = await readFile('src/App.tsx', 'utf8');
-  assert.ok(app.includes("'guide-happ-routing': { topic: 'proxy'"));
+  assert.equal((await import('../src/data/guideCatalog.js')).guideCardMeta['guide-happ-routing'].topic, 'proxy');
   assert.ok(app.includes('return <HappRoutingGuideArticle'));
   assert.equal(article.video, undefined);
   assert.deepEqual(page.cover, article.cover);

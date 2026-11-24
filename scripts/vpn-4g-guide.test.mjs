@@ -36,7 +36,7 @@ test('VPN 4G guide uses source metadata, fixed draft dates and the proxy catalog
   assert.ok((await stat('public' + article.videoPoster.src)).size < 50000);
   assert.doesNotMatch(JSON.stringify(article), /—|\(Ссылки?:|\[ССЫЛКА/);
   const app = await readFile('src/App.tsx', 'utf8');
-  assert.ok(app.includes("'guide-vpn-4g': { topic: 'proxy'"));
+  assert.equal((await import('../src/data/guideCatalog.js')).guideCardMeta['guide-vpn-4g'].topic, 'proxy');
   assert.ok(app.includes('return <Vpn4gGuideArticle'));
 });
 

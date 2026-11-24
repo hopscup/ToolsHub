@@ -1,5 +1,6 @@
 import { proxyGuideMeta } from './proxyGuideContent.js';
 import { aiSection } from './aiPages.js';
+import { homeHeroCopy } from './homePage.js';
 
 import { newVpnPages } from './vpnUpdates.js';
 
@@ -7,8 +8,8 @@ export const pageHeadings = {
   ...Object.fromEntries(newVpnPages.map(page => [`/proxy-vpn/${page.slug}`, page.heading])),
   '/ai': aiSection.heading,
   "/": {
-    "ru": "Полезные сервисы для работы с аккаунтами и цифровыми задачами",
-    "en": "Useful services for accounts and digital workflows",
+    "ru": `${homeHeroCopy.wordmark} ${homeHeroCopy.subtitle.ru}`,
+    "en": `${homeHeroCopy.wordmark} ${homeHeroCopy.subtitle.en}`,
     "es": "Servicios útiles para cuentas y tareas digitales",
     "zh": "账号和数字工作流实用服务",
     "ko": "계정과 디지털 작업을 위한 유용한 서비스"

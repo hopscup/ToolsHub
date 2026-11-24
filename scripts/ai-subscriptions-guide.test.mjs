@@ -15,7 +15,7 @@ test('Plati uses the affiliate homepage in OFFERS and every localized store link
   const url = 'https://plati.market/?ai=1422112';
   assert.equal(OFFERS.find(offer => offer.id === 'st-plati').url, url);
   assert.equal(getExternalLinkRel(url), 'sponsored noopener noreferrer');
-  const app = await readFile('src/App.tsx', 'utf8');
+  const app = await readFile('src/App.tsx', 'utf8') + await readFile('src/components/CatalogToolsDialogs.tsx', 'utf8');
   assert.ok(!app.includes('plati.market/games/'));
   const links = [...app.matchAll(/<a href="https:\/\/plati\.market\/\?ai=1422112"[^>]*>/g)];
   assert.equal(links.length, 5);
@@ -79,7 +79,7 @@ test('AI subscription guide is in AI and linked from the subscription landing pa
   assert.equal(guideCatalog.find(item => item.id === article.id).route, '/guides/deshevye-podpiski-chatgpt-claude-gemini');
   assert.ok(OFFERS.some(offer => offer.id === article.id && offer.category === 'Guides'));
   const app = await readFile('src/App.tsx', 'utf8');
-  assert.ok(app.includes("'guide-ai-subscriptions': { topic: 'ai'"));
+  assert.equal((await import('../src/data/guideCatalog.js')).guideCardMeta['guide-ai-subscriptions'].topic, 'ai');
   assert.ok(app.includes('return <AiSubscriptionsGuideArticle'));
   assert.deepEqual(seoLandingPages.find(page => page.id === 'ai-subscriptions').guideLink, {
     href: '/guides/deshevye-podpiski-chatgpt-claude-gemini',

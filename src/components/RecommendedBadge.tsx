@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import { AnimatePresence, m as motion } from 'motion/react';
+import { AnimatePresence, motion } from './CssTransitions';
 import { Star } from 'lucide-react';
 
 export const RecommendedBadge = ({ language, label: customLabel }: { language: 'ru' | 'en'; label?: string }) => {

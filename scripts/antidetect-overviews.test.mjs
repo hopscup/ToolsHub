@@ -85,7 +85,8 @@ test('ShardX table keeps the empty Dolphin storage cell and cross-links both gui
 
 test('both overview articles are native React pages in the antidetect catalogue topic', async () => {
   const app = await readFile('src/App.tsx', 'utf8');
-  for (const source of antidetectOverviewArticles) assert.ok(app.includes(`'${source.id}': { topic: 'antidetect'`));
-  assert.ok(app.includes('return <AntidetectOverviewGuideArticle'));
+  const {guideCardMeta} = await import('../src/data/guideCatalog.js');
+  for (const source of antidetectOverviewArticles) assert.equal(guideCardMeta[source.id].topic, 'antidetect');
+  for (const component of ['FreeAntidetectGuideArticle','ShardxReviewGuideArticle']) assert.ok(app.includes(`<${component} offers={OFFERS}`));
   assert.ok(app.includes('antidetectOverviewArticles.some(article => article.id === offer.id)'));
 });

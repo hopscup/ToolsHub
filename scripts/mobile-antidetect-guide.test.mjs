@@ -126,6 +126,6 @@ test('mobile antidetect is a native article in the antidetect catalogue topic', 
   assert.equal(guideCatalog.find(item => item.id === article.id).route, '/guides/antidetekt-na-telefone');
   assert.ok(OFFERS.some(offer => offer.id === article.id && offer.category === 'Guides'));
   const app = await readFile('src/App.tsx', 'utf8');
-  assert.ok(app.includes("'guide-mobile-antidetect': { topic: 'antidetect'"));
+  assert.equal((await import('../src/data/guideCatalog.js')).guideCardMeta['guide-mobile-antidetect'].topic, 'antidetect');
   assert.ok(app.includes('return <MobileAntidetectGuideArticle'));
 });

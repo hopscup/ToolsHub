@@ -1,0 +1,11 @@
+/* Scope legacy hero/icon rules and typography adjustments to the supplied hero. */
+html #hero-title.home-hero-title { background-image:none;overflow:visible; }
+.home-hero [class],.home-hero code { letter-spacing:0 !important; }
+.home-hero .home-hero-wordmark { font-size:80px; }
+.home-hero .home-hero-sub { font-size:26px; }
+html[data-site-theme] .home-hero svg.lucide { color:inherit !important; }
+html[data-site-theme] .home-hero .home-hero-task-arrow { color:#6f6b7b !important; }
+@media(max-width:767px) {
+  .home-hero .home-hero-wordmark { font-size:44px; }
+  .home-hero .home-hero-sub { font-size:20px; }
+}

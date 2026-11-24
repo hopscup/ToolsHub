@@ -100,11 +100,4 @@ export const linkenSpherePages = pages.filter(page => page.category === 'Antidet
 export const botShopOffers = botShopPages.map(page => ({ ...page, logoUrl: page.logo, description: page.editorial.description }));
 export const linkenSphereOffers = linkenSpherePages.map(page => ({ ...page, logoUrl: page.logo, description: page.editorial.description }));
 
-export const orderAntidetectAllOffers = offers => {
-  const followingIds = ['ant-linken-sphere', 'ant-shardx'];
-  const following = followingIds.map(id => offers.find(offer => offer.id === id)).filter(Boolean);
-  if (!offers.some(offer => offer.id === 'ant-vision') || following.length !== followingIds.length) return offers;
-  const ordered = offers.filter(offer => !followingIds.includes(offer.id));
-  ordered.splice(ordered.findIndex(offer => offer.id === 'ant-vision') + 1, 0, ...following);
-  return ordered;
-};
+export {orderAntidetectAllOffers} from '../lib/offerOrdering.js';

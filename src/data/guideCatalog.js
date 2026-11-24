@@ -77,3 +77,35 @@ export const guideCatalog = [
 
 export const guideCatalogById = Object.fromEntries(guideCatalog.map((guide) => [guide.id, guide]));
 export const indexableGuideCatalog = guideCatalog.filter(guide => guide.indexable !== false);
+
+export const guideCardMeta = {
+  'guide-happ-routing': { topic: 'proxy', minutes: 5 },
+  'guide-vpn-4g': { topic: 'proxy', minutes: 7 },
+  'guide-mobile-antidetect': { topic: 'antidetect', minutes: 9 },
+  'guide-ai-subscriptions': { topic: 'ai', minutes: 5 },
+  'guide-a6api': { topic: 'ai', minutes: 8 },
+  'guide-youtube-farm': { topic: 'accounts', minutes: 9 },
+  'guide-rf-numbers': { topic: 'accounts', minutes: 6 },
+  'guide-virtual-number': { topic: 'accounts', minutes: 5 },
+  'guide-free-antidetect': { topic: 'antidetect', minutes: 8 },
+  'guide-shardx-review': { topic: 'antidetect', minutes: 8 },
+  'guide-best-mobile-proxies': { topic: 'proxy', minutes: 8 },
+  'guide-claude-recovery': { topic: 'ai', minutes: 6 },
+  'guide-claude-russia': { topic: 'ai', minutes: 10 },
+  'guide-discord-token': { topic: 'accounts', minutes: 6 },
+  'guide-foreign-cards': { topic: 'crypto', minutes: 7 },
+  'guide-mobile-ip': { topic: 'proxy', minutes: 4 },
+  'guide-gmail-forwarding': { topic: 'accounts', minutes: 5 },
+  'guide-account-farm': { topic: 'accounts', minutes: 14 },
+  'guide-otc-kyc': { topic: 'crypto', minutes: 8 },
+  'guide-uids-addresses': { topic: 'crypto', minutes: 6 },
+  'guide-antidetect-setup': { topic: 'antidetect', minutes: 12 },
+};
+
+export const guideTopicLabels = {
+  ai: { ru: 'Нейросети', en: 'AI', es: 'AI', zh: 'AI', ko: 'AI' },
+  proxy: { ru: 'IP и прокси', en: 'IP & proxies', es: 'IP y proxies', zh: 'IP 与代理', ko: 'IP 및 프록시' },
+  antidetect: { ru: 'Антидетект', en: 'Antidetect', es: 'Antidetect', zh: '反检测', ko: '안티디텍트' },
+  accounts: { ru: 'Аккаунты', en: 'Accounts', es: 'Cuentas', zh: '账号', ko: '계정' },
+  crypto: { ru: 'Крипта', en: 'Crypto', es: 'Cripto', zh: '加密货币', ko: '암호화폐' },
+};

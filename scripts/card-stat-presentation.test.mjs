@@ -9,7 +9,7 @@ import {getServiceFacts, localizedServiceValue} from '../src/data/servicePresent
 
 const {OFFERS} = await loadOffers();
 const cards = OFFERS.filter(offer => offer.cardStats);
-const source = ts.createSourceFile('App.tsx', await readFile('src/App.tsx', 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+const source = ts.createSourceFile('App.tsx', await readFile('src/App.tsx', 'utf8') + await readFile('src/components/ServiceModal.tsx', 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 const fragments = new Map();
 const visit = node => {
   if (ts.isJsxExpression(node) && node.expression) {
@@ -21,7 +21,7 @@ const visit = node => {
 };
 visit(source);
 
-// Render the actual App.tsx facts fragments, including promo-aware issuance rows.
+// Render the actual catalogue/modal facts fragments, including promo-aware issuance rows.
 const renderers = new Map();
 for (const [name, expression] of fragments) {
   const compiled = await build({

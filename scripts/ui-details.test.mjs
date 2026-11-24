@@ -6,6 +6,13 @@ import {loadOffers} from './load-offers.mjs';
 import {getPartnerIntroduction} from '../src/data/partnerCardRefresh.js';
 import {normalizeServiceText,splitServiceParagraphs} from '../src/data/servicePresentation.js';
 const {OFFERS}=await loadOffers();
+test('desktop controls wrap whole groups, never individual chips or actions, without changing mobile rules',async()=>{
+ const app=await readFile('src/App.tsx','utf8'),css=await readFile('src/theme.css','utf8');
+ for(const name of ['site-section-controls-row','site-section-action-group','site-guide-topics'])assert.ok(app.includes(name));
+ const desktop=css.slice(css.indexOf('@media(min-width:768px) {\n  .site-section-controls-row'),css.indexOf('@media(max-width:767px) {\n  .site-section-controls > div'));
+ for(const rule of ['flex-flow:row wrap','flex:0 0 auto;flex-wrap:nowrap','margin-inline-start:auto','flex-shrink:0;white-space:nowrap','.site-guide-topics { flex-wrap:nowrap'])assert.ok(desktop.includes(rule),rule);
+ assert.ok(css.includes('.site-section-actions { display:grid;width:100%;grid-template-columns:minmax(0,1fr);gap:12px; }'));
+});
 test('filter counts come from current offers, including antidetect and multi-category filters',()=>{
  assert.equal(categoryFilterCount(OFFERS,'Proxy','Proxy'),7);assert.equal(categoryFilterCount(OFFERS,'Proxy','VPN'),9);
  for(const filter of ['PCBasic','PCAdvanced','Mobile'])assert.ok(categoryFilterCount(OFFERS,'Antidetect',filter)>0);
@@ -52,11 +59,11 @@ test('recommendation keeps its 26px button and existing tooltip text while chang
 });
 
 test('new effects use one-shot intersection reveals, successful-copy bursts, reduced motion and neutral social exceptions',async()=>{
- const effects=await readFile('src/lib/uiEffects.ts','utf8'),css=await readFile('src/theme.css','utf8'),particles=await readFile('src/components/BackgroundParticles.tsx','utf8'),app=await readFile('src/App.tsx','utf8');
+ const effects=await readFile('src/lib/uiEffects.ts','utf8'),css=await readFile('src/theme.css','utf8'),particles=await readFile('src/components/BackgroundParticles.tsx','utf8'),app=await readFile('src/App.tsx','utf8')+await readFile('src/components/ServiceModal.tsx','utf8');
  for(const token of ['IntersectionObserver','observer?.unobserve','seen.current.add','prefers-reduced-motion: reduce','index < 6','animationend','star.remove()','burst.remove()'])assert.ok(effects.includes(token),token);
  for(const token of ['site-wordmark-window 9s','site-wordmark-text 9s','site-card-rise','site-copy-star','site-star-glint','svg.site-search-icon','site-social-button svg.lucide'])assert.ok(css.includes(token),token);
- for(const token of ['visibilitychange','rgba(45, 45, 52','site-mobile-twinkles'])assert.ok(particles.includes(token),token);
- assert.ok(!particles.includes('prefers-reduced-motion'));assert.equal((particles.match(/<i\/>/g)||[]).length,5);
+ for(const token of ['visibilitychange','rgba(45, 45, 52','site-mobile-sky'])assert.ok(particles.includes(token),token);
+ assert.ok(!particles.includes('prefers-reduced-motion'));assert.equal((particles.match(/<i\/>/g)||[]).length,0);
  assert.ok(app.includes('burstPromoStars(sourceId)'));assert.equal((app.match(/data-promo-source=/g)||[]).length,3);assert.ok(!app.includes('delay: index * 0.1'));assert.ok(!app.includes('initial={{ opacity: 0, y: 30 }}'));
  for(const theme of ['dark','light'])assert.ok((await stat('public/sky/twinkles-'+theme+'.webp')).size<20000);
 });
@@ -71,7 +78,7 @@ test('light neutral boundaries are explicit and do not replace the accent action
 });
 
 test('three approved partner cards retain their authored description before facts in React and static pages',async()=>{
- const app=await readFile('src/App.tsx','utf8');
+ const app=await readFile('src/components/ServiceModal.tsx','utf8');
  assert.ok(app.indexOf('data-offer-description')<app.indexOf('data-offer-facts'));
  assert.ok(app.includes('key={selectedOffer.id} data-offer-scroll'));
  assert.ok(app.includes('getPartnerIntroduction(selectedOffer, lang) || offerDescription(selectedOffer)'));
@@ -99,13 +106,13 @@ test('All catalogue groups retain each service once and preserve relative order 
  const cards=groupCatalogOffers(overlap,['NoKYC','WithKYC']);assert.deepEqual(cards.flatMap(g=>g.offers).map(o=>o.id),['one','two','other']);
 });
 
-test('background remains animated with reduced motion while foreground effects remain disabled',async()=>{
+test('desktop stays animated while the mobile sky is static and foreground respects reduced motion',async()=>{
  const css=await readFile('src/theme.css','utf8'),source=await readFile('src/components/BackgroundParticles.tsx','utf8');
  const reduced=css.slice(css.lastIndexOf('@media(prefers-reduced-motion:reduce)'));
  assert.ok(!reduced.includes('site-mobile-sky'));assert.ok(!reduced.includes('site-mobile-twinkles'));
  assert.ok(reduced.includes('.site-wordmark-glint,.site-recommend-glint i { animation:none'));
- assert.ok(!source.includes('reducedMotion'));assert.ok(css.includes('animation:site-meteor 20s'));
- for(const delay of ['4s','8s','12s','16s'])assert.ok(css.includes('animation-delay:'+delay));
+ assert.ok(!source.includes('reducedMotion'));assert.ok(!css.includes('animation:site-meteor'));
+ assert.ok(!css.includes('site-mobile-twinkles'));
 });
 
 test('only the Proxy section groups its All catalogue; search, home and other categories stay flat',()=>{

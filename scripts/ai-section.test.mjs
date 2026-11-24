@@ -148,7 +148,9 @@ test('AI optional editorial fields have RU/EN content and keep linked author tex
 
 test('AI preview hides introductions and keeps revised Lumean and OmniRouter facts', async () => {
   const app = await readFile('src/App.tsx', 'utf8');
-  assert.match(app, /offer.category !== 'Guides' && offer.category !== 'AI' && \(/);
+  const tiles = app.slice(app.indexOf('const renderServiceCards'), app.indexOf('  if (isProxyGuideArticle)'));
+  assert.equal((tiles.match(/\{offerDescription\(offer\)\}/g) || []).length, 1);
+  assert.match(tiles, /\(offer.subCategory === 'AML' \|\| offer.subCategory === 'Wallet'\) && \(/);
   for (const id of ['ai-lumean', 'ai-omnirouter']) {
     const offer = services.find(item => item.id === id);
     assert.equal(offer.details.paymentMethods.ru, 'Рубли, крипта');
@@ -214,7 +216,8 @@ test('A6API guide uses live referrals, fixed draft dates, complete prompt and ch
 
 test('AI catalogue topic includes the new guide and three moved guides', async () => {
   const app = await readFile('src/App.tsx', 'utf8');
-  for (const id of ['guide-a6api', 'guide-ai-subscriptions', 'guide-claude-recovery', 'guide-claude-russia']) assert.ok(app.includes(`'${id}': { topic: 'ai'`));
+  const {guideCardMeta} = await import('../src/data/guideCatalog.js');
+  for (const id of ['guide-a6api', 'guide-ai-subscriptions', 'guide-claude-recovery', 'guide-claude-russia']) assert.equal(guideCardMeta[id].topic, 'ai');
   assert.ok(app.includes("{ id: 'ai', label: l(GUIDE_TOPIC_LABELS.ai) }"));
   for (const [filter, icon] of [['AIGeneration', 'Sparkles'], ['AIVoice', 'AudioLines'], ['AICoding', 'Code']]) {
     assert.ok(app.includes(`filter === '${filter}' && <${icon} aria-hidden="true"`));

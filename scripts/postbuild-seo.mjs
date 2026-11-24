@@ -10,13 +10,15 @@ import { orderAntidetectAllOffers } from '../src/data/botAndLinkenPages.js';
 import { cryptoExchangePages } from '../src/data/cryptoExchangePages.js';
 import { foreignCardPages } from '../src/data/foreignCardPages.js';
 import { guidePages } from '../src/data/guidePages.js';
-import { indexableGuideCatalog } from '../src/data/guideCatalog.js';
+import { indexableGuideCatalog, guideCardMeta, guideTopicLabels } from '../src/data/guideCatalog.js';
 import { getExternalLinkRel } from '../src/lib/externalLinks.js';
 import { proxyGuideMeta, proxyGuideBlocks, proxyProviders, proxyTypes, proxyCopy, proxyChecklist } from '../src/data/proxyGuideContent.js';
 import { mobileIpGuideBlocks, mobileIpChecklist, mobileIpProvider } from '../src/data/mobileIpGuideContent.js';
 import { antidetectSetupCopy, antidetectSetupAdditions, antidetectVideoUrl, getAntidetectGuideServices, resolveAntidetectGuideSegments, createAntidetectGuideChecklist } from '../src/data/antidetectSetupContent.js';
 import { articleSocialLinks, articleSocialBanner, withoutArticleSocialFooter } from '../src/data/articleSocialFooter.js';
 import { pageHeadings } from '../src/data/pageHeadings.js';
+import { homeCopy, homeHeroCopy, homeSeo, homeGuideEnglish, homeLink, getHomeSelections } from '../src/data/homePage.js';
+import { homeStats } from '../src/lib/homeStats.js';
 import { articleFallbackByRoute, mobileProxyChecklist, mobileProxyCopy, mobileProxyMeta, mobileProxyProviders } from '../src/data/articleFallbackContent.js';
 import { loadOffers } from './load-offers.mjs';
 import { createAccountFarmContent } from '../src/data/accountFarmContent.js';
@@ -54,6 +56,7 @@ const languages = [
 ];
 const indexLanguages = languages.filter(({ code }) => code === 'ru' || code === 'en');
 const { OFFERS, OFFER_DESCRIPTION_TRANSLATIONS } = await loadOffers();
+const home = getHomeSelections(OFFERS);
 const accountFarmContent = createAccountFarmContent(OFFERS);
 const linkedGuideContent = {
   [vpn4gArticle.id]: createVpn4gContent(OFFERS),
@@ -81,15 +84,13 @@ const sections = [
     priority: '1.0',
     changefreq: 'weekly',
     title: {
-      ru: "Hopscup's Tools Hub — полезные сервисы для аккаунтов, прокси и крипты",
-      en: "Hopscup's Tools Hub — useful services for accounts, proxies, and crypto",
+      ...homeSeo.title,
       es: "Hopscup's Tools Hub — servicios útiles para cuentas, proxies y cripto",
       zh: "Hopscup's Tools Hub — 账号、代理和加密货币工具",
       ko: "Hopscup's Tools Hub — 계정, 프록시, 암호화폐 도구",
     },
     description: {
-      ru: 'Подборка сервисов Hopscup: прокси и VPN, антидетекты, магазины аккаунтов, зарубежные карты, SMS-активаторы, VDS/VPS, криптообменники, Steam и полезные гайды.',
-      en: 'A curated Hopscup directory of proxy and VPN services, antidetect browsers, account shops, virtual cards, SMS activators, VDS/VPS hosting, crypto exchanges, Steam top-ups, and practical guides.',
+      ...homeSeo.description,
       es: 'Directorio de Hopscup con proxies y VPN, navegadores antidetect, tiendas de cuentas, tarjetas virtuales, activadores SMS, VDS/VPS, exchanges cripto, recargas Steam y guías.',
       zh: 'Hopscup 精选目录：代理和 VPN、反检测浏览器、账号商店、虚拟卡、短信接码、VDS/VPS、加密货币兑换、Steam 充值和实用指南。',
       ko: 'Hopscup 큐레이션 디렉터리: 프록시와 VPN, 안티디텍트 브라우저, 계정 상점, 가상 카드, SMS 인증, VDS/VPS, 암호화폐 환전, Steam 충전, 실용 가이드.',
@@ -1911,7 +1912,50 @@ const renderSectionOffers = (section, language) => {
   }).join('\n');
 };
 
+const renderHomeStatic = language => {
+  const code = language.code;
+  const text = value => value[code];
+  const link = (href, label) => renderLink({ href: homeLink(href, code), label });
+  const youtube = code === 'ru' ? 'https://www.youtube.com/@hopscup' : 'https://www.youtube.com/@Hopscup_eng';
+  const stats = homeStats(OFFERS, home.guideCount);
+  return `<article class="seo-fallback" data-home-hub aria-label="${escapeHtml(text(homeSeo.title))}">
+    <nav data-language-switcher aria-label="Language"><a href="/" lang="ru">RU</a> <a href="/en" lang="en">EN</a></nav>
+    <header class="fallback-hero"><p>${escapeHtml(text(homeHeroCopy.eyebrow))}</p>
+      <h1>${escapeHtml(homeHeroCopy.wordmark)} <span>${escapeHtml(text(homeHeroCopy.subtitle))}</span></h1><p>${escapeHtml(text(homeHeroCopy.lead))}</p>
+      <p>${renderLink({href:'#home-tasks',label:text(homeHeroCopy.choose)})} ${renderLink({href:youtube,label:text(homeHeroCopy.youtube)})}</p>
+      <section data-home-hero-preview><h2>${escapeHtml(text(homeHeroCopy.previewTitle))}</h2><p>${homeHeroCopy.tasks.length} ${escapeHtml(text(homeHeroCopy.taskLabel))}</p><ul>
+        ${homeHeroCopy.tasks.map(task=>{
+          const offer=OFFERS.find(item=>item.id===task.offerId);
+          return `<li>${link(`${serviceCategoryRoutes[offer.category]}/${offer.slug}`,text(task.title))} <span>${escapeHtml(offer.name)}</span>${offer.promoDiscount?` <em>${escapeHtml(localizedServiceValue(offer.promoDiscount,code))}</em>`:''}</li>`;
+        }).join('')}
+      </ul><p>${escapeHtml(text(homeHeroCopy.promo))} <code>hopscup</code> ${escapeHtml(text(homeHeroCopy.discount))}</p></section>
+    </header>
+    <dl>${[stats.services,stats.rub,stats.guides,'100%'].map((value,index)=>`<dt>${escapeHtml(text(homeHeroCopy.statsLabels)[index])}</dt><dd>${value}</dd>`).join('')}</dl>
+    <section id="home-tasks"><h2>${escapeHtml(text(homeCopy.tasksTitle))}</h2><p>${escapeHtml(text(homeCopy.tasksSubtitle))}</p>
+      ${homeCopy.tasks.map(task=>`<section data-home-task="${task.id}"><h3>${escapeHtml(text(task.title))}</h3><p>${escapeHtml(text(task.text))}</p>${task.links.map(item=>`<p>${link(item.href,text(item.label))}</p>`).join('')}</section>`).join('')}
+    </section>
+    <section data-home-featured><h2>${escapeHtml(text(homeCopy.featuredTitle))}</h2><p>${escapeHtml(text(homeCopy.featuredSubtitle))}</p>
+      ${home.featured.map(offer=>{
+        const facts=getServiceFacts(offer,code),vpn=offer.subCategory==='VPN' ? vpnTerms[offer.slug] : undefined;
+        if(vpn)facts.unshift({label:code==='ru'?'Бесплатно':'Free trial',value:localizedServiceValue(vpn.free,code)},{label:code==='ru'?'Цена':'Price',value:localizedServiceValue(vpn.price,code)});
+        return `<section data-service-summary="${offer.id}"><h3>${escapeHtml(offer.name)}</h3><dl>${facts.map(fact=>`<dt>${escapeHtml(fact.label)}</dt><dd>${escapeHtml(fact.value)}</dd>`).join('')}</dl>
+          ${offer.promoCode?`<p>${code==='ru'?'Промокод':'Promo code'}: <code>${escapeHtml(offer.promoCode)}</code> ${escapeHtml(localizedServiceValue(offer.promoDiscount,code)||'')}</p>`:''}
+          <p>${link(`${serviceCategoryRoutes[offer.category]}/${offer.slug}`,code==='ru'?'Подробнее':'Details')}</p></section>`;
+      }).join('')}
+    </section>
+    <section data-home-guides><h2>${escapeHtml(text(homeCopy.guidesTitle))}</h2>${home.guides.map(guide=>{
+      const adapted=code==='en'?homeGuideEnglish[guide.id]:undefined;
+      const cover=guide.cover;
+      const meta=guideCardMeta[guide.id]||{topic:'accounts',minutes:6};
+      return `<section><p>${escapeHtml(guideTopicLabels[meta.topic][code])}</p><h3>${renderLink({href:guide.route,label:adapted?.title||getLanguage(guide.title,language)})}</h3>${cover?`<img src="${escapeHtml(cover.previewSrc||cover.src)}" alt="${escapeHtml(cover.alt)}" width="${cover.width}" height="${cover.height}" loading="lazy" />`:''}<p>${escapeHtml(adapted?.description||getLanguage(guide.description,language))}</p><p>${meta.minutes} ${code==='ru'?'мин чтения':'min read'}</p></section>`;
+    }).join('')}<p>${link('/guides',text(homeCopy.allGuides))}</p></section>
+    <section><h2>${escapeHtml(text(homeCopy.selectionTitle))}</h2><p>${escapeHtml(text(homeCopy.selectionText))}</p><ul>${text(homeCopy.selectionPoints).map(point=>`<li>${escapeHtml(point)}</li>`).join('')}</ul></section>
+    <nav aria-label="${escapeHtml(fallbackLabels[code].nav)}">${internalLinks(language)}</nav>
+  </article>`;
+};
+
 const renderStaticContent = (section, language, pageLanguage = language) => {
+  if (section.id === 'home' && ['ru','en'].includes(language.code)) return renderHomeStatic(language);
   const offer = offersByRoute.get(section.route);
   const article = articleFallbackByRoute[section.route];
   const vpn = section.route.startsWith('/proxy-vpn/') ? vpnTerms[section.route.slice('/proxy-vpn/'.length)] : undefined;
@@ -1998,7 +2042,9 @@ const collectionSchema = (section, language) => ({
   },
   mainEntity: {
     '@type': 'ItemList',
-    itemListElement: section.items.map((name, index) => ({
+    itemListElement: (section.id === 'home' && ['ru','en'].includes(language.code)
+      ? [...home.featured.map(offer=>offer.name),...home.guides.map(guide=>language.code==='en'&&homeGuideEnglish[guide.id] ? homeGuideEnglish[guide.id].title : getLanguage(guide.title,language))]
+      : section.items).map((name, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name,
@@ -2083,6 +2129,11 @@ const replaceHead = (html, section, language) => {
   const structuredData = [websiteSchema(contentLanguage), organizationSchema, pageSchema];
 
   return html
+    .replace(/<link\b[^>]*\sdata-client-catalogue\s[^>]*>/g, tag => {
+      const href = tag.match(new RegExp(`data-client-catalogue-${language.code}="([^"]+)"`))?.[1];
+      if (!href) throw new Error(`Missing client catalogue preload for ${language.code}`);
+      return tag.replace(/\bhref="[^"]*"/, `href="${href}"`);
+    })
     .replace(/<html lang=".*?">/, `<html lang="${contentLanguage.htmlLang}">`)
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`)
     .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${description}" />`)

@@ -1,6 +1,7 @@
 import { createServer } from 'node:http';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import {isAnalyticsUrl,fulfillBlockedAnalytics} from './analytics-test-policy.mjs';
 import { pathToFileURL } from 'node:url';
 import { appendFileSync, existsSync } from 'node:fs';
 import { createInventory, saveInventory, checkServiceSnapshot, checkExternalLinkParity, hash, normalizeUrl, isExternalUrl } from './content-regression-inventory.mjs';
@@ -111,7 +112,7 @@ export async function runContentRegression({ staticOnly = false, serviceLanguage
     report.unexecutedReactRoutes = inventory.pages.filter(page => !selected.has(page.route)).map(page => page.route);
     const worker = async () => {
       const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce', serviceWorkers: 'block' });
-      await context.route('**/*', route => route.request().url().startsWith(server.base + '/') ? route.continue() : route.abort());
+      await context.route('**/*', route => isAnalyticsUrl(route.request().url()) ? fulfillBlockedAnalytics(route) : route.request().url().startsWith(server.base + '/') ? route.continue() : route.abort());
       await context.addInitScript(() => localStorage.setItem('hopscup-analytics-consent', 'denied'));
       const tab = await context.newPage();
       tab.setDefaultTimeout(12000);

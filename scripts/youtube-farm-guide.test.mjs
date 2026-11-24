@@ -68,7 +68,7 @@ test('YouTube farm is a native article in the Accounts catalogue', async () => {
   assert.equal(guideCatalog.find(item => item.id === article.id).route, '/guides/youtube-ferma');
   assert.ok(OFFERS.some(offer => offer.id === article.id && offer.category === 'Guides'));
   const app = await readFile('src/App.tsx', 'utf8');
-  assert.ok(app.includes("'guide-youtube-farm': { topic: 'accounts'"));
+  assert.equal((await import('../src/data/guideCatalog.js')).guideCardMeta['guide-youtube-farm'].topic, 'accounts');
   assert.ok(app.includes('return <YoutubeFarmGuideArticle'));
   assert.ok(app.includes('offer.id === youtubeFarmArticle.id'));
 });

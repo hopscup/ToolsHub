@@ -243,13 +243,15 @@ const DesktopParticles = () => {
   );
 };
 
+const MOBILE_SKY_QUERY = '(max-width: 767px), (max-width: 1023px) and (pointer: coarse)';
+
 export const BackgroundParticles = () => {
-  const [mobile,setMobile] = useState(() => window.matchMedia('(max-width: 767px), (pointer: coarse)').matches);
+  const [mobile,setMobile] = useState(() => window.matchMedia(MOBILE_SKY_QUERY).matches);
   useEffect(() => {
-    const media = window.matchMedia('(max-width: 767px), (pointer: coarse)');
+    const media = window.matchMedia(MOBILE_SKY_QUERY);
     const change = () => setMobile(media.matches);
     media.addEventListener('change',change);
     return () => media.removeEventListener('change',change);
   }, []);
-  return mobile ? <div className="site-mobile-sky" aria-hidden="true"><i/><i/><i/><i/><i/><span className="site-mobile-twinkles"/></div> : <DesktopParticles/>;
+  return mobile ? <div className="site-mobile-sky" aria-hidden="true"/> : <DesktopParticles/>;
 };

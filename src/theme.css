@@ -36,12 +36,6 @@ html[data-site-theme] .site-section-actions > :is(a,button) { border-color:var(-
 .site-mobile-menu-bottom { display:flex;align-items:center;gap:12px;padding:16px 24px;border-top:1px solid var(--site-line); }
 .site-mobile-menu-bottom > :last-child { margin-left:auto; }
 .site-mobile-sky { position:fixed;inset:0;pointer-events:none;z-index:0;background:url('/sky/dark.webp') center/cover no-repeat;overflow:hidden; }
-.site-mobile-sky i { position:absolute;top:8%;left:-190px;width:170px;height:2px;background:linear-gradient(90deg,transparent,rgb(255 255 255 / 95%));--meteor-y:300px;--meteor-angle:29deg;animation:site-meteor 20s linear infinite; }
-.site-mobile-sky i::after { content:'';position:absolute;right:0;top:-.5px;width:3px;height:3px;border-radius:50%;background:#fff; }
-.site-mobile-sky i:nth-child(2) { top:26%;left:-165px;width:145px;--meteor-y:240px;--meteor-angle:25deg;animation-delay:4s; }
-.site-mobile-sky i:nth-child(3) { top:42%;left:-210px;width:190px;--meteor-y:350px;--meteor-angle:33deg;animation-delay:8s; }
-.site-mobile-sky i:nth-child(4) { top:16%;left:-150px;width:130px;--meteor-y:270px;--meteor-angle:27deg;animation-delay:12s; }
-.site-mobile-sky i:nth-child(5) { top:51%;left:-180px;width:160px;--meteor-y:220px;--meteor-angle:24deg;animation-delay:16s; }
 .site-recommend-button { background:rgb(255 255 255 / 5%);border:1px solid rgb(255 255 255 / 14%);backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgb(255 255 255 / 16%); }
 .site-recommend-tooltip { background:rgb(22 18 30 / 88%);backdrop-filter:blur(18px);border-color:rgb(255 255 255 / 14%);color:#f5f5f7; }
 html[data-site-theme="light"] { color-scheme:light;--site-link:#6520c7;--site-surface:#fff;--site-text:#1d1d1f;--site-muted:#626268;--site-line:#c8cbd4;--site-outline:#b4b8c4; }
@@ -67,14 +61,19 @@ html[data-site-theme="light"] .mesh-gradient { background:radial-gradient(at 0% 
 html[data-site-theme="light"] #hero-title { background-image:linear-gradient(to bottom,#1d1d1f,#1d1d1f,#737378); }
 html[data-site-theme="light"] .site-mobile-menu { background:rgb(255 255 255 / 94%); }
 html[data-site-theme="light"] .site-mobile-sky { background-image:url('/sky/light.webp'); }
-html[data-site-theme="light"] .site-mobile-sky i { background:linear-gradient(90deg,transparent,rgb(29 29 31 / 95%)); }
-html[data-site-theme="light"] .site-mobile-sky i::after { background:#1d1d1f; }
 html[data-site-theme="light"] .site-universe-film { mix-blend-mode:multiply !important; }
 html[data-site-theme="light"] .site-recommend-button { background:rgb(255 255 255 / 72%);border-color:var(--site-line); }
 html[data-site-theme="light"] .site-recommend-tooltip { background:rgb(255 255 255 / 88%);border-color:var(--site-line);color:#1d1d1f; }
 html[data-site-theme="light"] .article-particles { opacity:1 !important; }
 html[data-site-theme="light"] ::-webkit-scrollbar-track { background:#f5f5f7; }
 @media(max-width:767px) { .site-mobile-trigger { display:inline-flex; } }
+@media(min-width:768px) {
+  .site-section-controls-row { flex-flow:row wrap; }
+  .site-section-controls-row > .site-filter-chips { flex:0 0 auto;flex-wrap:nowrap;justify-content:flex-start;max-width:100%;overflow-x:auto; }
+  .site-section-controls-row > :is(.site-section-actions,.site-section-action-group) { flex:0 0 auto;flex-wrap:nowrap;max-width:100%;margin-inline-start:auto;overflow-x:auto; }
+  .site-section-controls-row :is(.site-filter-chip,.site-section-actions > a,.site-section-actions > button,.site-section-action-group > a) { flex-shrink:0;white-space:nowrap; }
+  .site-guide-topics { flex-wrap:nowrap;max-width:100%;overflow-x:auto; }
+}
 @media(max-width:767px) {
   .site-section-controls > div { width:100%; }
   .site-filter-chips { display:flex;flex-wrap:nowrap;justify-content:flex-start;width:100%;max-width:100%;overflow-x:auto;gap:8px;scrollbar-width:none;padding:3px 0; }
@@ -120,10 +119,6 @@ html[data-site-theme="light"] svg.site-search-icon { color:#626268 !important; }
 html[data-site-theme="light"] .site-wordmark-glint > span { color:#7e1bff; }
 @keyframes site-wordmark-window { 0% { transform:translateX(-100%);opacity:0; } 2% { opacity:.5; } 14% { transform:translateX(100%);opacity:0; } 100% { transform:translateX(100%);opacity:0; } }
 @keyframes site-wordmark-text { 0% { transform:translateX(100%); } 14%,100% { transform:translateX(-100%); } }
-.site-mobile-twinkles { position:absolute;inset:0;background:url('/sky/twinkles-dark.webp') center/cover no-repeat;animation:site-twinkle 5.7s ease-in-out infinite alternate; }
-html[data-site-theme="light"] .site-mobile-twinkles { background-image:url('/sky/twinkles-light.webp'); }
-@keyframes site-twinkle { from { opacity:.15; } to { opacity:.85; } }
-@keyframes site-meteor { 0% { transform:translate3d(0,0,0) rotate(var(--meteor-angle));opacity:0; } 1% { opacity:1; } 9% { opacity:.9; } 11%,100% { transform:translate3d(calc(100vw + 410px),var(--meteor-y),0) rotate(var(--meteor-angle));opacity:0; } }
 .site-copy-burst { position:fixed;width:0;height:0;z-index:10000;pointer-events:none; }
 .site-copy-burst i { position:absolute;left:0;top:0;background:#7e1bff;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 94%,50% 72%,21% 94%,32% 57%,2% 35%,39% 35%);animation:site-copy-star 650ms ease-out var(--burst-delay) both; }
 html[data-site-theme="dark"] .site-copy-burst i { background:#a05bff; }
@@ -171,3 +166,10 @@ html[data-site-theme="light"] .site-section-controls .site-section-actions > [cl
 }
 html[data-site-theme="light"] .site-unified-header { background:#fff !important;border-bottom-color:rgb(0 0 0 / 6%) !important;box-shadow:0 8px 24px -16px rgb(0 0 0 / 12%) !important; }
 html[data-site-theme="light"] .site-unified-header > div:first-child { border-bottom-color:rgb(0 0 0 / 6%) !important; }
+.css-presence { display:contents; }
+.css-presence > * { transition:opacity 180ms; }
+.css-presence-exiting > * { opacity:0;pointer-events:none; }
+.css-enter { animation:css-enter var(--enter-duration,.2s) ease-out both; }
+@keyframes css-enter { from { opacity:var(--enter-opacity,0);transform:translate(var(--enter-x,0),var(--enter-y,0)) scale(var(--enter-scale,1)); } }
+@media (hover:hover) { .css-hover:hover { transform:translateY(var(--hover-y,0)) scale(var(--hover-scale,1)); } }
+@media (prefers-reduced-motion:reduce) { .css-enter { animation:none; }.css-presence > * { transition:none; } }
