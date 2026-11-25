@@ -7,7 +7,6 @@ import {HydrationReady} from './HydrationReady';
 import {waitForPageStyles} from './lib/pageStyles';
 import './index.css';
 import './theme.css';
-import './font-fallbacks.css';
 import './components/home-hero-integration.css';
 
 startDeferredAnalytics();

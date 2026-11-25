@@ -11,11 +11,12 @@ export function pageLayers(html) {
   const location=mount?.sourceCodeLocation;
   if(!location)throw Error('Missing React root');
   const start=location.startTag.endOffset,end=location.endTag.startOffset;
+  const prerendered=mount.attrs.some(attr=>attr.name==='data-prerendered');
   const countHeadings=node=>(node.tagName==='h1'?1:0)+(node.content?.childNodes||node.childNodes||[]).reduce((sum,child)=>sum+countHeadings(child),0);
   return {
     prerender:html.slice(start,end),
     headingCount:countHeadings(mount),
-    prerendered:mount.attrs.some(attr=>attr.name==='data-prerendered'),
-    staticDocument:html.slice(0,start)+html.slice(end),
+    prerendered,
+    staticDocument:prerendered?html.slice(0,start)+html.slice(end):html,
   };
 }

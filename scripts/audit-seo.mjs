@@ -404,7 +404,7 @@ for (const language of languages) {
     try {
       const original = await read(file);
       const layers = pageLayers(original);
-      if (!layers.prerendered || layers.headingCount !== 1) errors.push(`Expected one prerendered H1: ${localizedRoute}`);
+      if (layers.prerendered && layers.headingCount !== 1) errors.push(`Expected one prerendered H1: ${localizedRoute}`);
       html = layers.staticDocument;
     } catch {
       errors.push(`Missing page: ${localizedRoute}`);
@@ -465,7 +465,7 @@ for (const language of languages) {
 
 const rootSource = await read('index.html');
 const rootLayers = pageLayers(rootSource);
-if (!rootLayers.prerendered || rootLayers.headingCount !== 1) errors.push('Expected one prerendered home H1');
+if (rootLayers.prerendered && rootLayers.headingCount !== 1) errors.push('Expected one prerendered home H1');
 const rootHtml = rootLayers.staticDocument;
 checkFallback(rootHtml, '/');
 checkIndexPolicy(rootHtml, '/');

@@ -8,6 +8,20 @@ import postcss from 'postcss';
 import valueParser from 'postcss-value-parser';
 
 const root=process.cwd(),dist=path.join(root,'dist'),server=path.join(root,'.prerender');
+const mode=process.env.PRERENDER_MODE || 'off';
+if(!['off','all','cards'].includes(mode))throw Error('Unknown PRERENDER_MODE: '+mode);
+// Preload hygiene is independent of the experimental prerender.
+for(const relative of await readdir(dist,{recursive:true})){
+  if(!relative.endsWith('.html'))continue;
+  const file=path.join(dist,relative),html=await readFile(file,'utf8'),seen=new Set();
+  const clean=html.replace(/<link\b[^>]*rel="modulepreload"[^>]*>/g,tag=>{
+    const href=tag.match(/href="([^"]+)"/)?.[1];
+    if(seen.has(href)||/\/analytics-[^/]+\.js$/.test(href))return '';
+    seen.add(href);return tag;
+  });
+  if(clean!==html)await writeFile(file,clean);
+}
+if(mode==='off'){console.log('Prerender disabled; standard client render and original noscript retained.');process.exit(0);}
 await build({build:{ssr:'src/entry-server.tsx',outDir:server,emptyOutDir:true,minify:false,rollupOptions:{output:{entryFileNames:'entry-server.mjs'}}},logLevel:'warn'});
 const {renderPage}=await import(pathToFileURL(path.join(server,'entry-server.mjs')));
 const walk=(node,visit)=>{visit(node);for(const child of node.childNodes||[])walk(child,visit);};

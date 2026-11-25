@@ -55,6 +55,13 @@ test('recovery handles denied storage without reload loops and ignores unrelated
 test('prerender has real markup, one H1 per layer, inline styles and unique non-analytics preloads',async()=>{
   for(const route of ['','en/','proxy-vpn/','proxy-vpn/proxywing/','guides/youtube-ferma/','antidetect/']) {
     const html=await readFile('dist/'+route+'index.html','utf8'),layers=pageLayers(html);
+    if(!layers.prerendered){
+      assert.ok(!html.includes('id="prerender-bootstrap"'));assert.ok(!html.includes('id="first-screen-css"'));
+      assert.ok(!html.includes('data:font/'));assert.ok(!html.includes('data-prerender-root'));
+      assert.equal((layers.staticDocument.match(/<h1[ >]/g)||[]).length,1);
+      const preloads=[...html.matchAll(/<link\b[^>]*rel="modulepreload"[^>]*href="([^"]+)"/g)].map(match=>match[1]);
+      assert.equal(new Set(preloads).size,preloads.length);assert.ok(preloads.every(href=>!href.includes('/analytics-')));continue;
+    }
     assert.equal(layers.prerendered,true,route);assert.equal(layers.headingCount,1,route);
     assert.ok(layers.prerender.includes('<template data-prerender-root>'));
     assert.ok(!html.includes('html:not([data-js-enabled]) #root'),'Prerender must be inert template content, not CSS-hidden text');
@@ -89,6 +96,7 @@ test('main hydrates the prerender and analytics cannot enter the initial depende
 
 test('prerender activation only decodes embedded fonts and cannot wait indefinitely for a font service',async()=>{
   const html=await readFile('dist/index.html','utf8');let source;
+  if(!pageLayers(html).prerendered){assert.ok(!html.includes('prerender-bootstrap'));return;}
   const visit=node=>{if(node.tagName==='script'&&node.attrs.some(attr=>attr.name==='id'&&attr.value==='prerender-bootstrap'))source=node.childNodes.map(node=>node.value).join('');for(const child of node.childNodes||[])visit(child);};visit(parse(html));
   let replacements=0,deadline;
   const content={},window={},root={querySelector:()=>({content}),replaceChildren:value=>{assert.equal(value,content);replacements++;}};
